@@ -999,19 +999,24 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
-            turnoutAComboBox = new JmriBeanComboBox(
-                    InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
+            turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+            layoutEditor.setupComboBox(turnoutAComboBox, false, true);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
+
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
+            panel1a.add(turnoutBNameLabel);
+
             turnoutBComboBox = new JmriBeanComboBox(
                     InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            panel1a.add(turnoutBNameLabel);
+            layoutEditor.setupComboBox(turnoutBComboBox, false, true);
             panel1a.add(turnoutBComboBox);
+
             contentPane.add(panel1a);
+
             JPanel panel2 = new JPanel();
             panel2.setLayout(new GridLayout(0, 3, 2, 2));
 
@@ -1082,19 +1087,15 @@ public class LayoutSlip extends LayoutTurnout {
                     }
             );
 
-            slipEditDone.addActionListener(
-                    (ActionEvent event) -> {
-                        slipEditDonePressed(event);
-                    }
-            );
+            slipEditDone.addActionListener((ActionEvent event) -> {
+                slipEditDonePressed(event);
+            });
             slipEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            slipEditCancel.addActionListener(
-                    (ActionEvent event) -> {
-                        slipEditCancelPressed(event);
-                    }
-            );
+            slipEditCancel.addActionListener((ActionEvent event) -> {
+                slipEditCancelPressed(event);
+            });
             slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
@@ -1295,8 +1296,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         newName = turnoutBComboBox.getDisplayName();
         if (!turnoutBName.equals(newName)) {
-            if (layoutEditor.validatePhysicalTurnout(newName,
-                    editLayoutTurnoutFrame)) {
+            if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnoutB(newName);
             } else {
                 namedTurnoutB = null;
