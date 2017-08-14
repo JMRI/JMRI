@@ -606,36 +606,43 @@ public class TrackSegment extends LayoutTrack {
             }
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
-        lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
 
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
+        }));
+        jmi.setSelected(!getArc() && !getBezier());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Circle")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
+        }));
+        jmi.setSelected(getArc() && getCircle());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Ellipse")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Bezier")) {
+        }));
+        jmi.setSelected(getArc() && !getCircle());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Bezier")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(3);
             }
-        });
+        }));
+        jmi.setSelected(!getArc() && getBezier());
+
         popup.add(lineType);
 
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     flipAngle();
@@ -889,13 +896,13 @@ public class TrackSegment extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 
             contentPane.add(panel2);
 
-            if (getArc() && circle) {
+            if (getArc() && getCircle()) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -1568,16 +1575,16 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
             if (getArc()) {
-                g2.draw(new Line2D.Double(ep1, ep2));
+                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
             }
             if (showConstructionLinesLE()) { //draw track circles
-                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
+                g2.draw(new Line2D.Double(ep1, ep2));
             }
         }
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.
         g2.setColor(Color.black);
-        if (circle && showConstructionLinesLE()) {
+        if (getCircle() && showConstructionLinesLE()) {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)
