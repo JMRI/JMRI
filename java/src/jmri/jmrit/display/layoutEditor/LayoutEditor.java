@@ -4655,15 +4655,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
-            //set up selection rectangle
-            double selX = Math.min(selectionX, selectionX + selectionWidth);
-            double selY = Math.min(selectionY, selectionY + selectionHeight);
-            Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
-                    Math.abs(selectionWidth), Math.abs(selectionHeight));
+            Rectangle2D selectionRect = getSelectionRect();
 
             //set up undo information
-            undoRect = new Rectangle2D.Double(selX + xTranslation, selY + yTranslation,
-                    Math.abs(selectionWidth), Math.abs(selectionHeight));
+            undoRect = MathUtil.offset(selectionRect, xTranslation, yTranslation);
             undoDeltaX = -xTranslation;
             undoDeltaY = -yTranslation;
             canUndoMoveSelection = true;
@@ -4674,7 +4669,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (Positionable c : contents) {
                 Point2D upperLeft = c.getLocation();
 
-                if (selectRect.contains(upperLeft)) {
+                if (selectionRect.contains(upperLeft)) {
                     int xNew = (int) (upperLeft.getX() + xTranslation);
                     int yNew = (int) (upperLeft.getY() + yTranslation);
                     c.setLocation(xNew, yNew);
@@ -4685,7 +4680,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutTurnout t : turnoutList) {
                 Point2D center = t.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     t.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4695,7 +4690,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LevelXing x : xingList) {
                 Point2D center = x.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     x.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4705,7 +4700,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutSlip sl : slipList) {
                 Point2D center = sl.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     sl.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4715,7 +4710,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutTurntable x : turntableList) {
                 Point2D center = x.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     x.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4725,7 +4720,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (PositionablePoint p : pointList) {
                 Point2D coord = p.getCoordsCenter();
 
-                if (selectRect.contains(coord)) {
+                if (selectionRect.contains(coord)) {
                     p.setCoordsCenter(new Point2D.Double(coord.getX() + xTranslation,
                             coord.getY() + yTranslation));
                 }
@@ -4912,7 +4907,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }   //actionPerformed
         };
-        addButtonGroupMenuEntry(inMenu, trackColorButtonGroup, inName, 
+        addButtonGroupMenuEntry(inMenu, trackColorButtonGroup, inName,
                 inColor == defaultTrackColor, a);
     }   //addTrackColorMenuEntry
 
@@ -4985,7 +4980,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }   //actionPerformed
         };
-        JRadioButtonMenuItem r = addButtonGroupMenuEntry(inMenu, 
+        JRadioButtonMenuItem r = addButtonGroupMenuEntry(inMenu,
                 turnoutCircleSizeButtonGroup, inName,
                 getTurnoutCircleSize() == inSize, a);
     }   //addTurnoutCircleSizeMenuEntry
@@ -6505,14 +6500,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void createSelectionGroups() {
         List<Positionable> contents = getContents();
-        //set up selection rectangle
-        double selX = Math.min(selectionX, selectionX + selectionWidth);
-        double selY = Math.min(selectionY, selectionY + selectionHeight);
-        Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
-                Math.abs(selectionWidth), Math.abs(selectionHeight));
+        Rectangle2D selectionRect = getSelectionRect();
 
         for (Positionable c : contents) {
-            if (selectRect.contains(c.getLocation())) {
+            if (selectionRect.contains(c.getLocation())) {
                 if (_positionableSelection == null) {
                     _positionableSelection = new ArrayList<Positionable>();
                 }
@@ -6527,7 +6518,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurnout t : turnoutList) {
             Point2D center = t.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_turnoutSelection == null) {
                     _turnoutSelection = new ArrayList<LayoutTurnout>();
                 }
@@ -6536,14 +6527,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     _turnoutSelection.add(t);
                 }
 
-        }
+            }
         }   // for (LayoutTurnout t : turnoutList)
 
         // loop over all level crossings
         for (LevelXing x : xingList) {
             Point2D center = x.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_xingSelection == null) {
                     _xingSelection = new ArrayList<LevelXing>();
                 }
@@ -6558,7 +6549,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip sl : slipList) {
             Point2D center = sl.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_slipSelection == null) {
                     _slipSelection = new ArrayList<LayoutSlip>();
                 }
@@ -6573,7 +6564,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurntable x : turntableList) {
             Point2D center = x.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_turntableSelection == null) {
                     _turntableSelection = new ArrayList<LayoutTurntable>();
                 }
@@ -6588,7 +6579,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (PositionablePoint p : pointList) {
             Point2D coord = p.getCoordsCenter();
 
-            if (selectRect.contains(coord)) {
+            if (selectionRect.contains(coord)) {
                 if (_pointSelection == null) {
                     _pointSelection = new ArrayList<PositionablePoint>();
                 }
@@ -6687,7 +6678,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             noWarnLayoutTurnout = oldTurnout;
         }
-        
+
         selectionActive = false;
         clearSelectionGroups();
         repaint();
@@ -6730,7 +6721,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 break;
             }
         }
-        
+
         if (!removed) {
             _turnoutSelection.add(p);
         }
@@ -7156,7 +7147,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
 
                 if ((_pointSelection != null) || (_turntableSelection != null)
-                        || (_xingSelection != null) 
+                        || (_xingSelection != null)
                         || (_turnoutSelection != null)
                         || (_positionableSelection != null)) {
                     int offsetx = xLoc - _lastX;
@@ -10261,16 +10252,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }   // for (PositionablePoint p : pointList)
     }   //drawPoints
 
+    private Rectangle2D getSelectionRect() {
+        double selX = Math.min(selectionX, selectionX + selectionWidth);
+        double selY = Math.min(selectionY, selectionY + selectionHeight);
+        Rectangle2D result = new Rectangle2D.Double(selX, selY,
+                Math.abs(selectionWidth), Math.abs(selectionHeight));
+        return result;
+    }
+
     private void drawSelectionRect(Graphics2D g2) {
         if (selectionActive && (selectionWidth != 0.0) && (selectionHeight != 0.0)) {
-            //set up selection rectangle
-            double selX = Math.min(selectionX, selectionX + selectionWidth);
-            double selY = Math.min(selectionY, selectionY + selectionHeight);
-            Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
-                    Math.abs(selectionWidth), Math.abs(selectionHeight));
             g2.setColor(defaultTrackColor);
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.draw(selectRect);
+            g2.draw(getSelectionRect());
         }
     }   //drawSelectionRect
 
