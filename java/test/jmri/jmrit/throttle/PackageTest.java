@@ -52,7 +52,7 @@ public class PackageTest extends TestCase {
         suite.addTest(ThrottlesPreferencesPaneTest.suite());
         suite.addTest(ThrottlesListPanelTest.suite());
         suite.addTest(ThrottlesTableCellRendererTest.suite());
-        suite.addTest(ThrottlesTableModelTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ThrottlesTableModelTest.class));
         suite.addTest(new JUnit4TestAdapter(KeyListenerInstallerTest.class));
         suite.addTest(new JUnit4TestAdapter(WindowPreferencesTest.class));
         suite.addTest(new JUnit4TestAdapter(SpeedPanelTest.class));

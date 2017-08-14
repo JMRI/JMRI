@@ -12,16 +12,15 @@ import org.junit.Test;
  */
 public class ItemPaletteTest {
 
-    ItemPalette ip;
-
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ItemPalette ip = new ItemPalette("Test ItemPalette", null);
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
             ip.pack();
+            ip.setVisible(true);
         });
-        ip.setVisible(true);
+        ip.dispose();
     }
 
     @Before

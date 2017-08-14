@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.util.SwingTestCase;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -11,7 +12,7 @@ import org.junit.Test;
 
 /**
  * PanelEditorTest.java
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen
@@ -24,7 +25,8 @@ public class PanelEditorTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-
+        SwingTestCase.disposeFrame("Layer Name Test", true, true);
+        SwingTestCase.disposeFrame("Layer Name Test Editor", true, true);
     }
 
     @Test

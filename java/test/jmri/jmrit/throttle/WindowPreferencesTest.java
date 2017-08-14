@@ -14,7 +14,7 @@ public class WindowPreferencesTest {
     @Test
     public void testCTor() {
         WindowPreferences t = new WindowPreferences();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -31,5 +31,4 @@ public class WindowPreferencesTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WindowPreferencesTest.class.getName());
-
 }

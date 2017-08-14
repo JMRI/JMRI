@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(MemoryIconTest.suite());
         suite.addTest(MemorySpinnerIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
-        suite.addTest(ReporterIconTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ReporterIconTest.class));
         suite.addTest(RpsPositionIconTest.suite());
         suite.addTest(SensorIconWindowTest.suite());
         suite.addTest(SignalMastIconTest.suite());
