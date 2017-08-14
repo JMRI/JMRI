@@ -1315,7 +1315,7 @@ public class TrackSegment extends LayoutTrack {
      * @return the center coordinates
      */
     public Point2D getCoordsCenterCircle() {
-        return new Point2D.Double(centreX, centreY);
+        return getCentre();
     }
 
     /**
@@ -1574,12 +1574,10 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlPointRectAt(ep2));
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
-            if (getArc()) {
-                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
-            }
             if (showConstructionLinesLE()) { //draw track circles
                 g2.draw(new Line2D.Double(ep1, ep2));
             }
+            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         }
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.

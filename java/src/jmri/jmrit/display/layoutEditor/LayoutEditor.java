@@ -4991,7 +4991,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         while (e.hasMoreElements()) {
             AbstractButton button = (AbstractButton) e.nextElement();
             String buttonName = button.getText();
-            button.setSelected(buttonName == tcs);
+            button.setSelected(buttonName.equals(tcs));
         }
     }   //setOptionMenuTurnoutCircleSize
 
