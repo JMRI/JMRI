@@ -44,7 +44,7 @@ a.start()
 jmri.jmrit.automat.AutomatSummary.instance().get(name).stop()
 
 # confirm that it has stopped (might have to wait a here?)
-self.waitMsec(1000) # wait 1 second
+sleep(1.0) # wait 1 second
 for t in java.lang.Thread.getAllStackTraces().keySet() :
     if (t.getName() == name) :
         if (t.getState() != java.lang.Thread.State.TERMINATED) : raise AssertionError('thread did not TERMINATE')
