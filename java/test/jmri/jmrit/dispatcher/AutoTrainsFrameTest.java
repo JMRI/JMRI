@@ -22,6 +22,8 @@ public class AutoTrainsFrameTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         AutoTrainsFrame t = new AutoTrainsFrame(d);
         Assert.assertNotNull("exists",t);
+        t.dispose();
+        d.dispose();
     }
 
     // The minimal setup for log4J

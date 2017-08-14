@@ -24,6 +24,7 @@ public class AllocationPlanTest {
         jmri.util.JUnitAppender.assertErrorMessage("null LayoutEditor when constructing AutoAllocate");
         AllocationPlan t = new AllocationPlan(aa,1);
         Assert.assertNotNull("exists",t);
+        d.dispose();
     }
 
     // The minimal setup for log4J

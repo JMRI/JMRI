@@ -22,6 +22,7 @@ public class AutoTurnoutsTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         AutoTurnouts t = new AutoTurnouts(d);
         Assert.assertNotNull("exists",t);
+        d.dispose();
     }
 
     // The minimal setup for log4J

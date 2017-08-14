@@ -22,7 +22,8 @@ public class ActivateTrainFrameTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
         ActivateTrainFrame t = new ActivateTrainFrame(d);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        d.dispose();
     }
 
     // The minimal setup for log4J
@@ -39,5 +40,4 @@ public class ActivateTrainFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrameTest.class.getName());
-
 }

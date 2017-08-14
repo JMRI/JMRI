@@ -22,6 +22,7 @@ public class OptionsMenuTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         OptionsMenu t = new OptionsMenu(d);
         Assert.assertNotNull("exists",t);
+        d.dispose();
     }
 
     // The minimal setup for log4J

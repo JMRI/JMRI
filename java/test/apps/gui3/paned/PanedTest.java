@@ -1,7 +1,9 @@
 package apps.gui3.paned;
 
 import apps.AppsBase;
+import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.SwingTestCase;
 import org.junit.After;
@@ -29,7 +31,10 @@ public class PanedTest {
 
             @Override
             protected void configureProfile() {
-                JUnitUtil.resetInstanceManager();
+                // do not call JUnitUtil.resetInstanceManager() since that also
+                // disposes of open windows, which is undesirable
+                InstanceManager.getDefault().clearAll();
+                JUnitUtil.initDefaultUserMessagePreferences();
             }
 
             @Override
@@ -62,13 +67,14 @@ public class PanedTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        Log4JFixture.setUp();
         JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        Log4JFixture.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PanedTest.class.getName());
