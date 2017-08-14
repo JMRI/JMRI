@@ -47,6 +47,14 @@ import org.slf4j.LoggerFactory;
  * crossing, A-C and B-D are straight segments. A train proceeds through the
  * crossing on either of these segments.
  * <P>
+ * {@literal
+ *    A   D
+ *    \\ //
+ *      X
+ *    // \\
+ *    B   C
+ * literal}
+ * <P>
  * Each straight segment carries Block information. A-C and B-D may be in the
  * same or different Layout Blocks.
  * <P>

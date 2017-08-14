@@ -75,6 +75,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PositionableJPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ToolTipTest.class));
         suite.addTest(new JUnit4TestAdapter(PanelMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionablePopupUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionablePropertiesUtilTest.class));
         return suite;
     }
 
