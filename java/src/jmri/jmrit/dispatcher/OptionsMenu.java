@@ -23,6 +23,7 @@ import javax.swing.JSeparator;
 import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.Scale;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -408,7 +409,7 @@ public class OptionsMenu extends JMenu {
 
     private boolean initializeLayoutEditorCombo() {
         // get list of Layout Editor panels
-        layoutEditorList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        layoutEditorList = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         if (layoutEditorList.size() == 0) {
             return false;
         }

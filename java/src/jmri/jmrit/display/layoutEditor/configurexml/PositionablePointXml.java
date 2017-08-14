@@ -1,7 +1,9 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import org.jdom2.Attribute;
@@ -144,7 +146,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         if (type == PositionablePoint.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
             String linkedEditorName = element.getAttribute("linkedpanel").getValue();
-            LayoutEditor linkedEditor = (LayoutEditor) jmri.jmrit.display.PanelMenu.instance().getEditorByName(linkedEditorName);
+            LayoutEditor linkedEditor = (LayoutEditor) InstanceManager.getDefault(PanelMenu.class).getEditorByName(linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.pointList) {

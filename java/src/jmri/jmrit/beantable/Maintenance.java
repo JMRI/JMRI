@@ -32,6 +32,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;
@@ -1243,7 +1244,7 @@ public class Maintenance {
 
         found = false;
         empty = true;
-        ArrayList<jmri.jmrit.display.Editor> panelList = jmri.jmrit.display.PanelMenu.instance().getEditorPanelList();
+        ArrayList<jmri.jmrit.display.Editor> panelList = InstanceManager.getDefault(PanelMenu.class).getEditorPanelList();
         for (int i = 0; i < panelList.size(); i++) {
             jmri.jmrit.display.Editor panelEditor = panelList.get(i);
             name = panelEditor.getTitle();

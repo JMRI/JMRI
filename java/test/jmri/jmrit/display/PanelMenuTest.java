@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +14,7 @@ public class PanelMenuTest {
 
     @Test
     public void testInstance() {
-        PanelMenu t = PanelMenu.instance();
+        PanelMenu t = InstanceManager.getDefault(PanelMenu.class);
         Assert.assertNotNull("exists", t);
     }
 

@@ -108,6 +108,7 @@ import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.display.MultiSensorIcon;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.PositionableLabel;
@@ -1118,10 +1119,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //confirm that panel hasn't already been loaded
-        if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
         }
-        jmri.jmrit.display.PanelMenu.instance().addEditorPanel(this);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(this);
         thisPanel = this;
         thisPanel.setFocusable(true);
         thisPanel.addKeyListener(this);
@@ -2734,13 +2735,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (newName != null) {
                 if (!newName.equals(layoutName)) {
-                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
                         JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         setTitle(newName);
                         layoutName = newName;
-                        jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(thisPanel);
+                        InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(thisPanel);
                         setDirty(true);
 
                         if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {

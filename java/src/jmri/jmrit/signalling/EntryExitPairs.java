@@ -21,6 +21,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -161,7 +162,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public void addNXSourcePoint(NamedBean source) {
         PointDetails point = null;
-        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         for (int i = 0; i < layout.size(); i++) {
             point = providePoint(source, layout.get(i));
         }

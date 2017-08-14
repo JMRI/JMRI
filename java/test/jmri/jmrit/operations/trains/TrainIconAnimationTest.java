@@ -60,7 +60,7 @@ public class TrainIconAnimationTest {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        PanelMenu.instance().addEditorPanel(editor);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
