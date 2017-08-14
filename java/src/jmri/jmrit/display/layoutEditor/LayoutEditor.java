@@ -4966,7 +4966,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }   //actionPerformed
         };
         addButtonGroupMenuEntry(inMenu, turnoutCircleColorButtonGroup, inName,
-                inColor == turnoutCircleColor, a);
+                (inColor != null) && (inColor == turnoutCircleColor), a);
     }   //addTurnoutCircleColorMenuEntry
 
     private void addTurnoutCircleSizeMenuEntry(JMenu inMenu, final String inName, final int inSize) {
@@ -5025,10 +5025,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         while (e.hasMoreElements()) {
             AbstractButton button = (AbstractButton) e.nextElement();
             String buttonName = button.getText().replaceAll("\\s+", "");
-            // make 1st character lower case
-            buttonName = Character.toLowerCase(buttonName.charAt(0)) + buttonName.substring(1);
-            Color buttonColor = ColorUtil.stringToColor(buttonName);
-            button.setSelected(buttonColor == inColor);
+            if (buttonName.equals("UseDefaultTrackColor")) {
+                button.setSelected(false);
+            } else {
+                // make 1st character lower case
+                buttonName = Character.toLowerCase(buttonName.charAt(0)) + buttonName.substring(1);
+                Color buttonColor = ColorUtil.stringToColor(buttonName);
+                button.setSelected(buttonColor == inColor);
+            }
         }
     }
 
@@ -9703,6 +9707,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setTurnoutCircleColor(String newColor) {
+        if (newColor.equals("track")) {
+            newColor = getDefaultTrackColor();
+        }
         turnoutCircleColor = ColorUtil.stringToColor(newColor);
         setOptionMenuTurnoutCircleColor();
     }
