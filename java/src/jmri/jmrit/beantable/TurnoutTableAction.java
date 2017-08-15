@@ -1150,7 +1150,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Create action to edit a turnout in Edit pane.
      * (also used in windowTest)
      *
-     * @param the turnout to be edited
+     * @param t the turnout to be edited
      */
     void editButton(Turnout t) {
         jmri.jmrit.beantable.beanedit.TurnoutEditAction beanEdit = new jmri.jmrit.beantable.beanedit.TurnoutEditAction();
