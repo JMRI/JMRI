@@ -97,76 +97,76 @@ public class LayoutEditorTools {
 
         // defer these actions until all these actually exist...
         SwingUtilities.invokeLater(() -> {
-            layoutEditor.setupComboBox(turnoutComboBox, true, true);
+            LayoutEditor.setupComboBox(turnoutComboBox, true, true);
 
-            layoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
 
-            layoutEditor.setupComboBox(block1IDComboBox, true, true);
-            layoutEditor.setupComboBox(block2IDComboBox, true, true);
+            LayoutEditor.setupComboBox(block1IDComboBox, true, true);
+            LayoutEditor.setupComboBox(block2IDComboBox, true, true);
 
-            layoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
 
-            layoutEditor.setupComboBox(a1ComboBox, true, true);
-            layoutEditor.setupComboBox(a2ComboBox, true, true);
-            layoutEditor.setupComboBox(b1ComboBox, true, true);
-            layoutEditor.setupComboBox(b2ComboBox, true, true);
-            layoutEditor.setupComboBox(c1ComboBox, true, true);
-            layoutEditor.setupComboBox(c2ComboBox, true, true);
-            layoutEditor.setupComboBox(d1ComboBox, true, true);
-            layoutEditor.setupComboBox(d2ComboBox, true, true);
+            LayoutEditor.setupComboBox(a1ComboBox, true, true);
+            LayoutEditor.setupComboBox(a2ComboBox, true, true);
+            LayoutEditor.setupComboBox(b1ComboBox, true, true);
+            LayoutEditor.setupComboBox(b2ComboBox, true, true);
+            LayoutEditor.setupComboBox(c1ComboBox, true, true);
+            LayoutEditor.setupComboBox(c2ComboBox, true, true);
+            LayoutEditor.setupComboBox(d1ComboBox, true, true);
+            LayoutEditor.setupComboBox(d2ComboBox, true, true);
 
-            layoutEditor.setupComboBox(blockAComboBox, true, true);
-            layoutEditor.setupComboBox(blockCComboBox, true, true);
+            LayoutEditor.setupComboBox(blockAComboBox, true, true);
+            LayoutEditor.setupComboBox(blockCComboBox, true, true);
 
-            layoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
 
-            layoutEditor.setupComboBox(turnout1ComboBox, true, true);
-            layoutEditor.setupComboBox(turnout2ComboBox, true, true);
+            LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
+            LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
 
-            layoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
 
-            layoutEditor.setupComboBox(turnoutAComboBox, true, true);
-            layoutEditor.setupComboBox(turnoutBComboBox, true, true);
+            LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
+            LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
 
-            layoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
 
-            layoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
+            LayoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
 
-            layoutEditor.setupComboBox(xingBlockAComboBox, true, true);
-            layoutEditor.setupComboBox(xingBlockCComboBox, true, true);
+            LayoutEditor.setupComboBox(xingBlockAComboBox, true, true);
+            LayoutEditor.setupComboBox(xingBlockCComboBox, true, true);
 
-            layoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
+            LayoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
 
-            layoutEditor.setupComboBox(xingSensorsBlockAComboBox, true, true);
-            layoutEditor.setupComboBox(xingSensorsBlockCComboBox, true, true);
+            LayoutEditor.setupComboBox(xingSensorsBlockAComboBox, true, true);
+            LayoutEditor.setupComboBox(xingSensorsBlockCComboBox, true, true);
 
-            layoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
-            layoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
+            LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
         });
     }
 
