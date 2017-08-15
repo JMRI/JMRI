@@ -47,6 +47,14 @@ import org.slf4j.LoggerFactory;
  * crossing, A-C and B-D are straight segments. A train proceeds through the
  * crossing on either of these segments.
  * <P>
+ * {@literal
+ *    A   D
+ *    \\ //
+ *      X
+ *    // \\
+ *    B   C
+ * literal}
+ * <P>
  * Each straight segment carries Block information. A-C and B-D may be in the
  * same or different Layout Blocks.
  * <P>
@@ -1303,7 +1311,7 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            layoutEditor.setupComboBox(block1NameComboBox, false, true);
+            LayoutEditor.setupComboBox(block1NameComboBox, false, true);
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
 
@@ -1313,7 +1321,7 @@ public class LevelXing extends LayoutTrack {
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            layoutEditor.setupComboBox(block2NameComboBox, false, true);
+            LayoutEditor.setupComboBox(block2NameComboBox, false, true);
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
 
