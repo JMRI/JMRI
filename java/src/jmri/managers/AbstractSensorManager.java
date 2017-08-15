@@ -187,9 +187,19 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return prefix + typeLetter() + curAddress;
     }
 
+    /**
+     * Validate system name format.
+     *
+     * @return true to let undocumented connection system managers pass entry validation.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         String tmpSName = "";
 
@@ -280,7 +290,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      * Do the sensor objects provided by this manager support configuring
      * an internal pullup or pull down resistor?
      * <p>
-     * This default implementaiton always returns false.
+     * This default implementation always returns false.
      *
      * @return true if pull up/pull down configuration is supported.
      */

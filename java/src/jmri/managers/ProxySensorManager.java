@@ -152,14 +152,10 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      * system name format. Return false if no manager exists.
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) throws jmri.JmriException {
+    public boolean validSystemNameFormat(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
-            try {
-                return ((SensorManager) getMgr(i)).validSystemNameFormat(systemName);
-            } catch (jmri.JmriException ex) {
-                throw ex;
-            }
+            return ((SensorManager) getMgr(i)).validSystemNameFormat(systemName);
         }
         return false;
     }

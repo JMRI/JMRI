@@ -66,6 +66,18 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         return getSystemPrefix() + typeLetter() + curAddress;
     }
 
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e){
+            log.warn("Error: "+e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();

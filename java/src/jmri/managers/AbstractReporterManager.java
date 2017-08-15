@@ -128,7 +128,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Reporter r = getBySystemName(prefix + typeLetter() + curAddress);
         if (r == null) {

@@ -115,7 +115,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             throw ex;
         }
 
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {

@@ -98,7 +98,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'T',_memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'T', _memo));
     }
 
     /**

@@ -166,7 +166,7 @@ public interface SensorManager extends Manager<Sensor> {
      * @return true if formatted correctly; false otherwise
      */
     @CheckReturnValue
-    public boolean validSystemNameFormat(@Nonnull String systemName) throws jmri.JmriException;
+    public boolean validSystemNameFormat(@Nonnull String systemName);
 
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.

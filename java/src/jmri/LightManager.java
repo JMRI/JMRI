@@ -120,7 +120,7 @@ public interface LightManager extends Manager<Light> {
      * @return true if formatted correctly; false otherwise
      */
     @CheckReturnValue
-    public boolean validSystemNameFormat(@Nonnull String systemName) throws jmri.JmriException;
+    public boolean validSystemNameFormat(@Nonnull String systemName);
 
     /**
      * Test if parameter is a valid system name for current configuration.

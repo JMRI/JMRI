@@ -4,6 +4,8 @@ import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CAN CBUS implementation of a TurnoutManager.
@@ -69,6 +71,18 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return curAddress;
     }
 
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e){
+            log.warn("Error: "+e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
@@ -110,5 +124,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class.getName());
 
 }

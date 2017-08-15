@@ -147,7 +147,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
