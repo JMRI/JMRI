@@ -34,6 +34,7 @@ import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +46,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -423,30 +425,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private ButtonGroup backgroundColorButtonGroup = null;
     private ButtonGroup turnoutCircleColorButtonGroup = null;
     private ButtonGroup turnoutCircleSizeButtonGroup = null;
-    private Color[] trackColors = new Color[13];
-    private Color[] trackOccupiedColors = new Color[13];
-    private Color[] trackAlternativeColors = new Color[13];
-    private Color[] textColors = new Color[13];
-    private Color[] backgroundColors = new Color[13];
-    private Color[] turnoutCircleColors = new Color[14];
-    private int[] turnoutCircleSizes = new int[10];
 
-    private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
-    private JRadioButtonMenuItem[] trackOccupiedColorMenuItems = new JRadioButtonMenuItem[13];
-    private JRadioButtonMenuItem[] trackAlternativeColorMenuItems = new JRadioButtonMenuItem[13];
-    private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
-    private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
-    private JRadioButtonMenuItem[] turnoutCircleColorMenuItems = new JRadioButtonMenuItem[14];
-    private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[10];
-
-    private int trackColorCount = 0;
-    private int trackOccupiedColorCount = 0;
-    private int trackAlternativeColorCount = 0;
-    private int textColorCount = 0;
-    private int turnoutCircleColorCount = 0;
-    private int turnoutCircleSizeCount = 0;
     private boolean turnoutDrawUnselectedLeg = true;
-    private int backgroundColorCount = 0;
     private boolean autoAssignBlocks = false;
 
     //Selected point information
@@ -534,7 +514,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double yScale = 1.0;
     private boolean animatingLayout = true;
     private boolean showHelpBar = true;
-    private boolean drawGrid = false;
+    private boolean drawGrid = true;
 
     private boolean snapToGridOnAdd = false;
     private boolean snapToGridOnMove = false;
@@ -2076,7 +2056,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      *                       invalid text == yellow background
      * @param inEnable       boolean to enable / disable the JmriBeanComboBox
      */
-    public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
+    public static void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
@@ -4677,15 +4657,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
-            //set up selection rectangle
-            double selX = Math.min(selectionX, selectionX + selectionWidth);
-            double selY = Math.min(selectionY, selectionY + selectionHeight);
-            Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
-                    Math.abs(selectionWidth), Math.abs(selectionHeight));
+            Rectangle2D selectionRect = getSelectionRect();
 
             //set up undo information
-            undoRect = new Rectangle2D.Double(selX + xTranslation, selY + yTranslation,
-                    Math.abs(selectionWidth), Math.abs(selectionHeight));
+            undoRect = MathUtil.offset(selectionRect, xTranslation, yTranslation);
             undoDeltaX = -xTranslation;
             undoDeltaY = -yTranslation;
             canUndoMoveSelection = true;
@@ -4696,7 +4671,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (Positionable c : contents) {
                 Point2D upperLeft = c.getLocation();
 
-                if (selectRect.contains(upperLeft)) {
+                if (selectionRect.contains(upperLeft)) {
                     int xNew = (int) (upperLeft.getX() + xTranslation);
                     int yNew = (int) (upperLeft.getY() + yTranslation);
                     c.setLocation(xNew, yNew);
@@ -4707,7 +4682,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutTurnout t : turnoutList) {
                 Point2D center = t.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     t.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4717,7 +4692,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LevelXing x : xingList) {
                 Point2D center = x.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     x.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4727,7 +4702,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutSlip sl : slipList) {
                 Point2D center = sl.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     sl.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4737,7 +4712,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (LayoutTurntable x : turntableList) {
                 Point2D center = x.getCoordsCenter();
 
-                if (selectRect.contains(center)) {
+                if (selectionRect.contains(center)) {
                     x.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
                             center.getY() + yTranslation));
                 }
@@ -4747,7 +4722,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (PositionablePoint p : pointList) {
                 Point2D coord = p.getCoordsCenter();
 
-                if (selectRect.contains(coord)) {
+                if (selectionRect.contains(coord)) {
                     p.setCoordsCenter(new Point2D.Double(coord.getX() + xTranslation,
                             coord.getY() + yTranslation));
                 }
@@ -4888,247 +4863,180 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
     }   //setCurrentPositionAndSize()
 
-    void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
-        ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            final Color desiredColor = color;
+    private JRadioButtonMenuItem addButtonGroupMenuEntry(JMenu inMenu,
+            ButtonGroup inButtonGroup, final String inName,
+            boolean inSelected, ActionListener inActionListener) {
+        JRadioButtonMenuItem result = new JRadioButtonMenuItem(inName);
+        if (inActionListener != null) {
+            result.addActionListener(inActionListener);
+        }
+        if (inButtonGroup != null) {
+            inButtonGroup.add(result);
+        }
+        result.setSelected(inSelected);
 
+        if (inMenu != null) {
+            inMenu.add(result);
+        }
+        return result;
+    }
+
+    private void addBackgroundColorMenuEntry(JMenu inMenu, final String inName, final Color inColor) {
+        ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!defaultBackgroundColor.equals(desiredColor)) {
-                    defaultBackgroundColor = desiredColor;
-                    setBackgroundColor(desiredColor);
+                if (!defaultBackgroundColor.equals(inColor)) {
+                    defaultBackgroundColor = inColor;
+                    setBackgroundColor(inColor);
                     setDirty(true);
                     repaint();
                 }
-            }   //actionPerformed
+            }
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        backgroundColorButtonGroup.add(r);
-
-        if (defaultBackgroundColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        backgroundColorMenuItems[backgroundColorCount] = r;
-        backgroundColors[backgroundColorCount] = color;
-        backgroundColorCount++;
+        addButtonGroupMenuEntry(inMenu, backgroundColorButtonGroup, inName,
+                inColor == defaultBackgroundColor, a);
     }   //addBackgroundColorMenuEntry
 
-    void addTrackColorMenuEntry(JMenu menu, final String name, final Color color) {
+    private void addTrackColorMenuEntry(JMenu inMenu, final String inName, final Color inColor) {
         ActionListener a = new ActionListener() {
-            final Color desiredColor = color;
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!defaultTrackColor.equals(desiredColor)) {
-                    LayoutTrack.setDefaultTrackColor(desiredColor);
-                    defaultTrackColor = desiredColor;
+                if (!defaultTrackColor.equals(inColor)) {
+                    LayoutTrack.setDefaultTrackColor(inColor);
+                    defaultTrackColor = inColor;
                     setDirty(true);
                     repaint();
                 }
             }   //actionPerformed
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        trackColorButtonGroup.add(r);
-
-        if (defaultTrackColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        trackColorMenuItems[trackColorCount] = r;
-        trackColors[trackColorCount] = color;
-        trackColorCount++;
+        addButtonGroupMenuEntry(inMenu, trackColorButtonGroup, inName,
+                inColor == defaultTrackColor, a);
     }   //addTrackColorMenuEntry
 
-    void addTrackOccupiedColorMenuEntry(JMenu menu, final String name, final Color color) {
+    private void addTrackOccupiedColorMenuEntry(JMenu inMenu, final String inName, final Color inColor) {
         ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            final Color desiredColor = color;
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!defaultOccupiedTrackColor.equals(desiredColor)) {
-                    defaultOccupiedTrackColor = desiredColor;
+                if (!defaultOccupiedTrackColor.equals(inColor)) {
+                    defaultOccupiedTrackColor = inColor;
                     setDirty(true);
                     repaint();
                 }
             }   //actionPerformed
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        trackOccupiedColorButtonGroup.add(r);
-
-        if (defaultOccupiedTrackColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        trackOccupiedColorMenuItems[trackOccupiedColorCount] = r;
-        trackOccupiedColors[trackOccupiedColorCount] = color;
-        trackOccupiedColorCount++;
+        addButtonGroupMenuEntry(inMenu, trackOccupiedColorButtonGroup, inName,
+                inColor == defaultOccupiedTrackColor, a);
     }   //addTrackOccupiedColorMenuEntry
 
-    void addTrackAlternativeColorMenuEntry(JMenu menu, final String name, final Color color) {
+    private void addTrackAlternativeColorMenuEntry(JMenu inMenu, final String inName, final Color inColor) {
         ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            final Color desiredColor = color;
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!defaultAlternativeTrackColor.equals(desiredColor)) {
-                    defaultAlternativeTrackColor = desiredColor;
+                if (!defaultAlternativeTrackColor.equals(inColor)) {
+                    defaultAlternativeTrackColor = inColor;
                     setDirty(true);
                     repaint();
                 }
             }   //actionPerformed
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        r.setSelected(defaultAlternativeTrackColor.equals(color));
-        trackAlternativeColorButtonGroup.add(r);
-
-        menu.add(r);
-        trackAlternativeColorMenuItems[trackAlternativeColorCount] = r;
-        trackAlternativeColors[trackAlternativeColorCount] = color;
-        trackAlternativeColorCount++;
+        addButtonGroupMenuEntry(inMenu, trackAlternativeColorButtonGroup, inName,
+                inColor == defaultAlternativeTrackColor, a);
     }   //addTrackAlternativeColorMenuEntry
 
-    protected void setOptionMenuTrackColor() {
-        for (int i = 0; i < trackColorCount; i++) {
-            trackColorMenuItems[i].setSelected(trackColors[i].equals(defaultTrackColor));
-        }
-
-        for (int i = 0; i < trackOccupiedColorCount; i++) {
-            trackOccupiedColorMenuItems[i].setSelected(trackOccupiedColors[i].equals(defaultOccupiedTrackColor));
-        }
-
-        for (int i = 0; i < trackAlternativeColorCount; i++) {
-            trackAlternativeColorMenuItems[i].setSelected(trackAlternativeColors[i].equals(defaultAlternativeTrackColor));
-        }
-    }   //setOptionMenuTrackColor
-
-    void addTextColorMenuEntry(JMenu menu, final String name, final Color color) {
+    private void addTextColorMenuEntry(JMenu inMenu, final String inName, final Color inColor) {
         ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            final Color desiredColor = color;
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!defaultTextColor.equals(desiredColor)) {
-                    defaultTextColor = desiredColor;
+                if (!defaultTextColor.equals(inColor)) {
+                    defaultTextColor = inColor;
                     setDirty(true);
                     repaint();
                 }
             }   //actionPerformed
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        textColorButtonGroup.add(r);
-
-        if (defaultTextColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        textColorMenuItems[textColorCount] = r;
-        textColors[textColorCount] = color;
-        textColorCount++;
+        addButtonGroupMenuEntry(inMenu, textColorButtonGroup, inName,
+                inColor == defaultTextColor, a);
     }   //addTextColorMenuEntry
 
-    void addTurnoutCircleColorMenuEntry(JMenu menu, final String name, final Color color) {
+    private void addTurnoutCircleColorMenuEntry(JMenu inMenu, final String inName, final Color inColor) {
         ActionListener a = new ActionListener() {
-            final Color desiredColor = color;
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                setTurnoutCircleColor(ColorUtil.colorToString(desiredColor));
+                setTurnoutCircleColor(ColorUtil.colorToString(inColor));
                 setDirty(true);
                 repaint();
             }   //actionPerformed
         };
-
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        turnoutCircleColorButtonGroup.add(r);
-
-        if (turnoutCircleColor.equals(color)) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        turnoutCircleColorMenuItems[turnoutCircleColorCount] = r;
-        turnoutCircleColors[turnoutCircleColorCount] = color;
-        turnoutCircleColorCount++;
+        addButtonGroupMenuEntry(inMenu, turnoutCircleColorButtonGroup, inName,
+                (inColor != null) && (inColor == turnoutCircleColor), a);
     }   //addTurnoutCircleColorMenuEntry
 
-    void addTurnoutCircleSizeMenuEntry(JMenu menu, final String name, final int size) {
+    private void addTurnoutCircleSizeMenuEntry(JMenu inMenu, final String inName, final int inSize) {
         ActionListener a = new ActionListener() {
-            final int desiredSize = size;
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (getTurnoutCircleSize() != desiredSize) {
-                    setTurnoutCircleSize(desiredSize);
+                if (getTurnoutCircleSize() != inSize) {
+                    setTurnoutCircleSize(inSize);
                     setDirty(true);
                     repaint();
                 }
             }   //actionPerformed
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-
-        r.addActionListener(a);
-        turnoutCircleSizeButtonGroup.add(r);
-
-        if (getTurnoutCircleSize() == size) {
-            r.setSelected(true);
-        } else {
-            r.setSelected(false);
-        }
-        menu.add(r);
-        turnoutCircleSizeMenuItems[turnoutCircleSizeCount] = r;
-        turnoutCircleSizes[turnoutCircleSizeCount] = size;
-        turnoutCircleSizeCount++;
+        JRadioButtonMenuItem r = addButtonGroupMenuEntry(inMenu,
+                turnoutCircleSizeButtonGroup, inName,
+                getTurnoutCircleSize() == inSize, a);
     }   //addTurnoutCircleSizeMenuEntry
 
-    protected void setOptionMenuTurnoutCircleColor() {
-        for (int i = 0; i < turnoutCircleColorCount; i++) {
-            turnoutCircleColorMenuItems[i].setSelected((turnoutCircleColors[i] != null) && turnoutCircleColors[i].equals(turnoutCircleColor));
-        }
-    }   //setOptionMenuTurnoutCircleColor
-
     protected void setOptionMenuTurnoutCircleSize() {
-        for (int i = 0; i < turnoutCircleSizeCount; i++) {
-            turnoutCircleSizeMenuItems[i].setSelected(turnoutCircleSizes[i] == getTurnoutCircleSize());
+        String tcs = "" + getTurnoutCircleSize();
+        Enumeration e = turnoutCircleSizeButtonGroup.getElements();
+        while (e.hasMoreElements()) {
+            AbstractButton button = (AbstractButton) e.nextElement();
+            String buttonName = button.getText();
+            button.setSelected(buttonName.equals(tcs));
         }
     }   //setOptionMenuTurnoutCircleSize
 
-    protected void setOptionMenuTextColor() {
-        for (int i = 0; i < textColorCount; i++) {
-            textColorMenuItems[i].setSelected(textColors[i].equals(defaultTextColor));
+    protected void setOptionMenuTurnoutCircleColor() {
+        setOptionMenuColor(turnoutCircleColorButtonGroup, turnoutCircleColor);
+        // if nothing is selected...
+        if (turnoutCircleSizeButtonGroup.getSelection() == null) {
+            // then select the 1st button
+            Enumeration e = turnoutCircleColorButtonGroup.getElements();
+            AbstractButton button = (AbstractButton) e.nextElement();
+            button.setSelected(true);
         }
+    }   //setOptionMenuTurnoutCircleColor
+
+    protected void setOptionMenuTextColor() {
+        setOptionMenuColor(textColorButtonGroup, defaultTextColor);
     }   //setOptionMenuTextColor
 
     protected void setOptionMenuBackgroundColor() {
-        for (int i = 0; i < backgroundColorCount; i++) {
-            backgroundColorMenuItems[i].setSelected(backgroundColors[i].equals(defaultBackgroundColor));
-        }
+        setOptionMenuColor(backgroundColorButtonGroup, defaultBackgroundColor);
     }   //setOptionMenuBackgroundColor
+
+    protected void setOptionMenuTrackColor() {
+        setOptionMenuColor(trackColorButtonGroup, defaultTrackColor);
+        setOptionMenuColor(trackOccupiedColorButtonGroup, defaultOccupiedTrackColor);
+        setOptionMenuColor(trackAlternativeColorButtonGroup, defaultAlternativeTrackColor);
+    }   //setOptionMenuTrackColor
+
+    private void setOptionMenuColor(ButtonGroup inButtonGroup, Color inColor) {
+        Enumeration e = inButtonGroup.getElements();
+        while (e.hasMoreElements()) {
+            AbstractButton button = (AbstractButton) e.nextElement();
+            String buttonName = button.getText().replaceAll("\\s+", "");
+            if (buttonName.equals("UseDefaultTrackColor")) {
+                button.setSelected(false);
+            } else {
+                // make 1st character lower case
+                buttonName = Character.toLowerCase(buttonName.charAt(0)) + buttonName.substring(1);
+                Color buttonColor = ColorUtil.stringToColor(buttonName);
+                button.setSelected(buttonColor == inColor);
+            }
+        }
+    }
 
     @Override
     public void setScroll(int state) {
@@ -6503,8 +6411,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     }   //rotateTurnout
 
-    private java.util.HashMap<LayoutTurnout, TurnoutSelection> _turnoutSelection = null;
-
     static class TurnoutSelection {
 
         boolean pointA = false;
@@ -6548,11 +6454,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
-    private ArrayList<PositionablePoint> _pointSelection = null;
-    private ArrayList<LevelXing> _xingSelection = null;
-    private ArrayList<LayoutSlip> _slipSelection = null;
-    private ArrayList<LayoutTurntable> _turntableSelection = null;
     private ArrayList<Positionable> _positionableSelection = null;
+    private ArrayList<PositionablePoint> _pointSelection = null;
+    private ArrayList<LayoutTurnout> _turnoutSelection = null;
+    private ArrayList<LayoutSlip> _slipSelection = null;
+    private ArrayList<LevelXing> _xingSelection = null;
+    private ArrayList<LayoutTurntable> _turntableSelection = null;
 
     private void highLightSelection(Graphics2D g) {
         java.awt.Stroke stroke = g.getStroke();
@@ -6563,16 +6470,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_positionableSelection != null) {
             for (Positionable c : _positionableSelection) {
                 g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight());
-            }
-        }
-
-        // loop over all turnouts selections
-        if (_turnoutSelection != null) {
-            for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout t = entry.getKey();
-                Rectangle2D r = t.getBounds();
-                r = MathUtil.centerRectangleOnPoint(r, t.getCoordsCenter());
-                g.draw(r);
             }
         }
 
@@ -6588,6 +6485,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         if (_pointSelection != null) {
             listOfLists.add(_pointSelection);
+        }
+        if (_turnoutSelection != null) {
+            listOfLists.add(_turnoutSelection);
         }
         for (List<LayoutTrack> l : listOfLists) {
             for (LayoutTrack lt : l) {
@@ -6606,14 +6506,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void createSelectionGroups() {
         List<Positionable> contents = getContents();
-        //set up selection rectangle
-        double selX = Math.min(selectionX, selectionX + selectionWidth);
-        double selY = Math.min(selectionY, selectionY + selectionHeight);
-        Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
-                Math.abs(selectionWidth), Math.abs(selectionHeight));
+        Rectangle2D selectionRect = getSelectionRect();
 
         for (Positionable c : contents) {
-            if (selectRect.contains(c.getLocation())) {
+            if (selectionRect.contains(c.getLocation())) {
                 if (_positionableSelection == null) {
                     _positionableSelection = new ArrayList<Positionable>();
                 }
@@ -6628,14 +6524,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurnout t : turnoutList) {
             Point2D center = t.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_turnoutSelection == null) {
-                    _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+                    _turnoutSelection = new ArrayList<LayoutTurnout>();
                 }
 
-                if (!_turnoutSelection.containsKey(t)) {
-                    _turnoutSelection.put(t, new TurnoutSelection());
+                if (!_turnoutSelection.contains(t)) {
+                    _turnoutSelection.add(t);
                 }
+
             }
         }   // for (LayoutTurnout t : turnoutList)
 
@@ -6643,7 +6540,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LevelXing x : xingList) {
             Point2D center = x.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_xingSelection == null) {
                     _xingSelection = new ArrayList<LevelXing>();
                 }
@@ -6658,7 +6555,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip sl : slipList) {
             Point2D center = sl.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_slipSelection == null) {
                     _slipSelection = new ArrayList<LayoutSlip>();
                 }
@@ -6673,7 +6570,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurntable x : turntableList) {
             Point2D center = x.getCoordsCenter();
 
-            if (selectRect.contains(center)) {
+            if (selectionRect.contains(center)) {
                 if (_turntableSelection == null) {
                     _turntableSelection = new ArrayList<LayoutTurntable>();
                 }
@@ -6688,7 +6585,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (PositionablePoint p : pointList) {
             Point2D coord = p.getCoordsCenter();
 
-            if (selectRect.contains(coord)) {
+            if (selectionRect.contains(coord)) {
                 if (_pointSelection == null) {
                     _pointSelection = new ArrayList<PositionablePoint>();
                 }
@@ -6782,8 +6679,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             boolean oldTurnout = noWarnLayoutTurnout;
             noWarnLayoutTurnout = true;
 
-            for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                removeLayoutTurnout(entry.getKey());
+            for (LayoutTurnout lt : _turnoutSelection) {
+                removeLayoutTurnout(lt);
             }
             noWarnLayoutTurnout = oldTurnout;
         }
@@ -6819,25 +6716,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void amendSelectionGroup(LayoutTurnout p, Point2D dLoc) {
         if (_turnoutSelection == null) {
-            _turnoutSelection = new HashMap<LayoutTurnout, TurnoutSelection>();
+            _turnoutSelection = new ArrayList<LayoutTurnout>();
         }
 
         boolean removed = false;
-
-        for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-            LayoutTurnout t = entry.getKey();
-
-            if (t == p) {
-                _turnoutSelection.remove(t);
+        for (LayoutTurnout lt : _turnoutSelection) {
+            if (lt == p) {
+                _turnoutSelection.remove(lt);
                 removed = true;
                 break;
             }
         }
 
         if (!removed) {
-            _turnoutSelection.put(p, new TurnoutSelection());
+            _turnoutSelection.add(p);
         }
-
         if (_turnoutSelection.isEmpty()) {
             _turnoutSelection = null;
         }
@@ -6941,7 +6834,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //amendSelectionGroup
 
     public void alignSelection(boolean alignX) {
-        int sum = 0;
+        Point2D minPoint = MathUtil.infinityPoint2D;
+        Point2D maxPoint = MathUtil.zeroPoint2D;
+        Point2D sumPoint = MathUtil.zeroPoint2D;
         int cnt = 0;
 
         if (_positionableSelection != null) {
@@ -6949,30 +6844,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!getFlag(OPTION_POSITION, comp.isPositionable())) {
                     continue;
                 }
-
-                if (alignX) {
-                    sum += comp.getX();
-                } else {
-                    sum += comp.getY();
-                }
-                cnt++;
-            }
-        }
-
-        if (_turnoutSelection != null) {
-            for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout comp = entry.getKey();
-
-                if (alignX) {
-                    sum += comp.getCoordsCenter().getX();
-                } else {
-                    sum += comp.getCoordsCenter().getY();
-                }
+                Point2D p = MathUtil.PointToPoint2D(comp.getLocation());
+                minPoint = MathUtil.min(minPoint, p);
+                maxPoint = MathUtil.max(maxPoint, p);
+                sumPoint = MathUtil.add(sumPoint, p);
                 cnt++;
             }
         }
 
         List<List> listOfLists = new ArrayList<List>();
+
+        if (_turnoutSelection != null) {
+            listOfLists.add(_turnoutSelection);
+        }
 
         if (_pointSelection != null) {
             listOfLists.add(_pointSelection);
@@ -6992,16 +6876,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         for (List<LayoutTrack> l : listOfLists) {
             for (LayoutTrack lt : l) {
-                if (alignX) {
-                    sum += lt.getCoordsCenter().getX();
-                } else {
-                    sum += lt.getCoordsCenter().getY();
-                }
+                Point2D p = lt.getCoordsCenter();
+                minPoint = MathUtil.min(minPoint, p);
+                maxPoint = MathUtil.max(maxPoint, p);
+                sumPoint = MathUtil.add(sumPoint, p);
                 cnt++;
             }
         }
 
-        int ave = Math.round((float) sum / cnt);
+        Point2D avePoint = MathUtil.divide(sumPoint, cnt);
+        int aveX = (int) avePoint.getX();
+        int aveY = (int) avePoint.getY();
 
         if (_positionableSelection != null) {
             for (Positionable comp : _positionableSelection) {
@@ -7010,21 +6895,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
 
                 if (alignX) {
-                    comp.setLocation(ave, comp.getY());
+                    comp.setLocation(aveX, comp.getY());
                 } else {
-                    comp.setLocation(comp.getX(), ave);
-                }
-            }
-        }
-
-        if (_turnoutSelection != null) {
-            for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout comp = entry.getKey();
-
-                if (alignX) {
-                    comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
-                } else {
-                    comp.setCoordsCenter(new Point2D.Double(comp.getCoordsCenter().getX(), ave));
+                    comp.setLocation(comp.getX(), aveY);
                 }
             }
         }
@@ -7032,9 +6905,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (List<LayoutTrack> l : listOfLists) {
             for (LayoutTrack lt : l) {
                 if (alignX) {
-                    lt.setCoordsCenter(new Point2D.Double(ave, lt.getCoordsCenter().getY()));
+                    lt.setCoordsCenter(new Point2D.Double(aveX, lt.getCoordsCenter().getY()));
                 } else {
-                    lt.setCoordsCenter(new Point2D.Double(lt.getCoordsCenter().getX(), ave));
+                    lt.setCoordsCenter(new Point2D.Double(lt.getCoordsCenter().getX(), aveY));
                 }
             }
         }
@@ -7094,33 +6967,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         double deltaX = returnDeltaPositionX(e);
         double deltaY = returnDeltaPositionY(e);
+
         if ((deltaX != 0) || (deltaY != 0)) {
+            Point2D delta = new Point2D.Double(deltaX, deltaY);
             if (_positionableSelection != null) {
                 for (Positionable c : _positionableSelection) {
-                    int xNew;
-                    int yNew;
-
+                    Point2D newPoint = c.getLocation();
                     if ((c instanceof MemoryIcon) && (c.getPopupUtility().getFixedWidth() == 0)) {
                         MemoryIcon pm = (MemoryIcon) c;
-                        xNew = (int) Math.max(0.0, pm.getOriginalX() + deltaX);
-                        yNew = (int) Math.max(0.0, pm.getOriginalY() + deltaY);
-                    } else {
-                        Point2D upperLeft = c.getLocation();
-                        xNew = (int) Math.max(0.0, upperLeft.getX() + deltaX);
-                        yNew = (int) Math.max(0.0, upperLeft.getY() + deltaY);
+                        newPoint = new Point2D.Double(pm.getOriginalX(), pm.getOriginalY());
                     }
-                    c.setLocation(xNew, yNew);
-                }
-            }
-
-            // loop over all turnouts
-            if (_turnoutSelection != null) {
-                for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                    LayoutTurnout t = entry.getKey();
-                    Point2D coord = t.getCoordsCenter();
-                    t.setCoordsCenter(new Point2D.Double(
-                            Math.max(0.0, coord.getX() + deltaX),
-                            Math.max(0.0, coord.getY() + deltaY)));
+                    newPoint = MathUtil.add(newPoint, delta);
+                    newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
+                    c.setLocation(MathUtil.PointForPoint2D(newPoint));
                 }
             }
 
@@ -7128,6 +6987,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (_pointSelection != null) {
                 listOfLists.add(_pointSelection);
+            }
+
+            if (_turnoutSelection != null) {
+                listOfLists.add(_turnoutSelection);
             }
 
             if (_xingSelection != null) {
@@ -7144,10 +7007,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             for (List<LayoutTrack> l : listOfLists) {
                 for (LayoutTrack lt : l) {
-                    Point2D coord = lt.getCoordsCenter();
-                    lt.setCoordsCenter(new Point2D.Double(
-                            Math.max(0.0, coord.getX() + deltaX),
-                            Math.max(0.0, coord.getY() + deltaY)));
+                    Point2D newPoint = MathUtil.add(lt.getCoordsCenter(), delta);
+                    newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
+                    lt.setCoordsCenter(newPoint);
                 }
             }
 
@@ -7290,8 +7152,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     yLabel.setText(Integer.toString(yLoc));
                 }
 
-                if ((_pointSelection != null) || (_turntableSelection != null) || (_xingSelection != null)
-                        || (_turnoutSelection != null) || (_positionableSelection != null)) {
+                if ((_pointSelection != null) || (_turntableSelection != null)
+                        || (_xingSelection != null)
+                        || (_turnoutSelection != null)
+                        || (_positionableSelection != null)) {
                     int offsetx = xLoc - _lastX;
                     int offsety = yLoc - _lastY;
 
@@ -7317,23 +7181,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                     }
 
-                    if (_turnoutSelection != null) {
-                        for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                            LayoutTurnout t = entry.getKey();
-                            Point2D center = t.getCoordsCenter();
-                            xNew = (int) center.getX() + offsetx;
-                            yNew = (int) center.getY() + offsety;
-                            //don't allow negative placement, object could become unreachable
-                            xNew = Math.max(xNew, 0);
-                            yNew = Math.max(yNew, 0);
-                            t.setCoordsCenter(new Point2D.Double(xNew, yNew));
-                        }
-                    }
-
                     List<List> listOfLists = new ArrayList<List>();
 
                     if (_pointSelection != null) {
                         listOfLists.add(_pointSelection);
+                    }
+
+                    if (_turnoutSelection != null) {
+                        listOfLists.add(_turnoutSelection);
                     }
 
                     if (_xingSelection != null) {
@@ -7974,7 +7829,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      *
      * @param inTurnoutName the (system or user) name of the turnout
      * @param inOpenPane    the pane over which to show dialogs (null to
-     *                      supress)
+     *                      suppress dialogs)
      * @return true if valid
      */
     public boolean validatePhysicalTurnout(String inTurnoutName, Component inOpenPane) {
@@ -9854,6 +9709,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setTurnoutCircleColor(String newColor) {
+        if (newColor.equals("track")) {
+            newColor = getDefaultTrackColor();
+        }
         turnoutCircleColor = ColorUtil.stringToColor(newColor);
         setOptionMenuTurnoutCircleColor();
     }
@@ -10403,16 +10261,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }   // for (PositionablePoint p : pointList)
     }   //drawPoints
 
+    private Rectangle2D getSelectionRect() {
+        double selX = Math.min(selectionX, selectionX + selectionWidth);
+        double selY = Math.min(selectionY, selectionY + selectionHeight);
+        Rectangle2D result = new Rectangle2D.Double(selX, selY,
+                Math.abs(selectionWidth), Math.abs(selectionHeight));
+        return result;
+    }
+
     private void drawSelectionRect(Graphics2D g2) {
         if (selectionActive && (selectionWidth != 0.0) && (selectionHeight != 0.0)) {
-            //set up selection rectangle
-            double selX = Math.min(selectionX, selectionX + selectionWidth);
-            double selY = Math.min(selectionY, selectionY + selectionHeight);
-            Rectangle2D selectRect = new Rectangle2D.Double(selX, selY,
-                    Math.abs(selectionWidth), Math.abs(selectionHeight));
             g2.setColor(defaultTrackColor);
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.draw(selectRect);
+            g2.draw(getSelectionRect());
         }
     }   //drawSelectionRect
 

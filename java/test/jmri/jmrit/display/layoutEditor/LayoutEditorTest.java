@@ -468,8 +468,8 @@ public class LayoutEditorTest {
     public void testGetDrawGrid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
-        // default to false
-        Assert.assertFalse("getDrawGrid", e.getDrawGrid());
+        // default to true
+        Assert.assertTrue("getDrawGrid", e.getDrawGrid());
         e.dispose();
     }
 
