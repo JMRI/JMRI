@@ -26,7 +26,7 @@ import javax.swing.JProgressBar;
  * @author   Mark Underwood Copyright (C) 2011
  * 
  */
-class BusyDialog extends JDialog {
+public class BusyDialog extends JDialog {
 
     JFrame frame;
     JProgressBar pbar;
