@@ -16,6 +16,7 @@ import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.netbeans.jemmy.FrameWaiter;
 
 /**
@@ -25,7 +26,7 @@ import org.netbeans.jemmy.FrameWaiter;
  * access to create and dispose of window frames. i.e. those calls that simulate
  * an actionPerformed event.
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
 public class LogixTableActionTest {
 
@@ -34,6 +35,7 @@ public class LogixTableActionTest {
 
     private LogixTableAction _logixTable;
 
+    @Test
     public void testCreateLogix() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // cannot use Assume in a TestCase
@@ -104,7 +106,7 @@ public class LogixTableActionTest {
 
     @After
     public void tearDown() throws Exception {
-        // now close logix actin window
+        // now close logix action window
         _logixTable.f.dispose();
 
         JUnitUtil.resetInstanceManager();
