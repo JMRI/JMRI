@@ -13196,7 +13196,7 @@ public class LayoutEditorTools {
 
     protected Boolean addLayoutTurnoutSignalHeadInfoToMenu(String inTurnoutNameA, String inTurnoutNameB, JMenu inMenu) {
         Boolean result = false; // assume failure (pessimist!)
-        // just so we won't have to test for null later…
+        // just so we won't have to test for null later
         inTurnoutNameA = (inTurnoutNameA == null) ? "" : inTurnoutNameA;
         inTurnoutNameB = (inTurnoutNameB == null) ? "" : inTurnoutNameB;
         // lookup turnouts

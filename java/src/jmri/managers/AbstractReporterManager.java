@@ -162,6 +162,17 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
             return Integer.toString(iName);
         }
     }
+
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
+
 }
 
