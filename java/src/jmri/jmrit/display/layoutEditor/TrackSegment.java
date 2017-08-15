@@ -353,7 +353,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     public void scaleCoords(float xFactor, float yFactor) {
-        // Nothing to do here… move along…
+        // Nothing to do here, move along
     }
 
     /**
@@ -363,7 +363,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     public void translateCoords(float xFactor, float yFactor) {
-        // Nothing to do here… move along…
+        // Nothing to do here, move along
     }
 
     // initialization instance variables (used when loading a LayoutEditor)

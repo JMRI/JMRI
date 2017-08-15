@@ -58,12 +58,4 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         return entryToolTip;
     }
 
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // NCE example 2044, see tooltip
-    }
-
 }
