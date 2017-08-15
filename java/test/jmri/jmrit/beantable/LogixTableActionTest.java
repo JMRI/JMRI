@@ -107,7 +107,9 @@ public class LogixTableActionTest {
     @After
     public void tearDown() throws Exception {
         // now close logix action window
-        _logixTable.f.dispose();
+        if (_logixTable.f != null) {
+            _logixTable.f.dispose();
+        }
 
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
