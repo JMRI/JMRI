@@ -145,6 +145,26 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     /**
+     * Validate system name format. Locate a system specfic SensorManager based on
+     * a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) throws jmri.JmriException {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            try {
+                return ((SensorManager) getMgr(i)).validSystemNameFormat(systemName);
+            } catch (jmri.JmriException ex) {
+                throw ex;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
@@ -202,4 +222,5 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
+
 }

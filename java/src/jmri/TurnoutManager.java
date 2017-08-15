@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -264,6 +265,15 @@ public interface TurnoutManager extends Manager<Turnout> {
     public String getDefaultThrownSpeed();
 
     public String getDefaultClosedSpeed();
+
+    /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @param systemName the system name
+     * @return true if formatted correctly; false otherwise
+     */
+    @CheckReturnValue
+    public boolean validSystemNameFormat(@Nonnull String systemName) throws jmri.JmriException;
 
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.

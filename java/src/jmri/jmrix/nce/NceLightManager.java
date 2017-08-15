@@ -65,7 +65,7 @@ public class NceLightManager extends AbstractLightManager {
             log.error("illegal character in header field of nce light system name: " + systemName);
             return (0);
         }
-        // name must be in the NLnnnnn format
+        // name must be in the NLnnnnn format (N is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(

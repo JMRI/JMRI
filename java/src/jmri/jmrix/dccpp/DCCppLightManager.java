@@ -64,7 +64,7 @@ public class DCCppLightManager extends AbstractLightManager {
         systemName, getSystemPrefix(), typeLetter());
             return (0);
         }
-        // name must be in the DCCppLnnnnn format
+        // name must be in the DCCppLnnnnn format (DCCPP is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(

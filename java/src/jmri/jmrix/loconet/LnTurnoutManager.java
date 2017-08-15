@@ -185,6 +185,46 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0);
+    }
+
+    /**
+     * Get the bit address from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "T"))) {
+            // here if an illegal loconet turnout system name
+            log.error("illegal character in header field of loconet turnout system name: " + systemName);
+            return (0);
+        }
+        // name must be in the LTnnnnn format (L is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.error("illegal character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.error("invalid loconet turnout system name: " + systemName);
+            return (0);
+        } else if (num > 4096) {
+            log.error("bit number out of range in loconet turnout system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override

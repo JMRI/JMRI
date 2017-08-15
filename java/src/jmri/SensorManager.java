@@ -160,6 +160,15 @@ public interface SensorManager extends Manager<Sensor> {
     public boolean isPullResistanceConfigurable();
 
     /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @param systemName the system name
+     * @return true if formatted correctly; false otherwise
+     */
+    @CheckReturnValue
+    public boolean validSystemNameFormat(@Nonnull String systemName) throws jmri.JmriException;
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     public String getEntryToolTip();
