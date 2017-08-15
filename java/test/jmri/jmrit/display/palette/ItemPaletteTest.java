@@ -12,11 +12,14 @@ import org.junit.Test;
  */
 public class ItemPaletteTest {
 
+    // allows creation in lamba expressions
+    private ItemPalette ip = null;
+
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ItemPalette ip = new ItemPalette("Test ItemPalette", null);
         jmri.util.ThreadingUtil.runOnGUI(() -> {
+            ip = new ItemPalette("Test ItemPalette", null);
             ip.pack();
             ip.setVisible(true);
         });
@@ -31,6 +34,7 @@ public class ItemPaletteTest {
 
     @After
     public void tearDown() {
+        ip = null;
         apps.tests.Log4JFixture.tearDown();
     }
 

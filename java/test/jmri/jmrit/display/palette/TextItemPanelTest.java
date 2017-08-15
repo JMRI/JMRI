@@ -14,12 +14,15 @@ import org.junit.Test;
  */
 public class TextItemPanelTest {
 
+    // allow creation in lambda expression
+    private ItemPalette ip = null;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditorScaffold es = new EditorScaffold();
-        ItemPalette ip = new ItemPalette("Test ItemPalette", null);
         jmri.util.ThreadingUtil.runOnGUI(() -> {
+            ip = new ItemPalette("Test ItemPalette", null);
             ip.pack();
         });
         TextItemPanel t = new TextItemPanel(ip, "test", es);
@@ -36,6 +39,7 @@ public class TextItemPanelTest {
 
     @After
     public void tearDown() {
+        ip = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
