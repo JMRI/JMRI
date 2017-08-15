@@ -50,6 +50,7 @@ import org.junit.runners.Suite;
     NotchSoundTest.class,
     NotchTransitionTest.class,
     VSDFileTest.class,
+    VSDecoderPaneTest.class,
 })
 
 /**
