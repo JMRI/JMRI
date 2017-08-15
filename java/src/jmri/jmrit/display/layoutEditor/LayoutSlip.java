@@ -705,7 +705,7 @@ public class LayoutSlip extends LayoutTurnout {
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
 
-        if (tBlockName.length() > 0) {
+        if (!tBlockName.isEmpty()) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
@@ -715,7 +715,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        if (tBlockBName.length() > 0) {
+        if (!tBlockBName.isEmpty()) {
             blockB = p.getLayoutBlock(tBlockBName);
             if (blockB != null) {
                 blockBName = tBlockBName;
@@ -727,7 +727,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        if (tBlockCName.length() > 0) {
+        if (!tBlockCName.isEmpty()) {
             blockC = p.getLayoutBlock(tBlockCName);
             if (blockC != null) {
                 blockCName = tBlockCName;
@@ -739,7 +739,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        if (tBlockDName.length() > 0) {
+        if (!tBlockDName.isEmpty()) {
             blockD = p.getLayoutBlock(tBlockDName);
             if (blockD != null) {
                 blockDName = tBlockDName;
@@ -847,7 +847,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 error = false;
                                 newAngle = JOptionPane.showInputDialog(layoutEditor,
                                         rb.getString("EnterRotation") + " :");
-                                if (newAngle.length() < 1) {
+                                if (newAngle.isEmpty()) {
                                     return;  // cancelled
                                 }
                                 double rot = 0.0;

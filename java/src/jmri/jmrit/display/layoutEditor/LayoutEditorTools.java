@@ -1229,47 +1229,47 @@ public class LayoutEditorTools {
         String sysName = head.getSystemName();
         String uName = head.getUserName();
         String name = lTurnout.getSignalA1Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A1;
         }
         name = lTurnout.getSignalA2Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A2;
         }
         name = lTurnout.getSignalA3Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A3;
         }
         name = lTurnout.getSignalB1Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return B1;
         }
         name = lTurnout.getSignalB2Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return B2;
         }
         name = lTurnout.getSignalC1Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return C1;
         }
         name = lTurnout.getSignalC2Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return C2;
         }
         name = lTurnout.getSignalD1Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return D1;
         }
         name = lTurnout.getSignalD2Name();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return D2;
         }
@@ -1468,7 +1468,7 @@ public class LayoutEditorTools {
      * assignment to any turnout, positionable point, or level crossing
      */
     public void removeSignalHeadFromPanel(String signalName) {
-        if ((signalName == null) || (signalName.length() < 1)) {
+        if ((signalName == null) || signalName.isEmpty()) {
             return;
         }
         SignalHead head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
@@ -4074,7 +4074,7 @@ public class LayoutEditorTools {
                 if (xingBlockA == null) {
                     return false;
                 }
-                if (NamedBean.normalizeUserName(blockCComboBox.getDisplayName()).length() > 0) {
+                if (!NamedBean.normalizeUserName(blockCComboBox.getDisplayName()).isEmpty()) {
                     xingBlockC = getBlockFromEntry(blockCComboBox);
                     if (xingBlockC == null) {
                         return false;
@@ -8884,22 +8884,22 @@ public class LayoutEditorTools {
         String sysName = mast.getSystemName();
         String uName = mast.getUserName();
         String name = lTurnout.getSignalAMastName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A1;
         }
         name = lTurnout.getSignalBMastName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A2;
         }
         name = lTurnout.getSignalCMastName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A3;
         }
         name = lTurnout.getSignalDMastName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return B1;
         }
@@ -9956,7 +9956,7 @@ public class LayoutEditorTools {
                 }
 
                 String theBlockName = NamedBean.normalizeUserName(xingBlockCComboBox.getDisplayName());
-                if (theBlockName.length() > 0) {
+                if (!theBlockName.isEmpty()) {
                     xingBlockC = getBlockFromEntry(xingBlockCComboBox);
                     if (xingBlockC == null) {
                         return false;
@@ -10426,22 +10426,22 @@ public class LayoutEditorTools {
         String sysName = sensor.getSystemName();
         String uName = sensor.getUserName();
         String name = lTurnout.getSensorAName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A1;
         }
         name = lTurnout.getSensorBName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A2;
         }
         name = lTurnout.getSensorCName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return A3;
         }
         name = lTurnout.getSensorDName();
-        if ((name != null) && (name.length() > 0) && ((name.equals(uName))
+        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
                 || (name.equals(sysName)))) {
             return B1;
         }
@@ -10975,7 +10975,7 @@ public class LayoutEditorTools {
                     return false;
                 }
                 String theBlockName = NamedBean.normalizeUserName(xingSensorsBlockCComboBox.getDisplayName());
-                if (theBlockName.length() > 0) {
+                if (!theBlockName.isEmpty()) {
                     xingSensorBlockC = getBlockFromEntry(xingSensorsBlockCComboBox);
                     if (xingSensorBlockC == null) {
                         return false;
@@ -13208,10 +13208,10 @@ public class LayoutEditorTools {
             if (to != null) {
                 String uname = to.getUserName();
                 String sname = to.getSystemName();
-                if ((inTurnoutNameA.length() > 0) && (sname.equals(inTurnoutNameA.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
+                if (!inTurnoutNameA.isEmpty() && (sname.equals(inTurnoutNameA.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameA)))) {
                     layoutTurnout = layoutTurnout1 = layoutTurnoutA = lt;
                 }
-                if ((inTurnoutNameB.length() > 0) && (sname.equals(inTurnoutNameB.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
+                if (!inTurnoutNameB.isEmpty() && (sname.equals(inTurnoutNameB.toUpperCase()) || ((uname != null) && uname.equals(inTurnoutNameB)))) {
                     layoutTurnout2 = layoutTurnoutB = lt;
                 }
             }
@@ -13393,13 +13393,13 @@ public class LayoutEditorTools {
     }
 
     private void addInfoToMenu(String title, String info, JMenu menu) {
-        if ((title != null) && (title.length() > 0) && (info != null) && (info.length() > 0)) {
+        if ((title != null) && !title.isEmpty() && (info != null) && !info.isEmpty()) {
             addInfoToMenu(title + ": " + info, menu);
         }
     }
 
     private void addInfoToMenu(String info, JMenu menu) {
-        if ((info != null) && (info.length() > 0)) {
+        if ((info != null) && !info.isEmpty()) {
             JMenuItem jmi = new JMenuItem(info);
             jmi.setEnabled(false);
             menu.add(jmi);
