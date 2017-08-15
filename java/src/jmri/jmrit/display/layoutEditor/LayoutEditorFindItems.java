@@ -116,8 +116,7 @@ public class LayoutEditorFindItems {
             }
         } else if (bean instanceof SignalHead) {
             for (PositionablePoint p : layoutEditor.pointList) {
-                if (p.getWestBoundSignal().equals(bean.getSystemName())
-                        || p.getWestBoundSignal().equals(bean.getSystemName())) {
+                if (p.getWestBoundSignal().equals(bean.getSystemName())) {
                     return p;
                 }
             }
@@ -140,8 +139,7 @@ public class LayoutEditorFindItems {
             }
         } else if (bean instanceof SignalHead) {
             for (PositionablePoint p : layoutEditor.pointList) {
-                if (p.getEastBoundSignal().equals(bean.getSystemName())
-                        || p.getEastBoundSignal().equals(bean.getSystemName())) {
+                if (p.getEastBoundSignal().equals(bean.getSystemName())) {
                     return p;
                 }
             }
@@ -177,7 +175,6 @@ public class LayoutEditorFindItems {
             for (PositionablePoint p : layoutEditor.pointList) {
                 if (p.getEastBoundSignal().equals(bean.getSystemName())
                         || p.getWestBoundSignal().equals(bean.getSystemName())) {
-
                     return p;
                 }
                 if (bean.getUserName() != null && (p.getEastBoundSignal().equals(bean.getSystemName())
