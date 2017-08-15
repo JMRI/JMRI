@@ -28,6 +28,7 @@ public class MonitoringLabelTest {
         p.propertyChange(e);
 
         Assert.assertEquals("check content", "new content", p.getText());
+        f.dispose();
     }
 
     // The minimal setup for log4J
