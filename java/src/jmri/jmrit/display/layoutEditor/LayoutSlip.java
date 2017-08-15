@@ -1001,7 +1001,7 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
             panel1.add(turnoutNameLabel);
             turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            layoutEditor.setupComboBox(turnoutAComboBox, false, true);
+            LayoutEditor.setupComboBox(turnoutAComboBox, false, true);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
 
@@ -1012,7 +1012,7 @@ public class LayoutSlip extends LayoutTurnout {
 
             turnoutBComboBox = new JmriBeanComboBox(
                     InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            layoutEditor.setupComboBox(turnoutBComboBox, false, true);
+            LayoutEditor.setupComboBox(turnoutBComboBox, false, true);
             panel1a.add(turnoutBComboBox);
 
             contentPane.add(panel1a);
@@ -1056,7 +1056,7 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
             panel3.add(blockNameComboBox);
-            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
 
             contentPane.add(panel3);
