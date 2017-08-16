@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class VSDFileTest {
 
     @Test(expected=java.io.FileNotFoundException.class)
-    public void testCTor() throws java.util.zip.ZipException,java.io.IOException {
+    public void testCTorFail() throws java.util.zip.ZipException,java.io.IOException {
         VSDFile t = new VSDFile("test");
         Assert.assertNotNull("exists",t);
     }
