@@ -244,7 +244,7 @@ public class LayoutEditorAuxTools {
         // connected by edge connectors.
         boolean noDuplicate = true;
         String connString = c.toString();
-        if (connString != null && connString.length() > 0) {
+        if (connString != null && !connString.isEmpty()) {
             for (LayoutConnectivity dup : cList) {
                 if (connString.equals(dup.toString())) {
                     noDuplicate = false;
