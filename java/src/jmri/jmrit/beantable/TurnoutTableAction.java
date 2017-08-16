@@ -1746,7 +1746,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         range.setEnabled(false);
         log.debug("T Add box disabled");
         range.setSelected(false);
-        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field
+        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, use default tooltip
             connectionChoice = "TBD";
@@ -1855,7 +1855,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     public class CheckedTextField extends JTextField {
 
         CheckedTextField fld;
-        boolean allow0Length = false;
+        boolean allow0Length = false; // for Add new bean item, a value that is zero-length is considered invalid.
         private MyVerifier verifier; // internal mechanism used for verifying field data before focus is lost
 
         /**
@@ -1867,7 +1867,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             super("", len);
             fld = this;
 
-            // set background color for invalid field data
+            // configure InputVerifier
             verifier = new MyVerifier();
             fld = this;
             fld.setInputVerifier(verifier);
@@ -1887,9 +1887,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         /**
          * Validate the field information. Does not make any GUI changes.
-         * A field value that is zero-length is considered invalid.
          *
-         * @return true if current field information is valid; otherwise false
+         * @return 'true' if current field information is valid according to the system manager; otherwise 'false'
          */
         @Override
         public boolean isValid() {
@@ -1921,7 +1920,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
             // set default background color for invalid field data
-            Color mark = Color.red;
+            Color mark = Color.orange;
 
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {

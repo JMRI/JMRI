@@ -118,12 +118,24 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30
-     *
+     * turnouts in numerical order eg. 10 to 30
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
+    }
+
+    /**
+     * Validate system name format.
+     *
+     * @since 2.9.3
+     * @see jmri.jmrit.beantable.ReporterTableAction.CheckedTextField
+     * @param systemName proposed complete system name incl. prefix
+     * @return always 'true' to let undocumented connection system managers pass entry validation.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
     }
 
     @Override

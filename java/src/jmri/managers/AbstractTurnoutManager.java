@@ -241,7 +241,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /**
      * Validate system name format.
      *
-     * @return true to let undocumented connection system managers pass entry validation.
+     * @since 2.9.3
+     * @see jmri.jmrit.beantable.TurnoutTableAction.CheckedTextField
+     * @param systemName proposed complete system name incl. prefix
+     * @return always 'true' to let undocumented connection system managers pass entry validation.
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {

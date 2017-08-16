@@ -59,6 +59,11 @@ public class InternalSensorManager extends AbstractSensorManager {
     protected String prefix = "I";
 
     @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
@@ -97,11 +102,6 @@ public class InternalSensorManager extends AbstractSensorManager {
     @Override
     public String getSystemPrefix() {
         return prefix;
-    }
-
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class);

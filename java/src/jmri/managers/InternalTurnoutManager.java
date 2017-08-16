@@ -41,17 +41,17 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
     /**
      * Turnout operation support. Internal turnouts don't need retries.
      */
     @Override
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
-    }
-
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
     }
 
 }
