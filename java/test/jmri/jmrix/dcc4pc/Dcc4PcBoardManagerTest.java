@@ -16,7 +16,15 @@ public class Dcc4PcBoardManagerTest {
 
     @Test
     public void testCTor() {
-        Dcc4PcBoardManager t = new Dcc4PcBoardManager();
+        Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
+          @Override
+          public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
+          }
+        };
+        Dcc4PcSystemConnectionMemo memo = new Dcc4PcSystemConnectionMemo(tc);
+
+        Dcc4PcSensorManager tm = new Dcc4PcSensorManager(tc,memo);
+        Dcc4PcBoardManager t = new Dcc4PcBoardManager(tc,tm);
         Assert.assertNotNull("exists",t);
     }
 
