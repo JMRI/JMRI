@@ -20,6 +20,15 @@ public class VSDFileTest {
         Assert.assertNotNull("exists",t);
     }
 
+    String filename = "java/test/jmri/jmrit/vsdecoder/steam1min8.zip";
+
+    @Test
+    public void testCTor() throws java.util.zip.ZipException,java.io.IOException {
+        VSDFile t = new VSDFile(filename);
+        Assert.assertNotNull("exists",t);
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
