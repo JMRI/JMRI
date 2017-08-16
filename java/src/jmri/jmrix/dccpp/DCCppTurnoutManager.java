@@ -120,14 +120,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return entryToolTip;
     }
 
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,5}$"; // examples 456, see tooltip
-    }
-
     @Deprecated
     static public DCCppTurnoutManager instance() {
         //if (_instance == null) _instance = new DCCppTurnoutManager();

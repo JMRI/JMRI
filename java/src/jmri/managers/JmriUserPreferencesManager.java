@@ -1095,7 +1095,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 String reference = window.getAttributeValue("class");
                 log.debug("Reading window details for {}", reference);
                 try {
-                    if (window.getAttribute("locX") != null && window.getAttribute("locX") != null) {
+                    if (window.getAttribute("locX") != null && window.getAttribute("locY") != null) {
                         double x = window.getAttribute("locX").getDoubleValue();
                         double y = window.getAttribute("locY").getDoubleValue();
                         this.setWindowLocation(reference, new java.awt.Point((int) x, (int) y));

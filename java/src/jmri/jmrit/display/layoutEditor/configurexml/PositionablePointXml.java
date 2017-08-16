@@ -47,24 +47,24 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (p.getConnect2() != null) {
             element.setAttribute("connect2name", p.getConnect2().getID());
         }
-        if (p.getEastBoundSignal().length() > 0) {
+        if (!p.getEastBoundSignal().isEmpty()) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
         }
-        if (p.getWestBoundSignal().length() > 0) {
+        if (!p.getWestBoundSignal().isEmpty()) {
             element.setAttribute("westboundsignal", p.getWestBoundSignal());
         }
 
-        if (p.getEastBoundSignalMastName().length() > 0) {
+        if (!p.getEastBoundSignalMastName().isEmpty()) {
             element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMastName());
         }
-        if (p.getWestBoundSignalMastName().length() > 0) {
+        if (!p.getWestBoundSignalMastName().isEmpty()) {
             element.setAttribute("westboundsignalmast", p.getWestBoundSignalMastName());
         }
 
-        if (p.getEastBoundSensorName().length() > 0) {
+        if (!p.getEastBoundSensorName().isEmpty()) {
             element.setAttribute("eastboundsensor", p.getEastBoundSensorName());
         }
-        if (p.getWestBoundSensorName().length() > 0) {
+        if (!p.getWestBoundSensorName().isEmpty()) {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {

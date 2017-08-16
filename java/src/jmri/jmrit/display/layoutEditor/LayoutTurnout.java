@@ -2062,7 +2062,7 @@ public class LayoutTurnout extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (tBlockName.length() > 0) {
+        if (!tBlockName.isEmpty()) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
@@ -2071,7 +2071,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockName + "' in layoutturnout " + ident);
             }
         }
-        if (tBlockBName.length() > 0) {
+        if (!tBlockBName.isEmpty()) {
             blockB = p.getLayoutBlock(tBlockBName);
             if (blockB != null) {
                 blockBName = tBlockBName;
@@ -2082,7 +2082,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + ident);
             }
         }
-        if (tBlockCName.length() > 0) {
+        if (!tBlockCName.isEmpty()) {
             blockC = p.getLayoutBlock(tBlockCName);
             if (blockC != null) {
                 blockCName = tBlockCName;
@@ -2093,7 +2093,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + ident);
             }
         }
-        if (tBlockDName.length() > 0) {
+        if (!tBlockDName.isEmpty()) {
             blockD = p.getLayoutBlock(tBlockDName);
             if (blockD != null) {
                 blockDName = tBlockDName;
@@ -2106,7 +2106,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         //Do the second one first then the activate is only called the once
-        if (tSecondTurnoutName.length() > 0) {
+        if (!tSecondTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
             if (turnout != null) {
                 secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
@@ -2117,7 +2117,7 @@ public class LayoutTurnout extends LayoutTrack {
                 secondNamedTurnout = null;
             }
         }
-        if (tTurnoutName.length() > 0) {
+        if (!tTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tTurnoutName);
             if (turnout != null) {
                 namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tTurnoutName, turnout);
@@ -2230,7 +2230,7 @@ public class LayoutTurnout extends LayoutTrack {
                         error = false;
                         newAngle = JOptionPane.showInputDialog(layoutEditor,
                                 rb.getString("EnterRotation") + " :");
-                        if (newAngle.length() < 1) {
+                        if (newAngle.isEmpty()) {
                             return;  // cancelled
                         }
                         double rot = 0.0;

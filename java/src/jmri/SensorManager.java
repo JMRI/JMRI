@@ -164,9 +164,4 @@ public interface SensorManager extends Manager<Sensor> {
      */
     public String getEntryToolTip();
 
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    public String getEntryRegex();
-
 }

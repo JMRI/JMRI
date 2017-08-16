@@ -353,7 +353,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     public void scaleCoords(float xFactor, float yFactor) {
-        // Nothing to do here… move along…
+        // Nothing to do here, move along
     }
 
     /**
@@ -363,7 +363,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     public void translateCoords(float xFactor, float yFactor) {
-        // Nothing to do here… move along…
+        // Nothing to do here, move along
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
@@ -380,7 +380,7 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
     public void setObjects(LayoutEditor p) {
-        if (tBlockName.length() > 0) {
+        if (!tBlockName.isEmpty()) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;

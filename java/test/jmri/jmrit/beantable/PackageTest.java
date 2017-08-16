@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
         suite.addTest(new JUnit4TestAdapter(BlockTableActionTest.class));
+        suite.addTest(LightTableWindowTest.suite());
         suite.addTest(new JUnit4TestAdapter(LogixTableActionTest.class));
         suite.addTest(LRouteTableActionTest.suite());
         suite.addTest(OBlockTableActionTest.suite());
