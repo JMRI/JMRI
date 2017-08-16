@@ -686,7 +686,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockAC() {
-        if ((blockAC == null) && (blockNameAC.length() > 0)) {
+        if ((blockAC == null) && !blockNameAC.isEmpty()) {
             blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
             if ((blockAC != null) && (blockAC == blockBD)) {
                 blockAC.decrementUse();
@@ -696,7 +696,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockBD() {
-        if ((blockBD == null) && (blockNameBD.length() > 0)) {
+        if ((blockBD == null) && !blockNameBD.isEmpty()) {
             blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
             if ((blockBD != null) && (blockAC == blockBD)) {
                 blockBD.decrementUse();
@@ -1039,7 +1039,7 @@ public class LevelXing extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (tBlockNameAC.length() > 0) {
+        if (!tBlockNameAC.isEmpty()) {
             blockAC = p.getLayoutBlock(tBlockNameAC);
             if (blockAC != null) {
                 blockNameAC = tBlockNameAC;
@@ -1050,7 +1050,7 @@ public class LevelXing extends LayoutTrack {
                 log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + ident);
             }
         }
-        if (tBlockNameBD.length() > 0) {
+        if (!tBlockNameBD.isEmpty()) {
             blockBD = p.getLayoutBlock(tBlockNameBD);
             if (blockBD != null) {
                 blockNameBD = tBlockNameBD;
@@ -1393,7 +1393,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameAC = newName;
-            if (blockNameAC.length() > 0) {
+            if (!blockNameAC.isEmpty()) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1439,7 +1439,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameBD = newName;
-            if (blockNameBD.length() > 0) {
+            if (!blockNameBD.isEmpty()) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
@@ -1480,7 +1480,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameAC = newName;
-            if (blockNameAC.length() > 0) {
+            if (!blockNameAC.isEmpty()) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1508,7 +1508,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameBD = newName;
-            if (blockNameBD.length() > 0) {
+            if (!blockNameBD.isEmpty()) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted

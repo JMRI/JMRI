@@ -327,7 +327,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      */
     public Sensor validateSensor(String sensorName, Component openFrame) {
         //check if anything entered
-        if ((sensorName == null) || (sensorName.length() < 1)) {
+        if ((sensorName == null) || sensorName.isEmpty()) {
             //no sensor name entered
             if (occupancyNamedSensor != null) {
                 setOccupancySensorName(null);
@@ -389,7 +389,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      */
     public jmri.Memory validateMemory(String memName, Component openFrame) {
         //check if anything entered
-        if ((memName == null) || (memName.length() < 1)) {
+        if ((memName == null) || memName.isEmpty()) {
             //no memory entered
             return null;
         }
@@ -914,7 +914,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         String newName = NamedBean.normalizeUserName(sensorNameField.getText());
         if (!(getOccupancySensorName()).equals(newName)) {
             //sensor has changed
-            if (newName.length() == 0) {
+            if (newName.isEmpty()) {
                 setOccupancySensorName(newName);
                 sensorNameField.setText("");
                 needsRedraw = true;
