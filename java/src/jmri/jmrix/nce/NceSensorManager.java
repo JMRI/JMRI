@@ -425,7 +425,49 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             return Integer.toString(iName);
         }
+    }
 
+    /**
+     * Get the bit address from the system name.
+     *
+     * @param systemName system name for sensor
+     * @return index value for sensor
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
+            // here if an illegal nce light system name
+            log.error("illegal character in header field of nce sensor system name: " + systemName);
+            return (0);
+        }
+        // name must be in the NLnnnnn format (N is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.error("illegal character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.error("invalid nce sensor system name: " + systemName);
+            return (0);
+        } else if (num > 4096) {
+            log.error("bit number out of range in nce sensor system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0);
     }
 
     /**

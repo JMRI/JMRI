@@ -336,6 +336,26 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return _memo.validSystemNameFormat(systemName, 'T');
+    }
+
+    /**
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else return "".
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return _memo.normalizeSystemName(systemName);
+    }
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override

@@ -373,7 +373,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

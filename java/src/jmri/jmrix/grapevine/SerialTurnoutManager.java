@@ -103,7 +103,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int nNode = 0;
 
     /**
-     * A method that returns the next valid free turnout hardware address
+     * A method that returns the next valid free turnout hardware address.
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -144,6 +144,29 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         } else {
             return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
         }
+    }
+
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else
+     * returns ""
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return (SerialAddress.normalizeSystemName(systemName));
     }
 
     /**

@@ -54,8 +54,9 @@ public class NceLightManager extends AbstractLightManager {
     }
 
     /**
-     * Get the bit address from the system name
-     * @param systemName systemName for light
+     * Get the bit address from the system name.
+     *
+     * @param systemName system name for light
      * @return index value for light
      */
     public int getBitFromSystemName(String systemName) {
@@ -97,8 +98,9 @@ public class NceLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
@@ -106,10 +108,11 @@ public class NceLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false' for now, this method always returns 'true'; it is needed for the
-     * Abstract Light class
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false'. For now, this method always returns 'true'; it is needed for the
+     * Abstract Light class.
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
