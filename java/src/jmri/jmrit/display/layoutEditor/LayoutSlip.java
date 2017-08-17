@@ -1447,7 +1447,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     //Internal call to update the state of the slip depending upon the turnout states.
-    void updateState() {
+    private void updateState() {
         int state_a = getTurnout().getKnownState();
         int state_b = getTurnoutB().getKnownState();
         for (Entry<Integer, TurnoutState> en : turnoutStates.entrySet()) {

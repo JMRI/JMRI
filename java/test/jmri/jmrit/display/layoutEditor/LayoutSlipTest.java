@@ -6,10 +6,12 @@ import java.awt.geom.Rectangle2D;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Test simple functioning of LayoutSlip
@@ -21,7 +23,7 @@ public class LayoutSlipTest {
     @Test
     public void testNew() {
         //System.err.println("testNew 27");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -36,7 +38,7 @@ public class LayoutSlipTest {
     @Test
     public void testToString() {
         //System.err.println("testToString 42");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -59,7 +61,7 @@ public class LayoutSlipTest {
     @Test
     public void testGetDisplayName() {
         //System.err.println("testGetDisplayName 57");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -75,7 +77,7 @@ public class LayoutSlipTest {
     @Test
     public void testSlipTypeAndState() {
         //System.err.println("testSlipTypeAndState 65");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -94,7 +96,7 @@ public class LayoutSlipTest {
     @Test
     public void testTurnoutB() {
         //System.err.println("testTurnoutB 76");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -113,7 +115,7 @@ public class LayoutSlipTest {
     @Test
     public void testGetConnectionTypes() {
         //System.err.println("testGetConnectionTypes 87");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -140,7 +142,7 @@ public class LayoutSlipTest {
     @Test
     public void testGetConnectionTypesFail() {
         //System.err.println("testGetConnectionTypesFail 106");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -168,7 +170,7 @@ public class LayoutSlipTest {
     @Test
     public void testSlipState() {
         //System.err.println("testSlipState 126");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -213,7 +215,7 @@ public class LayoutSlipTest {
     @Test
     public void testActivateTurnout() {
         //System.err.println("testActivateTurnout 163");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -228,7 +230,7 @@ public class LayoutSlipTest {
     @Test
     public void testDeactivateTurnout() {
         //System.err.println("testDeactivateTurnout 170");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -243,7 +245,7 @@ public class LayoutSlipTest {
     @Test
     public void testGetCoordsForConnectionType() {
         //System.err.println("testGetCoordsForConnectionType 177");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -322,7 +324,7 @@ public class LayoutSlipTest {
     @Test
     public void testGetBounds() {
         //System.err.println("testGetBounds 248");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -344,7 +346,7 @@ public class LayoutSlipTest {
     @Test
     public void testIsMainline() {
         //System.err.println("testIsMainline 262");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -360,7 +362,7 @@ public class LayoutSlipTest {
     @Test
     public void testSetCoordsCenter() {
         //System.err.println("testSetCoordsCenter 270");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -437,7 +439,7 @@ public class LayoutSlipTest {
     @Test
     public void testScaleCoords() {
         //System.err.println("testScaleCoords 339");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
@@ -516,7 +518,7 @@ public class LayoutSlipTest {
     @Test
     public void testTranslateCoords() {
         //System.err.println("testTranslateCoords 410");
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutEditor layoutEditor = new LayoutEditor();
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
