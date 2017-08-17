@@ -133,21 +133,25 @@ public final class InstanceManager {
 
     /**
      * Remove an object of a particular type that had earlier been registered
-     * with {@link #store}.
+     * with {@link #store}. If item was previously registered, this will remove
+     * item and fire an indexed property change event for the property matching
+     * the output of {@link #getListPropertyName(java.lang.Class)} for type.
      *
      * @param <T>  The type of the class
      * @param item The object of type T to be deregistered
-     * @param type The class Object for the item's type.
+     * @param type The class Object for the item's type
      */
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         List<T> l = (ArrayList<T>) getList(type);
         int index = l.indexOf(item);
-        l.remove(item);
-        if (item instanceof Disposable) {
-            getDefault().dispose((Disposable) item);
+        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+            l.remove(item);
+            if (item instanceof Disposable) {
+                getDefault().dispose((Disposable) item);
+            }
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
-        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
     /**
