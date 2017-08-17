@@ -204,14 +204,44 @@ public class LayoutConnectivity {
         boolean result = false; // assume failure (pessimist!)
         if ((o != null) && o instanceof LayoutConnectivity) {
             LayoutConnectivity lc = (LayoutConnectivity) o;
-            result = toString().equals(lc.toString());
+            result = (hashCode() == lc.hashCode());
         }
         return result;
     }
 
     @Override
     public int hashCode() {
-        return toString().hashCode();
+        int result = 0;
+
+        if (block1 != null) {
+            block1.hashCode();
+        }
+        if (block2 != null) {
+            result += block2.hashCode();
+        }
+
+        result += direction;
+
+        if (track1 != null) {
+            result += track1.hashCode();
+        }
+
+        if (connect2 != null) {
+            result += connect2.hashCode();
+        }
+
+        result += typeConnect2;
+
+        if (xover != null) {
+            result += xover.hashCode();
+        }
+
+        result += xoverBoundaryType;
+        if (anchor != null) {
+            result += anchor.hashCode();
+        }
+
+        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
