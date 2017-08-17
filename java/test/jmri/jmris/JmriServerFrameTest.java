@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the jmri.jmris.JmriServerFrame class 
+ * Tests for the jmri.jmris.JmriServerFrame class
  *
  * @author Paul Bender
  */
@@ -21,6 +21,7 @@ public class JmriServerFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriServerFrame a = new JmriServerFrame();
         Assert.assertNotNull(a);
+        a.dispose();
     }
 
     // The minimal setup for log4J

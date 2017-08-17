@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -27,16 +28,19 @@ public class MonitoringLabelTest {
         p.propertyChange(e);
 
         Assert.assertEquals("check content", "new content", p.getText());
+        f.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

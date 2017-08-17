@@ -203,14 +203,14 @@ public class FirstTimeStartUpWizard {
                 wizPage.get(currentScreen).getHelpDetails().setVisible(false);
             }
             finish.setVisible(false);
-            
+
             currentScreen = currentScreen - 1;
             if (currentScreen != -1) {
                 wizPage.get(currentScreen).getPanel().setVisible(true);
                 wizPage.get(currentScreen).getHelpDetails().setVisible(true);
                 header.setText(wizPage.get(currentScreen).getHeaderText());
                 header.setFont(header.getFont().deriveFont(14f));
-                
+
                 if (currentScreen == 0) {
                     previous.setEnabled(false);
                 }

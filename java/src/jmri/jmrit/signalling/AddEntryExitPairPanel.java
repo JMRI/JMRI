@@ -24,6 +24,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -65,7 +66,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         top.add(new JLabel(Bundle.getMessage("SelectPanel")));  // NOI18N
         top.add(selectPanel);
         selectPanel.removeAllItems();
-        panels = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         for (int i = 0; i < panels.size(); i++) {
             selectPanel.addItem(panels.get(i).getLayoutName());
         }
@@ -147,8 +148,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         sourceLabel = new JLabel(Bundle.getMessage("DiscoveringEntryExitPairs"));  // NOI18N
         /*ImageIcon i;
          i = new ImageIcon(FileUtil.findURL("resources/icons/misc/gui3/process-working.gif"));
-         JLabel label = new JLabel(); 
-         label.setIcon(i); 
+         JLabel label = new JLabel();
+         label.setIcon(i);
          panel1.add(label);*/
         panel1.add(sourceLabel);
 
