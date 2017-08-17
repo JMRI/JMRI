@@ -412,6 +412,7 @@
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
+                    <show>package</show>
                     <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
                     <!-- change from default 100 warnings -->
                     <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2350</additionalparam>
