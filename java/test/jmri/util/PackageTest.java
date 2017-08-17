@@ -97,6 +97,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(WindowMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.usb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(FileChooserFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JTreeWithPopupTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MenuScrollerTest.class));
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
