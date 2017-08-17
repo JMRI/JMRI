@@ -6,8 +6,6 @@ import javax.swing.ButtonGroup;
 import jmri.InstanceManager;
 import jmri.ProgrammerScaffold;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -25,13 +23,12 @@ public class ProgServiceModePaneTest {
     public void testCreateHorizontalNone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
-        JmriJFrame f = new JmriJFrame("Horizontal None");
+        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal None");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.X_AXIS));
         f.pack();
         f.setLocation(0, 0);
         f.setVisible(true);
-        f.dispose();
     }
 
     @Test
@@ -40,40 +37,38 @@ public class ProgServiceModePaneTest {
         // add dummy DCC
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
                 (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
-        Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class));
+        Assert.assertTrue("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class) != null);
         // create and show
-        JmriJFrame f = new JmriJFrame("Horizontal DIRECTBYTEMODE");
+        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.X_AXIS));
         f.pack();
         f.setLocation(0, 100);
         f.setVisible(true);
-        f.dispose();
     }
 
     @Test
     public void testCreateVerticalNone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
-        JmriJFrame f = new JmriJFrame("Vertical None");
+        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Vertical None");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.Y_AXIS,
                         new ButtonGroup()));
         f.pack();
         f.setLocation(0, 200);
         f.setVisible(true);
-        f.dispose();
     }
 
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        // clear InstanceManager
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

@@ -126,6 +126,14 @@ public class XNetLightManager extends AbstractLightManager {
     }
 
     /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // number entry
+    }
+
+    /**
      * Allow access to XNetLightManager.
      */
     @Deprecated

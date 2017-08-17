@@ -91,8 +91,6 @@ public class SwingTestCaseTest extends SwingTestCase {
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE,
                 Pixel.GREEN, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE);
-
-        f.dispose();
     }
 
     /**

@@ -183,6 +183,14 @@ public class XBeeLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,6}[:]{1,1}[0-9]{1,2}$"; // examples 4:3, see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
 
 }

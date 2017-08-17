@@ -1,16 +1,18 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class AutoTrainsFrameTest {
 
@@ -19,11 +21,9 @@ public class AutoTrainsFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
-        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        DispatcherFrame d = DispatcherFrame.instance();
         AutoTrainsFrame t = new AutoTrainsFrame(d);
         Assert.assertNotNull("exists",t);
-        t.dispose();
-        d.dispose();
     }
 
     // The minimal setup for log4J

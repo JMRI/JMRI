@@ -2,10 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.io.File;
 import java.util.ArrayList;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -20,9 +17,10 @@ import org.slf4j.LoggerFactory;
  * This class manipulates the files conforming to the dispatcher-options DTD
  * <p>
  * The file is written when the user requests that options be saved. If the
- * dispatcheroptions.xml file is present when Dispatcher is started, it is read
- * and options set accordingly
- * <p>
+ * dispatcheroptions.xml file is present when Dispatcher is started, it is
+ * read and options set accordingly
+ *
+ * <P>
  * This file is part of JMRI.
  * <P>
  * JMRI is open source software; you can redistribute it and/or modify it under
@@ -35,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAutoDefault {
+public class OptionsFile extends jmri.jmrit.XmlFile {
 
     public OptionsFile() {
         super();
@@ -71,7 +69,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         // there is a layout editor name selected
                         String leName = options.getAttribute("lename").getValue();
                         // get list of Layout Editor panels
-                        ArrayList<LayoutEditor> layoutEditorList = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+                        ArrayList<LayoutEditor> layoutEditorList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
                         if (layoutEditorList.isEmpty()) {
                             log.warn("Dispatcher options specify a Layout Editor panel that is not present.");
                         } else {
@@ -271,15 +269,13 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         }
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
+    private static OptionsFile _instance = null;
+
     public static OptionsFile instance() {
-        return InstanceManager.getDefault(OptionsFile.class);
+        if (_instance == null) {
+            _instance = new OptionsFile();
+        }
+        return _instance;
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class.getName());

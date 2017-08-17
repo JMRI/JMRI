@@ -60,7 +60,7 @@ public class TrainIconAnimationTest {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        PanelMenu.instance().addEditorPanel(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
@@ -385,6 +385,7 @@ public class TrainIconAnimationTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

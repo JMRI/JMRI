@@ -193,6 +193,15 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         return entryToolTip;
     }
 
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,5}[:]{0,1}[0-9]{0,2}$"; // DCC++ examples 4:14, 50
+        // see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class.getName());
 
 }

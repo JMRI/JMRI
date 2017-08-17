@@ -250,6 +250,15 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         return entryToolTip;
     }
 
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,6}[:]{1,1}[0-9]{1,2}$"; // XBee example 4:3
+        // see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }

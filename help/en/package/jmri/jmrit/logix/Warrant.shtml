@@ -179,9 +179,9 @@
 	    protects.  This requires the warrant to calculate the time and
 	    position for the slowdown to occur.
 	    </p><p> 
-	    See <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
-	    for what track conditions require speed changes, they are detected
-	    and how warrants make gradual changes of speed.
+	    See <a href="SpeedChanges.shtml">Modifying Warrant Speeds</a>
+	    for how warrants detect track conditions that require speed changes
+	    and how they make gradual changes of speed.
 	    
       <h3>Warrant Types</h3>There are three types of warrants:
       <ul>
@@ -268,11 +268,11 @@
       the <i>"Normal"</i> speeds. However, after creation when running, track
       conditions may not be <i>"Clear",</i> due to a signal's speed
       restriction, a block's speed restriction, occupancy by a
-      rouge train or even intervention by you to halt the train. 
+      rouge train or even intevention by you to halt the train. 
       Warrants are able to deal with these
       restrictions and will modify their <i>Normal"</i> speeds as needed
       to comply with the restrictions. 
-      <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
+      <a href="SpeedChanges.shtml">Modifying Warrant Speeds</a>
       explains this relationship.</p>
 
       <h4>Recording Scripts</h4>This is done by putting a screen
@@ -305,7 +305,7 @@
       a signal required a reduction of speed. Warrants respond
       to these and other track conditions by automatically
       modifying the scripted throttle settings.
-      <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
+      <a href="SpeedChanges.shtml">Modifying Warrant Speeds</a>
       has details about how warrants modify recorded speeds.
 
       <h3>Customizing the Script</h3>A warrant script can be edited

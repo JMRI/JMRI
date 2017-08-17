@@ -1,15 +1,16 @@
 package apps.gui3.dp3;
 
-import jmri.util.SwingTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class DecoderPro3WindowTest {
 
@@ -17,9 +18,7 @@ public class DecoderPro3WindowTest {
     @Ignore("needs more setup")
     public void testCTor() {
         DecoderPro3Window t = new DecoderPro3Window();
-        Assert.assertNotNull("exists", t);
-        SwingTestCase.disposeFrame("Decoder Pro Wizard", true, true);
-        t.dispose();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -40,4 +39,5 @@ public class DecoderPro3WindowTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class.getName());
+
 }

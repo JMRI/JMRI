@@ -5,20 +5,21 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class,
-    apps.gui3.dp3.PackageTest.class,
-    apps.gui3.mdi.PackageTest.class,
-    TabbedPreferencesActionTest.class,
-    TabbedPreferencesFrameTest.class,
-    TabbedPreferencesProfileActionTest.class,
-    TabbedPreferencesTest.class,
-    apps.gui3.paned.PackageTest.class,
-    FirstTimeStartUpWizardTest.class,
-    FirstTimeStartUpWizardActionTest.class,})
+     BundleTest.class,
+     apps.gui3.dp3.PackageTest.class,
+     apps.gui3.mdi.PackageTest.class,
+     TabbedPreferencesActionTest.class,
+     TabbedPreferencesFrameTest.class,
+     TabbedPreferencesProfileActionTest.class,
+     TabbedPreferencesTest.class,
+     apps.gui3.paned.PackageTest.class,
+     FirstTimeStartUpWizardTest.class,
+     FirstTimeStartUpWizardActionTest.class,
+})
 
 /**
  * Tests for GUI3 base class.
- * <p>
+ *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -30,8 +31,8 @@ import org.junit.runners.Suite;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Bob Jacobsen Copyright 2009
+ * @author	Bob Jacobsen Copyright 2009
  */
-public class PackageTest {
+public class Gui3AppsTest {
 
 }

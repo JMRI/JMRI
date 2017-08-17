@@ -88,10 +88,6 @@ abstract public class AbstractTableAction extends AbstractAction {
         f = frame;
     }
 
-    public BeanTableFrame getFrame() {
-        return f;
-    }
-
     /**
      * Allow subclasses to add to the frame without having to actually subclass
      * the BeanTableDataFrame.
@@ -105,8 +101,7 @@ abstract public class AbstractTableAction extends AbstractAction {
      * If the subClass is being included in a greater tabbed frame, then this
      * method is used to add the details to the tabbed frame.
      *
-     * @param f AbstractTableTabAction for the containing frame containing these
-     *          and other tabs
+     * @param f AbstractTableTabAction for the containing frame containing these and other tabs
      */
     public void addToPanel(AbstractTableTabAction f) {
     }
@@ -137,14 +132,12 @@ abstract public class AbstractTableAction extends AbstractAction {
         if (m != null) {
             m.dispose();
         }
-        // should this also dispose of the frame f?
     }
 
     /**
      * Specify the JavaHelp target for this specific panel.
      *
-     * @return a fixed default string "index" pointing to to highest level in
-     *         JMRI Help
+     * @return a fixed default string "index" pointing to to highest level in JMRI Help
      */
     protected String helpTarget() {
         return "index";  // by default, go to the top

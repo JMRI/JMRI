@@ -3,9 +3,10 @@ package jmri.jmrix.rps;
 import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmrit.display.Editor;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -36,10 +37,9 @@ public class RpsPositionIconTest {
         Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 5, "source");
         Distributor.instance().submitMeasurement(m);
 
-        Editor e = Editor.getEditor("RPS Location Test Editor");
-        Assert.assertNotNull("has target frame", e.getTargetFrame());
-        Assert.assertEquals("RPS Location Test", e.getTargetFrame().getTitle());
-        e.dispose(true);
+        JFrame f = JmriJFrame.getFrame("RPS Location Test");
+        Assert.assertNotNull("found frame", f);
+        f.dispose();
     }
 
     @Before

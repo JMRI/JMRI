@@ -1,18 +1,21 @@
 package apps.gui3;
 
+import apps.AppsBase;
 import apps.gui3.dp3.DecoderPro3;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
-import jmri.util.SwingTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class FirstTimeStartUpWizardTest {
 
@@ -20,8 +23,8 @@ public class FirstTimeStartUpWizardTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
-        Apps3 a = new DecoderPro3(args) {
-            // force the application to not actually start.
+        AppsBase a = new DecoderPro3(args) {
+            // force the application to not actually start.  
             // Just checking construction.
             @Override
             protected void start() {
@@ -52,16 +55,11 @@ public class FirstTimeStartUpWizardTest {
             protected void installShutDownManager() {
                 JUnitUtil.initShutDownManager();
             }
-
-            @Override
-            public void createAndDisplayFrame() {
-                // called when wizard is disposed, but do nothing in tests
-            }
         };
-        FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false), a);
-        Assert.assertNotNull("exists", t);
-        t.dispose();
-        SwingTestCase.disposeFrame("Decoder Pro Wizard", false, false);
+        FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false),(DecoderPro3)a);
+        Assert.assertNotNull("exists",t);
+        // shutdown the application
+        AppsBase.handleQuit();
     }
 
     // The minimal setup for log4J
@@ -77,4 +75,5 @@ public class FirstTimeStartUpWizardTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class.getName());
+
 }

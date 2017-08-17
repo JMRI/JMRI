@@ -291,6 +291,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         return entryToolTip;
     }
 
+    /**
+     * Provide a connection system agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
+    }
+
     @Override
     public int getXMLOrder() {
         return jmri.Manager.TURNOUTS;

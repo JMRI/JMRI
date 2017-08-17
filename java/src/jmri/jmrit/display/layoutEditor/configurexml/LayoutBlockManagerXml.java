@@ -55,9 +55,10 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             } else {
                 log.debug("layoutblock system name is " + sname);
                 LayoutBlock b = tm.getBySystemName(sname);
-                // save only those LayoutBlocks that are in use--skip abandoned ones
                 if (b.getUseCount() > 0) {
-                    Element elem = new Element("layoutblock").setAttribute("systemName", sname);
+                    // save only those LayoutBlocks that are in use--skip abandoned ones
+                    Element elem = new Element("layoutblock")
+                            .setAttribute("systemName", sname);
                     elem.addContent(new Element("systemName").addContent(sname));
                     storeCommon(b, elem);
                     if (!b.getOccupancySensorName().equals("")) {
@@ -67,13 +68,13 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                     elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
                     elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
                     elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
+                    layoutblocks.addContent(elem);
                     if (!b.getMemoryName().equals("")) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }
                     if (!b.useDefaultMetric()) {
                         elem.addContent(new Element("metric").addContent("" + b.getBlockMetric()));
                     }
-                    layoutblocks.addContent(elem);
                 }
             }
         }
@@ -209,7 +210,8 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
 
         // register new one with InstanceManager
-        LayoutBlockManager pManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlockManager pManager = LayoutBlockManager.instance();
+        InstanceManager.store(pManager, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         // register new one for configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {

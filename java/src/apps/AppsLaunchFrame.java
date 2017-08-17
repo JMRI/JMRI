@@ -15,7 +15,6 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
-import jmri.InstanceManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
@@ -181,7 +180,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(PanelMenu.instance());
     }
 
     /**
@@ -257,7 +256,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         // tell help to use default browser for external types
         SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-        // use as main help menu
+        // use as main help menu 
         menuBar.add(helpMenu);
     }
 

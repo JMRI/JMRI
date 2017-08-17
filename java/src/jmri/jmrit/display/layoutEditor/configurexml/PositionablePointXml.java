@@ -1,9 +1,7 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
-import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import org.jdom2.Attribute;
@@ -38,7 +36,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         // include attributes
         element.setAttribute("ident", p.getID());
         element.setAttribute("type", "" + p.getType());
-        Point2D coords = p.getCoordsCenter();
+        Point2D coords = p.getCoords();
         element.setAttribute("x", "" + coords.getX());
         element.setAttribute("y", "" + coords.getY());
         if (p.getConnect1() != null) {
@@ -47,24 +45,24 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (p.getConnect2() != null) {
             element.setAttribute("connect2name", p.getConnect2().getID());
         }
-        if (!p.getEastBoundSignal().isEmpty()) {
+        if (p.getEastBoundSignal().length() > 0) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
         }
-        if (!p.getWestBoundSignal().isEmpty()) {
+        if (p.getWestBoundSignal().length() > 0) {
             element.setAttribute("westboundsignal", p.getWestBoundSignal());
         }
 
-        if (!p.getEastBoundSignalMastName().isEmpty()) {
+        if (p.getEastBoundSignalMastName().length() > 0) {
             element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMastName());
         }
-        if (!p.getWestBoundSignalMastName().isEmpty()) {
+        if (p.getWestBoundSignalMastName().length() > 0) {
             element.setAttribute("westboundsignalmast", p.getWestBoundSignalMastName());
         }
 
-        if (!p.getEastBoundSensorName().isEmpty()) {
+        if (p.getEastBoundSensorName().length() > 0) {
             element.setAttribute("eastboundsensor", p.getEastBoundSensorName());
         }
-        if (!p.getWestBoundSensorName().isEmpty()) {
+        if (p.getWestBoundSensorName().length() > 0) {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -146,7 +144,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         if (type == PositionablePoint.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
             String linkedEditorName = element.getAttribute("linkedpanel").getValue();
-            LayoutEditor linkedEditor = (LayoutEditor) InstanceManager.getDefault(PanelMenu.class).getEditorByName(linkedEditorName);
+            LayoutEditor linkedEditor = (LayoutEditor) jmri.jmrit.display.PanelMenu.instance().getEditorByName(linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.pointList) {

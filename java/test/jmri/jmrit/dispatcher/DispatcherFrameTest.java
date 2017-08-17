@@ -1,7 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
@@ -23,7 +22,7 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
-        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        DispatcherFrame d = DispatcherFrame.instance();
         // Find new table window by name
         JmriJFrame dw = JmriJFrame.getFrame("Dispatcher");
         // test some options from file

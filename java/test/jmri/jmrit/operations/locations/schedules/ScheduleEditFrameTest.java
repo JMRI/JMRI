@@ -4,14 +4,17 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class ScheduleEditFrameTest {
 
@@ -20,9 +23,8 @@ public class ScheduleEditFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location l = new Location("Location Test Attridutes id", "Location Test Name");
         Track trk = new Track("Test id", "Test Name", "Test Type", l);
-        ScheduleEditFrame t = new ScheduleEditFrame(new Schedule("Test id", "Test Name"), trk);
-        Assert.assertNotNull("exists", t);
-        t.dispose();
+        ScheduleEditFrame t = new ScheduleEditFrame(new Schedule("Test id", "Test Name"), trk );
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -39,4 +41,5 @@ public class ScheduleEditFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ScheduleEditFrameTest.class.getName());
+
 }

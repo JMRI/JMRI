@@ -52,7 +52,7 @@ public class JmriJFrameServletTest extends TestCase {
 
     }
 
-    // local variant class to make access to private members
+    // local varient class to make access to private members
     private class JmriJFrameServlet_ut extends JmriJFrameServlet {
 
         @Override

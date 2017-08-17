@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
-public class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
+class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
@@ -90,7 +90,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
                 return "";
             }
             return block.getPortals().get(idx).getName();
-            /*
+            /*           
              while (count <= row)  {
              count += ((OBlock)list.get(idx++)).getPortals().size();
              }
@@ -133,6 +133,6 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
             fireTableDataChanged();
         }
     }
-
+    
     private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
 }

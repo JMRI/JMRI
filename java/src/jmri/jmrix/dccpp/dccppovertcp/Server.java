@@ -10,15 +10,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Properties;
-import java.util.Set;
-import jmri.InstanceInitializer;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +26,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Server {
 
-    private final LinkedList<ClientRxHandler> clients = new LinkedList<>();
+    static Server self;
+    LinkedList<ClientRxHandler> clients;
     Thread socketListener;
     ServerSocket serverSocket;
     boolean settingsLoaded = false;
@@ -43,21 +40,21 @@ public class Server {
     static final String SETTINGS_FILE_NAME = "DCCppOverTcpSettings.ini";
 
     private Server() {
+        clients = new LinkedList<ClientRxHandler>();
     }
 
     public void setStateListner(ServerListner l) {
         stateListner = l;
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
     public static synchronized Server getInstance() {
-        return InstanceManager.getDefault(Server.class);
+        if (self == null) {
+            self = new Server();
+            if (self.getAutoStart()) {
+                self.enable();
+            }
+        }
+        return self;
     }
 
     private void loadSettings() {
@@ -165,15 +162,13 @@ public class Server {
                 this.shutDownTask = new QuietShutDownTask("DCCppOverTcpServer") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.getDefault(Server.class).disable();
+                        Server.getInstance().disable();
                         return true;
                     }
                 };
             }
-            if (this.shutDownTask != null) {
-                InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
-                    sdm.register(this.shutDownTask);
-                });
+            if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }
@@ -264,27 +259,4 @@ public class Server {
         }
     }
     private final static Logger log = LoggerFactory.getLogger(Server.class.getName());
-
-    @ServiceProvider(service = InstanceInitializer.class)
-    public static class Initializer extends AbstractInstanceInitializer {
-
-        @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            if (type.equals(Server.class)) {
-                Server instance = new Server();
-                if (instance.getAutoStart()) {
-                    instance.enable();
-                }
-                return instance;
-            }
-            return super.getDefault(type);
-        }
-
-        @Override
-        public Set<Class<?>> getInitalizes() {
-            Set<Class<?>> set = super.getInitalizes();
-            set.add(Server.class);
-            return set;
-        }
-    }
 }

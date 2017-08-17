@@ -50,7 +50,7 @@ abstract class BeanEditAction extends AbstractAction {
         super("Bean Edit");
     }
 
-    NamedBean bean;
+    jmri.NamedBean bean;
 
     public void setBean(jmri.NamedBean bean) {
         this.bean = bean;
@@ -75,7 +75,6 @@ abstract class BeanEditAction extends AbstractAction {
     JTextField userNameField = new JTextField(20);
     JTextArea commentField = new JTextArea(3, 30);
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
-    private JLabel statusBar = new JLabel(Bundle.getMessage("ItemEditStatusInfo", Bundle.getMessage("ButtonApply")));
 
     /**
      * Create a generic panel that holds the basic bean information System Name,
@@ -208,7 +207,7 @@ abstract class BeanEditAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
-            // display message in status bar TODO
+            // add error dialog TODO
             log.error("No bean set so unable to edit a null bean");  //NOI18N
             return;
         }
@@ -224,19 +223,8 @@ abstract class BeanEditAction extends AbstractAction {
                 addToPanel(bi, bi.getListOfItems());
                 detailsTab.addTab(bi.getName(), bi);
             }
+
             containerPanel.add(detailsTab, BorderLayout.CENTER);
-
-            // shared bottom panel part
-            JPanel bottom = new JPanel();
-            bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
-            // shared status bar above buttons
-            JPanel panelStatus = new JPanel();
-            statusBar.setFont(statusBar.getFont().deriveFont(0.9f * userNameField.getFont().getSize())); // a bit smaller
-            statusBar.setForeground(Color.gray);
-            panelStatus.add(statusBar);
-            bottom.add(panelStatus);
-
-            // shared buttons
             JPanel buttons = new JPanel();
             JButton applyBut = new JButton(Bundle.getMessage("ButtonApply"));
             applyBut.addActionListener(new ActionListener() {
@@ -263,8 +251,7 @@ abstract class BeanEditAction extends AbstractAction {
             buttons.add(applyBut);
             buttons.add(okBut);
             buttons.add(cancelBut);
-            bottom.add(buttons);
-            containerPanel.add(bottom, BorderLayout.SOUTH);
+            containerPanel.add(buttons, BorderLayout.SOUTH);
         }
         for (BeanItemPanel bi : bei) {
             bi.resetField();
@@ -346,6 +333,7 @@ abstract class BeanEditAction extends AbstractAction {
             }
             y++;
         }
+
         panel.add(p);
     }
 
@@ -356,11 +344,6 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     public void save() {
-        String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
-                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
-        // provide feedback to user, can be overwritten by save action error handler
-        statusBar.setText(feedback);
-        statusBar.setForeground(Color.gray);
         for (BeanItemPanel bi : bei) {
             bi.saveItem();
         }
@@ -381,6 +364,7 @@ abstract class BeanEditAction extends AbstractAction {
 
     abstract protected String getBeanType();
 
+    /*abstract protected NamedBean getBySystemName(String name);*/
     abstract protected NamedBean getByUserName(String name);
 
     /**
@@ -611,5 +595,4 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
-
 }

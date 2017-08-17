@@ -240,8 +240,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
         String tmpSName = "";
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -266,11 +266,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                     showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
             return null;
         }
-        // The Number of Output Bits of the previous turnout will help determine the next
-        // valid address.
+        //The Number of Output Bits of the previous turnout will help determine the next
+        //valid address.
         iName = iName + t.getNumberOutputBits();
-        // Check to determine if the systemName is in use;
-        // return null if it is, otherwise return the next valid address.
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
         t = getBySystemName(prefix + typeLetter() + iName);
         if (t != null) {
             for (int x = 1; x < 10; x++) {
@@ -366,6 +366,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
         return entryToolTip;
+    }
+
+    /**
+     * Provide a connection system agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());

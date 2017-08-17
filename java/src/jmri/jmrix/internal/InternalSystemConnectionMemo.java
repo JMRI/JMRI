@@ -41,6 +41,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         log.debug("Do configureManagers - doesn't pre-build anything");
         if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
         configured = true;
+
     }
 
     private InternalLightManager lightManager;
@@ -202,7 +203,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        // No actions to add at start up
+        //No actions to add at start up
         return null;
     }
 

@@ -1,4 +1,4 @@
-package jmri.util.swing;
+package jmri.jmrit.vsdecoder;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,7 +26,7 @@ import javax.swing.JProgressBar;
  * @author   Mark Underwood Copyright (C) 2011
  * 
  */
-public class BusyDialog extends JDialog {
+class BusyDialog extends JDialog {
 
     JFrame frame;
     JProgressBar pbar;

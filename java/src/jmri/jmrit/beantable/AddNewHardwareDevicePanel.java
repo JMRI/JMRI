@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,9 +22,8 @@ import javax.swing.JTextField;
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JSpinner endRange, JCheckBox addRange,
-            JButton addButton, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener, JLabel statusBar) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        if (statusBar == null) statusBar = new JLabel("");
         _endRange = endRange;
         _range = addRange;
         JPanel p;
@@ -56,7 +54,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridx = 2;
         c.gridy = 1;
         p.add(sysAddress, c);
-        sysAddress.setToolTipText(Bundle.getMessage("HardwareAddressToolTip")); // overridden in calling class
+        sysAddress.setToolTipText(Bundle.getMessage("HardwareAddressToolTip"));
         c.gridx = 3;
         p.add(finishLabel, c);
         c.gridx = 4;
@@ -64,19 +62,10 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridx = 2;
         c.gridy = 2;
         p.add(userName, c);
-        userName.setToolTipText(Bundle.getMessage("UserNameToolTip")); // fixed general instruction
         add(p);
 
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
-
-        // add status bar above buttons
-        JPanel panelStatus = new JPanel();
-        panelStatus.setLayout(new FlowLayout());
-        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * sysAddressLabel.getFont().getSize())); // a bit smaller
-        statusBar.setForeground(Color.gray);
-        panelStatus.add(statusBar);
-        add(panelStatus);
 
         // cancel + add buttons at bottom of window
         JPanel panelBottom = new JPanel();
@@ -85,8 +74,8 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         panelBottom.add(cancel);
         cancel.addActionListener(cancelListener);
 
-        panelBottom.add(addButton);
-        addButton.addActionListener(okListener);
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
 
         add(panelBottom);
 
@@ -125,13 +114,13 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    JButton cancel = new JButton(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Revert/Cancel
+    JButton ok;
+    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JSpinner _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JLabel sysAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
-    JLabel statusBar;
 
 }

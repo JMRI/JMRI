@@ -17,8 +17,7 @@ import org.junit.runners.Suite;
     PR2StatusTest.class,
     PR3MS100ModeStatusTest.class,
     RawStatusTest.class,
-    LocoStatsFuncTest.class,
-    BundleTest.class,
+    LocoStatsFuncTest.class
 })
 public class PackageTest {
 }

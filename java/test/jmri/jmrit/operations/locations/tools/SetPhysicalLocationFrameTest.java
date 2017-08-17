@@ -4,13 +4,16 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.locations.Location;
 import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class SetPhysicalLocationFrameTest {
 
@@ -19,8 +22,7 @@ public class SetPhysicalLocationFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location l = new Location("Test id", "Test Name");
         SetPhysicalLocationFrame t = new SetPhysicalLocationFrame(l);
-        Assert.assertNotNull("exists", t);
-        t.dispose();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -37,4 +39,5 @@ public class SetPhysicalLocationFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrameTest.class.getName());
+
 }

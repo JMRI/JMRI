@@ -20,13 +20,4 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
         return true;
     }
 
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
 }

@@ -12,7 +12,6 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
@@ -139,15 +138,15 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
         ControlPanelEditor panel = new ControlPanelEditor(name);
         panel.getTargetFrame().setVisible(false);   // save painting until last
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
 
-        // Load editor option flags. This has to be done before the content
+        // Load editor option flags. This has to be done before the content 
         // items are loaded, to preserve the individual item settings
         Attribute a;
         boolean value = true;

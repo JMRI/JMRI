@@ -50,6 +50,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
@@ -64,6 +65,7 @@ import jmri.jmrit.jython.RunJythonScript;
 import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.roster.swing.RosterMenu;
+import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
@@ -72,6 +74,7 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.managers.DefaultShutDownManager;
+import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
@@ -195,7 +198,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                             new BlockValueFile().writeBlockValues();
                         } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
                         catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe.getMessage());
+                            log.error("Exception writing blocks: {}", ioe);
                         }
 
                         // continue shutdown
@@ -208,6 +211,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
+
+        // Install a user preferences manager
+        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -646,7 +652,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(PanelMenu.instance());
     }
 
     /**

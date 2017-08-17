@@ -52,14 +52,13 @@ public abstract class LayoutTrack {
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
-    protected LayoutEditor layoutEditor = null;
-
     protected String ident = "";
 
     // dashed line parameters (unused)
     //protected static int minNumDashes = 3;
     //protected static double maxDashLength = 10;
-    protected Point2D center = new Point2D.Double(50.0, 50.0);
+
+    public Point2D center = new Point2D.Double(50.0, 50.0);
 
     protected boolean hidden = false;
 
@@ -83,24 +82,6 @@ public abstract class LayoutTrack {
 
     public String getName() {
         return ident;
-    }
-
-    /**
-     * get center coordinates
-     *
-     * @return the center coordinates
-     */
-    public Point2D getCoordsCenter() {
-        return center;
-    }
-
-    /**
-     * set center coordinates
-     *
-     * @param p the coordinates to set
-     */
-    public void setCoordsCenter(Point2D p) {
-        center = p;
     }
 
     public static void setDefaultTrackColor(Color color) {
@@ -146,33 +127,12 @@ public abstract class LayoutTrack {
     }
 
     public void setHidden(boolean hide) {
-        if (hidden != hide) {
-            hidden = hide;
-            if (layoutEditor != null) {
-                layoutEditor.redrawPanel();
-            }
-        }
+        hidden = hide;
     }
 
     /*
      * non-accessor methods
      */
-    /**
-     * scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
-     */
-    public abstract void scaleCoords(float xFactor, float yFactor);
-
-    /**
-     * translate this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
-     */
-    public abstract void translateCoords(float xFactor, float yFactor);
-
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -184,14 +144,10 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point (abstract: should be overridden
-     * by ALL subclasses)
-     *
-     * @param p                  the point
-     * @param useRectangles      - whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free
-     *                           connections
+     * find the hit (location) type for a point (abstract: should be overridden by ALL subclasses)
+     * @param p the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
+     * @param requireUnconnected - whether to only return hit types for free connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -253,23 +209,21 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * return the coordinates for a specified connection type (abstract: should
-     * be overridden by ALL subclasses)
-     *
+     * return the coordinates for a specified connection type
+     * (abstract: should be overridden by ALL subclasses)
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
-     * abstract method... subclasses should implement _IF_ they need to recheck
-     * their block boundaries
+     * abstract method... subclasses should implement _IF_ they need to recheck their block boundaries
      */
     public abstract void reCheckBlockBoundary();
 
     /**
-     * @return the bounds of this track (abstract: should be overridden by ALL
-     *         subclasses)
+     * @return the bounds of this track
+     * (abstract: should be overridden by ALL subclasses)
      */
     public abstract Rectangle2D getBounds();
 
@@ -279,41 +233,38 @@ public abstract class LayoutTrack {
 
     /**
      * get the object connected to this track for the specified connection type
-     *
      * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection
-     *         type
+     * @return the object connected to this slip for the specified connection type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
-    // Note: There are times when subclass instances are stored in variables
-    // of this (base) class so when this method is called on them they
-    // are dispatched here instead of directly to their subclass implementation.
-    // So basicly this is just a subclass dispatcher
-    //TODO: Determine if this is 100% necessary
+     // Note: There are times when subclass instances are stored in variables
+     // of this (base) class so when this method is called on them they
+     // are dispatched here instead of directly to their subclass implementation.
+     // So basicly this is just a subclass dispatcher
     public Object getConnection(int connectionType) throws jmri.JmriException {
         Object result = null;
         switch (connectionType) {
             case POS_POINT: {
-                result = ((PositionablePoint) this).getConnection(connectionType);
+                result = ((PositionablePoint)this).getConnection(connectionType);
                 break;
             }
             case TURNOUT_A:
             case TURNOUT_B:
             case TURNOUT_C:
             case TURNOUT_D: {
-                result = ((LayoutTurnout) this).getConnection(connectionType);
+                result = ((LayoutTurnout)this).getConnection(connectionType);
                 break;
             }
             case LEVEL_XING_A:
             case LEVEL_XING_B:
             case LEVEL_XING_C:
             case LEVEL_XING_D: {
-                result = ((LevelXing) this).getConnection(connectionType);
+                result = ((LevelXing)this).getConnection(connectionType);
                 break;
             }
 
             case TRACK: {
-                result = ((TrackSegment) this).getConnection(connectionType);
+                result = ((TrackSegment)this).getConnection(connectionType);
                 break;
             }
 
@@ -321,12 +272,12 @@ public abstract class LayoutTrack {
             case SLIP_B:
             case SLIP_C:
             case SLIP_D: {
-                result = ((LayoutSlip) this).getConnection(connectionType);
+                result = ((LayoutSlip)this).getConnection(connectionType);
                 break;
             }
             default: {
                 if (connectionType >= TURNTABLE_RAY_OFFSET) {
-                    result = ((LayoutTurntable) this).getConnection(connectionType);
+                    result = ((LayoutTurntable)this).getConnection(connectionType);
                 } else {
                     log.error("Invalid connection type " + connectionType); //I18IN
                     throw new jmri.JmriException("Invalid Point");
@@ -338,43 +289,39 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection
-     * type
-     *
-     * @param connectionType the connection type (where it is connected to us)
-     * @param o              the object that is being connected
-     * @param type           the type of object that we're being connected to
-     *                       (Should always be "NONE" or "TRACK")
+     * set the object connected to this turnout for the specified connection type
+     * @param connectionType the connection type (where it is connected to the us)
+     * @param o the object that is being connected
+     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
      * @throws jmri.JmriException - if connectionType or type are invalid
      */
-    // Note: There are times when subclass instances are stored in variables
-    // of this (base) class so when this method is called on them they
-    // are dispatched here instead of directly to their subclass implementation.
-    // So basicly this is just a subclass dispatcher
-    //TODO: Determine if this is 100% necessary
+     // Note: There are times when subclass instances are stored in variables
+     // of this (base) class so when this method is called on them they
+     // are dispatched here instead of directly to their subclass implementation.
+     // So basicly this is just a subclass dispatcher
     public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
         switch (connectionType) {
             case POS_POINT: {
-                ((PositionablePoint) this).setConnection(connectionType, o, type);
+                ((PositionablePoint)this).setConnection(connectionType, o, type);
                 break;
             }
             case TURNOUT_A:
             case TURNOUT_B:
             case TURNOUT_C:
             case TURNOUT_D: {
-                ((LayoutTurnout) this).setConnection(connectionType, o, type);
+                ((LayoutTurnout)this).setConnection(connectionType, o, type);
                 break;
             }
             case LEVEL_XING_A:
             case LEVEL_XING_B:
             case LEVEL_XING_C:
             case LEVEL_XING_D: {
-                ((LevelXing) this).setConnection(connectionType, o, type);
+                ((LevelXing)this).setConnection(connectionType, o, type);
                 break;
             }
 
             case TRACK: {
-                ((TrackSegment) this).setConnection(connectionType, o, type);
+                ((TrackSegment)this).setConnection(connectionType, o, type);
                 break;
             }
 
@@ -382,12 +329,12 @@ public abstract class LayoutTrack {
             case SLIP_B:
             case SLIP_C:
             case SLIP_D: {
-                ((LayoutSlip) this).setConnection(connectionType, o, type);
+                ((LayoutSlip)this).setConnection(connectionType, o, type);
                 break;
             }
             default: {
                 if (connectionType >= TURNTABLE_RAY_OFFSET) {
-                    ((LayoutTurntable) this).setConnection(connectionType, o, type);
+                    ((LayoutTurntable)this).setConnection(connectionType, o, type);
                 } else {
                     log.error("Invalid connection type " + connectionType); //I18IN
                     throw new jmri.JmriException("Invalid Point");
@@ -399,7 +346,6 @@ public abstract class LayoutTrack {
 
     /**
      * return true if this connection type is disconnected
-     *
      * @param connectionType - the connection type to test
      * @return true if the connection for this connection type is free
      */

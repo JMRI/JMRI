@@ -7,8 +7,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SerialPacketGenFrameTest.class,
-    SerialPacketGenActionTest.class,
-    BundleTest.class
+    SerialPacketGenActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.grapevine.packetgen package

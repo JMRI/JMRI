@@ -2,17 +2,14 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowListener;
-import jmri.InstanceManager;
-import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
  * MemorySpinnerIconTest.java
- * <p>
+ *
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
@@ -44,8 +41,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
         toi2 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi2);
 
-        InstanceManager.getDefault().clearAll();
-        JUnitUtil.initDefaultUserMessagePreferences();
+        jmri.util.JUnitUtil.resetInstanceManager();
 
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
@@ -112,10 +108,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            ThreadingUtil.runOnGUI(() -> {
-                panel.getTargetFrame().dispose();
-                panel.dispose();
-            });
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
         apps.tests.Log4JFixture.tearDown();
     }

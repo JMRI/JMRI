@@ -125,6 +125,14 @@ public class NceLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}$"; // NCE example: 2044, see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceLightManager.class.getName());
 
 }

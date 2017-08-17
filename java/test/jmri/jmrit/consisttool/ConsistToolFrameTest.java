@@ -1,7 +1,6 @@
 package jmri.jmrit.consisttool;
 
 import apps.tests.Log4JFixture;
-import java.awt.GraphicsEnvironment;
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -10,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of ConsistToolFrame
@@ -23,7 +23,6 @@ public class ConsistToolFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         Assert.assertNotNull("exists", frame );
-        frame.dispose();
     }
 
     @Test
@@ -40,7 +39,6 @@ public class ConsistToolFrameTest {
 
         ConsistToolFrame frame = new ConsistToolFrame();
         Assert.assertNotNull("exists", frame );
-        frame.dispose();
     }
 
     @Before

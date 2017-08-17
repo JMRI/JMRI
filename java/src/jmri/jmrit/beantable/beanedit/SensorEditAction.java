@@ -7,7 +7,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 
 /**
- * Provides an edit panel for a Sensor object
+ * Provides an edit panel for a sensor object
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */

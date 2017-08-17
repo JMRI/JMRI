@@ -35,7 +35,6 @@ import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,14 +45,6 @@ import org.slf4j.LoggerFactory;
  * A LevelXing has four connection points, designated A, B, C, and D. At the
  * crossing, A-C and B-D are straight segments. A train proceeds through the
  * crossing on either of these segments.
- * <P>
- * {@literal
- *    A   D
- *    \\ //
- *      X
- *    // \\
- *    B   C
- * literal}
  * <P>
  * Each straight segment carries Block information. A-C and B-D may be in the
  * same or different Layout Blocks.
@@ -82,6 +73,7 @@ public class LevelXing extends LayoutTrack {
     private LayoutBlock blockAC = null;
     private LayoutBlock blockBD = null;
     private LevelXing instance = null;
+    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private String blockNameAC = "";
@@ -106,7 +98,7 @@ public class LevelXing extends LayoutTrack {
     private Object connectB = null;
     private Object connectC = null;
     private Object connectD = null;
-
+    private Point2D center = new Point2D.Double(50.0, 50.0);
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
 
@@ -686,7 +678,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockAC() {
-        if ((blockAC == null) && !blockNameAC.isEmpty()) {
+        if ((blockAC == null) && (blockNameAC.length() > 0)) {
             blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
             if ((blockAC != null) && (blockAC == blockBD)) {
                 blockAC.decrementUse();
@@ -696,7 +688,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockBD() {
-        if ((blockBD == null) && !blockNameBD.isEmpty()) {
+        if ((blockBD == null) && (blockNameBD.length() > 0)) {
             blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
             if ((blockBD != null) && (blockAC == blockBD)) {
                 blockBD.decrementUse();
@@ -705,20 +697,32 @@ public class LevelXing extends LayoutTrack {
         return blockBD;
     }
 
+    public Point2D getCoordsCenter() {
+        return center;
+    }
+
     public Point2D getCoordsA() {
-        return MathUtil.add(center, dispA);
+        double x = center.getX() + dispA.getX();
+        double y = center.getY() + dispA.getY();
+        return new Point2D.Double(x, y);
     }
 
     public Point2D getCoordsB() {
-        return MathUtil.add(center, dispB);
+        double x = center.getX() + dispB.getX();
+        double y = center.getY() + dispB.getY();
+        return new Point2D.Double(x, y);
     }
 
     public Point2D getCoordsC() {
-        return MathUtil.subtract(center, dispA);
+        double x = center.getX() - dispA.getX();
+        double y = center.getY() - dispA.getY();
+        return new Point2D.Double(x, y);
     }
 
     public Point2D getCoordsD() {
-        return MathUtil.subtract(center, dispB);
+        double x = center.getX() - dispB.getX();
+        double y = center.getY() - dispB.getY();
+        return new Point2D.Double(x, y);
     }
 
     /**
@@ -930,44 +934,44 @@ public class LevelXing extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
+    public void setCoordsCenter(Point2D p) {
+        center = p;
+    }
 
     public void setCoordsA(Point2D p) {
-        dispA = MathUtil.subtract(p, center);
+        double x = center.getX() - p.getX();
+        double y = center.getY() - p.getY();
+        dispA = new Point2D.Double(-x, -y);
     }
 
     public void setCoordsB(Point2D p) {
-        dispB = MathUtil.subtract(p, center);
+        double x = center.getX() - p.getX();
+        double y = center.getY() - p.getY();
+        dispB = new Point2D.Double(-x, -y);
     }
 
     public void setCoordsC(Point2D p) {
-        dispA = MathUtil.subtract(center, p);
+        double x = center.getX() - p.getX();
+        double y = center.getY() - p.getY();
+        dispA = new Point2D.Double(x, y);
     }
 
     public void setCoordsD(Point2D p) {
-        dispB = MathUtil.subtract(center, p);
+        double x = center.getX() - p.getX();
+        double y = center.getY() - p.getY();
+        dispB = new Point2D.Double(x, y);
     }
 
-    /**
-     * scale this LayoutTrack's coordinates by the x and y factors
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
-     */
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
-        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
-        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
-    }
-
-    /**
-     * translate this LayoutTrack's coordinates by the x and y factors
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
-     */
-    @Override
-    public void translateCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
+        center = pt;
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
+        dispA = pt;
+        pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
+        dispB = pt;
     }
 
     /**
@@ -1039,7 +1043,7 @@ public class LevelXing extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (!tBlockNameAC.isEmpty()) {
+        if (tBlockNameAC.length() > 0) {
             blockAC = p.getLayoutBlock(tBlockNameAC);
             if (blockAC != null) {
                 blockNameAC = tBlockNameAC;
@@ -1050,7 +1054,7 @@ public class LevelXing extends LayoutTrack {
                 log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + ident);
             }
         }
-        if (!tBlockNameBD.isEmpty()) {
+        if (tBlockNameBD.length() > 0) {
             blockBD = p.getLayoutBlock(tBlockNameBD);
             if (blockBD != null) {
                 blockNameBD = tBlockNameBD;
@@ -1311,7 +1315,7 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            LayoutEditor.setupComboBox(block1NameComboBox, false, true);
+            layoutEditor.setupComboBox(block1NameComboBox, false, true);
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
 
@@ -1321,7 +1325,7 @@ public class LevelXing extends LayoutTrack {
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            LayoutEditor.setupComboBox(block2NameComboBox, false, true);
+            layoutEditor.setupComboBox(block2NameComboBox, false, true);
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
 
@@ -1393,7 +1397,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameAC = newName;
-            if (!blockNameAC.isEmpty()) {
+            if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1439,7 +1443,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameBD = newName;
-            if (!blockNameBD.isEmpty()) {
+            if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
@@ -1480,7 +1484,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameAC = newName;
-            if (!blockNameAC.isEmpty()) {
+            if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1508,7 +1512,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameBD = newName;
-            if (!blockNameBD.isEmpty()) {
+            if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted

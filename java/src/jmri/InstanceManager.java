@@ -133,25 +133,21 @@ public final class InstanceManager {
 
     /**
      * Remove an object of a particular type that had earlier been registered
-     * with {@link #store}. If item was previously registered, this will remove
-     * item and fire an indexed property change event for the property matching
-     * the output of {@link #getListPropertyName(java.lang.Class)} for type.
+     * with {@link #store}.
      *
      * @param <T>  The type of the class
      * @param item The object of type T to be deregistered
-     * @param type The class Object for the item's type
+     * @param type The class Object for the item's type.
      */
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         List<T> l = (ArrayList<T>) getList(type);
         int index = l.indexOf(item);
-        if (index != -1) { // -1 means items was not in list, and therefor, not registered
-            l.remove(item);
-            if (item instanceof Disposable) {
-                getDefault().dispose((Disposable) item);
-            }
-            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
+        l.remove(item);
+        if (item instanceof Disposable) {
+            getDefault().dispose((Disposable) item);
         }
+        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
     /**
@@ -310,19 +306,6 @@ public final class InstanceManager {
             notifyPropertyChangeListener(getDefaultsPropertyName(type), oldDefault, item);
         }
         return getDefault(type);
-    }
-
-    /**
-     * Check if a default has been set for the given type.
-     *
-     * @param <T>  The type of the class
-     * @param type The class type
-     * @return true if an item is available as a default for the given type;
-     *         false otherwise
-     */
-    static public <T> boolean containsDefault(@Nonnull Class<T> type) {
-        List<T> l = getList(type);
-        return !l.isEmpty();
     }
 
     /**
@@ -774,16 +757,17 @@ public final class InstanceManager {
     /**
      * Clear all managed instances from this InstanceManager.
      * <p>
-     * Realistically, JMRI can't ensure that all objects and combination of
-     * objects held by the InstanceManager are threadsafe. This call therefore
-     * defers to the GUI thread to become atomic and reduce risk.
+     * Realistically, JMRI can't ensure that all objects
+     * and combination of objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to become atomic and reduce risk.
      */
     public void clearAll() {
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
             log.debug("Clearing InstanceManager");
             managerLists.keySet().forEach((type) -> {
                 clear(type);
-            });
+             } );
         });
     }
 
@@ -791,14 +775,15 @@ public final class InstanceManager {
      * Clear all managed instances of a particular type from this
      * InstanceManager.
      * <p>
-     * Realistically, JMRI can't ensure that all objects and combination of
-     * objects held by the InstanceManager are threadsafe. This call therefore
-     * defers to the GUI thread to become atomic and reduce risk.
+     * Realistically, JMRI can't ensure that all objects 
+     * and combination of objects
+     * held by the InstanceManager are threadsafe.  This call
+     * therefore defers to the GUI thread to become atomic and reduce risk.
      *
      * @param type the type to clear
      */
     public void clear(@Nonnull Class<?> type) {
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
             log.trace("Clearing managers of {}", type.getName());
             getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
                 dispose((Disposable) o);

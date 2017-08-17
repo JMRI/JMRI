@@ -298,6 +298,15 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return entryToolTip;
     }
 
+    /**
+     * Provide a connection system agnostic regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,4}[:]{0,1}[0-9]{1,4}$";
+        // Initially accepts a 4 digit number + ":" + another 4 digit number
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
 
 }

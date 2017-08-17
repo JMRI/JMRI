@@ -12,19 +12,19 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Sensor;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.entryexit.DestinationPoints;
 import jmri.jmrit.signalling.entryexit.PointDetails;
@@ -72,7 +72,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     private Color settingRouteColor = null;
 
     public boolean useDifferentColorWhenSetting() {
-        return (settingRouteColor != null);
+        return (settingRouteColor == null ? false : true);
     }
 
     public Color getSettingRouteColor() {
@@ -125,7 +125,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
-        InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
 
         glassPane.setOpaque(false);
         glassPane.setLayout(null);
@@ -153,7 +153,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return glassPane;
     }
 
-    HashMap<PointDetails, Source> nxpair = new HashMap<>();
+    HashMap<PointDetails, Source> nxpair = new HashMap<PointDetails, Source>();
 
     public void addNXSourcePoint(LayoutBlock facing, List<LayoutBlock> protecting, NamedBean loc, LayoutEditor panel) {
         PointDetails point = providePoint(facing, protecting, panel);
@@ -162,12 +162,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     public void addNXSourcePoint(NamedBean source) {
         PointDetails point = null;
-        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
         for (int i = 0; i < layout.size(); i++) {
             point = providePoint(source, layout.get(i));
         }
         if (point == null) {
-            log.error("Unable to find a location on any panel for item {}", source.getDisplayName());  // NOI18N
+            log.error("Unable to find a location on any panel for item " + source.getDisplayName());  // NOI18N
+            return;
         }
     }
 
@@ -183,7 +184,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         PointDetails point;
         point = providePoint(source, panel);
         if (point == null) {
-            log.error("Unable to find a location on the panel {} for item {}", panel.getLayoutName(), source.getDisplayName());  // NOI18N
+            log.error("Unable to find a location on the panel " + panel.getLayoutName() + " for item " + source.getDisplayName());  // NOI18N
+            return;
         }
     }
 
@@ -265,7 +267,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      *
      * @param inputName System name to be normalized
      * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form
+     * @return A system name in standard normalized form 
      */
     @Override
     @CheckReturnValue
@@ -273,9 +275,22 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return inputName;
     }
 
+    /**
+     * Implemented to support the Conditional combo box name list
+     * @since 4.9.3
+     * @return A sorted array of NX names
+     */
     @Override
     public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        List<String> nxList = getEntryExitList();
+        String[] arr = new String[nxList.size()];
+        int i = 0;
+        for (String nxRow : nxList) {
+            arr[i] = nxRow;
+            i++;
+        }
+        java.util.Arrays.sort(arr);
+        return arr;
     }
 
     @Override
@@ -341,7 +356,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return A list of source objects
      */
     public List<Object> getSourceList(LayoutEditor panel) {
-        List<Object> list = new ArrayList<>();
+        List<Object> list = new ArrayList<Object>();
 
         for (Entry<PointDetails, Source> e : nxpair.entrySet()) {
             Object obj = (e.getKey()).getRefObject();
@@ -434,7 +449,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * List holding SourceToDest sets of routes between two points.
      */
-    ArrayList<SourceToDest> routesToSet = new ArrayList<>();
+    ArrayList<SourceToDest> routesToSet = new ArrayList<SourceToDest>();
 
     /**
      * Class to store NX sets consisting of a source point, a destination point,
@@ -485,7 +500,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Remove remaining SourceToDest sets in routesToSet
      */
     synchronized void removeRemainingRoute() {
-        ArrayList<SourceToDest> toRemove = new ArrayList<>();
+        ArrayList<SourceToDest> toRemove = new ArrayList<SourceToDest>();
         for (SourceToDest rts : routesToSet) {
             if (rts.ref == currentDealing) {
                 toRemove.add(rts);
@@ -509,14 +524,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
     };
 
-    ArrayList<Object> destinationList = new ArrayList<>();
+    ArrayList<Object> destinationList = new ArrayList<Object>();
 
     // Need to sort out the presentation of the name here rather than using the point ID.
     // This is used for the creation and display of information in the table.
     // The presentation of the name might have to be done at the table level.
     public ArrayList<Object> getNxSource(LayoutEditor panel) {
-        ArrayList<Object> source = new ArrayList<>();
-        destinationList = new ArrayList<>();
+        ArrayList<Object> source = new ArrayList<Object>();
+        destinationList = new ArrayList<Object>();
 
         for (Entry<PointDetails, Source> e : nxpair.entrySet()) {
             PointDetails key = e.getKey();
@@ -537,7 +552,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     public ArrayList<LayoutEditor> getSourcePanelList() {
-        ArrayList<LayoutEditor> list = new ArrayList<>();
+        ArrayList<LayoutEditor> list = new ArrayList<LayoutEditor>();
 
         for (Entry<PointDetails, Source> e : nxpair.entrySet()) {
             PointDetails key = e.getKey();
@@ -576,7 +591,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
         PointDetails sourcePoint = providePoint(source, panel);
         if (sourcePoint == null) {
-            log.error("source point for {} not created addNXDes", source.getDisplayName());  // NOI18N
+            log.error("source point for " + source.getDisplayName() + " not created addNXDes");  // NOI18N
             return;
         }
 
@@ -596,7 +611,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     public ArrayList<Object> getDestinationList(Object obj, LayoutEditor panel) {
-        ArrayList<Object> list = new ArrayList<>();
+        ArrayList<Object> list = new ArrayList<Object>();
         if (nxpair.containsKey(getPointDetails(obj, panel))) {
             List<PointDetails> from = nxpair.get(getPointDetails(obj, panel)).getDestinationPoints();
             for (int i = 0; i < from.size(); i++) {
@@ -626,7 +641,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         if (nxpair.containsKey(sourcePoint)) {
             nxpair.get(sourcePoint).removeDestination(destPoint);
             firePropertyChange("length", null, null);  // NOI18N
-            if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
+            if (nxpair.get(sourcePoint).getDestinationPoints().size() == 0) {
                 nxpair.remove(sourcePoint);
             }
         } else if (log.isDebugEnabled()) {
@@ -696,7 +711,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     public List<String> getEntryExitList() {
-        ArrayList<String> destlist = new ArrayList<>();
+        ArrayList<String> destlist = new ArrayList<String>();
         for (Source e : nxpair.values()) {
             destlist.addAll(e.getDestinationUniqueId());
         }
@@ -789,7 +804,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return "empty";  // NOI18N
     }
 
-    ArrayList<StackDetails> stackList = new ArrayList<>();
+    ArrayList<StackDetails> stackList = new ArrayList<StackDetails>();
 
     /**
      * If a route is requested but is currently blocked, ask user
@@ -828,7 +843,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return an ArrayList containing destinationPoint elements
      */
     public List<DestinationPoints> getStackedInterlocks() {
-        List<DestinationPoints> dpList = new ArrayList<>();
+        List<DestinationPoints> dpList = new ArrayList<DestinationPoints>();
         for (StackDetails st : stackList) {
             dpList.add(st.getDestinationPoint());
         }
@@ -896,8 +911,11 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         }
     }
 
-    javax.swing.Timer checkTimer = new javax.swing.Timer(10000, (java.awt.event.ActionEvent e) -> {
-        checkRoute();
+    javax.swing.Timer checkTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            checkRoute();
+        }
     });
 
     /**

@@ -617,13 +617,8 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }   // findHitPointType
 
-    /*
-     * Modify coordinates methods
-     */
-
     /**
-     * set center coordinates
-     * @param p the coordinates to set
+     * Modify coordinates methods
      */
     @Override
     public void setCoordsCenter(Point2D p) {
@@ -662,34 +657,13 @@ public class LayoutSlip extends LayoutTurnout {
         pointB = MathUtil.add(center, dispB);
     }
 
-    /**
-     * scale this LayoutTrack's coordinates by the x and y factors
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
-     */
     @Override
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
-        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
-        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
-        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
-        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
-    }
-
-    /**
-     * translate this LayoutTrack's coordinates by the x and y factors
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
-     */
-    @Override
-    public void translateCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Double(xFactor, yFactor);
-        center = MathUtil.add(center, factor);
-        pointA = MathUtil.add(pointA, factor);
-        pointB = MathUtil.add(pointB, factor);
-        pointC = MathUtil.add(pointC, factor);
-        pointD = MathUtil.add(pointD, factor);
+        center = MathUtil.granulize(MathUtil.multiply(center, xFactor), 1.0);
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, xFactor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, xFactor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, xFactor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, xFactor), 1.0);
     }
 
     /**
@@ -705,7 +679,7 @@ public class LayoutSlip extends LayoutTurnout {
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
 
-        if (!tBlockName.isEmpty()) {
+        if (tBlockName.length() > 0) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
@@ -715,7 +689,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        if (!tBlockBName.isEmpty()) {
+        if (tBlockBName.length() > 0) {
             blockB = p.getLayoutBlock(tBlockBName);
             if (blockB != null) {
                 blockBName = tBlockBName;
@@ -727,7 +701,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        if (!tBlockCName.isEmpty()) {
+        if (tBlockCName.length() > 0) {
             blockC = p.getLayoutBlock(tBlockCName);
             if (blockC != null) {
                 blockCName = tBlockCName;
@@ -739,7 +713,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        if (!tBlockDName.isEmpty()) {
+        if (tBlockDName.length() > 0) {
             blockD = p.getLayoutBlock(tBlockDName);
             if (blockD != null) {
                 blockDName = tBlockDName;
@@ -847,7 +821,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 error = false;
                                 newAngle = JOptionPane.showInputDialog(layoutEditor,
                                         rb.getString("EnterRotation") + " :");
-                                if (newAngle.isEmpty()) {
+                                if (newAngle.length() < 1) {
                                     return;  // cancelled
                                 }
                                 double rot = 0.0;
@@ -999,24 +973,19 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
+            turnoutAComboBox = new JmriBeanComboBox(
+                    InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
-            turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(turnoutAComboBox, false, true);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
-
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
-            panel1a.add(turnoutBNameLabel);
-
             turnoutBComboBox = new JmriBeanComboBox(
                     InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(turnoutBComboBox, false, true);
+            panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
-
             contentPane.add(panel1a);
-
             JPanel panel2 = new JPanel();
             panel2.setLayout(new GridLayout(0, 3, 2, 2));
 
@@ -1056,7 +1025,7 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
             panel3.add(blockNameComboBox);
-            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
+            layoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
 
             contentPane.add(panel3);
@@ -1087,15 +1056,19 @@ public class LayoutSlip extends LayoutTurnout {
                     }
             );
 
-            slipEditDone.addActionListener((ActionEvent event) -> {
-                slipEditDonePressed(event);
-            });
+            slipEditDone.addActionListener(
+                    (ActionEvent event) -> {
+                        slipEditDonePressed(event);
+                    }
+            );
             slipEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            slipEditCancel.addActionListener((ActionEvent event) -> {
-                slipEditCancelPressed(event);
-            });
+            slipEditCancel.addActionListener(
+                    (ActionEvent event) -> {
+                        slipEditCancelPressed(event);
+                    }
+            );
             slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
@@ -1296,7 +1269,8 @@ public class LayoutSlip extends LayoutTurnout {
         }
         newName = turnoutBComboBox.getDisplayName();
         if (!turnoutBName.equals(newName)) {
-            if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
+            if (layoutEditor.validatePhysicalTurnout(newName,
+                    editLayoutTurnoutFrame)) {
                 setTurnoutB(newName);
             } else {
                 namedTurnoutB = null;

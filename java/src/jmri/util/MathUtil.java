@@ -1,7 +1,5 @@
 package jmri.util;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -19,21 +17,11 @@ import javax.annotation.CheckReturnValue;
 @CheckReturnValue
 public final class MathUtil {
 
-    public static Point2D zeroPoint2D = new Point2D.Double(0, 0);
-    public static Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
-    
     /**
      * @return the point {0, 0}
      */
     public static Point2D zeroPoint2D() {
-        return zeroPoint2D;
-    }
-
-    /**
-     * @return the point {POSITIVE_INFINITY, POSITIVE_INFINITY}
-     */
-    public static Point2D infinityPoint2D() {
-        return infinityPoint2D;
+        return new Point2D.Double(0, 0);
     }
 
     /**
@@ -70,37 +58,6 @@ public final class MathUtil {
      */
     public static Point Point2DToPoint(Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
-    }
-
-    /**
-     * return the minimum coordinates of two points
-     * @param pA the first point
-     * @param pB the second point
-     * @return the minimum coordinates
-     */
-    public static Point2D min(Point2D pA, Point2D pB) {
-        return new Point2D.Double(Math.min(pA.getX(), pB.getX()), Math.min(pA.getY(), pB.getY()));
-    }
-
-    /**
-     * return the maximum coordinates of two points
-     * @param pA the first point
-     * @param pB the second point
-     * @return the maximum coordinates
-     */
-    public static Point2D max(Point2D pA, Point2D pB) {
-        return new Point2D.Double(Math.max(pA.getX(), pB.getX()), Math.max(pA.getY(), pB.getY()));
-    }
-
-    /**
-     * return the coordinates of a point pinned between two other points
-     * @param pA the first point
-     * @param pB the second point
-     * @param pC the third point
-     * @return the coordinated of pA pined between pB and pC
-     */
-    public static Point2D pin(Point2D pA, Point2D pB, Point2D pC) {
-        return min(max(pA, min(pB, pC)), max(pB, pC));
     }
 
     /**
@@ -142,16 +99,6 @@ public final class MathUtil {
     // (again just so parameter order doesn't matter...)
     public static Point2D multiply(double s, Point2D p) {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
-    }
-
-    /**
-     * multiply a point times a point
-     * @param p1 the first point
-     * @param p2 the second point
-     * @return the first point multiplied by the second
-     */
-    public static Point2D multiply(Point2D p1, Point2D p2) {
-        return new Point2D.Double(p1.getX() * p2.getX(), p1.getY() * p2.getY());
     }
 
     /**

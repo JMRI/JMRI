@@ -20,7 +20,6 @@
     <label>
       <text>Locomotive Information</text>
       <text xml:lang="it">Informazioni Locomotiva</text>
-      <text xml:lang="de">Lokomotive Information</text>
     </label>
     <label>
       <text> </text>
@@ -28,13 +27,11 @@
     <label>
       <text>(coming soon)</text>
       <text xml:lang="it">in arrivo</text>
-      <text xml:lang="de">demnächst hier</text>
     </label>
     <separator/>
     <label>
       <text>Project Information</text>
       <text xml:lang="it">Informazioni Progetto</text>
-      <text xml:lang="de">Projekt Information</text>
     </label>
     <label>
       <text> </text>
@@ -42,7 +39,6 @@
     <label>
       <text>(coming soon)</text>
       <text xml:lang="it">in arrivo</text>
-      <text xml:lang="de">demnächst hier</text>
     </label>
   </column>
 </pane>

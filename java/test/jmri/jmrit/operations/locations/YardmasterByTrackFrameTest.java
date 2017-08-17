@@ -4,12 +4,15 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class YardmasterByTrackFrameTest {
 
@@ -18,8 +21,7 @@ public class YardmasterByTrackFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location l = new Location("Location Test Attridutes id", "Location Test Name");
         YardmasterByTrackFrame t = new YardmasterByTrackFrame(l);
-        Assert.assertNotNull("exists", t);
-        t.dispose();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -36,4 +38,5 @@ public class YardmasterByTrackFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackFrameTest.class.getName());
+
 }

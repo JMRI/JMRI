@@ -146,10 +146,8 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     @Override
     public void setHidden(boolean hide) {
-        if (_hidden != hide) {
-            _hidden = hide;
-            showHidden();
-        }
+        _hidden = hide;
+        showHidden();
     }
 
     @Override

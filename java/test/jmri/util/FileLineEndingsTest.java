@@ -8,7 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.apache.commons.io.FileUtils;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+import jmri.script.JmriScriptEngineManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests that files have correct line endings. The list of file patterns tested
  * should match the list fixed by the ant fixlineends target.
- * <p>
+ *
  * Do not include in the jmri package test suite.
  *
  * @author Randall Wood (C) 2017
@@ -112,8 +114,27 @@ public class FileLineEndingsTest {
     @Test
     public void lineEndings() {
         try {
-            String contents = FileUtils.readFileToString(file);
-            Assert.assertFalse("File " + file.getPath() + " has incorrect line endings.", contents.contains("\r\n"));
+            String path = this.file.getCanonicalPath();
+            // convert Windows separators into POSIX separators so
+            // Python can normalize the paths since the Windows separator
+            // is also the escape character
+            if (File.separator.equals("\\")) {
+                path = path.replace("\\", "/");
+            }
+            String script = String.join("\n",
+                    "import os",
+                    "failing = False",
+                    "if \"\\r\\n\" in open(os.path.normpath(\"" + path + "\"),\"rb\").read():",
+                    "    failing = True");
+            try {
+                ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+                engine.eval(script);
+                Assert.assertFalse("File " + file.getPath() + " has incorrect line endings.",
+                        Boolean.valueOf(engine.get("failing").toString()));
+            } catch (ScriptException ex) {
+                log.error("Unable to execute script for test", ex);
+                Assert.fail("Unable to execute script for test");
+            }
         } catch (IOException ex) {
             log.error("Unable to get path for {}", this.file, ex);
             Assert.fail("Unable to get get path " + file.getPath() + " for test");

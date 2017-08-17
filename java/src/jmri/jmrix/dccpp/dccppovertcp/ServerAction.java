@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.InstanceManager;
 
 /**
  * Implementation of the DCCppOverTcp LbServer Server Protocol
@@ -17,19 +16,19 @@ public class ServerAction
         super(s);
         // Get a server instance to cause the config to be read and the server
         // started if necessary
-        InstanceManager.getDefault(Server.class);
+        Server.getInstance();
     }
 
     public ServerAction() {
         this("DCC++OverTcp Server");
         // Get a server instance to cause the config to be read and the server
         // started if necessary
-        InstanceManager.getDefault(Server.class);
+        Server.getInstance();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ServerFrame f = InstanceManager.getDefault(ServerFrame.class);
+        ServerFrame f = ServerFrame.getInstance();
         f.setVisible(true);
     }
 }

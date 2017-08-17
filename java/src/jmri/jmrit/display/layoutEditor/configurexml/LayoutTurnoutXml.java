@@ -37,22 +37,22 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-        if (!p.getTurnoutName().isEmpty()) {
+        if (p.getTurnoutName().length() > 0) {
             element.setAttribute("turnoutname", p.getTurnoutName());
         }
-        if (!p.getSecondTurnoutName().isEmpty()) {
+        if (p.getSecondTurnoutName().length() > 0) {
             element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
         }
-        if (!p.getBlockName().isEmpty()) {
+        if (p.getBlockName().length() > 0) {
             element.setAttribute("blockname", p.getBlockName());
         }
-        if (!p.getBlockBName().isEmpty()) {
+        if (p.getBlockBName().length() > 0) {
             element.setAttribute("blockbname", p.getBlockBName());
         }
-        if (!p.getBlockCName().isEmpty()) {
+        if (p.getBlockCName().length() > 0) {
             element.setAttribute("blockcname", p.getBlockCName());
         }
-        if (!p.getBlockDName().isEmpty()) {
+        if (p.getBlockDName().length() > 0) {
             element.setAttribute("blockdname", p.getBlockDName());
         }
         element.setAttribute("type", "" + p.getTurnoutType());
@@ -71,63 +71,64 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if (p.getConnectD() != null) {
             element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
         }
-        if (!p.getSignalA1Name().isEmpty()) {
+        if (p.getSignalA1Name().length() > 0) {
             element.setAttribute("signala1name", p.getSignalA1Name());
         }
-        if (!p.getSignalA2Name().isEmpty()) {
+        if (p.getSignalA2Name().length() > 0) {
             element.setAttribute("signala2name", p.getSignalA2Name());
         }
-        if (!p.getSignalA3Name().isEmpty()) {
+        if (p.getSignalA3Name().length() > 0) {
             element.setAttribute("signala3name", p.getSignalA3Name());
         }
-        if (!p.getSignalB1Name().isEmpty()) {
+        if (p.getSignalB1Name().length() > 0) {
             element.setAttribute("signalb1name", p.getSignalB1Name());
         }
-        if (!p.getSignalB2Name().isEmpty()) {
+        if (p.getSignalB2Name().length() > 0) {
             element.setAttribute("signalb2name", p.getSignalB2Name());
         }
-        if (!p.getSignalC1Name().isEmpty()) {
+        if (p.getSignalC1Name().length() > 0) {
             element.setAttribute("signalc1name", p.getSignalC1Name());
         }
-        if (!p.getSignalC2Name().isEmpty()) {
+        if (p.getSignalC2Name().length() > 0) {
             element.setAttribute("signalc2name", p.getSignalC2Name());
         }
-        if (!p.getSignalD1Name().isEmpty()) {
+        if (p.getSignalD1Name().length() > 0) {
             element.setAttribute("signald1name", p.getSignalD1Name());
         }
-        if (!p.getSignalD2Name().isEmpty()) {
+        if (p.getSignalD2Name().length() > 0) {
             element.setAttribute("signald2name", p.getSignalD2Name());
         }
-        if (!p.getLinkedTurnoutName().isEmpty()) {
+        if (p.getLinkedTurnoutName().length() > 0) {
             element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
             element.setAttribute("linktype", "" + p.getLinkType());
         }
 
-        if (!p.getSignalAMastName().isEmpty()) {
+        if (p.getSignalAMastName().length() > 0) {
             element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
         }
 
-        if (!p.getSignalBMastName().isEmpty()) {
+        if (p.getSignalBMastName().length() > 0) {
             element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
         }
-        if (!p.getSignalCMastName().isEmpty()) {
+        if (p.getSignalCMastName().length() > 0) {
             element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
         }
-        if (!p.getSignalDMastName().isEmpty()) {
+        if (p.getSignalDMastName().length() > 0) {
             element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
+
         }
 
-        if (!p.getSensorAName().isEmpty()) {
+        if (p.getSensorAName().length() > 0) {
             element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
         }
 
-        if (!p.getSensorBName().isEmpty()) {
+        if (p.getSensorBName().length() > 0) {
             element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
         }
-        if (!p.getSensorCName().isEmpty()) {
+        if (p.getSensorCName().length() > 0) {
             element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
         }
-        if (!p.getSensorDName().isEmpty()) {
+        if (p.getSensorDName().length() > 0) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
 

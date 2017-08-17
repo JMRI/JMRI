@@ -13,11 +13,14 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.ShutDownManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
+import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.managers.DefaultShutDownManager;
+import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
@@ -222,12 +225,18 @@ public abstract class AppsBase {
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", Application.getApplicationName(), null);
 
+        // Install a user preferences manager
+        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
+
         // install the abstract action model that allows items to be added to the, both
         // CreateButton and Perform Action Model use a common Abstract class
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
+
+        //Install Entry Exit Pairs Manager
+        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
     }
 

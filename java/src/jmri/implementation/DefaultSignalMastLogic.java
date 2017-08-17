@@ -18,7 +18,6 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -280,7 +279,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
         if (boo) {
             log.debug("Set use layout editor");
-            ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+            ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
             /*We don't care which layout editor panel the signalmast is on, just so long as
              the routing is done via layout blocks*/
             // TODO: what is this?
@@ -792,7 +791,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         try {
             thr.start();
         } catch (java.lang.IllegalThreadStateException ex) {
-            log.error("exception while starting setSignalAppearance thread: {}", ex.getMessage());
+            log.error("exception while starting setSignalAppearance thread: ", ex.toString());
         }
     }
 
@@ -977,7 +976,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 try {
                     getSourceMast().setAspect(aspect);
                 } catch (Exception ex) {
-                    log.error("Exception while setting Signal Logic {}", ex.getMessage());
+                    log.error("Exception while setting Signal Logic ", ex.toString());
                 }
                 return;
             }
@@ -1307,7 +1306,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
         public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks) {
             if (log.isDebugEnabled()) {
-                log.debug("{} called setAutoBlocks with {}", destination.getDisplayName(), (blocks != null ? "" + blocks.size() + " blocks in hash table" : "null hash table reference"));
+                log.debug("{} called setAutoBlocks with ", destination.getDisplayName(), (blocks != null ? "" + blocks.size() + " blocks in hash table" : "null hash table reference"));
             }
             if (this.autoBlocks != null) {
                 for (Block key : autoBlocks.keySet()) {
@@ -2110,7 +2109,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             if ((destinationBlock != null) && (log.isDebugEnabled())) {
                 log.debug(destination.getDisplayName() + " Set use layout editor");
             }
-            ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+            ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
             List<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.

@@ -155,6 +155,14 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{2,6}$"; // examples 3455, see tooltip
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }

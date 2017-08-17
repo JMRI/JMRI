@@ -38,7 +38,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         element.setAttribute("ident", p.getName());
 
         element.setAttribute("slipType", "" + p.getSlipType());
-        if (!p.getBlockName().isEmpty()) {
+        if (p.getBlockName().length() > 0) {
             element.setAttribute("blockname", p.getBlockName());
         }
 
@@ -54,28 +54,28 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         if (p.getConnectD() != null) {
             element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
         }
-        if (!p.getSignalA1Name().isEmpty()) {
+        if (p.getSignalA1Name().length() > 0) {
             element.addContent(new Element("signala1name").addContent(p.getSignalA1Name()));
         }
-        if (!p.getSignalB1Name().isEmpty()) {
+        if (p.getSignalB1Name().length() > 0) {
             element.addContent(new Element("signalb1name").addContent(p.getSignalB1Name()));
         }
-        if (!p.getSignalC1Name().isEmpty()) {
+        if (p.getSignalC1Name().length() > 0) {
             element.addContent(new Element("signalc1name").addContent(p.getSignalC1Name()));
         }
-        if (!p.getSignalD1Name().isEmpty()) {
+        if (p.getSignalD1Name().length() > 0) {
             element.addContent(new Element("signald1name").addContent(p.getSignalD1Name()));
         }
-        if (!p.getSignalA2Name().isEmpty()) {
+        if (p.getSignalA2Name().length() > 0) {
             element.addContent(new Element("signala2name").addContent(p.getSignalA2Name()));
         }
-        if (!p.getSignalB2Name().isEmpty()) {
+        if (p.getSignalB2Name().length() > 0) {
             element.addContent(new Element("signalb2name").addContent(p.getSignalB2Name()));
         }
-        if (!p.getSignalC2Name().isEmpty()) {
+        if (p.getSignalC2Name().length() > 0) {
             element.addContent(new Element("signalc2name").addContent(p.getSignalC2Name()));
         }
-        if (!p.getSignalD2Name().isEmpty()) {
+        if (p.getSignalD2Name().length() > 0) {
             element.addContent(new Element("signald2name").addContent(p.getSignalD2Name()));
         }
         Point2D coords = p.getCoordsCenter();
@@ -88,39 +88,39 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
 
-        if (!p.getSignalAMastName().isEmpty()) {
+        if (p.getSignalAMastName().length() > 0) {
             element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
         }
 
-        if (!p.getSignalBMastName().isEmpty()) {
+        if (p.getSignalBMastName().length() > 0) {
             element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
         }
-        if (!p.getSignalCMastName().isEmpty()) {
+        if (p.getSignalCMastName().length() > 0) {
             element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
         }
-        if (!p.getSignalDMastName().isEmpty()) {
+        if (p.getSignalDMastName().length() > 0) {
             element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
         }
 
-        if (!p.getSensorAName().isEmpty()) {
+        if (p.getSensorAName().length() > 0) {
             element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
         }
 
-        if (!p.getSensorBName().isEmpty()) {
+        if (p.getSensorBName().length() > 0) {
             element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
         }
-        if (!p.getSensorCName().isEmpty()) {
+        if (p.getSensorCName().length() > 0) {
             element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
         }
-        if (!p.getSensorDName().isEmpty()) {
+        if (p.getSensorDName().length() > 0) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
 
-        if (!p.getTurnoutName().isEmpty()) {
+        if (p.getTurnoutName().length() > 0) {
             element.addContent(new Element("turnout").addContent(p.getTurnoutName()));
         }
 
-        if (!p.getTurnoutBName().isEmpty()) {
+        if (p.getTurnoutBName().length() > 0) {
             element.addContent(new Element("turnoutB").addContent(p.getTurnoutBName()));
         }
 

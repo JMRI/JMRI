@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 
 /**
  * Test the SignalMastIcon.
- * <p>
+ *
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
@@ -39,6 +39,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager & create test heads
+        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
             @Override
@@ -91,6 +92,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager & create test heads
+        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
             @Override
@@ -151,6 +153,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetWindows(true);  // log existing windows in setup
         JUnitUtil.resetInstanceManager();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test SignalMastIcon Panel");
@@ -165,9 +168,10 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            panel.getTargetFrame().dispose();
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
             panel.dispose();
         }
+        JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

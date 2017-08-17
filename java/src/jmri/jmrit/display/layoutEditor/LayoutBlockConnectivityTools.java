@@ -9,7 +9,6 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalMast;
-import jmri.jmrit.display.PanelMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -81,7 +80,7 @@ public class LayoutBlockConnectivityTools {
         LayoutBlock protectingBlock = null;
         LayoutBlock destFacingBlock = null;
         List<LayoutBlock> destProtectBlock = null;
-        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         for (int i = 0; i < layout.size(); i++) {
             if (log.isDebugEnabled()) {
@@ -143,7 +142,7 @@ public class LayoutBlockConnectivityTools {
      *                            has not been enabled.
      */
     public ArrayList<LayoutBlock> getLayoutBlocks(NamedBean sourceBean, NamedBean destBean, boolean validateOnly, int pathMethod) throws jmri.JmriException {
-        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock facingBlock = null;
         LayoutBlock protectingBlock = null;

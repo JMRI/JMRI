@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
    LnMessageServerActionTest.class,
    LnMessageClientActionTest.class,
    LnMessageClientPollThreadTest.class,
-   LnMessageServerTest.class,
-   BundleTest.class,
+   LnMessageServerTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.locormi package.

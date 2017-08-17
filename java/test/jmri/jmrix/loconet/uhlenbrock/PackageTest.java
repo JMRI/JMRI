@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
    UhlenbrockPacketizerTest.class,
    UhlenbrockSystemConnectionMemoTest.class,
    UhlenbrockProgrammerManagerTest.class,
-   UhlenbrockLnThrottleManagerTest.class,
-   BundleTest.class,
+   UhlenbrockLnThrottleManagerTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.uhlenbrock package.

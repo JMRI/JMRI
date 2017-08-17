@@ -47,10 +47,6 @@ import org.junit.runners.Suite;
     SteamSoundTest.class,
     Steam1SoundTest.class,
     ThrottleTriggerTest.class,
-    NotchSoundTest.class,
-    NotchTransitionTest.class,
-    VSDFileTest.class,
-    VSDecoderPaneTest.class,
 })
 
 /**

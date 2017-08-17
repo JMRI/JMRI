@@ -124,6 +124,14 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{1,5}$"; // examples 345, see tooltip
+    }
+
+    /**
      * Allow access to DCCppLightManager
      */
     @Deprecated

@@ -130,6 +130,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryRegex() {
+        return "^[0-9]{2,6}[aAmMpPsS]{0,1}[0-9]{1,3}$"; // Grapevine examples 56m5, 502
+        // see tooltip
+    }
+
+    /**
      * Dummy routine
      */
     @Override

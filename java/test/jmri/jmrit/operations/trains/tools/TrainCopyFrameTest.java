@@ -1,16 +1,19 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.trains.Train;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.Train;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class TrainCopyFrameTest {
 
@@ -19,8 +22,7 @@ public class TrainCopyFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainCopyFrame t = new TrainCopyFrame(train1);
-        Assert.assertNotNull("exists", t);
-        t.dispose();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -37,4 +39,5 @@ public class TrainCopyFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainCopyFrameTest.class.getName());
+
 }

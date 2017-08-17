@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    JmrixConfigPaneXmlTest.class,
-    BundleTest.class
+    JmrixConfigPaneXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.configurexml package.

@@ -24,7 +24,6 @@ import javax.swing.table.TableColumnModel;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
 import jmri.Section;
 import jmri.Sensor;
@@ -44,13 +43,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Dispatcher functionality, working with Sections, Transits and ActiveTrain.
- * <p>
+ *
+ * <P>
  * Dispatcher serves as the manager for ActiveTrains. All allocation of Sections
  * to ActiveTrains is performed here.
  * <P>
- * Programming Note: Use the managed instance returned by
- * {@link jmri.InstanceManager#getDefault(java.lang.Class)} to access the
- * running Dispatcher.
+ * Programming Note: public methods may be addressed externally via
+ * jmri.jmrit.dispatcher.DispatcherFrame.instance(). ...
  * <P>
  * Dispatcher listens to fast clock minutes to handle all ActiveTrain items tied
  * to fast clock time.
@@ -70,9 +69,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceManagerAutoDefault {
+public class DispatcherFrame extends jmri.util.JmriJFrame {
 
-    public DispatcherFrame() {
+    /**
+     * Get a DispatcherFrame through the instance() method
+     */
+    private DispatcherFrame() {
         super(false, true);
         initializeOptions();
         openDispatcherWindow();
@@ -104,7 +106,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         boolean pathsInited = false;
         if (names.length > 0) {
             for (int i = 0; i < names.length; i++) {
-                //read xml data from selected filename and move it into the new train dialog box
+                //read xml data from selected filename and move it into the new train dialog box 
                 TrainInfo info = null;
                 try {
                     info = tif.readTrainInfo(names[i]);
@@ -264,7 +266,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         optionsRead = true;
         try {
-            InstanceManager.getDefault(OptionsFile.class).readDispatcherOptions(this);
+            OptionsFile.instance().readDispatcherOptions(this);
         } catch (org.jdom2.JDOMException jde) {
             log.error("JDOM Exception when retreiving dispatcher options " + jde);
         } catch (java.io.IOException ioe) {
@@ -731,7 +733,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     seq = seqList.get(0);
                 }
                 if (seqList.size() > 1) {
-                    // this section is in the Transit multiple times
+                    // this section is in the Transit multiple times 
                     int test = at.getNextSectionSeqNumber() - 1;
                     int diff = java.lang.Math.abs(seq - test);
                     for (int i = 1; i < seqList.size(); i++) {
@@ -1110,8 +1112,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 }
             }
-            // check/set Transit specific items for automatic running
-            // validate connectivity for all Sections in this transit
+            // check/set Transit specific items for automatic running    
+            // validate connectivity for all Sections in this transit            
             int numErrors = t.validateConnectivity(_LE);
             if (numErrors != 0) {
                 if (showErrorMessages) {
@@ -1139,7 +1141,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             //TODO: Need to check signalMasts as well
             // this train is OK, activate the AutoTrains window, if needed
             if (_autoTrainsFrame == null) {
-                _autoTrainsFrame = new AutoTrainsFrame(this);
+                _autoTrainsFrame = new AutoTrainsFrame(_instance);
             } else {
                 _autoTrainsFrame.setVisible(true);
             }
@@ -1160,7 +1162,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
-        // all information checks out - create
+        // all information checks out - create 
         ActiveTrain at = new ActiveTrain(t, trainID, tSource);
         //if (at==null) {
         // if (showErrorMessages) {
@@ -1260,7 +1262,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     releaseAllocatedSection(allocatedSections.get(k - 1), true);
                 }
             } catch (Exception e) {
-                log.warn("releaseAllocatedSection failed - maybe the AllocatedSection was removed due to a terminating train?? {}", e.getMessage());
+                log.warn("releaseAllocatedSection failed - maybe the AllocatedSection was removed due to a terminating train??", e.toString());
+                continue;
             }
         }
         // remove from restarting trains list, if present
@@ -1403,11 +1406,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     /**
      * Allocates a Section to an Active Train according to the information in an
      * AllocationRequest.
-     * <p>
+     *
      * If successful, returns an AllocatedSection and removes the
      * AllocationRequest from the queue. If not successful, returns null and
      * leaves the AllocationRequest in the queue.
-     * <p>
+     *
      * To be allocatable, a Section must be FREE and UNOCCUPIED. If a Section is
      * OCCUPIED, the allocation is rejected unless the dispatcher chooses to
      * override this restriction. To be allocatable, the Active Train must not
@@ -1483,7 +1486,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
                     && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
                     && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
-                // not at either end - determine the next section
+                // not at either end - determine the next section 
                 int seqNum = ar.getSectionSeqNumber();
                 if (at.isAllocationReversed()) {
                     seqNum -= 1;
@@ -1590,7 +1593,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         //If the section state is free, we need to look to see if any of the blocks are used else where
                         Section conflict = checkBlocksNotInAllocatedSection(se, null);
                         if (conflict != null) {
-                            //We have a conflicting path
+                            //We have a conflicting path 
                             //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
                             return null;
                         } else {
@@ -1617,7 +1620,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
 
             // check/set turnouts if requested or if autorun
-            // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If
+            // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If 
             //   turnouts are not set correctly, allocation will not proceed without dispatcher override.
             //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
             //   if not in the correct position.
@@ -1826,12 +1829,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 ArrayList<Block> blas = as.getSection().getBlockList();
-                //
-                // When allocating the initial section for an Active Train,
+                // 
+                // When allocating the initial section for an Active Train, 
                 // we need not be concerned with any blocks in the initial section
                 // which are unoccupied and to the rear of any occupied blocks in
                 // the section as the train is not expected to enter those blocks.
-                // When sections include the OS section these blocks prevented
+                // When sections include the OS section these blocks prevented 
                 // allocation.
                 //
                 // The procedure is to remove those blocks (for the moment) from
@@ -1963,10 +1966,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     private void checkAutoRelease() {
         if ((autoReleaseBox != null) && (autoReleaseBox.isSelected())) {
-            // Auto release of exited sections has been requested - because of possible noise in block detection
+            // Auto release of exited sections has been requested - because of possible noise in block detection 
             //    hardware, allocated sections are automatically released in the order they were allocated only
             // Only unoccupied sections that have been exited are tested.
-            // The next allocated section must be assigned to the same train, and it must have been entered for
+            // The next allocated section must be assigned to the same train, and it must have been entered for 
             //    the exited Section to be released.
             // Extra allocated sections are not automatically released (allocation number = -1).
             boolean foundOne = true;
@@ -2004,7 +2007,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                         || (at.getStatus() == ActiveTrain.STOPPED)
                                         || (at.getStatus() == ActiveTrain.READY)
                                         || (at.getMode() == ActiveTrain.MANUAL)) {
-                                    // do not autorelease allocated sections from an Active Train that is
+                                    // do not autorelease allocated sections from an Active Train that is 
                                     //    STOPPED, READY, or WORKING, or is in MANUAL mode.
                                     foundOne = false;
                                     //But do so if the active train has reached its restart point
@@ -2105,7 +2108,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             ActiveTrain at = delayedTrains.get(i);
             // check if this Active Train is waiting to start
             if ((!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
-                // is it time to start?
+                // is it time to start? 
                 if (at.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
                     if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
                         // allow this train to start
@@ -2360,8 +2363,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (at.getDelayedStart() != ActiveTrain.NODELAY && (!at.getStarted())) {
                 delayedTrains.add(at);
                 fastClockWarn(true);
-            } // djd needs work here
-            // check for delayed restart
+            } // djd needs work here    
+            // check for delayed restart      
             else if (at.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
                 fastClockWarn(false);
             }
@@ -2404,15 +2407,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _autoTrainsFrame;
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
+    static DispatcherFrame _instance = null;
+
     static public DispatcherFrame instance() {
-        return InstanceManager.getDefault(DispatcherFrame.class);
+        if (_instance == null) {
+            _instance = new DispatcherFrame();
+            jmri.InstanceManager.store(_instance, jmri.jmrit.dispatcher.DispatcherFrame.class);
+        }
+        return (_instance);
     }
 
     /**

@@ -270,4 +270,9 @@ public interface TurnoutManager extends Manager<Turnout> {
      */
     public String getEntryToolTip();
 
+    /**
+     * Provide a manager-specific regex for the Add new item beantable pane.
+     */
+    public String getEntryRegex();
+
 }

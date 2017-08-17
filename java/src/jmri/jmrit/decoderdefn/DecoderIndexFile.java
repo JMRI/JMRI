@@ -254,7 +254,6 @@ public class DecoderIndexFile extends XmlFile {
         if (masterFile == null) {
             return false;
         }
-        log.debug("checking for master file at {}", masterFile);
         Element masterRoot = masterXmlFile.rootFromURL(masterFile);
         if (masterRoot.getChild("decoderIndex") != null) {
             if (masterRoot.getChild("decoderIndex").getAttribute("version") != null) {
@@ -270,7 +269,6 @@ public class DecoderIndexFile extends XmlFile {
         // the master is found, we still do the right thing (nothing).
         String userVersion = null;
         DecoderIndexFile userXmlFile = new DecoderIndexFile();
-        log.debug("checking for user file at {}", defaultDecoderIndexFilename());
         Element userRoot = userXmlFile.rootFromName(defaultDecoderIndexFilename());
         if (userRoot.getChild("decoderIndex") != null) {
             if (userRoot.getChild("decoderIndex").getAttribute("version") != null) {
@@ -283,7 +281,10 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // force the update, with the version number located earlier is available
-        log.debug("forcing update of decoder index due to {} and {}", masterVersion, userVersion);
+        if (masterVersion != null) {
+            InstanceManager.getDefault(DecoderIndexFile.class).fileVersion = Integer.parseInt(masterVersion);
+        }
+
         forceCreationOfNewIndex();
         // and force it to be used
         return true;
@@ -313,8 +314,9 @@ public class DecoderIndexFile extends XmlFile {
             {
                 log.error("Failed to delete old index file");
             }
-            // force read from distributed file on next access
+            // force read from distributed file
             resetInstance();
+            InstanceManager.getDefault(DecoderIndexFile.class);
         }
 
         // create an array of file names from decoders dir in preferences, count entries
