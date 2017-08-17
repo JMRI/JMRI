@@ -457,8 +457,6 @@ public class LayoutSlipTest {
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         jmri.util.JUnitUtil.resetInstanceManager();
         ///DOMConfigurator.configure("myapp-log4j.xml");
