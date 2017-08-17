@@ -56,14 +56,14 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.debug("illegal character in number field of system name: " + systemName);
             return (0);
         }
         if (num <= 0) {
             log.error("invalid nce turnout system name: " + systemName);
             return (0);
         } else if (num > 4096) {
-            log.error("bit number out of range in nce turnout system name: " + systemName);
+            log.warn("bit number out of range in nce turnout system name: " + systemName);
             return (0);
         }
         return (num);

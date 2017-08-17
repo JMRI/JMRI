@@ -2245,7 +2245,7 @@ public class LightTableAction extends AbstractTableAction {
         /**
          * Validate the field information. Does not make any GUI changes.
          *
-         * @return 'true' if current field information is valid according to the system manager; otherwise 'false'
+         * @return 'true' if current field entry is valid according to the system manager; otherwise 'false'
          */
         @Override
         public boolean isValid() {
@@ -2257,7 +2257,6 @@ public class LightTableAction extends AbstractTableAction {
             }
             value = getText().trim();
             if ((value.length() < 1) && (allow0Length == false)) {
-                // some info in statusBar
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;

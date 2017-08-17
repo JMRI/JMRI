@@ -73,14 +73,20 @@ public class CbusLightManager extends AbstractLightManager {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Cbus light address");
+            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus light address");
         }
         switch (v.length) {
             case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
+                int unsigned = 0;
+                try {
+                    unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
+                } catch (NumberFormatException ex) {
+                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                };
+                if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
+                throw new IllegalArgumentException("can't make 2nd event from address " + address);
             case 2:
                 break;
             default:
@@ -90,11 +96,11 @@ public class CbusLightManager extends AbstractLightManager {
 
     @Override
     public boolean validSystemNameFormat(String systemName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.warn("Error: "+e.getMessage());
+            log.debug("Warning: "+e.getMessage());
             return false;
         }
         return true;
@@ -106,7 +112,7 @@ public class CbusLightManager extends AbstractLightManager {
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.warn("Error: "+e.getMessage());
+            //log.warn("Error: "+e.getMessage());
             return false;
         }
         return true;

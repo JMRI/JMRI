@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnTurnoutManager implements the TurnoutManager.
- * <P>
+ * Manage the LocoNet-specific Turnout implementation.
  * System names are "LTnnn", where nnn is the turnout number without padding.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -31,10 +30,8 @@ import org.slf4j.LoggerFactory;
  * bandwidth.
  * </UL>
  * In the end, this implementation is OK, but not great. An improvement would be
- * to control JMRI turnout operations centrally, so that retransmissions can
+ * to control JMRI turnout operations centrally, so that retransmissions can be
  * controlled.
- * <P>
- * Description: Implement turnout manager for loconet
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
@@ -195,7 +192,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

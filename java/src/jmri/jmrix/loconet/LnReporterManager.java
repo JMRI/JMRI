@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnReporterManager implements the ReporterManager.
- * <P>
+ * Manage the LocoNet-specific Reporter implementation.
  * System names are "LRnnn", where nnn is the Reporter number without padding.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -58,7 +57,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

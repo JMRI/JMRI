@@ -129,7 +129,7 @@ public class AcelaAddress {
     /**
      * Public static method to validate system name format
      *
-     * @eturn 'true' if system name has a valid format, else return 'false'
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters

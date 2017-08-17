@@ -73,14 +73,14 @@ public class NceLightManager extends AbstractLightManager {
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.debug("illegal character in number field of system name: " + systemName);
             return (0);
         }
         if (num <= 0) {
             log.error("invalid nce light system name: " + systemName);
             return (0);
         } else if (num > 4096) {
-            log.error("bit number out of range in nce light system name: " + systemName);
+            log.warn("bit number out of range in nce light system name: " + systemName);
             return (0);
         }
         return (num);
@@ -90,7 +90,6 @@ public class NceLightManager extends AbstractLightManager {
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
      * range box in the add Light window
-     *
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {

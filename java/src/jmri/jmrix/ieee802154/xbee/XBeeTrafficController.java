@@ -79,9 +79,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
         } catch (TimeoutException te) {
-            log.error("Timeout durring communication with Local XBee on communication start up. Error was {} cause {} ",te,te.getCause());
+            log.error("Timeout during communication with Local XBee on communication start up. Error was {} cause {} ",te,te.getCause());
         } catch (XBeeException xbe ) {
-            log.error("Exception durring XBee communication start up. Error was {} cause {} ",xbe,xbe.getCause());
+            log.error("Exception during XBee communication start up. Error was {} cause {} ",xbe,xbe.getCause());
         }
     }
 
@@ -366,7 +366,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     public XBeeDevice getXBee(){
         return xbee;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
 

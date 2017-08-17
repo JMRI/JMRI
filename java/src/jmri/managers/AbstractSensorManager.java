@@ -202,8 +202,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         String tmpSName = "";
 
         try {

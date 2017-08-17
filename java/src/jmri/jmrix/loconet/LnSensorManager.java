@@ -175,7 +175,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     int iName;
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -195,7 +195,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid loconet sesnor system name: " + systemName);
+            log.error("invalid loconet sensor system name: " + systemName);
             return (0);
         } else if (num > 4096) {
             log.error("bit number out of range in loconet sensor system name: " + systemName);
