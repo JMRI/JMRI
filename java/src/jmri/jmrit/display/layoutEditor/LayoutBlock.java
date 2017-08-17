@@ -482,7 +482,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Add Memory by name
      */
     public void setMemoryName(String name) {
-        if ((name == null) || name.equals("")) {
+        if ((name == null) || name.isEmpty()) {
             namedMemory = null;
             memoryName = "";
             return;
@@ -527,7 +527,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Add occupancy sensor by name
      */
     public void setOccupancySensorName(String name) {
-        if ((name == null) || name.equals("")) {
+        if ((name == null) || name.isEmpty()) {
             if (occupancyNamedSensor != null) {
                 occupancyNamedSensor.getBean().removePropertyChangeListener(mBlockListener);
             }
@@ -935,10 +935,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 getOccupancySensor().setUseDefaultTimerSettings(true);
             } else {
                 getOccupancySensor().setUseDefaultTimerSettings(false);
-                if (!sensorDebounceInactiveField.getText().trim().equals("")) {
+                if (!sensorDebounceInactiveField.getText().trim().isEmpty()) {
                     getOccupancySensor().setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
                 }
-                if (!sensorDebounceActiveField.getText().trim().equals("")) {
+                if (!sensorDebounceActiveField.getText().trim().isEmpty()) {
                     getOccupancySensor().setSensorDebounceGoingActiveTimer(Long.parseLong(sensorDebounceActiveField.getText().trim()));
                 }
             }

@@ -825,7 +825,7 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.equals(""))) {
+            if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
                 jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
@@ -959,7 +959,7 @@ public class LayoutSlip extends LayoutTurnout {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockName != null) && (!blockName.equals("")) && (block != null)) {
+        if ((blockName != null) && (!blockName.isEmpty()) && (block != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != block)) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + block.getDisplayName());

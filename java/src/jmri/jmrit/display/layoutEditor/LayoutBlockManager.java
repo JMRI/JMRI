@@ -66,7 +66,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         //Check that LayoutBlock does not already exist
         LayoutBlock block = null;
 
-        if ((userName == null) || userName.equals("")) {
+        if ((userName == null) || userName.isEmpty()) {
             log.error("Attempt to create a LayoutBlock with no user name");
 
             return null;

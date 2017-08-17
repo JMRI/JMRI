@@ -34,7 +34,6 @@ public class PackageTest extends TestCase {
         suite.addTest(LayoutBlockManagerTest.suite());
         suite.addTest(BlockValueFileTest.suite());
         suite.addTest(LayoutBlockConnectivityToolsTest.suite());
-        suite.addTest(LayoutTurnoutTest.suite());
         suite.addTest(LayoutConnectivityTest.suite());
 
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
@@ -42,6 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
         suite.addTest(LayoutEditorActionTest.suite());
         suite.addTest(new JUnit4TestAdapter(LayoutEditorTest.class));
+        suite.addTest(new JUnit4TestAdapter(LayoutTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorAuxToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(ConnectivityUtilTest.class));

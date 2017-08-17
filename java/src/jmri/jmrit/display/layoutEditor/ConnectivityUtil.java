@@ -621,59 +621,59 @@ public class ConnectivityUtil {
         if (t.getLinkType() == LayoutTurnout.NO_LINK) {
             if ((t.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (t.getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                     || (t.getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
-                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
+                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().isEmpty())
+                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().isEmpty())
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().isEmpty())) {
                     return true;
                 } else {
                     return false;
                 }
             } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
-                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalA2Name() != null) && (!t.getSignalA2Name().equals(""))
-                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
-                        && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))
-                        && (t.getSignalD2Name() != null) && (!t.getSignalD2Name().equals(""))) {
+                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().isEmpty())
+                        && (t.getSignalA2Name() != null) && (!t.getSignalA2Name().isEmpty())
+                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().isEmpty())
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().isEmpty())
+                        && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().isEmpty())
+                        && (t.getSignalD2Name() != null) && (!t.getSignalD2Name().isEmpty())) {
 
                     if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP) {
                         return true;
                     }
                     if (t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
-                        if ((t.getSignalB2Name() != null) && (!t.getSignalB2Name().equals(""))
-                                && (t.getSignalC2Name() != null) && (!t.getSignalC2Name().equals(""))) {
+                        if ((t.getSignalB2Name() != null) && (!t.getSignalB2Name().isEmpty())
+                                && (t.getSignalC2Name() != null) && (!t.getSignalC2Name().isEmpty())) {
                             return true;
                         }
                     }
                 }
                 return false;
             } else {
-                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))
-                        && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().equals(""))) {
+                if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().isEmpty())
+                        && (t.getSignalB1Name() != null) && (!t.getSignalB1Name().isEmpty())
+                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().isEmpty())
+                        && (t.getSignalD1Name() != null) && (!t.getSignalD1Name().isEmpty())) {
                     return true;
                 } else {
                     return false;
                 }
             }
         } else if (t.getLinkType() == LayoutTurnout.FIRST_3_WAY) {
-            if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
-                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
+            if ((t.getSignalA1Name() != null) && (!t.getSignalA1Name().isEmpty())
+                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().isEmpty())) {
                 return true;
             } else {
                 return false;
             }
         } else if (t.getLinkType() == LayoutTurnout.SECOND_3_WAY) {
-            if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
+            if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().isEmpty())
+                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().isEmpty())) {
                 return true;
             } else {
                 return false;
             }
         } else if (t.getLinkType() == LayoutTurnout.THROAT_TO_THROAT) {
-            if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""))) {
+            if ((t.getSignalB1Name() != null) && (!t.getSignalB1Name().isEmpty())
+                    && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().isEmpty())) {
                 return true;
             } else {
                 return false;
@@ -750,16 +750,16 @@ public class ConnectivityUtil {
     public boolean layoutTurnoutHasSignalMasts(LayoutTurnout t) {
         String[] turnoutBlocks = t.getBlockBoundaries();
         boolean valid = true;
-        if (turnoutBlocks[0] != null && (t.getSignalAMastName() == null || t.getSignalAMastName().equals(""))) {
+        if (turnoutBlocks[0] != null && (t.getSignalAMastName() == null || t.getSignalAMastName().isEmpty())) {
             valid = false;
         }
-        if (turnoutBlocks[1] != null && (t.getSignalBMastName() == null || t.getSignalBMastName().equals(""))) {
+        if (turnoutBlocks[1] != null && (t.getSignalBMastName() == null || t.getSignalBMastName().isEmpty())) {
             valid = false;
         }
-        if (turnoutBlocks[2] != null && (t.getSignalCMastName() == null || t.getSignalCMastName().equals(""))) {
+        if (turnoutBlocks[2] != null && (t.getSignalCMastName() == null || t.getSignalCMastName().isEmpty())) {
             valid = false;
         }
-        if (turnoutBlocks[3] != null && (t.getSignalDMastName() == null || t.getSignalDMastName().equals(""))) {
+        if (turnoutBlocks[3] != null && (t.getSignalDMastName() == null || t.getSignalDMastName().isEmpty())) {
             valid = false;
         }
         return valid;
@@ -947,7 +947,7 @@ public class ConnectivityUtil {
             log.error("Null signal head on entry to addSensorToSignalHeadLogic");
             return false;
         }
-        if ((name == null) || name.equals("")) {
+        if ((name == null) || name.isEmpty()) {
             log.error("Null string for sensor name on entry to addSensorToSignalHeadLogic");
             return false;
         }
@@ -1171,7 +1171,7 @@ public class ConnectivityUtil {
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
                     if ((((LayoutTurnout) cNode).getLinkedTurnoutName() == null)
-                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))) {
+                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().isEmpty())) {
                         // Standard turnout - node type A
                         if (((LayoutTurnout) cNode).getContinuingSense() == Turnout.CLOSED) {
                             if (cNodeState == 0) {
@@ -1282,7 +1282,7 @@ public class ConnectivityUtil {
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
                     if ((((LayoutTurnout) cNode).getLinkedTurnoutName() == null)
-                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))
+                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().isEmpty())
                             || (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
                         tTrack = (TrackSegment) (((LayoutTurnout) cNode).getConnectA());
                         pType = LayoutTrack.TURNOUT_A;
