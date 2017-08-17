@@ -18,7 +18,7 @@ import java.io.PipedWriter;
 public class PipeListenerTest {
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException {
         JTextArea jta = new JTextArea();
         PipedReader pr = new PipedReader();
         PipeListener t = new PipeListener(pr,jta);
@@ -26,7 +26,7 @@ public class PipeListenerTest {
     }
 
     @Test
-    public void testWrite() {
+    public void testWrite() throws java.io.IOException {
         JTextArea jta = new JTextArea();
         PipedWriter wr = new PipedWriter();
         PipedReader pr = new PipedReader(wr);
