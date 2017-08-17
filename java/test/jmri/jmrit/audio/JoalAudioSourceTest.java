@@ -36,6 +36,7 @@ public class JoalAudioSourceTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         factory = new JoalAudioFactory();
+        factory.init();
     }
 
     @After
