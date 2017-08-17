@@ -1,23 +1,21 @@
 package jmri.jmrit.display;
 
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PanelMenuTest {
 
     @Test
     public void testInstance() {
-        PanelMenu t = PanelMenu.instance();
-        Assert.assertNotNull("exists",t);
+        PanelMenu t = InstanceManager.getDefault(PanelMenu.class);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -34,5 +32,4 @@ public class PanelMenuTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PanelMenuTest.class.getName());
-
 }

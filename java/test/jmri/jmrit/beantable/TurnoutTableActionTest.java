@@ -2,48 +2,39 @@ package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.KeyEvent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.netbeans.jemmy.operators.JMenuItemOperator;
-import org.netbeans.jemmy.operators.JMenuOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.TurnoutTableAction class.
- * @author Paul Bender Copyright (C) 2017	
+ *
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TurnoutTableActionTest extends AbstractTableActionBase {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",a);
+        Assert.assertNotNull("exists", a);
     }
 
     @Override
-    public String getTableFrameName(){
+    public String getTableFrameName() {
         return Bundle.getMessage("TitleTurnoutTable");
     }
 
     @Override
     @Test
-    public void testGetClassDescription(){
-         Assert.assertEquals("Turnout Table Action class description","Turnout Table",a.getClassDescription());
+    public void testGetClassDescription() {
+        Assert.assertEquals("Turnout Table Action class description", "Turnout Table", a.getClassDescription());
     }
 
     /**
@@ -53,12 +44,13 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
      */
     @Override
     @Test
-    public void testIncludeAddButton(){
-         Assert.assertTrue("Default include add button",a.includeAddButton());
+    public void testIncludeAddButton() {
+        Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
     /**
      * Check Turnout Table GUI, menus and graphic state presentation.
+     *
      * @since 4.7.4
      */
     @Test
@@ -107,12 +99,10 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 
         // Open Speed pane to test Speed menu, which displays a JOptionPane
         //System.out.println("Speed pane started at " + java.time.LocalTime.now()); // debug
-
         // method 1: open as method
         //_t1Table.setDefaultSpeeds(null); // create dialog (bypassing menu, but is not found)
         //_t1Table.setDefaultSpeeds(t1Frame); // create dialog by frame (bypassing menu, but is also not found)
 //        JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); // create dialog (through menu)
-
         // method 2: Alternatively, used GUI menu to open Speeds pane:
         // pushMenuNoBlock is used, because dialog is modal
 //        JMenuBarOperator mainbar = new JMenuBarOperator(main);
@@ -122,10 +112,8 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 //        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
 //        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
 //        jmio.pushNoBlock();
-
         // wait for Speeds dialog
         // for Jemmy to work, we need the Turnout Speeds pane inside a JDialog
-
         // TODO activate test when we manage to find pane:
 //        JDialogOperator as = new JDialogOperator(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"));
 //        Assert.assertNotNull("found Speeds menu dialog", as);
@@ -133,13 +121,13 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         // close pane
 //        JButtonOperator jbs = new JButtonOperator(as, "OK");
 //        jbs.pushNoBlock();
-
         // clean up
         af.dispose();
         am.dispose();
         //as.dispose(); // uncomment when test is Speeds menu activated
         tof.dispose();
         _t1Table.dispose();
+        t1Frame.dispose();
     }
 
     // The minimal setup for log4J
@@ -162,5 +150,4 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     }
 
     //private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class.getName());
-
 }

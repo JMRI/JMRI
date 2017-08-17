@@ -1,19 +1,18 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.logix.OBlock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.logix.OBlock;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EditCircuitPathsTest {
 
@@ -23,9 +22,10 @@ public class EditCircuitPathsTest {
         ControlPanelEditor frame = new ControlPanelEditor();
         CircuitBuilder cb = new CircuitBuilder(frame);
         OBlock ob = new OBlock("OB01");
-        EditCircuitPaths t = new EditCircuitPaths("Edit Circuit Paths",cb,ob);
-        Assert.assertNotNull("exists",t);
+        EditCircuitPaths t = new EditCircuitPaths("Edit Circuit Paths", cb, ob);
+        Assert.assertNotNull("exists", t);
         frame.dispose();
+        t.dispose();
     }
 
     // The minimal setup for log4J

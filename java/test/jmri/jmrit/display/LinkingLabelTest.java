@@ -5,6 +5,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -47,7 +48,7 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
         to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
         panel.putItem(to);
 
-        jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
         panel.setLocation(150, 150);
 
         panel.setTitle();
