@@ -30,7 +30,6 @@ public class PipeListenerTest {
         JTextArea jta = new JTextArea();
         PipedWriter wr = new PipedWriter();
         PipedReader pr = new PipedReader(wr);
-        wr.connect(pr);
         PipeListener t = new PipeListener(pr,jta);
         wr.write('a');
         Assert.assertEquals("text after character write","a",jta.getText());
