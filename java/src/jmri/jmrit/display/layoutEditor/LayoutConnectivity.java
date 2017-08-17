@@ -199,6 +199,14 @@ public class LayoutConnectivity {
         return anchor;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false; // assume failure (pessimist!)
+        if ((o != null) && o instanceof LayoutConnectivity) {
+            LayoutConnectivity lc = (LayoutConnectivity) o;
+            result = toString().equals(lc.toString());
+        }
+        return result;
+    }
     private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
-
-}
+}   // class LayoutConnectivity
