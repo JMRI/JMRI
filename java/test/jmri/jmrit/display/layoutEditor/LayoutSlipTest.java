@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import org.junit.After;
@@ -23,7 +22,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testNew() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor not null", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -31,7 +30,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testToString() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         String ltsString = lts.toString();
         Assert.assertNotNull("ltsString not null", ltsString);
         Assert.assertEquals(ltsString, "LayoutSlip single");
@@ -45,14 +44,14 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetDisplayName() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals(lts.getDisplayName(), "Slip single");
         Assert.assertEquals(ltd.getDisplayName(), "Slip double");
     }
 
     @Test
     public void testSlipTypeAndState() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.SINGLE_SLIP);
         Assert.assertTrue("lts.getSlipState() is UNKNOWN", lts.getSlipState() == LayoutTurnout.UNKNOWN);
 
@@ -62,7 +61,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testTurnoutB() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("lts.getTurnoutBName() is ''", lts.getTurnoutBName() == "");
         Assert.assertNull("lts.getTurnoutB() is null", lts.getTurnoutB());
 
@@ -72,7 +71,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetConnectionTypes() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         try {
             Assert.assertNull("lts.getConnectionType(SLIP_A) is null", lts.getConnection(LayoutTrack.SLIP_A));
             Assert.assertNull("lts.getConnectionType(SLIP_B) is null", lts.getConnection(LayoutTrack.SLIP_B));
@@ -90,7 +89,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetConnectionTypesFail() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         try {
             // this should throw up (SLIP_CENTER is not a valid connection type)
             Assert.assertNull("lts.getConnectionType(SLIP_CENTER) is null", lts.getConnection(LayoutTrack.SLIP_CENTER));
@@ -109,7 +108,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testSlipState() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Single slip state unknown", lts.getSlipState() == LayoutTurnout.UNKNOWN);
         lts.toggleState(LayoutTrack.SLIP_LEFT);
         Assert.assertTrue("Single slip state STATE_AC", lts.getSlipState() == LayoutTurnout.STATE_AC);
@@ -145,19 +144,19 @@ public class LayoutSlipTest {
 
     @Test
     public void testActivateTurnout() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         // nothing to do here until we've assigned physical turnouts
     }
 
     @Test
     public void testDeactivateTurnout() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         // nothing to do here until we've assigned physical turnouts
     }
 
     @Test
     public void testGetCoordsForConnectionType() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
                 lts.getCoordsForConnectionType(LayoutTrack.NONE));
@@ -227,7 +226,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetBounds() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals("lts.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
                 lts.getBounds());
@@ -240,14 +239,14 @@ public class LayoutSlipTest {
 
     @Test
     public void testIsMainline() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("lts.isMainline() false", lts.isMainline());
         Assert.assertFalse("ltd.isMainline() false", ltd.isMainline());
     }
 
     @Test
     public void testSetCoordsCenter() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         Point2D newCenterPoint = new Point2D.Double(75.0, 150.0);
         lts.setCoordsCenter(newCenterPoint);
         Assert.assertEquals("lts.getCoordsCenter ", newCenterPoint, lts.getCoordsCenter());
@@ -315,7 +314,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testScaleCoords() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         lts.scaleCoords(1.5F, 2.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
                 new Point2D.Double(75.0, 250.0),
@@ -385,7 +384,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testTranslateCoords() {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         lts.translateCoords(15.5F, 25.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
                 new Point2D.Double(65.5, 125.5),
@@ -464,7 +463,7 @@ public class LayoutSlipTest {
         ///DOMConfigurator.configure("myapp-log4j.xml");
         apps.tests.Log4JFixture.initLogging();
 
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+//        Assert.assertFalse(GraphicsEnvironment.isHeadless());
         layoutEditor = new LayoutEditor();
         lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
         ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
