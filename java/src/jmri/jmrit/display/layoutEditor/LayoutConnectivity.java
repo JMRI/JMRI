@@ -208,5 +208,11 @@ public class LayoutConnectivity {
         }
         return result;
     }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
 }   // class LayoutConnectivity
