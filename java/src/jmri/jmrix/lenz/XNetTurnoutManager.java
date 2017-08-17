@@ -138,21 +138,12 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     /**
-     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$";
-        // Initially accepts a 4 digit number + ":" + another 4 digit number
     }
 
     @Deprecated

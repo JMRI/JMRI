@@ -124,13 +124,13 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _logixTable = new LogixTableAction() {
             // skip dialog box if in edit mode, just assume OK pressed
-            @Override
-            boolean checkEditConditional() {
-                if (inEditConditionalMode) {
-                    return true;
-                }
-                return false;
-            }
+//             @Override
+//             boolean checkEditConditional() {
+//                 if (inEditConditionalMode) {
+//                     return true;
+//                 }
+//                 return false;
+//             }
         };
         assertNotNull("LogixTableAction is null!", _logixTable);
 

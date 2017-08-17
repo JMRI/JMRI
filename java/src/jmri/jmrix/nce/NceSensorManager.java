@@ -429,21 +429,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,2}[:]{0,1}[0-9]{1,2}$"; // NCE examples 4:14, 50
-        // see tooltip
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());

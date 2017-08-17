@@ -179,21 +179,12 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Provide a connection agnostic tooltip for the Add new item beantable pane.
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9:]{1,5}$";
-        // Accepts a 4 digit number + ":" + another 4 digit number
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class.getName());

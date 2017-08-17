@@ -185,20 +185,12 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // LocoNet: "enter a number", see tooltip
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());

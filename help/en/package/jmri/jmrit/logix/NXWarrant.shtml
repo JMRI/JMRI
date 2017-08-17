@@ -40,6 +40,8 @@
       the <i>Throttle Factor</i> and <i>Layout Scale</i> are used
       for a rough estimate of track speed. If block lengths are not  
       specified, you will be prompted to provide a length.
+      <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
+      has details about how warrants modify recorded speeds.
 
       <h2>Launching an NXWarrant</h2>After selecting the menu item
       <b>Create NX Warrant</b> from the <b>Warrants</b> menu of the

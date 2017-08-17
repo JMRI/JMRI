@@ -8,7 +8,7 @@ import java.awt.event.FocusListener;
  * function.
  *
  * Supports two types of validated field: a generic text fields with length
- * and/or character set limited by a JAVA regular expression or an integral
+ * and/or character set limited by a Java regular expression or an integral
  * numeric field with minimum and maximum allowed values.
  *
  * @author B. Milhaupt Copyright 2010, 2011
@@ -465,7 +465,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
 
     /**
      * Retrieve the current "validationRegExp".
-     * Used in eg. Add Turnout to attach a connection specific pattern without redrawing the pane
+     * Used in eg. Add Turnout to attach a manager-specific pattern without redrawing the pane
      * @see #setValidateRegExp(String)
      *
      * @return the current validation pattern
@@ -536,6 +536,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
             source.selectAll();
         }
     }
+
     private java.awt.Color invalidBackgroundColor = null;
 
     /**

@@ -36,10 +36,10 @@ public class LevelXingXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getID());
-        if (p.getBlockNameAC().length() > 0) {
+        if (!p.getBlockNameAC().isEmpty()) {
             element.setAttribute("blocknameac", p.getBlockNameAC());
         }
-        if (p.getBlockNameBD().length() > 0) {
+        if (!p.getBlockNameBD().isEmpty()) {
             element.setAttribute("blocknamebd", p.getBlockNameBD());
         }
         if (p.getConnectA() != null) {
@@ -54,16 +54,16 @@ public class LevelXingXml extends AbstractXmlAdapter {
         if (p.getConnectD() != null) {
             element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
         }
-        if (p.getSignalAName().length() > 0) {
+        if (!p.getSignalAName().isEmpty()) {
             element.setAttribute("signalaname", p.getSignalAName());
         }
-        if (p.getSignalBName().length() > 0) {
+        if (!p.getSignalBName().isEmpty()) {
             element.setAttribute("signalbname", p.getSignalBName());
         }
-        if (p.getSignalCName().length() > 0) {
+        if (!p.getSignalCName().isEmpty()) {
             element.setAttribute("signalcname", p.getSignalCName());
         }
-        if (p.getSignalDName().length() > 0) {
+        if (!p.getSignalDName().isEmpty()) {
             element.setAttribute("signaldname", p.getSignalDName());
         }
         Point2D coords = p.getCoordsCenter();
@@ -76,31 +76,31 @@ public class LevelXingXml extends AbstractXmlAdapter {
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
 
-        if (p.getSignalAMastName().length() > 0) {
+        if (!p.getSignalAMastName().isEmpty()) {
             element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
         }
 
-        if (p.getSignalBMastName().length() > 0) {
+        if (!p.getSignalBMastName().isEmpty()) {
             element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
         }
-        if (p.getSignalCMastName().length() > 0) {
+        if (!p.getSignalCMastName().isEmpty()) {
             element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
         }
-        if (p.getSignalDMastName().length() > 0) {
+        if (!p.getSignalDMastName().isEmpty()) {
             element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
         }
 
-        if (p.getSensorAName().length() > 0) {
+        if (!p.getSensorAName().isEmpty()) {
             element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
         }
 
-        if (p.getSensorBName().length() > 0) {
+        if (!p.getSensorBName().isEmpty()) {
             element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
         }
-        if (p.getSensorCName().length() > 0) {
+        if (!p.getSensorCName().isEmpty()) {
             element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
         }
-        if (p.getSensorDName().length() > 0) {
+        if (!p.getSensorDName().isEmpty()) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
 

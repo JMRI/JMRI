@@ -179,7 +179,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         main.add(left);
 
         WarrantPreferences preferences = WarrantPreferences.getDefault();
-        warrentScaleLabel.setText("Scale Factor in Warrents:" + Float.toString(preferences.getLayoutScale()));
+        warrentScaleLabel.setText("Layout Scale: " + Float.toString(preferences.getLayoutScale()));
         warrentScaleLabel.setBackground(Color.white);
         left = makePadPanel(warrentScaleLabel);
         c.gridy = 11;
@@ -575,6 +575,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         setButtonStates(true);
     }
 
+    @Override
+    public void notifyStealThrottleRequired(jmri.DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
+
     PropertyChangeListener startListener = null;
     PropertyChangeListener finishListener = null;
     PropertyChangeListener middleListener = null;
@@ -598,7 +604,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         // this switching back a forward helps if the throttle was stolen.
         // the sleeps are needed as some systems dont like a speed setting right after a direction setting.
         //If we had guarenteed access to the dispatcher frame we could use
-        //         Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval() * 2)
+        //         Thread.sleep(InstanceManager.getDefault(DispatcherFrame.class).getMinThrottleInterval() * 2)
         try {
             Thread.sleep(250);
         } catch (InterruptedException e) {

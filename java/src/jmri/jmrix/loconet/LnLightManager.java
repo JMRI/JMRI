@@ -105,8 +105,7 @@ public class LnLightManager extends AbstractLightManager {
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
-     *
+     * range box in the add Light window.
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -114,20 +113,12 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // LocoNet: "enter a number"
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());

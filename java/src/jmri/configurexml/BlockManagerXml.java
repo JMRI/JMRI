@@ -55,6 +55,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         setStoreElementClass(blocks);
         BlockManager tm = (BlockManager) o;
         if (tm != null) {
+
+            //TODO: dead code strip: (don't sort - this is so JMRI preserves the order of things in the file)
+            //AlphanumComparator ac = new AlphanumComparator();
+            //List<String> contents = tm.getSystemNameList();
+            //Collections.sort(contents, (String s1, String s2) -> ac.compare(s1, s2));
+            //java.util.Iterator<String> iter = contents.iterator();
+
             java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
 
             // don't return an element if there are not blocks to include
@@ -76,7 +83,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             // paths). At some point in the future (after a major release?) we 
             // can remove writing the first set of blocks without contents 
             // (and this (now way overly verbose) comment).
-            
             if (true) {
                 // write out first set of blocks without contents
                 while (iter.hasNext()) {

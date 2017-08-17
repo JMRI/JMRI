@@ -142,6 +142,13 @@ public class OlcbSensorTest extends TestCase {
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
         t.flush();
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+
+        // Repeat send
+        t.tc.rcvMessage = null;
+        s.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
+        t.flush();
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
 
     public void testEventTable() {

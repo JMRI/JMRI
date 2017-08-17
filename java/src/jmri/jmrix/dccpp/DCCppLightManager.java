@@ -115,20 +115,12 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a connection specific tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,5}$"; // examples 345, see tooltip
     }
 
     /**

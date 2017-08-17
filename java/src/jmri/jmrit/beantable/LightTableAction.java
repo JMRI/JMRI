@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
@@ -51,7 +53,6 @@ import jmri.Turnout;
 import jmri.implementation.LightControl;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.ValidatedTextField;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -262,6 +263,7 @@ public class LightTableAction extends AbstractTableAction {
                             l.setTargetIntensity(intensity);
                         } catch (IllegalArgumentException e1) {
                             status1.setText(Bundle.getMessage("LightError16"));
+                            status1.setForeground(Color.red);
                         }
                         break;
                     case ENABLECOL:
@@ -513,10 +515,7 @@ public class LightTableAction extends AbstractTableAction {
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    //JTextField fieldHardwareAddress = new JTextField(10);
-    ValidatedTextField fieldHardwareAddress = new ValidatedTextField(40, false,
-            "^[0-9a-zA-Z]{1,20}$", "Invalid entry for system name in Add Light pane");
-    // initially allow any 20 char string, updated by prefixBox selection
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
     JSpinner NumberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
@@ -590,10 +589,10 @@ public class LightTableAction extends AbstractTableAction {
             panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
-            panel1a.add(fieldHardwareAddress);
-            fieldHardwareAddress.setInvalidBackgroundColor(java.awt.Color.white);
-            // don't use strong colorization on ValidatedTextField like for CVs
-            fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+            panel1a.add(hardwareAddressTextField);
+            hardwareAddressTextField.setBackground(Color.white);
+            // reset after possible error notification
+            hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(NumberToAdd);
@@ -604,6 +603,9 @@ public class LightTableAction extends AbstractTableAction {
             panel2.add(userNameLabel);
             panel2.add(userName);
             userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
+            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
+            userName.setName("userName"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
             contentPane.add(panel2);
             // items for variable intensity lights
             varPanel = new JPanel();
@@ -681,22 +683,28 @@ public class LightTableAction extends AbstractTableAction {
             panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
             JPanel panel41 = new JPanel();
             panel41.setLayout(new FlowLayout());
+            // add status bar above buttons
             panel41.add(status1);
             status1.setText(Bundle.getMessage("LightCreateInst"));
+            status1.setFont(status1.getFont().deriveFont(0.9f * systemNameLabel.getFont().getSize())); // a bit smaller
+            status1.setForeground(Color.gray);
             JPanel panel42 = new JPanel();
             panel42.setLayout(new FlowLayout());
             panel42.add(status2);
+            status2.setText(Bundle.getMessage("LightCreateInst"));
+            status2.setFont(status2.getFont().deriveFont(0.9f * systemNameLabel.getFont().getSize())); // a bit smaller
+            status2.setForeground(Color.gray);
             status2.setText("");
             status2.setVisible(false);
             panel4.add(panel41);
             panel4.add(panel42);
-            Border panel4Border = BorderFactory.createEtchedBorder();
-            panel4.setBorder(panel4Border);
+            //Border panel4Border = BorderFactory.createEtchedBorder();
+            //panel4.setBorder(panel4Border);
             contentPane.add(panel4);
             // buttons at bottom of window
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonClose"))); // when Update has been clicked at least once, this is not Revert/Cancel
             cancel.addActionListener(this::cancelPressed);
             cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
@@ -717,6 +725,11 @@ public class LightTableAction extends AbstractTableAction {
                 cancelPressed(null);
             }
         });
+        hardwareAddressTextField.setBackground(Color.white);
+        // reset statusBar text
+        status1.setText(Bundle.getMessage("LightCreateInst"));
+        status1.setForeground(Color.gray);
+
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -740,7 +753,6 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private String addEntryToolTip;
-    private String addEntryRegex;
 
     protected void prefixChanged() {
         if (supportsVariableLights()) {
@@ -764,7 +776,7 @@ public class LightTableAction extends AbstractTableAction {
         // show tooltip for selected system connection
         String connectionChoice = (String) prefixBox.getSelectedItem();
         if (connectionChoice == null) {
-            // Tab All or first time opening, default tooltip
+            // Tab All or first time opening, keep default tooltip
             connectionChoice = "TBD";
         }
         // Update tooltip in the Add Light pane to match system connection selected from combobox.
@@ -778,21 +790,25 @@ public class LightTableAction extends AbstractTableAction {
                 jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     // get tooltip from ProxyLightManager
-                    addEntryRegex = mgr.getEntryRegex();
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("L Add box set");
                     break;
                 }
             }
+        } else if (lightManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
+            addRangeBox.setEnabled(true);
+            log.debug("L add box enabled2");
+            // get tooltip from light manager
+            addEntryToolTip = lightManager.getEntryToolTip();
+            log.debug("LightManager tip");
         }
         log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
-        fieldHardwareAddress.setToolTipText("<html>" +
-                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
-                "<br>" + addEntryToolTip + "</html>");
-        // configure validation regexp for selected connection
-        fieldHardwareAddress.setValidateRegExp(addEntryRegex); // manipulate validationRegExp in ValidatedTextField, example: "^[a-zA-Z0-9]{3,}$"
-
+        if (addEntryToolTip != null) {
+            hardwareAddressTextField.setToolTipText("<html>" +
+                    Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
+                    "<br>" + addEntryToolTip + "</html>");
+        }
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -844,7 +860,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create lights when the create button is pressed and entry is valis.
+     * Create lights when the Create New button on the Add/Create pane is pressed and entry is valid.
      *
      * @param e the button press action
      */
@@ -852,15 +868,19 @@ public class LightTableAction extends AbstractTableAction {
 
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
-        String curAddress = fieldHardwareAddress.getText();
+        String curAddress = hardwareAddressTextField.getText().trim();
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
             status1.setText(Bundle.getMessage("LightError17"));
+            status1.setForeground(Color.red);
             status2.setVisible(false);
+            hardwareAddressTextField.setBackground(Color.red);
             addFrame.pack();
             addFrame.setVisible(true);
             return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
         }
         String suName = lightPrefix + curAddress;
         String uName = userName.getText();
@@ -872,11 +892,16 @@ public class LightTableAction extends AbstractTableAction {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: {}", suName);
             status1.setText(Bundle.getMessage("LightError3"));
+            status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
+            hardwareAddressTextField.setBackground(Color.red);
             addFrame.pack();
             addFrame.setVisible(true);
+            hardwareAddressTextField.setBackground(Color.red);
             return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
         }
         // Format is valid, normalize it
         String sName = InstanceManager.getDefault(LightManager.class).normalizeSystemName(suName);
@@ -885,6 +910,7 @@ public class LightTableAction extends AbstractTableAction {
         if (g != null) {
             // Light already exists
             status1.setText(Bundle.getMessage("LightError1"));
+            status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError2"));
             status2.setVisible(true);
             addFrame.pack();
@@ -897,8 +923,8 @@ public class LightTableAction extends AbstractTableAction {
             g = InstanceManager.getDefault(LightManager.class).getBySystemName(altName);
             if (g != null) {
                 // Light already exists
-                status1.setText(Bundle.getMessage("LightError10") + " '" + altName + "' "
-                        + Bundle.getMessage("LightError11"));
+                status1.setText(Bundle.getMessage("LightError10", altName));
+                status1.setForeground(Color.red);
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
@@ -911,6 +937,7 @@ public class LightTableAction extends AbstractTableAction {
             if (g != null) {
                 // Light with this user name already exists
                 status1.setText(Bundle.getMessage("LightError8"));
+                status1.setForeground(Color.red);
                 status2.setText(Bundle.getMessage("LightError9"));
                 status2.setVisible(true);
                 addFrame.pack();
@@ -922,6 +949,7 @@ public class LightTableAction extends AbstractTableAction {
         if (!InstanceManager.getDefault(LightManager.class).validSystemNameConfig(sName)) {
             // System Name not in configured hardware
             status1.setText(Bundle.getMessage("LightError5"));
+            status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
             addFrame.pack();
@@ -937,8 +965,8 @@ public class LightTableAction extends AbstractTableAction {
             log.warn("Requested Light {} uses same address as Turnout {}", sName, testT);
             if (!noWarn) {
                 int selectedValue = JOptionPane.showOptionDialog(addFrame,
-                        Bundle.getMessage("LightWarn5") + " " + sName + " " + Bundle.getMessage("LightWarn6") + " "
-                        + testSN + ".\n   " + Bundle.getMessage("LightWarn7"), Bundle.getMessage("WarningTitle"),
+                        Bundle.getMessage("LightWarn5", sName, testSN),
+                        Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
                             Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
@@ -952,6 +980,7 @@ public class LightTableAction extends AbstractTableAction {
             }
             // Light with this system name already exists as a turnout
             status2.setText(Bundle.getMessage("LightWarn4") + " " + testSN + ".");
+            status1.setForeground(Color.red);
             status2.setVisible(true);
         }
         // Check multiple Light creation request, if supported
@@ -960,25 +989,17 @@ public class LightTableAction extends AbstractTableAction {
         if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(sName))
                 && addRangeBox.isSelected()) {
             // get number requested   
-            try {
-                numberOfLights = (Integer) NumberToAdd.getValue();
-            } catch (NumberFormatException ex) {
-                status1.setText(Bundle.getMessage("LightError4"));
-                status2.setVisible(false);
-                addFrame.pack();
-                addFrame.setVisible(true);
-                log.error("Unable to convert {} to a number - Number to add", (NumberToAdd.getValue() + ""));
-                return;
-            }
+            numberOfLights = (Integer) NumberToAdd.getValue();
+
             // convert numerical hardware address
             try {
-                startingAddress = Integer.parseInt(fieldHardwareAddress.getText());
+                startingAddress = Integer.parseInt(hardwareAddressTextField.getText());
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert {} to a number.", fieldHardwareAddress.getText());
+                log.error("Unable to convert {} to a number.", hardwareAddressTextField.getText());
                 return;
             }
             // check that requested address range is available
@@ -997,6 +1018,7 @@ public class LightTableAction extends AbstractTableAction {
                 testAdd = turnoutPrefix + add;
                 if (InstanceManager.turnoutManagerInstance().getBySystemName(testAdd) != null) {
                     status1.setText(Bundle.getMessage("LightError19"));
+                    status1.setForeground(Color.red);
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
@@ -1033,7 +1055,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         g.setMaxIntensity(Double.parseDouble(p) / 100);
 
-        p = fieldTransitionTime.getText();
+        p = fieldTransitionTime.getText(); // TODO BUG DecimalFormat i18n
         if (p.equals("")) {
             p = "0";
         }
@@ -1044,7 +1066,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setTransitionTime(0.0);
         }
         // provide feedback to user
-        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + ", " + uName;
+        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + " (" + uName + ")";
         // create additional lights if requested
         if (numberOfLights > 1) {
             String sxName = "";
@@ -1069,6 +1091,7 @@ public class LightTableAction extends AbstractTableAction {
             feedback = feedback + " - " + sxName + ", " + uxName;
         }
         status1.setText(feedback);
+        status1.setForeground(Color.gray);
         status2.setText("");
         status2.setVisible(false);
         addFrame.pack();
@@ -1076,8 +1099,8 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to the Edit button in the light table, window has already been
-     * created
+     * Respond to the Edit button in the Light table; window has already been
+     * created.
      */
     void editPressed() {
         // check if a Light with this name already exists
@@ -1086,6 +1109,7 @@ public class LightTableAction extends AbstractTableAction {
         if (sName.equals("")) {
             // Entered system name has invalid format
             status1.setText(Bundle.getMessage("LightError3"));
+            status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
             addFrame.pack();
@@ -1105,6 +1129,7 @@ public class LightTableAction extends AbstractTableAction {
             if (g == null) {
                 // Light does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("LightError7"));
+                status1.setForeground(Color.red);
                 status2.setText(Bundle.getMessage("LightError6"));
                 status2.setVisible(true);
                 addFrame.pack();
@@ -1121,7 +1146,7 @@ public class LightTableAction extends AbstractTableAction {
         systemLabel.setVisible(false);
         panel1a.setVisible(false);
         addRangeBox.setVisible(false);
-        // deactivate this light
+        // deactivate this Light
         curLight.deactivateLight();
         inEditMode = true;
         // get information for this Light
@@ -1133,7 +1158,7 @@ public class LightTableAction extends AbstractTableAction {
             fieldMinIntensity.setText(oneDigit.format(g.getMinIntensity() * 100) + "  ");
             fieldMaxIntensity.setText(oneDigit.format(g.getMaxIntensity() * 100) + "  ");
             if (g.isTransitionAvailable()) {
-                fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime()) + "    ");
+                fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime()) + "    "); // displays i18n decimal separator eg. 0,00 in _nl
             }
         }
         setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
@@ -1141,6 +1166,7 @@ public class LightTableAction extends AbstractTableAction {
         update.setVisible(true);
         create.setVisible(false);
         status1.setText(Bundle.getMessage("LightUpdateInst"));
+        status1.setForeground(Color.gray); // reset color
         status2.setText("");
         status2.setVisible(false);
         addFrame.pack();
@@ -1156,7 +1182,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to the Update button.
+     * Respond to the Update button on the Add/Update Light pane.
      *
      * @param e the button press action
      */
@@ -1174,6 +1200,7 @@ public class LightTableAction extends AbstractTableAction {
             if (p != null) {
                 // Light with this user name already exists
                 status1.setText(Bundle.getMessage("LightError8"));
+                status1.setForeground(Color.red);
                 status2.setText(Bundle.getMessage("LightError9"));
                 status2.setVisible(true);
                 return;
@@ -1190,7 +1217,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setMinIntensity(Double.parseDouble(fieldMinIntensity.getText()) / 100);
             g.setMaxIntensity(Double.parseDouble(fieldMaxIntensity.getText()) / 100);
             if (g.isTransitionAvailable()) {
-                g.setTransitionTime(Double.parseDouble(fieldTransitionTime.getText()));
+                g.setTransitionTime(Double.parseDouble(fieldTransitionTime.getText())); // TODO fix i18n decimal separator on reading value (DecimalFormat)
             }
         }
         g.activateLight();
@@ -1211,7 +1238,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to the Cancel button.
+     * Respond to the Close button.
      *
      * @param e the button press action
      */
@@ -1219,6 +1246,7 @@ public class LightTableAction extends AbstractTableAction {
         if (inEditMode) {
             // if in Edit mode, cancel the Edit and reactivate the Light
             status1.setText(Bundle.getMessage("LightCreateInst"));
+            status1.setForeground(Color.gray);
             update.setVisible(false);
             create.setVisible(true);
             fixedSystemName.setVisible(false);
@@ -1230,19 +1258,22 @@ public class LightTableAction extends AbstractTableAction {
             curLight.activateLight();
             inEditMode = false;
         }
+        if (addFrame != null) {
+            addFrame.setVisible(false); // hide first for cleaner display
+        }
+        clearLightControls();
+        status2.setText("");
         // remind to save, if Light was created or edited
         if (lightCreatedOrUpdated) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLightTable")),
+                    showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString",
+                            Bundle.getMessage("MenuItemLightTable")),
                             getClassName(),
                             "remindSaveLight"); // NOI18N
         }
         lightCreatedOrUpdated = false;
         // get rid of the add/edit Frame
-        clearLightControls();
-        status2.setText("");
         if (addFrame != null) {
-            addFrame.setVisible(false);
             addFrame.dispose();
             addFrame = null;
         }
@@ -1377,7 +1408,7 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel3);
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
+            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonClose"))); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
             cancelControl.addActionListener(this::cancelControlPressed);
             cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
@@ -1568,6 +1599,7 @@ public class LightTableAction extends AbstractTableAction {
         } else {
             status1.setText(Bundle.getMessage("LightCreateInst"));
         }
+        status1.setForeground(Color.gray);
         status2.setText("");
         status2.setVisible(false);
         addFrame.pack();
@@ -1615,6 +1647,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setControlSensorSense(sState);
             if (s == null) {
                 status1.setText(Bundle.getMessage("LightWarn1"));
+                status1.setForeground(Color.red);
                 return (false);
             }
         } else if (fastClockControl.equals(typeBox.getSelectedItem())) {
@@ -1629,6 +1662,7 @@ public class LightTableAction extends AbstractTableAction {
             String s = field1b.getText();
             if ((s.length() != 5) || (s.charAt(2) != ':')) {
                 status1.setText(Bundle.getMessage("LightError12"));
+                status1.setForeground(Color.red);
                 error = true;
             }
             if (!error) {
@@ -1636,10 +1670,12 @@ public class LightTableAction extends AbstractTableAction {
                     onHour = Integer.parseInt(s.substring(0, 2));
                     if ((onHour < 0) || (onHour > 24)) {
                         status1.setText(Bundle.getMessage("LightError13"));
+                        status1.setForeground(Color.red);
                         error = true;
                     }
                 } catch (NumberFormatException e) {
                     status1.setText(Bundle.getMessage("LightError14"));
+                    status1.setForeground(Color.red);
                     error = true;
                 }
             }
@@ -1648,16 +1684,19 @@ public class LightTableAction extends AbstractTableAction {
                     onMin = Integer.parseInt(s.substring(3, 5));
                     if ((onMin < 0) || (onMin > 59)) {
                         status1.setText(Bundle.getMessage("LightError13"));
+                        status1.setForeground(Color.red);
                         error = true;
                     }
                 } catch (NumberFormatException e) {
                     status1.setText(Bundle.getMessage("LightError14"));
+                    status1.setForeground(Color.red);
                     error = true;
                 }
             }
             s = field2a.getText();
             if ((s.length() != 5) || (s.charAt(2) != ':')) {
                 status1.setText(Bundle.getMessage("LightError12"));
+                status1.setForeground(Color.red);
                 error = true;
             }
             if (!error) {
@@ -1665,10 +1704,12 @@ public class LightTableAction extends AbstractTableAction {
                     offHour = Integer.parseInt(s.substring(0, 2));
                     if ((offHour < 0) || (offHour > 24)) {
                         status1.setText(Bundle.getMessage("LightError13"));
+                        status1.setForeground(Color.red);
                         error = true;
                     }
                 } catch (NumberFormatException e) {
                     status1.setText(Bundle.getMessage("LightError14"));
+                    status1.setForeground(Color.red);
                     error = true;
                 }
             }
@@ -1677,10 +1718,12 @@ public class LightTableAction extends AbstractTableAction {
                     offMin = Integer.parseInt(s.substring(3, 5));
                     if ((offMin < 0) || (offMin > 59)) {
                         status1.setText(Bundle.getMessage("LightError13"));
+                        status1.setForeground(Color.red);
                         error = true;
                     }
                 } catch (NumberFormatException e) {
                     status1.setText(Bundle.getMessage("LightError14"));
+                    status1.setForeground(Color.red);
                     error = true;
                 }
             }
@@ -1740,6 +1783,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setControlTurnoutState(tState);
             if (t == null) {
                 status1.setText(Bundle.getMessage("LightWarn2"));
+                status1.setForeground(Color.red);
                 return (false);
             }
         } else if (timedOnControl.equals(typeBox.getSelectedItem())) {
@@ -1773,12 +1817,14 @@ public class LightTableAction extends AbstractTableAction {
             } catch (NumberFormatException e) {
                 if (s != null) {
                     status1.setText(Bundle.getMessage("LightWarn9"));
+                    status1.setForeground(Color.red);
                     return (false);
                 }
             }
             g.setTimedOnDuration(dur);
             if (s == null) {
                 status1.setText(Bundle.getMessage("LightWarn8"));
+                status1.setForeground(Color.red);
                 return (false);
             }
         } else if (twoSensorControl.equals(typeBox.getSelectedItem())) {
@@ -1827,6 +1873,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setControlSensorSense(sState);
             if (s == null) {
                 status1.setText(Bundle.getMessage("LightWarn1"));
+                status1.setForeground(Color.red);
                 return (false);
             }
         } else if (noControl.equals(typeBox.getSelectedItem())) {
@@ -2154,6 +2201,42 @@ public class LightTableAction extends AbstractTableAction {
             if (col == REMOVE_COLUMN) {
                 deleteControlAction(row);
             }
+        }
+    }
+
+    /**
+     * Extends JTextField to provide a data validation function.
+     *
+     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     */
+    public class CheckedTextField extends JTextField {
+
+        CheckedTextField fld;
+
+        /**
+         * Text entry field with an active key event checker.
+         *
+         * @param len field length
+         */
+        public CheckedTextField(int len) {
+            super("", len);
+            fld = this;
+            // set background color for invalid field data
+            fld.setBackground(Color.red);
+
+//            fld.addFocusListener(new FocusListener() {
+//                @Override
+//                public void focusGained(FocusEvent e) {
+//                    setEditable(true);
+//                    setEnabled(true);
+//                }
+//
+//                @Override
+//                public void focusLost(FocusEvent e) {
+//                    exitFieldColorizer();
+//                    setEditable(true);
+//                }
+//            });
         }
     }
 
