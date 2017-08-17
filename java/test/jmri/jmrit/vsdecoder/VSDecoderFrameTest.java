@@ -21,6 +21,7 @@ public class VSDecoderFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame t = new VSDecoderFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

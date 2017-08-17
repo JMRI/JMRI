@@ -10,8 +10,6 @@ import jmri.jmrix.cmri.serial.SerialNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import java.util.ResourceBundle;
-
 import javax.swing.border.Border;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -26,8 +24,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * @author	 Chuck Catania   Copyright (C) 2016
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.serialmon.SerialFilterBundle");
 
     ArrayList<SerialNode> monitorNode = new  ArrayList<SerialNode>();  
         
