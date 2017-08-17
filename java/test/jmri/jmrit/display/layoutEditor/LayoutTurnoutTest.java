@@ -43,32 +43,32 @@ public class LayoutTurnoutTest {
         testCtor(); // to create the layout editor
 
         ltRH = new LayoutTurnout("Right Hand",
-                LayoutTurnout.RH_TURNOUT, new Point2D.Double(50.0, 100.0),
+                LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
                 33.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("LayoutTurnout right hand not null", ltRH);
 
         ltLH = new LayoutTurnout("Left Hand",
-                LayoutTurnout.LH_TURNOUT, new Point2D.Double(100.0, 100.0),
+                LayoutTurnout.LH_TURNOUT, new Point2D.Double(200.0, 100.0),
                 66.0, 1.3, 1.4, layoutEditor);
         Assert.assertNotNull("LayoutTurnout left hand not null", ltLH);
 
         ltWY = new LayoutTurnout("Wye",
-                LayoutTurnout.WYE_TURNOUT, new Point2D.Double(150.0, 100.0),
+                LayoutTurnout.WYE_TURNOUT, new Point2D.Double(250.0, 100.0),
                 99.0, 1.5, 1.6, layoutEditor);
         Assert.assertNotNull("LayoutTurnout wye not null", ltWY);
 
         ltDX = new LayoutTurnout("Double XOver",
-                LayoutTurnout.DOUBLE_XOVER, new Point2D.Double(200.0, 100.0),
+                LayoutTurnout.DOUBLE_XOVER, new Point2D.Double(300.0, 100.0),
                 132.0, 1.7, 1.8, layoutEditor);
         Assert.assertNotNull("LayoutTurnout double crossover not null", ltDX);
 
         ltRX = new LayoutTurnout("Right Hand XOver",
-                LayoutTurnout.RH_XOVER, new Point2D.Double(250.0, 100.0),
+                LayoutTurnout.RH_XOVER, new Point2D.Double(350.0, 100.0),
                 165.0, 1.9, 2.0, layoutEditor);
         Assert.assertNotNull("LayoutTurnout right hand crossover not null", ltRX);
 
         ltLX = new LayoutTurnout("Left Hand XOver",
-                LayoutTurnout.LH_XOVER, new Point2D.Double(300.0, 100.0),
+                LayoutTurnout.LH_XOVER, new Point2D.Double(400.0, 100.0),
                 198.0, 2.1, 2.2, layoutEditor);
         Assert.assertNotNull("LayoutTurnout left hand crossover not null", ltLX);
     }
@@ -421,28 +421,28 @@ public class LayoutTurnoutTest {
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
-                new Point2D.Double(50.0, 100.0),
+                new Point2D.Double(150.0, 100.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.NONE));
         jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(-37.0, 100.0),
+                new Point2D.Double(45.0, 166.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(137.0, 100.0),
+                new Point2D.Double(255.0, 34.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_B));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(131.0, 110.0),
+                new Point2D.Double(249.0, 44.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_C));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(-37.0, 100.0),
+                new Point2D.Double(45.0, 166.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_D));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
-                new Point2D.Double(50.0, 100.0),
+                new Point2D.Double(150.0, 100.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_CENTER));
     }
 
@@ -452,7 +452,7 @@ public class LayoutTurnoutTest {
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals("ltRH.getBounds() is equal to...",
-                new Rectangle2D.Double(-37.0, 100.0, 174.0, 10.0),
+                new Rectangle2D.Double(45.0, 34.0, 210.0, 132.0),
                 ltRH.getBounds());
     }
 
