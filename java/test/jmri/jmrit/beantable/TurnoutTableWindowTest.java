@@ -82,19 +82,19 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame fa = JmriJFrame.getFrame(Bundle.getMessage("TitleAddTurnout"));
         Assert.assertNotNull("Add window found", fa);
 
-        // Find hardware number field
-        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName");
-        JTextField sysNameField = (JTextField) ncfinder.find(fa, 0);
-        Assert.assertNotNull(sysNameField);
+        // Find hardware address field
+        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "hwAddressTextField");
+        JTextField hwAddressField = (JTextField) ncfinder.find(fa, 0);
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
         
         // The following line works on the CI servers, but not in some standalone cases
-        //getHelper().sendString(new StringEventData(this, sysNameField, "1"));
-        sysNameField.setText("1"); // workaround
+        //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
+        hwAddressField.setText("1"); // workaround
         
         flushAWT();
-        Assert.assertEquals("name content", "1", sysNameField.getText());
+        Assert.assertEquals("name content", "1", hwAddressField.getText());
 
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
@@ -104,12 +104,12 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         prefixBox.setSelectedItem("Internal");
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem()); // this connection type is always available
 
-        // Find the Add OK button
-        AbstractButtonFinder okfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonOK"));
-        JButton okbutton = (JButton) okfinder.find(fa, 0);
-        Assert.assertNotNull(okbutton);
+        // Find the Add Create button
+        AbstractButtonFinder createfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCreate"));
+        JButton createbutton = (JButton) createfinder.find(fa, 0);
+        Assert.assertNotNull(createbutton);
         // Click button to add turnout
-        getHelper().enterClickAndLeave(new MouseEventData(this, okbutton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, createbutton));
         // Ask to close Add pane
         TestHelper.disposeWindow(fa, this);
 

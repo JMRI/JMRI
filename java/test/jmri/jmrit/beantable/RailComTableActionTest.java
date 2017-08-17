@@ -3,31 +3,28 @@ package jmri.jmrit.beantable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RailComTableActionTest extends AbstractTableActionBase {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",a);
+        Assert.assertNotNull("exists", a);
     }
 
     @Override
-    public String getTableFrameName(){
-       return Bundle.getMessage("TitleRailComTable");
+    public String getTableFrameName() {
+        return Bundle.getMessage("TitleRailComTable");
     }
 
     @Override
     @Test
-    public void testGetClassDescription(){
-         Assert.assertEquals("RailCom Table Action class description","RailCom Locos",a.getClassDescription());
+    public void testGetClassDescription() {
+        Assert.assertEquals("RailCom Table Action class description", "RailCom Locos", a.getClassDescription());
     }
 
     // The minimal setup for log4J
@@ -47,5 +44,4 @@ public class RailComTableActionTest extends AbstractTableActionBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RailComTableActionTest.class.getName());
-
 }

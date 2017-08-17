@@ -37,7 +37,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getID());
-        if (p.getBlockName().length() > 0) {
+        if (!p.getBlockName().isEmpty()) {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("connect1name", p.getConnect1Name());

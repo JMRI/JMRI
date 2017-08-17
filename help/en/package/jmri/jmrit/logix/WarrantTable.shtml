@@ -210,7 +210,7 @@
       attempt to secure allocation of the blocks ahead each time
       it enters a Block. It also checks whether the block is
       occupied by an unknown train and will not enter if the Block
-      is occupied. <a href="SpeedChanges.shtml">Modifying Warrant Speeds</a>
+      is occupied. <a href="SpeedChanges.shtml">When Warrant Speeds Are Modified</a>
       has details about how warrants modify recorded speeds.</p>
 
       <h3>When the Starting block is Unoccupied</h3>If a warrant is
