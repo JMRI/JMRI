@@ -2,6 +2,7 @@ package jmri.swing;
 
 import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import org.junit.After;
@@ -21,24 +22,34 @@ public class AboutDialogTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AboutDialog dialog = new AboutDialog(null, true);
+        // create a frame to be the dialog parent so that nothing attempts to
+        // remove the SwingUtilities$SharedOwnerFrame instance
+        JFrame frame = new JFrame();
+        AboutDialog dialog = new AboutDialog(frame, true);
         Assert.assertNotNull(dialog);
+        dialog.dispose();
+        frame.dispose();
     }
 
     @Test
     public void testShowAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AboutDialog dialog = new AboutDialog(null, true);
+        JFrame frame = new JFrame();
+        AboutDialog dialog = new AboutDialog(frame, true);
 
         new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleAbout", jmri.Application.getApplicationName()));
             jdo.close();
         }).start();
-        ThreadingUtil.runOnGUI( () -> { dialog.setVisible(true); });
+        ThreadingUtil.runOnGUI(() -> {
+            dialog.setVisible(true);
+        });
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "About dialog did not close");
+        dialog.dispose();
+        frame.dispose();
     }
 
     @Before
@@ -52,9 +63,9 @@ public class AboutDialogTest {
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetWindows(false); // don't display the list of windows, 
-                                       // it will display only show the ones
-                                       // from the current test. 
+        JUnitUtil.resetWindows(false); // don't display the list of windows,
+        // it will display only show the ones
+        // from the current test.
         Log4JFixture.tearDown();
     }
 }

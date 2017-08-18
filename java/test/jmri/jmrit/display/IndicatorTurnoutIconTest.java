@@ -3,23 +3,25 @@ package jmri.jmrit.display;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowListener;
 import javax.swing.JFrame;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * IndicatorTurnoutIconTest.java
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
-public class IndicatorTurnoutIconTest extends jmri.util.SwingTestCase {
+public class IndicatorTurnoutIconTest {
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel = null;
+    PanelEditor panel = null;
 
+    @Test
     public void testEquals() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -36,6 +38,7 @@ public class IndicatorTurnoutIconTest extends jmri.util.SwingTestCase {
         Assert.assertFalse("object (not content) equality commutes", to.equals(to2));
     }
 
+    @Test
     public void testClone() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
@@ -55,43 +58,27 @@ public class IndicatorTurnoutIconTest extends jmri.util.SwingTestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public IndicatorTurnoutIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", IndicatorTurnoutIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IndicatorTurnoutIconTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
         jmri.util.JUnitUtil.resetInstanceManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test IndicatorTurnoutIcon Panel");
+            panel = new PanelEditor("Test IndicatorTurnoutIcon Panel");
         }
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         // now close panel window
         if (panel != null) {
             java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            panel.getTargetFrame().dispose();
+            panel.dispose();
         }
         apps.tests.Log4JFixture.tearDown();
     }

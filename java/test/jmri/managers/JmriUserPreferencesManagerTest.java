@@ -47,7 +47,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetInstance() {
-        Assert.assertNull(InstanceManager.getNullableDefault(UserPreferencesManager.class));
+        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
         Assert.assertNotNull(JmriUserPreferencesManager.getInstance());
         Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getInstance());
         Assert.assertEquals(JmriUserPreferencesManager.getDefault(), JmriUserPreferencesManager.getInstance());
@@ -55,7 +55,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetDefault() {
-        Assert.assertNull(InstanceManager.getNullableDefault(UserPreferencesManager.class));
+        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
         Assert.assertNotNull(JmriUserPreferencesManager.getDefault());
         Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getDefault());
     }
@@ -996,6 +996,8 @@ public class JmriUserPreferencesManagerTest {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
+        // ensure no existing UserPreferencesManager interferes with this test
+        InstanceManager.reset(UserPreferencesManager.class);
     }
 
     @After
