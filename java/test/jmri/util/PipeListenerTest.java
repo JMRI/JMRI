@@ -29,10 +29,13 @@ public class PipeListenerTest {
     public void testWrite() throws java.io.IOException {
         JTextArea jta = new JTextArea();
         PipedWriter wr = new PipedWriter();
-        PipedReader pr = new PipedReader(wr);
+        PipedReader pr = new PipedReader(wr,1);
         PipeListener t = new PipeListener(pr,jta);
-        wr.write('a');
-        Assert.assertEquals("text after character write","a",jta.getText());
+        t.start();
+        wr.write("Test String");
+        wr.flush();
+        Assert.assertEquals("text after character write","Test String",jta.getText());
+        t.stop();
     }
 
     // The minimal setup for log4J
