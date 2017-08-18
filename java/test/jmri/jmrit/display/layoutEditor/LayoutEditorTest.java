@@ -344,7 +344,8 @@ public class LayoutEditorTest {
 
     @Test
     public void testGetLayoutName() {
-        testCtor(); // create layout editor
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e = new LayoutEditor(); // we do this here to test the default name
         // default is "My Layout"
         Assert.assertEquals("getLayoutName", "My Layout", e.getLayoutName());
     }
@@ -352,7 +353,9 @@ public class LayoutEditorTest {
     @Test
     public void testSetLayoutName() {
         testCtor(); // create layout editor
-        // set to a known value
+        // the test layout editor testCtor created is named this
+        Assert.assertEquals("getLayoutName", "Test Layout", e.getLayoutName());
+        // set to a known (different) value
         e.setLayoutName("foo");
         Assert.assertEquals("getLayoutName after set", "foo", e.getLayoutName());
     }
