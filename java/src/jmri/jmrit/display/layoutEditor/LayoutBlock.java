@@ -125,8 +125,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     private boolean suppressNameUpdate = false;
 
     //persistent instances variables (saved between sessions)
-    public String blockName = "";
-    public String lbSystemName = "";
+    //public String blockName = "";
+    //public String lbSystemName = "";
     public String occupancySensorName = "";
     public String memoryName = "";
     public int occupiedSense = Sensor.ACTIVE;
@@ -146,8 +146,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public LayoutBlock(String sName, String uName) {
         super(sName.toUpperCase(), uName);
         _instance = this;
-        blockName = uName;
-        lbSystemName = sName;
+        //blockName = uName;
+//        lbSystemName = sName;
     }
 
     /*
@@ -155,7 +155,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      */
     protected void initializeLayoutBlock() {
         //get/create a jmri.Block object corresponding to this LayoutBlock
-        block = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(blockName);
+        block = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(getUserName());
         if (block == null) {
             //not found, create a new jmri.Block
             String s = "";
@@ -169,9 +169,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     found = false;
                 }
             }
-            block = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(s, blockName);
+            block = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(s, getUserName());
             if (block == null) {
-                log.error("Failure to get/create Block: " + s + "," + blockName);
+                log.error("Failure to get/create Block: " + s + "," + getUserName());
             }
         }
 
@@ -181,7 +181,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     = (java.beans.PropertyChangeEvent e) -> {
                         handleBlockChange(e);
                     },
-                    blockName, "Layout Block:" + blockName);
+                    getUserName(), "Layout Block:" + getUserName());
             if (occupancyNamedSensor != null) {
                 block.setNamedSensor(occupancyNamedSensor);
             }
@@ -209,7 +209,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Accessor methods
      */
     public String getID() {
-        return blockName;
+        return getUserName();
     }
 
     public Color getBlockTrackColor() {
@@ -666,7 +666,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             //send user an error message
                             int response = JOptionPane.showOptionDialog(null,
                                     java.text.MessageFormat.format(rb.getString("Warn1"),
-                                            new Object[]{blockName, tPanel.getLayoutName(),
+                                            new Object[]{getUserName(), tPanel.getLayoutName(),
                                                 panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                     null, new Object[]{Bundle.getMessage("ButtonOK"),
@@ -780,7 +780,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 if (InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                     addAdjacency(newp);
 //                 } else {
-//                     log.error("Trouble adding Path to block {}", blockName);
+//                     log.error("Trouble adding Path to block {}", getDisplayName());
                 }
                 auxTools.addBeanSettings(newp, lc, _instance);
             }
@@ -788,7 +788,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
 //djd debugging - lists results of automatic initialization of Paths and BeanSettings
         for (Path p : block.getPaths()) {
-            log.debug("From {} to {}", blockName, p.toString());
+            log.debug("From {} to {}", getDisplayName(), p.toString());
         }
 //end debugging
     }   // updateBlockPaths
@@ -896,7 +896,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
         if (block == null) {
             //Block may not have been initialised due to an error so manually set it in the edit window
-            beanEdit.setBean(InstanceManager.getDefault(jmri.BlockManager.class).getBlock(blockName));
+            beanEdit.setBean(InstanceManager.getDefault(jmri.BlockManager.class).getBlock(getUserName()));
         } else {
             beanEdit.setBean(block);
         }
@@ -1323,7 +1323,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             return;
         }
-        ArrayList<TrackSegment> ts = panel.getFinder().findTrackSegmentByBlock(blockName);
+        ArrayList<TrackSegment> ts = panel.getFinder().findTrackSegmentByBlock(getUserName());
         int mainline = 0;
         int side = 0;
 
@@ -1424,7 +1424,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         //send user an error message
                         int response = JOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(rb.getString("Warn1"),
-                                        new Object[]{blockName, tPanel.getLayoutName(),
+                                        new Object[]{getUserName(), tPanel.getLayoutName(),
                                             panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, new Object[]{Bundle.getMessage("ButtonOK"),
@@ -2401,7 +2401,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         //send user an error message
                         int response = JOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(rb.getString("Warn1"),
-                                        new Object[]{blockName, tPanel.getLayoutName(),
+                                        new Object[]{getUserName(), tPanel.getLayoutName(),
                                             panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, new Object[]{Bundle.getMessage("ButtonOK"),
@@ -2881,11 +2881,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Provides an output to the console of how to reach a specific block from
      * our block
      */
-    public void printRoutes(String blockName) {
+    public void printRoutes(String inBlockName) {
         log.info("Routes for block " + this.getDisplayName());
         log.info("Our Block, Destination, Next Block, Hop Count, Direction, Metric");
         for (int i = 0; i < routes.size(); i++) {
-            if (routes.get(i).getDestBlock().getDisplayName().equals(blockName)) {
+            if (routes.get(i).getDestBlock().getDisplayName().equals(inBlockName)) {
                 log.info("From " + this.getDisplayName() + ", " + (routes.get(i).getDestBlock()).getDisplayName()
                         + ", " + (routes.get(i).getNextBlock()).getDisplayName() + ", " + routes.get(i).getHopCount() + ", "
                         + Path.decodeDirection(routes.get(i).getDirection()) + ", " + routes.get(i).getMetric());
@@ -4028,7 +4028,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         boolean advertiseRouteToNeighbour(Routes routeToAdd) {
             if (!isMutual()) {
-                log.debug("In block " + blockName
+                log.debug("In block " + getDisplayName()
                         + ": Neighbour is not mutual so will not advertise it (Routes " + routeToAdd + ")");
 
                 return false;
@@ -4037,7 +4037,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //Just wonder if this should forward on the new packet to the neighbour?
             Block dest = routeToAdd.getDestBlock();
             if (!adjDestRoutes.containsKey(dest)) {
-                log.debug("In block " + blockName
+                log.debug("In block " + getDisplayName()
                         + ": We are not currently advertising a route to the destination to neighbour: "
                         + dest.getSystemName());
 

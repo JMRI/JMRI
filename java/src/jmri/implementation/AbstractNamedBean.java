@@ -1,13 +1,13 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 
 /**
@@ -272,4 +272,18 @@ public abstract class AbstractNamedBean implements NamedBean {
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false; // assume failure (pessimist!)
+        if ((o != null) && o instanceof AbstractNamedBean) {
+            AbstractNamedBean anb = (AbstractNamedBean) o;
+            result = getFullyFormattedDisplayName().equals(anb.getFullyFormattedDisplayName());
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return getFullyFormattedDisplayName().hashCode();
+    }
 }
