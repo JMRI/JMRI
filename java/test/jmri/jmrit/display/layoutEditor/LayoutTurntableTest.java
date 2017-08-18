@@ -38,7 +38,7 @@ public class LayoutTurntableTest {
 
         String ltString = lt.toString();
         Assert.assertNotNull("ltString not null", ltString);
-        Assert.assertEquals(ltString, "LayoutTurntable");
+        Assert.assertEquals("LayoutTurntable My Turntable", ltString);
     }
 
     // from here down is testing infrastructure

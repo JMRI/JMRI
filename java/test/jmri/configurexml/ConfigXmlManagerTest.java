@@ -25,7 +25,7 @@ public class ConfigXmlManagerTest extends TestCase {
         super(s);
     }
 
-    boolean innerFlag;
+    private boolean innerFlag;
 
     public void testRegisterOK() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
@@ -122,12 +122,16 @@ public class ConfigXmlManagerTest extends TestCase {
         // make sure no test file exists in "layout"
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "layout");
         File f = new File(FileUtil.getUserFilesPath() + "layout" + File.separator + "testConfigXmlManagerTest.xml");
-        f.delete();  // remove it if its there
+        if (f.delete()) {  // remove it if its there
+            // nothing to do if delete failed
+        }
 
         // if file is at top level, remove that too
         f = new File("testConfigXmlManagerTest.xml");
         if (f.exists()) {
-            f.delete();
+            if (f.delete()) {
+                // nothing to do if delete failed
+            }
         }
 
         // check for not found if doesn't exist
