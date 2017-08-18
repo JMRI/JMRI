@@ -81,6 +81,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
      * Get from the user, the number of addressed bits used to control a
      * turnout. Normally this is 1, and the default routine returns 1
      * automatically. Turnout Managers for systems that can handle multiple
@@ -156,6 +165,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //     "you specified.","Assignment Conflict",
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
+
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();

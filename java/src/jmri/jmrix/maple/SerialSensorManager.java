@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * This is a SerialListener to handle the replies to poll messages. Those are
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
   */
@@ -92,6 +92,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'S'));
+    }
+
+    /**
      * Dummy routine
      */
     @Override
@@ -100,7 +109,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process a reply to a poll of Sensors of one panel node
+     * Process a reply to a poll of Sensors of one panel node.
      */
     @Override
     public void reply(SerialReply r) {
@@ -131,7 +140,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * static function returning the SerialSensorManager instance to use.
+     * Static function returning the SerialSensorManager instance to use.
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
@@ -210,5 +219,3 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
-
-
