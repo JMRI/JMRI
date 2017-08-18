@@ -459,7 +459,6 @@ public class LayoutTurnoutTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        //System.err.println("setup 482");
         apps.tests.Log4JFixture.setUp();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
@@ -467,7 +466,6 @@ public class LayoutTurnoutTest {
 
     @After
     public void tearDown() throws Exception {
-        //System.err.println("tearDown 491");
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
