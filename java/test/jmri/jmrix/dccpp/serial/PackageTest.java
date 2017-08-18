@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
    ConnectionConfigTest.class,
    jmri.jmrix.dccpp.serial.configurexml.PackageTest.class,
    SerialDCCppPacketizerTest.class,
-   DCCppAdapterTest.class
+   DCCppAdapterTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.serial package.

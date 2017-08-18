@@ -1,18 +1,16 @@
 package jmri.jmrit.dispatcher;
 
+import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OptionsMenuTest {
 
@@ -21,9 +19,10 @@ public class OptionsMenuTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
-        DispatcherFrame d = DispatcherFrame.instance();
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         OptionsMenu t = new OptionsMenu(d);
         Assert.assertNotNull("exists",t);
+        d.dispose();
     }
 
     // The minimal setup for log4J

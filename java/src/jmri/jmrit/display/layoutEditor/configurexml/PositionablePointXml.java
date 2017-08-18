@@ -1,7 +1,9 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import org.jdom2.Attribute;
@@ -45,24 +47,24 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (p.getConnect2() != null) {
             element.setAttribute("connect2name", p.getConnect2().getID());
         }
-        if (p.getEastBoundSignal().length() > 0) {
+        if (!p.getEastBoundSignal().isEmpty()) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
         }
-        if (p.getWestBoundSignal().length() > 0) {
+        if (!p.getWestBoundSignal().isEmpty()) {
             element.setAttribute("westboundsignal", p.getWestBoundSignal());
         }
 
-        if (p.getEastBoundSignalMastName().length() > 0) {
+        if (!p.getEastBoundSignalMastName().isEmpty()) {
             element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMastName());
         }
-        if (p.getWestBoundSignalMastName().length() > 0) {
+        if (!p.getWestBoundSignalMastName().isEmpty()) {
             element.setAttribute("westboundsignalmast", p.getWestBoundSignalMastName());
         }
 
-        if (p.getEastBoundSensorName().length() > 0) {
+        if (!p.getEastBoundSensorName().isEmpty()) {
             element.setAttribute("eastboundsensor", p.getEastBoundSensorName());
         }
-        if (p.getWestBoundSensorName().length() > 0) {
+        if (!p.getWestBoundSensorName().isEmpty()) {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
@@ -144,7 +146,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
         if (type == PositionablePoint.EDGE_CONNECTOR && element.getAttribute("linkedpanel") != null && element.getAttribute("linkpointid") != null) {
             String linkedEditorName = element.getAttribute("linkedpanel").getValue();
-            LayoutEditor linkedEditor = (LayoutEditor) jmri.jmrit.display.PanelMenu.instance().getEditorByName(linkedEditorName);
+            LayoutEditor linkedEditor = (LayoutEditor) InstanceManager.getDefault(PanelMenu.class).getEditorByName(linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.pointList) {

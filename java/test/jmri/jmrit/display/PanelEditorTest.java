@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  * PanelEditorTest.java
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen
@@ -24,7 +24,6 @@ public class PanelEditorTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-
     }
 
     @Test

@@ -1,13 +1,11 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -20,7 +18,8 @@ public class WarrantTableModelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantTableFrame f = WarrantTableFrame.getDefault();
         WarrantTableModel t = new WarrantTableModel(f);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        f.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,5 +36,4 @@ public class WarrantTableModelTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WarrantTableModelTest.class.getName());
-
 }

@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ZTCConnectionTypeListTest.class,
-   jmri.jmrix.ztc.ztc611.PackageTest.class
+   jmri.jmrix.ztc.ztc611.PackageTest.class,
+   BundleTest.class
 })
 
 /**

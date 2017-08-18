@@ -3,17 +3,22 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Create the default "Panels" menu for use in a menubar.
- *
+ * <p>
  * Also manages the Show Panel menu for all Editor panels.
  *
  * @author Bob Jacobsen Copyright 2003, 2004, 2010
@@ -23,9 +28,10 @@ import org.slf4j.LoggerFactory;
 public class PanelMenu extends JMenu {
 
     /**
-     * The single PanelMenu must now be accessed via the instance() method
+     * The single PanelMenu must accessed using
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)}.
      */
-    private PanelMenu() {
+    public PanelMenu() {
 
         this.setText(Bundle.getMessage("MenuPanels"));
 
@@ -58,26 +64,29 @@ public class PanelMenu extends JMenu {
     // operational variables
     private JMenu panelsSubMenu = null;
     private JMenuItem noPanelsItem = null;
-    static private PanelMenu thisMenu = null;
     private final ArrayList<Editor> panelsList = new ArrayList<>();
 
     /**
      * Provide method to reference this panel menu
      *
      * @return get the single instance of this menu
+     * @deprecated since 4.9.3; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     static public PanelMenu instance() {
-        if (thisMenu == null) {
-            thisMenu = new PanelMenu();
-        }
-        return thisMenu;
+        return InstanceManager.getDefault(PanelMenu.class);
     }
 
     /**
-     * Provide method to delete the reference to this menu
+     * Has no effect; retained for backwards compatibility.
+     *
+     * @deprecated since 4.9.3; use
+     * {@link jmri.InstanceManager#reset(java.lang.Class)} instead
      */
+    @Deprecated
     static public void dispose() {
-        thisMenu = null;
+        // do nothing
     }
 
     /**
@@ -248,5 +257,25 @@ public class PanelMenu extends JMenu {
         }
         return lePanelsList;
     }
+
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(PanelMenu.class)) {
+                return new PanelMenu();
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(PanelMenu.class);
+            return set;
+        }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(PanelMenu.class.getName());
 }

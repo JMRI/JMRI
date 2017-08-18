@@ -1,19 +1,18 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 
 /**
- * Test simple functioning of SprogSlotMonFrame 
+ * Test simple functioning of SprogSlotMonFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -23,9 +22,10 @@ public class SprogSlotMonFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SprogSlotMonFrame action = new SprogSlotMonFrame(memo);
         Assert.assertNotNull("exists", action);
+        action.dispose();
     }
 
     @Before

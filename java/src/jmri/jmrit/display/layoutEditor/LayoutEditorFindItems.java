@@ -22,7 +22,7 @@ public class LayoutEditorFindItems {
     }
 
     public TrackSegment findTrackSegmentByName(String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         for (TrackSegment t : layoutEditor.trackList) {
@@ -34,7 +34,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByName(String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         for (PositionablePoint p : layoutEditor.pointList) {
@@ -71,7 +71,7 @@ public class LayoutEditorFindItems {
      * Returns an array list of track segments matching the block name.
      */
     public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         ArrayList<TrackSegment> ts = new ArrayList<TrackSegment>();
@@ -416,7 +416,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
         LayoutTurnout result = null;
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getName().equals(name)) {
                     result = t;
@@ -429,7 +429,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
         LayoutTurnout result = null;
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getTurnoutName().equals(name)) {
                     result = t;
@@ -441,7 +441,7 @@ public class LayoutEditorFindItems {
 
     public LevelXing findLevelXingByName(String name) {
         LevelXing result = null;
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             for (LevelXing x : layoutEditor.xingList) {
                 if (x.getID().equals(name)) {
                     result = x;
@@ -454,7 +454,7 @@ public class LayoutEditorFindItems {
 
     public LayoutSlip findLayoutSlipByName(String name) {
         LayoutSlip result = null;
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             for (LayoutSlip x : layoutEditor.slipList) {
                 if (x.getName().equals(name)) {
                     result = x;
@@ -467,7 +467,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurntable findLayoutTurntableByName(String name) {
         LayoutTurntable result = null;
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             for (LayoutTurntable x : layoutEditor.turntableList) {
                 if (x.getID().equals(name)) {
                     result = x;
@@ -502,7 +502,7 @@ public class LayoutEditorFindItems {
      */
     @Deprecated
     public Object findObjectByTypeAndName(int type, String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         switch (type) {
@@ -550,7 +550,7 @@ public class LayoutEditorFindItems {
     // code you would just call this method instead.
     public Object findObjectByName(String name) {
         Object result = null;   // assume failure (pessimist!)
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
             } else if (name.startsWith("A") || name.startsWith("EB") || name.startsWith("EC")) {

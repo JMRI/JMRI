@@ -1,18 +1,15 @@
 package jmri.jmrit.operations.trains;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainEditBuildOptionsActionTest {
 
@@ -21,8 +18,9 @@ public class TrainEditBuildOptionsActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainEditFrame tf = new TrainEditFrame(train1);
-        TrainEditBuildOptionsAction t = new TrainEditBuildOptionsAction("Test Action",tf);
-        Assert.assertNotNull("exists",t);
+        TrainEditBuildOptionsAction t = new TrainEditBuildOptionsAction("Test Action", tf);
+        Assert.assertNotNull("exists", t);
+        tf.dispose();
     }
 
     // The minimal setup for log4J
@@ -39,5 +37,4 @@ public class TrainEditBuildOptionsActionTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsActionTest.class.getName());
-
 }

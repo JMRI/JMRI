@@ -290,7 +290,7 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         if (_trackerTable != null) {
-            TrackerTableAction.mouseClickedOnBlock(block);
+            InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
         }
     }
 

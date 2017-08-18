@@ -184,14 +184,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return (LayoutBlock) _tuser.get(key);
     }
 
-    static LayoutBlockManager _instance = null;
-
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public LayoutBlockManager instance() {
-        if (_instance == null) {
-            _instance = new LayoutBlockManager();
-        }
-        return _instance;
-    }	//instance
+        return InstanceManager.getDefault(LayoutBlockManager.class);
+    }
 
     /**
      * Method to find a LayoutBlock with a specified Sensor assigned as its
