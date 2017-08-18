@@ -51,7 +51,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
             throw e;
         }
         try {
-            if (Integer.valueOf(addr).intValue() > 0) {
+            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
                 // accept unsigned positive integer, prefix "+"
                 addr = "+" + addr;
             }
@@ -67,6 +67,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
 
     @Override
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+        // first, check validity
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
@@ -86,12 +87,14 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(String curAddress, String prefix) {
         // always return this (the current) name without change
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + e, "", true, false);
+            return null;
         }
         return curAddress;
     }

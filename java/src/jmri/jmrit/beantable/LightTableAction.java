@@ -866,6 +866,8 @@ public class LightTableAction extends AbstractTableAction {
      */
     void createPressed(ActionEvent e) {
 
+        status1.setForeground(Color.gray); // reset
+        status1.setText("");
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
         String curAddress = hardwareAddressTextField.getText().trim();

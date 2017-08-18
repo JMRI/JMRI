@@ -40,8 +40,15 @@ public class CbusLightManager extends AbstractLightManager {
     @Override
     protected Light createNewLight(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
+        // first, check validity
         try {
-            if (Integer.valueOf(addr).intValue() > 0) {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+            throw e;
+        }
+        try {
+            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
                 // accept unsigned positive integer, prefix "+"
                 addr = "+" + addr;
             }
@@ -59,6 +66,7 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     public String createSystemName(String curAddress, String prefix) throws JmriException {
+        // first, check validity
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {

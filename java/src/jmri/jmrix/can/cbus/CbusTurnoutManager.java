@@ -40,8 +40,15 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
+        // first, check validity
         try {
-            if (Integer.valueOf(addr).intValue() > 0) {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+            throw e;
+        }
+        try {
+            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
                 // accept unsigned positive integer, prefix "+"
                 addr = "+" + addr;
             }
@@ -60,6 +67,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
+        // first, check validity
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
@@ -72,7 +80,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         } catch (NumberFormatException ex) {
             // already warned
         };
-        if (unsigned > 0) {
+        if (unsigned > 0 && !curAddress.startsWith("+")) {
             curAddress = "+" + curAddress;
         }
         return getSystemPrefix() + typeLetter() + curAddress;
