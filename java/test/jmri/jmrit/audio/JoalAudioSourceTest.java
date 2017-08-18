@@ -1,6 +1,7 @@
 package jmri.jmrit.audio;
 
 import apps.tests.Log4JFixture;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -36,6 +37,7 @@ public class JoalAudioSourceTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         factory = new JoalAudioFactory();
+        InstanceManager.setDefault(AudioFactory.class, factory);
         factory.init();
     }
 
