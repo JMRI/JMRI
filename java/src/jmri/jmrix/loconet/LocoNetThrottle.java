@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nullable;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -308,7 +309,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
     }
 
+    @Nullable
     public LocoNetSlot getLocoNetSlot() {
+        if (slot == null) return slot;
         log.debug("getLocoNetSlot is returning slot {}", slot.getSlot());
         return slot;
     }
