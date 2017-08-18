@@ -272,6 +272,10 @@ public abstract class AbstractNamedBean implements NamedBean {
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
+    // In theory the system names should always be unique...
+    // (Esp. consitering that you should never be comparing Apples to Oranges...)
+    // but on the off chance they're ever not… we'll use the "Fully
+    // Formatted Display Name" (which includes the system and user names).
     @Override
     public boolean equals(Object o) {
         boolean result = false; // assume failure (pessimist!)

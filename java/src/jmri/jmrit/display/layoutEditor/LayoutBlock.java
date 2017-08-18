@@ -125,8 +125,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     private boolean suppressNameUpdate = false;
 
     //persistent instances variables (saved between sessions)
-    //public String blockName = "";
-    //public String lbSystemName = "";
     public String occupancySensorName = "";
     public String memoryName = "";
     public int occupiedSense = Sensor.ACTIVE;
@@ -146,8 +144,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public LayoutBlock(String sName, String uName) {
         super(sName.toUpperCase(), uName);
         _instance = this;
-        //blockName = uName;
-        //lbSystemName = sName;
     }
 
     /*
@@ -4039,7 +4035,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (!adjDestRoutes.containsKey(dest)) {
                 log.debug("In block " + getDisplayName()
                         + ": We are not currently advertising a route to the destination to neighbour: "
-                        + dest.getSystemName());
+                        + dest.getDisplayName());
 
                 return true;
             }

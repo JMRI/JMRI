@@ -259,7 +259,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
     public MultiIconEditor sensorIconEditor = null;
-    public JFrame sensorFrame;
+    public JFrame sensorFrame = null;
 
     public MultiIconEditor signalIconEditor = null;
     public JFrame signalFrame;

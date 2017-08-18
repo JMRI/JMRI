@@ -217,11 +217,11 @@ public class ConnectivityUtil {
         if (notFound) {
             if (prevBlock != null) {    // could not initialize the connectivity search
                 if (!suppress) {
-                    log.error("Could not find connection between Blocks " + currBlock.getUserName() + " and "
-                            + prevBlock.getUserName());
+                    log.error("Could not find connection between Blocks " + currBlock.getDisplayName() + " and "
+                            + prevBlock.getDisplayName());
                 }
             } else if (!suppress) {
-                log.error("Could not find connection between Blocks " + currBlock.getUserName() + ", prevBock is null!");
+                log.error("Could not find connection between Blocks " + currBlock.getDisplayName() + ", prevBock is null!");
             }
             return list;
         }
@@ -237,7 +237,7 @@ public class ConnectivityUtil {
                 cObject = tr.getConnect1();
             } else {
                 if (!suppress) {
-                    log.error("Connectivity error when searching turnouts in Block " + currLayoutBlock.getUserName());
+                    log.error("Connectivity error when searching turnouts in Block " + currLayoutBlock.getDisplayName());
                 }
                 tr = null;
                 break;
@@ -556,7 +556,7 @@ public class ConnectivityUtil {
                         && (x.getLayoutBlockAC() != null) && (x.getLayoutBlockBD() != null)) {
                     list.add(x);
                 } else {
-                    log.error("Missing connection or block assignment at Level Crossing in Block " + block.getUserName());
+                    log.error("Missing connection or block assignment at Level Crossing in Block " + block.getDisplayName());
                 }
             }
         }
@@ -778,7 +778,7 @@ public class ConnectivityUtil {
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         if ((x.getConnectA() == null) || (x.getConnectB() == null)
                 || (x.getConnectC() == null) || (x.getConnectD() == null)) {
-            log.error("Missing track around level crossing near Block " + block.getUserName());
+            log.error("Missing track around level crossing near Block " + block.getDisplayName());
             return null;
         }
         if (((TrackSegment) x.getConnectA()).getLayoutBlock() == lBlock) {
@@ -891,7 +891,7 @@ public class ConnectivityUtil {
             if (x.getLayoutBlockAC() == lBlock) {
                 return true;
             } else {
-                log.error("Panel blocking error at AC of Level Crossing in Block " + block.getUserName());
+                log.error("Panel blocking error at AC of Level Crossing in Block " + block.getDisplayName());
                 return false;
             }
         }
@@ -915,7 +915,7 @@ public class ConnectivityUtil {
             if (x.getLayoutBlockBD() == lBlock) {
                 return true;
             } else {
-                log.error("Panel blocking error at BD of Level Crossing in Block " + block.getUserName());
+                log.error("Panel blocking error at BD of Level Crossing in Block " + block.getDisplayName());
                 return false;
             }
         }
@@ -977,7 +977,7 @@ public class ConnectivityUtil {
             } else if (bbLogic.getSensor5() == null) {
                 bbLogic.setSensor5(name);
             } else {
-                log.error("Error - could not add sensor to SSL for signal head " + sh.getSystemName()
+                log.error("Error - could not add sensor to SSL for signal head " + sh.getDisplayName()
                         + " because there is no room in the SSL.");
                 bbLogic.retain();
                 bbLogic.start();
@@ -996,7 +996,7 @@ public class ConnectivityUtil {
                 } else if (bbLogic.getWatchedSensor2Alt() == null) {
                     bbLogic.setWatchedSensor2Alt(name);
                 } else {
-                    log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
+                    log.error("Error - could not add watched sensor to SSL for signal head " + sh.getDisplayName()
                             + " because there is no room in the facing SSL diverging part.");
                     bbLogic.retain();
                     bbLogic.start();
@@ -1014,21 +1014,21 @@ public class ConnectivityUtil {
                 } else if (bbLogic.getWatchedSensor1Alt() == null) {
                     bbLogic.setWatchedSensor1Alt(name);
                 } else {
-                    log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
+                    log.error("Error - could not add watched sensor to SSL for signal head " + sh.getDisplayName()
                             + " because there is no room in the facing SSL continuing part.");
                     bbLogic.retain();
                     bbLogic.start();
                     return false;
                 }
             } else {
-                log.error("Error - could not add watched sensor to SSL for signal head " + sh.getSystemName()
+                log.error("Error - could not add watched sensor to SSL for signal head " + sh.getDisplayName()
                         + "because 'where' to place the sensor was not correctly designated.");
                 bbLogic.retain();
                 bbLogic.start();
                 return false;
             }
         } else {
-            log.error("SSL has not been set up for signal head " + sh.getSystemName()
+            log.error("SSL has not been set up for signal head " + sh.getDisplayName()
                     + ". Could not add sensor - " + name + ".");
             return false;
         }
@@ -2173,7 +2173,7 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-                    log.error("Connectivity error when following track " + curTS.getID() + " in Block " + currLayoutBlock.getUserName());
+                    log.error("Connectivity error when following track " + curTS.getID() + " in Block " + currLayoutBlock.getDisplayName());
                     log.error(objectToNameOrIDString(curObj) + " not connected to " + curTS.getID()
                             + " (connects: " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")");
                     return false;
@@ -2182,7 +2182,7 @@ public class ConnectivityUtil {
                 if (logInfoFor_trackSegmentLeadsTo) {
                     String con_type = connectionTypeToString(conType);
 
-                    log.info("In block " + currLayoutBlock.getUserName()
+                    log.info("In block " + currLayoutBlock.getDisplayName()
                             + ", going from " + objectToNameOrIDString(conObj)
                             + " thru " + curTS.getID()
                             + //" (connects: " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
@@ -2459,7 +2459,7 @@ public class ConnectivityUtil {
                                     curTS = (TrackSegment) ls.getConnectA();
                                 } else {
                                     log.debug("{} not connected to {} (connections: {} & {})",
-                                            currLayoutBlock.getUserName(), ls.getName(),
+                                            currLayoutBlock.getDisplayName(), ls.getName(),
                                             objectToNameOrIDString(ls.getConnectA()),
                                             objectToNameOrIDString(ls.getConnectB()));
                                 }
