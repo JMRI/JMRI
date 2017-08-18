@@ -52,6 +52,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
+        log.debug("requestThrottleSetup: address {}, control {}", address, control);
 
         slotManager.slotFromLocoAddress(((DccLocoAddress) address).getNumber(), this);  //first try
 
@@ -73,7 +74,6 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                     try {
                         Thread.sleep(1000);  //wait one second
                     } catch (InterruptedException ex) {
-                        log.debug("ending because interrupted");
                         return;  //stop waiting if slot is found or error occurs
                     }
                     String msg = "No response to slot request for {}, attempt {}"; // NOI18N
@@ -88,15 +88,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 failedThrottleRequest(address, "Failed to get response from command station");
             }
         }
-        
-        retrySetupThread = new Thread(new RetrySetup((DccLocoAddress) address, this));
-        retrySetupThread.setName("LnThrottleManager RetrySetup "+address);
-        retrySetupThread.start();
-        waitingForNotification.put(((DccLocoAddress) address).getNumber(), retrySetupThread);
+        Thread thr = new Thread(new RetrySetup((DccLocoAddress) address, this));
+        thr.start();
+        waitingForNotification.put(((DccLocoAddress) address).getNumber(), thr);
     }
 
-    volatile Thread retrySetupThread;
-    
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
 
     /**
@@ -127,16 +123,90 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
+        log.debug("notifyChangedSlot - slot {}, slotStatus {}", s.getSlot(), Integer.toHexString(s.slotStatus()));
+        // This is invoked only if the SlotManager knows that the LnThrottleManager is 
+        // interested in the address associated with this slot.
+        
+        // need to check to see if the slot is in a suitable state for creating a throttle.
+        if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
+            // cannot acquire loco account is already in-use or is consist-mid or consist-sub 
+            log.warn("slot {} address {} cannot be acquired for loco control account address is already in-use.",
+                    s.getSlot(), s.locoAddr());
+            // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
+            if (s.id() != throttleID) {
+                // notify the LnThrottleManager about failure of acquisition.
+                notifyRefused(s.locoAddr(), "Locomotive address is already in-use by some other throttle.");
+                return;
+            }
+        }
+        if ((s.consistStatus() == LnConstants.CONSIST_MID) |
+                (s.consistStatus() == LnConstants.CONSIST_SUB)) {
+            // cannot acquire loco account is consist-mid or consist-sub 
+            log.warn("slot {} address {} cannot be acquired for loco control account already in-use, consist-mid or consist-sub.",
+                    s.getSlot(), s.locoAddr());
+            // notify the LnThrottleManager about failure of acquisition.
+            notifyRefused(s.locoAddr(), "Locomotive burried in a consist cannot be acquired.");
+            return;
+        }
+        tc.sendLocoNetMessage(s.writeThrottleID(throttleID));
+        log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleID);
+
+        // haven't identified a particular reason to refuse throttle acquisition at this time...
         DccThrottle throttle = createThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
+        s.notifySlotListeners();    // make sure other listeners for this slot know about what's going on!
         notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));
         //end the waiting thread since we got a response
         if (waitingForNotification.containsKey(s.locoAddr())) {
+            log.debug("LnThrottleManager.notifyChangedSlot() - removing throttle acquisition notification flagging for address {}", s.locoAddr() );
             waitingForNotification.get(s.locoAddr()).interrupt();
             waitingForNotification.remove(s.locoAddr());
         }
+        else {
+            log.debug("LnThrottleManager.notifyChangedSlot() - ignoring slot notification for slot {}, address {} account not attempting to acquire that address", s.getSlot(), s.locoAddr() );
+
+        }
     }
 
+    
+    public void notifyRefused(int address, String cause) {
+        //end the waiting thread since we got a failure response
+        if (waitingForNotification.containsKey(address)) {
+            waitingForNotification.get(address).interrupt();
+            waitingForNotification.remove(address);
+            // notify the throttle - in some other thread!
+            
+            class InformRejection implements Runnable {  
+                // inform the throttle from a new thread, so that
+                // the modal dialog box doesn't block other LocoNet 
+                // message handling
+
+                int address;
+                String cause;
+
+                InformRejection(int address, String s) {
+                    this.address = address;
+                    this.cause = s;
+                }
+
+                public void run() {
+                    
+                    log.debug("New thread launched to inform throttle user of failure to acquire loco {} - {}", address, cause);
+                    failedThrottleRequest(new DccLocoAddress(address, isLongAddress(address)), cause);
+                }
+            }
+            Thread thr = new Thread(new InformRejection( address, cause));
+            thr.start();
+
+            
+            
+            
+        }
+        
+    }
+    
+
     DccThrottle createThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot s) {
+        log.debug("createThrottle: slot {}", s.getSlot());
         return new LocoNetThrottle(memo, s);
     }
 
@@ -175,6 +245,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("disposeThrottle - throttle {}", t.getLocoAddress());
         if (super.disposeThrottle(t, l)) {
             LocoNetThrottle lnt = (LocoNetThrottle) t;
             lnt.throttleDispose();
@@ -186,6 +257,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     @Override
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
         // set status to common
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
@@ -201,6 +273,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     @Override
     public void releaseThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("releaseThrottle - throttle {}", t.getLocoAddress());
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
         if (tSlot != null) {
@@ -213,6 +286,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void failedThrottleRequest(DccLocoAddress address, String reason) {
         super.failedThrottleRequest(address, reason);
+        log.debug("failedThrottleRequest - address {}, reason {}", address, reason);
         //now end and remove any waiting thread
         if (waitingForNotification.containsKey(address.getNumber())) {
             waitingForNotification.get(address.getNumber()).interrupt();
@@ -231,24 +305,21 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         super.cancelThrottleRequest(address, isLong, l);
+        log.debug("cancelThrottleRequest - address {}", address);
         if (waitingForNotification.containsKey(address)) {
             waitingForNotification.get(address).interrupt();
             waitingForNotification.remove(address);
         }
     }
-    
+
+    protected int throttleID = 0x0171;
     /**
-     * Dipose of this manager, typically for testing
+     * provide a mechanism to propagate the connection's "throttle ID" for use by
+     * JMRI-created LocoNet throttles.
      */
-    void dispose() {
-        if (retrySetupThread != null) {
-            try {
-                retrySetupThread.interrupt();
-                retrySetupThread.join();
-            } catch (InterruptedException ex) {
-                log.warn("dispose interrupted");
-            }
-        }
+    public void setThrottleID(int id) {
+        throttleID = id;
+        log.info("Throttles created by JMRI will use Throttle ID 0x{}",Integer.toHexString(id));
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class.getName());
