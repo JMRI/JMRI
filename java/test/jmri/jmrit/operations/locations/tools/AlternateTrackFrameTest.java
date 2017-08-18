@@ -1,19 +1,16 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.locations.TrackEditFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AlternateTrackFrameTest {
 
@@ -22,7 +19,9 @@ public class AlternateTrackFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrackEditFrame tf = new TrackEditFrame();
         AlternateTrackFrame t = new AlternateTrackFrame(tf);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        t.dispose();
+        tf.dispose();
     }
 
     // The minimal setup for log4J
@@ -39,5 +38,4 @@ public class AlternateTrackFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrameTest.class.getName());
-
 }

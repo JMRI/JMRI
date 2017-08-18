@@ -17,6 +17,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -25,10 +26,9 @@ import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Hold configuration data for Warrants, includes Speed Map
@@ -126,8 +126,8 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
-    private int _msIncrTime = 500;          // time in milliseconds between speed changes ramping up or down
-    private float _throttleIncr = 0.03f;    // throttle increment for each ramp speed change
+    private int _msIncrTime = 1000;          // time in milliseconds between speed changes ramping up or down
+    private float _throttleIncr = 0.0238f;  // throttle increment for each ramp speed change - 3 steps
 
     public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
     private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles

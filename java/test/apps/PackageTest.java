@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
         apps.PacketPro.PackageTest.class,
         apps.PacketScript.PackageTest.class,
         apps.InstallTest.PackageTest.class,
-        apps.gui3.Gui3AppsTest.class,
+        apps.gui3.PackageTest.class,
         apps.DecoderPro.PackageTest.class,
         apps.JmriDemo.PackageTest.class,
         apps.DispatcherPro.PackageTest.class,

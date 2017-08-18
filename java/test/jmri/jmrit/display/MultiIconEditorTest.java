@@ -1,13 +1,13 @@
 package jmri.jmrit.display;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of MultiIconEditor
@@ -20,7 +20,8 @@ public class MultiIconEditorTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MultiIconEditor frame = new MultiIconEditor(4);
-        Assert.assertNotNull("exists", frame );
+        Assert.assertNotNull("exists", frame);
+        frame.dispose();
     }
 
     @Before
@@ -34,6 +35,5 @@ public class MultiIconEditorTest {
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }
-
 
 }
