@@ -147,7 +147,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         super(sName.toUpperCase(), uName);
         _instance = this;
         //blockName = uName;
-//        lbSystemName = sName;
+        //lbSystemName = sName;
     }
 
     /*
