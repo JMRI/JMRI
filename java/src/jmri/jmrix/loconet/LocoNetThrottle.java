@@ -662,8 +662,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     }
             }
         }
-        log.debug("getLocoAddress replying address 65536 for slot not in-use or for sub-consisted slot or for null slot");
-        return new DccLocoAddress(65536, LnThrottleManager.isLongAddress(65536));
+        log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
+        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(65536));
     }
 
     // initialize logging
