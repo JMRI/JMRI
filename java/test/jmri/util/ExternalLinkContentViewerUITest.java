@@ -18,7 +18,7 @@ import java.awt.GraphicsEnvironment;
 public class ExternalLinkContentViewerUITest {
 
     @Test
-    @Ignore("cause of freeze on appveyor")
+    @Ignore("May be causing hang on Appveyor")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExternalLinkContentViewerUI t = new ExternalLinkContentViewerUI(new JHelpContentViewer());
