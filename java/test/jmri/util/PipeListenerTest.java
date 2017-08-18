@@ -34,6 +34,7 @@ public class PipeListenerTest {
         t.start();
         wr.write("Test String");
         wr.flush();
+        jmri.util.JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
         Assert.assertEquals("text after character write","Test String",jta.getText());
         t.stop();
     }
