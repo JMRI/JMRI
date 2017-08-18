@@ -2148,6 +2148,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
+                setVariableNameBox(itemType);
                 break;
 
             default:
@@ -2461,7 +2462,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 _curVariable.setName(name);
                 Conditional c = _conditionalManager.getBySystemName(name);
-                if (c.getUserName().length() > 0) {
+                if (c == null) {
+                    return false;
+                }
+                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
                     _curVariable.setGuiName(c.getUserName());
                 } else {
                     _curVariable.setGuiName(c.getSystemName());
