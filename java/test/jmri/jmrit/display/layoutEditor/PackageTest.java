@@ -30,23 +30,22 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
 
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
-        suite.addTest(LayoutBlockTest.suite());
-        suite.addTest(LayoutBlockManagerTest.suite());
-        suite.addTest(BlockValueFileTest.suite());
-        suite.addTest(LayoutBlockConnectivityToolsTest.suite());
-        suite.addTest(LayoutConnectivityTest.suite());
-
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockManagerTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(BlockValueFileTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockConnectivityToolsTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutConnectivityTest.class)); 
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.blockRoutingTable.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
-        suite.addTest(LayoutEditorActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorActionTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutEditorTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorAuxToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(ConnectivityUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(BlockContentsIconTest.class));
-        suite.addTest(MultiIconEditorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MultiIconEditorTest.class));
         suite.addTest(new JUnit4TestAdapter(MultiSensorIconFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutTurntableTest.class));
         suite.addTest(new JUnit4TestAdapter(LevelXingTest.class));
