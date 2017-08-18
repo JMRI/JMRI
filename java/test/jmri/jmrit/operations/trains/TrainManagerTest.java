@@ -1,11 +1,12 @@
 //TrainManagerTest.java
 package jmri.jmrit.operations.trains;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the TrainManager class Last manually cross-checked on 20090131
@@ -16,7 +17,7 @@ public class TrainManagerTest extends OperationsTestCase {
 
     // test train manager
     public void testTrainManager() {
-        TrainManager manager = TrainManager.instance();
+        TrainManager manager = InstanceManager.getDefault(TrainManager.class);
 
         // test defaults
         Assert.assertTrue("Build Messages", manager.isBuildMessagesEnabled());
@@ -38,18 +39,17 @@ public class TrainManagerTest extends OperationsTestCase {
      * Make sure we can retrieve a train from the manager by name.
      */
     public void testGetTrainByName() {
-        TrainManager manager = TrainManager.instance();
-        Assert.assertNotNull("Retrieve Train",manager.getTrainByName("STF"));
+        TrainManager manager = InstanceManager.getDefault(TrainManager.class);
+        Assert.assertNotNull("Retrieve Train", manager.getTrainByName("STF"));
     }
 
     /**
      * Make sure we can retrieve a train from the manager by name.
      */
     public void testGetTrainById() {
-        TrainManager manager = TrainManager.instance();
-        Assert.assertNotNull("Retrieve Train",manager.getTrainById("1"));
+        TrainManager manager = InstanceManager.getDefault(TrainManager.class);
+        Assert.assertNotNull("Retrieve Train", manager.getTrainById("1"));
     }
-    
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J

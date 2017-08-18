@@ -132,6 +132,20 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
     @Deprecated
     static public XNetTurnoutManager instance() {
         //if (_instance == null) _instance = new XNetTurnoutManager();

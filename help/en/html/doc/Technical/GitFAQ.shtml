@@ -89,8 +89,10 @@
           from the JMRI master on GitHub and push to your fork
           (also on GitHub):
 
-          <p><img src="/web/images/GitHubWorkflow.png"></p>
-
+          <a href="/web/images/GitHubWorkflow.png">
+            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%">
+          </a>
+            
           <p>That horizontal arrow is the "Pull Request" (and
           subsequent pull) that records information about how
           things get into the repository.</p>

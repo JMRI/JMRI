@@ -49,9 +49,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
-import jmri.NamedBeanHandleManager;
 import jmri.ShutDownManager;
-import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
@@ -66,7 +64,6 @@ import jmri.jmrit.jython.RunJythonScript;
 import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.roster.swing.RosterMenu;
-import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
@@ -75,7 +72,6 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.managers.DefaultShutDownManager;
-import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
@@ -199,7 +195,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                             new BlockValueFile().writeBlockValues();
                         } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
                         catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe);
+                            log.error("Exception writing blocks: {}", ioe.getMessage());
                         }
 
                         // continue shutdown
@@ -210,14 +206,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Install configuration manager and Swing error handler
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
-        // Install a history manager
-        InstanceManager.store(new FileHistory(), FileHistory.class);
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
-
-        // Install a user preferences manager
-        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
-        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -268,10 +258,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());
             configOK = false;
         }
-
-        //Install Entry Exit Pairs Manager
-        //   Done after load config file so that connection-system-specific Managers are defined and usable
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // populate GUI
         log.debug("Start UI");
@@ -388,7 +374,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             @Override
             public void run() {
                 try {
-                    DecoderIndexFile.instance();
+                    InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
                     log.error("Error in trying to initialize decoder index file {}", ex.toString());
                 }
@@ -660,7 +646,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(PanelMenu.instance());
+        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
     }
 
     /**

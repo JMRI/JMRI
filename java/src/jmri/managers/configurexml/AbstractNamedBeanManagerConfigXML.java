@@ -4,10 +4,10 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
-import jmri.Manager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -322,9 +322,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             Object value = t.getProperty(key);
             Element p = new Element("property");
             ret.addContent(p);
-            p.addContent(new Element("key")
-                    .setText(key)
-            );
+            p.addContent(new Element("key").setText(key));
             if (value != null) {
                 p.addContent(new Element("value")
                         .setAttribute("class", value.getClass().getName())

@@ -2,6 +2,7 @@
 package jmri.jmrit.operations.router;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -19,9 +20,9 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Router class
@@ -42,16 +43,16 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * location. The next set of tests confirms operation using one train and
      * two locations. When this test was written, routing up to 5 trains and 6
      * locations was supported.
-     *
+     * <p>
      */
     public void testCarRouting() {
         // now load up the managers
-        TrainManager tmanager = TrainManager.instance();
-        RouteManager rmanager = RouteManager.instance();
-        LocationManager lmanager = LocationManager.instance();
-        Router router = Router.instance();
-        CarManager cmanager = CarManager.instance();
-        CarTypes ct = CarTypes.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Router router = InstanceManager.getDefault(Router.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
 
         // register the car and engine types used
         ct.addName("Boxcar");
@@ -1068,9 +1069,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
     // Use trains to move cars
     public void testRoutingWithTrains() {
-        TrainManager tmanager = TrainManager.instance();
-        CarManager cmanager = CarManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         loadLocationsTrainsAndCars();
 
@@ -1274,9 +1275,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * the car type and load.
      */
     public void testRoutingWithSimpleSchedules() {
-        TrainManager tmanager = TrainManager.instance();
-        CarManager cmanager = CarManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         loadLocationsTrainsAndCars();
 
@@ -1311,7 +1312,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         AS1.setTrainDirections(0);
 
         // create schedules
-        ScheduleManager scheduleManager = ScheduleManager.instance();
+        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
         Schedule schA = scheduleManager.newSchedule("Schedule A");
         ScheduleItem schAItem1 = schA.addItem("Boxcar");
         schAItem1.setReceiveLoadName("Food");
@@ -1627,9 +1628,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * schedule that is demanding the car type and load.
      */
     public void testRoutingWithSchedules() {
-        TrainManager tmanager = TrainManager.instance();
-        CarManager cmanager = CarManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         loadLocationsTrainsAndCars();
 
@@ -1661,7 +1662,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         AS1.setTrainDirections(0);
 
         // create schedules
-        ScheduleManager scheduleManager = ScheduleManager.instance();
+        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
         Schedule schA = scheduleManager.newSchedule("Schedule AA");
         ScheduleItem schAItem1 = schA.addItem("Boxcar");
         schAItem1.setReceiveLoadName("Empty");
@@ -1831,9 +1832,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * Test uses car loads to activate schedule.
      */
     public void testRoutingWithSchedulesMatchMode() {
-        TrainManager tmanager = TrainManager.instance();
-        CarManager cmanager = CarManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         loadLocationsTrainsAndCars();
 
@@ -1864,7 +1865,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         AS1.setTrainDirections(0);
 
         // create schedules
-        ScheduleManager scheduleManager = ScheduleManager.instance();
+        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
         Schedule schA = scheduleManager.newSchedule("Schedule AAA");
         ScheduleItem schAItem1 = schA.addItem("Boxcar");
         schAItem1.setReceiveLoadName("Empty");
@@ -1963,9 +1964,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * Cars use final destination to activate schedule
      */
     public void testRoutingWithSchedulesMatchMode2() {
-        TrainManager tmanager = TrainManager.instance();
-        CarManager cmanager = CarManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         loadLocationsTrainsAndCars();
 
@@ -2008,7 +2009,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         AS1.setTrainDirections(0);
 
         // create schedules
-        ScheduleManager scheduleManager = ScheduleManager.instance();
+        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
         Schedule schA = scheduleManager.newSchedule("Schedule ABC");
 
         ScheduleItem schAItem1 = schA.addItem("Boxcar");
@@ -2030,13 +2031,13 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         schAItem3.setDestinationTrack(BS1);
 
         ScheduleItem schAItem4 = schA.addItem("Boxcar");
-        schAItem4.setReceiveLoadName(CarLoads.instance().getDefaultEmptyName());
+        schAItem4.setReceiveLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         schAItem4.setShipLoadName("Bolts");
         schAItem4.setDestination(Danbury);
         schAItem4.setDestinationTrack(DS1);
 
         ScheduleItem schAItem5 = schA.addItem("Boxcar");
-        schAItem5.setReceiveLoadName(CarLoads.instance().getDefaultLoadName());
+        schAItem5.setReceiveLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
         schAItem5.setShipLoadName("Nuts");
         schAItem5.setDestination(Foxboro);
         schAItem5.setDestinationTrack(FS1);
@@ -2051,7 +2052,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c3.setFinalDestination(Essex);
 
         // c4 (BB 4) is a Flat
-        c4.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c4.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         c4.setFinalDestination(Essex);
         c4.setFinalDestinationTrack(ES1);
 
@@ -2060,7 +2061,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c5.setFinalDestination(Essex);
 
         // c6 (BD 6) is a Boxcar
-        c6.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c6.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         c6.setFinalDestination(Essex);
 
         // c7 (BA 7) is a Boxcar
@@ -2073,7 +2074,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c8.setMoves(20);	// serve BB 8 and BC 9 after the other cars
 
         // c9 (BC 9) is a Boxcar
-        c9.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c9.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         c9.setMoves(21);
 
         // place cars
@@ -2248,7 +2249,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 //		// try again
 //		DanburyToEssexTrain.build();
 //		Assert.assertTrue("Bedford train built", DanburyToEssexTrain.isBuilt());
-//	
+//
 //		// check car destinations
 //		// BA 3 (Boxcar) this car's load and final destination is now different
 //		Assert.assertEquals("Car BA 3 destination","Essex MA", c3.getDestinationName());
@@ -2306,9 +2307,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 //		Assert.assertEquals("Car BC 9 final destination track","Danbury Siding 1", c9.getFinalDestinationTrackName());
 //		Assert.assertEquals("Car BC 9 next load", "Bolts", c9.getNextLoadName());
 //		Assert.assertEquals("Car BC 9 schedule id", "", c9.getScheduleId());
-//		
+//
 //		DanburyToEssexTrain.terminate();
-//		
+//
 //		// check car destinations
 //		// BA 3 (Boxcar)
 //		Assert.assertEquals("Car BA 3 destination","", c3.getDestinationName());
@@ -2380,12 +2381,12 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * but not reachable because the Clinton to Danbury train is
      * removed as part of this test.
      * has 5 tracks, 3 sidings, yard, and an interchange track.
-     *  
+     *
      */
     public void testRoutingWithSchedulesLocal() {
-        TrainManager tmanager = TrainManager.instance();
-        CarManager cmanager = CarManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         loadLocationsTrainsAndCars();
 
@@ -2407,19 +2408,19 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c4.setLoadName("Trucks");
 
         // c5 (BC 5) is a Boxcar
-        c5.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c5.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
 
         // c6 (BD 6) is a Boxcar
-        c6.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c6.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
 
         // c7 (7) is a Boxcar
-        c7.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c7.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
 
         // c8 (8) is a Boxcar
         c8.setLoadName("Trucks");
 
         // c9 (9) is a Boxcar
-        c9.setLoadName(CarLoads.instance().getDefaultEmptyName());
+        c9.setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
 
         Location Acton = lmanager.getLocationByName("Acton MA");
         Location Bedford = lmanager.getLocationByName("Bedford MA");
@@ -2435,7 +2436,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Track AI = Acton.getTrackByName("Acton Interchange", Track.INTERCHANGE);
 
         // create schedules
-        ScheduleManager scheduleManager = ScheduleManager.instance();
+        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
         Schedule schA = scheduleManager.newSchedule("Schedule Action");
         ScheduleItem schAItem1 = schA.addItem("Boxcar");
         schAItem1.setReceiveLoadName("Cardboard");
@@ -2551,7 +2552,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         // Build train
         Train BedfordToActonTrain = tmanager.newTrain("BedfordToActonToBedford");
-        Route BedfordToActon = RouteManager.instance().newRoute("BedfordToActonToBedford");
+        Route BedfordToActon = InstanceManager.getDefault(RouteManager.class).newRoute("BedfordToActonToBedford");
         RouteLocation rlB2 = BedfordToActon.addLocation(Bedford);
         RouteLocation rlA2 = BedfordToActon.addLocation(Acton);
         RouteLocation rlB3 = BedfordToActon.addLocation(Bedford);
@@ -2617,12 +2618,12 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     private void loadLocationsTrainsAndCars() {
-        LocationManager lmanager = LocationManager.instance();
-        TrainManager tmanager = TrainManager.instance();
-        RouteManager rmanager = RouteManager.instance();
-        CarManager cmanager = CarManager.instance();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
 
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
 
         // register the car and engine types used
         ct.addName("Boxcar");
@@ -2791,7 +2792,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         EssexToFoxboroTrain.setRoute(routeEF);
 
         Train BedfordToActonTrain = tmanager.newTrain("BedfordToActonToBedford");
-        Route BedfordToActon = RouteManager.instance().newRoute("BedfordToActonToBedford");
+        Route BedfordToActon = InstanceManager.getDefault(RouteManager.class).newRoute("BedfordToActonToBedford");
         RouteLocation rlB2 = BedfordToActon.addLocation(Bedford);
         RouteLocation rlA3 = BedfordToActon.addLocation(Acton);
         RouteLocation rlB3 = BedfordToActon.addLocation(Bedford);

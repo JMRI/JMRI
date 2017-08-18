@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -40,15 +41,15 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     // train
     Train _train;
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     // panels
     JPanel pRoute = new JPanel();
 
     // radio buttons
     // combo boxes
-    JComboBox<Train> trainsComboBox = TrainManager.instance().getTrainComboBox();
-    JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
+    JComboBox<Train> trainsComboBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
+    JComboBox<String> typeComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
     JComboBox<Car> carsComboBox = new JComboBox<>();
 
     // The car currently selected
@@ -108,7 +109,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         addComboBoxAction(carsComboBox);
 
         locationManager.addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         // listen to all tracks and locations
         addLocationAndTrackPropertyChange();
 
@@ -293,8 +294,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         _car.getTrack() != track &&
                         _car.getLocation() == track.getLocation() &&
                         _car.getFinalDestination() == null &&
-                        (_car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) ||
-                                _car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))) {
+                        (_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) ||
+                                _car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName()))) {
                     op.setText(Bundle.getMessage("X(LocalMove)"));
                     // determine if local move with custom load or final destination is allowed
                 } else if (!_train.isAllowLocalMovesEnabled() &&
@@ -302,16 +303,16 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         _car.getTrack() != track &&
                         _car.getLocation() == track.getLocation() &&
                         (_car.getFinalDestination() != null ||
-                                !_car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
-                                        !_car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))) {
+                                !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) &&
+                                        !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName()))) {
                     op.setText(Bundle.getMessage("X(TrainLocalMove)"));
                     // determine if spur can accept car with custom load
                 } else if (track.getTrackType().equals(Track.SPUR) &&
                         track.getSchedule() == null &&
                         _car != null &&
                         _car.getTrack() != track &&
-                        !_car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
-                        !_car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
+                        !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) &&
+                        !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName())) {
                     op.setText(Bundle.getMessage("X(TrackCustomLoad)"));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
                     op.setText(Bundle.getMessage("ButtonOK"));
@@ -367,7 +368,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             // check to see if schedule timetable allows delivery
             if (attribute.equals(TIMETABLE) &&
                     si.getTypeName().equals(carType) &&
-                    (si.getSetoutTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+                    (si.getSetoutTrainScheduleId().equals("") || InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId()
                             .equals(si.getSetoutTrainScheduleId()))) {
                 return true;
             }
@@ -380,7 +381,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                             car == null ||
                             si.getRoadName().equals(car.getRoadName())) &&
                     (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
-                            TrainManager.instance().getTrainScheduleActiveId()
+                            InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId()
                                     .equals(si.getSetoutTrainScheduleId()))) {
                 return true;
             }
@@ -390,7 +391,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
     private void updateComboBox() {
         log.debug("update combobox");
-        CarTypes.instance().updateComboBox(typeComboBox);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
     }
 
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
@@ -401,7 +402,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         String carType = (String) typeComboBox.getSelectedItem();
         // load car combobox
         carsComboBox.addItem(null);
-        List<RollingStock> cars = CarManager.instance().getByTypeList(carType);
+        List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(carType);
         for (RollingStock rs : cars) {
             Car car = (Car) rs;
             carsComboBox.addItem(car);
@@ -411,7 +412,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects")
     private void adjustCarsComboBoxSize() {
-        List<RollingStock> cars = CarManager.instance().getList();
+        List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getList();
         for (RollingStock rs : cars) {
             Car car = (Car) rs;
             carsComboBox.addItem(car);
@@ -459,7 +460,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         removeLocationAndTrackPropertyChange();
         if (_train != null) {
             _train.removePropertyChangeListener(this);

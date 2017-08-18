@@ -45,6 +45,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
@@ -164,7 +165,7 @@ public class PanelEditor extends Editor implements ItemListener {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
             }
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
@@ -173,7 +174,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
+                ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                 ii.pack();
                 ii.setVisible(true);
             }
@@ -224,7 +225,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     if (newName == null) {
                         return;  // cancelled
                     }
-                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
@@ -233,7 +234,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         ((JFrame) getTargetPanel().getTopLevelAncestor()).setTitle(newName);
                     }
                     editor.setTitle();
-                    jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(editor);
+                    InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(editor);
                 }
 
                 ActionListener init(PanelEditor e) {

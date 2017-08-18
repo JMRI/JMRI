@@ -106,13 +106,27 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
     @Deprecated
     static public DCCppTurnoutManager instance() {
         //if (_instance == null) _instance = new DCCppTurnoutManager();
         return _instance;
     }
     static DCCppTurnoutManager _instance = null;
-    
+
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
 
 }

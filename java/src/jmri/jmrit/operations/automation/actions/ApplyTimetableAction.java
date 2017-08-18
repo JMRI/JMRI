@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.timetable.TrainSchedule;
@@ -22,9 +23,9 @@ public class ApplyTimetableAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(TrainManager.instance().getTrainScheduleActiveId());
+            TrainSchedule ts = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
             if (ts != null) {
-                for (Train train : TrainManager.instance().getTrainsByIdList()) {
+                for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
                     train.setBuildEnabled(ts.containsTrainId(train.getId()));
                 }
             }
@@ -34,6 +35,6 @@ public class ApplyTimetableAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 }

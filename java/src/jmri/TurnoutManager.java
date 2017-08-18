@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface TurnoutManager extends Manager {
+public interface TurnoutManager extends Manager<Turnout> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -264,4 +264,10 @@ public interface TurnoutManager extends Manager {
     public String getDefaultThrownSpeed();
 
     public String getDefaultClosedSpeed();
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    public String getEntryToolTip();
+
 }

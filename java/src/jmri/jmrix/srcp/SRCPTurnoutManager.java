@@ -41,6 +41,11 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /*
      * @deprecated since 4.3.5
      */

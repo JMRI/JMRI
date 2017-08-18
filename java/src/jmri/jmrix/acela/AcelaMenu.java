@@ -31,4 +31,5 @@ public class AcelaMenu extends JMenu {
         add(new jmri.jmrix.acela.packetgen.AcelaPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
         add(new jmri.jmrix.acela.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigNodes"),_memo));
     }
+
 }

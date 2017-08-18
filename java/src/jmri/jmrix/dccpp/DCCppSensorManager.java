@@ -167,7 +167,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
@@ -183,6 +182,15 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         } else {
             return Integer.toString(iName);
         }
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class.getName());

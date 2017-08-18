@@ -62,6 +62,7 @@ public class PaneProgPaneTest {
         };
         assertNotNull("exists", pane);
         assertEquals("column count", 2, colCount);
+        pFrame.dispose();
     }
 
     // test specifying variables in columns
@@ -93,6 +94,7 @@ public class PaneProgPaneTest {
         };
         assertNotNull("exists", pane);
         assertEquals("variable defn count", 7, varCount);
+        pFrame.dispose();
     }
 
     // test storage of programming info in list
@@ -138,6 +140,7 @@ public class PaneProgPaneTest {
         assertEquals("variable list length", 2, pane.varList.size());
         assertEquals("1st variable index ", Integer.valueOf(1), pane.varList.get(0));
         assertEquals("2nd variable index ", Integer.valueOf(0), pane.varList.get(1));
+        pFrame.dispose();
     }
 
     // test storage of programming info in list
@@ -195,6 +198,7 @@ public class PaneProgPaneTest {
         Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
 
         log.debug("testPaneRead ends ok");
+        pFrame.dispose();
     }
 
     @Test
@@ -253,6 +257,7 @@ public class PaneProgPaneTest {
         Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));
 
         log.debug("testPaneWrite ends ok");
+        pFrame.dispose();
     }
 
     // test counting of read operations needed
@@ -340,6 +345,7 @@ public class PaneProgPaneTest {
         Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false, true));
 
         log.debug("testPaneReadOpCount ends ok");
+        pFrame.dispose();
     }
 
     // static variables for internal classes to report their interpretations

@@ -35,6 +35,9 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
 }
-
-

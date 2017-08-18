@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public abstract class AbstractLightManager extends AbstractManager
+public abstract class AbstractLightManager extends AbstractManager<Light>
         implements LightManager, java.beans.PropertyChangeListener {
 
     public AbstractLightManager() {
@@ -235,8 +235,10 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
+     * range box in the add Light window.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -248,5 +250,15 @@ public abstract class AbstractLightManager extends AbstractManager
         return Bundle.getMessage("BeanNameLight");
     }
 
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+
 }

@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -48,7 +49,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
     }
 
     ProgModeSelector selector;
-    
+
     public void init() {
         JLabel last;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -85,7 +86,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         pane1a.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         add(pane1a);
 
-        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        decoderBox = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
         add(decoderBox);
 
         // Open programmer button
@@ -143,7 +144,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         // if productID present, try with that
         if (productID != -1) {
             String sz_productID = Integer.toString(productID);
-            temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
             if (temp.getItemCount() == 0) {
                 log.debug("selectDecoder found no items with product ID " + productID);
                 temp = null;
@@ -154,7 +155,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
 
         // try without product ID if needed
         if (temp == null) {  // i.e. if no match previously
-            temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             if (log.isDebugEnabled()) {
                 log.debug("selectDecoder without productID found " + temp.getItemCount() + " matches");
             }
@@ -180,7 +181,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
             log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
         }
         // locate a decoder like that.
-        List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) {
             log.debug("found " + l.size() + " matches");
         }
@@ -210,7 +211,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
     protected void openButton() {
 
         // find the decoderFile object
-        DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String) decoderBox.getSelectedItem());
+        DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle((String) decoderBox.getSelectedItem());
         if (log.isDebugEnabled()) {
             log.debug("decoder file: " + decoderFile.getFilename());
         }

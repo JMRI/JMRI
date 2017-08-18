@@ -1,13 +1,13 @@
 package jmri.jmrit.simplelightctrl;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of SimpleLightCtrlFrame
@@ -18,9 +18,10 @@ public class SimpleLightCtrlFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleLightCtrlFrame action = new SimpleLightCtrlFrame();
         Assert.assertNotNull("exists", action);
+        action.dispose();
     }
 
     @Before

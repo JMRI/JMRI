@@ -47,19 +47,19 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame fa = JmriJFrame.getFrame("Add New Sensor");
         Assert.assertNotNull("add window", fa);
 
-        // Find system name field
-        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName");
-        JTextField sysNameField = (JTextField) ncfinder.find(fa, 0);
-        Assert.assertNotNull("sys name field", sysNameField);
+        // Find hardware address field
+        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "hwAddressTextField");
+        JTextField hwAddressField = (JTextField) ncfinder.find(fa, 0);
+        Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
         
         // The following line works on the CI servers, but not in some standalone cases
-        //getHelper().sendString(new StringEventData(this, sysNameField, "1"));
-        sysNameField.setText("1"); // workaround
+        //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
+        hwAddressField.setText("1"); // workaround
         
         flushAWT();
-        Assert.assertEquals("name content", "1", sysNameField.getText());
+        Assert.assertEquals("name content", "1", hwAddressField.getText());
         
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
@@ -69,8 +69,8 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         prefixBox.setSelectedItem("Internal");
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
 
-        // Find the OK button
-        abfinder = new AbstractButtonFinder("OK");
+        // Find the Create button
+        abfinder = new AbstractButtonFinder("Create new");
         button = (JButton) abfinder.find(fa, 0);
         Assert.assertNotNull(button);
 

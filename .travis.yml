@@ -4,6 +4,7 @@ addons:
   apt:
     packages:
     - graphviz
+    - libalut0
 
 before_install:
   # ensure no unwanted defaults are set

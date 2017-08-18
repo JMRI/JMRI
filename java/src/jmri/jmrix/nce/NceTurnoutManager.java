@@ -35,6 +35,11 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     }
 
     @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    @Override
     public void reply(NceReply r) {
 
     }
@@ -43,6 +48,14 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     public void message(NceMessage m) {
 
     }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
 }
-
-

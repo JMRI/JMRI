@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for XBee connections
- * <p>
  *
  * @author Paul Bender Copyright (C) 2014
  */
@@ -77,6 +76,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      * Validate system name for the current hardware configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
+     *
      * @param systemName Xbee id format with pins
      * @return true for valid formatted name
      */
@@ -182,7 +182,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Turnout s) {
         super.deregister(s);
         // remove the specified turnout from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -208,6 +208,15 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             }
         }
 
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class.getName());

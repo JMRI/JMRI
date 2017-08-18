@@ -214,10 +214,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _dccNumBox.addActionListener((ActionEvent e) -> {
             setTrainInfo(_dccNumBox.getText());
         });
-        /*        JPanel x = new JPanel();
-        x.setLayout(new BoxLayout(x, BoxLayout.PAGE_AXIS));
-        x.add(trainPanel);
-        return x;*/
         return trainPanel;
     }
 
@@ -250,11 +246,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
-        if (speedProfile != null) {
-            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
-            _spTable.setVisible(true);
-            return;
+        if (_speedUtil.profileHasSpeedInfo(true) || _speedUtil.profileHasSpeedInfo(false)) {
+            RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
+            if (speedProfile != null) {
+                _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+                _spTable.setVisible(true);
+                return;
+            }            
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
     }

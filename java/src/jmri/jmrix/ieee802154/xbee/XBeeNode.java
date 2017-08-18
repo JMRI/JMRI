@@ -17,7 +17,6 @@ import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Implementation of a node for XBee networks.
  * <p>
@@ -91,7 +90,7 @@ public class XBeeNode extends IEEE802154Node {
         globalAddress = device.get64BitAddress();
     }
 
-    /*
+    /**
      * Set the traffic controller associated with this node.
      */
     public void setTrafficController(XBeeTrafficController controller) {
@@ -131,8 +130,8 @@ public class XBeeNode extends IEEE802154Node {
         return false;
     }
 
-    /*
-     *  get/set the isPolled attribute;
+    /**
+     * Get/set the isPolled attribute;
      */
     public void setPoll(boolean poll) {
         isPolled = poll;
@@ -162,7 +161,7 @@ public class XBeeNode extends IEEE802154Node {
         return;
     }
 
-    /*
+    /**
      *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
     public XBee16BitAddress getXBeeAddress16() {
@@ -173,7 +172,7 @@ public class XBeeNode extends IEEE802154Node {
         }
     }
 
-    /*
+    /**
      *  Convert the 64 bit address to an XBee64BitAddress object.
      */
     public XBee64BitAddress getXBeeAddress64() {
@@ -264,7 +263,6 @@ public class XBeeNode extends IEEE802154Node {
      * @return the Identifier string if it is not blank then a string
      *         representation of the bytes of the 16 bit address if it is not a
      *         broadcast address. Otherwise return the 64 bit GUID.
-     *
      */
     public String getPreferedName() {
         if (!Identifier.equals("")) {
@@ -283,7 +281,6 @@ public class XBeeNode extends IEEE802154Node {
      *
      * @return the 16 bit address if it is not a broadcast address. Otherwise
      *         return the 64 bit GUID.
-     *
      */
     @Deprecated
     public Object getPreferedTransmitAddress() {
@@ -295,8 +292,8 @@ public class XBeeNode extends IEEE802154Node {
         }
     }
 
-    /*
-     * @return RemoteXBeeDevice associated with this node.
+    /**
+     * @return RemoteXBeeDevice associated with this node
      */
     public RemoteXBeeDevice getXBee() {
            if( device == null && tc !=null) {
@@ -306,11 +303,11 @@ public class XBeeNode extends IEEE802154Node {
            return device;
     }
 
-    /*
-     * set the RemoteXBeeDevice associated with this node and
+    /**
+     * Set the RemoteXBeeDevice associated with this node and
      * configure address information.
      *
-     * @param RemoteXBeeDevice associated with this node.
+     * @param rxd the RemoteXBeeDevice associated with this node.
      */
     public void setXBee(RemoteXBeeDevice rxd) {
            device=rxd;
@@ -322,8 +319,8 @@ public class XBeeNode extends IEEE802154Node {
 
     }
 
-    /*
-     * get the stream object associated with this node.  Create it if it does
+    /**
+     * Get the stream object associated with this node.  Create it if it does
      * not exist.
      */
     public XBeeIOStream getIOStream() {
@@ -335,19 +332,20 @@ public class XBeeNode extends IEEE802154Node {
 
     private XBeeIOStream mStream = null;
 
-    /*
+    /**
      * Connect a StreamPortController object to the XBeeIOStream
-     * associated with this node
+     * associated with this node.
+     *
      * @param cont AbstractSTreamPortController object to connect.
      */
     public void connectPortController(jmri.jmrix.AbstractStreamPortController cont) {
         connectedController = cont;
     }
-    /*
+
+    /**
      * Create a new object derived from AbstractStreamPortController and
      * connect it to the IOStream associated with this object.
      */
-
     public void connectPortController(Class<jmri.jmrix.AbstractStreamPortController> T) {
         try {
             java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
@@ -368,10 +366,10 @@ public class XBeeNode extends IEEE802154Node {
         }
     }
 
-    /*
-     * return the StreamPortController ojbect associated with the XBeeIOStream
+    /**
+     * Get the StreamPortController ojbect associated with the XBeeIOStream
      * associated with this node.
-     * @return jmri.jmrix.AbstractStreamPortController
+     * @return connected {@link jmri.jmrix.AbstractStreamPortController}
      */
     public jmri.jmrix.AbstractStreamPortController getPortController() {
         return connectedController;
@@ -379,8 +377,8 @@ public class XBeeNode extends IEEE802154Node {
 
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
 
-    /*
-     * provide a string representation of this XBee Node
+    /**
+     * Provide a string representation of this XBee Node
      */
     @Override
     public String toString(){
@@ -396,7 +394,7 @@ public class XBeeNode extends IEEE802154Node {
     private final Lock writeLock = readWriteLock.writeLock();
 
     /**
-     * Package protected method to set the PR (Pull Resistance) parameter of the     * node.
+     * Package protected method to set the PR (Pull Resistance) parameter of the node.
      *
      * @param pin the pin number to change.
      * @param pr a jmri.Sensor.PullResistance value used to configure the pin.
@@ -488,9 +486,10 @@ public class XBeeNode extends IEEE802154Node {
     * the specified pin has the pull-up resistor enabled.
     *
     * @param pin the pin number
-    * @return a jmri.Sensor.PullResistance value indicating the current state of    * the pullup resistor. 
- * @throws TimeoutException lock timeout
- * @throws XBeeException invalid pins or values
+    * @return a jmri.Sensor.PullResistance value indicating the current state of
+    * the pullup resistor.
+    * @throws TimeoutException lock timeout
+    * @throws XBeeException invalid pins or values
     */
     jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException, XBeeException {
        if(pin>7 || pin < 0){
@@ -572,4 +571,5 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
+
 }

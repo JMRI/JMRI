@@ -771,7 +771,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput,
                 singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
             }));
-            //If no DCC Comand station is found remove the DCC Signal Decoder option.
+            //If no DCC Command station is found remove the DCC Signal Decoder option.
             if (prefixBox.getItemCount() == 0) {
                 typeBox.removeItem(dccSignalDecoder);
             }
@@ -1550,22 +1550,20 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     void handleCreateException(Exception ex, String sysName) {
         if (ex.getLocalizedMessage() != null) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
+            JOptionPane.showMessageDialog(addFrame,
                     ex.getLocalizedMessage(),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         } else if (ex.getMessage() != null ) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
+            JOptionPane.showMessageDialog(addFrame,
                     ex.getMessage(),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         } else {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("ErrorSignalHeadAddFailed"),
-                            new Object[]{sysName}),
+            JOptionPane.showMessageDialog(addFrame,
+                    Bundle.getMessage("ErrorSignalHeadAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                     Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1651,14 +1649,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     void handleCreate2TurnoutException(String t1, String t2, String uName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSe8cAddFailed"),
-                        new Object[]{t1},
-                        new Object[]{t2},
-                        new Object[]{uName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorSe8cAddFailed", uName, t1, t2) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     void handleSE8cTypeChanged() {

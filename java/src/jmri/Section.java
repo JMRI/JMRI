@@ -143,9 +143,9 @@ public class Section extends AbstractNamedBean {
     private String mReverseBlockingSensorName = "";
     private String mForwardStoppingSensorName = "";
     private String mReverseStoppingSensorName = "";
-    private final ArrayList<Block> mBlockEntries = new ArrayList<>();
-    private final ArrayList<EntryPoint> mForwardEntryPoints = new ArrayList<>();
-    private final ArrayList<EntryPoint> mReverseEntryPoints = new ArrayList<>();
+    private final jmri.util.NonNullArrayList<Block> mBlockEntries = new jmri.util.NonNullArrayList<>();
+    private final jmri.util.NonNullArrayList<EntryPoint> mForwardEntryPoints = new jmri.util.NonNullArrayList<>();
+    private final jmri.util.NonNullArrayList<EntryPoint> mReverseEntryPoints = new jmri.util.NonNullArrayList<>();
 
     /**
      * Operational instance variables (not saved between runs)
@@ -665,9 +665,7 @@ public class Section extends AbstractNamedBean {
     public void removeAllBlocksFromSection() {
         for (int i = mBlockEntries.size(); i > 0; i--) {
             Block b = mBlockEntries.get(i - 1);
-            if (b != null) {
-                b.removePropertyChangeListener(mBlockListeners.get(i - 1));
-            }
+            b.removePropertyChangeListener(mBlockListeners.get(i - 1));
             mBlockListeners.remove(i - 1);
             mBlockEntries.remove(i - 1);
         }
@@ -2352,10 +2350,8 @@ public class Section extends AbstractNamedBean {
         if (initializationNeeded) {
             initializeBlocks();
         }
-        Block eBlock = getEntryBlock();
-        ArrayList<EntryPoint> epList = getListOfForwardBlockEntryPoints(eBlock);
 
-        // need code to fully implement checkSignals if (epList.size() > 0)
+        // need code to fully implement checkSignals if (getListOfForwardBlockEntryPoints(getEntryBlock()).size() > 0)
 
         return true;
     }

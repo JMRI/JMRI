@@ -107,7 +107,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle add button
+     * Method to handle Add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist

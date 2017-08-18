@@ -2,16 +2,14 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -27,15 +25,15 @@ import junit.framework.TestSuite;
 public class ScheduleManagerTest extends OperationsTestCase {
 
     public void testScheduleManager() {
-        LocationManager lm = LocationManager.instance();
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
         Location l = lm.newLocation("new test location");
         Track t = l.addTrack("track 1", Track.SPUR);
 
-        ScheduleManager sm = ScheduleManager.instance();
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
 
         // clear out any previous schedules
         sm.dispose();
-        sm = ScheduleManager.instance();
+        sm = InstanceManager.getDefault(ScheduleManager.class);
 
         Schedule s1 = sm.newSchedule("new schedule");
         Schedule s2 = sm.newSchedule("newer schedule");
