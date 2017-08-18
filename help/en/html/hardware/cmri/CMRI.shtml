@@ -878,7 +878,7 @@ for easy access click an item in this list:</p>
     <td>0B1</td>
     <td>N/A</td>
   </tr>
-  </table>
+  </tbody></table>
   <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
   based on information from the Hardware help pages
   by Egbert Broerse @silverailscolo July 2017 -->

@@ -90,6 +90,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
      * Get from the user, the number of addressed bits used to control a
      * turnout. Normally this is 1, and the default routine returns 1
      * automatically. Turnout Managers for systems that can handle multiple
