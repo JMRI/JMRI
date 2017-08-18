@@ -1,18 +1,15 @@
 package jmri.jmrit.beantable.signalmast;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AddSignalMastJFrameTest {
 
@@ -20,7 +17,8 @@ public class AddSignalMastJFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AddSignalMastJFrame t = new AddSignalMastJFrame();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -38,5 +36,4 @@ public class AddSignalMastJFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AddSignalMastJFrameTest.class.getName());
-
 }

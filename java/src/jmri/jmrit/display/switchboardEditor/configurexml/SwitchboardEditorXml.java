@@ -4,16 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.List;
-//import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
-import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -121,13 +118,13 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
             result = false;
         }
         SwitchboardEditor panel = new SwitchboardEditor(name);
         //panel.makeFrame(name);
-        jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
 

@@ -54,6 +54,8 @@
     <version author="Dave Heap" version="16" lastUpdated="20150427"/>
     <!-- ver17 added LokSound V4.0 M4,LokSound V4.0 M4 OEM -->
     <version author="Dave Heap" version="17" lastUpdated="20161101"/>
+    <!-- ver18 added German translation -->
+    <version author="Ronald Kuhn" version="18" lastUpdated="20170722"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
@@ -152,6 +154,7 @@
             <variable CV="48" item="Sound Option 2" default="0">
                 <decVal/>
                 <label>Sound Configuration Number</label>
+                <label xml:lang="de">Gewählte Soundkonfiguration</label>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>

@@ -1,10 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of LayoutTurnout
@@ -23,17 +23,13 @@ public class LayoutTurnoutTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
- 
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

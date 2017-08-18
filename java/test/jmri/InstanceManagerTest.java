@@ -278,6 +278,18 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
     }
 
+    public void testContainsDefault() {
+        // verify not OkAutoCreate instances exist
+        InstanceManager.reset(OkAutoCreate.class);
+        Assert.assertFalse("Should be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        // create a OkAutoCreate instance
+        Assert.assertNotNull(InstanceManager.getDefault(OkAutoCreate.class));
+        Assert.assertTrue("Should not be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        // remote OkAutoCreate instance
+        InstanceManager.reset(OkAutoCreate.class);
+        Assert.assertFalse("Should be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+    }
+
     // from here down is testing infrastructure
     public InstanceManagerTest(String s) {
         super(s);

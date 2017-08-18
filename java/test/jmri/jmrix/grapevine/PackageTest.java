@@ -58,6 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSensorTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

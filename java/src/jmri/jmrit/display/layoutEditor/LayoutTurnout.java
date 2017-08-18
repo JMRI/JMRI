@@ -61,11 +61,13 @@ import org.slf4j.LoggerFactory;
  * route). A-C (and B-D for crossovers) is the diverging route. B-C (and A-D for
  * crossovers) is an illegal condition.
  * <P>
+ * {@literal
  * ==A==-==B==
  *    \\ //
  *      X
  *    // \\
  * ==D==-==C==
+ * literal}
  * <P>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block,however, a block border may
@@ -163,8 +165,6 @@ public class LayoutTurnout extends LayoutTrack {
     protected LayoutBlock blockB = null;  // Xover - second block, if there is one
     protected LayoutBlock blockC = null;  // Xover - oneThirdPoint block, if there is one
     protected LayoutBlock blockD = null;  // Xover - oneFourthPoint block, if there is one
-
-    protected LayoutEditor layoutEditor = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
@@ -324,10 +324,6 @@ public class LayoutTurnout extends LayoutTrack {
         } else if (type == LH_XOVER) {
             if (version == 2) {
                 center = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
-                pointA.setLocation(20, 0);
-                pointB.setLocation(60, 0);
-                pointC.setLocation(40, 20);
-                pointD.setLocation(0, 20);
 
                 pointA.setLocation((center.getX() - layoutEditor.getXOverShort()), 0);
                 pointB.setLocation((layoutEditor.getXOverLong() * 2), 0);
@@ -369,19 +365,13 @@ public class LayoutTurnout extends LayoutTrack {
         double sineRot = Math.sin(rotRAD);
         double cosineRot = Math.cos(rotRAD);
 
-        if (version == 2) {
-            pointA = rotatePoint(pointA, sineRot, cosineRot);
-            pointB = rotatePoint(pointB, sineRot, cosineRot);
-            pointC = rotatePoint(pointC, sineRot, cosineRot);
-            pointD = rotatePoint(pointD, sineRot, cosineRot);
-        } else {
-            double x = (cosineRot * dispB.getX()) - (sineRot * dispB.getY());
-            double y = (sineRot * dispB.getX()) + (cosineRot * dispB.getY());
-            dispB = new Point2D.Double(x, y);
-            x = (cosineRot * dispA.getX()) - (sineRot * dispA.getY());
-            y = (sineRot * dispA.getX()) + (cosineRot * dispA.getY());
-            dispA = new Point2D.Double(x, y);
-        }
+        dispA = rotatePoint(dispA, sineRot, cosineRot);
+        dispB = rotatePoint(dispB, sineRot, cosineRot);
+
+        pointA = rotatePoint(pointA, sineRot, cosineRot);
+        pointB = rotatePoint(pointB, sineRot, cosineRot);
+        pointC = rotatePoint(pointC, sineRot, cosineRot);
+        pointD = rotatePoint(pointD, sineRot, cosineRot);
     }
 
     /**
@@ -1232,10 +1222,6 @@ public class LayoutTurnout extends LayoutTrack {
         return block;
     }
 
-    public Point2D getCoordsCenter() {
-        return center;
-    }
-
     public Point2D getCoordsA() {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             if (version == 2) {
@@ -1725,18 +1711,21 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
-    /**
+    /*
      * Modify coordinates methods
      */
+
+    /**
+     * set center coordinates
+     * @param p the coordinates to set
+     */
+    @Override
     public void setCoordsCenter(Point2D p) {
-        if (version == 2) {
-            Point2D oldC = center;
-            Point2D offset = MathUtil.subtract(oldC, p);
-            pointA = MathUtil.subtract(pointA, offset);
-            pointB = MathUtil.subtract(pointB, offset);
-            pointC = MathUtil.subtract(pointC, offset);
-            pointD = MathUtil.subtract(pointD, offset);
-        }
+        Point2D offset = MathUtil.subtract(p, center);
+        pointA = MathUtil.add(pointA, offset);
+        pointB = MathUtil.add(pointB, offset);
+        pointC = MathUtil.add(pointC, offset);
+        pointD = MathUtil.add(pointD, offset);
         center = p;
     }
 
@@ -1913,27 +1902,37 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        center = pt;
-        if (version == 2) {
-            pointA = new Point2D.Double(Math.round(pointA.getX() * xFactor),
-                    Math.round(pointA.getY() * yFactor));
-            pointB = new Point2D.Double(Math.round(pointB.getX() * xFactor),
-                    Math.round(pointB.getY() * yFactor));
-            pointC = new Point2D.Double(Math.round(pointC.getX() * xFactor),
-                    Math.round(pointC.getY() * yFactor));
-            pointD = new Point2D.Double(Math.round(pointD.getX() * xFactor),
-                    Math.round(pointD.getY() * yFactor));
-        } else {
-            pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
-                    Math.round(dispB.getY() * yFactor));
-            dispB = pt;
-            pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
-                    Math.round(dispA.getY() * yFactor));
-            dispA = pt;
-        }
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+
+        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
+        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
+
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
+    }
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    @Override
+    public void translateCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.add(center, factor);
+        pointA = MathUtil.add(pointA, factor);
+        pointB = MathUtil.add(pointB, factor);
+        pointC = MathUtil.add(pointC, factor);
+        pointD = MathUtil.add(pointD, factor);
     }
 
     /**
@@ -2063,7 +2062,7 @@ public class LayoutTurnout extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (tBlockName.length() > 0) {
+        if (!tBlockName.isEmpty()) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
@@ -2072,7 +2071,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockName + "' in layoutturnout " + ident);
             }
         }
-        if (tBlockBName.length() > 0) {
+        if (!tBlockBName.isEmpty()) {
             blockB = p.getLayoutBlock(tBlockBName);
             if (blockB != null) {
                 blockBName = tBlockBName;
@@ -2083,7 +2082,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + ident);
             }
         }
-        if (tBlockCName.length() > 0) {
+        if (!tBlockCName.isEmpty()) {
             blockC = p.getLayoutBlock(tBlockCName);
             if (blockC != null) {
                 blockCName = tBlockCName;
@@ -2094,7 +2093,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + ident);
             }
         }
-        if (tBlockDName.length() > 0) {
+        if (!tBlockDName.isEmpty()) {
             blockD = p.getLayoutBlock(tBlockDName);
             if (blockD != null) {
                 blockDName = tBlockDName;
@@ -2107,7 +2106,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         //Do the second one first then the activate is only called the once
-        if (tSecondTurnoutName.length() > 0) {
+        if (!tSecondTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
             if (turnout != null) {
                 secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
@@ -2118,7 +2117,7 @@ public class LayoutTurnout extends LayoutTrack {
                 secondNamedTurnout = null;
             }
         }
-        if (tTurnoutName.length() > 0) {
+        if (!tTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tTurnoutName);
             if (turnout != null) {
                 namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tTurnoutName, turnout);
@@ -2231,7 +2230,7 @@ public class LayoutTurnout extends LayoutTrack {
                         error = false;
                         newAngle = JOptionPane.showInputDialog(layoutEditor,
                                 rb.getString("EnterRotation") + " :");
-                        if (newAngle.length() < 1) {
+                        if (newAngle.isEmpty()) {
                             return;  // cancelled
                         }
                         double rot = 0.0;
@@ -2608,7 +2607,7 @@ public class LayoutTurnout extends LayoutTrack {
 
             // add combobox to select turnout
             firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            layoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
+            LayoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
             panel1.add(firstTurnoutComboBox);
             contentPane.add(panel1);
 
@@ -2616,7 +2615,7 @@ public class LayoutTurnout extends LayoutTrack {
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
 
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            layoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
+            LayoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
             additionalTurnout.addActionListener((ActionEvent e) -> {
                 if (additionalTurnout.isSelected()) {
                     secondTurnoutLabel.setEnabled(true);
@@ -2668,7 +2667,7 @@ public class LayoutTurnout extends LayoutTrack {
             panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
             panel2.add(blockNameComboBox);
-            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
             turnoutEditBlock.addActionListener((ActionEvent e) -> {
@@ -2681,7 +2680,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
-                layoutEditor.setupComboBox(blockBNameComboBox, false, true);
+                LayoutEditor.setupComboBox(blockBNameComboBox, false, true);
                 blockBNameComboBox.setToolTipText(rb.getString("EditBlockBNameHint"));
                 panel21.add(blockBNameComboBox);
 
@@ -2697,7 +2696,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
-                layoutEditor.setupComboBox(blockCNameComboBox, false, true);
+                LayoutEditor.setupComboBox(blockCNameComboBox, false, true);
                 blockCNameComboBox.setToolTipText(rb.getString("EditBlockCNameHint"));
                 panel22.add(blockCNameComboBox);
                 panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
@@ -2712,7 +2711,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
-                layoutEditor.setupComboBox(blockDNameComboBox, false, true);
+                LayoutEditor.setupComboBox(blockDNameComboBox, false, true);
                 blockDNameComboBox.setToolTipText(rb.getString("EditBlockDNameHint"));
                 panel23.add(blockDNameComboBox);
                 panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));

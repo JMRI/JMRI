@@ -294,6 +294,11 @@ public class SpeedUtil {
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.setSpeedProfiles(_rosterId, _speedProfile, _sessionProfile);
         }
+        if (_throttle != null) {  // quiet
+            _throttle.setF0(false);
+            _throttle.setF1(false);
+            _throttle.setF2(false);
+        }
     }
 
     /************* runtime speed needs - throttle, engineer acquired ***************/
@@ -497,7 +502,7 @@ public class SpeedUtil {
         float speed = fromSpeed;
         int steps = 0;
         while (speed >= toSpeed) {
-            float dist = getTrackSpeed(speed - deltaThrottle / 2, isForward) * deltaTime;
+            float dist = getTrackSpeed(speed - deltaThrottle*NXFrame._mf, isForward) * deltaTime;
             if (dist <= 0.0f) {
                 break;
             }
@@ -570,13 +575,13 @@ public class SpeedUtil {
             float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);                
 
             if (log.isDebugEnabled()) {
-                log.debug("{} speed changes. AveThrottle= {}, throttle= {}. dist= {}, pathLength = {}. tas= {}, et= {}.",
+                log.debug("{} speed changes. AveThtle= {}, curThtle= {}. \"dist\"= {}, dist = {}. \"et\"= {}, et= {}.",
                         _numchanges, aveThrottle, throttle, _distanceTravelled, totalLength, _timeAtSpeed, elpsedTime);
                 log.debug("Speeds: SpeedProfile= {}, aveSpeed= {}, speed= {}, over block {} to {}",
                         spSpeed, aveSpeed, speed, _warrant._orders.get(lastIdx).getBlock().getDisplayName(),
                         _warrant._orders.get(newIdx).getBlock().getDisplayName());
             }
-            if (spSpeed > 0.0f) {   // perhaps spSpeed should be weighted.  but how much?
+            if (spSpeed > 0.0f && aveSpeed > 0.0f) {   // perhaps spSpeed should be weighted.  but how much?
                 aveSpeed = (aveSpeed + spSpeed) / 2;
             } else if (aveSpeed < _stepIncrement){
                 mergeOK = false;

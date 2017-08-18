@@ -4,15 +4,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedProfileFrameTest {
 
@@ -20,7 +17,8 @@ public class SpeedProfileFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedProfileFrame t = new SpeedProfileFrame();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,5 +35,4 @@ public class SpeedProfileFrameTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SpeedProfileFrameTest.class.getName());
-
 }

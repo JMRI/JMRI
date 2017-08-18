@@ -1,6 +1,7 @@
 package jmri.util.swing;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -11,8 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ComboBoxEditor;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JComboBox.KeySelectionManager;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.text.JTextComponent;
 import jmri.NamedBean;
 import jmri.util.AlphanumComparator;
@@ -20,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JComboBox varient for showing and selecting JMRI NamedBeans from a specific
+ * JComboBox variant for showing and selecting JMRI NamedBeans from a specific
  * manager.
  */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
@@ -64,6 +70,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 validateText();
             }
         });
+        setRenderer(_enableRenderer);
+        ListSelectionModel lsm = _enableRenderer.getEnabledItems();
+        lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
     }
 
     @Override
@@ -293,12 +302,16 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     /**
      * Set the text from the editor for this JmriBeanComboBox
-     * 
+     *
      * @param text the text to set
      */
     public void setText(String text) {
         getEditor().setItem(text);
-        setSelectedBeanByName(text);
+        if ((text != null) && !text.isEmpty()) {
+            setSelectedBeanByName(text);
+        } else {
+            setSelectedIndex(-1);
+        }
         validateText();
     }   // setText
 
@@ -506,7 +519,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
         }
         return result;
-
     }   //getBean
 
     public enum DisplayOptions {
@@ -620,6 +632,157 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 }
             }
             return -1;
+        }
+    }
+
+    public void setEnabledItems(ListSelectionModel enabledItems) {
+        if (_enableRenderer != null) {
+            _enableRenderer.setEnabledItems(enabledItems);
+        }
+    }
+
+    public ListSelectionModel getEnabledItems() {
+        ListSelectionModel result = null;
+        if (_enableRenderer != null) {
+            result = _enableRenderer.getEnabledItems();
+        }
+        return result;
+    }
+
+    public void setItemEnabled(int inIndex, boolean inEnabled) {
+        ListSelectionModel lsm = getEnabledItems();
+        if (lsm != null) {
+            if (inEnabled) {
+                lsm.addSelectionInterval(inIndex, inIndex);
+            } else {
+                lsm.removeSelectionInterval(inIndex, inIndex);
+            }
+        }
+    }
+    
+    public boolean isItemEnabled(int inIndex) {
+        boolean result = false;
+        ListSelectionModel lsm = getEnabledItems();
+        if (lsm != null) {
+            result = lsm.isSelectedIndex(inIndex);
+        }
+        return result;
+    }
+
+    public void enableItem(int inIndex) {
+        setItemEnabled(inIndex, true);
+    }
+
+    public void disableItem(int inIndex) {
+        setItemEnabled(inIndex, false);
+    }
+    
+    public void setEnabledColor(Color enabledColor) {
+        if (_enableRenderer != null) {
+            _enableRenderer.setEnabledColor(enabledColor);
+        }
+    }
+    
+    public Color getEnabledColor() {
+        Color result = null;
+        if (_enableRenderer != null) {
+            result = _enableRenderer.getEnabledColor();
+        }
+        return result;
+    }
+    
+    public void setDisabledColor(Color disabledColor) {
+        if (_enableRenderer != null) {
+            _enableRenderer.setDisabledColor(disabledColor);
+        }
+    }
+    
+    public Color getDisabledColor() {
+        Color result = null;
+        if (_enableRenderer != null) {
+            result = _enableRenderer.getDisabledColor();
+        }
+        return result;
+    }
+
+    private EnabledComboBoxRenderer _enableRenderer = new EnabledComboBoxRenderer();
+
+    class EnabledComboBoxRenderer extends BasicComboBoxRenderer {
+
+        private ListSelectionModel _enabledItems;
+        private Color _enabledColor = super.getForeground();
+        private Color _disabledColor = Color.lightGray;
+
+        public EnabledComboBoxRenderer() {
+            _enabledItems = new DefaultListSelectionModel();
+        }
+
+        public EnabledComboBoxRenderer(ListSelectionModel enabledItems) {
+            super();
+            _enabledItems = enabledItems;
+        }
+
+        public void setEnabledItems(ListSelectionModel enabledItems) {
+            _enabledItems = enabledItems;
+        }
+
+        public ListSelectionModel getEnabledItems() {
+            return _enabledItems;
+        }
+
+        public void setItemEnabled(int inIndex, boolean inEnabled) {
+            if (_enabledItems != null) {
+                if (inEnabled) {
+                    _enabledItems.addSelectionInterval(inIndex, inIndex);
+                } else {
+                    _enabledItems.removeSelectionInterval(inIndex, inIndex);
+                }
+            }
+        }
+
+        public boolean isItemEnabled(int inIndex) {
+            boolean result = false;
+            if (_enabledItems != null) {
+                result = _enabledItems.isSelectedIndex(inIndex);
+            }
+            return result;
+        }
+
+        public void setEnabledColor(Color EnabledColor) {
+            _enabledColor = EnabledColor;
+        }
+
+        public Color getEnabledColor() {
+            return _enabledColor;
+        }
+
+        public void setDisabledColor(Color disabledColor) {
+            _disabledColor = disabledColor;
+        }
+
+        public Color getDisabledColor() {
+            return _disabledColor;
+        }
+        
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value,
+                int index, boolean isSelected, boolean cellHasFocus) {
+
+            Component c = super.getListCellRendererComponent(list, value, index,
+                    isSelected, cellHasFocus);
+
+            if (_enabledItems.isSelectedIndex(index)) {
+                c.setBackground(super.getBackground());
+                c.setForeground(_enabledColor);
+            } else {    // not enabled
+                if (isSelected) {
+                    c.setBackground(UIManager.getColor("ComboBox.background"));
+                } else {
+                    c.setBackground(super.getBackground());
+                }
+                c.setForeground(_disabledColor);
+            }
+            return c;
         }
     }
 
