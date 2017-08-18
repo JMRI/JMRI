@@ -26,7 +26,6 @@ public class PipeListenerTest {
     }
 
     @Test
-    @Ignore("Test is causing timeouts on CI servers")
     public void testWrite() throws java.io.IOException {
         JTextArea jta = new JTextArea();
         PipedWriter wr = new PipedWriter();
