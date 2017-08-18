@@ -182,7 +182,7 @@ public class SerialAddress {
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.debug("illegal character in node address field of system name: "
+                log.warn("illegal character in node address field of system name: "
                         + systemName);
                 return (false);
             }
@@ -195,7 +195,7 @@ public class SerialAddress {
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.debug("illegal character in bit number field of system name: "
+                log.warn("illegal character in bit number field of system name: "
                         + systemName);
                 return (false);
             }
