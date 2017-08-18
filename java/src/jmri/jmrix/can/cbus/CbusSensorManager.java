@@ -39,6 +39,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     CanSystemConnectionMemo memo;
 
     // CBUS-specific methods
+
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
@@ -71,7 +72,28 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
+        // prefix + as service to user
+        int unsigned = 0;
+        try {
+            unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
+        } catch (NumberFormatException ex) {
+            // already warned
+        };
+        if (unsigned > 0) {
+            curAddress = "+" + curAddress;
+        }
         return getSystemPrefix() + typeLetter() + curAddress;
+    }
+
+    @Override
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+        // always return this (the current) name without change
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        return curAddress;
     }
 
     @Override

@@ -1581,7 +1581,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -1686,7 +1686,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     statusBar.setForeground(Color.red);
                     return; // without creating
                 }
-                String user = userNameTextField.getText().trim();
+                String user = userNameTextField.getText().trim(); // N11N
                 if ((x != 0) && user != null && !user.equals("")) {
                     user = user + ":" + x; // add :x to user name starting with 2nd item
                 }
@@ -1729,7 +1729,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             statusBar.setForeground(Color.gray);
         } else {
             statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
         }
 
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
@@ -1758,15 +1758,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
+                    log.debug("T Add box enabled1");
                     // get tooltip from ProxyTurnoutManager
                     addEntryToolTip = mgr.getEntryToolTip();
-                    log.debug("T add box set");
                     break;
                 }
             }
         } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
-            log.debug("T add box enabled2");
+            log.debug("T Add box enabled2");
             // get tooltip from turnout manager
             addEntryToolTip = turnManager.getEntryToolTip();
             log.debug("TurnoutManager tip");
@@ -1791,7 +1791,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     JOptionPane.ERROR_MESSAGE);
         }
         // provide feedback to user
-        statusBar.setText("Error creating Turnouts. Check entered format and domain");
+        statusBar.setText(Bundle.getMessage("WarningInvalidRange"));
         statusBar.setForeground(Color.red);
     }
 

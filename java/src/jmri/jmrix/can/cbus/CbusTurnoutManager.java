@@ -40,6 +40,14 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
+        try {
+            if (Integer.valueOf(addr).intValue() > 0) {
+                // accept unsigned positive integer, prefix "+"
+                addr = "+" + addr;
+            }
+        } catch (NumberFormatException ex) {
+            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+        };
         Turnout t = new CbusTurnout(getSystemPrefix(), addr, memo.getTrafficController());
         t.setUserName(userName);
         return t;
@@ -56,6 +64,16 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
+        }
+        // prefix + as service to user
+        int unsigned = 0;
+        try {
+            unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
+        } catch (NumberFormatException ex) {
+            // already warned
+        };
+        if (unsigned > 0) {
+            curAddress = "+" + curAddress;
         }
         return getSystemPrefix() + typeLetter() + curAddress;
     }
@@ -77,7 +95,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.debug("Warning: "+e.getMessage());
+            log.debug("Warning: " + e.getMessage());
             return false;
         }
         return true;

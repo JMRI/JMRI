@@ -213,10 +213,10 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             return (0);
         }
         if (num <= 0) {
-            log.warn("invalid DCC++ light system name: " + systemName);
+            log.warn("invalid DCC++ sensor system name: " + systemName);
             return (0);
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.warn("bit number out of range in DCC++ light system name: " + systemName);
+            log.warn("bit number out of range in DCC++ sensor system name: " + systemName);
             return (0);
         }
         return (num);

@@ -117,7 +117,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
