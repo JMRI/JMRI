@@ -272,7 +272,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
-// [DISABLED - BREAKS BUILD]
+// [DISABLED: BREAKS BUILD]
 // In theory the system names should always be unique...
 // (Esp. consitering that you should never be comparing Apples to Oranges...)
 // but on the off chance they're ever not… we'll use the "Fully
@@ -291,5 +291,5 @@ public abstract class AbstractNamedBean implements NamedBean {
 //    public int hashCode() {
 //        return getFullyFormattedDisplayName().hashCode();
 //    }
-// [DISABLED - BREAKS BUILD]
+// [DISABLED: BREAKS BUILD]
 }
