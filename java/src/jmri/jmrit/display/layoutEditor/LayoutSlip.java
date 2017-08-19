@@ -996,6 +996,10 @@ public class LayoutSlip extends LayoutTurnout {
         return boundaryBetween;
     }
 
+    /*====================================*\
+    |*      Dialog box to edit slip       *|
+    \*====================================*/
+
     // variables for Edit slip Crossing pane
     JButton slipEditDone;
     JButton slipEditCancel;
@@ -1018,8 +1022,10 @@ public class LayoutSlip extends LayoutTurnout {
             editLayoutTurnoutFrame = new JmriJFrame(rb.getString("EditSlip"), false, true);
             editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutSlip", true);
             editLayoutTurnoutFrame.setLocation(50, 30);
+
             Container contentPane = editLayoutTurnoutFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
