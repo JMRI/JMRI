@@ -2007,7 +2007,7 @@
 
     <target name="package-windows"
             description="create a Windows release package"
-            depends="get-version-string, jar, launchjmri.exe">
+            depends="get-version-string, jar">
         <delete dir="${dist.windows}"/>
         <mkdir dir="${dist.windows}/JMRI"/>
         <copy todir="${dist.windows}/JMRI">
