@@ -3,21 +3,18 @@ package apps.gui3.dp3;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PaneProgDp3ActionTest {
 
     @Test
     public void testCTor() {
         PaneProgDp3Action t = new PaneProgDp3Action();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -34,5 +31,4 @@ public class PaneProgDp3ActionTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PaneProgDp3ActionTest.class.getName());
-
 }

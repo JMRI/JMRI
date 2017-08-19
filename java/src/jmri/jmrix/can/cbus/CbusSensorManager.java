@@ -94,16 +94,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         return entryToolTip;
     }
 
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     * @see jmri.jmrix.can.cbus.CbusAddress
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[NX]{0,1}[+-]{0,1}[0-9]{1,5}[;EX]{0,1}[+-]{0,1}[0-9]{1,5}[M]{0,1}[0-9a-fA-F]{0,2}$"; // Cbus example: +18;-21
-        // see tooltip
-    }
-
     // listen for sensors, creating them as needed
     @Override
     public void reply(CanReply l) {

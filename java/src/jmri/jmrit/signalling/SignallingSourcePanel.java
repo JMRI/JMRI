@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,8 +18,10 @@ import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
+import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.swing.RowSorterUtil;
@@ -56,15 +57,15 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      */
     public SignallingSourcePanel(final SignalMast sourceMast) {
         super();
-        sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
+        sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
         fixedSourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + ": " + sourceMast.getDisplayName());  // NOI18N
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }
 
-        jmri.InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(this);
-        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
@@ -131,8 +132,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      */
     @Override
     public void dispose() {
-        jmri.InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(this);
-        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -147,15 +148,15 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      * @param e The button event
      */
     void discoverPressed(ActionEvent e) {
-        if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));  // NOI18N
             if (response == 0) {
-                jmri.InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
+                InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabledShort"));  // NOI18N
             }
         }
 
-        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         if (layout.size() > 0) {
             signalMastLogicFrame = new JmriJFrame(Bundle.getMessage("DiscoverMastsTitle"), false, false);  // NOI18N
             signalMastLogicFrame.setPreferredSize(null);
@@ -167,17 +168,17 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             signalMastLogicFrame.pack();
             signalMastLogicFrame.setVisible(true);
 
-            jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
             for (int i = 0; i < layout.size(); i++) {
                 try {
-                    jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
+                    InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
                     sourceLabel.setText(Bundle.getMessage("DiscoveringMasts") + " (" + i + "/" + layout.size() + ")"); // indicate progress  // NOI18N
                 } catch (jmri.JmriException ex) {
                     signalMastLogicFrame.setVisible(false);
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
-            jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
         } else {
             // don't take the trouble of searching
             JOptionPane.showMessageDialog(null, Bundle.getMessage("GenSkipped"));  // NOI18N
@@ -216,7 +217,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
      */
     private void updateDetails() {
         SignalMastLogic old = sml;
-        sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
+        sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
             _AppearanceModel.updateSignalMastLogic(old, sml);
@@ -443,7 +444,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
 
         protected void deletePair(int r) {
-            jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(sml, _signalMastList.get(r));
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(sml, _signalMastList.get(r));
         }
 
         public static final int SYSNAME_COLUMN = 0;

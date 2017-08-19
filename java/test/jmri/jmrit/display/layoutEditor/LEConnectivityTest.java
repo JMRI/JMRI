@@ -384,15 +384,10 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initShutDownManager();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-
     }
 
     @Override
     protected void tearDown() throws Exception {
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
