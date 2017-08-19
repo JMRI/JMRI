@@ -237,25 +237,25 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initDebugPowerManager();
+//        JUnitUtil.initInternalTurnoutManager();
+//        JUnitUtil.initInternalLightManager();
+//        JUnitUtil.initInternalSensorManager();
+//        JUnitUtil.initInternalSignalHeadManager();
+//        JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initMemoryManager();
-        JUnitUtil.initOBlockManager();
-        JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
-        JUnitUtil.initWarrantManager();
+//        JUnitUtil.initMemoryManager();
+//        JUnitUtil.initOBlockManager();
+//        JUnitUtil.initLogixManager();
+//        JUnitUtil.initConditionalManager();
+//        JUnitUtil.initWarrantManager();
         JUnitUtil.initShutDownManager();
     }
 
     @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }
