@@ -58,444 +58,114 @@
   <version author="Dave Heap" version="18" lastUpdated="20150427"/>
   <!-- ver19 added new Product IDs -->
   <version author="Dave Heap" version="19" lastUpdated="20160519"/>
+  <!-- ver20 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
+  <version author="Dave Heap" version="20" lastUpdated="20170819"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
         <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
+      </model>
+      <model model="LokSound Select direct / micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
       <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
         <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
       </model>
       <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
         <size length="51" width="26" height="14" units="mm"/>
       </model>
-      <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27">Gear shift sound</soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
+      <model show="no" model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
+      <model show="no" model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
+      <model show="no" model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
+      <model show="no" model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
+      <model show="no" model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
+      <model show="no" model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+      <model show="no" model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
+      <model show="no" model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
+      <model show="no" model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
+      <model show="no" model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
+      <model show="no" model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
+      <model show="no" model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
+      <model show="no" model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
+      <model show="no" model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
+      <model show="no" model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
+      <model show="no" model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
+      <model show="no" model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
+      <model show="no" model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
+      <model show="no" model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
+      <model show="no" model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
+      <model show="no" model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
+      <model show="no" model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+      <model show="no" model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+      <model show="no" model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+      <model show="no" model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
+      <model show="no" model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model show="no" model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model show="no" model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
       <functionlabels>
-        <functionlabel num="0" lockable="true">Headlight</functionlabel>
-        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
         <functionlabel num="2" lockable="false">Horn</functionlabel>
-        <functionlabel num="3" lockable="true">Coupler</functionlabel>
-        <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
-        <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-        <functionlabel num="6" lockable="true">Ditch Light</functionlabel>
-        <functionlabel num="7" lockable="true">Switching</functionlabel>
-        <functionlabel num="8" lockable="true">Sound On</functionlabel>
-        <functionlabel num="9" lockable="true">Notch Up</functionlabel>
-        <functionlabel num="10" lockable="true">Notch Down</functionlabel>
-        <functionlabel num="11" lockable="true">Radiator Fan</functionlabel>
-        <functionlabel num="12" lockable="true">Dimmer</functionlabel>
-        <functionlabel num="13" lockable="true">AUX4</functionlabel>
-        <functionlabel num="14" lockable="true">Detector</functionlabel>
-        <functionlabel num="15" lockable="true">Crossing</functionlabel>
-        <functionlabel num="16" lockable="true">Rail Clack</functionlabel>
-        <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
-        <functionlabel num="18" lockable="true">Sanding</functionlabel>
-        <functionlabel num="19" lockable="true">Air</functionlabel>
-        <functionlabel num="20" lockable="true">Compressor</functionlabel>
-        <functionlabel num="21" lockable="true">Spitter Valve</functionlabel>
       </functionlabels>
       <soundlabels>
-        <soundlabel num="1">Diesel</soundlabel>
-        <soundlabel num="3">Airhorn</soundlabel>
-        <soundlabel num="4">Bell</soundlabel>
-        <soundlabel num="5">Coupler</soundlabel>
-        <soundlabel num="6">Dynamic Brake</soundlabel>
-        <soundlabel num="7">Air Compressor</soundlabel>
-        <soundlabel num="8">Radiator Fan</soundlabel>
-        <soundlabel num="9">Detector</soundlabel>
-        <soundlabel num="10">Crossing Comm</soundlabel>
-        <soundlabel num="11">Rail Clack</soundlabel>
-        <soundlabel num="12">Brake Set/Release</soundlabel>
-        <soundlabel num="13">Sanding Valve</soundlabel>
-        <soundlabel num="14">Short Air Let Off</soundlabel>
-        <soundlabel num="15">Pop Valve</soundlabel>
-        <soundlabel num="16">Short Airhorn</soundlabel>
         <soundlabel num="25">Random sounds</soundlabel>
         <soundlabel num="26">Automatic brake sound</soundlabel>
         <soundlabel num="27">Gear shift sound</soundlabel>

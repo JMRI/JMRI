@@ -56,9 +56,11 @@
   <version author="Dave Heap" version="17" lastUpdated="20140205"/>
   <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="18" lastUpdated="20150427"/>
+  <!-- ver19 this file is now basically legacy, with only obsolete definitions -->
+  <version author="Dave Heap" version="19" lastUpdated="20170819"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+      <model show="no" model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
         <size length="1.41" width=".51" height=".25" units="inches"/>
         <functionlabels>
           <functionlabel num="0" lockable="true"></functionlabel>
@@ -121,28 +123,28 @@
           <soundlabel num="27"></soundlabel>
         </soundlabels>
       </model>
-      <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+      <model show="no" model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+      <model show="no" model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+      <model show="no" model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+      <model show="no" model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+      <model show="no" model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+      <model show="no" model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+      <model show="no" model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
-      <model model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+      <model show="no" model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
       <functionlabels>
