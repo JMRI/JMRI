@@ -70,9 +70,9 @@ public class ConfigXmlManagerTest extends TestCase {
                 innerFlag = true;
             }
         };
-        Object o1 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
-        Object o2 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
-        Object o3 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
+        Object o1 = new jmri.implementation.TripleTurnoutSignalHead("SH1", "", null, null, null);
+        Object o2 = new jmri.implementation.TripleTurnoutSignalHead("SH2", "", null, null, null);
+        Object o3 = new jmri.implementation.TripleTurnoutSignalHead("SH3", "", null, null, null);
         innerFlag = false;
         configxmlmanager.registerConfig(o1, jmri.Manager.SIGNALHEADS);
         Assert.assertTrue("find found it", configxmlmanager.findInstance(o1.getClass(), 0) == o1);
@@ -82,6 +82,9 @@ public class ConfigXmlManagerTest extends TestCase {
         configxmlmanager.registerConfig(o1, jmri.Manager.SIGNALHEADS);
         configxmlmanager.registerConfig(o2, jmri.Manager.SIGNALHEADS);
         configxmlmanager.registerConfig(o3, jmri.Manager.SIGNALHEADS);
+        Object ot = configxmlmanager.findInstance(o1.getClass(), 1);
+        Assert.assertNotNull("findInstance(class, 1) not null", ot);
+        Assert.assertEquals("findInstance(class, 1) equals o2",o2, ot);
         Assert.assertTrue("find found 2nd", configxmlmanager.findInstance(o1.getClass(), 1) == o2);
         Assert.assertTrue("find found subclass", configxmlmanager.findInstance(Class.forName("jmri.SignalHead"), 1) == o2);
 
