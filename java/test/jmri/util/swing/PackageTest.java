@@ -49,6 +49,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XTableColumnModelTest.class));
         suite.addTest(new JUnit4TestAdapter(JFrameInterfaceTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriNamedPaneActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BusyDialogTest.class));
 
         return suite;
     }

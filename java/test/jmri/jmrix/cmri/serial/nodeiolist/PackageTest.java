@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrameTest.class,
+   NodeIOListFrameTest.class,
+   BundleTest.class,
+   NodeIOListActionTest.class,
 })
 
 public class PackageTest{

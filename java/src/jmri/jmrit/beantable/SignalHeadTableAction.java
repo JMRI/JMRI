@@ -771,7 +771,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput,
                 singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
             }));
-            //If no DCC Comand station is found remove the DCC Signal Decoder option.
+            //If no DCC Command station is found remove the DCC Signal Decoder option.
             if (prefixBox.getItemCount() == 0) {
                 typeBox.removeItem(dccSignalDecoder);
             }

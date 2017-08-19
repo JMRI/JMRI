@@ -19,7 +19,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.util.swing.JmriBeanComboBox;
 
 /**
- * Provides an edit panel for a block object.
+ * Provides an edit panel for a turnout object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
@@ -57,7 +57,6 @@ public class TurnoutEditAction extends BeanEditAction {
 
     JmriBeanComboBox reporterField;
     JCheckBox useCurrent = new JCheckBox();
-
     JCheckBox inverted = new JCheckBox();
 
     @Override
@@ -151,8 +150,8 @@ public class TurnoutEditAction extends BeanEditAction {
                 String newName = operationsName.getText();
                 if (currentOperation != null && newName != null && !newName.equals("")) {
                     if (!currentOperation.rename(newName)) {
-                        JOptionPane.showMessageDialog(null, "This name '" + newName + "' is already in use",
-                                "Name already in use", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorDuplicateUserName", newName),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
@@ -350,7 +349,6 @@ public class TurnoutEditAction extends BeanEditAction {
 
                     String decoderName = (String) lockBox.getSelectedItem();
                     t.setDecoderName(decoderName);
-
                 }
             });
 
@@ -373,6 +371,7 @@ public class TurnoutEditAction extends BeanEditAction {
                     }
                 }
             });
+
          } else {
            // lock operations are not available for this kind of Turnout
             lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockModeUnavailable")));
@@ -483,7 +482,6 @@ public class TurnoutEditAction extends BeanEditAction {
 
         bei.add(speed);
         return speed;
-
     }
 
 }

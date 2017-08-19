@@ -103,14 +103,6 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{2,6}[aAmMpPsS]{0,1}[0-9]{1,3}$"; // examples 4B3, 4:3, see tooltip
-    }
-
-    /**
      * Allow access to SerialLightManager
      */
     static public SerialLightManager instance() {

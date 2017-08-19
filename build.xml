@@ -2332,4 +2332,25 @@
             <antcall target="ci-test-appveyor-coveragecheck" />
         </parallel>
     </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: lockMetaFiles                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="lockMetaFiles" description="Lock META-INT files">
+    	<echo>locking META-INT files</echo>
+    	<chmod perm="ugo+rx">
+    		<fileset dir="${target/classes/META-INF}"/>
+    	</chmod>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: unlockMetaFiles                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="unlockMetaFiles" description="Unlock META-INT files">
+    	<echo>unlocking META-INT files</echo>
+    	<chmod perm="ugo+rx+w">
+    		<fileset dir="${target/classes/META-INF}"/>
+    	</chmod>
+    </target>
+
 </project>

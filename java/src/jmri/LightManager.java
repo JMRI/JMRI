@@ -208,9 +208,4 @@ public interface LightManager extends Manager<Light> {
      */
     public String getEntryToolTip();
 
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    public String getEntryRegex();
-
 }

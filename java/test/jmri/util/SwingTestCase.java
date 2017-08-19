@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,7 @@ import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
 import org.junit.Assert;
+import org.netbeans.jemmy.FrameWaiter;
 
 /**
  * Provide Swing context for JUnit test classes.
@@ -27,9 +29,9 @@ public class SwingTestCase extends JFCTestCase {
 
     /**
      * Get the displayed content of a JComponent.
-     *
+     * <p>
      * static so that it can in invoked outside SwingTestCases subclasses
-     *
+     * <p>
      * Note: this does no adjustment, e.g. pack, etc. That should have been
      * already been done as required.
      *
@@ -125,6 +127,27 @@ public class SwingTestCase extends JFCTestCase {
         // we've checked the corners first on purpose, to see they're all right
         assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
 
+    }
+
+    /**
+     * Dispose of a frame searched for by title. Disposes of the first frame
+     * found with the given title. Asserts that the calling test failed if the
+     * frame cannot be found.
+     *
+     * @param title the title of the frame to dispose of
+     * @param ce    true to match title param as a substring of the frame's
+     *              title; false to require an exact match
+     * @param cc    true if search is case sensitive; false otherwise
+     */
+    public static void disposeFrame(String title, boolean ce, boolean cc) {
+        Frame f = FrameWaiter.getFrame("Decoder Pro Wizard", ce, cc);
+        if (f != null) {
+            ThreadingUtil.runOnGUI(() -> {
+                f.dispose();
+            });
+        } else {
+            Assert.fail("Unable to find frame \"" + title + "\" to dispose.");
+        }
     }
 
     /**

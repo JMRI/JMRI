@@ -6,13 +6,11 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SchedulesByLoadFrameTest {
 
@@ -37,7 +35,6 @@ public class SchedulesByLoadFrameTest {
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class.getName());

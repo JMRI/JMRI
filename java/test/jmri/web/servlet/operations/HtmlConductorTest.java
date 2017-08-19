@@ -3,16 +3,13 @@ package jmri.web.servlet.operations;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class HtmlConductorTest {
 
@@ -29,12 +26,11 @@ public class HtmlConductorTest {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
-        jmri.util.JUnitOperationsUtil.initOperationsData();     
+        jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
