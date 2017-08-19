@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class JmriUserInterfaceConfigurationProviderTest {
 
     @Test
+    @Ignore("May be causing hang on Appveyor")
     public void testCTor() {
         JmriUserInterfaceConfigurationProvider t = new JmriUserInterfaceConfigurationProvider(jmri.profile.ProfileManager.getDefault().getActiveProfile());
         Assert.assertNotNull("exists",t);
