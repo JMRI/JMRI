@@ -1,5 +1,8 @@
-To recreate the LaunchJMRI.exe:
+To recreate the LaunchJMRI.exe use 'ant launchjmri.exe` or
 
 /opt/local/bin/makensis -V2 LaunchJMRI.nsi
 
+Note that this ant target is included in the package-windows target: We remake the LaunchJMRI.exe file with every build of the release packages.  
+
+At the same time, we've also left a copy in this directory in Git, because rebuilding it requires a special version (3.01 with long string support) of NSIS that's not always available. If you need it locally for some reason, it's present.
 
