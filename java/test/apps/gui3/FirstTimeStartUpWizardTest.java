@@ -62,7 +62,7 @@ public class FirstTimeStartUpWizardTest {
         FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(jf, a);
         Assert.assertNotNull("exists", t);
         t.dispose();
-        SwingTestCase.disposeFrame("Decoder Pro Wizard", false, false);
+        jf.dispose();
     }
 
     // The minimal setup for log4J
