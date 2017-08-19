@@ -2084,7 +2084,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         inComboBox.setMaximumRowCount(c);
 
         inComboBox.setSelectedIndex(-1);
-
     }   //setupComboBox
 
     /**
