@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
@@ -44,7 +45,7 @@ import org.slf4j.LoggerFactory;
 public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListener {
 
     private boolean syncOK = true; // used to flag status messages
-    EngineManager engineManager = EngineManager.instance();
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     List<RollingStock> engineList;
     List<String> consists;
 

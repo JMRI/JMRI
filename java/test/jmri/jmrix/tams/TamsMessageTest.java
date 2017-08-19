@@ -33,6 +33,6 @@ public class TamsMessageTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TamsMessageTest.class.getName());
 
 }

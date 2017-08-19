@@ -51,7 +51,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
-public interface SignalHead extends NamedBean {
+public interface SignalHead extends Signal {
 
     public static final int DARK = 0x00;
     public static final int RED = 0x01;

@@ -36,4 +36,12 @@ public interface ThrottleListener extends EventListener {
      */
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason);
 
+    /**
+     * Get notification that a throttle request requires is in use by another
+     * device, and a "steal" may be required.
+     *
+     * @param address DccLocoAddress of the throttle that needs to be stolen.
+     */
+    public void notifyStealThrottleRequired(DccLocoAddress address);
+
 }

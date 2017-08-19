@@ -37,6 +37,6 @@ public class LayoutEditorFindItemsTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItemsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItemsTest.class.getName());
 
 }

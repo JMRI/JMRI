@@ -4,20 +4,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
 
 /**
  * Frame displaying the LZ100 configuration utility
- *
+ * <p>
  * This is a container for the LZ100 configuration utility. The actual utiliy is
  * defined in {@link LZ100InternalFrame}
  *
  * @author Paul Bender Copyright (C) 2005
-  */
+ */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("LZ100 Configuration Utility", memo);
+        this(Bundle.getMessage("MenuItemLZ100ConfigurationManager"), memo);
     }
 
     public LZ100Frame(String FrameName, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -26,7 +26,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
         javax.swing.JInternalFrame LZ100IFrame = new LZ100InternalFrame(memo);
 
-        javax.swing.JPanel pane0 = new JPanel();
+        JPanel pane0 = new JPanel();
         pane0.add(LZ100IFrame);
         getContentPane().add(pane0);
 
@@ -49,7 +49,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
     }
 
-    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("ButtonClose"));
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
     @Override
     public void dispose() {

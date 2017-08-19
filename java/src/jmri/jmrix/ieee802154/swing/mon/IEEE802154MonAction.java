@@ -46,12 +46,8 @@ public class IEEE802154MonAction extends AbstractAction {
             log.warn("IEEE802154MonAction starting IEEE802154MonFrame: Exception: " + ex.toString());
         }
         f.setVisible(true);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(IEEE802154MonAction.class);
 
 }
-
-
-

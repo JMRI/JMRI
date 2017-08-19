@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
-public class LayoutBlockManager extends AbstractManager implements jmri.InstanceManagerAutoDefault {
+public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
     //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public LayoutBlockManager() {
@@ -184,14 +184,16 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return (LayoutBlock) _tuser.get(key);
     }
 
-    static LayoutBlockManager _instance = null;
-
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public LayoutBlockManager instance() {
-        if (_instance == null) {
-            _instance = new LayoutBlockManager();
-        }
-        return _instance;
-    }	//instance
+        return InstanceManager.getDefault(LayoutBlockManager.class);
+    }
 
     /**
      * Method to find a LayoutBlock with a specified Sensor assigned as its
@@ -2356,7 +2358,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         firstRoutingChange = System.nanoTime();
 
         //cycle through all LayoutBlocks, completing initialization of the layout block routing
-        java.util.Enumeration<jmri.NamedBean> en = _tsys.elements();
+        java.util.Enumeration<LayoutBlock> en = _tsys.elements();
 
         while (en.hasMoreElements()) {
             ((LayoutBlock) en.nextElement()).initializeLayoutBlockRouting();

@@ -21,6 +21,7 @@ public class SensorGroupTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SensorGroupFrame frame = new SensorGroupFrame();
         Assert.assertNotNull(frame);
+        frame.dispose();
     }
 
     @Test
@@ -35,6 +36,7 @@ public class SensorGroupTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SensorGroupFrame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     // The minimal setup for log4J

@@ -22,6 +22,7 @@ public class CarRosterMenuTest {
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         CarRosterMenu t = new CarRosterMenu("test menu",1,ctf);
         Assert.assertNotNull("exists",t);
+        ctf.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +38,6 @@ public class CarRosterMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarRosterMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarRosterMenuTest.class.getName());
 
 }

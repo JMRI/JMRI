@@ -85,6 +85,15 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
     // listen for sensors, creating them as needed
     @Override
     public void reply(CanReply l) {

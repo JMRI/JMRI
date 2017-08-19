@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.IdTag;
@@ -288,12 +289,10 @@ public class IdTagTableAction extends AbstractTableAction {
     //private boolean noWarn = false;
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorIdTagAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorIdTagAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -336,4 +335,5 @@ public class IdTagTableAction extends AbstractTableAction {
         return IdTagTableAction.class.getName();
     }
     private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class.getName());
+
 }

@@ -60,7 +60,8 @@ public class Log4JFixture {
         "Aqua L&F",
         "AppKit Thread"
     }));
-    
+    static List<Thread> threadsSeen = new ArrayList<Thread>();
+
     /**
      * Do a diagnostic check of threads, 
      * providing a traceback if any new ones are still around.
@@ -72,7 +73,8 @@ public class Log4JFixture {
         // now check for extra threads
         count = 0;
         Thread.getAllStackTraces().keySet().forEach((t) -> 
-            { 
+            {
+                if (threadsSeen.contains(t)) return;
                 String name = t.getName();
                 if (! (threadNames.contains(name)
                      || name.startsWith("RMI TCP Accept")
@@ -82,17 +84,22 @@ public class Log4JFixture {
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
                      || (name.startsWith("Timer-") && 
-                            (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") ))
+                            ( t.getThreadGroup() != null && 
+                                (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )
+                            ) 
+                        )
                     )) {  
                     
-                    count++;
-                    threadNames.add(name);
-                    System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
+                        count++;
+                        threadsSeen.add(t);
+                        System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
                     
-                    // for anonymous threads, show the traceback in hopes of finding what it is
-                    if (name.startsWith("Thread-")) {
-                        for (StackTraceElement e : Thread.getAllStackTraces().get(t)) System.out.println("    "+e);
-                    }
+                        // for anonymous threads, show the traceback in hopes of finding what it is
+                        if (name.startsWith("Thread-")) {
+                            for (StackTraceElement e : Thread.getAllStackTraces().get(t)) {
+                                if (! e.toString().startsWith("java")) System.out.println("    "+e);
+                            }
+                        }
                 }
             });
         if (count > 0) {

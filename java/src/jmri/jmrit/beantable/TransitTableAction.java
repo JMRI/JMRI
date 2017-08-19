@@ -375,9 +375,9 @@ public class TransitTableAction extends AbstractTableAction {
         if ((sectionManager.getSystemNameList().size()) > 0) {
             addEditPressed();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(null, rbx
+            JOptionPane.showMessageDialog(null, rbx
                     .getString("Message21"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -704,15 +704,15 @@ public class TransitTableAction extends AbstractTableAction {
 
     void addNextSectionPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (primarySectionBoxList.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message25"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = primarySectionBox.getSelectedIndex();
@@ -766,15 +766,15 @@ public class TransitTableAction extends AbstractTableAction {
 
     void insertAtBeginningPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (insertAtBeginningBoxList.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message35"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = insertAtBeginningBox.getSelectedIndex();
@@ -926,10 +926,10 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
         if (possibles.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
+            JOptionPane.showMessageDialog(addFrame,
                     java.text.MessageFormat.format(rbx.getString("Message36"),
                             new Object[]{"" + seq}), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int k = 0;
@@ -982,9 +982,9 @@ public class TransitTableAction extends AbstractTableAction {
             log.error("Unable to convert " + seqNum.getText() + " to a number");
         }
         if ((n < 1) || (n > curSequenceNum)) {
-            javax.swing.JOptionPane.showMessageDialog(null, rbx
+            JOptionPane.showMessageDialog(null, rbx
                     .getString("Message34"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return 0;
         }
         return n;
@@ -1016,9 +1016,9 @@ public class TransitTableAction extends AbstractTableAction {
 
     void addAlternateForSeqPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int seq = getSeqNum();
@@ -1122,10 +1122,10 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
         if (possibles.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame,
+            JOptionPane.showMessageDialog(addFrame,
                     java.text.MessageFormat.format(rbx.getString("Message37"),
                             new Object[]{"" + seq}), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int k = 0;
@@ -1166,15 +1166,15 @@ public class TransitTableAction extends AbstractTableAction {
 
     void addAlternateSectionPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message23"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (alternateSectionBoxList.size() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message24"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         int index = alternateSectionBox.getSelectedIndex();
@@ -1208,9 +1208,9 @@ public class TransitTableAction extends AbstractTableAction {
             curTransit = transitManager.createNewTransit(sName, uName);
         }
         if (curTransit == null) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message22"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         sysName.setText(curTransit.getSystemName());
@@ -1238,9 +1238,9 @@ public class TransitTableAction extends AbstractTableAction {
             // check that new user name is unique
             Transit tTransit = transitManager.getByUserName(uName);
             if (tTransit != null) {
-                javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+                JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message22"), Bundle.getMessage("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -1255,9 +1255,9 @@ public class TransitTableAction extends AbstractTableAction {
 
     private boolean checkTransitInformation() {
         if ((sectionList.size() <= 1) || (curSequenceNum <= 1)) {
-            javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+            JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message26"), Bundle.getMessage("ErrorTitle"),
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 // djd debugging - need to add code to check Transit Information

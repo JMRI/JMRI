@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
     XnTcpAdapterTest.class,
     XnTcpXNetPacketizerTest.class,
     ConnectionConfigTest.class,
-    jmri.jmrix.lenz.xntcp.configurexml.PackageTest.class
+    jmri.jmrix.lenz.xntcp.configurexml.PackageTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

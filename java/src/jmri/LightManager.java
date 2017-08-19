@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface LightManager extends Manager {
+public interface LightManager extends Manager<Light> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -202,5 +202,10 @@ public interface LightManager extends Manager {
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    public String getEntryToolTip();
 
 }

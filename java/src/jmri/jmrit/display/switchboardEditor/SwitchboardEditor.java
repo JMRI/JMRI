@@ -32,7 +32,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,7 +44,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
@@ -58,6 +56,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -135,9 +134,9 @@ public class SwitchboardEditor extends Editor {
             Bundle.getMessage("Keys"),
             Bundle.getMessage("Symbols")
     };
-    private JComboBox switchShapeList;
+    private JComboBox<String> switchShapeList;
     private List<String> beanManuPrefixes = new ArrayList<String>();
-    private JComboBox beanManuNames;
+    private JComboBox<String> beanManuNames;
 
     // toolbar (from LE)
     private JPanel floatEditHelpPanel = null;
@@ -257,7 +256,7 @@ public class SwitchboardEditor extends Editor {
         log.debug("beanTypeChar set to [{}]", beanTypeChar);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
-        beanManuNames = new JComboBox();
+        beanManuNames = new JComboBox<>();
         if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
             List<jmri.Manager> managerList = proxy.getManagerList();
@@ -286,7 +285,7 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel switchShapeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SwitchShape")));
         switchShapePane.add(switchShapeTitle);
-        switchShapeList = new JComboBox(switchShapeStrings);
+        switchShapeList = new JComboBox<>(switchShapeStrings);
         switchShapeList.setSelectedIndex(0); // select Button in comboBox
         switchShapeList.setActionCommand(SWITCHTYPE_COMMAND);
         switchShapeList.addActionListener(this);
@@ -418,7 +417,7 @@ public class SwitchboardEditor extends Editor {
         int _currentState;
         String _manu = manuPrefix; // cannot use All group as in Tables
         String _insert = "";
-        if (_manu.startsWith("M")) { _insert = "+"; }; // create CANbus.MERG On event
+        if (_manu.startsWith("M")) { _insert = "+"; } // create CANbus.MERG On event
         for (int i = rangeMin; i <= rangeMax; i++) {
             switch (beanType) {
                 case 0:
@@ -1192,7 +1191,7 @@ public class SwitchboardEditor extends Editor {
         }
 
         public void doMouseClicked(java.awt.event.MouseEvent e) {
-            log.debug("Switch clicked", e);
+            log.debug("Switch clicked");
             //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             //    return;
             //}
@@ -1473,7 +1472,7 @@ public class SwitchboardEditor extends Editor {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
             }
         });
 
@@ -1829,7 +1828,7 @@ public class SwitchboardEditor extends Editor {
      * @return bean connection prefix
      */
     public String getSwitchManu() {
-        return (String) this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
+        return this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
     }
 
     /**
@@ -1875,7 +1874,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Load switch shape.
      *
-     * @param switchShape name of switch shape 
+     * @param switchShape name of switch shape
      */
     public void setSwitchShape(String switchShape) {
         int shape;
@@ -2148,19 +2147,19 @@ public class SwitchboardEditor extends Editor {
     private long _clickTime;
 
     @Override
-    public void mousePressed(MouseEvent event) {};
+    public void mousePressed(MouseEvent event) {}
 
     @Override
-    public void mouseReleased(MouseEvent event) {};
+    public void mouseReleased(MouseEvent event) {}
 
     @Override
-    public void mouseClicked(MouseEvent event) {};
+    public void mouseClicked(MouseEvent event) {}
 
     @Override
-    public void mouseDragged(MouseEvent event) {};
+    public void mouseDragged(MouseEvent event) {}
 
     @Override
-    public void mouseMoved(MouseEvent event) {};
+    public void mouseMoved(MouseEvent event) {}
 
     @Override
     public void mouseEntered(MouseEvent event) {
@@ -2288,7 +2287,7 @@ public class SwitchboardEditor extends Editor {
                     default:
                         image = image1; // off, also for connected & unknown
                         break;
-                };
+                }
                 this.repaint();
             }
         }
@@ -2368,7 +2367,7 @@ public class SwitchboardEditor extends Editor {
      */
     @Override
     protected void copyItem(Positionable p) {
-    };
+    }
 
     /**
      * Set an object's location when it is created.

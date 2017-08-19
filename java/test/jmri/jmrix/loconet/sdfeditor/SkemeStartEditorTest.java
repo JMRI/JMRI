@@ -33,6 +33,6 @@ public class SkemeStartEditorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SkemeStartEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SkemeStartEditorTest.class.getName());
 
 }

@@ -22,6 +22,7 @@ public class DeleteCarRosterActionTest {
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         DeleteCarRosterAction t = new DeleteCarRosterAction(ctf);
         Assert.assertNotNull("exists",t);
+        ctf.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +38,6 @@ public class DeleteCarRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterActionTest.class.getName());
 
 }

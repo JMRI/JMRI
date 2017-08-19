@@ -128,7 +128,7 @@ public class AcelaAddress {
      * Public static method to validate system name format returns 'true' if
      * system name has a valid format, else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type,String prefix) {
+    public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 

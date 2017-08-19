@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -43,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Common elements for the Conductor and Yardmaster Frames.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * 
+ *
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
@@ -53,9 +54,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected Location _location = null;
     protected Train _train = null;
 
-    protected TrainManager trainManager = TrainManager.instance();
-    protected EngineManager engManager = EngineManager.instance();
-    protected CarManager carManager = CarManager.instance();
+    protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    protected EngineManager engManager = InstanceManager.getDefault(EngineManager.class);
+    protected CarManager carManager = InstanceManager.getDefault(CarManager.class);
     protected TrainCommon trainCommon = new TrainCommon();
 
     protected JScrollPane locoPane;
@@ -278,9 +279,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         csf.initComponents();
         csf.loadCar(car);
     }
-    
+
     EngineSetFrame esf = null;
-    
+
     // action for set button for an engine, opens the set engine window
     public void engineSetButtonActionPerfomed(ActionEvent ae) {
         String name = ((JButton) ae.getSource()).getName();
@@ -332,7 +333,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     /**
      * Uses "ep" prefix to denote a checkbox with an engine pick up, and "es"
      * for an engine set out.
-     * 
+     *
      * @param rl The routeLocation to show loco pick ups or set outs.
      */
     protected void updateLocoPanes(RouteLocation rl) {
@@ -354,7 +355,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 engine.addPropertyChangeListener(this);
                 JCheckBox checkBox;
                 if (checkBoxes.containsKey("ep" + engine.getId())) {
-                    checkBox = checkBoxes.get("ep"+ engine.getId());
+                    checkBox = checkBoxes.get("ep" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
                     setCheckBoxFont(checkBox);
@@ -374,7 +375,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 engine.addPropertyChangeListener(this);
                 JCheckBox checkBox;
                 if (checkBoxes.containsKey("es" + engine.getId())) {
-                    checkBox = checkBoxes.get("es"+ engine.getId());
+                    checkBox = checkBoxes.get("es" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.dropEngine(engine));
                     setCheckBoxFont(checkBox);
@@ -403,7 +404,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
      * three panes are pick up, set out, or local move. To keep track of each
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
-     * @param rl The RouteLocation
+     *
+     * @param rl         The RouteLocation
      * @param isManifest True if manifest, false if switch list
      *
      */
@@ -431,9 +433,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // passenger trains are already blocked in the car list
                     if (car.getTrack() != null && car.getRouteLocation() == rl && car.getRouteDestination() != rl
                             && (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName()))
-                            && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) 
-                                    || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
-                                    || car.isPassenger())) {
+                            && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred())
+                            || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
+                            || car.isPassenger())) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);
@@ -635,14 +637,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 _train.getName()});
         }
     }
-    
+
     protected void clearAndUpdate() {
         trainCommon.clearUtilityCarTypes(); // reset the utility car counts
         checkBoxes.clear();
         isSetMode = false;
         update();
     }
-    
+
     // to be overridden
     protected abstract void update();
 
@@ -655,8 +657,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource().toString(), e
-                .getOldValue(), e.getNewValue()); // NOI18N
+        log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource(),
+                e.getOldValue(), e.getNewValue()); // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class.getName());

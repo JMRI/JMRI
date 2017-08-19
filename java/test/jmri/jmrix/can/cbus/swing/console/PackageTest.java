@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
      CbusConsolePaneTest.class,
      CbusEventFilterFrameTest.class,
-     CbusEventFilterPanelTest.class
+     CbusEventFilterPanelTest.class,
+     BundleTest.class
 })
 
 /**

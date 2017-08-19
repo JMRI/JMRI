@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public XNetSystemConnectionMemo(XNetTrafficController xt) {
-        super("X", "XpressNet");
+        super("X", Bundle.getMessage("MenuXpressNet"));
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         register(); // registers general type
@@ -35,22 +35,18 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Created XNetSystemConnectionMemo");
-        }
+        log.debug("Created XNetSystemConnectionMemo");
     }
 
     public XNetSystemConnectionMemo() {
-        super("X", "XpressNet");
+        super("X", Bundle.getMessage("MenuXpressNet"));
         register(); // registers general type
         InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
 
         // create and register the XNetComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this), jmri.jmrix.swing.ComponentFactory.class);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Created XNetSystemConnectionMemo");
-        }
+        log.debug("Created XNetSystemConnectionMemo");
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;

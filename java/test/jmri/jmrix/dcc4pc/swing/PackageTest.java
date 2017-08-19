@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
    jmri.jmrix.dcc4pc.swing.packetgen.PackageTest.class,
    Dcc4PcMenuTest.class,
    Dcc4PcComponentFactoryTest.class,
-   StatusPanelTest.class
+   StatusPanelTest.class,
+   Dcc4PcNamedPaneActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

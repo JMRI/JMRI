@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003
  */
-public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
+public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
 
     @Override
     public int getXMLOrder() {
@@ -74,7 +74,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     }
 
     @Override
-    protected Object getInstanceBySystemName(String systemName) {
+    protected Sensor getInstanceBySystemName(String systemName) {
         return getBySystemName(systemName);
     }
 
@@ -166,8 +166,10 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     /**
      * A method that determines if it is possible to add a range of sensors in
      * numerical order eg 10 to 30, primarily used to enable/disable the add
-     * range box in the add sensor panel
+     * range box in the add sensor panel.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -253,7 +255,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = (Sensor) _tsys.get(en.nextElement());
-            if (sen.useDefaultTimerSettings()) {
+            if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingActiveTimer(timer);
             }
         }
@@ -268,7 +270,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = (Sensor) _tsys.get(en.nextElement());
-            if (sen.useDefaultTimerSettings()) {
+            if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingInActiveTimer(timer);
             }
         }
@@ -287,6 +289,15 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
        return false;
     }
 
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
+
 }

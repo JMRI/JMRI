@@ -46,13 +46,11 @@ import org.slf4j.LoggerFactory;
 public class LoadAndStoreTestBase {
 
     private final File file;
-    private final boolean pass; // currently ignored, but not removing this
     // allows code reuse when building the parameter
     // collection in getFiles()
 
     public LoadAndStoreTestBase(File file, boolean pass) {
         this.file = file;
-        this.pass = pass;
     }
 
     /**
@@ -120,6 +118,11 @@ public class LoadAndStoreTestBase {
         outLine = outFileStream.readLine();
         while ( (nextIn = inFileStream.readLine()) != null && (nextOut = outFileStream.readLine()) != null) {
             count++;
+
+            if (inLine.contains("<filehistory>") && outLine.contains("<filehistory>")) {
+                break;
+            }
+
             if (!inLine.startsWith("  <!--Written by JMRI version")
                     && !inLine.startsWith("  <timebase") // time changes from timezone to timezone
                     && !inLine.startsWith("    <test>") // version changes over time
@@ -130,13 +133,16 @@ public class LoadAndStoreTestBase {
                     && !inLine.startsWith("    <memory systemName=\"IMCURRENTTIME\"") // time varies - old format
                     && !(inLine.contains("<memory value") && nextIn.contains("IMCURRENTTIME")) // time varies - new format
                     && !inLine.startsWith("    <modifier>This line ignored</modifier>")) {
-                if (!inLine.equals(outLine)) {
-                    log.error("match failed in testLoadStoreCurrent line " + count);
-                    log.error("   inLine = \"" + inLine + "\"");
-                    log.error("  outLine = \"" + outLine + "\"");
-                    log.error("     comparing \"" + inFile.getName() + "\" and \"" + outFile.getName() + "\"");
+                if (!inLine.contains("<date>") || !outLine.contains("<date>")) {
+                    if (!inLine.equals(outLine)) {
+                        log.error("match failed in LoadAndStoreTest: Current line " + count);
+                        log.error("   inLine = \"" + inLine + "\"");
+                        log.error("  outLine = \"" + outLine + "\"");
+                        log.error("     comparing \"" + compFile.getPath() + "\" and \"" + outFile.getPath() + "\"");
+                        log.error("     orginal inFile \"" + inFile.getPath() + "\"");
+                    }
+                    Assert.assertEquals(inLine, outLine);
                 }
-                Assert.assertEquals(inLine, outLine);
             }
             inLine = nextIn;
             outLine = nextOut;

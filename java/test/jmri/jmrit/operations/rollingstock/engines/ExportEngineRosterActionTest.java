@@ -22,6 +22,7 @@ public class ExportEngineRosterActionTest {
         EnginesTableFrame etf = new EnginesTableFrame();
         ExportEngineRosterAction t = new ExportEngineRosterAction("Test Action",etf);
         Assert.assertNotNull("exists",t);
+        etf.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +38,6 @@ public class ExportEngineRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExportEngineRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportEngineRosterActionTest.class.getName());
 
 }

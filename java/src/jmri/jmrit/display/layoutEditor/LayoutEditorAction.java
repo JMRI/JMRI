@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
+import jmri.jmrit.display.PanelMenu;
 
 /**
  * Start a LayoutEditor.
@@ -23,7 +25,7 @@ public class LayoutEditorAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         String name = "My Layout";
         for (int i = 2; i < 100; i++) {
-            if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
+            if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
                 name = "My Layout " + i;
             }
         }

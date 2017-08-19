@@ -355,21 +355,10 @@ public class Path {
         StringBuilder result = new StringBuilder();
         String separator = ""; // no separator on first item // NOI18N
         for (BeanSetting beanSetting : this.getSettings()) {
-            result.append(separator).append(MessageFormat.format("{0} with state {1}", beanSetting.getBean().getDisplayName(), toSettingString(beanSetting.getSetting()))); // NOI18N
+            result.append(separator).append(MessageFormat.format("{0} with state {1}", beanSetting.getBean().getDisplayName(), beanSetting.getBean().describeState(beanSetting.getSetting()))); // NOI18N
             separator = ", "; // NOI18N
         }
         return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result.toString()); // NOI18N
-    }
-
-    private String toSettingString(int setting) {
-        switch (setting) {
-            case Turnout.CLOSED:
-                return "CLOSED"; // NOI18N
-            case Turnout.THROWN:
-                return "THROWN"; // NOI18N
-            default:
-                return Integer.toString(setting);
-        }
     }
 
     // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change

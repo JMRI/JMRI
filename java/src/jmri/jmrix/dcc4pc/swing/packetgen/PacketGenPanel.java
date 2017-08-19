@@ -2,11 +2,17 @@ package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Dcc4Pc messages
@@ -18,10 +24,10 @@ import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
     // member declarations
-    javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-    javax.swing.JButton sendButton = new javax.swing.JButton();
-    javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
-    javax.swing.JCheckBox childBoardBox = new javax.swing.JCheckBox("Child Board");
+    JLabel jLabel1 = new JLabel();
+    JButton sendButton = new JButton();
+    JTextField packetTextField = new JTextField(20);
+    JCheckBox childBoardBox = new JCheckBox("Child Board");
     public PacketGenPanel() {
         super();
     }
@@ -69,11 +75,6 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         return "Send DCC4PC command";
     }
 
-    /*@Override
-    public void initComponents(Dcc4PcSystemConnectionMemo memo) {
-        super.initComponents(memo);
-    }*/
-
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 
         String text = packetTextField.getText();
@@ -99,7 +100,11 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             loc = loc + 2;
         }
         m.setForChildBoard(childBoardBox.isSelected());
-        memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
+        if(memo.getDcc4PcTrafficController()!=null){
+            memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
+        } else {
+            log.error("no Traffic Controller Found");
+        }
     }
 
     @Override
@@ -113,11 +118,8 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     @Override
     public void reply(Dcc4PcReply r) {
     } // ignore replies
-
-    @Override
-    public void processingData() {
-    }
-
+    
+    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
     /**
      * Nested class to create one of these using old-style defaults
      */

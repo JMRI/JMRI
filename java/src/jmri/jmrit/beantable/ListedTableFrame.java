@@ -35,6 +35,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,8 +79,8 @@ public class ListedTableFrame extends BeanTableFrame {
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
         if (!init) {
-            /*Add the default tables to the static list array, this should only be done
-             once when first loaded*/
+            // Add the default tables to the static list array,
+            // this should only be done once when first loaded
             addTable("jmri.jmrit.beantable.TurnoutTableTabAction", Bundle.getMessage("MenuItemTurnoutTable"), false);
             addTable("jmri.jmrit.beantable.SensorTableTabAction", Bundle.getMessage("MenuItemSensorTable"), false);
             addTable("jmri.jmrit.beantable.LightTableTabAction", Bundle.getMessage("MenuItemLightTable"), false);
@@ -110,9 +111,8 @@ public class ListedTableFrame extends BeanTableFrame {
         detailpanel.setLayout(new CardLayout());
         tabbedTableArray = new ArrayList<TabbedTableItem>(TabbedTableItemListArrayArray.size());
         ArrayList<TabbedTableItemListArray> removeItem = new ArrayList<TabbedTableItemListArray>(5);
-        for (int x = 0; x < TabbedTableItemListArrayArray.size(); x++) {
-            /* Here we add all the tables into the panel*/
-            TabbedTableItemListArray item = TabbedTableItemListArrayArray.get(x);
+        for (TabbedTableItemListArray item : TabbedTableItemListArrayArray) {
+            // Here we add all the tables into the panel
             try {
                 TabbedTableItem itemModel = new TabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
                 itemBeingAdded = itemModel;
@@ -195,10 +195,10 @@ public class ListedTableFrame extends BeanTableFrame {
 
     public void addTable(String aaClass, String choice, boolean stdModel) {
         TabbedTableItemListArray itemBeingAdded = null;
-        for (int x = 0; x < TabbedTableItemListArrayArray.size(); x++) {
-            if (TabbedTableItemListArrayArray.get(x).getClassAsString().equals(aaClass)) {
+        for (TabbedTableItemListArray ttila : TabbedTableItemListArrayArray) {
+            if (ttila.getClassAsString().equals(aaClass)) {
                 log.info("Class " + aaClass + " is already added");
-                itemBeingAdded = TabbedTableItemListArrayArray.get(x);
+                itemBeingAdded = ttila;
                 break;
             }
         }
@@ -211,8 +211,8 @@ public class ListedTableFrame extends BeanTableFrame {
     @Override
     public void dispose() {
         pref.disallowSave();
-        for (int x = 0; x < tabbedTableArray.size(); x++) {
-            tabbedTableArray.get(x).dispose();
+        for (TabbedTableItem tti : tabbedTableArray) {
+            tti.dispose();
         }
         if (list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
@@ -292,9 +292,9 @@ public class ListedTableFrame extends BeanTableFrame {
     //@TODO Sort out the procedure to add to bottom box
     @Override
     protected void addToBottomBox(Component comp, String c) {
-        for (int x = 0; x < tabbedTableArray.size(); x++) {
-            if (tabbedTableArray.get(x).getClassAsString().equals(c)) {
-                tabbedTableArray.get(x).addToBottomBox(comp);
+        for (TabbedTableItem tti : tabbedTableArray) {
+            if (tti.getClassAsString().equals(c)) {
+                tti.addToBottomBox(comp);
                 return;
             }
         }
@@ -302,8 +302,8 @@ public class ListedTableFrame extends BeanTableFrame {
 
     protected static ArrayList<String> getChoices() {
         ArrayList<String> choices = new ArrayList<String>();
-        for (int x = 0; x < TabbedTableItemListArrayArray.size(); x++) {
-            choices.add(TabbedTableItemListArrayArray.get(x).getItemString());
+        for (TabbedTableItemListArray ttila : TabbedTableItemListArrayArray) {
+            choices.add(ttila.getItemString());
         }
         return choices;
     }
@@ -386,6 +386,9 @@ public class ListedTableFrame extends BeanTableFrame {
 
             sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+
+            sorter.setComparator(BeanTableDataModel.USERNAMECOL, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
 
             dataModel.configureTable(dataTable);
 

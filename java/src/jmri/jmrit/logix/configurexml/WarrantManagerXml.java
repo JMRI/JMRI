@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.SCWarrant;
+import jmri.jmrit.logix.SpeedUtil;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -70,7 +71,7 @@ public class WarrantManagerXml //extends XmlFile
                 elem.addContent(c);
             }
             
-            List <BlockOrder> orders = warrant.getSavedOrders();
+            List <BlockOrder> orders = warrant.getBlockOrders();
             for (int j=0; j<orders.size(); j++) {
                 elem.addContent(storeOrder(orders.get(j), "blockOrder"));
             }
@@ -99,11 +100,12 @@ public class WarrantManagerXml //extends XmlFile
 
     static Element storeTrain(Warrant warrant, String type) {
         Element elem = new Element(type);
-        String str = warrant.getTrainId();
+        SpeedUtil speedUtil = warrant.getSpeedUtil();
+        String str = speedUtil.getRosterId();
         if (str==null) str = "";
         elem.setAttribute("trainId", str);
 
-        DccLocoAddress addr = warrant.getDccAddress();
+        DccLocoAddress addr = speedUtil.getDccAddress();
         if (addr != null) {
             elem.setAttribute("dccAddress", ""+addr.getNumber());
             elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
@@ -156,11 +158,17 @@ public class WarrantManagerXml //extends XmlFile
         elem.setAttribute("time", time);
 
         String str = command.getCommand();
-        if (str==null) str = "";
+        if (str==null) {
+            str = "";
+            log.error("ThrottleSetting command has no command type! {}", command);
+        }
         elem.setAttribute("command", str);
 
         str = command.getValue();
-        if (str==null) str = "";
+        if (str==null) {
+            str = "";
+            log.error("ThrottleSetting command has no value! {}", command);
+        }
         elem.setAttribute("value", str);
 
         str = command.getBeanSystemName();
@@ -169,6 +177,12 @@ public class WarrantManagerXml //extends XmlFile
             log.error("ThrottleSetting command has no bean name! {}", command);
         }
         elem.setAttribute("block", str);
+
+        float speed = command.getSpeed();
+        if (speed > 0.0f) {
+            // ignore attribute to allow loading into pre-4.9.2 versions
+            elem.setAttribute("speed", Float.toString(speed));            
+        }
 
         return elem;
     }
@@ -286,18 +300,20 @@ public class WarrantManagerXml //extends XmlFile
     }
 
     static void loadTrain(Element elem, Warrant warrant) {
+        SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {
-            warrant.setTrainId(elem.getAttribute("trainId").getValue());
+            speedUtil.setRosterId(elem.getAttribute("trainId").getValue());
         }
+        // if a RosterEntry exists "trainId" will be the Roster Id, otherwise a train name
+        // Possible redundant call to setDccAddress() is OK
         if (elem.getAttribute("dccAddress") != null) {
-            int address = 0;
             try {
-               address = elem.getAttribute("dccAddress").getIntValue();
+               int address = elem.getAttribute("dccAddress").getIntValue();
+               String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
+               speedUtil.setDccAddress(addr);
             } catch (org.jdom2.DataConversionException dce) {
                 log.error("{} for dccAddress in Warrant {}", dce, warrant.getDisplayName());
             }
-            String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
-            warrant.setDccAddress(addr);
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
@@ -370,8 +386,19 @@ public class WarrantManagerXml //extends XmlFile
         String block = null;
         if (attr != null)
             block =attr.getValue();
+
+        float speed = 0.0f;
+        attr = elem.getAttribute("speed");
+        if (attr != null) {
+            try {
+                speed = attr.getFloatValue();
+            } catch (DataConversionException ex) {
+                speed = 0.0f;;
+                log.error("Unable to read speed of command.", ex);
+            }
+        }
         
-        return new ThrottleSetting(time, command, value, block);
+        return new ThrottleSetting(time, command, value, block, speed);
     }
     
     @Override

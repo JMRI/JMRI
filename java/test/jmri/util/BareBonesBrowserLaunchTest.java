@@ -33,6 +33,6 @@ public class BareBonesBrowserLaunchTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BareBonesBrowserLaunchTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BareBonesBrowserLaunchTest.class.getName());
 
 }

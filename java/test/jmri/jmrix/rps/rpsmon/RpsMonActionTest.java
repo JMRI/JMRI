@@ -33,6 +33,6 @@ public class RpsMonActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsMonActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RpsMonActionTest.class.getName());
 
 }

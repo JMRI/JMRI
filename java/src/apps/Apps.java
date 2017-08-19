@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -49,7 +49,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
-import jmri.NamedBeanHandleManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
@@ -66,7 +65,6 @@ import jmri.jmrit.jython.RunJythonScript;
 import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.roster.swing.RosterMenu;
-import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
@@ -75,7 +73,6 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.managers.DefaultShutDownManager;
-import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
@@ -114,7 +111,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
             justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
-    public Apps(JFrame frame) {
+    public Apps() {
 
         super(true);
         long start = System.nanoTime();
@@ -199,7 +196,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                             new BlockValueFile().writeBlockValues();
                         } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
                         catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe);
+                            log.error("Exception writing blocks: {}", ioe.getMessage());
                         }
 
                         // continue shutdown
@@ -210,14 +207,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Install configuration manager and Swing error handler
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
-        // Install a history manager
-        InstanceManager.store(new FileHistory(), FileHistory.class);
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
-
-        // Install a user preferences manager
-        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
-        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -269,20 +260,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configOK = false;
         }
 
-        //Install Entry Exit Pairs Manager
-        //   Done after load config file so that connection-system-specific Managers are defined and usable
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
-
         // populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // Create a WindowInterface object based on the passed-in Frame
-        JFrameInterface wi = new JFrameInterface(frame);
-        // Create a menu bar
-        menuBar = new JMenuBar();
-
-        // Create menu categories and add to the menu bar, add actions to menus
-        createMenus(menuBar, wi);
 
         // done
         long end = System.nanoTime();
@@ -388,7 +368,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             @Override
             public void run() {
                 try {
-                    DecoderIndexFile.instance();
+                    InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
                     log.error("Error in trying to initialize decoder index file {}", ex.toString());
                 }
@@ -660,7 +640,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(PanelMenu.instance());
+        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
     }
 
     /**
@@ -1121,8 +1101,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return configFilename;
     }
 
-    static protected void createFrame(Apps containedPane, JFrame frame) {
+    static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
+        // Create a WindowInterface object based on the passed-in Frame
+        JFrameInterface wi = new JFrameInterface(frame);
+        // Create a menu bar
+        containedPane.menuBar = new JMenuBar();
+
+        // Create menu categories and add to the menu bar, add actions to menus
+        containedPane.createMenus(containedPane.menuBar, wi);
 
         // invoke plugin, if any
         JmriPlugin.start(frame, containedPane.menuBar);
@@ -1138,7 +1125,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         frame.pack();
         Dimension screen = frame.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
-        frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+
+        Point p = InstanceManager.getDefault(UserPreferencesManager.class).getWindowLocation(containedPane.getClass().getName());
+        if (p != null) {
+            frame.setLocation(p);
+        } else {
+            frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        }
         frame.setVisible(true);
     }
 

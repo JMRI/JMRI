@@ -21,6 +21,7 @@
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.14</openlcb.version>
+        <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
@@ -30,7 +31,6 @@
         <argLine>-Xmx1536m</argLine>
         <powermock.version>1.6.6</powermock.version>
         <surefire.version>2.20</surefire.version>
-        <surefile.printSummary>false</surefile.printSummary>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -306,7 +306,8 @@
                 <configuration>
                     <excludes>
                         <!-- ignore until #3340 is merged -->
-                        <exclude>jmri.jmrix.nce.**.Nce*</exclude>
+                        <exclude>jmri.jmrix.nce.Nce*</exclude>
+                        <exclude>%regex[jmri/jmrix/nce/(boosterprog|cab|clockmon|consist|macro|ncemon|networkdriver|packetgen|simulator|swing|usbdriver|usbinterface)/.*/Nce.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore until #2601 is resolved -->
@@ -337,8 +338,6 @@
                     <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <reuseForks>false</reuseForks>
                     -->
-                    <!-- uncomment to really ensure tests are independent -->
-                    <runOrder>random</runOrder>
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
@@ -410,6 +409,7 @@
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
+                    <show>package</show>
                     <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
                     <!-- change from default 100 warnings -->
                     <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2350</additionalparam>
@@ -524,12 +524,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.28</minimum>
+                                            <minimum>0.30</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.50</minimum>
+                                            <minimum>0.70</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -858,9 +858,25 @@
             <scope>test</scope>
         </dependency>
         -->
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
+        <!--
+        Repository hosting NetBeans modules, especially APIs.
+        Versions are based on IDE releases, e.g.: RELEASE691
+        To create your own repository, use: nbm:populate-repository
+        -->
+        <repository>
+            <id>netbeans</id>
+            <name>NetBeans</name>
+            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
+        </repository>
         <!--
         Repository hosting libraries not available through maven.org
         -->

@@ -22,6 +22,7 @@ public class ExportCarRosterActionTest {
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
         ExportCarRosterAction t = new ExportCarRosterAction("Test Action",ctf);
         Assert.assertNotNull("exists",t);
+        ctf.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +38,6 @@ public class ExportCarRosterActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class.getName());
 
 }

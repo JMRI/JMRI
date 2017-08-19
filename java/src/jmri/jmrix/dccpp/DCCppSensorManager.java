@@ -63,7 +63,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     @Override
     public void message(DCCppReply l) {
-        int addr = 0;
+        int addr = -1;  // -1 flags that no sensor address was found in reply
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
@@ -77,22 +77,23 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             addr = l.getSensorNumInt();
             log.debug("Sensor Status Reply for Encoder" + Integer.toString(addr));
         }
-        String s = prefix + typeLetter() + (addr);
-        if (null == getBySystemName(s)) {
-            // The sensor doesn't exist.  We need to create a 
-            // new sensor, and forward this message to it.
-            ((DCCppSensor) provideSensor(s)).initmessage(l);
-        } else {
-            // The sensor exists.  We need to forward this 
-            // message to it.
-            Sensor sen = getBySystemName(s);
-            if (sen == null) {
-                log.error("Failed to get sensor for {}", s);
+        if (addr >= 0) {
+            String s = prefix + typeLetter() + (addr);
+            if (null == getBySystemName(s)) {
+                // The sensor doesn't exist.  We need to create a 
+                // new sensor, and forward this message to it.
+                ((DCCppSensor) provideSensor(s)).initmessage(l);
             } else {
-                ((DCCppSensor) sen).message(l);
+                // The sensor exists.  We need to forward this 
+                // message to it.
+                Sensor sen = getBySystemName(s);
+                if (sen == null) {
+                    log.error("Failed to get sensor for {}", s);
+                } else {
+                    ((DCCppSensor) sen).message(l);
+                }
             }
         }
-
     }
 
     /**
@@ -166,7 +167,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
@@ -182,6 +182,15 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         } else {
             return Integer.toString(iName);
         }
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class.getName());

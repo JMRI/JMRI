@@ -1,11 +1,15 @@
 package jmri.jmrit.beantable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -86,17 +90,20 @@ public class SensorTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
 
-    JTextField sysName = new JTextField(40);
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
+    // initially allow any 20 char string, updated by prefixBox selection
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
+    JLabel hwAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    String userNameError = this.getClass().getName() + ".DuplicateUserName";
+    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
+    String connectionChoice = "";
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -110,7 +117,7 @@ public class SensorTableAction extends AbstractTableAction {
             ActionListener okListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
+                    createPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
@@ -145,12 +152,20 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            sysName.setName("sysName");
-            userName.setName("userName");
-            prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
+            hardwareAddressTextField.setBackground(Color.white);
+            userName.setName("userName"); // NOI18N
+            prefixBox.setName("prefixBox"); // NOI18N
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userName, prefixBox, numberToAdd, range,
+                    addButton, okListener, cancelListener, rangeListener, statusBar));
+            // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setBackground(Color.white);
+        // reset statusBar text
+        statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
+        statusBar.setForeground(Color.gray);
+
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -161,7 +176,12 @@ public class SensorTableAction extends AbstractTableAction {
         addFrame = null;
     }
 
-    void okPressed(ActionEvent e) {
+    /**
+     * Respond to Create new item pressed on Add Turnout pane
+     *
+     * @param e the click event
+     */
+    void createPressed(ActionEvent e) {
 
         int numberOfSensors = 1;
 
@@ -178,21 +198,42 @@ public class SensorTableAction extends AbstractTableAction {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String curAddress = sysName.getText().trim();
+        String curAddress = hardwareAddressTextField.getText().trim();
+        // initial check for empty entry
+        if (curAddress.length() < 1) {
+            statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
+            statusBar.setForeground(Color.red);
+            hardwareAddressTextField.setBackground(Color.red);
+            return;
+        } else {
+            hardwareAddressTextField.setBackground(Color.white);
+        }
 
+        // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
+        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
+        String errorMessage = new String();
+        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", curAddress), "" + ex, "", true, false);
+                // directly add to statusBar (but never called?)
+                statusBar.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBar.setForeground(Color.red);
                 return;
             }
             if (curAddress == null) {
-                //The next address is already in use, therefore we stop.
+                log.debug("Error converting HW or getNextValidAddress");
+                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
+                statusBar.setForeground(Color.red);
+                // The next address returned an error, therefore we stop this attempt and go to the next address.
                 break;
             }
-            //We have found another sensor with the same address, therefore we need to go onto the next address.
+
+            lastSuccessfulAddress = curAddress;
+            // Compose the proposed system name from parts:
             sName = sensorPrefix + jmri.InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
             Sensor s = null;
             try {
@@ -200,7 +241,10 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating
+                // Show error message in statusBar
+                errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                statusBar.setForeground(Color.gray);
+                return;   // return without creating
             }
 
             String user = userName.getText().trim();
@@ -213,36 +257,70 @@ public class SensorTableAction extends AbstractTableAction {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
             }
+
+            // add first and last names to statusMessage user feedback string
+            if (x == 0 || x == numberOfSensors - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
+            if (x == numberOfSensors - 2)
+                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            // only mention first and last of range added
+
+            // end of for loop creating range of Sensors
         }
+
+        // provide feedback to user
+        if (errorMessage.equals("")) {
+            statusBar.setText(statusMessage);
+            statusBar.setForeground(Color.gray);
+        } else {
+            statusBar.setText(errorMessage);
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+        }
+
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
+
+    private String addEntryToolTip;
 
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
+        String connectionChoice = (String) prefixBox.getSelectedItem();
+        if (connectionChoice == null) {
+            // Tab All or first time opening, default tooltip
+            connectionChoice = "TBD";
+        }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
-                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
-                    range.setEnabled(true);
-                    return;
+                if (mgr.getSystemPrefix().equals(systemPrefix)) {
+                    range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
+                    // get tooltip from ProxyTurnoutManager
+                    addEntryToolTip = mgr.getEntryToolTip();
+                    log.debug("S add box enabled1");
+                    break;
                 }
             }
-        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
+            log.debug("S add box enabled2");
+            // get tooltip from sensor manager
+            addEntryToolTip = senManager.getEntryToolTip();
+            log.debug("SensorManager tip");
         }
+        // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
+        hardwareAddressTextField.setToolTipText("<html>" +
+                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
+                "<br>" + addEntryToolTip + "</html>");
     }
 
-    void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorSensorAddFailed"),
-                        new Object[]{sysName}),
+    void handleCreateException(String hwAddress) {
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorSensorAddFailed", hwAddress) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     protected void setDefaultDebounce(JFrame _who) {
@@ -435,6 +513,42 @@ public class SensorTableAction extends AbstractTableAction {
     public void setMessagePreferencesDetails() {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
+    }
+
+    /**
+     * Extends JTextField to provide a data validation function.
+     *
+     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     */
+    public class CheckedTextField extends JTextField {
+
+        CheckedTextField fld;
+
+        /**
+         * Text entry field with an active key event checker.
+         *
+         * @param len field length
+         */
+        public CheckedTextField(int len) {
+            super("", len);
+            fld = this;
+            // set background color for invalid field data
+            fld.setBackground(Color.red);
+
+//            fld.addFocusListener(new FocusListener() {
+//                @Override
+//                public void focusGained(FocusEvent e) {
+//                    setEditable(true);
+//                    setEnabled(true);
+//                }
+//
+//                @Override
+//                public void focusLost(FocusEvent e) {
+//                    exitFieldColorizer();
+//                    setEditable(true);
+//                }
+//            });
+        }
     }
 
     @Override

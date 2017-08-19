@@ -35,6 +35,6 @@ public class VSDecoderManagerThreadTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderManagerThreadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDecoderManagerThreadTest.class.getName());
 
 }

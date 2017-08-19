@@ -1036,7 +1036,7 @@ class Steam1Sound extends EngineSound {
                 // Regular queueing. Whole sound clip goes to the queue. Low notches.
                 _sound.queueBuffer(b);
                 log.debug("chuff or coast buffer queued. Interval: {}", interval);
-                setWait((int) ((sbl - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL));
+                setWait( ((sbl - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL));
                 if (getWait() < 3) {
                     setWait(0);
                 } else {
@@ -1050,7 +1050,7 @@ class Steam1Sound extends EngineSound {
                 if (interval > (SLEEP_INTERVAL + 10)) {
                     log.debug("need to cut sound clip from {} to length {}", 
                             (int)SoundBite.calcLength(b), interval); 
-                    setWait((int) ((interval - SLEEP_INTERVAL * 8) / SLEEP_INTERVAL));
+                    setWait( ((interval - SLEEP_INTERVAL * 8) / SLEEP_INTERVAL));
                     if (getWait() < 4) {
                         setWait(0);
                     }
@@ -1110,7 +1110,7 @@ class Steam1Sound extends EngineSound {
                         k, _sound.getSource().numQueuedBuffers());
                 // Create a buffer to queue rest of the filling time. Ignore small sound bites.
                 if (imrest > (SLEEP_INTERVAL + 10)) {
-                    setWait((int) ((imrest - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL));
+                    setWait( ((imrest - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL));
                     if (getWait() < 3) {
                         setWait(0);
                     }

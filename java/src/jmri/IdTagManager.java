@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
  * @see jmri.InstanceManager
  * @since 2.11.4
  */
-public interface IdTagManager extends Manager {
+public interface IdTagManager extends Manager<IdTag> {
 
     /**
      * Locate via tag ID, then user name, and finally system name if needed. If

@@ -21,12 +21,14 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide access to the LocoNet over TCP server settings.
  *
  * @author Randall Wood (C) 2017
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class LnTcpPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JSpinner port;

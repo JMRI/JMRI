@@ -3,21 +3,18 @@ package jmri.jmrix.loconet.sdfeditor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PlayEditorTest {
 
     @Test
     public void testCTor() {
-        PlayEditor t = new PlayEditor(new jmri.jmrix.loconet.sdf.Play(1,2));
-        Assert.assertNotNull("exists",t);
+        PlayEditor t = new PlayEditor(new jmri.jmrix.loconet.sdf.Play(1, 2));
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -33,6 +30,5 @@ public class PlayEditorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PlayEditorTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(PlayEditorTest.class.getName());
 }

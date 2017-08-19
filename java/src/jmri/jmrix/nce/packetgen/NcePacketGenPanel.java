@@ -1,7 +1,6 @@
 package jmri.jmrix.nce.packetgen;
 
 import java.awt.Dimension;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import jmri.jmrix.nce.NceMessage;
@@ -19,7 +18,6 @@ import jmri.util.StringUtil;
  */
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -59,7 +57,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("Title"));
+        x.append(Bundle.getMessage("Title"));
         return x.toString();
     }
 
