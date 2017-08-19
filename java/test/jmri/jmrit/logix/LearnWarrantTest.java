@@ -100,7 +100,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // change address and run
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
-            return (frame._speedUtil.getDccAddress()!=null);
+            return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
         address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=111", 111, address.getNumber());
@@ -158,7 +158,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     private void confirmJOptionPane(java.awt.Container frame, String title, String text) {
         DialogFinder finder = new DialogFinder(title);
         JUnitUtil.waitFor(() -> {
-            return (java.awt.Container)finder.find()!=null;
+            return (java.awt.Container)finder.find() != null;
         }, "Found dialog + \"title\"");
         java.awt.Container pane = (java.awt.Container)finder.find();
         Assert.assertNotNull(title+" JOptionPane not found", pane);
@@ -174,7 +174,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
         flushAWT();
         float speed = 0.1f;
-        if (throttle==null) {
+        if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");
         }
         throttle.setSpeedSetting(speed);

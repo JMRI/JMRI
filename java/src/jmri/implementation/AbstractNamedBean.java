@@ -288,8 +288,8 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     public boolean equals(Object o) {
-        boolean result = false; // assume failure (pessimist!)
-        if ((o != null) && o instanceof AbstractNamedBean) {
+        boolean result = super.equals(o);
+        if (!result && (o != null) && o instanceof AbstractNamedBean) {
             AbstractNamedBean b = (AbstractNamedBean) o;
             if (this == b) {
                 result = true;
