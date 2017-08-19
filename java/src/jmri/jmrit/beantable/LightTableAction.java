@@ -1322,8 +1322,10 @@ public class LightTableAction extends AbstractTableAction {
     private int defaultControlIndex = 0;
     private boolean inEditControlMode = false;
     private LightControl lc = null;
-    private final JTextField field1a = new JTextField(10);  // Sensor // N11N
-    private final JTextField field1a2 = new JTextField(10); // Sensor 2  // N11N
+    private JmriBeanComboBox box1a = new JmriBeanComboBox(  // Sensor
+        InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private JmriBeanComboBox box1a2 = new JmriBeanComboBox(  // Sensor 2
+        InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private final JTextField field1b = new JTextField(8);   // Fast Clock
     private JmriBeanComboBox box1c = new JmriBeanComboBox(  // Turnout
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -1397,15 +1399,15 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
             panel32.add(f1Label);
-            panel32.add(field1a);
-            panel32.add(field1a2);
+            panel32.add(box1a);
+            panel32.add(box1a2);
             panel32.add(field1b);
             // add listener for turnout list regeneration
             PopupMenuListener pml = new PopupMenuListener() {
                 @Override
                 public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                     // This method is called before the popup menu becomes visible.
-                    log.debug("Light Control PopupMenuWillBecomeVisible");
+                    log.debug("T Light Control PopupMenuWillBecomeVisible");
                     Object o = e.getSource();
                     if (o instanceof JmriBeanComboBox) {
                         JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
@@ -1433,20 +1435,23 @@ public class LightTableAction extends AbstractTableAction {
                 }
             };
             box1c.addPopupMenuListener(pml); // add all currently present turnouts through the Listener
+
+            box1a.setFirstItemBlank(true);
+            box1a2.setFirstItemBlank(true);
             box1c.setFirstItemBlank(true);
-            box1c.setSelectedIndex(0);
 
             panel32.add(box1c);
             panel32.add(field1d);
-            field1a.setText("");
-            field1a2.setText("");
+            box1a.setSelectedIndex(0);
+            box1a2.setSelectedIndex(0);
             field1b.setText("00:00"); // TODO add Formatter
             field1d.setText("");
             field1b.setVisible(false);
+            box1c.setSelectedIndex(0);
             box1c.setVisible(false);
             field1d.setVisible(false);
-            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
-            field1a2.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
+            box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            box1a2.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             panel33.add(f2Label);
@@ -1508,7 +1513,7 @@ public class LightTableAction extends AbstractTableAction {
         if (sensorControl.equals(ctype)) {
             // set up panel for sensor control
             f1Label.setText(Bundle.getMessage("LightSensor"));
-            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             f2Label.setText(Bundle.getMessage("LightSensorSense"));
             stateBox.removeAllItems();
             stateBox.addItem(Bundle.getMessage("SensorStateActive"));
@@ -1517,9 +1522,9 @@ public class LightTableAction extends AbstractTableAction {
             sensorInactiveIndex = 1;
             stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
             f2Label.setVisible(true);
-            field1a.setVisible(true);
-            field1a2.setVisible(false);
-            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            box1a.setVisible(true);
+            box1a2.setVisible(false);
+            box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             field1b.setVisible(false);
             box1c.setVisible(false);
             field1d.setVisible(false);
@@ -1534,8 +1539,8 @@ public class LightTableAction extends AbstractTableAction {
             f2Label.setText(Bundle.getMessage("LightScheduleOff"));
             field2a.setToolTipText(Bundle.getMessage("LightScheduleHint"));
             f2Label.setVisible(true);
-            field1a.setVisible(false);
-            field1a2.setVisible(false);
+            box1a.setVisible(false);
+            box1a2.setVisible(false);
             field1b.setVisible(true);
             box1c.setVisible(false);
             field1d.setVisible(false);
@@ -1555,8 +1560,8 @@ public class LightTableAction extends AbstractTableAction {
             turnoutThrownIndex = 1;
             stateBox.setToolTipText(Bundle.getMessage("LightTurnoutSenseHint"));
             f2Label.setVisible(true);
-            field1a.setVisible(false);
-            field1a2.setVisible(false);
+            box1a.setVisible(false);
+            box1a2.setVisible(false);
             field1b.setVisible(false);
             box1c.setVisible(true);
             field1d.setVisible(false);
@@ -1571,8 +1576,8 @@ public class LightTableAction extends AbstractTableAction {
             f2Label.setText(Bundle.getMessage("LightTimedDurationOn"));
             field2b.setToolTipText(Bundle.getMessage("LightTimedDurationOnHint"));
             f2Label.setVisible(true);
-            field1a.setVisible(false);
-            field1a2.setVisible(false);
+            box1a.setVisible(false);
+            box1a2.setVisible(false);
             field1b.setVisible(false);
             box1c.setVisible(false);
             field1d.setVisible(true);
@@ -1583,7 +1588,7 @@ public class LightTableAction extends AbstractTableAction {
         } else if (twoSensorControl.equals(ctype)) {
             // set up panel for two sensor control
             f1Label.setText(Bundle.getMessage("LightSensor"));
-            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             f2Label.setText(Bundle.getMessage("LightSensorSense"));
             stateBox.removeAllItems();
             stateBox.addItem(Bundle.getMessage("SensorStateActive"));
@@ -1592,9 +1597,9 @@ public class LightTableAction extends AbstractTableAction {
             sensorInactiveIndex = 1;
             stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
             f2Label.setVisible(true);
-            field1a.setVisible(true);
-            field1a2.setVisible(true);
-            field1a.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
+            box1a.setVisible(true);
+            box1a2.setVisible(true);
+            box1a.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
             field1b.setVisible(false);
             box1c.setVisible(false);
             field1d.setVisible(false);
@@ -1606,8 +1611,8 @@ public class LightTableAction extends AbstractTableAction {
             // set up panel for no control
             f1Label.setText(Bundle.getMessage("LightNoneSelected"));
             f2Label.setVisible(false);
-            field1a.setVisible(false);
-            field1a2.setVisible(false);
+            box1a.setVisible(false);
+            box1a2.setVisible(false);
             field1b.setVisible(false);
             box1c.setVisible(false);
             field1d.setVisible(false);
@@ -1679,11 +1684,13 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.SENSOR_CONTROL);
             // Get sensor control information
-            String sensorName = field1a.getText().trim(); // N11N
             Sensor s = null;
-            if (sensorName.length() < 1) {
-                // no sensor name entered
+            String sensorName = box1a.getDisplayName();
+            if (sensorName == null) {
+                // no turnout selected
                 g.setControlType(Light.NO_CONTROL);
+                status1.setText(Bundle.getMessage("LightWarn8"));
+                status1.setForeground(Color.gray);
             } else {
                 // name was entered, check for user name first
                 s = InstanceManager.sensorManagerInstance().
@@ -1695,7 +1702,7 @@ public class LightTableAction extends AbstractTableAction {
                     if (s != null) {
                         // update sensor system name in case it changed
                         sensorName = s.getSystemName();
-                        field1a.setText(sensorName);
+                        box1a.setSelectedItem(sensorName);
                     }
                 }
             }
@@ -1798,8 +1805,6 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.TURNOUT_STATUS_CONTROL);
             // Get turnout control information
-
-            //check on a physical turnout
             String turnoutName = box1c.getDisplayName();
 
             if (turnoutName == null) {
@@ -1854,10 +1859,10 @@ public class LightTableAction extends AbstractTableAction {
                 return (false);
             }
         } else if (timedOnControl.equals(typeBox.getSelectedItem())) {
+            Sensor s = null;
             // Set type of control
             g.setControlType(Light.TIMED_ON_CONTROL);
             // Get trigger sensor control information
-            Sensor s = null;
             String triggerSensorName = field1d.getText();
             if (triggerSensorName.length() < 1) {
                 // Trigger sensor not entered, or invalidly entered
@@ -1895,15 +1900,18 @@ public class LightTableAction extends AbstractTableAction {
                 return (false);
             }
         } else if (twoSensorControl.equals(typeBox.getSelectedItem())) {
+            Sensor s = null;
+            Sensor s2 = null;
             // Set type of control
             g.setControlType(Light.TWO_SENSOR_CONTROL);
             // Get sensor control information
-            String sensorName = field1a.getText().trim(); // N11N
-            Sensor s = null;
-            String sensor2Name = field1a2.getText().trim(); // N11N
-            if ((sensorName.length() < 1) || (sensor2Name.length() < 1)) {
-                // no sensor name entered
+            String sensorName = box1a.getDisplayName();
+            String sensor2Name = box1a2.getDisplayName();
+            if (sensorName == null || sensor2Name == null) {
+                // no turnout selected
                 g.setControlType(Light.NO_CONTROL);
+                status1.setText(Bundle.getMessage("LightWarn8"));
+                status1.setForeground(Color.gray);
             } else {
                 // name was entered, check for user name first
                 s = InstanceManager.sensorManagerInstance().
@@ -1915,10 +1923,10 @@ public class LightTableAction extends AbstractTableAction {
                     if (s != null) {
                         // update sensor system name in case it changed
                         sensorName = s.getSystemName();
-                        field1a.setText(sensorName);
+                        box1a.setSelectedItem(sensorName);
                     }
                 }
-                Sensor s2 = InstanceManager.sensorManagerInstance().
+                s2 = InstanceManager.sensorManagerInstance().
                         getByUserName(sensor2Name);
                 if (s2 == null) {
                     // not user name, try system name
@@ -1927,7 +1935,7 @@ public class LightTableAction extends AbstractTableAction {
                     if (s2 != null) {
                         // update sensor system name in case it changed
                         sensor2Name = s2.getSystemName();
-                        field1a2.setText(sensor2Name);
+                        box1a2.setSelectedItem(sensor2Name);
                     }
                 }
             }
@@ -2061,7 +2069,7 @@ public class LightTableAction extends AbstractTableAction {
             case Light.SENSOR_CONTROL:
                 setUpControlType(sensorControl);
                 typeBox.setSelectedIndex(sensorControlIndex);
-                field1a.setText(lc.getControlSensorName());
+                box1a.setSelectedItem(lc.getControlSensorName());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (lc.getControlSensorSense() == Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);
@@ -2096,8 +2104,8 @@ public class LightTableAction extends AbstractTableAction {
             case Light.TWO_SENSOR_CONTROL:
                 setUpControlType(twoSensorControl);
                 typeBox.setSelectedIndex(twoSensorControlIndex);
-                field1a.setText(lc.getControlSensorName());
-                field1a2.setText(lc.getControlSensor2Name());
+                box1a.setSelectedItem(lc.getControlSensorName());
+                box1a2.setSelectedItem(lc.getControlSensor2Name());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (lc.getControlSensorSense() == Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);
@@ -2107,7 +2115,7 @@ public class LightTableAction extends AbstractTableAction {
                 // Set up as "None"
                 setUpControlType(noControl);
                 typeBox.setSelectedIndex(noControlIndex);
-                field1a.setText("");
+                box1a.setSelectedIndex(0);
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 break;
             default:
@@ -2283,6 +2291,7 @@ public class LightTableAction extends AbstractTableAction {
         //check if turnout name was entered
         if (inTurnoutName.isEmpty()) {
             //no turnout entered
+            log.debug("no turnout was selected");
             return false;
         }
         //check that the turnout name corresponds to a defined physical turnout
