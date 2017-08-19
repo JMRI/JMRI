@@ -1991,13 +1991,6 @@
 
     <target name="launchjmri.exe"
             description="recreate the LaunchJMRI.exe used by the Windows release package">
-<!--         <delete dir="${dist.windows}"/>
-        <mkdir dir="${dist.windows}/JMRI"/>
-        <copy todir="${dist.windows}/JMRI">
-            <fileset dir="${scriptdir}/WinInstallFiles"
-                     includes="*"/>
-        </copy>
-        <mkdir dir="${dist.release}"/> -->
         <exec executable="${nsis.home}makensis"
               dir="scripts/WinInstallFiles/"
               failonerror="true">
