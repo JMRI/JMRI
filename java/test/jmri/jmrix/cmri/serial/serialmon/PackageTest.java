@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
     SerialMonFrameTest.class,
     BundleTest.class,
     SerialFilterFrameTest.class,
+    SerialFilterActionTest.class,
 })
 
 /**
