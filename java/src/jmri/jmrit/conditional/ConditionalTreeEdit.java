@@ -1,5 +1,7 @@
 package jmri.jmrit.conditional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -662,7 +664,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _curNode.add(_varHead);
                 _leafNode = new ConditionalTreeNode(buildNodeText("LogicType", curConditional, 0), "LogicType", cName, 0);      // NOI18N
                 _curNode.add(_leafNode);
-                boolean triggerMode = curConditional.getTriggerOnChange();
+                _triggerMode = curConditional.getTriggerOnChange();
                 _leafNode = new ConditionalTreeNode(buildNodeText("TriggerMode", curConditional, 0), "TriggerMode", cName, 0);      // NOI18N
                 _curNode.add(_leafNode);
                 _actHead = new ConditionalTreeNode(buildNodeText("Actions", curConditional, 0), "Actions", cName, 0);      // NOI18N
@@ -798,7 +800,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
             case "Antecedent":      // NOI18N
                 int chkLogicType = _curConditional.getLogicType();
-                if (_logicType != Conditional.MIXED) {
+                if (chkLogicType != Conditional.MIXED) {
                     makeDetailGrid("EmptyGrid");  // NOI18N
                     return;
                 }
@@ -967,6 +969,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      *
      * @param newType The selected logic type
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void logicTypeChanged(int newType) {
         if (_logicType == newType) {
             return;
@@ -1067,6 +1070,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      *
      * @param variable the current Conditional Variable, ignored in method
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void appendToAntecedent(ConditionalVariable variable) {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
@@ -1122,6 +1126,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     /**
      * Update the Actions trigger mode, adjust the Action descriptions
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void togglePressed() {
         // Toggle the trigger mode
         _curLogix.deActivateLogix();
@@ -1149,7 +1154,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Refresh the Conditional or Variable state 
      */
     void checkPressed() {
-        if (_curNodeType == null || _curNodeType == "Conditional") {
+        if (_curNodeType == null || _curNodeType.equals("Conditional")) {
             for (int i = 0; i < _cdlRoot.getChildCount(); i++) {
                 ConditionalTreeNode cdlNode = (ConditionalTreeNode) _cdlRoot.getChildAt(i);
                 Conditional cdl = _conditionalManager.getBySystemName(cdlNode.getName());
@@ -1158,7 +1163,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
 
-        if (_curNodeType == "Variables") {  // NOI18N
+        if (_curNodeType.equals("Variables")) {  // NOI18N
             for (int i = 0; i < _variableList.size(); i++) {
                 ConditionalVariable variable = _variableList.get(i);
                 ConditionalTreeNode varNode = (ConditionalTreeNode) _curNode.getChildAt(i);
@@ -1171,6 +1176,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     /**
      * Process the node delete request
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void deletePressed() {        
         _curLogix.deActivateLogix();
         TreePath parentPath;
@@ -1385,6 +1391,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Move a tree node in response to a up or down request
      * @param direction The direction of movement, Up or down
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void moveTreeNode(String direction) {
         // Update the node
         int oldRow = _curNodeRow;
@@ -2764,7 +2771,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 _curVariable.setName(name);
                 Conditional c = _conditionalManager.getBySystemName(name);
-                if (c.getUserName().length() > 0) {
+                if (c == null) {
+                    return false;
+                }
+                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
                     _curVariable.setGuiName(c.getUserName());
                 } else {
                     _curVariable.setGuiName(c.getSystemName());
@@ -2898,6 +2908,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Update the variable operation
      * If a change has occurred, also update the antecedent and antecedent tree node
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void updateVariableOperator() {
         int oldOper = _curVariable.getOpern();
         if (_curNodeRow > 0) {
@@ -2922,6 +2933,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Update the variable negation
      * If a change has occurred, also update the antecedent and antecedent tree node
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void updateVariableNegation() {
         boolean state = _curVariable.isNegated();
         if (_variableNegated.isSelected()) {
@@ -3632,8 +3644,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBoxLabel.setText(Bundle.getMessage("LabelActionSignal"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("SignalSetHint"));  // NOI18N
                     loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
-                } else if ((actionType != Conditional.ACTION_SET_SIGNAL_APPEARANCE)
-                        && (actionType != Conditional.ACTION_NONE)) {
+                } else if (actionType != Conditional.ACTION_NONE) {
                     signalHeadGrid = "NameTypeActionFinal";  // NOI18N
                 }
 
@@ -3656,8 +3667,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBoxLabel.setText(Bundle.getMessage("LabelSignalAspect"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("SignalMastSetHint"));  // NOI18N
                     loadJComboBoxWithMastAspects(_actionBox, _actionNameField.getText().trim());
-                } else if ((actionType != Conditional.ACTION_SET_SIGNALMAST_ASPECT)
-                        && (actionType != Conditional.ACTION_NONE)) {
+                } else if (actionType != Conditional.ACTION_NONE) {
                     signalMastGrid = "NameTypeActionFinal";  // NOI18N
                 }
 
@@ -4474,7 +4484,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     // ============ Conditional Tree Node Definition ============
 
-    class ConditionalTreeNode extends DefaultMutableTreeNode {
+    static class ConditionalTreeNode extends DefaultMutableTreeNode {
         private String cdlText;
         private String cdlType;
         private String cdlName;
