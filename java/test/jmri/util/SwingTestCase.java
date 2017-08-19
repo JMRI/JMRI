@@ -140,7 +140,7 @@ public class SwingTestCase extends JFCTestCase {
      * @param cc    true if search is case sensitive; false otherwise
      */
     public static void disposeFrame(String title, boolean ce, boolean cc) {
-        Frame f = FrameWaiter.getFrame("Decoder Pro Wizard", ce, cc);
+        Frame f = FrameWaiter.getFrame(title, ce, cc);
         if (f != null) {
             ThreadingUtil.runOnGUI(() -> {
                 f.dispose();
