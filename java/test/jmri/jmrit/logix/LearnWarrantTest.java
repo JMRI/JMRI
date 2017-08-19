@@ -28,9 +28,9 @@ import org.junit.Assert;
  */
 public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
-    OBlockManager _OBlockMgr;
+    private OBlockManager _OBlockMgr;
 //    PortalManager _portalMgr;
-    SensorManager _sensorMgr;
+    private SensorManager _sensorMgr;
 //    TurnoutManager _turnoutMgr;
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
@@ -67,14 +67,14 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Calculate"));
         flushAWT();
         JUnitUtil.waitFor(() -> {
-            return (frame.getOrders()!=null);
+            return (frame.getOrders() != null);
         }, "Found orders");
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
         frame.setTrainInfo("99");
         JUnitUtil.waitFor(() -> {
-            return (frame._speedUtil.getDccAddress()!=null);
+            return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=99", 99, address.getNumber());
@@ -89,7 +89,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(frame, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> {
-            return (frame._learnThrottle!=null);
+            return (frame._learnThrottle != null);
         }, "Found throttle");
         Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
 
@@ -118,9 +118,10 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         }, "Train starts to move at 3rd command");
 
         sensor = runtimes(route);
+        Assert.assertNotNull("Sensor not null", sensor);
 
         JUnitUtil.waitFor(() -> {
-            return (warrant.getThrottle()==null);
+            return (warrant.getThrottle() == null);
         }, "Wait for run to end");
         String msg = w.getRunModeMessage();
         Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
