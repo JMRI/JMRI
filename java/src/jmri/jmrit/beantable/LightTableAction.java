@@ -1262,7 +1262,8 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to the Close button.
+     * Respond to the Cancel/Close button on the Add/Edit Light pane.
+     * Sometimes on first call causes NPE: TODO
      *
      * @param e the button press action
      */
@@ -1274,11 +1275,10 @@ public class LightTableAction extends AbstractTableAction {
             update.setVisible(false);
             create.setVisible(true);
             fixedSystemName.setVisible(false);
-            prefixBox.setVisible(true);
             systemNameLabel.setVisible(false);
             systemLabel.setVisible(true);
             panel1a.setVisible(true);
-            // reactivate the light
+            // reactivate the light, never null here
             curLight.activateLight();
             inEditMode = false;
         }
@@ -1296,7 +1296,7 @@ public class LightTableAction extends AbstractTableAction {
                             "remindSaveLight"); // NOI18N
         }
         lightCreatedOrUpdated = false;
-        // get rid of the add/edit Frame
+        // finally, get rid of the add/edit Frame
         if (addFrame != null) {
             addFrame.dispose();
             addFrame = null;
@@ -1304,6 +1304,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private void clearLightControls() {
+        log.debug("Clear LightControls");
         for (int i = controlList.size(); i > 0; i--) {
             controlList.remove(i - 1);
         }
