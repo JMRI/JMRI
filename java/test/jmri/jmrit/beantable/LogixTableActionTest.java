@@ -103,7 +103,8 @@ public class LogixTableActionTest extends AbstractTableActionBase {
 
         lgxTable.editPressed("IX101");  // NOI18N
 
-        JFrame frame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("TitleEditLogix"), true, true);  // NOI18N
+//         JFrameOperator frame = new JFrameOperator(LogixTableAction.rbx.getString("TitleEditLogix"), true, true);  // NOI18N
+        JFrameOperator frame = new JFrameOperator(LogixTableAction.rbx.getString("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(frame);
         frame.dispose();
     }
