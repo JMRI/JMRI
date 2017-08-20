@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.beans.Bean;
 import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
@@ -120,6 +122,7 @@ public class ProfileManager extends Bean {
      *
      * @return The in use Profile.
      */
+    @CheckForNull
     public Profile getActiveProfile() {
         return activeProfile;
     }
@@ -130,7 +133,7 @@ public class ProfileManager extends Bean {
      *
      * @param id the profile id
      */
-    public void setActiveProfile(String id) {
+    public void setActiveProfile(@Nullable String id) {
         if (id == null) {
             Profile old = activeProfile;
             activeProfile = null;
@@ -157,7 +160,7 @@ public class ProfileManager extends Bean {
      *
      * @param profile the profile to activate
      */
-    public void setActiveProfile(Profile profile) {
+    public void setActiveProfile(@Nullable Profile profile) {
         Profile old = activeProfile;
         if (profile == null) {
             activeProfile = null;
@@ -172,11 +175,12 @@ public class ProfileManager extends Bean {
         log.debug("Setting active profile to {}", profile.getId());
     }
 
+    @CheckForNull
     protected Profile getNextActiveProfile() {
         return this.nextActiveProfile;
     }
 
-    protected void setNextActiveProfile(Profile profile) {
+    protected void setNextActiveProfile(@Nullable Profile profile) {
         Profile old = this.nextActiveProfile;
         if (profile == null) {
             this.nextActiveProfile = null;

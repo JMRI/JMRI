@@ -294,15 +294,14 @@ public final class InstanceManager {
      * @return The default for type (normally this is the item passed in)
      */
     @Nonnull
-    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item
-    ) {
+    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
             log.error("Should not set default of type {} to null value", type.getName());
             throw npe;
         }
-        Object oldDefault = getNullableDefault(type);
+        Object oldDefault = containsDefault(type) ? getNullableDefault(type) : null;
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);

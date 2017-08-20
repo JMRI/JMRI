@@ -45,6 +45,7 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.picker.PickFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
+import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 
@@ -84,7 +85,6 @@ public class ConditionalEditBase {
     Logix _curLogix = null;
 
     int _numConditionals = 0;
-    int _conditionalEditCount = 0;
     boolean _inEditMode = false;
 
     boolean _showReminder = false;
@@ -269,7 +269,7 @@ public class ConditionalEditBase {
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
                 nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
             default:
                 return null;             // Skip any other items.
@@ -284,7 +284,7 @@ public class ConditionalEditBase {
      * When a combo box row is selected, the user/system name is copied to the Action or Variable name field.
      * @since 4.7.3
      */
-    class NameBoxListener implements ItemListener {
+    static class NameBoxListener implements ItemListener {
         /**
          * @param textField The target field object when an entry is selected
          */
@@ -651,26 +651,6 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Maintain a count of conditional edit sessions.
-     * Enable/Disable Logix as needed.
-     * @param status True for starting a session, false for closing a session
-     */
-    void setConditionalEdit(boolean status) {
-        if (status) {
-            _conditionalEditCount++;
-            _curLogix.deActivateLogix();
-        } else {
-            _conditionalEditCount--;
-            if (_conditionalEditCount < 0) {
-                _conditionalEditCount = 0;
-            }
-            if (_conditionalEditCount == 0) {
-                _curLogix.activateLogix();
-            }
-        }
-    }
-
-    /**
      * Check if String is an integer or references an integer.
      *
      * @param actionType Conditional action to check for, i.e. ACTION_SET_LIGHT_INTENSITY
@@ -700,6 +680,9 @@ public class ConditionalEditBase {
                     m = InstanceManager.memoryManagerInstance().getBySystemName(intRef);
                 }
                 try {
+                    if (m == null || m.getValue() == null) {
+                        throw new NumberFormatException();
+                    }
                     validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
@@ -761,6 +744,9 @@ public class ConditionalEditBase {
                     m = InstanceManager.memoryManagerInstance().getBySystemName(memRef);
                 }
                 try {
+                    if (m == null || m.getValue() == null) {
+                        throw new NumberFormatException();
+                    }
                     validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
