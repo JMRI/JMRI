@@ -80,7 +80,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
 
         if (f == null) {
             f = new TabbedPreferencesFrame();
-            new Thread(() -> {
+            Thread preferencesInitThread = new Thread(() -> {
                 final Object waiter = new Object();
                 try {
                     setWait(true);
@@ -95,7 +95,9 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                     Thread.currentThread().interrupt();
                     setWait(false);
                 }
-            }).start();
+            });
+            preferencesInitThread.setName("TabbedPreferencesAction actionPerformed");
+            preferencesInitThread.start();
         } else {
             showPreferences();
         }
