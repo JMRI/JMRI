@@ -20,6 +20,7 @@ import org.junit.runners.Suite;
     LayoutBlockManagerXmlTest.class,
     LayoutTurnoutXmlTest.class,
     LayoutTurntableXmlTest.class,
+    LevelXingXmlTest.class,
     LightIconXmlTest.class,
     MemoryComboIconXmlTest.class,
     MemoryIconXmlTest.class,
