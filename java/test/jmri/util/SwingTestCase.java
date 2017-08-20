@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.image.BufferedImage;
+import javax.annotation.Nonnull;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
@@ -140,14 +142,24 @@ public class SwingTestCase extends JFCTestCase {
      * @param cc    true if search is case sensitive; false otherwise
      */
     public static void disposeFrame(String title, boolean ce, boolean cc) {
-        Frame f = FrameWaiter.getFrame(title, ce, cc);
-        if (f != null) {
-            ThreadingUtil.runOnGUI(() -> {
-                f.dispose();
-            });
+        Frame frame = FrameWaiter.getFrame(title, ce, cc);
+        if (frame != null) {
+            SwingTestCase.dispose(frame);
         } else {
             Assert.fail("Unable to find frame \"" + title + "\" to dispose.");
         }
+    }
+
+    /**
+     * Dispose of a window. Disposes of the window on the GUI thread, returning
+     * only after the window is disposed of.
+     *
+     * @param window the window to dispose of
+     */
+    public static void dispose(@Nonnull Window window) {
+        ThreadingUtil.runOnGUI(() -> {
+            window.dispose();
+        });
     }
 
     /**
