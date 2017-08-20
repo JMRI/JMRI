@@ -12,16 +12,18 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    SchemaTest.class,
-    LoadAndStoreTest.class,
     AnalogClock2DisplayXmlTest.class,
     BlockContentsIconXmlTest.class,
     IndicatorTrackIconXmlTest.class,
+    IndicatorTurnoutIconXmlTest.class,
     LayoutBlockManagerXmlTest.class,
     LayoutTurnoutXmlTest.class,
     LayoutTurntableXmlTest.class,
     LevelXingXmlTest.class,
     LightIconXmlTest.class,
+    LinkingLabelXmlTest.class,
+    LoadAndStoreTest.class,
+    LocoIconXmlTest.class,
     MemoryComboIconXmlTest.class,
     MemoryIconXmlTest.class,
     MemoryInputIconXmlTest.class,
@@ -31,15 +33,13 @@ import org.junit.runners.Suite;
     PositionablePointXmlTest.class,
     ReporterIconXmlTest.class,
     RpsPositionIconXmlTest.class,
+    SchemaTest.class,
     SensorIconXmlTest.class,
     SignalHeadIconXmlTest.class,
     SignalMastIconXmlTest.class,
     SlipTurnoutIconXmlTest.class,
     TrackSegmentXmlTest.class,
-    TurnoutIconXmlTest.class,
-    IndicatorTurnoutIconXmlTest.class,
-    LinkingLabelXmlTest.class,
-    LocoIconXmlTest.class
+    TurnoutIconXmlTest.class
 })
 public class PackageTest {
 }
