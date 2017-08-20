@@ -16,7 +16,6 @@ import javax.swing.JMenu;
 public class MenuScrollerTest {
 
     @Test
-    @Ignore("May be causing hang on Appveyor")
     public void testCTor() {
         MenuScroller t = new MenuScroller(new JMenu());
         Assert.assertNotNull("exists",t);

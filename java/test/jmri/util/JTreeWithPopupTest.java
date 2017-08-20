@@ -16,7 +16,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class JTreeWithPopupTest {
 
     @Test
-    @Ignore("May be causing hang on Appveyor")
     public void testCTor() {
         DefaultMutableTreeNode node = new DefaultMutableTreeNode();
         JTreeWithPopup t = new JTreeWithPopup(node);
