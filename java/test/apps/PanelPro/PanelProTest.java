@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -15,18 +18,35 @@ import org.junit.Test;
 public class PanelProTest {
 
     @Test
-    @Ignore("Causes Exception")
+    // @Ignore("Causes Exception")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelPro t = new PanelPro();
         Assert.assertNotNull("exists", t);
     }
 
+    @Test
+    public void testLaunch() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PanelPro.main(new String[]{"PanelPro"});  // <-- can we point to a pre-made profile here somehow?
+        
+        // last few messages from a normal startup are:
+            // INFO  - No saved user preferences file [main]
+            // INFO  - Did not find throttle preferences file.  This is normal if you haven't save the preferences before [init prefs]
+            // INFO  - Could not find WiThrottle preferences file (/Users/jake/Library/Preferences/JMRI/Nwe/throttle/WiThrottlePreferences.xml).  Normal if preferences have not been saved before. [init
+
+        JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Could not find WiThrottle preferences") != null;},"init complete INFO message");
+        
+        // now clean up frames, depending on what's actually left
+        
+    }
+
+     
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager(); // an app should recreate this, but just in case
     }
 
     @After
@@ -34,6 +54,4 @@ public class PanelProTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(PanelProTest.class.getName());
 }
