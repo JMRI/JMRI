@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -508,6 +509,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private DecimalFormat oneDotTwoDigit;
+    private DecimalFormat TwoNumber;
     JmriJFrame addFrame = null;
     Light curLight = null;
     boolean lightCreatedOrUpdated = false;
@@ -519,7 +521,7 @@ public class LightTableAction extends AbstractTableAction {
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
     JComboBox<String> prefixBox = new JComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(10);
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
     JSpinner NumberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
@@ -528,12 +530,12 @@ public class LightTableAction extends AbstractTableAction {
     JPanel varPanel = null;
     JLabel systemNameLabel = new JLabel(Bundle.getMessage("LabelSystemName") + " ");
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
-    JTextField userName = new JTextField(10);
+    JTextField userName = new JTextField(20);
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName") + " ");
     LightControlTableModel lightControlTableModel = null;
     JButton create;
     JButton update;
-    JButton cancel;
+    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton addControl;
 
     ArrayList<LightControl> controlList = new ArrayList<>();
@@ -579,6 +581,7 @@ public class LightTableAction extends AbstractTableAction {
             panel1.add(prefixBox);
             panel1.add(new JLabel("   "));
             panel1.add(addRangeBox);
+            addRangeBox.setVisible(true); // reset after Edit Light
             addRangeBox.setToolTipText(Bundle.getMessage("LightAddRangeHint"));
             addRangeBox.addActionListener((ActionEvent e1) -> {
                 addRangeChanged();
@@ -596,8 +599,8 @@ public class LightTableAction extends AbstractTableAction {
             panel1a.setLayout(new FlowLayout());
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(hardwareAddressTextField);
-            hardwareAddressTextField.setBackground(Color.white);
-            // reset after possible error notification
+            hardwareAddressTextField.setText(""); // reset from possible previous use
+            hardwareAddressTextField.setBackground(Color.white); // reset after possible error notification
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
@@ -608,10 +611,11 @@ public class LightTableAction extends AbstractTableAction {
             panel2.setLayout(new FlowLayout());
             panel2.add(userNameLabel);
             panel2.add(userName);
+            userName.setText(""); // reset from possible previous use
             userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
-            userName.setName("userName"); // NOI18N
-            prefixBox.setName("prefixBox"); // NOI18N
+            userName.setName("userName"); // for jfcUnit test NOI18N
+            prefixBox.setName("prefixBox"); // for jfcUnit test NOI18N
             contentPane.add(panel2);
             // items for variable intensity lights
             varPanel = new JPanel();
@@ -619,12 +623,12 @@ public class LightTableAction extends AbstractTableAction {
             varPanel.add(new JLabel(" "));
             varPanel.add(labelMinIntensity);
             minIntensity.setToolTipText(Bundle.getMessage("LightMinIntensityHint"));
-            minIntensity.setValue(0); // reset JSpinner1
+            minIntensity.setValue(0.0d); // reset JSpinner1
             varPanel.add(minIntensity);
             varPanel.add(labelMinIntensityTail);
             varPanel.add(labelMaxIntensity);
             maxIntensity.setToolTipText(Bundle.getMessage("LightMaxIntensityHint"));
-            maxIntensity.setValue(100); // reset JSpinner2
+            maxIntensity.setValue(100.0d); // reset JSpinner2
             varPanel.add(maxIntensity);
             varPanel.add(labelMaxIntensityTail);
             varPanel.add(labelTransitionTime);
@@ -706,13 +710,12 @@ public class LightTableAction extends AbstractTableAction {
             status2.setVisible(false);
             panel4.add(panel41);
             panel4.add(panel42);
-            //Border panel4Border = BorderFactory.createEtchedBorder();
-            //panel4.setBorder(panel4Border);
             contentPane.add(panel4);
             // buttons at bottom of window
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonClose"))); // when Update has been clicked at least once, this is not Revert/Cancel
+            panel5.add(cancel);
+            cancel.setText(Bundle.getMessage("ButtonCancel"));
             cancel.addActionListener(this::cancelPressed);
             cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
@@ -721,7 +724,6 @@ public class LightTableAction extends AbstractTableAction {
             panel5.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(this::updatePressed);
             update.setToolTipText(Bundle.getMessage("LightUpdateButtonHint"));
-            cancel.setVisible(true);
             create.setVisible(true);
             update.setVisible(false);
             contentPane.add(panel5);
@@ -768,14 +770,10 @@ public class LightTableAction extends AbstractTableAction {
         } else {
             varPanel.setVisible(false);
         }
-        if (canAddRange()) {
-            addRangeBox.setVisible(true);
-            labelNumToAdd.setVisible(true);
-            NumberToAdd.setVisible(true);
+        if (canAddRange()) { // behaves like the AddNewHardwareDevice pane (dim if not available, do not hide)
+            addRangeBox.setEnabled(true);
         } else {
-            addRangeBox.setVisible(false);
-            labelNumToAdd.setVisible(false);
-            NumberToAdd.setVisible(false);
+            addRangeBox.setEnabled(false);
         }
         addRangeBox.setSelected(false);
         NumberToAdd.setValue(1);
@@ -877,7 +875,7 @@ public class LightTableAction extends AbstractTableAction {
 
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
@@ -892,7 +890,7 @@ public class LightTableAction extends AbstractTableAction {
             hardwareAddressTextField.setBackground(Color.white);
         }
         String suName = lightPrefix + curAddress;
-        String uName = userName.getText();
+        String uName = userName.getText().trim(); // N11N
         if (uName.equals("")) {
             uName = null;   // a blank field means no user name
         }
@@ -954,7 +952,7 @@ public class LightTableAction extends AbstractTableAction {
                 return;
             }
         }
-        // Does System Name correspond to configured hardware
+        // check if System Name corresponds to configured hardware
         if (!InstanceManager.getDefault(LightManager.class).validSystemNameConfig(sName)) {
             // System Name not in configured hardware
             status1.setText(Bundle.getMessage("LightError5"));
@@ -1052,28 +1050,29 @@ public class LightTableAction extends AbstractTableAction {
         g.activateLight();
         lightCreatedOrUpdated = true;
 
-        double p = (Double) minIntensity.getValue();
-        log.debug("minInt value entered: " + p);
-        g.setMinIntensity(p / 100);
-        p = (Double) maxIntensity.getValue();
-        g.setMaxIntensity(p / 100);
+        if (g.isIntensityVariable()) {
+            double p = (Double) minIntensity.getValue();
+            log.debug("minInt value entered: " + p);
+            g.setMinIntensity(p / 100);
+            p = (Double) maxIntensity.getValue();
+            g.setMaxIntensity(p / 100);
 
-        String q;
-        q = fieldTransitionTime.getText().trim(); // N11N
-        if (q.equals("")) {
-            q = "0";
+            String q;
+            q = fieldTransitionTime.getText().trim(); // N11N
+            if (q.equals("")) {
+                q = "0";
+            }
+            double transitionTime; // I18N decimal separator for reading value (DecimalFormat)
+            try {
+                transitionTime = oneDotTwoDigit.parse(q).doubleValue();
+            } catch (ParseException pe) {
+                // Light with this user name already exists
+                status1.setText(Bundle.getMessage("LightWarn9"));
+                status1.setForeground(Color.red);
+                transitionTime = 0.0;
+            }
+            g.setTransitionTime(transitionTime);
         }
-        double transitionTime; // I18N decimal separator for reading value (DecimalFormat)
-        try {
-            transitionTime = oneDotTwoDigit.parse(q).doubleValue();
-        } catch (ParseException pe) {
-            // Light with this user name already exists
-            status1.setText(Bundle.getMessage("LightWarn9"));
-            status1.setForeground(Color.red);
-            transitionTime = 0.0;
-        }
-        g.setTransitionTime(transitionTime);
-
         // provide feedback to user
         String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + " (" + uName + ")";
         // create additional lights if requested
@@ -1086,7 +1085,7 @@ public class LightTableAction extends AbstractTableAction {
             for (int i = 1; i < numberOfLights; i++) {
                 sxName = lightPrefix + (startingAddress + i);
                 if (uName != null) {
-                    uxName = uName + "+" + i;
+                    uxName = uName + ":" + i; // behaves like the TurnoutTable > Add multiple naming
                 }
                 try {
                     g = InstanceManager.getDefault(LightManager.class).newLight(sxName, uxName);
@@ -1103,6 +1102,7 @@ public class LightTableAction extends AbstractTableAction {
         status1.setForeground(Color.gray);
         status2.setText("");
         status2.setVisible(false);
+        cancel.setText(Bundle.getMessage("ButtonClose")); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -1164,8 +1164,8 @@ public class LightTableAction extends AbstractTableAction {
         controlList = curLight.getLightControlList();
         // variable intensity
         if (g.isIntensityVariable()) {
-            minIntensity.setValue(g.getMinIntensity() * 100);
-            maxIntensity.setValue(g.getMaxIntensity() * 100);
+            minIntensity.setValue(g.getMinIntensity() * 100d);
+            maxIntensity.setValue(g.getMaxIntensity() * 100d);
             if (g.isTransitionAvailable()) {
                 fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime())); // displays i18n decimal separator eg. 0,00 in _nl
             }
@@ -1178,6 +1178,7 @@ public class LightTableAction extends AbstractTableAction {
         status1.setForeground(Color.gray); // reset color
         status2.setText("");
         status2.setVisible(false);
+        cancel.setText(Bundle.getMessage("ButtonClose")); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
         addFrame.pack();
         addFrame.setVisible(true);
         lightControlTableModel.fireTableDataChanged();
@@ -1199,7 +1200,7 @@ public class LightTableAction extends AbstractTableAction {
     void updatePressed(ActionEvent e) {
         Light g = curLight;
         // Check if the User Name has been changed
-        String uName = userName.getText();
+        String uName = userName.getText().trim(); // N11N
         if (uName.equals("")) {
             uName = null; // a blank field means no user name
         }
@@ -1243,7 +1244,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         g.activateLight();
         lightCreatedOrUpdated = true;
-        cancelPressed(null);
+        cancelPressed(null); // closes pane
         status1.setText(Bundle.getMessage("LightUpdateFeedback") + " " + g.getUserName()); //provide some feedback
         status1.setForeground(Color.gray);
     }
@@ -1326,13 +1327,25 @@ public class LightTableAction extends AbstractTableAction {
         InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox box1a2 = new JmriBeanComboBox(  // Sensor 2
         InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private final JTextField field1b = new JTextField(8);   // Fast Clock
+
+    SpinnerNumberModel hourSpinner1 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
+    private JSpinner spinner1b = new JSpinner(hourSpinner1); // Fast Clock1 hours
+    SpinnerNumberModel minuteSpinner1 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
+    private JSpinner spinner1b1 = new JSpinner(minuteSpinner1); // Fast Clock1 minutes
+    private final JLabel clockSep = new JLabel(" : ");
+
     private JmriBeanComboBox box1c = new JmriBeanComboBox(  // Turnout
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox box1d = new JmriBeanComboBox(  // Timed ON
             InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor"));
-    private final JTextField field2a = new JTextField(8);   // Fast Clock
+
+    SpinnerNumberModel hourSpinner2 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
+    private JSpinner spinner2a = new JSpinner(hourSpinner2); // Fast Clock2 hours
+    SpinnerNumberModel minuteSpinner2 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
+    private JSpinner spinner2a1 = new JSpinner(minuteSpinner2); // Fast Clock2 minutes
+    private final JLabel clockSep2 = new JLabel(" : ");
+
     SpinnerNumberModel timedOnSpinner = new SpinnerNumberModel(0, 0, 1000000, 1); // 0 - 1,000,000 msec
     private JSpinner spinner2b = new JSpinner(timedOnSpinner); // Timed ON
     private final JLabel f2Label = new JLabel(Bundle.getMessage("LightSensorSense"));
@@ -1371,7 +1384,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create the Add/Edit control pane.
+     * Create the Add/Edit Light Control pane.
      */
     private void addEditControlWindow() {
         if (addControlFrame == null) {
@@ -1403,36 +1416,55 @@ public class LightTableAction extends AbstractTableAction {
             panel32.add(f1Label);
             panel32.add(box1a);
             panel32.add(box1a2);
-            panel32.add(field1b);
-
+            // set up number formatting
+            JSpinner.NumberEditor ne1b = new JSpinner.NumberEditor(spinner1b, "00"); // 2 digits "01" format
+            spinner1b.setEditor(ne1b);
+            panel32.add(spinner1b);  // hours ON
+            panel32.add(clockSep);
+            JSpinner.NumberEditor ne1b1 = new JSpinner.NumberEditor(spinner1b1, "00"); // 2 digits "01" format
+            spinner1b1.setEditor(ne1b1);
+            panel32.add(spinner1b1); // minutes OFF
             box1a.setFirstItemBlank(true);
             box1a2.setFirstItemBlank(true);
             box1c.setFirstItemBlank(true);
-
             panel32.add(box1c);
             panel32.add(box1d);
             box1a.setSelectedIndex(0);
             box1a2.setSelectedIndex(0);
-            field1b.setText("00:00"); // TODO add Formatter or split into 2 JSPinner fields
+            spinner1b.setValue(0);  // reset needed
+            spinner1b1.setValue(0); // reset needed
             box1d.setSelectedIndex(0);
-            field1b.setVisible(false);
+            spinner1b.setVisible(false);
+            clockSep.setVisible(false);
+            spinner1b1.setVisible(false);
             box1c.setSelectedIndex(0);
             box1c.setVisible(false);
             box1d.setVisible(false);
             box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             box1a2.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
+
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             panel33.add(f2Label);
             panel33.add(stateBox = new JComboBox<>(new String[]{
                 Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive"),}));
             stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
-            panel33.add(field2a);
+            JSpinner.NumberEditor ne2a = new JSpinner.NumberEditor(spinner2a, "00"); // 2 digits "01" format
+            spinner2a.setEditor(ne2a);
+            panel33.add(spinner2a);  // hours OFF
+            panel33.add(clockSep2);
+            JSpinner.NumberEditor ne2a1 = new JSpinner.NumberEditor(spinner2a1, "00"); // 2 digits "01" format
+            spinner2a1.setEditor(ne2a1);
+            panel33.add(spinner2a1); // minutes OFF
             panel33.add(spinner2b);
-            field2a.setText("00:00"); // TODO add Formatter
-            field2a.setVisible(false);
-            spinner2b.setValue(0);
+            spinner2a.setValue(0);  // reset needed
+            spinner2a1.setValue(0); // reset needed
+            spinner2b.setValue(0);  // reset needed
+            spinner2a.setVisible(false);
+            clockSep2.setVisible(false);
+            spinner2a1.setVisible(false);
             spinner2b.setVisible(false);
+
             panel3.add(panel31);
             panel3.add(panel32);
             panel3.add(panel33);
@@ -1441,7 +1473,8 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel3);
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonClose"))); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
+            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancelControl.setText(Bundle.getMessage("ButtonCancel")); // reset to Cancel
             cancelControl.addActionListener(this::cancelControlPressed);
             cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
@@ -1461,7 +1494,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             });
         }
-        typeBox.setSelectedIndex(defaultControlIndex);  // force GUI status consistent
+        typeBox.setSelectedIndex(defaultControlIndex); // force GUI status consistent
         addControlFrame.pack();
         addControlFrame.setVisible(true);
     }
@@ -1494,26 +1527,36 @@ public class LightTableAction extends AbstractTableAction {
             box1a.setVisible(true);
             box1a2.setVisible(false);
             box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
-            field1b.setVisible(false);
+            spinner1b.setVisible(false);
+            clockSep.setVisible(false);
+            spinner1b1.setVisible(false);
             box1c.setVisible(false);
             box1d.setVisible(false);
-            field2a.setVisible(false);
+            spinner2a.setVisible(false);
+            clockSep2.setVisible(false);
+            spinner2a1.setVisible(false);
             spinner2b.setVisible(false);
             stateBox.setVisible(true);
             defaultControlIndex = sensorControlIndex;
         } else if (fastClockControl.equals(ctype)) {
             // set up panel for fast clock control
             f1Label.setText(Bundle.getMessage("LightScheduleOn"));
-            field1b.setToolTipText(Bundle.getMessage("LightScheduleHint"));
+            spinner1b.setToolTipText(Bundle.getMessage("LightScheduleHint"));
+            spinner1b1.setToolTipText(Bundle.getMessage("LightScheduleHintMinutes"));
             f2Label.setText(Bundle.getMessage("LightScheduleOff"));
-            field2a.setToolTipText(Bundle.getMessage("LightScheduleHint"));
+            spinner2a.setToolTipText(Bundle.getMessage("LightScheduleHint"));
+            spinner2a1.setToolTipText(Bundle.getMessage("LightScheduleHintMinutes"));
             f2Label.setVisible(true);
             box1a.setVisible(false);
             box1a2.setVisible(false);
-            field1b.setVisible(true);
+            spinner1b.setVisible(true);
+            clockSep.setVisible(true);
+            spinner1b1.setVisible(true);
             box1c.setVisible(false);
             box1d.setVisible(false);
-            field2a.setVisible(true);
+            spinner2a.setVisible(true);
+            clockSep2.setVisible(true);
+            spinner2a1.setVisible(true);
             spinner2b.setVisible(false);
             stateBox.setVisible(false);
             defaultControlIndex = fastClockControlIndex;
@@ -1531,10 +1574,14 @@ public class LightTableAction extends AbstractTableAction {
             f2Label.setVisible(true);
             box1a.setVisible(false);
             box1a2.setVisible(false);
-            field1b.setVisible(false);
+            spinner1b.setVisible(false);
+            clockSep.setVisible(false);
+            spinner1b1.setVisible(false);
             box1c.setVisible(true);
             box1d.setVisible(false);
-            field2a.setVisible(false);
+            spinner2a.setVisible(false);
+            clockSep2.setVisible(false);
+            spinner2a1.setVisible(false);
             spinner2b.setVisible(false);
             stateBox.setVisible(true);
             defaultControlIndex = turnoutStatusControlIndex;
@@ -1547,10 +1594,14 @@ public class LightTableAction extends AbstractTableAction {
             f2Label.setVisible(true);
             box1a.setVisible(false);
             box1a2.setVisible(false);
-            field1b.setVisible(false);
+            spinner1b.setVisible(false);
+            clockSep.setVisible(false);
+            spinner1b1.setVisible(false);
             box1c.setVisible(false);
             box1d.setVisible(true);
-            field2a.setVisible(false);
+            spinner2a.setVisible(false);
+            clockSep2.setVisible(false);
+            spinner2a1.setVisible(false);
             spinner2b.setVisible(true);
             stateBox.setVisible(false);
             defaultControlIndex = timedOnControlIndex;
@@ -1569,10 +1620,14 @@ public class LightTableAction extends AbstractTableAction {
             box1a.setVisible(true);
             box1a2.setVisible(true);
             box1a.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
-            field1b.setVisible(false);
+            spinner1b.setVisible(false);
+            clockSep.setVisible(false);
+            spinner1b1.setVisible(false);
             box1c.setVisible(false);
             box1d.setVisible(false);
-            field2a.setVisible(false);
+            spinner2a.setVisible(false);
+            clockSep2.setVisible(false);
+            spinner2a1.setVisible(false);
             spinner2b.setVisible(false);
             stateBox.setVisible(true);
             defaultControlIndex = twoSensorControlIndex;
@@ -1582,10 +1637,14 @@ public class LightTableAction extends AbstractTableAction {
             f2Label.setVisible(false);
             box1a.setVisible(false);
             box1a2.setVisible(false);
-            field1b.setVisible(false);
+            spinner1b.setVisible(false);
+            clockSep.setVisible(false);
+            spinner1b1.setVisible(false);
             box1c.setVisible(false);
             box1d.setVisible(false);
-            field2a.setVisible(false);
+            spinner2a.setVisible(false);
+            clockSep2.setVisible(false);
+            spinner2a1.setVisible(false);
             spinner2b.setVisible(false);
             stateBox.setVisible(false);
             defaultControlIndex = noControlIndex;
@@ -1689,81 +1748,13 @@ public class LightTableAction extends AbstractTableAction {
         } else if (fastClockControl.equals(typeBox.getSelectedItem())) {
             // Set type of control
             g.setControlType(Light.FAST_CLOCK_CONTROL);
-            // read and parse the hours and minutes in the two fields
+            // read and parse the hours and minutes in the 2 x 2 spinners
             boolean error = false;
-            int onHour = 0;
-            int onMin = 0;
-            int offHour = 0;
-            int offMin = 0;
-            String s = field1b.getText();
-            if ((s.length() != 5) || (s.charAt(2) != ':')) {
-                status1.setText(Bundle.getMessage("LightError12"));
-                status1.setForeground(Color.red);
-                error = true;
-            }
-            if (!error) {
-                try {
-                    onHour = Integer.parseInt(s.substring(0, 2));
-                    if ((onHour < 0) || (onHour > 24)) {
-                        status1.setText(Bundle.getMessage("LightError13"));
-                        status1.setForeground(Color.red);
-                        error = true;
-                    }
-                } catch (NumberFormatException e) {
-                    status1.setText(Bundle.getMessage("LightError14"));
-                    status1.setForeground(Color.red);
-                    error = true;
-                }
-            }
-            if (!error) {
-                try {
-                    onMin = Integer.parseInt(s.substring(3, 5));
-                    if ((onMin < 0) || (onMin > 59)) {
-                        status1.setText(Bundle.getMessage("LightError13"));
-                        status1.setForeground(Color.red);
-                        error = true;
-                    }
-                } catch (NumberFormatException e) {
-                    status1.setText(Bundle.getMessage("LightError14"));
-                    status1.setForeground(Color.red);
-                    error = true;
-                }
-            }
-            s = field2a.getText();
-            if ((s.length() != 5) || (s.charAt(2) != ':')) {
-                status1.setText(Bundle.getMessage("LightError12"));
-                status1.setForeground(Color.red);
-                error = true;
-            }
-            if (!error) {
-                try {
-                    offHour = Integer.parseInt(s.substring(0, 2));
-                    if ((offHour < 0) || (offHour > 24)) {
-                        status1.setText(Bundle.getMessage("LightError13"));
-                        status1.setForeground(Color.red);
-                        error = true;
-                    }
-                } catch (NumberFormatException e) {
-                    status1.setText(Bundle.getMessage("LightError14"));
-                    status1.setForeground(Color.red);
-                    error = true;
-                }
-            }
-            if (!error) {
-                try {
-                    offMin = Integer.parseInt(s.substring(3, 5));
-                    if ((offMin < 0) || (offMin > 59)) {
-                        status1.setText(Bundle.getMessage("LightError13"));
-                        status1.setForeground(Color.red);
-                        error = true;
-                    }
-                } catch (NumberFormatException e) {
-                    status1.setText(Bundle.getMessage("LightError14"));
-                    status1.setForeground(Color.red);
-                    error = true;
-                }
-            }
-
+            int onHour = (Integer) spinner1b.getValue();  // hours
+            int onMin = (Integer) spinner1b1.getValue();  // minutes
+            int offHour = (Integer) spinner2a.getValue(); // hours
+            int offMin = (Integer) spinner2a1.getValue(); // minutes
+            // TODO check for 2 x 00:00 entry, end after start test
             if (error) {
                 return (false);
             }
@@ -1836,7 +1827,7 @@ public class LightTableAction extends AbstractTableAction {
                 status1.setText(Bundle.getMessage("LightWarn8"));
                 status1.setForeground(Color.gray);
             } else {
-                // name was selected, try user name first
+                // sensor was selected, try user name first
                 s = InstanceManager.sensorManagerInstance().
                         getByUserName(triggerSensorName);
                 if (s == null) {
@@ -1929,22 +1920,6 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Format time to hh:mm given integer hour and minute.
-     *
-     * @param hour   the hour from 0-23
-     * @param minute the minute from 0-59
-     * @return a formatted time or 00:00 if inputs are incorrect
-     */
-    String formatTime(int hour, int minute) {
-        String s = String.format("%02d:%02d", hour, minute);
-        if (s.length() != 5 || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
-            // input error
-            s = "00:00";
-        }
-        return s;
-    }
-
-    /**
      * Get text showing the type of Light Control.
      *
      * @param type the type of Light Control
@@ -1985,8 +1960,9 @@ public class LightTableAction extends AbstractTableAction {
                         new Object[]{lc.getControlSensorName(), getControlSensorSenseText(lc)});
             case Light.FAST_CLOCK_CONTROL:
                 return java.text.MessageFormat.format(Bundle.getMessage("LightFastClockDes"),
-                        new Object[]{formatTime(lc.getFastClockOnHour(), lc.getFastClockOnMin()),
-                            formatTime(lc.getFastClockOffHour(), lc.getFastClockOffMin())});
+                        // build 00:00 from 2 fields
+                        new Object[]{String.format("%02d:%02d", lc.getFastClockOnHour(), lc.getFastClockOnMin()),
+                                String.format("%02d:%02d", lc.getFastClockOffHour(), lc.getFastClockOffMin())});
             case Light.TURNOUT_STATUS_CONTROL:
                 return java.text.MessageFormat.format(Bundle.getMessage("LightTurnoutControlDes"),
                         new Object[]{lc.getControlTurnoutName(), getControlTurnoutStateText(lc)});
@@ -2050,8 +2026,10 @@ public class LightTableAction extends AbstractTableAction {
                 int onMin = lc.getFastClockOnMin();
                 int offHour = lc.getFastClockOffHour();
                 int offMin = lc.getFastClockOffMin();
-                field1b.setText(formatTime(onHour, onMin));
-                field2a.setText(formatTime(offHour, offMin));
+                spinner1b.setValue(onHour);
+                spinner1b1.setValue(onMin);
+                spinner2a.setValue(offHour);
+                spinner2a1.setValue(offMin);
                 break;
             case Light.TURNOUT_STATUS_CONTROL:
                 setUpControlType(turnoutStatusControl);
