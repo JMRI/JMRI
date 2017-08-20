@@ -21,6 +21,7 @@ public class ThrottleFrameManagerTest {
         // the constructor is private, but invoked by instance.
         ThrottleFrameManager frame = InstanceManager.getDefault(ThrottleFrameManager.class);
         Assert.assertNotNull("exists", frame);
+        frame.showThrottlesList();
         jmri.util.SwingTestCase.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"),true,true);
     }
 
