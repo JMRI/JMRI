@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
   */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class Region {
 
     public Region(Point3d[] points) {
