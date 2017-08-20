@@ -1,12 +1,14 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
+import apps.gui3.TabbedPreferencesAction;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
@@ -31,7 +33,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -50,6 +51,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
@@ -96,8 +98,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class for Jmri applications.
- * <P>
+ * Base class for JMRI applications.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010
  * @author Dennis Miller Copyright 2005
@@ -107,10 +108,11 @@ import org.slf4j.LoggerFactory;
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
     static String profileFilename;
+    Action prefsAction = new TabbedPreferencesAction();
 
     @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
             justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
-    public Apps(JFrame frame) {
+    public Apps() {
 
         super(true);
         long start = System.nanoTime();
@@ -262,13 +264,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // Create a WindowInterface object based on the passed-in Frame
-        JFrameInterface wi = new JFrameInterface(frame);
-        // Create a menu bar
-        menuBar = new JMenuBar();
-
-        // Create menu categories and add to the menu bar, add actions to menus
-        createMenus(menuBar, wi);
 
         // done
         long end = System.nanoTime();
@@ -579,7 +574,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             });
         }
     }
-    Action prefsAction;
 
     public void doPreferences() {
         prefsAction.actionPerformed(null);
@@ -614,8 +608,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         a.putValue(Action.NAME, Bundle.getMessage("MenuItemPaste"));
         editMenu.add(a);
 
-        // prefs
-        prefsAction = new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
         // Put prefs in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
             Application.getApplication().setPreferencesHandler(new PreferencesHandler() {
@@ -1107,8 +1099,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return configFilename;
     }
 
-    static protected void createFrame(Apps containedPane, JFrame frame) {
+    static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
+        // Create a WindowInterface object based on the passed-in Frame
+        JFrameInterface wi = new JFrameInterface(frame);
+        // Create a menu bar
+        containedPane.menuBar = new JMenuBar();
+
+        // Create menu categories and add to the menu bar, add actions to menus
+        containedPane.createMenus(containedPane.menuBar, wi);
 
         // invoke plugin, if any
         JmriPlugin.start(frame, containedPane.menuBar);
@@ -1124,7 +1123,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         frame.pack();
         Dimension screen = frame.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
-        frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+
+        Point p = InstanceManager.getDefault(UserPreferencesManager.class).getWindowLocation(containedPane.getClass().getName());
+        if (p != null) {
+            frame.setLocation(p);
+        } else {
+            frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        }
         frame.setVisible(true);
     }
 
