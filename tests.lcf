@@ -25,7 +25,12 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= WARN, A1
+log4j.rootCategory= INFO, A1
+
+# Note that many JMRI tests assume that INFO, WARN, ERROR and FATAL will 
+# be logged so that they can test for their presence in specific cases.
+# Raising that level will cause errors. Extraneous messages should be 
+# handled within the tests to keep the volume down.
 
 # A1 is set to be a jmri.util.JUnitAppender which outputs to System.err. 
 # The JUnitAppender provides hooks used to test whether a given
