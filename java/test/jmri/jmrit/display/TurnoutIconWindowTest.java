@@ -153,7 +153,6 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
                 icon.getLocation().x + icon.getSize().width / 2,
                 icon.getLocation().y + icon.getSize().height / 2);
 
-        System.out.println("testLayoutEditor before click");
         getHelper().enterClickAndLeave(
                 new MouseEventData(this,
                         jf, // component
@@ -164,7 +163,6 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
                         EventDataConstants.CUSTOM, // position
                         location
                 ));
-        System.out.println("testLayoutEditor after click");
         Assert.assertNotEquals("Not initial state", Turnout.UNKNOWN, sn.getState());
         Assert.assertEquals("state after one click", Turnout.CLOSED, sn.getState());
 
