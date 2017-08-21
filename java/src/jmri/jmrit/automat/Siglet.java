@@ -66,8 +66,8 @@ abstract public class Siglet {
         if (thread != null) log.error("Found thread != null, which is an internal synchronization error for {}", name);
         
         defineIO(); // user method that will load inputs
-        if (inputs.length <= 0) {
-            log.error("Siglet start invoked, but defined no inputs");
+        if (inputs == null || inputs.length <= 0) {
+            log.error("Siglet start invoked {}, but no inputs provided", ((name!=null && !name.isEmpty()) ? "for \""+name+"\"" : "(without a name)") );
             return;
         }
 
