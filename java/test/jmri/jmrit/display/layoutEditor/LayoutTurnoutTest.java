@@ -75,7 +75,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testToString() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         String s = ltRH.toString();
@@ -105,7 +104,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetVersion() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getVersion(), 1);
@@ -118,7 +116,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testSetVersion() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         ltRH.setVersion(2);
@@ -137,7 +134,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testUseBlockSpeed() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertFalse(ltRH.useBlockSpeed());
@@ -150,7 +146,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getTurnoutName(), "");
@@ -163,7 +158,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetSecondTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getSecondTurnoutName(), "");
@@ -176,7 +170,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetBlockName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getBlockName(), "");
@@ -189,7 +182,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetBlockBName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getBlockBName(), "");
@@ -202,7 +194,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetBlockCName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getBlockCName(), "");
@@ -215,7 +206,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetBlockDName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getBlockDName(), "");
@@ -228,7 +218,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetSignalHead() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA));
@@ -244,7 +233,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetLinkedTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getLinkedTurnoutName(), "");
@@ -257,7 +245,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testSetLinkedTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         ltRH.setLinkedTurnoutName("Foo");
@@ -281,7 +268,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetLinkType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.NO_LINK);
@@ -294,7 +280,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testSetLinkType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         ltRH.setLinkType(LayoutTurnout.THROAT_TO_THROAT);
@@ -326,7 +311,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetTurnoutType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getTurnoutType(), LayoutTurnout.RH_TURNOUT);
@@ -339,7 +323,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetConnectA() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertNull(ltRH.getConnectA());
@@ -352,7 +335,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetConnectB() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertNull(ltRH.getConnectB());
@@ -365,7 +347,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetConnectC() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertNull(ltRH.getConnectC());
@@ -378,7 +359,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetConnectD() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertNull(ltRH.getConnectD());
@@ -391,7 +371,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetTurnout() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertNull(ltRH.getTurnout());
@@ -404,7 +383,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetContinuingSense() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals(ltRH.getContinuingSense(), Turnout.CLOSED);
@@ -417,7 +395,6 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetCoordsForConnectionType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
@@ -426,19 +403,19 @@ public class LayoutTurnoutTest {
         jmri.util.JUnitAppender.assertErrorMessage("Invalid connection type 0");
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_A) is equal to...",
-                new Point2D.Double(45.0, 166.0),
+                new Point2D.Double(132.0, 87.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_A));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_B) is equal to...",
-                new Point2D.Double(255.0, 34.0),
+                new Point2D.Double(168.0, 113.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_B));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_C) is equal to...",
-                new Point2D.Double(249.0, 44.0),
+                new Point2D.Double(162.0, 123.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_C));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_D) is equal to...",
-                new Point2D.Double(45.0, 166.0),
+                new Point2D.Double(132.0, 87.0),
                 ltRH.getCoordsForConnectionType(LayoutTrack.TURNOUT_D));
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(TURNOUT_CENTER) is equal to...",
@@ -448,11 +425,10 @@ public class LayoutTurnoutTest {
 
     @Test
     public void testGetBounds() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         testNew();  // to create layout editor & layout turnouts
 
         Assert.assertEquals("ltRH.getBounds() is equal to...",
-                new Rectangle2D.Double(45.0, 34.0, 210.0, 132.0),
+                new Rectangle2D.Double(132.0, 87.0, 36.0, 36.0),
                 ltRH.getBounds());
     }
 
