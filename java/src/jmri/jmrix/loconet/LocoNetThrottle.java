@@ -668,6 +668,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(65536));
     }
+    
+    //note: throttle listener expects to have "callback" method notifyStealThrottleRequired 
+    //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class.getName());

@@ -120,13 +120,14 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Get notification that an address has changed slot. This method creates a
      * throttle for all ThrottleListeners of that address and notifies them via
      * the ThrottleListener.notifyThrottleFound method.
+     * @param s LocoNet slot which has been changed
      */
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         log.debug("notifyChangedSlot - slot {}, slotStatus {}", s.getSlot(), Integer.toHexString(s.slotStatus()));
         // This is invoked only if the SlotManager knows that the LnThrottleManager is 
         // interested in the address associated with this slot.
-        
+                
         // need to check to see if the slot is in a suitable state for creating a throttle.
         if (s.slotStatus() == LnConstants.LOCO_IN_USE) {
             // cannot acquire loco account is already in-use or is consist-mid or consist-sub 
@@ -135,7 +136,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
             if (s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
-                notifyRefused(s.locoAddr(), "Locomotive address is already in-use by some other throttle.");
+                // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
+                //note: throttle listener expects to have "callback" method notifyStealThrottleRequired 
+                //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
+
+            //    notifyRefused(s.locoAddr(), "Locomotive address is already in-use by some other throttle.");
+            notifyStealThrottleRequired(
                 return;
             }
         }
@@ -321,6 +327,22 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         throttleID = id;
         log.info("Throttles created by JMRI will use Throttle ID 0x{}",Integer.toHexString(id));
     }
+
+   
+    /**
+     * ?Attempt to "steal" if the invoking method wants to steal?
+     * <p>
+     * @param address
+     * @param l
+     * @param steal 
+     */
+    @Override
+    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l,boolean steal){
+        
+       // the default implementation does nothing.  LocoNet needs to do something different
+       log.warn("WARNING: STEALING address {} for ThrottleListener {} with steal param {}",address, l, steal);
+    }
+    
 
     private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class.getName());
 }
