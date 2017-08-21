@@ -3,13 +3,14 @@ package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2009
  */
 public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
-  
+
     @Test
     public void testRoutesTableFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -61,10 +62,10 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         f.routeNameTextField.setText("New Test Route");
         f.commentTextField.setText("New Text Route Comment");
         enterClickAndLeave(f.addRouteButton);
-        
+
         loadRoutes();
 
-        RouteManager rManager = RouteManager.instance();
+        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Assert.assertEquals("should be 6 routes", 6, rManager.getRoutesByNameList().size());
         Route newRoute = rManager.getRouteByName("New Test Route");
         Assert.assertNotNull(newRoute);
@@ -72,7 +73,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         // Add some locations to the route
         loadLocations();
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
         enterClickAndLeave(f.addLocationButton);
@@ -111,7 +112,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         //f.deleteRouteButton.doClick();
         enterClickAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
-        pressDialogButton(f,Bundle.getMessage("DeleteRoute?"),"Yes");
+        pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), "Yes");
 
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 
@@ -122,7 +123,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     public void testRouteEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadRoutes();
-        RouteManager lManager = RouteManager.instance();
+        RouteManager lManager = InstanceManager.getDefault(RouteManager.class);
         Route l2 = lManager.getRouteByName("Test Route C");
 
         RouteEditFrame f = new RouteEditFrame();
@@ -134,10 +135,10 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.dispose();
     }
-    
+
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
@@ -150,9 +151,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         l5.setLength(1005);
 
     }
-    
+
     private void loadRoutes() {
-        RouteManager rManager = RouteManager.instance();
+        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Route r1 = rManager.newRoute("Test Route E");
         r1.setComment("Comment test route E");
         Route r2 = rManager.newRoute("Test Route D");

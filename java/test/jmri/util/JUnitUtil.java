@@ -79,7 +79,7 @@ import org.slf4j.LoggerFactory;
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
  * </code></pre>
- *
+ * <p>
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
  *
@@ -95,7 +95,7 @@ public class JUnitUtil {
     /**
      * Release the current thread, allowing other threads to process. Waits for
      * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
-     *
+     * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use JFCUnit's flushAWT() and waitAtLeast(..)
      *
@@ -109,13 +109,15 @@ public class JUnitUtil {
 
     /**
      * Release the current thread, allowing other threads to process.
-     *
+     * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use JFCUnit's flushAWT() and waitAtLeast(..)
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
+     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
+    @Deprecated
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
@@ -235,7 +237,7 @@ public class JUnitUtil {
     /**
      * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
      * a thread-safe way.
-     *
+     * <p>
      * You can't assume that all the consequences of that setting will have
      * propagated through when this returns; those might take a long time. But
      * the set operation itself will be complete.
@@ -262,8 +264,12 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
+        // close any open windows
+        resetWindows(true);
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
+        // ensure the auto-defeault UserPreferencesManager is not created
+        InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
     public static void resetTurnoutOperationManager() {
@@ -276,6 +282,9 @@ public class JUnitUtil {
     }
 
     public static void initDefaultUserMessagePreferences() {
+        // remove the existing user preferences manager (if present)
+        InstanceManager.reset(UserPreferencesManager.class);
+        // create a test user preferences manager
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
@@ -366,16 +375,16 @@ public class JUnitUtil {
     }
 
     public static void initDebugCommandStation() {
-        jmri.CommandStation cs = new jmri.CommandStation(){
-            public void sendPacket(@Nonnull byte[] packet, int repeats){
+        jmri.CommandStation cs = new jmri.CommandStation() {
+            public void sendPacket(@Nonnull byte[] packet, int repeats) {
             }
 
-            public String getUserName(){
-               return "testCS";
+            public String getUserName() {
+                return "testCS";
             }
 
-            public String getSystemPrefix(){
-               return "I";
+            public String getSystemPrefix() {
+                return "I";
             }
 
         };
@@ -463,7 +472,7 @@ public class JUnitUtil {
      * If a profile will be written to and its contents verified as part of a
      * test use {@link #resetProfileManager(jmri.profile.Profile)} with a
      * provided profile.
-     *
+     * <p>
      * The new profile will have the name {@literal TestProfile }, the id
      * {@literal 00000000 }, and will be in the directory {@literal temp }
      * within the sources working copy.
@@ -555,7 +564,9 @@ public class JUnitUtil {
                 if (logWindow) {
                     log.warn("Cleaning up frame \"{}\" (a {}) from earlier test.", frame.getTitle(), frame.getClass());
                 }
-                ThreadingUtil.runOnGUI( () -> { frame.dispose(); } );
+                ThreadingUtil.runOnGUI(() -> {
+                    frame.dispose();
+                });
             }
         }
         for (Window window : Window.getWindows()) {
@@ -563,7 +574,9 @@ public class JUnitUtil {
                 if (logWindow) {
                     log.warn("Cleaning up window \"{}\" (a {}) from earlier test.", window.getName(), window.getClass());
                 }
-                ThreadingUtil.runOnGUI( () -> { window.dispose(); } );
+                ThreadingUtil.runOnGUI(() -> {
+                    window.dispose();
+                });
             }
         }
     }

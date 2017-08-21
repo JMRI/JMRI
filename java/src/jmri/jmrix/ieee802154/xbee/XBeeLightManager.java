@@ -174,6 +174,15 @@ public class XBeeLightManager extends AbstractLightManager {
 
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
 
 }

@@ -116,6 +116,15 @@ public class NceLightManager extends AbstractLightManager {
         return (true);
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceLightManager.class.getName());
 
 }

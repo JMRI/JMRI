@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -56,9 +57,9 @@ public class TrainCommon {
     protected static final boolean ENGINE = true;
     public static final boolean IS_TWO_COLUMN_TRACK = true;
 
-    CarManager carManager = CarManager.instance();
-    EngineManager engineManager = EngineManager.instance();
-    LocationManager locationManager = LocationManager.instance();
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     // for manifests
     protected int cars = 0; // number of cars in train at a RouteLocation
@@ -343,7 +344,7 @@ public class TrainCommon {
                     }
                     dropCars = true;
                     cars--;
-                    if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName())
+                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName())
                             .equals(CarLoad.LOAD_TYPE_EMPTY)) {
                         emptyCars--;
                     }
@@ -1354,10 +1355,10 @@ public class TrainCommon {
      * @return true if the train has work at the location
      */
     public static boolean isThereWorkAtLocation(Train train, Location location) {
-        if (isThereWorkAtLocation(train, location, CarManager.instance().getList(train))) {
+        if (isThereWorkAtLocation(train, location, InstanceManager.getDefault(CarManager.class).getList(train))) {
             return true;
         }
-        if (isThereWorkAtLocation(train, location, EngineManager.instance().getList(train))) {
+        if (isThereWorkAtLocation(train, location, InstanceManager.getDefault(EngineManager.class).getList(train))) {
             return true;
         }
         return false;
@@ -1379,7 +1380,7 @@ public class TrainCommon {
     }
 
     protected void addCarsLocationUnknown(PrintWriter file, boolean isManifest) {
-        CarManager carManager = CarManager.instance();
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
         List<Car> cars = carManager.getCarsLocationUnknown();
         if (cars.size() == 0) {
             return; // no cars to search for!
@@ -1405,7 +1406,7 @@ public class TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return " " +
                     padAndTruncateString(splitStringLeftParenthesis(engine.getModel()),
-                            EngineModels.instance().getMaxNameLength());
+                            InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
         }
         if (attribute.equals(Setup.CONSIST)) {
             return " " + padAndTruncateString(engine.getConsistName(), engineManager.getConsistMaxNameLength());
@@ -1418,11 +1419,11 @@ public class TrainCommon {
             return ((car.isCaboose() && !Setup.isPrintCabooseLoadEnabled()) ||
                     (car.isPassenger() &&
                             !Setup.isPrintPassengerLoadEnabled())) ? padAndTruncateString("",
-                                    CarLoads.instance().getMaxNameLength() +
+                                    InstanceManager.getDefault(CarLoads.class).getMaxNameLength() +
                                             1)
                                     : " " +
                                             padAndTruncateString(car.getLoadName(),
-                                                    CarLoads.instance().getMaxNameLength());
+                                                    InstanceManager.getDefault(CarLoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return (car.isHazardous() ? " " +
                     Setup.getHazardousMsg() : padAndTruncateString("", Setup.getHazardousMsg().length() + 1));
@@ -1493,14 +1494,14 @@ public class TrainCommon {
             return " " + padAndTruncateString(splitString(rs.getNumber()), Control.max_len_string_print_road_number);
         } else if (attribute.equals(Setup.ROAD)) {
             String[] road = rs.getRoadName().split("-"); // second half of string can be anything
-            return " " + padAndTruncateString(road[0], CarRoads.instance().getMaxNameLength());
+            return " " + padAndTruncateString(road[0], InstanceManager.getDefault(CarRoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.TYPE)) {
             String[] type = rs.getTypeName().split("-"); // second half of string can be anything
-            return " " + padAndTruncateString(type[0], CarTypes.instance().getMaxNameLength());
+            return " " + padAndTruncateString(type[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength());
         } else if (attribute.equals(Setup.LENGTH)) {
-            return " " + padAndTruncateString(rs.getLength() + LENGTHABV, CarLengths.instance().getMaxNameLength());
+            return " " + padAndTruncateString(rs.getLength() + LENGTHABV, InstanceManager.getDefault(CarLengths.class).getMaxNameLength());
         } else if (attribute.equals(Setup.COLOR)) {
-            return " " + padAndTruncateString(rs.getColor(), CarColors.instance().getMaxNameLength());
+            return " " + padAndTruncateString(rs.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength());
         } else if (((attribute.equals(Setup.LOCATION)) && (isPickup || isLocal)) ||
                 (attribute.equals(Setup.TRACK) && isPickup)) {
             if (rs.getTrack() != null) {
@@ -1573,7 +1574,7 @@ public class TrainCommon {
                                             TrainManifestText.getStringDest().length() +
                                             3);
         } else if (attribute.equals(Setup.OWNER)) {
-            return " " + padAndTruncateString(rs.getOwner(), CarOwners.instance().getMaxNameLength());
+            return " " + padAndTruncateString(rs.getOwner(), InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
         } else if (attribute.equals(Setup.COMMENT)) {
             return " " + rs.getComment();
         } else if (attribute.equals(Setup.BLANK)) {
@@ -1584,9 +1585,9 @@ public class TrainCommon {
                     padAndTruncateString("", Control.max_len_string_print_road_number -
                             (UTILITY_CAR_COUNT_FIELD_SIZE + 1));
         } else if (attribute.equals(Setup.NO_ROAD)) {
-            return " " + padAndTruncateString("", CarRoads.instance().getMaxNameLength());
+            return " " + padAndTruncateString("", InstanceManager.getDefault(CarRoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.NO_COLOR)) {
-            return " " + padAndTruncateString("", CarColors.instance().getMaxNameLength());
+            return " " + padAndTruncateString("", InstanceManager.getDefault(CarColors.class).getMaxNameLength());
         } // there are four truncated manifest attributes
         else if (attribute.equals(Setup.NO_DEST_TRACK)) {
             return Setup.isPrintHeadersEnabled() ? padAndTruncateString("",
@@ -1764,7 +1765,7 @@ public class TrainCommon {
             }
             if (attribute.equals(Setup.ROAD)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(),
-                        CarRoads.instance().getMaxNameLength()) +
+                        InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.NUMBER) && !isEngine) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
@@ -1776,11 +1777,11 @@ public class TrainCommon {
                         " ");
             } else if (attribute.equals(Setup.TYPE)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Type(),
-                        CarTypes.instance().getMaxNameLength()) +
+                        InstanceManager.getDefault(CarTypes.class).getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.MODEL)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Model(),
-                        EngineModels.instance().getMaxNameLength()) +
+                        InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Consist(),
@@ -1794,15 +1795,15 @@ public class TrainCommon {
                 buf.append("   "); // assume kernel size is 99 or less
             } else if (attribute.equals(Setup.LOAD)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Load(),
-                        CarLoads.instance().getMaxNameLength()) +
+                        InstanceManager.getDefault(CarLoads.class).getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.COLOR)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Color(),
-                        CarColors.instance().getMaxNameLength()) +
+                        InstanceManager.getDefault(CarColors.class).getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.OWNER)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Owner(),
-                        CarOwners.instance().getMaxNameLength()) +
+                        InstanceManager.getDefault(CarOwners.class).getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.LENGTH)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Length(),

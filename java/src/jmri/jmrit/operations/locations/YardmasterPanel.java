@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -287,21 +288,21 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     private void addTrainListeners() {
         log.debug("Adding train listerners");
-        List<Train> trains = TrainManager.instance().getTrainsByIdList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
         trains.stream().forEach((train) -> {
             train.addPropertyChangeListener(this);
         });
         // listen for new trains being added
-        TrainManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
     }
 
     private void removeTrainListeners() {
         log.debug("Removing train listerners");
-        List<Train> trains = TrainManager.instance().getTrainsByIdList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
         trains.stream().forEach((train) -> {
             train.removePropertyChangeListener(this);
         });
-        TrainManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
     }
 
     @Override

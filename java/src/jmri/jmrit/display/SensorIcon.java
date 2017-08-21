@@ -386,9 +386,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     /**
-     * Drive the current state of the display from the state of the turnout.
+     * Drive the current state of the display from the state of the sensor.
      *
-     * @param state the turnout state
+     * @param state the sensor state
      */
     @Override
     public void displayState(int state) {
@@ -491,7 +491,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

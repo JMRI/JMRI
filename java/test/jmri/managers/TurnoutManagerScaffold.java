@@ -208,7 +208,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return "Turnout";
     }
 
+    @Override
+    public String getEntryToolTip() { return "No Help"; }
+
 }
-
-
-

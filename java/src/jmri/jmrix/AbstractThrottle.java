@@ -424,6 +424,12 @@ abstract public class AbstractThrottle implements DccThrottle {
                 @Override
                 public void notifyThrottleFound(DccThrottle t) {
                 }
+    
+                @Override
+                public void notifyStealThrottleRequired(DccLocoAddress address){
+                    // this is an automatically stealing impelementation.
+                    InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                }
             });
         }
     }

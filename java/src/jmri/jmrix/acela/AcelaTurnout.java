@@ -27,7 +27,7 @@ public class AcelaTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaTurnout(String systemName,AcelaSystemConnectionMemo memo) {
+    public AcelaTurnout(String systemName, AcelaSystemConnectionMemo memo) {
         super(systemName);
         _memo = memo;
         initializeTurnout(systemName);
@@ -38,7 +38,7 @@ public class AcelaTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaTurnout(String systemName, String userName,AcelaSystemConnectionMemo memo) {
+    public AcelaTurnout(String systemName, String userName, AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
         _memo = memo;
         prefix = _memo.getSystemPrefix() + "T";
@@ -146,7 +146,7 @@ public class AcelaTurnout extends AbstractTurnout {
   
          byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
          AcelaMessage m = AcelaMessage.sendPacketMessage(bl);
-         AcelaTrafficController.instance().sendAcelaMessage(m, null);
+        _memo.getTrafficController().sendAcelaMessage(m, null);
          */
     }
 

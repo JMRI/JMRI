@@ -2000,6 +2000,15 @@
     <property name="dist.scripts" value="${dist}/scripts"/>
     <property name="dist.apps"    value="${dist}/apps"/>
 
+    <target name="launchjmri.exe"
+            description="recreate the LaunchJMRI.exe used by the Windows release package">
+        <exec executable="${nsis.home}makensis"
+              dir="scripts/WinInstallFiles/"
+              failonerror="true">
+            <arg line="-V2 LaunchJMRI.nsi"/>
+        </exec>
+    </target>
+
     <target name="package-windows"
             description="create a Windows release package"
             depends="get-version-string, jar">
@@ -2034,6 +2043,11 @@
             <fileset dir="${libdir}/windows"/>
         </copy>
         <mkdir dir="${dist.release}"/>
+        <exec executable="${nsis.home}makensis"
+              dir="${dist.windows}/JMRI"
+              failonerror="true">
+            <arg line="-V2 LaunchJMRI.nsi"/>
+        </exec>
         <exec executable="${nsis.home}makensis"
               dir="${dist.windows}/JMRI"
               failonerror="true">
@@ -2338,4 +2352,25 @@
             <antcall target="ci-test-appveyor-coveragecheck" />
         </parallel>
     </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: lockMetaFiles                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="lockMetaFiles" description="Lock META-INT files">
+    	<echo>locking META-INT files</echo>
+    	<chmod perm="ugo+rx">
+    		<fileset dir="${target/classes/META-INF}"/>
+    	</chmod>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: unlockMetaFiles                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="unlockMetaFiles" description="Unlock META-INT files">
+    	<echo>unlocking META-INT files</echo>
+    	<chmod perm="ugo+rx+w">
+    		<fileset dir="${target/classes/META-INF}"/>
+    	</chmod>
+    </target>
+
 </project>

@@ -241,6 +241,15 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
        return true;
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }

@@ -94,6 +94,15 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
      * Allow access to SerialLightManager
      */
     static public SerialLightManager instance() {

@@ -4,13 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility Class supporting parsing and testing of addresses
- * <P>
- * Two address formats are supported: Ktxxxx where: t is the type code, 'T' for
- * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
- * input or output bit (001-9999) Note: with Maple, all panels (nodes) have the
+ * Utility Class supporting parsing and testing of Maple addresses
+ * <p>
+ * One address format is supported: Ktxxxx where:
+ * <ul>
+ *   <li>K is (fixed) system prefix for Maple</li>
+ *   <li>t is the type code: 'T' for turnouts, 'S' for sensors,
+ *   and 'L' for lights</li>
+ *   <li>xxxx is a bit number of the input or output bit (001-9999)</li>
+ * </ul>
+ * Note: with Maple, all panels (nodes) have the
  * same address space, so there is no node number in the address.
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2004 - 2009
  */
 public class SerialAddress {
@@ -20,7 +25,9 @@ public class SerialAddress {
 
     /**
      * Public static method to parse a system name and return the bit number
-     * Notes: Bits are numbered from 1. If an error is found, 0 is returned.
+     * Notes: Bits are numbered from 1.
+     *
+     * @return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -46,8 +53,10 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format returns 'true' if
-     * system name has a valid format, else returns 'false'
+     * Public static method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type) {
         // validate the system Name leader characters
@@ -71,9 +80,10 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name for configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * Public static method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
         if (!validSystemNameFormat(systemName, type)) {
@@ -104,8 +114,8 @@ public class SerialAddress {
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to a bit, by removing extra zeros inserted by the user.
-     * <P>
-     * If the supplied system name does not have a valid format, an empty string
+     *
+     * @return If the supplied system name does not have a valid format, an empty string
      * is returned. If the address in the system name is not within the legal
      * maximum range for the type of item (L, T, or S), an empty string is
      * returned. Otherwise a normalized name is returned in the same format as
@@ -135,10 +145,10 @@ public class SerialAddress {
      * <P>
      * This routine returns a system name in the CLxxxx, CTxxxx, or CSxxxx
      * format. The returned name is normalized.
-     * <P>
-     * If the supplied character is not valid, or the bit number is out of the 1
-     * - 9000 range, an error message is logged and the null string "" is
-     * returned.
+     *
+     * @return "" (null string) if the supplied type character is not valid,
+     * or the bit number is out of the 1 - 9000 range, and an error message is
+     * logged.
      */
     public static String makeSystemName(String type, int bitNum) {
         String nName = "";
@@ -160,8 +170,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to test if a output bit is free for assignment
-     * Returns "" (null string) if the specified output bit is free for
+     * Public static method to test if a output bit is free for assignment.
+     *
+     * @return "" (null string) if the specified output bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      * Test is not performed if the node address or bit number are illegal.
      */
@@ -207,8 +218,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to test if a input bit is free for assignment
-     * Returns "" (null string) if the specified input bit is free for
+     * Public static method to test if a input bit is free for assignment.
+     *
+     * @return "" (null string) if the specified input bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      * Test is not performed if the node address is illegal or bit number is
      * greater than 2048.
@@ -234,8 +246,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to the user name for a valid system name Returns ""
-     * (null string) if the system name is not valid or does not exist
+     * Public static method to the user name for a valid system name.
+     *
+     * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName) {
         // check for a valid system name
@@ -277,6 +290,5 @@ public class SerialAddress {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+
 }
-
-

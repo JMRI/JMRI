@@ -179,5 +179,20 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());
+
 }

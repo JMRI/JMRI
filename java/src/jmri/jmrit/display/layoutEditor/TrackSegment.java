@@ -18,6 +18,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -67,7 +68,6 @@ public class TrackSegment extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     private LayoutBlock block = null;
     private TrackSegment instance = null;
-    private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
@@ -109,8 +109,10 @@ public class TrackSegment extends LayoutTrack {
         }
         instance = this;
         ident = id;
-        dashed = dash;
+
         mainline = main;
+        dashed = dash;
+
         arc = false;
         flip = false;
         angle = 0.0D;
@@ -128,8 +130,9 @@ public class TrackSegment extends LayoutTrack {
         type2 = t2;
         instance = this;
         ident = id;
-        dashed = dash;
+
         mainline = main;
+        dashed = dash;
         hidden = hide;
     }
 
@@ -183,7 +186,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setDashed(boolean dash) {
-        dashed = dash;
+        if (dashed != dash) {
+            dashed = dash;
+            layoutEditor.redrawPanel();
+        }
     }
 
     public boolean getMainline() {
@@ -191,7 +197,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setMainline(boolean main) {
-        mainline = main;
+        if (mainline != main) {
+            mainline = main;
+            layoutEditor.redrawPanel();
+        }
     }
 
     public boolean getArc() {
@@ -320,6 +329,43 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    /**
+     * Set Up a Layout Block for a Track Segment.
+     */
+    public void setLayoutBlock(LayoutBlock b) {
+        block = b;
+        if (b != null) {
+            blockName = b.getID();
+        }
+    }
+
+    public void setLayoutBlockByName(String name) {
+        blockName = name;
+    }
+
+    /*
+     * non-accessor methods
+     */
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     *
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
+    public void scaleCoords(float xFactor, float yFactor) {
+        // Nothing to do here, move along
+    }
+
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     *
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    public void translateCoords(float xFactor, float yFactor) {
+        // Nothing to do here, move along
+    }
+
     // initialization instance variables (used when loading a LayoutEditor)
     public String tBlockName = "";
     public String tConnect1Name = "";
@@ -334,7 +380,7 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
     public void setObjects(LayoutEditor p) {
-        if (tBlockName.length() > 0) {
+        if (!tBlockName.isEmpty()) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
@@ -356,20 +402,6 @@ public class TrackSegment extends LayoutTrack {
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
-    }
-
-    /**
-     * Set Up a Layout Block for a Track Segment.
-     */
-    public void setLayoutBlock(LayoutBlock b) {
-        block = b;
-        if (b != null) {
-            blockName = b.getID();
-        }
-    }
-
-    public void setLayoutBlockByName(String name) {
-        blockName = name;
     }
 
     protected void updateBlockInfo() {
@@ -530,33 +562,31 @@ public class TrackSegment extends LayoutTrack {
         jmi = popup.add(ident);
         jmi.setEnabled(false);
 
-        if (!dashed) {
-            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
-        } else {
-            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Dashed"));
-        }
-        jmi.setEnabled(false);
-
-        if (!mainline) {
-            jmi = popup.add(rb.getString("NotMainline"));
-        } else {
-            jmi = popup.add(rb.getString("Mainline"));
-        }
-        jmi.setEnabled(false);
-
         if (blockName.equals("")) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
             jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
         jmi.setEnabled(false);
+        popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        if (hidden) {
-            jmi = popup.add(rb.getString("Hidden"));
-        } else {
-            jmi = popup.add(rb.getString("NotHidden"));
-        }
-        jmi.setEnabled(false);
+        mainlineCheckBoxMenuItem.setSelected(mainline);
+        popup.add(mainlineCheckBoxMenuItem);
+        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setMainline(mainlineCheckBoxMenuItem.isSelected());
+        });
+
+        hiddenCheckBoxMenuItem.setSelected(hidden);
+        popup.add(hiddenCheckBoxMenuItem);
+        hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setHidden(hiddenCheckBoxMenuItem.isSelected());
+        });
+
+        dashedCheckBoxMenuItem.setSelected(dashed);
+        popup.add(dashedCheckBoxMenuItem);
+        dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setDashed(dashedCheckBoxMenuItem.isSelected());
+        });
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
@@ -576,36 +606,43 @@ public class TrackSegment extends LayoutTrack {
             }
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
-        lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
 
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
+        }));
+        jmi.setSelected(!getArc() && !getBezier());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Circle")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
+        }));
+        jmi.setSelected(getArc() && getCircle());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Ellipse")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Bezier")) {
+        }));
+        jmi.setSelected(getArc() && !getCircle());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Bezier")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(3);
             }
-        });
+        }));
+        jmi.setSelected(!getArc() && getBezier());
+
         popup.add(lineType);
 
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     flipAngle();
@@ -782,16 +819,24 @@ public class TrackSegment extends LayoutTrack {
 
     // variables for Edit Track Segment pane
     private JmriJFrame editTrackSegmentFrame = null;
-    private JComboBox<String> dashedBox = new JComboBox<String>();
-    private int dashedIndex;
-    private int solidIndex;
+
     private JComboBox<String> mainlineBox = new JComboBox<String>();
     private int mainlineTrackIndex;
     private int sideTrackIndex;
+
+    private JComboBox<String> dashedBox = new JComboBox<String>();
+    private int dashedIndex;
+    private int solidIndex;
+
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
+
+    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Mainline"));
+    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Dashed"));
+
     private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JTextField arcField = new JTextField(5);
-    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;
     private JButton segmentEditDone;
     private JButton segmentEditCancel;
@@ -851,13 +896,13 @@ public class TrackSegment extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 
             contentPane.add(panel2);
 
-            if (getArc() && circle) {
+            if (getArc() && getCircle()) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -958,21 +1003,16 @@ public class TrackSegment extends LayoutTrack {
     void segmentEditDonePressed(ActionEvent a) {
         // set dashed
         boolean oldDashed = dashed;
-        if (dashedBox.getSelectedIndex() == dashedIndex) {
-            dashed = true;
-        } else {
-            dashed = false;
-        }
+        setDashed(dashedBox.getSelectedIndex() == dashedIndex);
+
         // set mainline
         boolean oldMainline = mainline;
-        if (mainlineBox.getSelectedIndex() == mainlineTrackIndex) {
-            mainline = true;
-        } else {
-            mainline = false;
-        }
+        setMainline(mainlineBox.getSelectedIndex() == mainlineTrackIndex);
+
         // set hidden
         boolean oldHidden = hidden;
-        hidden = hiddenBox.isSelected();
+        setHidden(hiddenBox.isSelected());
+
         if (getArc()) {
             //setAngle(Integer.parseInt(arcField.getText()));
             //needsRedraw = true;
@@ -1269,10 +1309,20 @@ public class TrackSegment extends LayoutTrack {
         tmpangle = a;
     }
 
+    /**
+     * get center coordinates
+     *
+     * @return the center coordinates
+     */
     public Point2D getCoordsCenterCircle() {
-        return new Point2D.Double(centreX, centreY);
+        return getCentre();
     }
 
+    /**
+     * set center coordinates
+     *
+     * @param p the coordinates to set
+     */
     public void setCoordsCenterCircle(Point2D p) {
         centreX = p.getX();
         centreY = p.getY();
@@ -1524,17 +1574,15 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlPointRectAt(ep2));
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
-            if (getArc()) {
+            if (showConstructionLinesLE()) { //draw track circles
                 g2.draw(new Line2D.Double(ep1, ep2));
             }
-            if (showConstructionLinesLE()) { //draw track circles
-                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
-            }
+            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         }
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.
         g2.setColor(Color.black);
-        if (circle && showConstructionLinesLE()) {
+        if (getCircle() && showConstructionLinesLE()) {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)

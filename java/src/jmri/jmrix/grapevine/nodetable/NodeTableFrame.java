@@ -13,8 +13,6 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
-
     /**
      * Constructor method
      */
@@ -29,7 +27,7 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -53,4 +51,5 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         SerialTrafficController.instance().removeSerialListener(p);
         super.dispose();
     }
+
 }

@@ -8,8 +8,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import javax.swing.Icon;
@@ -17,10 +22,13 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import org.slf4j.Logger;
@@ -48,15 +56,18 @@ public class MenuScroller
     //private JMenu menu;
     private JPopupMenu menu;
     private Component[] menuItems;
-    private MenuScrollItem upItem;
-    private MenuScrollItem downItem;
-    private final MenuScrollListener menuListener = new MenuScrollListener();
+    private MenuScrollerItem upItem;
+    private MenuScrollerItem downItem;
+    private final MenuScrollerPopupMenuListener menuScrollerPopupMenuListener = new MenuScrollerPopupMenuListener();
+    private final MenuScrollerMenuKeyListener menuScrollerMenuKeyListener = new MenuScrollerMenuKeyListener();
     private int scrollCount;
     private int interval;
     private int topFixedCount;
     private int bottomFixedCount;
     private int firstIndex = 0;
     private int keepVisibleIndex = -1;
+
+//     private Component lastFocused = null;
 
     /**
      * Registers a menu to be scrolled with the default number of items to
@@ -309,36 +320,73 @@ public class MenuScroller
             throw new IllegalArgumentException("topFixedCount and bottomFixedCount cannot be negative");
         }
 
-        upItem = new MenuScrollItem(MenuIcon.UP, -1);
-        downItem = new MenuScrollItem(MenuIcon.DOWN, +1);
+        upItem = new MenuScrollerItem(MenuScrollerIcon.UP, -1);
+        downItem = new MenuScrollerItem(MenuScrollerIcon.DOWN, +1);
         setScrollCount(scrollCount);
         setInterval(interval);
         setTopFixedCount(topFixedCount);
         setBottomFixedCount(bottomFixedCount);
 
         this.menu = menu;
-        menu.addPopupMenuListener(menuListener);
+
+        installListeners();
+    }   // MenuScroller
+
+    private void installListeners() {
+
+        // remove all menu key listeners
+        for (MenuKeyListener mkl : menu.getMenuKeyListeners()) {
+            menu.removeMenuKeyListener(mkl);
+        }
+
+        // add our menu key listener
+        menu.addMenuKeyListener(menuScrollerMenuKeyListener);
+
+        if (false) {    // not working
+//        KeyListenerInstaller.installKeyListenerOnAllComponents(new KeyAdapter() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                int keyCode = e.getKeyCode();
+//                log.debug("keyTyped(" + keyCode + ")");
+//            }
+//        }, menu);
+
+            menu.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    int keyCode = e.getKeyCode();
+                    log.debug("keyTyped(" + keyCode + ")");
+                }
+            });
+
+        }
+
+        // add a Popup Menu listener
+        menu.addPopupMenuListener(menuScrollerPopupMenuListener);
 
         // add my mouse wheel listener
         // (so mouseWheelMoved (below) will be called)
         menu.addMouseWheelListener(this);
 
-        //trigger this once to resolve a bug:
-        //sometimes the context menu appears vertically
-        //several hundred pixels above where it should.
-//        SwingUtilities.invokeLater(() -> {
-//            menuListener.popupMenuWillBecomeVisible(null);
-//        });
+//         lastFocused = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+//         if (menu.isFocusable()) {
+//             menu.requestFocus();
+//         }
+    }   // installListeners
+
+    private void removeListeners() {
+//         lastFocused.requestFocus();
+//            menu.removeMenuKeyListener(menuScrollerMenuKeyListener);
+        menu.removePopupMenuListener(menuScrollerPopupMenuListener);
+        menu.removeMouseWheelListener(this);
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        //log.warn("mouseWheelMoved");
         // compute how much to scroll the menu
         int amount = e.getScrollAmount() * e.getWheelRotation();
         firstIndex += amount;
         refreshMenu();
-        //log.debug("mouseWheelMoved, amount: " + amount + ", firstIndex: " + firstIndex);
         e.consume();
     }
 
@@ -466,8 +514,7 @@ public class MenuScroller
      */
     public void dispose() {
         if (menu != null) {
-            menu.removePopupMenuListener(menuListener);
-            menu.removeMouseWheelListener(this);
+            removeListeners();
             menu = null;
         }
     }
@@ -523,9 +570,9 @@ public class MenuScroller
             parent.revalidate();
             parent.repaint();
         }
-    }
+    }   // refreshMenu()
 
-    private class MenuScrollListener implements PopupMenuListener {
+    private class MenuScrollerPopupMenuListener implements PopupMenuListener {
 
         @Override
         public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -544,6 +591,16 @@ public class MenuScroller
 
         private void setMenuItems() {
             menuItems = menu.getComponents();
+            if (false) {    // not working
+                for (Component c : menuItems) {
+                    JMenuItem jmi = (JMenuItem) c;
+                    // remove all menu key listeners
+                    for (MenuKeyListener mkl : jmi.getMenuKeyListeners()) {
+                        jmi.removeMenuKeyListener(mkl);
+                    }
+                    jmi.addMenuKeyListener(menuScrollerMenuKeyListener);
+                }
+            }
             if (keepVisibleIndex >= topFixedCount
                     && keepVisibleIndex <= menuItems.length - bottomFixedCount
                     && (keepVisibleIndex > firstIndex + scrollCount
@@ -558,15 +615,19 @@ public class MenuScroller
 
         private void restoreMenuItems() {
             menu.removeAll();
-            for (Component component : menuItems) {
-                menu.add(component);
+            for (Component c : menuItems) {
+                if (false) {    // not working
+                    JMenuItem jmi = (JMenuItem) c;
+                    jmi.removeMenuKeyListener(menuScrollerMenuKeyListener);
+                }
+                menu.add(c);
             }
         }
-    }
+    }   // class MenuScrollerPopupMenuListener
 
-    private class MenuScrollTimer extends Timer {
+    private class MenuScrollerTimer extends Timer {
 
-        public MenuScrollTimer(final int increment, int interval) {
+        public MenuScrollerTimer(final int increment, int interval) {
             super(interval, new ActionListener() {
 
                 @Override
@@ -576,17 +637,17 @@ public class MenuScroller
                 }
             });
         }
-    }
+    }   // class MenuScrollerTimer
 
-    private class MenuScrollItem extends JMenuItem
+    private class MenuScrollerItem extends JMenuItem
             implements ChangeListener {
 
-        private MenuScrollTimer timer;
+        private MenuScrollerTimer timer;
 
-        public MenuScrollItem(MenuIcon icon, int increment) {
+        public MenuScrollerItem(MenuScrollerIcon icon, int increment) {
             setIcon(icon);
             setDisabledIcon(icon);
-            timer = new MenuScrollTimer(increment, interval);
+            timer = new MenuScrollerTimer(increment, interval);
             addChangeListener(this);
         }
 
@@ -603,16 +664,59 @@ public class MenuScroller
                 timer.stop();
             }
         }
-    }
+    }   // class MenuScrollerItem
 
-    private static enum MenuIcon implements Icon {
+    // TODO: Determine why these methods are not being called
+    private class MenuScrollerMenuKeyListener implements MenuKeyListener {
+
+        @Override
+        public void menuKeyTyped(MenuKeyEvent e) {
+            int keyCode = e.getKeyCode();
+            log.debug("MenuScroller.keyTyped(" + keyCode + ")");
+        }
+
+        @Override
+        public void menuKeyPressed(MenuKeyEvent e) {
+            int keyCode = e.getKeyCode();
+            log.debug("MenuScroller.keyPressed(" + keyCode + ")");
+        }
+
+        @Override
+        public void menuKeyReleased(MenuKeyEvent e) {
+            int keyCode = e.getKeyCode();
+            switch (keyCode) {
+                case KeyEvent.VK_UP: {
+                    log.debug("MenuScroller.keyReleased(VK_UP)");
+                    firstIndex--;
+                    refreshMenu();
+                    e.consume();
+                    break;
+                }
+
+                case KeyEvent.VK_DOWN: {
+                    log.debug("MenuScroller.keyReleased(VK_DOWN)");
+                    firstIndex++;
+                    refreshMenu();
+                    e.consume();
+                    break;
+                }
+
+                default: {
+                    log.debug("MenuScroller.keyReleased(" + keyCode + ")");
+                    break;
+                }
+            }   //switch
+        }
+    }   // class MenuScrollerMenuKeyListener
+
+    private static enum MenuScrollerIcon implements Icon {
 
         UP(9, 1, 9),
         DOWN(1, 9, 1);
         final int[] xPoints = {1, 5, 9};
         final int[] yPoints;
 
-        MenuIcon(int... yPoints) {
+        MenuScrollerIcon(int... yPoints) {
             this.yPoints = yPoints;
         }
 
@@ -638,6 +742,7 @@ public class MenuScroller
         public int getIconHeight() {
             return 10;
         }
-    }
+    }   // enum MenuScrollerIcon
+
     private final static Logger log = LoggerFactory.getLogger(MenuScroller.class.getName());
-}
+}   // class MenuScroller

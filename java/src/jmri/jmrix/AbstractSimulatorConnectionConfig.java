@@ -41,7 +41,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractSimulatorConnectionConfig() {

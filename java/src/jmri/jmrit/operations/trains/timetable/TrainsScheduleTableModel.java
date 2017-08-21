@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JTable;
+import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -19,8 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    TrainManager trainManager = TrainManager.instance();
-    TrainScheduleManager scheduleManager = TrainScheduleManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    TrainScheduleManager scheduleManager = InstanceManager.getDefault(TrainScheduleManager.class);
 
     // Defines the columns
     private static final int IDCOLUMN = 0;

@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
 import jmri.Block;
+import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
 import jmri.TransitSection;
@@ -105,7 +106,7 @@ public class AutoAllocate {
                     log.error("error in allocation request list - AllocationRequest is null");
                     return;
                 }
-                if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST && isSignalHeldAtStartOfSection(ar)) {
+                if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST && isSignalHeldAtStartOfSection(ar)) {
                     return;
                 }
                 if (getPlanThisTrain(ar.getActiveTrain()) != null) {
@@ -223,7 +224,7 @@ public class AutoAllocate {
             }
             log.warn("Failure of prepared choice of next Section in AutoAllocate");
         }
-        // Jay Janzen 
+        // Jay Janzen
         // If there is an AP check to see if the AP's target is on the list of choices
         // and if so, return that.
         ActiveTrain at = ar.getActiveTrain();
@@ -314,7 +315,7 @@ public class AutoAllocate {
                 }
             }
         }
-        // train not in an AllocationPlan 
+        // train not in an AllocationPlan
         return null;
     }
 
@@ -373,7 +374,7 @@ public class AutoAllocate {
     }
 
     // test to see how far ahead allocations have already been made
-    // and go no farther than three unless the "all the way" attribute 
+    // and go no farther than three unless the "all the way" attribute
     // for the train is true then always allocate the request
     private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
         if (ar.getActiveTrain().getAllocateAllTheWay()) {
@@ -502,7 +503,7 @@ public class AutoAllocate {
                     }
                 }
             }
-            // if could not find a suitable siding for a crossing meet, return 
+            // if could not find a suitable siding for a crossing meet, return
             if ((aSec == null) || (nSec == null)) {
                 return false;
             }
@@ -637,7 +638,7 @@ public class AutoAllocate {
                     }
                 }
             }
-            // if could not find a suitable passing siding, return 
+            // if could not find a suitable passing siding, return
             if ((aSec == null) || (nSec == null)) {
                 return false;
             }
@@ -656,7 +657,7 @@ public class AutoAllocate {
         }
         // is there another train trying to let this high priority train pass
         if (neededByTrainList.size() > 2) {
-            // Note: e.g. Two lower priority trains ahead of a high priority train could cause gridlock 
+            // Note: e.g. Two lower priority trains ahead of a high priority train could cause gridlock
             //    if both try to set up a PASSING_PLAN meet at the same place, so we exclude that case.
             // is there another train between these two
             if (!areTrainsAdjacent(at, nt)) {
@@ -681,9 +682,9 @@ public class AutoAllocate {
 
     private boolean isThereConflictingPlan(ActiveTrain at, Section aSec, int aSecSeq,
             ActiveTrain nt, Section nSec, int nSecSeq, int type) {
-        // returns 'true' if there is a conflicting plan that may result in gridlock 
+        // returns 'true' if there is a conflicting plan that may result in gridlock
         //    if this plan is set up, return 'false' if not.
-        // Note: may have to add other tests to this method in the future to prevent gridlock 
+        // Note: may have to add other tests to this method in the future to prevent gridlock
         //   situations not currently tested for.
         if (_planList.size() == 0) {
             return false;
@@ -824,7 +825,7 @@ public class AutoAllocate {
                 }
             }
         }
-        if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST) {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
             if (!at.isAllocationReversed()) {
                 for (int i = 0; i < tsList.size(); i++) {
                     if (tsList.get(i).getSequenceNumber() > curSeq) {
@@ -988,7 +989,7 @@ public class AutoAllocate {
     }
 
     private boolean areTrainsAdjacent(ActiveTrain at, ActiveTrain nt) {
-        // returns 'false' if a different ActiveTrain has allocated track between the 
+        // returns 'false' if a different ActiveTrain has allocated track between the
         //      two trains, returns 'true' otherwise
         ArrayList<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
         ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();

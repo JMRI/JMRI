@@ -24,6 +24,7 @@ public class AudioBufferFrameTest {
         // object
         AudioBufferFrame t = new AudioBufferFrame("Buffer Frame Test",null);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

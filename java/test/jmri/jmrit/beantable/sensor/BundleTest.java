@@ -26,7 +26,7 @@ public class BundleTest  {
     }
 
     @Test public void testGoodKeyMessageArg() {
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
+        Assert.assertEquals("Sensor", Bundle.getMessage("BeanNameSensor", new Object[]{}));
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
