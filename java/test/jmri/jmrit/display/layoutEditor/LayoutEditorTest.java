@@ -42,6 +42,7 @@ public class LayoutEditorTest {
         testCtor(); // create layout editor
         le.setSize(100, 100);
         java.awt.Dimension d = le.getSize();
+
         // the java.awt.Dimension stores the values as floating point
         // numbers, but setSize expects integer parameters.
         Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
@@ -52,6 +53,10 @@ public class LayoutEditorTest {
     public void testGetSetZoom() {
         testCtor(); // create layout editor
         Assert.assertEquals("Zoom Get", 1.0, le.getZoom(), 0.0);
+        // note: Layout Editor won't allow zooms below 0.25
+        Assert.assertEquals("Zoom Set", 0.25, le.setZoom(0.1), 0.0);
+        // note: Layout Editor won't allow zooms above 6.0.
+        Assert.assertEquals("Zoom Set", 6.0, le.setZoom(10.0), 0.0);
         Assert.assertEquals("Zoom Set", 3.33, le.setZoom(3.33), 0.0);
         Assert.assertEquals("Zoom Get", 3.33, le.getZoom(), 0.0);
     }
