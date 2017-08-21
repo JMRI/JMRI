@@ -1,9 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +17,12 @@ import org.slf4j.LoggerFactory;
  */
 public class MultiIconEditorTest {
 
+    @Test
     public void testCtor() {
-        MultiIconEditor  t = new MultiIconEditor(5);
-        Assert.assertNotNull("exists", t);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        MultiIconEditor frame = new MultiIconEditor(4);
+        Assert.assertNotNull("exists", frame);
+        frame.dispose();
     }
 
     // from here down is testing infrastructure

@@ -87,7 +87,6 @@ public class LayoutTurntable extends LayoutTrack {
 
     // persistent instance variables (saved between sessions)
     private double radius = 25.0;
-    private Point2D center = new Point2D.Double(50.0, 50.0);
     private ArrayList<RayTrack> rayList = new ArrayList<RayTrack>(); // list of Ray Track objects.
     private int lastKnownIndex = -1;
 
