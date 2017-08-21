@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.EntryPoint;
@@ -235,11 +236,10 @@ public class ConnectivityUtil {
         if (notFound) {
             if (prevBlock != null) {    // could not initialize the connectivity search
                 if (!suppress) {
-                    log.error("Could not find connection between Blocks " + currBlock.getUserName() + " and "
-                            + prevBlock.getUserName());
+                    log.error("Could not find connection between Blocks {} and {}", currBlock.getUserName(), prevBlock.getUserName());
                 }
             } else if (!suppress) {
-                log.error("Could not find connection between Blocks " + currBlock.getUserName() + ", prevBock is null!");
+                log.error("Could not find connection between Blocks {}, prevBock is null!", currBlock.getUserName());
             }
             return list;
         }
@@ -703,10 +703,15 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the SignalHead at the Anchor block boundary If 'facing' is
-     * 'true', returns the head that faces toward the specified Block If
-     * 'facing' is 'false', returns the head that faces away from the specified
-     * Block
+     * Get the SignalHead at the Anchor block boundary.
+     *
+     * @param p      the anchor with the signal head
+     * @param block  the adjacent block
+     * @param facing true if SignalHead facing towards block should be returned;
+     *               false if SignalHead facing away from block should be
+     *               returned
+     * @return a SignalHead facing away from or towards block depending on value
+     *         of facing; may be null
      */
     public SignalHead getSignalHeadAtAnchor(PositionablePoint p, Block block, boolean facing) {
         if ((p == null) || (block == null)) {
@@ -735,10 +740,15 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the SignalMast at the Anchor block boundary If 'facing' is
-     * 'true', returns the head that faces toward the specified Block If
-     * 'facing' is 'false', returns the head that faces away from the specified
-     * Block
+     * Get the SignalMast at the Anchor block boundary.
+     *
+     * @param p      the anchor with the signal head
+     * @param block  the adjacent block
+     * @param facing true if SignalMast facing towards block should be returned;
+     *               false if SignalMast facing away from block should be
+     *               returned
+     * @return a SignalMast facing away from or towards block depending on value
+     *         of facing; may be null
      */
     public SignalMast getSignalMastAtAnchor(PositionablePoint p, Block block, boolean facing) {
         if ((p == null) || (block == null)) {
@@ -786,9 +796,15 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the SignalHead at the level crossing If 'facing' is 'true',
-     * returns the head that faces toward the specified Block If 'facing' is
-     * 'false', returns the head that faces away from the specified Block
+     * Get the SignalHead at the level crossing.
+     *
+     * @param x      the level crossing
+     * @param block  the adjacent block
+     * @param facing true if SignalHead facing towards block should be returned;
+     *               false if SignalHead facing away from block should be
+     *               returned
+     * @return a SignalHead facing away from or towards block depending on value
+     *         of facing; may be null
      */
     public SignalHead getSignalHeadAtLevelXing(LevelXing x, Block block, boolean facing) {
         if ((x == null) || (block == null)) {
@@ -798,7 +814,7 @@ public class ConnectivityUtil {
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         if ((x.getConnectA() == null) || (x.getConnectB() == null)
                 || (x.getConnectC() == null) || (x.getConnectD() == null)) {
-            log.error("Missing track around level crossing near Block " + block.getUserName());
+            log.error("Missing track around level crossing near Block {}", block.getUserName());
             return null;
         }
         if (((TrackSegment) x.getConnectA()).getLayoutBlock() == lBlock) {
@@ -833,10 +849,12 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns 'true' if the specified block is internal to the Level Xing, and
-     * if all else is OK. Returns 'false' if one of the connecting Track
-     * Segments is in the Block, or if there is a problem with looking for a
-     * signal head.
+     * Check if block is internal to a level crossing.
+     *
+     * @param x     the level crossing to check
+     * @param block the block to check
+     * @return true if block is internal to x; false if block is external or
+     *         contains a connecting track segment
      */
     public boolean blockInternalToLevelXing(LevelXing x, Block block) {
         if ((x == null) || (block == null)) {
@@ -869,23 +887,28 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Matches the anchor point to an Entry Point, and returns the direction
-     * specified in the Entry Point If no match is found, UNKNOWN is returned,
-     * indicating that the block boundary is internal to the Section.
+     * Get the direction of the block boundary anchor point p. If
+     * {@link EntryPoint#UNKNOWN} is returned, it indicates that p is entirely
+     * internal or external to the Section.
+     *
+     * @param mForwardEntryPoints list of forward entry points
+     * @param mReverseEntryPoints list of reverse entry points
+     * @param p                   anchor point to match against one of the
+     *                            points in the specified lists
+     * @return the direction specified in the matching entry point or
+     *         {@link EntryPoint#UNKNOWN}
      */
-    public int getDirectionFromAnchor(ArrayList<EntryPoint> mForwardEntryPoints, ArrayList<EntryPoint> mReverseEntryPoints,
+    public int getDirectionFromAnchor(List<EntryPoint> mForwardEntryPoints, List<EntryPoint> mReverseEntryPoints,
             PositionablePoint p) {
         Block block1 = p.getConnect1().getLayoutBlock().getBlock();
         Block block2 = p.getConnect2().getLayoutBlock().getBlock();
-        for (int i = 0; i < mForwardEntryPoints.size(); i++) {
-            EntryPoint ep = mForwardEntryPoints.get(i);
+        for (EntryPoint ep : mForwardEntryPoints) {
             if (((ep.getBlock() == block1) && (ep.getFromBlock() == block2))
                     || ((ep.getBlock() == block2) && (ep.getFromBlock() == block1))) {
                 return EntryPoint.FORWARD;
             }
         }
-        for (int j = 0; j < mReverseEntryPoints.size(); j++) {
-            EntryPoint ep = mReverseEntryPoints.get(j);
+        for (EntryPoint ep : mReverseEntryPoints) {
             if (((ep.getBlock() == block1) && (ep.getFromBlock() == block2))
                     || ((ep.getBlock() == block2) && (ep.getFromBlock() == block1))) {
                 return EntryPoint.REVERSE;
@@ -895,14 +918,17 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Checks if a Level Crossing's AC track and its two connecting Track
-     * Segments are internal to the specified block. If the A and C connecting
-     * Track Segments are in the Block, and the LevelXing's AC track is in the
-     * block, returns 'true". Otherwise returns 'false', even if one of the
-     * tracks of the LevelXing is in the block. Note; if two connecting track
-     * segments are in the block, but the internal connecting track is not, that
-     * is an error in the Layout Editor panel. If found, an error message is
-     * generated and 'false' is returned.
+     * Checks if the AC track of a Level Crossing and its two connecting Track
+     * Segments are internal to the specified block.
+     * <p>
+     * Note: if two connecting track segments are in the block, but the internal
+     * connecting track is not, that is an error in the Layout Editor panel. If
+     * found, an error message is generated and this method returns false.
+     *
+     * @param x     the level crossing to check
+     * @param block the block to check
+     * @return true if the A and C track segments of LevelXing x is in Block
+     *         block; false otherwise
      */
     public boolean isInternalLevelXingAC(LevelXing x, Block block) {
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
@@ -911,7 +937,7 @@ public class ConnectivityUtil {
             if (x.getLayoutBlockAC() == lBlock) {
                 return true;
             } else {
-                log.error("Panel blocking error at AC of Level Crossing in Block " + block.getUserName());
+                log.error("Panel blocking error at AC of Level Crossing in Block {}", block.getUserName());
                 return false;
             }
         }
@@ -919,14 +945,17 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Checks if a Level Crossing's BD track and its two connecting Track
-     * Segments are internal to the specified block. If the B and D connecting
-     * Track Segments are in the Block, and the LevelXing's BD track is in the
-     * block, returns 'true". Otherwise returns 'false', even if one of the
-     * tracks of the LevelXing is in the block. Note; if two connecting track
-     * segments are in the block, but the internal connecting track is not, that
-     * is an error in the Layout Editor panel. If found, an error message is
-     * generated and 'false' is returned.
+     * Checks if the BD track of a Level Crossing and its two connecting Track
+     * Segments are internal to the specified block.
+     * <p>
+     * Note: if two connecting track segments are in the block, but the internal
+     * connecting track is not, that is an error in the Layout Editor panel. If
+     * found, an error message is generated and this method returns false.
+     *
+     * @param x     the level crossing to check
+     * @param block the block to check
+     * @return true if the B and D track segments of LevelXing x is in Block
+     *         block; false otherwise
      */
     public boolean isInternalLevelXingBD(LevelXing x, Block block) {
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
@@ -1061,10 +1090,12 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Revoves the specified sensors ('names') from the SSL for the specified
-     * signal head if any of the sensors is currently in the SSL. Returns
-     * 'false' if an error was found, and issues a message to the error log.
-     * Returns 'true' if no error, whether any sensors were found or not.
+     * Removes the specified sensors from the SSL for the specified signal head
+     * if any of the sensors is currently in the SSL.
+     *
+     * @param names the names of the sensors to remove
+     * @param sh    the signal head to remove the sensors from
+     * @return true if successful; false otherwise
      */
     public boolean removeSensorsFromSignalHeadLogic(ArrayList<String> names, SignalHead sh) {
         if (sh == null) {
@@ -1119,13 +1150,14 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the next Node following the specified TrackNode
-     * <P>
-     * If the specified track node can lead to different paths to the next node,
-     * for example, if the specified track node is a turnout entered at its
-     * throat, then "cNodeState" must be specified to choose between the
-     * possible paths. Returns a TrackNode if one is reached. Returns null if
-     * trouble following the track. .
+     * Get the next TrackNode following the specified TrackNode.
+     *
+     * @param cNode      the current node
+     * @param cNodeState the possible path to follow (for example, if the
+     *                   current node is a turnout entered at its throat, the
+     *                   path could be the thrown or closed path)
+     * @return the next TrackNode following cNode for the given state or null if
+     *         unable to follow the track
      */
     public TrackNode getNextNode(TrackNode cNode, int cNodeState) {
         if (cNode == null) {
@@ -1140,9 +1172,8 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the next Node following the node specified by "cNode" and
-     * "cNodeType", assuming that cNode was reached via the specified
-     * TrackSegment.
+     * Get the next TrackNode following the specified TrackNode, assuming that
+     * TrackNode was reached via the specified TrackSegment.
      * <P>
      * If the specified track node can lead to different paths to the next node,
      * for example, if the specified track node is a turnout entered at its
@@ -1159,12 +1190,21 @@ public class ConnectivityUtil {
      * When following track, this method skips over anchor points that are not
      * block boundaries.
      * <P>
-     * When following track, this method treats a modelled 3-way turnout as a
+     * When following track, this method treats a modeled 3-way turnout as a
      * single turnout. It also treats two THROAT_TO_THROAT turnouts as a single
      * turnout, but with each turnout having a continuing sense.
      * <P>
      * Returns a TrackNode if a node or end_of-track is reached. Returns null if
      * trouble following the track.
+     *
+     * @param cNode      the current node
+     * @param cNodeType  the type of node
+     * @param cTrack     the followed track segment
+     * @param cNodeState the possible path to follow (for example, if the
+     *                   current node is a turnout entered at its throat, the
+     *                   path could be the thrown or closed path)
+     * @return the next TrackNode following cNode for the given state or null if
+     *         unable to follow the track
      */
     public TrackNode getTrackNode(Object cNode, int cNodeType, TrackSegment cTrack, int cNodeState) {
         // initialize
@@ -1540,9 +1580,11 @@ public class ConnectivityUtil {
      * Returns an "exit block" for the specified track node if there is one,
      * else returns null. An "exit block" must be different from the block of
      * the track segment in the node. If the node is a PositionablePoint, it is
-     * assumed to be a block boundary anchor point. If an "excludedBlock" is
-     * entered, that block will not be returned as the exit block of a Node of
-     * type TURNOUT_x.
+     * assumed to be a block boundary anchor point.
+     *
+     * @param node          the node to get the exit block for
+     * @param excludedBlock blocks not to be considered as exit blocks
+     * @return the exit block for node or null if none exists
      */
     public Block getExitBlockForTrackNode(TrackNode node, Block excludedBlock) {
         if ((node == null) || node.reachedEndOfTrack()) {
@@ -2221,7 +2263,7 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-                    log.error("Connectivity error when following track {} in Block ", curTS.getID(), currLayoutBlock.getUserName());
+                    log.error("Connectivity error when following track {} in Block {}", curTS.getID(), currLayoutBlock.getUserName());
                     log.error("{} not connected to {} (connects: {} & {})",
                             objectToNameOrIDString(curObj),
                             curTS.getID(),
@@ -2603,10 +2645,10 @@ public class ConnectivityUtil {
     private boolean turnoutConnectivity = true;
 
     /**
-     * This flag can be checked after performing a getTurnoutList() to check if
-     * the connectivity of the turnouts has been completed in the block when the
-     * getTurnoutList() was called. Returns 'false' if a turnout connectivity is
-     * not complete. Returns 'true' if the turnout connectivity is complete.
+     * Check if the connectivity of the turnouts has been completed in the block
+     * after calling getTurnoutList().
+     *
+     * @return true if turnout connectivity is complete; otherwise false
      */
     public boolean isTurnoutConnectivityComplete() {
         return turnoutConnectivity;
