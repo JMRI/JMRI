@@ -21,15 +21,19 @@ public class ThrottleFrameManagerTest {
         // the constructor is private, but invoked by instance.
         ThrottleFrameManager frame = InstanceManager.getDefault(ThrottleFrameManager.class);
         Assert.assertNotNull("exists", frame);
+        frame.showThrottlesList();
+        jmri.util.SwingTestCase.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"),true,true);
     }
 
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

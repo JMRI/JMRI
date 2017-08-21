@@ -16,14 +16,12 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 public class NodeIOListActionTest {
 
     @Test
-    @Ignore("May be causing hang on Appveyor")
     public void testCTor() {
         NodeIOListAction t = new NodeIOListAction("test action",new CMRISystemConnectionMemo()); 
         Assert.assertNotNull("exists",t);
     }
 
     @Test
-    @Ignore("May be causing hang on Appveyor")
     public void testMemoCTor() {
         NodeIOListAction t = new NodeIOListAction(new CMRISystemConnectionMemo()); 
         Assert.assertNotNull("exists",t);
