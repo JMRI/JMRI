@@ -485,7 +485,9 @@ public class LayoutSlipTest {
     @After
     public void tearDown() throws Exception {
         // do this to dispose of the sensor, signal and icon frames
-        layoutEditor.dispose();
+        if (layoutEditor != null) {
+            layoutEditor.dispose();
+        }
 
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
