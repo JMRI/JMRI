@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 /**
  * PackageTest.java
- *
+ * <p>
  * Description:	Tests for the jmrit.display.configurexml package
  *
  * @author	Bob Jacobsen Copyright 2009, 2014
