@@ -507,7 +507,6 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     private DecimalFormat oneDotTwoDigit;
-    private DecimalFormat TwoNumber;
     JmriJFrame addFrame = null;
     Light curLight = null;
     boolean lightCreatedOrUpdated = false;
@@ -998,13 +997,13 @@ public class LightTableAction extends AbstractTableAction {
 
             // convert numerical hardware address
             try {
-                startingAddress = Integer.parseInt(hardwareAddressTextField.getText());
+                startingAddress = Integer.parseInt(hardwareAddressTextField.getText().trim()); // N11N
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert {} to a number.", hardwareAddressTextField.getText());
+                log.error("Unable to convert '{}' to a number.", hardwareAddressTextField.getText().trim());
                 return;
             }
             // check that requested address range is available
@@ -1106,8 +1105,8 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to the Edit button in the Light table; window has already been
-     * created.
+     * Respond to the Edit button in the Light table.
+     * Panel has already been created.
      */
     void editPressed() {
         // check if a Light with this name already exists
@@ -1176,7 +1175,8 @@ public class LightTableAction extends AbstractTableAction {
         status1.setForeground(Color.gray); // reset color
         status2.setText("");
         status2.setVisible(false);
-        cancel.setText(Bundle.getMessage("ButtonClose")); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
+        addFrame.setTitle(Bundle.getMessage("TitleEditLight")); // for edit
+        cancel.setText(Bundle.getMessage("ButtonCancel")); // when Create/Apply has been clicked at least once, this will read Close
         addFrame.pack();
         addFrame.setVisible(true);
         lightControlTableModel.fireTableDataChanged();
@@ -1242,9 +1242,10 @@ public class LightTableAction extends AbstractTableAction {
         }
         g.activateLight();
         lightCreatedOrUpdated = true;
-        cancelPressed(null); // closes pane
+        cancelPressed(null);
         status1.setText(Bundle.getMessage("LightUpdateFeedback") + " " + g.getUserName()); //provide some feedback
         status1.setForeground(Color.gray);
+        cancel.setText("ButtonClose"); // after first Create, the no button cannot cancel 1st addition
     }
 
     private void setLightControlInformation(Light g) {
@@ -1261,7 +1262,6 @@ public class LightTableAction extends AbstractTableAction {
 
     /**
      * Respond to the Cancel/Close button on the Add/Edit Light pane.
-     * Sometimes on first call causes NPE: TODO
      *
      * @param e the button press action
      */
@@ -1273,6 +1273,7 @@ public class LightTableAction extends AbstractTableAction {
             update.setVisible(false);
             create.setVisible(true);
             fixedSystemName.setVisible(false);
+            prefixBox.setVisible(true);
             systemNameLabel.setVisible(false);
             systemLabel.setVisible(true);
             panel1a.setVisible(true);
@@ -1337,7 +1338,8 @@ public class LightTableAction extends AbstractTableAction {
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox box1d = new JmriBeanComboBox(  // Timed ON
             InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor"));
+    private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // for 1 sensor
+    private final JLabel f1aLabel = new JLabel(Bundle.getMessage("MakeLabel", "2")); // for 2nd sensor
 
     SpinnerNumberModel hourSpinner2 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
     private JSpinner spinner2a = new JSpinner(hourSpinner2); // Fast Clock2 hours
@@ -1414,6 +1416,7 @@ public class LightTableAction extends AbstractTableAction {
             panel32.setLayout(new FlowLayout());
             panel32.add(f1Label);
             panel32.add(box1a);
+            panel32.add(f1aLabel);
             panel32.add(box1a2);
             // set up number formatting
             JSpinner.NumberEditor ne1b = new JSpinner.NumberEditor(spinner1b, "00"); // 2 digits "01" format
@@ -1473,7 +1476,6 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
             panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancelControl.setText(Bundle.getMessage("ButtonCancel")); // reset to Cancel
             cancelControl.addActionListener(this::cancelControlPressed);
             cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
@@ -1513,7 +1515,8 @@ public class LightTableAction extends AbstractTableAction {
     void setUpControlType(String ctype) {
         if (sensorControl.equals(ctype)) {
             // set up panel for sensor control
-            f1Label.setText(Bundle.getMessage("LightSensor"));
+            f1Label.setText(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // insert nothing before colon
+            f1aLabel.setVisible(false);
             box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             f2Label.setText(Bundle.getMessage("LightSensorSense"));
             stateBox.removeAllItems();
@@ -1540,6 +1543,7 @@ public class LightTableAction extends AbstractTableAction {
         } else if (fastClockControl.equals(ctype)) {
             // set up panel for fast clock control
             f1Label.setText(Bundle.getMessage("LightScheduleOn"));
+            f1aLabel.setVisible(false);
             spinner1b.setToolTipText(Bundle.getMessage("LightScheduleHint"));
             spinner1b1.setToolTipText(Bundle.getMessage("LightScheduleHintMinutes"));
             f2Label.setText(Bundle.getMessage("LightScheduleOff"));
@@ -1562,6 +1566,7 @@ public class LightTableAction extends AbstractTableAction {
         } else if (turnoutStatusControl.equals(ctype)) {
             // set up panel for turnout status control
             f1Label.setText(Bundle.getMessage("LightTurnout"));
+            f1aLabel.setVisible(false);
             box1c.setToolTipText(Bundle.getMessage("LightTurnoutHint"));
             f2Label.setText(Bundle.getMessage("LightTurnoutSense"));
             stateBox.removeAllItems();
@@ -1587,6 +1592,7 @@ public class LightTableAction extends AbstractTableAction {
         } else if (timedOnControl.equals(ctype)) {
             // set up panel for sensor control
             f1Label.setText(Bundle.getMessage("LightTimedSensor"));
+            f1aLabel.setVisible(false);
             box1d.setToolTipText(Bundle.getMessage("LightTimedSensorHint"));
             f2Label.setText(Bundle.getMessage("LightTimedDurationOn"));
             spinner2b.setToolTipText(Bundle.getMessage("LightTimedDurationOnHint"));
@@ -1606,7 +1612,8 @@ public class LightTableAction extends AbstractTableAction {
             defaultControlIndex = timedOnControlIndex;
         } else if (twoSensorControl.equals(ctype)) {
             // set up panel for two sensor control
-            f1Label.setText(Bundle.getMessage("LightSensor"));
+            f1Label.setText(Bundle.getMessage("LightSensor", " " + Bundle.getMessage("MakeLabel", "1"))); // for 2-sensor use, insert number "1" before colon
+            f1aLabel.setVisible(true);
             box1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             f2Label.setText(Bundle.getMessage("LightSensorSense"));
             stateBox.removeAllItems();
@@ -1633,6 +1640,7 @@ public class LightTableAction extends AbstractTableAction {
         } else if (noControl.equals(ctype)) {
             // set up panel for no control
             f1Label.setText(Bundle.getMessage("LightNoneSelected"));
+            f1aLabel.setVisible(false);
             f2Label.setVisible(false);
             box1a.setVisible(false);
             box1a2.setVisible(false);
@@ -1665,7 +1673,11 @@ public class LightTableAction extends AbstractTableAction {
             lightControlTableModel.fireTableDataChanged();
             cancelControlPressed(e);
         } else {
-            addFrame.pack();
+            try { // prevent NPE when addFrame has been closed before AddControlPane is closed
+                addFrame.pack();
+            } catch (NullPointerException npe) {
+                log.error("addFrame not found");
+            }
             addControlFrame.setVisible(true);
         }
     }
@@ -1676,7 +1688,11 @@ public class LightTableAction extends AbstractTableAction {
             lightControlTableModel.fireTableDataChanged();
             cancelControlPressed(e);
         } else {
-            addFrame.pack();
+            try { // prevent NPE when addFrame has been closed before AddControlPane is closed
+                addFrame.pack();
+            } catch (NullPointerException npe) {
+                log.error("addFrame not found");
+            }
             addControlFrame.setVisible(true);
         }
     }
@@ -1693,8 +1709,12 @@ public class LightTableAction extends AbstractTableAction {
         status1.setForeground(Color.gray);
         status2.setText("");
         status2.setVisible(false);
-        addFrame.pack();
-        addFrame.setVisible(true);
+        try { // prevent NPE when addFrame has been closed before AddControlPane is closed
+            addFrame.pack();
+            addFrame.setVisible(true);
+        } catch (NullPointerException npe) {
+            log.error("frame not found");
+        }
         addControlFrame.setVisible(false);
         addControlFrame.dispose();
         addControlFrame = null;
@@ -2069,6 +2089,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         updateControl.setVisible(true);
         createControl.setVisible(false);
+        addControlFrame.setTitle(Bundle.getMessage("TitleEditLightControl"));
         addControlFrame.pack();
         addControlFrame.setVisible(true);
     }

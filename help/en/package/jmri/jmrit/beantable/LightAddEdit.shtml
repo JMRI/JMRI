@@ -33,7 +33,7 @@
           <b>Add...</b> button at the bottom of the <b>Light
           Table</b> pane to bring up the "Add" version of the
           <b>Add/Edit Light</b> pane.</p><img src=
-          "images/LightAddFrame.png" height="403" width="578">
+          "images/LightAddFrame.png" height="398" width="577">
         </li>
 
         <li>
@@ -106,7 +106,7 @@
           <p>Click the <b>Cancel</b> button to dismiss the pane
           without creating any more Lights.</p>
         </li>
-      </ol><a name="addLight" id="addLight"></a>
+      </ol><a name="addManyLight" id="addManyLight"></a>
 
       <h2>Adding several new Lights at Once</h2>
       If the selected
@@ -114,8 +114,8 @@
       <b>Add/Edit Light</b> window will display two additional
       items, as marked below:
 
-      <p><img src="images/LightAddManyFrame.png" height="333" width=
-      "563"></p>
+      <p><img src="images/LightAddManyFrame.png" height="399" width=
+      "576"></p>
 
       <p>Adding several new Lights at once is optional. If you only
       want to add one new Light, ignore the <b>Add a sequential
@@ -175,7 +175,7 @@
           <p>Click on a Light's <b>Edit</b> button in the
           <a href="LightTable.shtml">Light Table</a> to bring up
           the "Edit" version of the <b>Add/Edit Light</b> pane:</p>
-          <img src="images/LightEditFrame.png" height="346" width="576">
+          <img src="images/LightEditFrame.png" height="351" width="578">
         </li>
 
         <li>
@@ -202,7 +202,7 @@
           dismissed (closed) while in edit mode, <b>Close</b> is
           automatically selected, and no changes are made to the
           selected Light.</p>
-          <img src="images/LightAddFrameNone.png" height="140" width="272">
+          <img src="images/LightAddFrameNone.png" height="138" width="273">
         </li>
       </ol>
 
@@ -225,7 +225,7 @@
           setting a fascia panel light to follow block occupancy.
           That is useful, for example, for monitoring train
           position in a hidden staging area.</p><img src=
-          "images/LightAddFrameSensor.png" height="177" width="278">
+          "images/LightAddFrameSensor.png" height="177" width="280">
         </li>
 
         <li>
@@ -238,7 +238,7 @@
           this option is to turn on and off scenery lighting,
           street lights, house lights, etc. to simulate night time
           on the layout.</p><img src="images/LightAddFrameClock.png"
-          height="175" width="272">
+          height="175" width="273">
         </li>
 
         <li>
@@ -268,8 +268,8 @@
           fascia pushbutton, but it can also be used for other
           types of layout animation, for example, to control the
           ringing of a crossing bell when a train enters a
-          block.</p><img src="images/LightAddFrameTimed.png" height="177"
-          width="313">
+          block.</p><img src="images/LightAddFrameTimed.png" height="176"
+          width="281">
         </li>
 
         <li>
@@ -286,7 +286,7 @@
           placing two point sensors, one at each end of a bridge, a
           layout sound for a bridge rumble may be played while the
           train is traversing the bridge.</p><img src=
-          "images/LightAddTwoSensor.png" height="178" width="444">
+          "images/LightFrameTwoSensor.png" height="176" width="474">
         </li>
       </ul>
 
@@ -325,7 +325,7 @@
       area shown below:
 
       <p><img src="images/LightAddVariable.png" height="449" width=
-      "638"></p>
+      "637"></p>
 
       <p>Systems like
       <a href="../../../../html/hardware/powerline/index.shtml">PowerLine</a>,
