@@ -356,8 +356,12 @@ public class LayoutTurnout extends LayoutTrack {
         double sineRot = Math.sin(rotRAD);
         double cosineRot = Math.cos(rotRAD);
 
+        // rotate displacements around origin {0, 0}
+        Point2D center_temp = center;
+        center = MathUtil.zeroPoint2D;
         dispA = rotatePoint(dispA, sineRot, cosineRot);
         dispB = rotatePoint(dispB, sineRot, cosineRot);
+        center = center_temp;
 
         pointA = rotatePoint(pointA, sineRot, cosineRot);
         pointB = rotatePoint(pointB, sineRot, cosineRot);
