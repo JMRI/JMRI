@@ -24,7 +24,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class Bundle extends jmri.jmrix.cmri.serial.Bundle {
 
     @Nullable
-    private static final String name = null; // No local resources
+    private static final String name = "jmri.jmrix.cmri.serial.serialmon.SerialFilterBundle"; // c2
 
     //
     // below here is boilerplate to be copied exactly
