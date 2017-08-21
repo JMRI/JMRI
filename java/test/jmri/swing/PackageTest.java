@@ -19,7 +19,7 @@ import org.junit.runners.Suite.SuiteClasses;
     DefaultEditableListModelTest.class,
     RowSorterUtilTest.class,
     JTitledSeparatorTest.class,
-    DefaultCellEditorTest.class
+    DefaultListCellEditorTest.class
 })
 public class PackageTest {
 }
