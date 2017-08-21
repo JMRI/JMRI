@@ -112,8 +112,9 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     SerialFilterFrame curFrame;   
     
-    public SerialFilterFrame() {
+    public SerialFilterFrame(CMRISystemConnectionMemo memo) {
         super("CMRInet Packet Filter");
+        _memo = memo;
         curFrame = this;
 
     }
