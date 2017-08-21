@@ -29,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * If the Active Train this Section is assigned to is being run automatically,
  * support is provided for monitoring Section changes and changes for Blocks
  * within the Section.
- * <p>
- * <P>
+ * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is open source software; you can redistribute it and/or modify it under

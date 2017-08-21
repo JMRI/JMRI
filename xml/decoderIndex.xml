@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.2ish+jake+20170812T2112Z+Rde4dd1b01e on Sat Aug 12 14:12:37 PDT 2017-->
-  <decoderIndex version="828">
+  <!--Written by JMRI version 4.9.3ish+heap+20170819T0447Z+R47d9f85 on Sat Aug 19 14:47:42 AEST 2017-->
+  <decoderIndex version="838">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4990,9 +4990,11 @@
         <model model="LokPilot Micro V3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554478">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
@@ -5004,18 +5006,22 @@
         <model model="LokPilot Micro V3.0 DCC" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554479">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
         <model model="LokPilot V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554460,33554470,33554473">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5029,9 +5035,11 @@
         <model model="LokPilot V3.0 DCC" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554461,33554471,33554474">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5040,9 +5048,11 @@
         <model model="LokPilot Micro Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554486">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5055,9 +5065,11 @@
         <model model="LokPilot Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="33554476">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5072,9 +5084,11 @@
         <model model="LokPilot XL V3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="33554483">
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
@@ -5091,9 +5105,11 @@
         <model show="no" model="LokPilot micro 3.0" replacementModel="LokPilot Micro V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
@@ -5105,18 +5121,22 @@
         <model show="no" model="LokPilot micro DCC 3.0" replacementModel="LokPilot Micro V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0 DCC">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
         <model show="no" model="LokPilot 3.0" replacementModel="LokPilot V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5130,9 +5150,11 @@
         <model show="no" model="LokPilot DCC 3.0" replacementModel="LokPilot V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0 DCC">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5141,9 +5163,11 @@
         <model show="no" model="LokPilot mfx 3.0" replacementModel="LokPilot Micro Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot Micro Fx V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -5156,9 +5180,11 @@
         <model show="no" model="LokPilot XL 3.0" replacementModel="LokPilot XL V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="LokPilot XL V3.0">
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
           <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
@@ -5175,9 +5201,11 @@
         <model show="no" model="LokPilot Fx 3.0" replacementModel="LokPilot Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="LokPilot Fx V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
+            <label xml:lang="de">Lvor</label>
           </output>
           <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Retro</label>
+            <label xml:lang="de">Lrück</label>
           </output>
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
@@ -6078,32 +6106,7 @@
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
-          <functionlabel num="1" lockable="true">Snd</functionlabel>
-          <functionlabel num="2" lockable="false">SS3</functionlabel>
-          <functionlabel num="3" lockable="true">SS4</functionlabel>
-          <functionlabel num="4" lockable="true">AUX2+SS5</functionlabel>
-          <functionlabel num="5" lockable="true">SS6</functionlabel>
-          <functionlabel num="6" lockable="true">Switching</functionlabel>
-          <functionlabel num="7" lockable="true">SS15</functionlabel>
-          <functionlabel num="8" lockable="true">AUX1</functionlabel>
-          <functionlabel num="9" lockable="true">SS9</functionlabel>
-          <functionlabel num="10" lockable="true">SS10</functionlabel>
-          <functionlabel num="11" lockable="true">SS8</functionlabel>
-          <functionlabel num="12" lockable="true">SS11</functionlabel>
-          <functionlabel num="13" lockable="true">SS13</functionlabel>
-          <functionlabel num="14" lockable="true">SS7</functionlabel>
-          <functionlabel num="15" lockable="true">SS16</functionlabel>
-          <functionlabel num="16" lockable="true">SS12</functionlabel>
-          <functionlabel num="17" lockable="true">SS17+SS18</functionlabel>
-          <functionlabel num="18" lockable="true">SS15</functionlabel>
-          <functionlabel num="19" lockable="true">SS19</functionlabel>
-          <functionlabel num="20" lockable="true">SS20</functionlabel>
-          <functionlabel num="21" lockable="true">SS21</functionlabel>
-          <functionlabel num="22" lockable="true" />
-          <functionlabel num="23" lockable="true" />
-          <functionlabel num="24" lockable="true" />
-          <functionlabel num="25" lockable="true" />
-          <functionlabel num="26" lockable="true" />
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
         </functionlabels>
         <soundlabels>
           <soundlabel num="25">Random sounds</soundlabel>
@@ -6114,447 +6117,115 @@
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select.xml">
         <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
           <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
+        </model>
+        <model model="LokSound Select direct / micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+          <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
           <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
-        </model>
-        <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-          <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
-        </model>
-        <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
-          <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
         </model>
         <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
           <size length="51" width="26" height="14" units="mm" />
         </model>
-        <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
-          <size length="1.41" width=".51" height=".25" units="inches" />
-          <functionlabels>
-            <functionlabel num="0" lockable="true" />
-            <functionlabel num="1" lockable="true" />
-            <functionlabel num="2" lockable="false" />
-            <functionlabel num="3" lockable="true" />
-            <functionlabel num="4" lockable="true" />
-            <functionlabel num="5" lockable="true" />
-            <functionlabel num="6" lockable="true" />
-            <functionlabel num="7" lockable="true" />
-            <functionlabel num="8" lockable="true" />
-            <functionlabel num="9" lockable="true" />
-            <functionlabel num="10" lockable="true" />
-            <functionlabel num="11" lockable="true" />
-            <functionlabel num="12" lockable="true" />
-            <functionlabel num="13" lockable="true" />
-            <functionlabel num="14" lockable="true" />
-            <functionlabel num="15" lockable="true" />
-            <functionlabel num="16" lockable="true" />
-            <functionlabel num="17" lockable="true" />
-            <functionlabel num="18" lockable="true" />
-            <functionlabel num="19" lockable="true" />
-            <functionlabel num="20" lockable="true" />
-            <functionlabel num="21" lockable="true" />
-            <functionlabel num="22" lockable="true" />
-            <functionlabel num="23" lockable="true" />
-            <functionlabel num="24" lockable="true" />
-            <functionlabel num="25" lockable="true" />
-            <functionlabel num="26" lockable="true" />
-            <functionlabel num="27" lockable="true" />
-            <functionlabel num="28" lockable="true" />
-          </functionlabels>
-          <soundlabels>
-            <soundlabel num="1" />
-            <soundlabel num="2" />
-            <soundlabel num="3" />
-            <soundlabel num="4" />
-            <soundlabel num="5" />
-            <soundlabel num="6" />
-            <soundlabel num="7" />
-            <soundlabel num="8" />
-            <soundlabel num="9" />
-            <soundlabel num="10" />
-            <soundlabel num="11" />
-            <soundlabel num="12" />
-            <soundlabel num="13" />
-            <soundlabel num="14" />
-            <soundlabel num="15" />
-            <soundlabel num="16" />
-            <soundlabel num="17" />
-            <soundlabel num="18" />
-            <soundlabel num="19" />
-            <soundlabel num="20" />
-            <soundlabel num="21" />
-            <soundlabel num="22" />
-            <soundlabel num="23" />
-            <soundlabel num="24" />
-            <soundlabel num="25">Random sounds</soundlabel>
-            <soundlabel num="26">Automatic brake sound</soundlabel>
-            <soundlabel num="27">Gear shift sound</soundlabel>
-          </soundlabels>
-        </model>
-        <model model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
+        <model show="no" model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
+        <model show="no" model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
+        <model show="no" model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
+        <model show="no" model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
+        <model show="no" model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
+        <model show="no" model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <model show="no" model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
+        <model show="no" model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
+        <model show="no" model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
+        <model show="no" model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
+        <model show="no" model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
+        <model show="no" model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
+        <model show="no" model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
+        <model show="no" model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
+        <model show="no" model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
+        <model show="no" model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
+        <model show="no" model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
+        <model show="no" model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
+        <model show="no" model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
+        <model show="no" model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
+        <model show="no" model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
+        <model show="no" model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+        <model show="no" model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+        <model show="no" model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+        <model show="no" model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
+        <model show="no" model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model show="no" model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model show="no" model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="2" lockable="false">Horn</functionlabel>
-          <functionlabel num="3" lockable="true">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
-          <functionlabel num="5" lockable="true">Mars Light</functionlabel>
-          <functionlabel num="6" lockable="true">Ditch Light</functionlabel>
-          <functionlabel num="7" lockable="true">Switching</functionlabel>
-          <functionlabel num="8" lockable="true">Sound On</functionlabel>
-          <functionlabel num="9" lockable="true">Notch Up</functionlabel>
-          <functionlabel num="10" lockable="true">Notch Down</functionlabel>
-          <functionlabel num="11" lockable="true">Radiator Fan</functionlabel>
-          <functionlabel num="12" lockable="true">Dimmer</functionlabel>
-          <functionlabel num="13" lockable="true">AUX4</functionlabel>
-          <functionlabel num="14" lockable="true">Detector</functionlabel>
-          <functionlabel num="15" lockable="true">Crossing</functionlabel>
-          <functionlabel num="16" lockable="true">Rail Clack</functionlabel>
-          <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
-          <functionlabel num="18" lockable="true">Sanding</functionlabel>
-          <functionlabel num="19" lockable="true">Air</functionlabel>
-          <functionlabel num="20" lockable="true">Compressor</functionlabel>
-          <functionlabel num="21" lockable="true">Spitter Valve</functionlabel>
         </functionlabels>
         <soundlabels>
-          <soundlabel num="1">Diesel</soundlabel>
-          <soundlabel num="3">Airhorn</soundlabel>
-          <soundlabel num="4">Bell</soundlabel>
-          <soundlabel num="5">Coupler</soundlabel>
-          <soundlabel num="6">Dynamic Brake</soundlabel>
-          <soundlabel num="7">Air Compressor</soundlabel>
-          <soundlabel num="8">Radiator Fan</soundlabel>
-          <soundlabel num="9">Detector</soundlabel>
-          <soundlabel num="10">Crossing Comm</soundlabel>
-          <soundlabel num="11">Rail Clack</soundlabel>
-          <soundlabel num="12">Brake Set/Release</soundlabel>
-          <soundlabel num="13">Sanding Valve</soundlabel>
-          <soundlabel num="14">Short Air Let Off</soundlabel>
-          <soundlabel num="15">Pop Valve</soundlabel>
-          <soundlabel num="16">Short Airhorn</soundlabel>
           <soundlabel num="25">Random sounds</soundlabel>
           <soundlabel num="26">Automatic brake sound</soundlabel>
           <soundlabel num="27">Gear shift sound</soundlabel>
         </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select_Steam.xml">
-        <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+        <model show="no" model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
@@ -6617,28 +6288,28 @@
             <soundlabel num="27" />
           </soundlabels>
         </model>
-        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+        <model show="no" model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+        <model show="no" model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+        <model show="no" model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+        <model show="no" model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+        <model show="no" model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+        <model show="no" model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+        <model show="no" model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+        <model show="no" model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
         <functionlabels>

@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2014
  */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public final class ProgrammingMode {
 
     public ProgrammingMode(@Nonnull String standardName) {

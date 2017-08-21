@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -43,8 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DecoderPro extends Apps {
 
-    DecoderPro(JFrame p) {
-        super(p);
+    DecoderPro() {
+        super();
     }
 
     @Override
@@ -130,8 +129,8 @@ public class DecoderPro extends Apps {
         Apps.setStartupInfo("DecoderPro");
 
         setConfigFilename("DecoderProConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("DecoderPro");
-        DecoderPro dp = new DecoderPro(f);
+        DecoderPro dp = new DecoderPro();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(dp, f);
 
         log.debug("main initialization done");
