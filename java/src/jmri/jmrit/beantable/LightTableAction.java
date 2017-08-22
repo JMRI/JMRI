@@ -506,7 +506,6 @@ public class LightTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.LightTable";
     }
 
-    private DecimalFormat oneDotTwoDigit;
     JmriJFrame addFrame = null;
     Light curLight = null;
     boolean lightCreatedOrUpdated = false;
@@ -548,16 +547,14 @@ public class LightTableAction extends AbstractTableAction {
     String connectionChoice = "";
 
     // parts for supporting variable intensity, transition
-    JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity") + "  ");
-    SpinnerNumberModel minIntSpinner = new SpinnerNumberModel(0.0d, 0, 100, 1); // 0 - 100%
-    JSpinner minIntensity = new JSpinner(minIntSpinner);
-    JLabel labelMinIntensityTail = new JLabel(" %   ");
-    JLabel labelMaxIntensity = new JLabel(Bundle.getMessage("LightMaxIntensity") + "  ");
-    SpinnerNumberModel maxIntSpinner = new SpinnerNumberModel(100.0d, 0, 100, 1); // 100 - 0%
-    JSpinner maxIntensity = new JSpinner(maxIntSpinner);
-    JLabel labelMaxIntensityTail = new JLabel(" %   ");
-    JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime") + "  ");
-    JTextField fieldTransitionTime; // 2 digit decimal format field, initialized later as instance
+    JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity"));
+    JSpinner minIntensity = new JSpinner();
+    JLabel labelMinIntensityTail = new JLabel("   "); // just a spacer
+    JLabel labelMaxIntensity = new JLabel(Bundle.getMessage("LightMaxIntensity"));
+    JSpinner maxIntensity = new JSpinner();
+    JLabel labelMaxIntensityTail = new JLabel("   "); // another spaces
+    JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime"));
+    JSpinner transitionTime = new JSpinner(); // 2 digit decimal format field, initialized later as instance
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -619,24 +616,29 @@ public class LightTableAction extends AbstractTableAction {
             varPanel.setLayout(new BoxLayout(varPanel, BoxLayout.X_AXIS));
             varPanel.add(new JLabel(" "));
             varPanel.add(labelMinIntensity);
+            minIntensity.setModel(
+                    new SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), Double.valueOf(0.99d), Double.valueOf(0.01d))); // 0 - 99%
+            minIntensity.setEditor(new JSpinner.NumberEditor(minIntensity, "##0 %"));
             minIntensity.setToolTipText(Bundle.getMessage("LightMinIntensityHint"));
-            minIntensity.setValue(0.0d); // reset JSpinner1
+            minIntensity.setValue(Double.valueOf(Double.valueOf(0.0d))); // reset JSpinner1
             varPanel.add(minIntensity);
             varPanel.add(labelMinIntensityTail);
             varPanel.add(labelMaxIntensity);
+            maxIntensity.setModel(
+                    new SpinnerNumberModel(Double.valueOf(1.0d), Double.valueOf(0.01d), Double.valueOf(1.0d), Double.valueOf(0.01d))); // 100 - 1%
+            maxIntensity.setEditor(new JSpinner.NumberEditor(maxIntensity, "##0 %"));
             maxIntensity.setToolTipText(Bundle.getMessage("LightMaxIntensityHint"));
-            maxIntensity.setValue(100.0d); // reset JSpinner2
+            maxIntensity.setValue(Double.valueOf(Double.valueOf(1.0d))); // reset JSpinner2
             varPanel.add(maxIntensity);
             varPanel.add(labelMaxIntensityTail);
             varPanel.add(labelTransitionTime);
-            oneDotTwoDigit = (DecimalFormat)NumberFormat.getNumberInstance(); // for display and reading user input
-            oneDotTwoDigit.setMaximumFractionDigits(2); // 2 digit decimal format
-            oneDotTwoDigit.setMinimumFractionDigits(2);
-            fieldTransitionTime = new JTextField(oneDotTwoDigit.format(0.0), 5);
-            fieldTransitionTime.setToolTipText(Bundle.getMessage("LightTransitionTimeHint"));
-            fieldTransitionTime.setHorizontalAlignment(JTextField.RIGHT);
-            fieldTransitionTime.setText("0"); // reset from possible previous use
-            varPanel.add(fieldTransitionTime);
+            transitionTime.setModel(
+                    new SpinnerNumberModel(Double.valueOf(0d), Double.valueOf(0d), Double.valueOf(1000000d), Double.valueOf(0.01d)));
+            transitionTime.setEditor(new JSpinner.NumberEditor(transitionTime, "###0.00"));
+            transitionTime.setPreferredSize(new JTextField(8).getPreferredSize());
+            transitionTime.setToolTipText(Bundle.getMessage("LightTransitionTimeHint"));
+            transitionTime.setValue(Double.valueOf(0f)); // reset from possible previous use
+            varPanel.add(transitionTime);
             varPanel.add(new JLabel(" "));
             Border varPanelBorder = BorderFactory.createEtchedBorder();
             Border varPanelTitled = BorderFactory.createTitledBorder(varPanelBorder,
@@ -847,7 +849,7 @@ public class LightTableAction extends AbstractTableAction {
         maxIntensity.setVisible(showIntensity);
         labelMaxIntensityTail.setVisible(showIntensity);
         labelTransitionTime.setVisible(showTransition);
-        fieldTransitionTime.setVisible(showTransition);
+        transitionTime.setVisible(showTransition);
         if (showIntensity || showTransition) {
             varPanel.setVisible(true);
         } else {
@@ -1047,28 +1049,21 @@ public class LightTableAction extends AbstractTableAction {
         g.activateLight();
         lightCreatedOrUpdated = true;
 
+        status2.setText("");
+        status2.setVisible(false);
         if (g.isIntensityVariable()) {
-            double p = (Double) minIntensity.getValue();
-            log.debug("minInt value entered: " + p);
-            g.setMinIntensity(p / 100);
-            p = (Double) maxIntensity.getValue();
-            g.setMaxIntensity(p / 100);
-
-            String q;
-            q = fieldTransitionTime.getText().trim(); // N11N
-            if (q.equals("")) {
-                q = "0";
+            if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
+                log.debug("minInt value entered: {}", (Double) minIntensity.getValue());
+                // do not set intensity
+                status2.setText(Bundle.getMessage("LightWarn9"));
+                status2.setVisible(true);
+            } else {
+                g.setMinIntensity((Double) minIntensity.getValue());
+                g.setMaxIntensity((Double) maxIntensity.getValue());
             }
-            double transitionTime; // I18N decimal separator for reading value (DecimalFormat)
-            try {
-                transitionTime = oneDotTwoDigit.parse(q).doubleValue();
-            } catch (ParseException pe) {
-                // Light with this user name already exists
-                status1.setText(Bundle.getMessage("LightWarn9"));
-                status1.setForeground(Color.red);
-                transitionTime = 0.0;
+            if (g.isTransitionAvailable()) {
+                g.setTransitionTime((Double) transitionTime.getValue());
             }
-            g.setTransitionTime(transitionTime);
         }
         // provide feedback to user
         String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + " (" + uName + ")";
@@ -1097,8 +1092,6 @@ public class LightTableAction extends AbstractTableAction {
         }
         status1.setText(feedback);
         status1.setForeground(Color.gray);
-        status2.setText("");
-        status2.setVisible(false);
         cancel.setText(Bundle.getMessage("ButtonClose")); // when Create/Apply has been clicked at least once, this is not Revert/Cancel
         addFrame.pack();
         addFrame.setVisible(true);
@@ -1161,10 +1154,10 @@ public class LightTableAction extends AbstractTableAction {
         controlList = curLight.getLightControlList();
         // variable intensity
         if (g.isIntensityVariable()) {
-            minIntensity.setValue(g.getMinIntensity() * 100d);
-            maxIntensity.setValue(g.getMaxIntensity() * 100d);
+            minIntensity.setValue(g.getMinIntensity()); // displayed as percentage
+            maxIntensity.setValue(g.getMaxIntensity());
             if (g.isTransitionAvailable()) {
-                fieldTransitionTime.setText(oneDotTwoDigit.format(g.getTransitionTime())); // displays i18n decimal separator eg. 0,00 in _nl
+                transitionTime.setValue(g.getTransitionTime()); // displays i18n decimal separator eg. 0,00 in _nl
             }
         }
         setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
@@ -1223,21 +1216,10 @@ public class LightTableAction extends AbstractTableAction {
         setLightControlInformation(g);
         // Variable intensity, transitions
         if (g.isIntensityVariable()) {
-            double p = (Double) minIntensity.getValue();
-            g.setMinIntensity(p / 100);
-            p = (Double) maxIntensity.getValue();
-            g.setMaxIntensity(p / 100);
+            g.setMinIntensity((Double) minIntensity.getValue());
+            g.setMaxIntensity((Double) maxIntensity.getValue());
             if (g.isTransitionAvailable()) {
-                double transitionTime; // I18N decimal separator on reading value (DecimalFormat)
-                try {
-                    transitionTime = oneDotTwoDigit.parse(fieldTransitionTime.getText()).doubleValue();
-                } catch (ParseException pe) {
-                    // Light with this user name already exists
-                    status1.setText(Bundle.getMessage("LightWarn9"));
-                    status1.setForeground(Color.red);
-                    return;
-                }
-                g.setTransitionTime(transitionTime);
+                g.setTransitionTime((Double) transitionTime.getValue());
             }
         }
         g.activateLight();
@@ -1861,16 +1843,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
             g.setControlTimedOnSensorName(triggerSensorName);
-            int dur = 0;
-            try {
-                dur = (Integer) spinner2b.getValue();
-            } catch (NumberFormatException e) {
-                if (s != null) {
-                    status1.setText(Bundle.getMessage("LightWarn9"));
-                    status1.setForeground(Color.red);
-                    return (false);
-                }
-            }
+            int dur = (Integer) spinner2b.getValue();
             g.setTimedOnDuration(dur);
             if (s == null) {
                 status1.setText(Bundle.getMessage("LightWarn8"));
