@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     BundleTest.class,
     JsonOperationsTest.class,
-    JsonOperationsServiceFactoryTest.class
+    JsonOperationsServiceFactoryTest.class,
+    JsonOperationsSocketServiceTest.class
 })
 /**
  * Tests for the jmri.server.json.operations package

@@ -259,7 +259,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
     public MultiIconEditor sensorIconEditor = null;
-    public JFrame sensorFrame;
+    public JFrame sensorFrame = null;
 
     public MultiIconEditor signalIconEditor = null;
     public JFrame signalFrame;
@@ -8983,7 +8983,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String newName = signalHeadComboBox.getDisplayName();
         SignalHead mHead = null;
 
-        if (!newName.equals("")) {
+        if (!newName.isEmpty()) {
             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class
             ).getSignalHead(newName);
 
@@ -9081,7 +9081,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String newName = signalMastComboBox.getDisplayName();
         SignalMast mMast = null;
 
-        if (!newName.equals("")) {
+        if (!newName.isEmpty()) {
             mMast = InstanceManager.getDefault(jmri.SignalMastManager.class
             ).getSignalMast(newName);
             signalMastComboBox.setText(newName);

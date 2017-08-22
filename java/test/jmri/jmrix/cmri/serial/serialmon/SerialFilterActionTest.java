@@ -16,7 +16,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 public class SerialFilterActionTest {
 
     @Test
-    @Ignore("May be causing hang on Appveyor")
     public void testCTor() {
         SerialFilterAction t = new SerialFilterAction(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists",t);

@@ -197,56 +197,56 @@ public class LevelXingXml extends AbstractXmlAdapter {
 
         if (element.getChild("signalAMast") != null) {
             String mast = element.getChild("signalAMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalAMast(mast);
             }
         }
 
         if (element.getChild("signalBMast") != null) {
             String mast = element.getChild("signalBMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalBMast(mast);
             }
         }
 
         if (element.getChild("signalCMast") != null) {
             String mast = element.getChild("signalCMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalCMast(mast);
             }
         }
 
         if (element.getChild("signalDMast") != null) {
             String mast = element.getChild("signalDMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalDMast(mast);
             }
         }
 
         if (element.getChild("sensorA") != null) {
             String sensor = element.getChild("sensorA").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorAName(sensor);
             }
         }
 
         if (element.getChild("sensorB") != null) {
             String sensor = element.getChild("sensorB").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorBName(sensor);
             }
         }
 
         if (element.getChild("sensorC") != null) {
             String sensor = element.getChild("sensorC").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorCName(sensor);
             }
         }
 
         if (element.getChild("sensorD") != null) {
             String sensor = element.getChild("sensorD").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorDName(sensor);
             }
         }

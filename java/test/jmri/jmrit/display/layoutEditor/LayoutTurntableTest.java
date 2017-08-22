@@ -16,11 +16,29 @@ import org.junit.Test;
  */
 public class LayoutTurntableTest {
 
+    LayoutEditor layoutEditor = null;
+    LayoutTurntable lt = null;
+
     @Test
-    public void testCtor() {
+    public void testNew() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTurntable t = new LayoutTurntable("test", new Point2D.Double(0.0, 0.0), new LayoutEditor());
-        Assert.assertNotNull("exists", t);
+
+        layoutEditor = new LayoutEditor();
+        Assert.assertNotNull("LayoutEditor not null", layoutEditor);
+
+        lt = new LayoutTurntable("My Turntable", new Point2D.Double(50.0, 100.0), layoutEditor);
+        Assert.assertNotNull("Turntable not null", lt);
+    }
+
+    @Test
+    public void testToString() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        testNew();  // to create layout editor & LayoutTurntable
+
+        String ltString = lt.toString();
+        Assert.assertNotNull("ltString not null", ltString);
+        Assert.assertEquals("LayoutTurntable My Turntable", ltString);
     }
 
     // from here down is testing infrastructure
@@ -35,5 +53,4 @@ public class LayoutTurntableTest {
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
 }
