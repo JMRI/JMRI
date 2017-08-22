@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.rpi.Bundle"; // NOI18N
+    private static final String name = "jmri.jmrix.pi.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
