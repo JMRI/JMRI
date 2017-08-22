@@ -73,7 +73,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     }
                 }
                 if (val instanceof String) {
-                    if (val.equals("")) {
+                    if (((String)val).isEmpty()) {
                         setText(defaultText);
                     } else {
                         setText((String) val);

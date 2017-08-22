@@ -106,10 +106,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         temp.addAll(tlist);
         temp.addAll(ulist);
         temp.addAll(uplist);
-        for (int i = 0; i < temp.size(); i++) {
-            if (c.isInstance(temp.get(i))) {
+        for (Object o : temp) {
+            if (c.isInstance(o)) {
                 if (index-- == 0) {
-                    return temp.get(i);
+                    return o;
                 }
             }
         }

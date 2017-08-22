@@ -255,7 +255,7 @@ public class ConnectivityUtil {
                 cObject = tr.getConnect1();
             } else {
                 if (!suppress) {
-                    log.error("Connectivity error when searching turnouts in Block " + currLayoutBlock.getUserName());
+                    log.error("Connectivity error when searching turnouts in Block " + currLayoutBlock.getDisplayName());
                 }
                 tr = null;
                 break;
@@ -585,7 +585,7 @@ public class ConnectivityUtil {
                         && (x.getLayoutBlockAC() != null) && (x.getLayoutBlockBD() != null)) {
                     list.add(x);
                 } else {
-                    log.error("Missing connection or block assignment at Level Crossing in Block " + block.getUserName());
+                    log.error("Missing connection or block assignment at Level Crossing in Block " + block.getDisplayName());
                 }
             }
         });
@@ -780,16 +780,16 @@ public class ConnectivityUtil {
     public boolean layoutTurnoutHasSignalMasts(LayoutTurnout t) {
         String[] turnoutBlocks = t.getBlockBoundaries();
         boolean valid = true;
-        if (turnoutBlocks[0] != null && (t.getSignalAMastName() == null || t.getSignalAMastName().equals(""))) {
+        if (turnoutBlocks[0] != null && (t.getSignalAMastName() == null || t.getSignalAMastName().isEmpty())) {
             valid = false;
         }
-        if (turnoutBlocks[1] != null && (t.getSignalBMastName() == null || t.getSignalBMastName().equals(""))) {
+        if (turnoutBlocks[1] != null && (t.getSignalBMastName() == null || t.getSignalBMastName().isEmpty())) {
             valid = false;
         }
-        if (turnoutBlocks[2] != null && (t.getSignalCMastName() == null || t.getSignalCMastName().equals(""))) {
+        if (turnoutBlocks[2] != null && (t.getSignalCMastName() == null || t.getSignalCMastName().isEmpty())) {
             valid = false;
         }
-        if (turnoutBlocks[3] != null && (t.getSignalDMastName() == null || t.getSignalDMastName().equals(""))) {
+        if (turnoutBlocks[3] != null && (t.getSignalDMastName() == null || t.getSignalDMastName().isEmpty())) {
             valid = false;
         }
         return valid;
@@ -964,7 +964,7 @@ public class ConnectivityUtil {
             if (x.getLayoutBlockBD() == lBlock) {
                 return true;
             } else {
-                log.error("Panel blocking error at BD of Level Crossing in Block " + block.getUserName());
+                log.error("Panel blocking error at BD of Level Crossing in Block " + block.getDisplayName());
                 return false;
             }
         }
@@ -996,7 +996,7 @@ public class ConnectivityUtil {
             log.error("Null signal head on entry to addSensorToSignalHeadLogic");
             return false;
         }
-        if ((name == null) || name.equals("")) {
+        if ((name == null) || name.isEmpty()) {
             log.error("Null string for sensor name on entry to addSensorToSignalHeadLogic");
             return false;
         }
@@ -1026,7 +1026,7 @@ public class ConnectivityUtil {
             } else if (bbLogic.getSensor5() == null) {
                 bbLogic.setSensor5(name);
             } else {
-                log.error("Error - could not add sensor to SSL for signal head " + sh.getSystemName()
+                log.error("Error - could not add sensor to SSL for signal head " + sh.getDisplayName()
                         + " because there is no room in the SSL.");
                 bbLogic.retain();
                 bbLogic.start();
@@ -1080,7 +1080,7 @@ public class ConnectivityUtil {
                     return false;
             }
         } else {
-            log.error("SSL has not been set up for signal head " + sh.getSystemName()
+            log.error("SSL has not been set up for signal head " + sh.getDisplayName()
                     + ". Could not add sensor - " + name + ".");
             return false;
         }
@@ -1234,7 +1234,7 @@ public class ConnectivityUtil {
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
                     if ((((LayoutTurnout) cNode).getLinkedTurnoutName() == null)
-                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))) {
+                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().isEmpty())) {
                         // Standard turnout - node type A
                         if (((LayoutTurnout) cNode).getContinuingSense() == Turnout.CLOSED) {
                             switch (cNodeState) {
@@ -1361,7 +1361,7 @@ public class ConnectivityUtil {
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.LH_TURNOUT)
                         || (((LayoutTurnout) cNode).getTurnoutType() == LayoutTurnout.WYE_TURNOUT)) {
                     if ((((LayoutTurnout) cNode).getLinkedTurnoutName() == null)
-                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().equals(""))
+                            || (((LayoutTurnout) cNode).getLinkedTurnoutName().isEmpty())
                             || (((LayoutTurnout) cNode).getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
                         tTrack = (TrackSegment) (((LayoutTurnout) cNode).getConnectA());
                         pType = LayoutTrack.TURNOUT_A;

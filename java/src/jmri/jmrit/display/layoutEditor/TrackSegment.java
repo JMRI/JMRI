@@ -279,7 +279,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && (!blockName.equals(""))) {
+        if ((block == null) && (blockName != null) && (!blockName.isEmpty())) {
             block = layoutEditor.provideLayoutBlock(blockName);
         }
         return block;
@@ -562,7 +562,7 @@ public class TrackSegment extends LayoutTrack {
         jmi = popup.add(ident);
         jmi.setEnabled(false);
 
-        if (blockName.equals("")) {
+        if (blockName.isEmpty()) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
             jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
@@ -666,7 +666,7 @@ public class TrackSegment extends LayoutTrack {
                 });
             }
         }
-        if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
+        if ((!blockName.isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
