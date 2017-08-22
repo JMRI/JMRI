@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 public class JsonThrottleTest {
 
     @Test
-    @Ignore("still need to actually create the throttle (private method) or use getThrottle")
-    public void testCTor() throws java.io.IOException, jmri.server.json.JsonException {
+    @Ignore("need to correctly build string input for readTree call")
+    public void testGetThrottle() throws java.io.IOException, jmri.server.json.JsonException {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
