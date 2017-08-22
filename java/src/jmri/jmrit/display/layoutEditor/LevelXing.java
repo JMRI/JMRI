@@ -224,7 +224,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalAName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalAHeadNamed = null;
             return;
         }
@@ -245,7 +245,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalBName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalBHeadNamed = null;
             return;
         }
@@ -266,7 +266,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalCName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalCHeadNamed = null;
             return;
         }
@@ -287,7 +287,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalDName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalDHeadNamed = null;
             return;
         }
@@ -375,7 +375,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalAMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalAMastNamed = null;
             return;
         }
@@ -403,7 +403,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalBMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalBMastNamed = null;
             return;
         }
@@ -431,7 +431,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalCMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalCMastNamed = null;
             return;
         }
@@ -459,7 +459,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalDMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalDMastNamed = null;
             return;
         }
@@ -487,7 +487,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorAName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorANamed = null;
             return;
         }
@@ -515,7 +515,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorBName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorBNamed = null;
             return;
         }
@@ -543,7 +543,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorCName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorCNamed = null;
             return;
         }
@@ -571,7 +571,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorDName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorDNamed = null;
             return;
         }
@@ -1087,7 +1087,7 @@ public class LevelXing extends LayoutTrack {
 
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
-            if ((blockNameAC == null) || (blockNameAC.equals(""))) {
+            if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
                 jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
@@ -1095,7 +1095,7 @@ public class LevelXing extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if ((blockNameBD == null) || (blockNameBD.equals(""))) {
+            if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
                 jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
@@ -1228,7 +1228,7 @@ public class LevelXing extends LayoutTrack {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockNameAC != null) && (!blockNameAC.equals("")) && (blockAC != null)) {
+        if ((blockNameAC != null) && (!blockNameAC.isEmpty()) && (blockAC != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != blockAC)) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + blockAC.getDisplayName());
@@ -1246,7 +1246,7 @@ public class LevelXing extends LayoutTrack {
                 }
             }
         }
-        if ((blockNameBD != null) && (!blockNameBD.equals("")) && (blockBD != null)) {
+        if ((blockNameBD != null) && (!blockNameBD.isEmpty()) && (blockBD != null)) {
             if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != blockBD)) {
                 try {
                     boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + blockBD.getDisplayName());

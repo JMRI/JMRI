@@ -125,7 +125,8 @@
         <dt><code>--profile=<em>PROFILE</em></code></dt>
 
         <dd>Start JMRI with the configuration profile
-        <em>PROFILE</em>.</dd>
+        <em>PROFILE</em>. The profile can be specified by its complete path or
+        by its internal Id.</dd>
 
         <dt><code>--serial-ports=<em>SERIAL_PORTS</em></code></dt>
 
@@ -166,11 +167,11 @@
       parameter. An example is:</p>
 
       <p><code>default_options="-J-Xmx2048m"</code></p>
-      
+
       <a name="macosx" id="macosx"></a>
 
       <h2>macOS</h2>
-      
+
       JMRI distributions for macOS contain application bundles for each of the
       main applications: DecoderPro, PanelPro, etc. These provide familiar
       application icons for the user.
@@ -248,7 +249,7 @@
             will use profile <em>PROFILEID</em> as the <a href=
         "/help/en/html/profiles.shtml">JMRI configuration
         profile</a> to use instead of the default one. (since JMRI 3.7.1)</dd>
-        
+
         <dt><code>--cp:a=<em>CLASSPATH</em></code></dt>
 
         <dd>Append the JARs and directories in <em>CLASSPATH</em>

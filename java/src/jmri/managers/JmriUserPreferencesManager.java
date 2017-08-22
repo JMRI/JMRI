@@ -23,10 +23,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SortOrder;
 import jmri.ConfigureManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.UserPreferencesManager;
 import jmri.beans.Bean;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -39,13 +41,14 @@ import jmri.util.node.NodeIdentity;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of {@link UserPreferencesManager} that saves user interface
  * preferences that should be automatically remembered as they are set.
- *
+ * <p>
  * This class is intended to be a transitional class from a single user
  * interface preferences manager to multiple, domain-specific (windows, tables,
  * dialogs, etc) user interface preferences managers. Domain-specific managers
@@ -73,8 +76,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     * with {@code UserPreferencesManager.class} as the argument instead.
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
+     * {@code UserPreferencesManager.class} as the argument instead.
      */
     @Deprecated
     public static UserPreferencesManager getInstance() {
@@ -86,16 +90,13 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * exists. Load user preferences if needed.
      *
      * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     * with {@code UserPreferencesManager.class} as the argument instead.
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
+     * {@code UserPreferencesManager.class} as the argument instead.
      */
     @Deprecated
     public static UserPreferencesManager getDefault() {
-        return InstanceManager.getOptionalDefault(UserPreferencesManager.class).orElseGet(() -> {
-            JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
-            manager.readUserPreferences();
-            return InstanceManager.setDefault(UserPreferencesManager.class, manager);
-        });
+        return InstanceManager.getDefault(UserPreferencesManager.class);
     }
 
     private boolean dirty = false;
@@ -148,7 +149,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * allow that checkBox to be set to a true state when it is next
      * initialized. This can also be used anywhere else that a simple yes/no,
      * true/false type preference needs to be stored.
-     *
+     * <p>
      * It should not be used for remembering if a user wants to suppress a
      * message as there is no means in the GUI for the user to reset the flag.
      * setPreferenceState() should be used in this instance The name is
@@ -1442,4 +1443,24 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(UserPreferencesManager.class)) {
+                JmriUserPreferencesManager instance = new JmriUserPreferencesManager();
+                instance.readUserPreferences();
+                return instance;
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(UserPreferencesManager.class);
+            return set;
+        }
+    }
 }

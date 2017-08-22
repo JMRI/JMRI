@@ -3385,7 +3385,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().equals(Setup.NONE)) {
-            Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+            Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
             if (editor != null) {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);

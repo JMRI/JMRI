@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
    ZTC611XNetPacketizerTest.class,
    ZTC611XNetTurnoutTest.class,
    ZTC611XNetTurnoutManagerTest.class,
-   ZTC611XNetInitializationManagerTest.class
+   ZTC611XNetInitializationManagerTest.class,
+   BundleTest.class
 })
 
 /**

@@ -1,18 +1,16 @@
 package jmri.jmrit.dispatcher;
 
+import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AllocatedSectionTest {
 
@@ -20,11 +18,12 @@ public class AllocatedSectionTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Transit transit = new jmri.Transit("TT1");
-        ActiveTrain at = new ActiveTrain(transit,"Train",ActiveTrain.USER);
+        ActiveTrain at = new ActiveTrain(transit, "Train", ActiveTrain.USER);
         jmri.Section section1 = new jmri.Section("TS1");
         jmri.Section section2 = new jmri.Section("TS2");
-        AllocatedSection t = new AllocatedSection(section1,at,1,section2,2);
-        Assert.assertNotNull("exists",t);
+        AllocatedSection t = new AllocatedSection(section1, at, 1, section2, 2);
+        Assert.assertNotNull("exists", t);
+        InstanceManager.getDefault(DispatcherFrame.class).dispose();
     }
 
     // The minimal setup for log4J
@@ -41,5 +40,4 @@ public class AllocatedSectionTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AllocatedSectionTest.class.getName());
-
 }

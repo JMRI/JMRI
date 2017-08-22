@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2014
  */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public enum LnCommandStationType {
 
     //  enum value                 name                         canRead progEndOp   ThrottleManager      SlotManager

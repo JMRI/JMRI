@@ -19,7 +19,8 @@ import org.junit.runners.Suite;
    Dcc4PcOpsModeProgrammerTest.class,
    Dcc4PcSensorTest.class,
    Dcc4PcSensorManagerTest.class,
-   Dcc4PcReporterTest.class
+   Dcc4PcReporterTest.class,
+   Dcc4PcBoardManagerTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

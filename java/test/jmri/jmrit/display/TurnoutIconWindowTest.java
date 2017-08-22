@@ -163,7 +163,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
                         EventDataConstants.CUSTOM, // position
                         location
                 ));
-
+        Assert.assertNotEquals("Not initial state", Turnout.UNKNOWN, sn.getState());
         Assert.assertEquals("state after one click", Turnout.CLOSED, sn.getState());
 
         // Click icon change state to inactive

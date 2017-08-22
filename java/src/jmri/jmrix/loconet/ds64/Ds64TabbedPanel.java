@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.ds64;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -93,7 +93,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * <P>
      * At instantiation, the object will automatically assume BoardID 1 and will
      * not pre-read the basic board configuration information.
-     *
+     * <p>
      */
     public Ds64TabbedPanel() {
         // this is a constructor which is in-place to support legacy applications.
@@ -308,7 +308,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         updateGuiBasicOpSw(14);
         opsw[15] = (localControlOfOutputsStyle.getSelectedIndex() >= 2);  //0 -> OpSw15="c"
         updateGuiBasicOpSw(15);
-        opsw[16] = routesControl.getSelectedIndex() >=2;
+        opsw[16] = routesControl.getSelectedIndex() >= 2;
         updateGuiBasicOpSw(16);
         opsw[17] = output1CrossbuckFlasherCheckBox.isSelected();
         updateGuiBasicOpSw(17);
@@ -1437,11 +1437,11 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * Updates data register to reflect address, state, and enable for two
      * turnouts.
      *
-     * @param address1 - first turnout address
-     * @param state1 - first turnout's state
+     * @param address1  - first turnout address
+     * @param state1    - first turnout's state
      * @param is1Unused - true if first turnout entry is to be "unused"
-     * @param address2 - second turnout address
-     * @param state2 - second turnout's state
+     * @param address2  - second turnout address
+     * @param state2    - second turnout's state
      * @param is2Unused - true if second turnout entry is to be "unused"
      */
     protected void updateOpSwsOutAddr(int address1, boolean state1, boolean is1Unused, int address2, boolean state2, boolean is2Unused) {
@@ -1957,7 +1957,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Reset the DS64 board
      */
-    @SuppressWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "Functionality not yet confirmed with hardware; may be useful at a future date.")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "Functionality not yet confirmed with hardware; may be useful at a future date.")
     private void boardFactoryReset() {
 
         // before proceeding, make sure that the user really wants to go forward
@@ -2530,7 +2530,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             Bundle.getMessage("ButtonTextResetRouteN", routeNumber),
                             Bundle.getMessage("ButtonCancel")};
                         int userReply = JOptionPane.showOptionDialog(this.getParent(),
-                                Bundle.getMessage("DialogTextClearRouteWarning",routeNumber),
+                                Bundle.getMessage("DialogTextClearRouteWarning", routeNumber),
                                 Bundle.getMessage("DialogHeadingClearRouteWarning"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
@@ -2538,8 +2538,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             resetRouteButton.setSelected(false);
                             return; // compare only to exactly the value for executing the "clear route" operation!
                         }
-
-
 
                         resetRouteOperation(routeNumber);
                     }
@@ -3024,7 +3022,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         break;
 
                     case "1116": // NOI18N
-                        opsw[11] = (routesControl.getSelectedIndex()  == 1) || (routesControl.getSelectedIndex() == 3);
+                        opsw[11] = (routesControl.getSelectedIndex() == 1) || (routesControl.getSelectedIndex() == 3);
                         opsw[16] = routesControl.getSelectedIndex() >= 2;
                         updateGuiBasicOpSw(11);
                         updateGuiBasicOpSw(16);
