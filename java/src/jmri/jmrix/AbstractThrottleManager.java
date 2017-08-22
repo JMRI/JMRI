@@ -119,9 +119,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * This allows more than one ThrottleLister to request a throttle at a time, 
      * the entries in this Hashmap are only valid during the throttle setup process.
      */
-    private HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
+    protected HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
 
-    static class WaitingThrottle {
+    protected static class WaitingThrottle {
 
         ThrottleListener l;
         BasicRosterEntry re;
@@ -141,7 +141,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return pl;
         }
 
-        ThrottleListener getListener() {
+        public ThrottleListener getListener() {
             return l;
         }
 
@@ -239,6 +239,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             if (log.isDebugEnabled()) {
                 log.debug("list of WaitingThrottles is empty: " + la + ";" + a);
             }
+            log.debug("calling requestThrottleSetup()");
             requestThrottleSetup(la, true);
         } else {
             a.add(new WaitingThrottle(l, re));
@@ -407,6 +408,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     @Override
     public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l,boolean steal){
        // the default implementation does nothing.
+       log.debug("empty stealThrottleRequest() has been activated for address {}, with steal boolean = {}",address.getNumber(),steal);
     }
 
 
