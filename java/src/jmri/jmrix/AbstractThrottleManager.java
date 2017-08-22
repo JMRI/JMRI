@@ -119,9 +119,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * This allows more than one ThrottleLister to request a throttle at a time, 
      * the entries in this Hashmap are only valid during the throttle setup process.
      */
-    protected HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
+    private HashMap<DccLocoAddress, ArrayList<WaitingThrottle>> throttleListeners = new HashMap<DccLocoAddress, ArrayList<WaitingThrottle>>(5);
 
-    protected static class WaitingThrottle {
+    static class WaitingThrottle {
 
         ThrottleListener l;
         BasicRosterEntry re;
@@ -141,7 +141,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return pl;
         }
 
-        public ThrottleListener getListener() {
+        ThrottleListener getListener() {
             return l;
         }
 
@@ -506,6 +506,33 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         notifyThrottleKnown(throttle, addr, false);
+    }
+
+    /**
+     * When the system-specific ThrottleManager has been unable to create the DCC
+     * throttle because it is already in use and must be "stolen" to take control,
+     * it needs to notify the listener of this situation.
+     * <p>
+     * This applies only to those systems where "stealing" applies, such as LocoNet.
+     * <p>
+     * @param address The DCC Loco Address where controlling requires a steal
+     * @param reason  A text string passed by the ThrottleManae as to why
+     */
+    public void notifyStealRequest(DccLocoAddress address) {
+        if (throttleListeners != null) {
+            ArrayList<WaitingThrottle> a = throttleListeners.get(address);
+            if (a == null) {
+                log.warn("Cannot issue a steal request to a throttle listener because No throttle listeners registered for address {}",address.getNumber());
+                return;
+            }
+            ThrottleListener l;
+            log.debug("{} listener(s) registered for address {}",a.size(),address.getNumber());
+            for (int i = 0; i < a.size(); i++) {
+                l = a.get(i).getListener();
+                log.debug("Notifying a throttle listener (address {}) of the steal situation", address.getNumber());
+                l.notifyStealThrottleRequired(address);
+            }
+        }
     }
 
     /**

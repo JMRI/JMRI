@@ -333,14 +333,17 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
     
     /**
-     * Inform the requesting throttle that the address is in-use and the throttle 
-     * user may either choose to "steal" the address, or quit the acquisition 
-     * process.
+     * Inform the requesting throttle object (not the connection-specific throttle 
+     * implementation!)  that the address is in-use and the throttle user may 
+     * either choose to "steal" the address, or quit the acquisition process.  
+     * The LocoNet acquisition process "retry" timer is stopped as part of this 
+     * process, since a positive response has been received from the command station
+     * and since user intervention is required.
      * <p>
      * Reminder: for LocoNet throttles which are not using "expanded slot" 
      * functionality, "steal" really means "share".  For those LocoNet throttles
-     * which are using "expanded slots", "steal" really means "force any other 
-     * throttle running that address to drop the loco".
+     * which are using "expanded slots", "steal" really means take control and 
+     * let the command station issue a "StealZap" LocoNet message to the other throttle.
      * <p>
      * @param locoAddr 
      */
@@ -348,27 +351,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         // need to find the "throttleListener" associated with the request for locoAddr, and
         // send that "throttleListener" a notification that the command station needs 
         // permission to "steal" the loco address.
-        
-        log.debug("notifyStealRequest for loco address {}", locoAddr);
         if (waitingForNotification.containsKey(locoAddr)) {
             waitingForNotification.get(locoAddr).interrupt();
             waitingForNotification.remove(locoAddr);
-        }
-        
-        if (throttleListeners != null) {
-            ArrayList<WaitingThrottle> a = throttleListeners.get(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
-            if (a == null) {
-                log.debug("No throttle listeners registered for address {}",locoAddr);
-                return;
-            }
-            ThrottleListener l;
-            log.debug("{} listener(s) registered for address {}",a.size(),locoAddr);
-            for (int i = 0; i < a.size(); i++) {
-                l = a.get(i).getListener();
-                log.debug("Notifying a throttle listener (address {}) of the steal situation", locoAddr);
-                l.notifyStealThrottleRequired(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
-            }
-        }
+
+            notifyStealRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
+        }   
     }
 
     /**
