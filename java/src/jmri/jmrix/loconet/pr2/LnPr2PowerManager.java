@@ -92,12 +92,6 @@ public class LnPr2PowerManager extends LnPowerManager {
         tc.sendLocoNetMessage(msg);
     }
 
-    // to free resources when no longer used
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
     LnOpsModeProgrammer pm = null;
 
     private void checkOpsProg() throws JmriException {

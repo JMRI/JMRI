@@ -124,7 +124,10 @@ public class Z21SimulatorAdapterTest {
 
     @AfterClass
     static public void tearDown() {
+        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
         a.dispose();
+        a.terminateThread();
+
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

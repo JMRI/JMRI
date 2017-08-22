@@ -1,0 +1,141 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/line/line-chart.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/line/line-chart.directive.js#L128" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfLineChart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><p>Directive for rendering a line chart.
+<br><br>
+See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> for a full list of C3 chart options.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-line-chart
+     config="{object}"
+     chart-data="{object}"
+     [show-x-axis="{boolean}"]
+     [show-y-axis="{boolean}"]
+     [set-area-chart="{boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><p>configuration settings for the line chart:<br/></p>
+<ul style='list-style-type: none'>
+<li>.chartId            - the ID of the container that the chart should bind to
+<li>.units              - unit label for values, ex: &#39;MHz&#39;,&#39;GB&#39;, etc..
+<li>.tooltipFn          - (optional) override the tooltip contents generation functions. Should take a data point and
+                          return HTML markup for the tooltip contents. Setting this overrides the tooltipType value.
+<li>.area               - (optional) overrides the default Area properties of the C3 chart
+<li>.size               - (optional) overrides the default Size properties of the C3 chart
+<li>.axis               - (optional) overrides the default Axis properties of the C3 chart
+<li>.color              - (optional) overrides the default Color properties of the C3 chart
+<li>.legend             - (optional) overrides the default Legend properties of the C3 chart
+<li>.point              - (optional) overrides the default Point properties of the C3 chart
+</ul></div></td></tr><tr><td>chartData</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><p>the data to be shown as an area chart<br/>
+First and second Array elements, xData and yData, must exist, next data arrays are optional.<br/></p>
+<ul style='list-style-type: none'>
+<li>.xData      - Array, X values for the data points, first element must be the name of the data
+<li>.yData      - Array, Y Values for the data points, first element must be the name of the data
+<li>.yData1     - Array, Y Values for the data points, first element must be the name of the data
+<li>.[...]      - Array, Y Values for the data points, first element must be the name of the data
+</ul></div></td></tr><tr><td>showXAxis <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><p>override config settings for showing the X Axis</p>
+</div></td></tr><tr><td>showYAxis <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><p>override config settings for showing the Y Axis</p>
+</div></td></tr><tr><td>setAreaChart <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><p>override config settings for showing area type chart</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pflinechart-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-13" source-edit-css="" source-edit-js="script.js-14" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-13" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-13">
+  <div ng-controller="ChartCtrl" class="row" style="display:inline-block; width: 100%;">
+    <div class="col-md-12">
+      <div pf-line-chart config="config" chart-data="data" set-area-chart="custAreaChart" show-x-axis="custShowXAxis" show-y-axis="custShowYAxis"></div>
+    </div>
+    <hr class="col-md-12">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <form role="form"">
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custShowXAxis">X Axis</input>
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custShowYAxis">Y Axis</input>
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custAreaChart">Area Chart</input>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+              <button ng-click="addDataPoint()">Add Data Point</button>
+              <button ng-click="resetData()">Reset Data</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <form role="form"">
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="data.dataAvailable">Data Available</input>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-14"></pre>
+<script type="text/ng-template" id="script.js-14">
+  angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope, pfUtils ) {
+
+    $scope.config = {
+      chartId: 'exampleLine',
+      grid: {y: {show: false}},
+      point: {r: 1},
+      color: {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]}
+    };
+
+    var today = new Date();
+    var dates = ['dates'];
+    for (var d = 20 - 1; d >= 0; d--) {
+      dates.push(new Date(today.getTime() - (d * 24 * 60 * 60 * 1000)));
+    }
+
+    $scope.data = {
+      dataAvailable: true,
+      xData: dates,
+      yData0: ['Created', 12, 10, 10, 62, 17, 10, 15, 13, 17, 10, 12, 10, 10, 12, 17, 16, 15, 13, 17, 10],
+      yData1: ['Deleted', 10, 17, 76, 14, 10, 10, 10, 10, 10, 10, 10, 17, 17, 14, 10, 10, 10, 10, 10, 10]
+    };
+
+    $scope.custShowXAxis = false;
+    $scope.custShowYAxis = false;
+    $scope.custAreaChart = false;
+
+    $scope.addDataPoint = function () {
+      $scope.data.xData.push(new Date($scope.data.xData[$scope.data.xData.length - 1].getTime() + (24 * 60 * 60 * 1000)));
+      $scope.data.yData0.push(Math.round(Math.random() * 100));
+      $scope.data.yData1.push(Math.round(Math.random() * 100));
+    };
+
+    $scope.resetData = function () {
+      $scope.data = {
+        xData: dates,
+        yData0: ['Created', 12, 10, 10, 62],
+        yData1: ['Deleted', 10, 17, 76, 14]
+      };
+    };
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-13" ng-eval-javascript="script.js-14"></div>
+</div></div>
+</div>

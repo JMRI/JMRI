@@ -47,7 +47,16 @@
         <a href="SystemStructure.shtml">intended system connection structure</a>
         which is documented 
         <a href="SystemStructure.shtml">documented on another page</a>.
-
+        
+        <p>This mostly talks about a type that connected to one or more
+        system connections, e.g. represents hardware-specific items.
+        It's also possible to have non-layout-specific types, which are
+        somewhat different (and should also be documented). For example,
+        <code>Routes</code>.
+        
+    <!-- need to better document the proper package structure: jmri.managers vs jmri.implementations -->
+    <!-- need to better document InstanceManager creation of default objects for non-specific types -->
+    
       <div class="list">
         <p>We list the files that are modified and created in the
         order they were done in this case; other orders may also
@@ -136,9 +145,11 @@
 
           <dd>
             <p>There are several historical ways to install things
-            in the InstanceManager. The current way is to use
-            "proxies" to allow the use of multiple layout systems,
-            so please copy Turnout as a template.</p>
+            in the InstanceManager. The current way is to 
+            use the <code>getDefault(..)</code>
+            and <code>getOptionalDefault(..)</code> calls for
+            a default and the <code>getList(..)</code>
+            call to get access to all. </p>
           </dd>
 
           <dd>
@@ -177,7 +188,8 @@
             <p>Here (or perhaps somewhere else in another system)
             you create an instance of the correct ReporterManager
             class at system startup and install it in the
-            InstanceManager.</p>
+            InstanceManager. See the 
+            <a href="SystemStructure.shtml">system structure page</a> for more details.</p>
           </dd>
 
           <dd>

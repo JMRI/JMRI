@@ -16,6 +16,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
+    // must be null until first use to allow app initialization before construction
+    static TabbedPreferencesFrame f = null;
+    String preferencesItem = null;
+    String preferenceSubCat = null;
+    static boolean inWait = false;
+
     /**
      * Create an action with a specific title.
      * <P>
@@ -64,11 +70,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         preferencesItem = category;
     }
 
-    static TabbedPreferencesFrame f;
-    String preferencesItem = null;
-    String preferenceSubCat = null;
-    static boolean inWait = false;
-
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         // create the frame
@@ -78,25 +79,23 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         }
 
         if (f == null) {
-            f = new TabbedPreferencesFrame() {};
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        setWait(true);
-                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
-                            Thread.sleep(50);
+            f = new TabbedPreferencesFrame();
+            new Thread(() -> {
+                final Object waiter = new Object();
+                try {
+                    setWait(true);
+                    while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
+                        synchronized (waiter) {
+                            waiter.wait(50);
                         }
-                        SwingUtilities.updateComponentTreeUI(f);
-                        showPreferences();
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                        setWait(false);
                     }
+                    SwingUtilities.updateComponentTreeUI(f);
+                    showPreferences();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    setWait(false);
                 }
-            };
-            Thread thr = new Thread(r);
-            thr.start();
+            }).start();
         } else {
             showPreferences();
         }

@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
-import com.digi.xbee.api.listeners.IDiscoveryListener;
 import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.listeners.IDiscoveryListener;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -37,6 +37,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
 
     /**
      * Constructor method
+     * @param tc traffic controller for node
      */
     public NodeConfigFrame(XBeeTrafficController tc) {
         super(tc);

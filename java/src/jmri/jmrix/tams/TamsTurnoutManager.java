@@ -49,6 +49,11 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     boolean noWarnDelete = false;
 
     @Override

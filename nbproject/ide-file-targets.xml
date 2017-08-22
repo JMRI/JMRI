@@ -1,41 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="../java" name="JMRI-IDE">
-    <!-- TODO: edit the following target according to your needs -->
-    <!-- (more info: http://www.netbeans.org/kb/55/freeform-config.html#compilesingle) -->
-    <target name="compile-selected-files-in-jmri">
-        <fail unless="files">Must set property 'files'</fail>
-        <!-- TODO decide on and define some value for ${build.classes.dir} -->
-        <mkdir dir="classes"/>
-        <javac destdir="classes" includeantruntime="false" includes="${files}" source="1.8" srcdir="src/jmri">
-            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom-2.0.5.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;lib/jlfgr-1_0.jar;lib/junit.jar;lib/jython-standalone-2.7.0.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath-1.5.2.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/jna-4.4.0.jar;lib/jna-platform-4.4.0.jar"/>
-        </javac>
-    </target>
+<project basedir=".." name="JMRI-IDE">
+    <import file="../build.xml"/>
     <!-- TODO: edit the following target according to your needs -->
     <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#compilesingle) -->
-    <target name="compile-selected-files-in-src">
+    <target depends="runtime-library-selection" name="compile-selected-files-in-src">
         <fail unless="files">Must set property 'files'</fail>
-        <mkdir dir="classes"/>
-        <javac destdir="classes" includes="${files}" source="1.8" srcdir="src">
-            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom-2.0.5.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;lib/jlfgr-1_0.jar;lib/junit.jar;lib/jython-standalone-2.7.0.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath-1.5.2.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/jna-4.4.0.jar;lib/jna-platform-4.4.0.jar"/>
-        </javac>
+        <java-compile javac.includes="${files}" javac.source="${source}"/>
     </target>
     <!-- TODO: edit the following target according to your needs -->
     <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#compilesingle) -->
     <target name="compile-selected-files-in-test">
         <fail unless="files">Must set property 'files'</fail>
-        <mkdir dir="classes"/>
-        <javac destdir="classes" includes="${files}" source="1.8" srcdir="test">
-            <classpath path="tmp;classes;lib/junit.jar;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/jakarta-regexp-1.5.jar;lib/javacsv.jar;lib/jdom-2.0.5.jar;lib/jdom.jar;lib/jfcunit.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;lib/jlfgr-1_0.jar;lib/junit.jar;lib/jython-standalone-2.7.0.jar;lib/log4j-1.2.17.jar;lib/mailapi.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath-1.5.2.jar;lib/annotations.jar;lib/jsr305.jar;lib/jna-4.4.0.jar;lib/jna-platform-4.4.0.jar"/>
-        </javac>
+        <java-compile javac.classpath="test.class.path" javac.includes="${files}" javac.source="${test}" javac.target="${testtarget}"/>
     </target>
     <!-- TODO: edit the following target according to your needs -->
     <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#compilesingle) -->
     <target name="compile-selected-files-in-tmp">
         <fail unless="files">Must set property 'files'</fail>
-        <!-- TODO decide on and define some value for ${build.classes.dir} -->
-        <mkdir dir="${build.classes.dir}"/>
-        <javac destdir="${build.classes.dir}" includes="${files}" source="1.8" srcdir="java/tmp">
-            <classpath path="tmp;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom-2.0.5.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/openlcb.jar;lib/jlfgr-1_0.jar;lib/junit.jar;lib/jython-standalone-2.7.0.jar;lib/log4j-1.2.17.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath-1.5.2.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar;lib/jna-4.4.0.jar;lib/jna-platform-4.4.0.jar"/>
-        </javac>
+        <java-compile javac.includes="${files}" javac.source="${genjavasrcdir}"/>
+    </target>
+    <!-- TODO: edit the following target according to your needs -->
+    <!-- (more info: http://www.netbeans.org/kb/articles/freeform-config.html#runsingle) -->
+    <target name="run-selected-file-in-test">
+        <fail unless="run.class">Must set property 'test.includes'</fail>
+        <ant antfile="${ant.script}" inheritall="false" target="test-single"/>
     </target>
 </project>

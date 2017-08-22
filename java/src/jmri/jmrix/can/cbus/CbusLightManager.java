@@ -45,7 +45,8 @@ public class CbusLightManager extends AbstractLightManager {
         return l;
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
@@ -109,6 +110,15 @@ public class CbusLightManager extends AbstractLightManager {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class.getName());

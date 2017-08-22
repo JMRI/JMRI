@@ -40,7 +40,7 @@ public class ConnectionConfigManagerTest {
     public final static String TYPE_B = "TypeB";
     public final static String TYPE_C = "TypeC";
     public final static String TYPE_D = "TypeD";
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
     @BeforeClass
     public static void setUpClass() throws Exception {

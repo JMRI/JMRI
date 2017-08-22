@@ -61,7 +61,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
         _BoardModel = new ReaderBoardModel();
         JTable boardTable = new JTable(_BoardModel);
-        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>();
+        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>(_BoardModel);
         sorter.setComparator(ReaderBoardModel.ADDRESS_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, ReaderBoardModel.ADDRESS_COLUMN, SortOrder.ASCENDING);
         
@@ -172,7 +172,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return rb.getString("ColumnDescription");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString(""); //no title above Edit buttons
+                return ""; //rb.getString(""); //no title above Edit buttons
             }
             return "";
         }

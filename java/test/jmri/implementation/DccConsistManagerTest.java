@@ -12,27 +12,24 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DccConsistManagerTest {
-
-    @Test
-    public void testCTor() {
-        DccConsistManager t = new DccConsistManager();
-        Assert.assertNotNull("exists",t);
-    }
+public class DccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase  {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        cm = new DccConsistManager();
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccConsistManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DccConsistManagerTest.class.getName());
 
 }

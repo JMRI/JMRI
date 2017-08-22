@@ -1,8 +1,8 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -34,6 +34,7 @@ final public class XBeeIOStream extends AbstractPortController {
     private Thread sinkThread;  // thread reading from the remote xbee
 
     private RemoteXBeeDevice remoteXBee;
+    @SuppressWarnings("unused")
     private XBeeTrafficController xtc;
 
     public XBeeIOStream(XBeeNode node, XBeeTrafficController tc) {

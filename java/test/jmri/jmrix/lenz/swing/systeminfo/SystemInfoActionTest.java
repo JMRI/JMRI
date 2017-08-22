@@ -35,13 +35,13 @@ public class SystemInfoActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SystemInfoAction action = new SystemInfoAction("Xpressnet System Information",memo);
+        SystemInfoAction action = new SystemInfoAction("XpressNet System Information", memo);
         action.actionPerformed(null);
-        // wait for frame with the value of "XPressNet System Information 
+        // wait for frame with the value of "XpressNet System Information
         // in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame("XPressNet System Information", false, false);
+        JFrame frame = JFrameOperator.waitJFrame("XpressNet System Information", false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SystemInfoFrame.class.getName(), frame.getClass().getName());

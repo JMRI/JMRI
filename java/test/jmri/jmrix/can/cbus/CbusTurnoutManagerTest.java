@@ -38,6 +38,6 @@ public class CbusTurnoutManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerTest.class.getName());
 
 }

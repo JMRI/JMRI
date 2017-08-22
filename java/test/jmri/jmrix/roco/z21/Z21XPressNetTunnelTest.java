@@ -26,6 +26,8 @@ public class Z21XPressNetTunnelTest {
         Assert.assertNotNull(tunnel.getStreamPortController());
     }
 
+    jmri.jmrix.lenz.XNetTrafficController packets;
+    
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
@@ -45,7 +47,7 @@ public class Z21XPressNetTunnelTest {
                  @Override
                  public void configure(){
                      // connect to a packetizing traffic controller
-                     jmri.jmrix.lenz.XNetTrafficController packets = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+                     packets = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
                      packets.connectPort(this);
                      this.getSystemConnectionMemo().setXNetTrafficController(packets);
                  }
@@ -56,9 +58,12 @@ public class Z21XPressNetTunnelTest {
 
     @After
     public void tearDown() {
-        int n = tc.outbound.size();
+        packets.terminateThreads();
+        tunnel.dispose();
         tunnel = null;
+        tc.terminateThreads();
         tc = null;
+        memo.getTrafficController().terminateThreads();
         memo = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

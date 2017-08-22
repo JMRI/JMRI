@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalMastManager extends AbstractManager
+public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         implements SignalMastManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalMastManager() {

@@ -35,6 +35,6 @@ public class SprogIIUpdateActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateActionTest.class.getName());
 
 }

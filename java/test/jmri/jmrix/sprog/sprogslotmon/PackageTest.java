@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     SprogSlotMonFrameTest.class,
     SprogSlotMonDataModelTest.class,
-    SprogSlotMonActionTest.class
+    SprogSlotMonActionTest.class,
+    BundleTest.class
 })
 
 /**

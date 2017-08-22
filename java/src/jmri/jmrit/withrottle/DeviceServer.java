@@ -446,6 +446,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public void startEKG() {
+        log.debug("starting heartbeat EKG for '{}' with interval: {}", getName(), pulseInterval);
         isUsingHeartbeat = true;
         stopEKGCount = 0;
         ekg = new Timer();

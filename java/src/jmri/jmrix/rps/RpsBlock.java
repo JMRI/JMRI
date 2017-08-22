@@ -93,6 +93,12 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
     }
 
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
+
     void updateCurrentThrottles() {
         List<Integer> l = sensor.getContents();
         if (l.size() == 0) {

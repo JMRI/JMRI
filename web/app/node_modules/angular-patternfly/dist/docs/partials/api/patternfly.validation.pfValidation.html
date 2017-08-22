@@ -1,0 +1,83 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/validation/validation.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/validation/validation.js#L72" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfValidation</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-validation-page patternfly-validation-pfvalidation-page"><p>Directive used for input validation based on custom function.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;pf-validation
+       [pf-validation-disabled="{expression}"]&gt;
+&lt;/pf-validation&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pfValidationDisabled <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-validation-page patternfly-validation-pfvalidation-page"><p>If true, the validation is disabled, it is enabled otherwise.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-validation-page patternfly-validation-pfvalidation-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.validation" source-edit-deps="angular.js script.js" source-edit-html="index.html-63" source-edit-css="" source-edit-js="script.js-64" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-63" ng-html-wrap-loaded="patternfly.validation angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-63">
+    <div ng-controller="ValidationDemoCtrl">
+    <form class="form-horizontal">
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="message">Initially valid:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" ng-model="myValueValid" pf-validation="isNumber(input)"/>
+          <span class="help-block">The value you typed is not a number.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="message">Fixed Number:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" ng-model="myValue" pf-validation="isNumber(input)"/>
+          <span class="help-block">The value you typed is not a number.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="message">Number:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" ng-model="myValue" pf-validation="isNumber(input)" pf-validation-disabled="isValidationDisabled"/>
+          <span class="help-block">The value you typed is not a number.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="message">Validation disabled:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="checkbox" ng-model="isValidationDisabled"/>
+        </div>
+      </div>
+    </form>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-64"></pre>
+<script type="text/ng-template" id="script.js-64">
+    angular.module( 'patternfly.validation' ).controller( 'ValidationDemoCtrl', function( $scope ) {
+      $scope.myValue = "Change this value to be a number";
+      $scope.myValueValid = 42;
+      $scope.isValidationDisabled = false;
+
+      $scope.isNumber = function (value) {
+        if (isNaN(value)) {
+          return false;
+        }
+
+        return true;
+      }
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.validation" ng-set-html="index.html-63" ng-eval-javascript="script.js-64"></div>
+</div></div>
+</div>

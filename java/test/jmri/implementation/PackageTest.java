@@ -53,7 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SignalHeadSignalMastTest.class));
         suite.addTest(SignalSpeedMapTest.suite());
         suite.addTest(new JUnit4TestAdapter(SignalSystemFileCheckTest.class));
-        suite.addTest(SingleTurnoutSignalHeadTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SingleTurnoutSignalHeadTest.class));
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(DccConsistTest.class));
@@ -93,6 +93,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TripleTurnoutSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutSignalMastTest.class));
         suite.addTest(new JUnit4TestAdapter(VirtualSignalMastTest.class));
+        suite.addTest(new JUnit4TestAdapter(AbstractInstanceInitializerTest.class));
 
 
         return suite;

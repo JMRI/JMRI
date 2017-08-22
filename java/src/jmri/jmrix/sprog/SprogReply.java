@@ -31,7 +31,7 @@ public class SprogReply extends AbstractMRReply {
     }
 
     /**
-     * Create a new SprogReply as a deep copy of an existing SprogReply
+     * Create a new SprogReply as a deep copy of an existing SprogReply.
      *
      * @param m the SprogReply to copy
      */
@@ -53,7 +53,7 @@ public class SprogReply extends AbstractMRReply {
     }
 
     /**
-     * Create a SprogReply from a String
+     * Create a SprogReply from a String.
      *
      * @param replyString a String containing the contents of the reply
      * @param isBoot a boolean indicating if this is a boot reply
@@ -81,7 +81,9 @@ public class SprogReply extends AbstractMRReply {
         return (this.toString().indexOf("!E") >= 0);
     }
 
-    // Check and strip framing characters and DLE from a sprog bootloader reply
+    /**
+     * Check and strip framing characters and DLE from a SPROG bootloader reply.
+     */
     public boolean strip() {
         char tmp[] = new char[_nDataChars];
         int j = 0;
@@ -113,8 +115,11 @@ public class SprogReply extends AbstractMRReply {
         return true;
     }
 
-    // Check and strip checksum from a sprog bootloader reply
-    // Assumes framing and DLE chars have been stripped
+    /**
+     * Check and strip checksum from a SPROG bootloader reply.
+     * <p>
+     * Assumes framing and DLE chars have been stripped
+     */
     public boolean getChecksum() {
         int checksum = 0;
         for (int i = 0; i < _nDataChars; i++) {
@@ -125,7 +130,7 @@ public class SprogReply extends AbstractMRReply {
     }
 
     /**
-     * Returns a string representation of this SprogReply
+     * Return a string representation of this SprogReply.
      */
     @Override
     public String toString() {
@@ -148,12 +153,12 @@ public class SprogReply extends AbstractMRReply {
     }
 
     /**
-     * Extracts Read-CV returned value from a message. Returns -1 if message
-     * can't be parsed.
-     *
+     * Extract Read-CV returned value from a message.
+     * <p>
      * SPROG is assumed to not be echoing commands. A reply to a command may
      * include the prompt that was printed after the previous command Reply to a
      * CV read is of the form " = hvv" where vv is the CV value in hex
+     * @return -1 if message can't be parsed
      */
     @Override
     public int value() {
@@ -176,11 +181,13 @@ public class SprogReply extends AbstractMRReply {
     }
 
     /**
-     * Returns the index of String s in the reply
+     * Find a specific string in the reply.
+     *
+     * @param s string to look for
+     * @return index of String s in the reply
      */
     @Override
     public int match(String s) {
-        // find a specific string in the reply
         String rep = new String(_dataChars, 0, _nDataChars);
         return rep.indexOf(s);
     }
@@ -199,9 +206,9 @@ public class SprogReply extends AbstractMRReply {
 
     /*
      * Normal SPROG replies will end with the prompt for the next command
-     * Bootloader will end with ETX with no preceding DLE
+     * Bootloader will end with ETX with no preceding DLE.
      * SPROG v4 bootloader replies "L>" on entry and replies "." at other
-     * times
+     * times.
      */
     public boolean endNormalReply() {
         // Detect that the reply buffer ends with "P> " or "R> " (note ending space)
@@ -278,6 +285,3 @@ public class SprogReply extends AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(SprogReply.class.getName());
 
 }
-
-
-

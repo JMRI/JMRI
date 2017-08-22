@@ -11,12 +11,9 @@ import jmri.*;
 public class BasePanel extends JPanel implements Constants {
 
     BasePanel() {
-        if (rb == null) {
-            rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
-        }
     }
 
-    static java.util.ResourceBundle rb = null;
+    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
 
     void complain(String message, String value) {
         javax.swing.JOptionPane.showMessageDialog(this,

@@ -39,8 +39,6 @@ import jmri.util.table.ButtonRenderer;
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
-
     /**
      * Constructor method
      */
@@ -87,8 +85,8 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         };
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        JButton b = new JButton(rb.getString("ButtonCheck"));
-        b.setToolTipText(rb.getString("TipCheck"));
+        JButton b = new JButton(Bundle.getMessage("ButtonCheck"));
+        b.setToolTipText(Bundle.getMessage("TipCheck"));
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -102,7 +100,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         p.add(Box.createHorizontalGlue());
 
         // renumber button
-        b = new JButton(rb.getString("ButtonRenumber"));
+        b = new JButton(Bundle.getMessage("ButtonRenumber"));
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -136,7 +134,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             scanSeen[i] = false;
         }
 
-        status.setText(rb.getString("StatusStart"));
+        status.setText(Bundle.getMessage("StatusStart"));
 
         // create a timer to send messages
         timer = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
@@ -153,10 +151,10 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                     timer.stop();
                     timer = null;
                     // if nothing seen yet, this is a failure
-                    if (status.getText().equals(rb.getString("StatusStart"))) {
-                        status.setText(rb.getString("StatusFail"));
+                    if (status.getText().equals(Bundle.getMessage("StatusStart"))) {
+                        status.setText(Bundle.getMessage("StatusFail"));
                     } else {
-                        status.setText(rb.getString("StatusOK"));
+                        status.setText(Bundle.getMessage("StatusOK"));
                     }
                 }
             }
@@ -185,8 +183,8 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     @Override
     public void reply(SerialReply m) {
         // set the status as having seen something
-        if (status.getText().equals(rb.getString("StatusStart"))) {
-            status.setText(rb.getString("StatusRunning"));
+        if (status.getText().equals(Bundle.getMessage("StatusStart"))) {
+            status.setText(Bundle.getMessage("StatusRunning"));
         }
         // is this a software version reply?
         if (m.getNumDataElements() != 2) {
@@ -235,11 +233,11 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         public String getColumnName(int c) {
             switch (c) {
                 case ADDRCOL:
-                    return rb.getString("TitleAddress");
+                    return Bundle.getMessage("TitleAddress");
                 case STATUSCOL:
-                    return rb.getString("TitleStatus");
+                    return Bundle.getMessage("TitleStatus");
                 case EDITCOL:
-                    return rb.getString("TitleConfigure");
+                    return ""; // no title over Edit column
                 default:
                     return "";
             }
@@ -270,26 +268,26 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                 case STATUSCOL:
                     // see if node exists
                     if (SerialTrafficController.instance().getNodeFromAddress(r + 1) != null) {
-                        return rb.getString("StatusConfig");
+                        return Bundle.getMessage("StatusConfig");
                     } else {
                         // see if seen in scan
                         if (scanSeen[r + 1]) {
-                            return rb.getString("StatusPresent");
+                            return Bundle.getMessage("StatusPresent");
                         } else {
-                            return rb.getString("StatusAbsent");
+                            return Bundle.getMessage("StatusAbsent");
                         }
                     }
                 case EDITCOL:
                     // see if node exists
                     if (SerialTrafficController.instance().getNodeFromAddress(r + 1) != null) {
-                        return rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonEdit");
                     } else {
-                        return rb.getString("ButtonAdd");
+                        return Bundle.getMessage("ButtonAdd");
                     }
                 case INITCOL:
                     // see if node exists
                     if (SerialTrafficController.instance().getNodeFromAddress(r + 1) != null) {
-                        return rb.getString("ButtonInit");
+                        return Bundle.getMessage("ButtonInit");
                     } else {
                         return null;
                     }

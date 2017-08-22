@@ -18,7 +18,7 @@ public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     CanSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
      */
     @Override
     public javax.swing.JMenu getMenu() {
@@ -28,6 +28,3 @@ public class CanComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         return new CanMenu(memo);
     }
 }
-
-
-

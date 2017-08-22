@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.Bundle {
+public class Bundle extends jmri.jmrix.ieee802154.xbee.Bundle {
 
     @Nullable
     private static final String name = null; // NOI18N

@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
     FrameServletPreferencesPanelTest.class,
     RailroadNamePreferencesPanelTest.class,
     WebServerActionTest.class,
-    WebServerManagerTest.class,
+    WebServerPreferencesInstanceInitializerTest.class,
     WebServerPreferencesPanelTest.class,
     WebServerPreferencesTest.class
 })

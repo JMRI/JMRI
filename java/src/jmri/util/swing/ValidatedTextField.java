@@ -8,8 +8,8 @@ import java.awt.event.FocusListener;
  * function.
  *
  * Supports two types of validated field: a generic text fields with length
- * and/or character set limited by a JAVA regular expression or an integral
- * numeric fields with minimum and maximum allowed values.
+ * and/or character set limited by a Java regular expression or an integral
+ * numeric field with minimum and maximum allowed values.
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
@@ -31,7 +31,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * field foreground and background colors. If instead the current field
      * value does not match the "Last Queried Value", the field background color
      * is changed to reflect that the value is not yet saved. Use the
-     * setLastQueriedValue() method to set the value for this comparison.
+     * {@link #setLastQueriedValue(String)} method to set the value for this comparison.
      *
      * @param len                    defines the width of the text field entry
      *                               box, in characters
@@ -224,7 +224,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Provides a validated text field, where the validation mechanism requires
+     * Provide a validated text field, where the validation mechanism requires
      * a Numeric value which is a hexadecimal value which is valid and within a
      * given numeric range.
      *
@@ -238,7 +238,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * field foreground and background colors. If instead the current field
      * value does not match the "Last Queried Value", the field background color
      * is changed to reflect that the value is not yet saved. Use the
-     * setLastQueriedValue() method to set the value for this comparison.
+     * {@link #setLastQueriedValue(String)} method to set the value for this comparison.
      *
      * @param len                    the length of the field
      * @param minAcceptableVal       defines the lowest acceptable value
@@ -282,14 +282,14 @@ public class ValidatedTextField extends javax.swing.JTextField {
         });
     }
 
-    private String lastQueryValue;    // used for GUI field colorization
+    private String lastQueryValue;      // used for GUI field colorization
     private String validateRegExpr;     // used for validation of TEXT ValidatedTextField objects
     private Integer minAllowedValue;    // used for validation of INTEGRALNUMERIC ValidatedTextField objects
     private Integer maxAllowedValue;    // used for validation of INTEGRALNUMERIC ValidatedTextField objects
-    private boolean allow0Length;  // used for validation
+    private boolean allow0Length;       // used for validation
 
     private String validationErrorText; // text used when validation fails
-    private FieldType fieldType;        // used to distinguis between INTEGRALNUMERIC-only and TEXT ValidatedTextField objects
+    private FieldType fieldType;        // used to distinguish between INTEGRALNUMERIC-only and TEXT ValidatedTextField objects
     private boolean forceUpper;         // used for forcing all input to upper-case for TEXT ValidatedTextField objects
     private MyVerifier verifier;        // internal mechanism used for verifying field data before focus is lost
 
@@ -340,7 +340,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Validates the field information. Does not make any GUI changes. A field
+     * Validate the field information. Does not make any GUI changes. A field
      * value that is zero-length is considered invalid.
      *
      * @return true if current field information is valid; otherwise false
@@ -432,8 +432,9 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Method to set the "Last Queried Value". This value is used by the
+     * Set the "Last Queried Value". This value is used by the
      * colorization process when focus is exiting the field.
+     * @see #getLastQueriedValue()
      *
      * @param lastQueriedValue the last value verified
      */
@@ -443,13 +444,34 @@ public class ValidatedTextField extends javax.swing.JTextField {
     }
 
     /**
-     * Method to retrieve the current value of the "Last Queried Value". See
-     * also setLastQueriedValue().
+     * Retrieve the current value of the "Last Queried Value".
+     * @see #setLastQueriedValue(String)
      *
      * @return the last value verified
      */
     public String getLastQueriedValue() {
         return lastQueryValue;
+    }
+
+    /**
+     * Set the "validationRegExp".
+     * @see #getValidateRegExp()
+     *
+     * @param validationRegExpr new validation pattern
+     */
+    public void setValidateRegExp(String validationRegExpr) {
+        validateRegExpr = validationRegExpr;
+    }
+
+    /**
+     * Retrieve the current "validationRegExp".
+     * Used in eg. Add Turnout to attach a manager-specific pattern without redrawing the pane
+     * @see #setValidateRegExp(String)
+     *
+     * @return the current validation pattern
+     */
+    public String getValidateRegExp() {
+        return validateRegExpr;
     }
 
     /**
@@ -514,12 +536,13 @@ public class ValidatedTextField extends javax.swing.JTextField {
             source.selectAll();
         }
     }
+
     private java.awt.Color invalidBackgroundColor = null;
 
     /**
-     * Sets the color used for the field background when the field value is
+     * Set the color used for the field background when the field value is
      * invalid.
-     * <p>
+     *
      * @param c background Color to be used when the value is invalid
      */
     public void setInvalidBackgroundColor(java.awt.Color c) {
@@ -535,4 +558,5 @@ public class ValidatedTextField extends javax.swing.JTextField {
     public final static java.awt.Color COLOR_BG_OK = java.awt.Color.white;
     public final static java.awt.Color COLOR_BG_UNEDITED = COLOR_BG_OK;
     public final static java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
+
 }

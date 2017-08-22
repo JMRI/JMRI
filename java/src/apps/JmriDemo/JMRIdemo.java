@@ -32,8 +32,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JMRIdemo extends Apps {
 
-    JMRIdemo(JFrame p) {
-        super(p);
+    JMRIdemo() {
+        super();
     }
 
     @Override
@@ -68,11 +68,12 @@ public class JMRIdemo extends Apps {
         // show splash screen early
         splash(true);
 
-        Apps.setStartupInfo("JMRIdemo");
+        Apps.setStartupInfo("JmriDemo");
 
         setConfigFilename("JmriDemoConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("JmriDemo");
-        createFrame(new JMRIdemo(f), f);
+        JMRIdemo jd = new JMRIdemo();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(jd, f);
 
         log.debug("main initialization done");
         splash(false);

@@ -1,18 +1,15 @@
 package jmri.jmrit.nixieclock;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NixieClockFrameTest {
 
@@ -20,7 +17,8 @@ public class NixieClockFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NixieClockFrame t = new NixieClockFrame();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -36,6 +34,5 @@ public class NixieClockFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NixieClockFrameTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(NixieClockFrameTest.class.getName());
 }

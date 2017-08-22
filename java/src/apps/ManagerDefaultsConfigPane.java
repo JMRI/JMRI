@@ -17,6 +17,7 @@ import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.swing.JmriPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
@@ -25,6 +26,7 @@ import jmri.util.swing.JmriPanel;
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.5
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
@@ -87,7 +89,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
                     JRadioButton r = new SelectionButton(name, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
-                    if ( !selected[i] && manager.getDefault(item.managerClass) == null) {
+                    if (!selected[i] && manager.getDefault(item.managerClass) == null) {
                         r.setSelected(true);
                         selected[i] = true;
                     }
@@ -158,7 +160,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
 
     @Override
     public boolean isPreferencesValid() {
-        return true; // no validity checking performed
+        return InstanceManager.getDefault(ManagerDefaultSelector.class).isPreferencesValid(ProfileManager.getDefault().getActiveProfile());
     }
 
     /**
@@ -194,6 +196,6 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             }
         }
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class.getName());
 }

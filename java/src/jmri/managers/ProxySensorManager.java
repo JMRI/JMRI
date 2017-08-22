@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxySensorManager extends AbstractProxyManager
+public class ProxySensorManager extends AbstractProxyManager<Sensor>
         implements SensorManager {
 
     public ProxySensorManager() {
@@ -144,6 +144,15 @@ public class ProxySensorManager extends AbstractProxyManager
         return null;
     }
 
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
     @Override
     public long getDefaultSensorDebounceGoingActive() {
         return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingActive();
@@ -190,7 +199,6 @@ public class ProxySensorManager extends AbstractProxyManager
     public boolean isPullResistanceConfigurable(){
        return false;
     }
-
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());

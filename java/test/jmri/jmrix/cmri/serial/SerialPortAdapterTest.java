@@ -23,6 +23,7 @@ public class SerialPortAdapterTest extends jmri.jmrix.AbstractSerialPortControll
           }
        };
        jmri.jmrix.cmri.CMRISystemConnectionMemo memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
+       memo.setTrafficController(tc);
        apc = new SerialPortAdapter(memo){
             @Override
             public boolean status(){

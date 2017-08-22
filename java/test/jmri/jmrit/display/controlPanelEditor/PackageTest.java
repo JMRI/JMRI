@@ -13,6 +13,10 @@ import org.junit.runners.Suite;
     PortalIconTest.class,
     CircuitBuilderTest.class,
     PortalListTest.class,
+    EditPortalFrameTest.class,
+    EditPortalDirectionTest.class,
+    EditCircuitPathsTest.class,
+    EditCircuitFrameTest.class,
 })
 
 /**

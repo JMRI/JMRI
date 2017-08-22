@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class Transit extends AbstractNamedBean implements java.io.Serializable {
+public class Transit extends AbstractNamedBean {
 
     /**
      * The idle, or available for assignment to an ActiveTrain state.
@@ -571,6 +571,8 @@ public class Transit extends AbstractNamedBean implements java.io.Serializable {
         return numErrors;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT" , 
+            justification = "FindBugs doesn't see that toBeRemoved is being read by the forEach clause")
     public void removeTemporarySections() {
         ArrayList<TransitSection> toBeRemoved = new ArrayList<>();
         for (TransitSection ts : mTransitSectionList) {
@@ -612,9 +614,8 @@ public class Transit extends AbstractNamedBean implements java.io.Serializable {
                     throw new PropertyVetoException(Bundle.getMessage("VetoTransitSection", getDisplayName()), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // NOI18N
-            // ignore this property
         }
+        // we ignore the property setConfigureManager
     }
     private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());
 

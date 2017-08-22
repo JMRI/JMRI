@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JComboBox;
+import jmri.Disposable;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
@@ -21,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  */
-public class Setup {
+public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
@@ -334,7 +336,7 @@ public class Setup {
     public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
-        OperationsSetupXml.instance(); // load file
+        InstanceManager.getDefault(OperationsSetupXml.class); // load file
         return getDefault().mainMenuEnabled;
     }
 
@@ -355,10 +357,11 @@ public class Setup {
     }
 
     public static void setAutoSaveEnabled(boolean enabled) {
-        boolean old = getDefault().autoSave;
         getDefault().autoSave = enabled;
-        if (!old && enabled) {
-            new AutoSave();
+        if (enabled) {
+            new AutoSave().start();
+        } else {
+            new AutoSave().stop();
         }
     }
 
@@ -548,7 +551,7 @@ public class Setup {
         boolean old = getDefault().generateCsvManifest;
         getDefault().generateCsvManifest = enabled;
         if (enabled && !old) {
-            TrainManagerXml.instance().createDefaultCsvManifestDirectory();
+            InstanceManager.getDefault(TrainManagerXml.class).createDefaultCsvManifestDirectory();
         }
         setDirtyAndFirePropertyChange(MANIFEST_CSV_PROPERTY_CHANGE, old, enabled);
     }
@@ -561,7 +564,7 @@ public class Setup {
         boolean old = getDefault().generateCsvSwitchList;
         getDefault().generateCsvSwitchList = enabled;
         if (enabled && !old) {
-            TrainManagerXml.instance().createDefaultCsvSwitchListDirectory();
+            InstanceManager.getDefault(TrainManagerXml.class).createDefaultCsvSwitchListDirectory();
         }
         setDirtyAndFirePropertyChange(SWITCH_LIST_CSV_PROPERTY_CHANGE, old, enabled);
     }
@@ -872,11 +875,15 @@ public class Setup {
         return getDefault().printValid;
     }
 
-    public static void setSortByTrackEnabled(boolean enable) {
+    public static void setSortByTrackNameEnabled(boolean enable) {
         getDefault().sortByTrack = enable;
     }
 
-    public static boolean isSortByTrackEnabled() {
+    /**
+     * when true manifest work is sorted by track names.
+     * @return true if work at a location is to be sorted by track names.
+     */
+    public static boolean isSortByTrackNameEnabled() {
         return getDefault().sortByTrack;
     }
 
@@ -1068,7 +1075,7 @@ public class Setup {
 
     public static void setCarLoggerEnabled(boolean enable) {
         getDefault().carLogger = enable;
-        RollingStockLogger.instance().enableCarLogging(enable);
+        InstanceManager.getDefault(RollingStockLogger.class).enableCarLogging(enable);
     }
 
     public static boolean isEngineLoggerEnabled() {
@@ -1077,7 +1084,7 @@ public class Setup {
 
     public static void setEngineLoggerEnabled(boolean enable) {
         getDefault().engineLogger = enable;
-        RollingStockLogger.instance().enableEngineLogging(enable);
+        InstanceManager.getDefault(RollingStockLogger.class).enableEngineLogging(enable);
     }
 
     public static boolean isTrainLoggerEnabled() {
@@ -1086,7 +1093,7 @@ public class Setup {
 
     public static void setTrainLoggerEnabled(boolean enable) {
         getDefault().trainLogger = enable;
-        TrainLogger.instance().enableTrainLogging(enable);
+        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(enable);
     }
 
     public static boolean isSaveTrainManifestsEnabled() {
@@ -1902,7 +1909,7 @@ public class Setup {
         values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2090,7 +2097,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SCALE)) != null) {
                 String scale = a.getValue();
-                log.debug("scale: " + scale);
+                log.debug("scale: {}", scale);
                 try {
                     setScale(Integer.parseInt(scale));
                 } catch (NumberFormatException ee) {
@@ -2099,7 +2106,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_TYPES)) != null) {
                 String types = a.getValue();
-                log.debug("CarTypes: " + types);
+                log.debug("CarTypes: {}", types);
                 setCarTypes(types);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SWITCH_TIME)) != null) {
@@ -2184,7 +2191,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
                 log.debug("sortByTrack: {}", enable);
-                setSortByTrackEnabled(enable.equals(Xml.TRUE));
+                setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
@@ -2488,7 +2495,7 @@ public class Setup {
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
                 log.debug("manifest sortByTrack: {}", enable);
-                setSortByTrackEnabled(enable.equals(Xml.TRUE));
+                setSortByTrackNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
@@ -2916,16 +2923,19 @@ public class Setup {
     }
 
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        OperationsSetupXml.instance().setDirty(true);
+        InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
     public static Setup getDefault() {
-        return InstanceManager.getOptionalDefault(Setup.class).orElseGet(() -> {
-            return InstanceManager.setDefault(Setup.class, new Setup());
-        });
+        return InstanceManager.getDefault(Setup.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(Setup.class.getName());
+
+    @Override
+    public void dispose() {
+        new AutoSave().stop();
+    }
 
 }

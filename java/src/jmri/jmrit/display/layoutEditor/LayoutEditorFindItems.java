@@ -15,14 +15,14 @@ import org.slf4j.LoggerFactory;
 */
 public class LayoutEditorFindItems {
 
-    LayoutEditor layoutEditor;
+    private LayoutEditor layoutEditor;
 
     public LayoutEditorFindItems(LayoutEditor editor) {
         layoutEditor = editor;
     }
 
     public TrackSegment findTrackSegmentByName(String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         for (TrackSegment t : layoutEditor.trackList) {
@@ -34,7 +34,7 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByName(String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         for (PositionablePoint p : layoutEditor.pointList) {
@@ -71,7 +71,7 @@ public class LayoutEditorFindItems {
      * Returns an array list of track segments matching the block name.
      */
     public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         ArrayList<TrackSegment> ts = new ArrayList<TrackSegment>();
@@ -116,8 +116,7 @@ public class LayoutEditorFindItems {
             }
         } else if (bean instanceof SignalHead) {
             for (PositionablePoint p : layoutEditor.pointList) {
-                if (p.getWestBoundSignal().equals(bean.getSystemName())
-                        || p.getWestBoundSignal().equals(bean.getSystemName())) {
+                if (p.getWestBoundSignal().equals(bean.getSystemName())) {
                     return p;
                 }
             }
@@ -140,8 +139,7 @@ public class LayoutEditorFindItems {
             }
         } else if (bean instanceof SignalHead) {
             for (PositionablePoint p : layoutEditor.pointList) {
-                if (p.getEastBoundSignal().equals(bean.getSystemName())
-                        || p.getEastBoundSignal().equals(bean.getSystemName())) {
+                if (p.getEastBoundSignal().equals(bean.getSystemName())) {
                     return p;
                 }
             }
@@ -177,7 +175,6 @@ public class LayoutEditorFindItems {
             for (PositionablePoint p : layoutEditor.pointList) {
                 if (p.getEastBoundSignal().equals(bean.getSystemName())
                         || p.getWestBoundSignal().equals(bean.getSystemName())) {
-
                     return p;
                 }
                 if (bean.getUserName() != null && (p.getEastBoundSignal().equals(bean.getSystemName())
@@ -396,82 +393,89 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName) {
+        PositionablePoint result = null;
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getEastBoundSensorName().equals(sensorName)) {
-                return p;
+                result = p;
+                break;
             }
         }
-        return null;
+        return result;
     }
 
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName) {
+        PositionablePoint result = null;
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getWestBoundSensorName().equals(sensorName)) {
-                return p;
+                result = p;
+                break;
             }
-
         }
-        return null;
+        return result;
     }
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
-            if (t.getName().equals(name)) {
-                return t;
+        LayoutTurnout result = null;
+        if (!name.isEmpty()) {
+            for (LayoutTurnout t : layoutEditor.turnoutList) {
+                if (t.getName().equals(name)) {
+                    result = t;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
-            if (t.getTurnoutName().equals(name)) {
-                return t;
+        LayoutTurnout result = null;
+        if (!name.isEmpty()) {
+            for (LayoutTurnout t : layoutEditor.turnoutList) {
+                if (t.getTurnoutName().equals(name)) {
+                    result = t;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LevelXing findLevelXingByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LevelXing x : layoutEditor.xingList) {
-            if (x.getID().equals(name)) {
-                return x;
+        LevelXing result = null;
+        if (!name.isEmpty()) {
+            for (LevelXing x : layoutEditor.xingList) {
+                if (x.getID().equals(name)) {
+                    result = x;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LayoutSlip findLayoutSlipByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutSlip x : layoutEditor.slipList) {
-            if (x.getName().equals(name)) {
-                return x;
+        LayoutSlip result = null;
+        if (!name.isEmpty()) {
+            for (LayoutSlip x : layoutEditor.slipList) {
+                if (x.getName().equals(name)) {
+                    result = x;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LayoutTurntable findLayoutTurntableByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutTurntable x : layoutEditor.turntableList) {
-            if (x.getID().equals(name)) {
-                return x;
+        LayoutTurntable result = null;
+        if (!name.isEmpty()) {
+            for (LayoutTurntable x : layoutEditor.turntableList) {
+                if (x.getID().equals(name)) {
+                    result = x;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     // data encapsulation means that no one external to an object should
@@ -498,7 +502,7 @@ public class LayoutEditorFindItems {
      */
     @Deprecated
     public Object findObjectByTypeAndName(int type, String name) {
-        if (name.length() <= 0) {
+        if (name.isEmpty()) {
             return null;
         }
         switch (type) {
@@ -532,7 +536,12 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    // This replacement routine for findObjectByTypeAndName (above)
+    /**
+     * find object by name
+     * @param name the name of the object that you are looking for
+     * @return object the named object
+     */
+    // NOTE: This replacement routine for findObjectByTypeAndName (above)
     // uses the unique name prefixes to determine what type of item to find.
     // Currently this routine (like the one above that it replaces) is only
     // called by the setObjects routine in TrackSegment.java however in the
@@ -541,7 +550,7 @@ public class LayoutEditorFindItems {
     // code you would just call this method instead.
     public Object findObjectByName(String name) {
         Object result = null;   // assume failure (pessimist!)
-        if (name.length() > 0) {
+        if (!name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
             } else if (name.startsWith("A") || name.startsWith("EB") || name.startsWith("EC")) {
@@ -552,9 +561,9 @@ public class LayoutEditorFindItems {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
                 result = findLayoutTurntableByName(name);
-            } else if (name.startsWith("T")) {
+            } else if (name.startsWith("T")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
                 result = findTrackSegmentByName(name);
-            } else if (name.endsWith("-EB")) {
+            } else if (name.endsWith("-EB")) {  //BUGFIX: a 3rd party JMRI exporter gets this one wrong.
                 result = findPositionablePointByName(name);
             } else {
                 log.warn("findObjectByName({}): unknown type name prefix", name);

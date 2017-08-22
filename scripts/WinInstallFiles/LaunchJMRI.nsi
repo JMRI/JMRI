@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.0
+; - Support Java 9
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.0
 ; - Alter max and initial heap size calculations to be more in-line with
 ; - POSIX platforms
@@ -139,8 +142,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2016 JMRI Community"   ; Copyright string
-!define VER        "0.1.21.0"                     ; Launcher version
+!define COPYRIGHT  "(C) 1997-2017 JMRI Community" ; Copyright string
+!define VER        "0.1.22.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -251,19 +254,19 @@ Section "Main"
   System::Call kernel32::IsWow64Process(is,*i.s)
   Pop $x64
   DetailPrint "Result: $x64"
-  
+
   ; -- Find the JAVA install
-  
+
   ; -- Initialise JRE architecture variable
   StrCpy $x64JRE ${ARCH_32BIT}
-  
+
   ; -- Determine which JAVA exe to use
   StrCpy $R0 "java"
   StrCmp $NOISY ${SW_NORMAL} IsNoisy
   StrCpy $R0 "$R0w"
   IsNoisy:
   StrCpy $JAVAEXE "$R0.exe"
-  
+
   ; -- If we're running x64, first check for 64-bit JRE
   StrCmp ${ARCH_32BIT} $x64 JRESearch
     ; -- Now check if we should force 32-bit JRE usage on x64
@@ -276,6 +279,9 @@ Section "Main"
   ; -- Read from machine registry
   JRESearch:
     ClearErrors
+    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
+    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JRE\$R1" "JavaHome"
+    IfErrors 0 +3
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
     StrCpy $R0 "$R0\bin\$JAVAEXE"
@@ -289,7 +295,7 @@ Section "Main"
       DetailPrint "Setting x86 registry view..."
       StrCpy $x64JRE ${ARCH_32BIT}
       Goto JRESearch
-    
+
   JreNotFound:
     MessageBox MB_OK|MB_ICONSTOP "Java not found!"
     Goto Exit
@@ -297,13 +303,13 @@ Section "Main"
   JreFound:
   StrCpy $JAVAPATH $R0
   DetailPrint "JavaPath: $JAVAPATH"
-  
+
   ; -- Now we've determined Java is basically OK, copy the file to a
   ; -- temporary location and rename it
-  
+
   ; -- First try to remove any old temporary launchers
   RMDir /r $TEMP\LaunchJMRI
-  
+
   ; -- Now create temporary directory and copy JAVA launcher across
   CreateDirectory `$TEMP\LaunchJMRI`
   StrCpy $JEXEPATH `$TEMP\LaunchJMRI\$APPNAME.exe`
@@ -311,7 +317,7 @@ Section "Main"
   System::Call "kernel32::CopyFile(t `$JAVAPATH`, t `$JEXEPATH`, b `0`) ?e"
   Pop $0
   DetailPrint "Result: $0"
-  
+
   ; -- Check that the temporary launcher file exists
   ClearErrors
   FindFirst $0 $1 $JEXEPATH
@@ -336,7 +342,7 @@ Section "Main"
   ; -- it's not as simple to do that compared to the methods available
   ; -- on POSIX systems so, for the time being, we will just assume
   ; -- that the default calculation is performed by the JVM
-  
+
   ; -- Our required memory calculations will be as follows:
   ; -- - 1/4 total memory size on systems with more than 4GB RAM
   ; -- - 1/2 total memory size on systems with 1-4GB RAM
@@ -345,7 +351,7 @@ Section "Main"
   ; -- If running on an x86 JVM, we peg the maximum to ${X86MAX}
   ; -- as, it seems, the x86 JVM cannot always allocate a larger
   ; -- amount of RAM even if there is sufficient on the machine
-  
+
   ; -- Check that physical memory is >= MINMEM
   IntCmp $4 ${MINMEM} cmp_mem_gt_4 cmp_min_lt cmp_mem_gt_4
   cmp_min_lt:
@@ -378,7 +384,7 @@ Section "Main"
   DetailPrint "InitHeap: ${INITHEAP}m"
   DetailPrint "MinMemory: ${MINMEM}m"
   DetailPrint "MaxMemory: $CALCMAXMEMm"
-  
+
   ; -- Check if we're on a 32-bit JVM and adjust max heap down if necessary
   DetailPrint "Checking maximum heap size..."
   StrCmp $x64JRE ${ARCH_64BIT} check_heap_done
@@ -389,7 +395,7 @@ Section "Main"
     DetailPrint "Adjusted MaxMemory: $CALCMAXMEMm"
   check_heap_done:
   DetailPrint "...finished"
-  
+
   ; -- Build options string
   ; -- JVM and RMI options
 
@@ -401,7 +407,7 @@ Section "Main"
   ; -- Add profile (if specified)
   StrCmp $JMRIPROFILE "" contOptions
     StrCpy $JMRIOPTIONS '$JMRIOPTIONS -Dorg.jmri.profile="$JMRIPROFILE"'
-  
+
   contOptions:
   StrCpy $OPTIONS "$JMRIOPTIONS $JVMOPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
@@ -425,7 +431,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
   ; -- default file coding
   StrCpy $OPTIONS "$OPTIONS -Dfile.encoding=UTF-8"
-  
+
   ; -- Read environment variable
   ; -- JMRI_USERHOME - user files location
   ClearErrors
@@ -435,7 +441,7 @@ Section "Main"
     DetailPrint "Set user.home to JMRI_USERHOME: $JMRIUSERHOME"
     StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
     Goto ReadPrefsDir
-    
+
   CheckUserHome:
   ; -- If not defined, check user home is consistent
   Call CheckUserHome
@@ -531,13 +537,13 @@ Section "Main"
 
   ; -- We're no longer active
   DetailPrint "Return code from process: $7"
-  
+
   ; -- Check the return code is 100 - if so, re-launch
   StrCmp $7 100 LaunchJMRI
-  
+
   ; -- Set ErrorLevel to return code
   SetErrorLevel $7
-  
+
   Exit:
   DetailPrint "To copy this text to the clipboard, right click then choose"
   DetailPrint "  'Copy Details To Clipboard'"
@@ -718,7 +724,7 @@ Function ReadConfFile
   ClearErrors
   FileOpen $2 "$PROFILE\JMRI\jmri.conf" r
   IfErrors ReadConfFile_Exit
-  
+
   ReadConfFile_ReadLine:
     ClearErrors
     FileRead $2 $1
@@ -881,11 +887,11 @@ Function GetParameters
   Push $R2
   Push $R3
   Push $R4
-  
+
   StrCpy $R4 $R0
   StrCpy $R2 1
   StrLen $R3 $R4
-  
+
   ; -- Check for quote or space
   StrCpy $R0 $R4 $R2
   StrCmp $R0 '"' 0 +3
