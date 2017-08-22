@@ -256,7 +256,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         try {
             x = shared.getAttribute("x").getIntValue();
             y = shared.getAttribute("y").getIntValue();
-            // For compatibility with previous versions, try and see if height and width tags are contained in the file
+ 
+            // For compatibility with previous versions, try and
+            // see if height and width tags are contained in the file
             if ((a = shared.getAttribute("height")) != null) {
                 windowHeight = a.getIntValue();
                 panelHeight = windowHeight - 60;
@@ -265,7 +267,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 windowWidth = a.getIntValue();
                 panelWidth = windowWidth - 18;
             }
-            // For files created by the new version, retrieve window and panel sizes
+ 
+            // For files created by the new version, 
+            // retrieve window and panel sizes
             if ((a = shared.getAttribute("windowheight")) != null) {
                 windowHeight = a.getIntValue();
             }
@@ -285,6 +289,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             log.error("failed to convert LayoutEditor's attribute");
             result = false;
         }
+ 
         double xScale = 1.0;
         double yScale = 1.0;
         a = shared.getAttribute("xscale");
@@ -305,15 +310,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
+
         // find the name and default track color
         String name = "";
-        if (shared.getAttribute("name") != null) {
-            name = shared.getAttribute("name").getValue();
+        a = shared.getAttribute("name");
+        if (a != null) {
+            name = a.getValue();
         }
         if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             int n = JOptionPane.showConfirmDialog(frame,
                     java.text.MessageFormat.format(rb.getString("DuplicatePanel"),
                             new Object[]{name}),
@@ -323,40 +330,51 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 return false;
             }
         }
+        LayoutEditor panel = new LayoutEditor(name);
+        panel.setLayoutName(name);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+
         String defaultColor = "black";
+        a = shared.getAttribute("defaulttrackcolor");
+        if (a != null) {
+            defaultColor = a.getValue();
+        }
+        panel.setDefaultTrackColor(defaultColor);
+
         String defaultTextColor = "black";
-        if (shared.getAttribute("defaulttrackcolor") != null) {
-            defaultColor = shared.getAttribute("defaulttrackcolor").getValue();
+        a = shared.getAttribute("defaulttextcolor");
+        if (a != null) {
+            defaultTextColor = a.getValue();
         }
-        if (shared.getAttribute("defaulttextcolor") != null) {
-            defaultTextColor = shared.getAttribute("defaulttextcolor").getValue();
-        }
+        panel.setDefaultTextColor(defaultTextColor);
+
         String turnoutCircleColor = "track";  //default to using use default track color for circle color
-        if (shared.getAttribute("turnoutcirclecolor") != null) {
-            turnoutCircleColor = shared.getAttribute("turnoutcirclecolor").getValue();
+        a = shared.getAttribute("turnoutcirclecolor");
+        if (a != null) {
+            turnoutCircleColor = a.getValue();
         }
+        panel.setTurnoutCircleColor(turnoutCircleColor);
+
         int turnoutCircleSize = 2;
-        if (shared.getAttribute("turnoutcirclesize") != null) {
+        a = shared.getAttribute("turnoutcirclesize");
+        if (a != null) {
             try {
-                turnoutCircleSize = shared.getAttribute("turnoutcirclesize").getIntValue();
+                turnoutCircleSize = a.getIntValue();
             } catch (DataConversionException e1) {
                 //leave at default if cannot convert
                 log.warn("unable to convert turnoutcirclesize");
             }
         }
+        panel.setTurnoutCircleSize(turnoutCircleSize);
+
         boolean turnoutDrawUnselectedLeg = true;
         if ((a = shared.getAttribute("turnoutdrawunselectedleg")) != null && a.getValue().equals("no")) {
             turnoutDrawUnselectedLeg = false;
         }
+
         // create the objects
-        LayoutEditor panel = new LayoutEditor(name);
-        panel.setLayoutName(name);
         panel.setMainlineTrackWidth(mainlinetrackwidth);
         panel.setSideTrackWidth(sidetrackwidth);
-        panel.setDefaultTrackColor(defaultColor);
-        panel.setDefaultTextColor(defaultTextColor);
-        panel.setTurnoutCircleColor(turnoutCircleColor);
-        panel.setTurnoutCircleSize(turnoutCircleSize);
         panel.setTurnoutDrawUnselectedLeg(turnoutDrawUnselectedLeg);
         panel.setXScale(xScale);
         panel.setYScale(yScale);

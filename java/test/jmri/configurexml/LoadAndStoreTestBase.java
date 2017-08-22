@@ -138,8 +138,9 @@ public class LoadAndStoreTestBase {
                         log.error("match failed in LoadAndStoreTest: Current line " + count);
                         log.error("   inLine = \"" + inLine + "\"");
                         log.error("  outLine = \"" + outLine + "\"");
-                        log.error("     comparing \"" + compFile.getPath() + "\" and \"" + outFile.getPath() + "\"");
-                        log.error("     orginal inFile \"" + inFile.getPath() + "\"");
+                        log.error("  comparing file \"" + compFile.getPath() + "\"");
+                        log.error("         to file \"" + outFile.getPath() + "\"");
+                        log.error("    orginal file \"" + inFile.getPath() + "\"");
                     }
                     Assert.assertEquals(inLine, outLine);
                 }

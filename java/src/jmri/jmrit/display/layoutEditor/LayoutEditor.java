@@ -607,8 +607,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        //TODO: Add code to set default save file name to name of currently loaded config/panel
-        //TODO: need to setSelectedFile
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
@@ -1097,7 +1095,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
         }
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(this);
+        //TODO: verify that this isn't needed... then dead code strip
+        ///InstanceManager.getDefault(PanelMenu.class).addEditorPanel(this);
         thisPanel = this;
         thisPanel.setFocusable(true);
         thisPanel.addKeyListener(this);
