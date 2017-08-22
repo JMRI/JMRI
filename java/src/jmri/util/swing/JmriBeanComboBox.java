@@ -35,7 +35,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     /**
      * Create a default Jmri Combo box for the given bean manager.
      *
-     * @param manager the jmri manager that is used to populate the combo box
+     * @param inManager the jmri manager that is used to populate the combo box
      */
     public JmriBeanComboBox(Manager inManager) {
         this(inManager, null, DisplayOptions.DISPLAYNAME);
@@ -45,11 +45,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * Create a Jmri Combo box for the given bean manager, with the Namedbean nBean already selected
      * and the items displayed and ordered by displayOrder.
      *
-     * @param manager the jmri manager that is used to populate the combo box
-     * @param nBean the namedBean that should automatically be selected
-     * @param displayOrder the way in which the namedbeans should be displayed: by System or Display Name
+     * @param inManager the jmri manager that is used to populate the combo box
+     * @param inNamedBean the namedBean that should automatically be selected
+     * @param inDisplayOrder the way in which the namedbeans should be displayed: by System or Display Name
      */
-    public JmriBeanComboBox(jmri.Manager inManager, NamedBean inNamedBean, DisplayOptions inDisplayOrder) {
+    public JmriBeanComboBox(Manager inManager, NamedBean inNamedBean, DisplayOptions inDisplayOrder) {
         _displayOrder = inDisplayOrder;
         _manager = inManager;
         setSelectedBean(inNamedBean);
@@ -104,11 +104,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     private DisplayOptions _displayOrder;
     private boolean _firstBlank = false;
 
-    private jmri.Manager _manager;
+    private Manager _manager;
 
     private HashMap<String, NamedBean> displayToBean = new HashMap<>();
 
-    public jmri.Manager getManager() {
+    public Manager getManager() {
         return _manager;
     }
 
@@ -453,7 +453,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     // this is called to validate that the text in the textfield
     // is a valid member of the managed data.
-    //note:  if _validateMode is true
+    // note:  if _validateMode is true
     //           if text is valid set textfield background to green else red
     //       if _validateMode is false
     //           if text is valid set textfield background to green else yellow
@@ -484,7 +484,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     public NamedBean getNamedBean() {
         NamedBean result = null;
 
-        jmri.Manager uDaManager = getManager();
+        Manager uDaManager = getManager();
 
         String comboBoxText = getText();
         comboBoxText = (null != comboBoxText) ? NamedBean.normalizeUserName(comboBoxText) : "";
