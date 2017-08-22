@@ -372,11 +372,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Internal routine to resend the speed on a timeout
      */
     synchronized protected void timeout() {
-        log.debug("refresh timer timed-out on slot {}", slot.getSlot());
-        // clear the last known layout_spd so that we will actually send the
-        // message.
-        layout_spd = -1;
-        setSpeedSetting(speedSetting);
+        if (slot != null) {
+            log.debug("refresh timer timed-out on slot {}", slot.getSlot());
+            // clear the last known layout_spd so that we will actually send the
+            // message.
+            layout_spd = -1;
+            setSpeedSetting(speedSetting);
+        }
+        else {
+            log.debug("refresh timer time-out on a null slot");
+        }
     }
 
     /**
