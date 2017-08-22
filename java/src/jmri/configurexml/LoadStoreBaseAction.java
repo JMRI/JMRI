@@ -70,5 +70,4 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
         }
         return userFileChooser;
     }
-
 }
