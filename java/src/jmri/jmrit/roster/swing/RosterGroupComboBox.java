@@ -1,6 +1,7 @@
 package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -23,7 +24,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
      * default Roster instance.
      *
-     * @param roster the Roster to show the groups of
      */
     // needed for unit tests
     public RosterGroupComboBox(Roster roster) {
@@ -33,7 +33,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Create a RosterGroupComboBox with an arbitrary selection.
      *
-     * @param selection the initial roster group selection
      */
     public RosterGroupComboBox(String selection) {
         this(Roster.getDefault(), selection);
@@ -42,22 +41,24 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Create a RosterGroupComboBox with arbitrary selection and Roster.
      *
-     * @param roster    the Roster to show the groups of
-     * @param selection the initial roster group selection
      */
     public RosterGroupComboBox(Roster roster, String selection) {
         super();
         _roster = roster;
         update(selection);
-        roster.addPropertyChangeListener((PropertyChangeEvent pce) -> {
-            if (pce.getPropertyName().equals("RosterGroupAdded")) {
-                update();
-            } else if (pce.getPropertyName().equals("RosterGroupRemoved")
-                    || pce.getPropertyName().equals("RosterGroupRenamed")) {
-                if (getSelectedItem().equals(pce.getOldValue())) {
-                    update((String) pce.getNewValue());
-                } else {
+        roster.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (pce.getPropertyName().equals("RosterGroupAdded")) {
                     update();
+                } else if (pce.getPropertyName().equals("RosterGroupRemoved")
+                        || pce.getPropertyName().equals("RosterGroupRenamed")) {
+                    if (getSelectedItem().equals(pce.getOldValue())) {
+                        update((String) pce.getNewValue());
+                    } else {
+                        update();
+                    }
                 }
             }
         });
@@ -80,16 +81,15 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
 
     /**
      * Update the combo box and select given String.
-     * <p>
-     * @param selection the selection to update to
+     *
      */
     public final void update(String selection) {
         removeAllItems();
         ArrayList<String> l = _roster.getRosterGroupList();
         Collections.sort(l);
-        l.forEach((g) -> {
+        for (String g : l) {
             addItem(g);
-        });
+        }
         if (allEntriesEnabled) {
             insertItemAt(Roster.AllEntries(Locale.getDefault()), 0);
             if (selection == null) {
@@ -121,7 +121,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
                 || getSelectedItem().equals(Roster.AllEntries(Locale.getDefault()))) {
             return null;
         } else {
-            return getSelectedItem();
+            return getSelectedItem().toString();
         }
     }
 
@@ -138,10 +138,5 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     public void setAllEntriesEnabled(boolean allEntriesEnabled) {
         this.allEntriesEnabled = allEntriesEnabled;
         this.update();
-    }
-
-    @Override
-    public String getSelectedItem() {
-        return super.getSelectedItem().toString();
     }
 }
