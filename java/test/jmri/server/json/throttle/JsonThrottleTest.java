@@ -1,5 +1,7 @@
 package jmri.server.json.throttle;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +18,7 @@ public class JsonThrottleTest {
 
     @Test
     @Ignore("still need to actually create the throttle (private method) or use getThrottle")
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException, jmri.server.json.JsonException {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -26,8 +28,11 @@ public class JsonThrottleTest {
                     }
                 });
         jmri.server.json.JsonMockConnection mc = new jmri.server.json.JsonMockConnection(output);
+        ObjectMapper m = new ObjectMapper();
+        JsonNode jn = m.readTree("");
+        
         JsonThrottleSocketService ts = new JsonThrottleSocketService(mc);
-//        JsonThrottle t = new JsonThrottle(new jmri.DccLocoAddress(42,false),ts);
+        JsonThrottle t = JsonThrottle.getThrottle("42",jn,ts);
         Assert.assertNotNull("exists",t);
     }
 
