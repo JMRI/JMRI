@@ -3,21 +3,18 @@ package jmri.jmrit.throttle;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WindowPreferencesTest {
 
     @Test
     public void testCTor() {
         WindowPreferences t = new WindowPreferences();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -34,5 +31,4 @@ public class WindowPreferencesTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(WindowPreferencesTest.class.getName());
-
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class AutoSave {
                     wait(60000); // wait another minute before saving
                 } catch (InterruptedException e) {
                 }
-                if (TrainManager.instance().isAnyTrainBuilding()) {
+                if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilding()) {
                     log.debug("Detected trains being built");
                     continue;
                 }

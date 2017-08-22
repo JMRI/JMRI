@@ -14,6 +14,7 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.Sound;
+import jmri.util.ThreadingUtil;
 import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1354,7 +1355,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 }
             }
 
-            // set sensors at
+            // set sensors 
             for (int k = 0; k < r.getNumOutputSensors(); k++) {
                 Sensor t = r.getOutputSensor(k);
                 int state = r.getOutputSensorState(k);
@@ -1366,11 +1367,15 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                         state = Sensor.ACTIVE;
                     }
                 }
-                try {
-                    t.setKnownState(state);
-                } catch (JmriException e) {
-                    log.warn("Exception setting sensor {} in route", t.getSystemName());
-                }
+                final int toState = state;
+                final Sensor setSensor = t;
+                ThreadingUtil.runOnLayoutEventually(() -> {  // eventually, even though we have timing here, should be soon
+                    try {
+                        setSensor.setKnownState(toState);
+                    } catch (JmriException e) {
+                        log.warn("Exception setting sensor {} in route", setSensor.getSystemName());
+                    }
+                });
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -1392,7 +1397,11 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                         state = Turnout.CLOSED;
                     }
                 }
-                t.setCommandedState(state);
+                final int toState = state;
+                final Turnout setTurnout = t;
+                ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
+                    setTurnout.setCommandedState(toState);
+                });         
                 try {
                     Thread.sleep(250 + delay);
                 } catch (InterruptedException e) {

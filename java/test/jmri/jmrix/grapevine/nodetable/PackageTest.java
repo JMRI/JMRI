@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
    NodeTableActionTest.class,
    NodeTablePaneTest.class,
    RenumberFrameTest.class,
-   NodeTableFrameTest.class
+   NodeTableFrameTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.grapevine.nodetable package

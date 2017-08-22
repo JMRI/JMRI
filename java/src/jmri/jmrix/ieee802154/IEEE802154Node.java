@@ -197,4 +197,5 @@ public abstract class IEEE802154Node extends AbstractNode {
     boolean needSend = true;          // 'true' if something has changed that requires data to be sent
 
     private final static Logger log = LoggerFactory.getLogger(IEEE802154Node.class.getName());
+
 }

@@ -42,6 +42,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
@@ -575,6 +576,8 @@ public class RouteTableAction extends AbstractTableAction {
             TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
             rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
             routeTurnoutTable.setRowSorter(rtSorter);
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
@@ -627,6 +630,8 @@ public class RouteTableAction extends AbstractTableAction {
             TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
             rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            rtSorter.setComparator(RouteTurnoutModel.UNAME_COLUMN, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.UNAME_COLUMN, SortOrder.ASCENDING);
             routeSensorTable.setRowSorter(rsSorter);
             routeSensorTable.setRowSelectionAllowed(false);
             routeSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
@@ -1694,12 +1699,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorLightAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorRouteAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     ConditionalVariable cloneVariable(ConditionalVariable v) {

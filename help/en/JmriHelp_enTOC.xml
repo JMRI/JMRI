@@ -420,7 +420,7 @@
 
    <tocitem text="NXWarrants " target="package.jmri.jmrit.logix.NXWarrant"/>
 
-   <tocitem text="Signal Controlled Warrants " target="package.jmri.jmrit.logix.SCWarrant"/>
+   <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 

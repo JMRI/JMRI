@@ -46,8 +46,9 @@ public class JmriConfigurationManager implements ConfigureManager {
                 InstanceManager.store(provided.cast(pp), provided);
             }
         }
-        if (ProfileManager.getDefault().getActiveProfile() != null) {
-            this.legacy.setPrefsLocation(new File(ProfileManager.getDefault().getActiveProfile().getPath(), Profile.CONFIG_FILENAME));
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            this.legacy.setPrefsLocation(new File(profile.getPath(), Profile.CONFIG_FILENAME));
         }
         if (!GraphicsEnvironment.isHeadless()) {
             ConfigXmlManager.setErrorHandler(new DialogErrorHandler());

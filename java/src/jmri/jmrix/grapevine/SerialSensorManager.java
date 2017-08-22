@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * System names are "GSnnnn", where nnnn is the sensor number without padding.
  * <P>
  * Sensors are numbered from 1.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
  */
@@ -118,6 +118,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             log.debug("register " + s.getSystemName() + " in node " + node);
         }
         return s;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
     }
 
     /**

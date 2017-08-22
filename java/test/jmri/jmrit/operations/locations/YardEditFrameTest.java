@@ -2,9 +2,10 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import org.junit.Assert;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ import org.junit.Test;
 public class YardEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
-    private LocationManager lManager = LocationManager.instance();
+    private LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
     private Location l = lManager.getLocationByName("Test Loc C");
 
     @Test
@@ -95,7 +96,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
-        
+
         // clean up the frame
         f.setVisible(false);
         f.dispose();
@@ -159,7 +160,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
@@ -180,8 +181,8 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
-        
-        lManager = LocationManager.instance();
+
+        lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
     }
 

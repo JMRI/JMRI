@@ -178,6 +178,15 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class.getName());
 
 }

@@ -2,9 +2,10 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import org.junit.Assert;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -91,7 +92,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         Track t = l.getTrackByName("4th staging track", null);
         Assert.assertNotNull("4th staging track", t);
         Assert.assertEquals("4th staging track length", 12, t.getLength());
-        Assert.assertEquals("Direction All before Change", ALL , t.getTrainDirections());
+        Assert.assertEquals("Direction All before Change", ALL, t.getTrainDirections());
 
         // deselect east, west and south check boxes
         enterClickAndLeave(f.northCheckBox);
@@ -163,7 +164,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
@@ -185,7 +186,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         loadLocations();
 
-        lManager = LocationManager.instance();
+        lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc A");
         Assert.assertNotNull("Test Loc A", l);
 
@@ -197,7 +198,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
     public void tearDown() throws Exception {
         super.tearDown();
 
-        lManager = null; 
-        l = null; 
+        lManager = null;
+        l = null;
     }
 }

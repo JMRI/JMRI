@@ -5,13 +5,13 @@ import jmri.LightManager;
 import jmri.NamedBean;
 
 /**
- * Implementation of a LightManager that can serves as a proxy for multiple
+ * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
  */
-public class ProxyLightManager extends AbstractProxyManager
+public class ProxyLightManager extends AbstractProxyManager<Light>
         implements LightManager {
 
     public ProxyLightManager() {
@@ -39,7 +39,7 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     @Override
-    protected NamedBean makeBean(int i, String systemName, String userName) {
+    protected Light makeBean(int i, String systemName, String userName) {
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
 
@@ -207,9 +207,18 @@ public class ProxyLightManager extends AbstractProxyManager
         }
         return false;
     }
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
 
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }
+
 }

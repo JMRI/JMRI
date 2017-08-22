@@ -29,7 +29,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     @Override
     public void setText(String text) {
-        if (text == null || text.length() == 0) {
+        if (text == null || !text.isEmpty()) {
             super.setText(defaultText);
         } else {
             super.setText(text);
@@ -73,7 +73,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     }
                 }
                 if (val instanceof String) {
-                    if (val.equals("")) {
+                    if (((String)val).isEmpty()) {
                         setText(defaultText);
                     } else {
                         setText((String) val);

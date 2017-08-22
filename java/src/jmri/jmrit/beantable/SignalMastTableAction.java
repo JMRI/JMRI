@@ -156,5 +156,5 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
-}
 
+}

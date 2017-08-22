@@ -7,7 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
@@ -37,8 +36,8 @@ import org.slf4j.LoggerFactory;
  */
 public class InstallTest extends Apps {
 
-    InstallTest(JFrame p) {
-        super(p);
+    InstallTest() {
+        super();
     }
 
     @Override
@@ -113,8 +112,9 @@ public class InstallTest extends Apps {
         Apps.setStartupInfo("InstallTest");
 
         setConfigFilename("InstallTestConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("InstallTest");
-        createFrame(new InstallTest(f), f);
+        InstallTest it = new InstallTest();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(it, f);
 
         log.debug("main initialization done");
         splash(false);

@@ -68,7 +68,7 @@ public class VSDConfigPanel extends JmriPanel {
     private boolean profile_selected;  // true if a user has selected a Profile
     private NullProfileBoxItem loadProfilePrompt; // dummy profileComboBox entry
 
-    private BusyDialog busy_dialog;
+    private jmri.util.swing.BusyDialog busy_dialog;
 
     // CONSTRUCTORS
     public VSDConfigPanel() {
@@ -496,7 +496,7 @@ public class VSDConfigPanel extends JmriPanel {
 
     protected VSDecoder getNewDecoder() {
         VSDecoder rv;
-        busy_dialog = new BusyDialog(this.main_pane.getFrame(), "Loading VSD Profile...", false);
+        busy_dialog = new jmri.util.swing.BusyDialog(this.main_pane.getFrame(), "Loading VSD Profile...", false);
         // This takes a little while... so we'll use a SwingWorker
         SwingWorker<VSDecoder, Object> sw = new SwingWorker<VSDecoder, Object>() {
             @Override
