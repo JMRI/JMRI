@@ -1,25 +1,23 @@
-package jmri.managers;
+package jmri.jmrix.cmri.serial.serialmon;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultUserPreferencesManagerFactoryTest {
+public class SerialFilterActionTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DefaultUserPreferencesManagerFactory t = new DefaultUserPreferencesManagerFactory();
+        SerialFilterAction t = new SerialFilterAction(new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +34,6 @@ public class DefaultUserPreferencesManagerFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultUserPreferencesManagerFactoryTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialFilterActionTest.class.getName());
 
 }

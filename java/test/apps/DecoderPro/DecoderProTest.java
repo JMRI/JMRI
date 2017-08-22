@@ -17,8 +17,7 @@ public class DecoderProTest {
     @Test
     @Ignore("This test works, but actually starts DecoderPro")
     public void testCtor() {
-        javax.swing.JFrame frame = new javax.swing.JFrame();
-        apps.Apps a = new DecoderPro(frame);
+        apps.Apps a = new DecoderPro();
         Assert.assertNotNull(a);
     }
 

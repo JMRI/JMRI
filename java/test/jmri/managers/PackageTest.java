@@ -35,8 +35,7 @@ import org.junit.runners.Suite;
     DefaultSignalMastManagerTest.class,
     DeferringProgrammerManagerTest.class,
     InternalTurnoutManagerTest.class,
-    WarningProgrammerManagerTest.class,
-    DefaultUserPreferencesManagerFactoryTest.class
+    WarningProgrammerManagerTest.class
 })
 
 /**

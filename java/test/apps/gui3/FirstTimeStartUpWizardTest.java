@@ -58,10 +58,11 @@ public class FirstTimeStartUpWizardTest {
                 // called when wizard is disposed, but do nothing in tests
             }
         };
-        FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false), a);
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false);
+        FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(jf, a);
         Assert.assertNotNull("exists", t);
         t.dispose();
-        SwingTestCase.disposeFrame("Decoder Pro Wizard", false, false);
+        jf.dispose();
     }
 
     // The minimal setup for log4J
