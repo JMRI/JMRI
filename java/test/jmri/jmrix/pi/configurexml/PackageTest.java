@@ -5,12 +5,12 @@ import org.junit.runners.Suite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   RaspberryPiConnectionConfigXmlTest.class,
-   RaspberryPiSensorManagerXmlTest.class,
-   RaspberryPiTurnoutManagerXmlTest.class
+    RaspberryPiConnectionConfigXmlTest.class,
+    RaspberryPiSensorManagerXmlTest.class,
+    RaspberryPiTurnoutManagerXmlTest.class,
+    RaspberryPiClassMigration.class
 })
 /**
  * Tests for the jmri.jmrix.pi.configurexml package.
@@ -22,8 +22,8 @@ public class PackageTest {
     // Main entry point
     static public void main(String[] args) {
         org.junit.runner.Result result = org.junit.runner.JUnitCore
-                 .runClasses(PackageTest.class);
-        for(org.junit.runner.notification.Failure fail: result.getFailures()) {
+                .runClasses(PackageTest.class);
+        for (org.junit.runner.notification.Failure fail : result.getFailures()) {
             log.error(fail.toString());
         }
         //junit.textui.TestRunner.main(testCaseName);
