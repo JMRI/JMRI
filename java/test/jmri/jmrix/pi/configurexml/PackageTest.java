@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class,
+   RaspberryPiConnectionConfigXmlTest.class,
    RaspberryPiSensorManagerXmlTest.class,
    RaspberryPiTurnoutManagerXmlTest.class
 })

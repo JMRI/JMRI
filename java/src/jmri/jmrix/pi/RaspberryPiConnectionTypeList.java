@@ -1,7 +1,7 @@
 package jmri.jmrix.pi;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid Raspberry Pi Connection Types
@@ -17,7 +17,7 @@ public class RaspberryPiConnectionTypeList implements jmri.jmrix.ConnectionTypeL
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.pi.ConnectionConfig"
+            "jmri.jmrix.pi.RaspberryPiConnectionConfig"
         };
     }
 

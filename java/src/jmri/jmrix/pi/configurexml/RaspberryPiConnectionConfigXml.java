@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml {
 
     private RaspberryPiAdapter adapter = null;
 
-    public ConnectionConfigXml() {
+    public RaspberryPiConnectionConfigXml() {
         super();
     }
 
@@ -38,7 +38,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
                 try {
                     this.creationErrorEncountered("Not running on Raspberry PI.", adapter.getSystemPrefix(), adapter.getUserName(), null);
                 } catch (JmriConfigureXmlException ex) {
-                    java.util.logging.Logger.getLogger(ConnectionConfigXml.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger(RaspberryPiConnectionConfigXml.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -82,6 +82,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfigXml.class.getName());
 
 }

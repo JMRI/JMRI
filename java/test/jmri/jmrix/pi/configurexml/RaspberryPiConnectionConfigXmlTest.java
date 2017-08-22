@@ -7,16 +7,16 @@ import org.junit.Test;
 
 /**
  * ConnectionConfigXmlTest.java
+ * <p>
+ * Description: tests for the RaspberryPiConnectionConfigXml class
  *
- * Description: tests for the ConnectionConfigXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
+public class RaspberryPiConnectionConfigXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
+    public void testCtor() {
+        Assert.assertNotNull("RaspberryPiConnectionConfigXml constructor", new RaspberryPiConnectionConfigXml());
     }
 
     // The minimal setup for log4J
@@ -31,4 +31,3 @@ public class ConnectionConfigXmlTest {
     }
 
 }
-
