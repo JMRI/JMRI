@@ -15,16 +15,17 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CsvImportActionTest {
+public class QuantumCvMgrImportActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CvTableModel tm = new CvTableModel(new JLabel(), null);
-        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test Csv Import");
-        CsvImportAction t = new CsvImportAction("Test Action",tm,jf,new JLabel());
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test Quantum Import");
+        QuantumCvMgrImportAction t = new QuantumCvMgrImportAction("Test Action",tm,jf,new JLabel());
+        Assert.assertNotNull("exists",t);
         jf.dispose();
-    } 
+    }
 
     // The minimal setup for log4J
     @Before
@@ -39,6 +40,6 @@ public class CsvImportActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsvImportActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImportActionTest.class.getName());
 
 }

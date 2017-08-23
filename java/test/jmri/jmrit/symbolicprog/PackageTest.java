@@ -81,6 +81,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CsvExportActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CsvImportActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(GenericImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LokProgImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ExportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1WinExportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(QuantumCvMgrImportActionTest.class));
 
         return suite;
     }
