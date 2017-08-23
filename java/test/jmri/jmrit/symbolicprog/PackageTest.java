@@ -71,6 +71,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedTableVarValueTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ValueEditorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ValueRendererTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CombinedLocoSelPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CombinedLocoSelTreePaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(KnownLocoSelPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoSelTreePaneTest.class));
 
         return suite;
     }
