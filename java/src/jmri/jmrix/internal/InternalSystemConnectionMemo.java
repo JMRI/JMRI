@@ -17,14 +17,13 @@ import jmri.InstanceManager;
  * <li>It must make sure that its objects are available individually through the instance manager.
  * <li>But it also has to handle the ProxyManager special cases in the InstanceManager
  * </ul>
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2010, 2016
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
     public InternalSystemConnectionMemo() {
-        super("I", "Internal");
+        super("I", "Internal"); // TODO I18N
         InstanceManager.store(this, InternalSystemConnectionMemo.class); // also register as specific type
         register();
     }
@@ -42,7 +41,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         log.debug("Do configureManagers - doesn't pre-build anything");
         if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
         configured = true;
-
     }
 
     private InternalLightManager lightManager;
@@ -204,7 +202,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        //No actions to add at start up
+        // No actions to add at start up
         return null;
     }
 
@@ -222,5 +220,5 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class.getName());
-}
 
+}

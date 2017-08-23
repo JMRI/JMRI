@@ -29,8 +29,11 @@
       <p>All the Signal Heads that JMRI knows about can be
       referenced using the "Signal Head Table" tool in the Tools &gt; Tables
       menu of most JMRI programs. Signal Heads may also be used
-      to build Signal Masts in a later step. There are eight
-      columns in the Signal Head Table:</p>
+      to build Signal Masts in a later step.<br>
+      You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a
+      column title.<br>
+      There are eight columns in the Signal Head Table:</p>
 
       <ol>
         <li>The System Name is assigned to the Signal Head when
@@ -78,7 +81,7 @@
       </ol>
 
       <p>To define a new Signal Head, click on the "<a href=
-      "SignalAddEdit.shtml">Add.."</a> button at the bottom of the
+      "SignalAddEdit.shtml">Add..."</a> button at the bottom of the
       Signal Head Table. It will prompt you for the Signal Head
       connection type and whatever information is needed.</p>
 
@@ -97,7 +100,8 @@
 
       <p>Back to the <a href=
       "../../../../html/tools/signaling/SignalHeads.shtml">Signal
-      Heads help page</a>. <!--#include virtual="/Footer" --></p>
+      Heads help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

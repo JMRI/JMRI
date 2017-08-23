@@ -9,6 +9,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.dispatcher.DispatcherFrame;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.ColorUtil;
@@ -20,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for LayoutEditor panes.
- *
+ * <p>
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
@@ -41,6 +43,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
         LayoutEditor p = (LayoutEditor) o;
+
         Element panel = new Element("LayoutEditor");
 
         panel.setAttribute("class", getClass().getName());
@@ -94,31 +97,30 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("blueBackground", "" + p.getBackgroundColor().getBlue());
         }
         panel.setAttribute("gridSize", "" + p.getGridSize());
+        panel.setAttribute("gridSize2nd", "" + p.getGridSize2nd());
+
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
 
         // note: moving zoom attribute into per-window user preference
         //panel.setAttribute("zoom", Double.toString(p.getZoom()));
+        int num;
 
         // include contents (Icons and Labels)
         List<Positionable> contents = p.getContents();
-        int num = contents.size();
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Positionable sub = contents.get(i);
-                if (sub != null && sub.storeItem()) {
-                    try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            panel.addContent(e);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error storing panel contents element: " + e);
+        for (Positionable sub : contents) {
+            if (sub != null && sub.storeItem()) {
+                try {
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                    if (e != null) {
+                        panel.addContent(e);
                     }
-                } else {
-                    log.warn("Null entry found when storing panel contents.");
+                } catch (Exception e) {
+                    log.error("Error storing contents element: " + e);
                 }
+            } else {
+                log.warn("Null entry found when storing panel contents.");
             }
         }
 
@@ -127,17 +129,15 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if (log.isDebugEnabled()) {
             log.debug("N layoutturnout elements: " + num);
         }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.turnoutList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel layoutturnout element: " + e);
+
+        for (Object sub : p.turnoutList) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
                 }
+            } catch (Exception e) {
+                log.error("Error storing layoutturnout element: " + e);
             }
         }
 
@@ -146,93 +146,87 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if (log.isDebugEnabled()) {
             log.debug("N tracksegment elements: " + num);
         }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.trackList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel tracksegment element: " + e);
+
+        for (Object sub : p.trackList) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
                 }
+            } catch (Exception e) {
+                log.error("Error storing tracksegment element: " + e);
             }
         }
+
         // include PositionablePoints
         num = p.pointList.size();
         if (log.isDebugEnabled()) {
             log.debug("N positionablepoint elements: " + num);
         }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.pointList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel positionalpoint element: " + e);
+
+        for (Object sub : p.pointList) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
                 }
+            } catch (Exception e) {
+                log.error("Error storing positionalpoint element: " + e);
             }
         }
+
         // include LevelXings
         num = p.xingList.size();
         if (log.isDebugEnabled()) {
             log.debug("N levelxing elements: " + num);
         }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.xingList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel levelxing element: " + e);
+
+        for (Object sub : p.xingList) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
                 }
+            } catch (Exception e) {
+                log.error("Error storing levelxing element: " + e);
             }
         }
+
         // include LayoutSlips
         num = p.slipList.size();
         if (log.isDebugEnabled()) {
             log.debug("N layoutSlip elements: " + num);
         }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.slipList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel layoutSlip element: " + e);
+
+        for (Object sub : p.slipList) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
                 }
+            } catch (Exception e) {
+                log.error("Error storing layoutSlip element: " + e);
             }
         }
+
         // include LayoutTurntables
         num = p.turntableList.size();
         if (log.isDebugEnabled()) {
             log.debug("N turntable elements: " + num);
         }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.turntableList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel turntable element: " + e);
+
+        for (Object sub : p.turntableList) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
                 }
+            } catch (Exception e) {
+                log.error("Error storing turntable element: " + e);
             }
         }
         return panel;
-    }
+    }   // store
 
     @Override
     public void load(Element element, Object o) {
@@ -316,7 +310,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if (shared.getAttribute("name") != null) {
             name = shared.getAttribute("name").getValue();
         }
-        if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
@@ -441,6 +435,19 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
+        // second grid size parameter
+        iz = 10; // this value is never used but it's the default
+        a = shared.getAttribute("gridSize2nd");
+        if (a != null) {
+            try {
+                iz = (Integer.parseInt(a.getValue()));
+                panel.setGridSize2nd(iz);
+            } catch (Exception e) {
+                log.error("failed to convert to int - " + a.getValue());
+                result = false;
+            }
+        }
+
         // set contents state
         String slValue = "both";
         if ((a = shared.getAttribute("sliders")) != null && a.getValue().equals("no")) {
@@ -553,7 +560,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         //if (shared.getAttribute("zoom") != null) {
         //    panel.setZoom(Double.valueOf(shared.getAttribute("zoom").getValue()));
         //}
-
         // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
         panel.initView();
@@ -615,7 +621,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             if (shared.getAttribute("openDispatcher") != null) {
                 if (shared.getAttribute("openDispatcher").getValue().equals("yes")) {
                     panel.setOpenDispatcherOnLoad(true);
-                    jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                    DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
                     df.loadAtStartup();
                 } else {
                     panel.setOpenDispatcherOnLoad(false);
@@ -623,7 +629,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
         return result;
-    }
+    }   // load
 
     @Override
     public int loadOrder() {

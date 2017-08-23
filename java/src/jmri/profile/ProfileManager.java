@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.beans.Bean;
 import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
@@ -24,6 +26,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXParseException;
 
 /**
  * Manage JMRI configuration profiles.
@@ -87,7 +90,7 @@ public class ProfileManager extends Bean {
 
     /**
      * Get the default {@link ProfileManager}.
-     *
+     * <p>
      * The default ProfileManager needs to be loaded before the InstanceManager
      * since user interaction with the ProfileManager may change how the
      * InstanceManager is configured.
@@ -102,7 +105,7 @@ public class ProfileManager extends Bean {
 
     /**
      * Get the default {@link ProfileManager}.
-     *
+     * <p>
      * The default ProfileManager needs to be loaded before the InstanceManager
      * since user interaction with the ProfileManager may change how the
      * InstanceManager is configured.
@@ -119,18 +122,20 @@ public class ProfileManager extends Bean {
      *
      * @return The in use Profile.
      */
+    @CheckForNull
     public Profile getActiveProfile() {
         return activeProfile;
     }
 
     /**
-     * Set the {@link Profile} to use. This method finds the Profile by Id and
-     * calls {@link #setActiveProfile(jmri.profile.Profile)}.
+     * Set the {@link Profile} to use. This method finds the Profile by path or
+     * Id and calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
-     * @param id the profile id
+     * @param identifier the profile path or id; can be null
      */
-    public void setActiveProfile(String id) {
-        if (id == null) {
+    public void setActiveProfile(@Nullable String identifier) {
+        // handle null profile
+        if (identifier == null) {
             Profile old = activeProfile;
             activeProfile = null;
             FileUtil.setProfilePath(null);
@@ -138,25 +143,40 @@ public class ProfileManager extends Bean {
             log.debug("Setting active profile to null");
             return;
         }
+        // handle profile path
+        File profileFile = new File(identifier);
+        if (profileFile.exists() && profileFile.isDirectory()) {
+            if (Profile.isProfile(profileFile)) {
+                try {
+                    this.setActiveProfile(new Profile(profileFile));
+                    return;
+                } catch (IOException ex) {
+                    log.error("Unable to use profile path {} to set active profile.", identifier, ex);
+                }
+            } else {
+                log.error("{} is not a profile folder.", identifier);
+            }
+        }
+        // handle profile ID without path
         for (Profile p : profiles) {
-            log.debug("Looking for profile {}, found {}", id, p.getId());
-            if (p.getId().equals(id)) {
+            log.debug("Looking for profile {}, found {}", identifier, p.getId());
+            if (p.getId().equals(identifier)) {
                 this.setActiveProfile(p);
                 return;
             }
         }
-        log.warn("Unable to set active profile. No profile with id {} could be found.", id);
+        log.warn("Unable to set active profile. No profile with id {} could be found.", identifier);
     }
 
     /**
      * Set the {@link Profile} to use.
-     *
+     * <p>
      * Once the {@link jmri.ConfigureManager} is loaded, this only sets the
      * Profile used at next application start.
      *
      * @param profile the profile to activate
      */
-    public void setActiveProfile(Profile profile) {
+    public void setActiveProfile(@Nullable Profile profile) {
         Profile old = activeProfile;
         if (profile == null) {
             activeProfile = null;
@@ -171,11 +191,12 @@ public class ProfileManager extends Bean {
         log.debug("Setting active profile to {}", profile.getId());
     }
 
+    @CheckForNull
     protected Profile getNextActiveProfile() {
         return this.nextActiveProfile;
     }
 
-    protected void setNextActiveProfile(Profile profile) {
+    protected void setNextActiveProfile(@Nullable Profile profile) {
         Profile old = this.nextActiveProfile;
         if (profile == null) {
             this.nextActiveProfile = null;
@@ -233,10 +254,23 @@ public class ProfileManager extends Bean {
     public void readActiveProfile() throws IOException {
         Properties p = new Properties();
         FileInputStream is = null;
-        if (this.configFile.exists()) {
+        if (this.configFile.exists() && this.configFile.length() != 0) {
             try {
                 is = new FileInputStream(this.getConfigFile());
-                p.loadFromXML(is);
+                try {
+                    p.loadFromXML(is);
+                } catch (IOException ex) {
+                    if (is != null) {
+                        is.close();
+                    }
+                    if (ex.getCause().getClass().equals(SAXParseException.class)) {
+                        // try loading the profile as a standard properties file
+                        is = new FileInputStream(this.getConfigFile());
+                        p.load(is);
+                    } else {
+                        throw ex;
+                    }
+                }
                 is.close();
             } catch (IOException ex) {
                 if (is != null) {
@@ -606,7 +640,7 @@ public class ProfileManager extends Bean {
 
     /**
      * Migrate a JMRI application to using {@link Profile}s.
-     *
+     * <p>
      * Migration occurs when no profile configuration exists, but an application
      * configuration exists. This method also handles the situation where an
      * entirely new user is first starting JMRI, or where a user has deleted all
@@ -782,7 +816,7 @@ public class ProfileManager extends Bean {
 
     /**
      * Get the active profile.
-     *
+     * <p>
      * This method initiates the process of setting the active profile when a
      * headless app launches.
      *
@@ -824,7 +858,7 @@ public class ProfileManager extends Bean {
 
     /**
      * Seconds to display profile selector before automatically starting.
-     *
+     * <p>
      * If 0, selector will not automatically dismiss.
      *
      * @return Seconds to display selector.
@@ -836,10 +870,10 @@ public class ProfileManager extends Bean {
     /**
      * Set the number of seconds to display the profile selector before
      * automatically starting.
-     *
+     * <p>
      * If negative or greater than 300 (5 minutes), set to 0 to prevent
      * automatically starting with any profile.
-     *
+     * <p>
      * Call {@link #saveActiveProfile() } after setting this to persist the
      * value across application restarts.
      *

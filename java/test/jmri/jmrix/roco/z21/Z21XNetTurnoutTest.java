@@ -19,16 +19,14 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertEquals("closed message", "53 00 15 88 CE",
+        Assert.assertEquals("closed message", "53 00 14 88 CF",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertEquals("thrown message", "53 00 15 89 CF",
+        Assert.assertEquals("thrown message", "53 00 14 89 CE",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     // Test the Z21XNetTurnout message sequence.
@@ -45,14 +43,14 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         }
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
-        Assert.assertEquals("on message sent", "53 00 15 88 CE",
+        Assert.assertEquals("on message sent", "53 00 14 88 CF",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         // notify that the command station received the reply
         XNetReply m = new XNetReply();
         m.setElement(0, 0x43);
         m.setElement(1, 0x00);
-        m.setElement(2, 0x15);
+        m.setElement(2, 0x14);
         m.setElement(3, 0x00);     // set CLOSED
         m.setElement(4, 0x56);
 
@@ -63,14 +61,14 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         while (n == lnis.outbound.size()) {
         } // busy loop.  Wait for 
         // outbound size to change.
-        Assert.assertEquals("off message sent", "53 00 15 80 C6",
+        Assert.assertEquals("off message sent", "53 00 14 80 C7",
                 lnis.outbound.elementAt(n).toString());
 
         // the turnout will not set its state until it sees a reply message.
         m = new XNetReply();
         m.setElement(0, 0x43);
         m.setElement(1, 0x00);
-        m.setElement(2, 0x15);
+        m.setElement(2, 0x14);
         m.setElement(3, 0x00);
         m.setElement(4, 0x56);
 

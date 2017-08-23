@@ -14,19 +14,20 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p port adapter for connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
 
-    JButton b = new JButton("Configure XBee noddes");
+    JButton b = new JButton(Bundle.getMessage("ConfigureXbeeTitle"));
 
     @Override
     public void loadDetails(JPanel details) {
@@ -39,7 +40,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "XBee Network";
+        return Bundle.getMessage("XBeeNetworkTitle");
     }
 
     public boolean isOptList1Advanced() {

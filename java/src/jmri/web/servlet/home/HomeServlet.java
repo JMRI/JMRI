@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
@@ -21,8 +23,9 @@ import jmri.web.servlet.ServletUtil;
             "/index.html", // redirect to default since ~ 1 FEB 2014
             "/prefs/index.html" // some WiThrottle clients require this URL to show web services
         })
+@ServiceProvider(service = HttpServlet.class)
 public class HomeServlet extends HttpServlet {
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getRequestURI().startsWith("/index.html")
                 || request.getRequestURI().startsWith("/prefs/index.html")) {
@@ -37,10 +40,10 @@ public class HomeServlet extends HttpServlet {
         response.setContentType(UTF8_TEXT_HTML);
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Home.html"))),
-                ServletUtil.getInstance().getRailroadName(false),
-                ServletUtil.getInstance().getNavBar(request.getLocale(), "/home"),
-                ServletUtil.getInstance().getRailroadName(false),
-                ServletUtil.getInstance().getFooter(request.getLocale(), "/home")
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), "/home"),
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), "/home")
         ));
     }
 

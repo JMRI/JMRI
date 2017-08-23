@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    MonitorPaneTest.class
+    MonitorPaneTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.swing.monitor package.

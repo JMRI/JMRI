@@ -1,0 +1,44 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/form/datetimepicker/datetimepicker.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/form/datetimepicker/datetimepicker.directive.js#L30" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfDateTimepicker</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.form</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-form-directive-page patternfly-form-directive-pfdatetimepicker-page"><p>Angular directive to wrap the bootstrap datetimepicker <a href="http://eonasdan.github.io/bootstrap-datetimepicker/">http://eonasdan.github.io/bootstrap-datetimepicker/</a></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-date-timepicker
+     date="{object}"
+     options="{string}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>date</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfdatetimepicker-page"><p>date and time moment object</p>
+</div></td></tr><tr><td>options</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfdatetimepicker-page"><p>the configuration options for the date picker</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-form-directive-page patternfly-form-directive-pfdatetimepicker-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.form" source-edit-deps="angular.js script.js" source-edit-html="index.html-27" source-edit-css="" source-edit-js="script.js-28" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-27" ng-html-wrap-loaded="patternfly.form angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-27">
+  <form class="form" ng-controller="FormDemoCtrl">
+    <span>Date and Time: <span ng-bind="date"></span></span>
+    <div pf-date-timepicker options="options" date="date"></div>
+  </form>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-28"></pre>
+<script type="text/ng-template" id="script.js-28">
+  angular.module( 'patternfly.form' ).controller( 'FormDemoCtrl', function( $scope ) {
+    $scope.options = {
+      format: 'HH:mm'
+    };
+    $scope.date = moment();
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.form" ng-set-html="index.html-27" ng-eval-javascript="script.js-28"></div>
+</div></div>
+</div>

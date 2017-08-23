@@ -8,7 +8,8 @@
                 <!-- gridheight for full-depth row heading, weightx for right-justified row -->
                 <label>
                     <text>Master Controls</text>
-                    <text xml:lang="it">="Controlli principali"</text>
+                    <text xml:lang="it">Controlli principali</text>
+                    <text xml:lang="de">Globale Einstellungen</text>
                 </label>
             </griditem>
             <griditem gridx="1" gridy="0" gridwidth="2" anchor="LINE_START">
@@ -65,17 +66,20 @@
                 <!-- gridheight for full-depth row heading, weightx for right-justified row -->
                 <label>
                     <text>Heavy Load and Coast Modes</text>
+                    <text xml:lang="de">Lastregelung und Coasting</text>
                 </label>
             </griditem>
             <griditem gridx="0" gridy="1">
                 <column>
                     <label>
                         <text>Requires decoder firmware version 4.15.9240 or later</text>
+                        <text xml:lang="de">Mind. v4.15.9240 oder später</text>
                     </label>
                     <column>
                         <row>
                             <label>
                                 <text>Your version is</text>
+                                <text xml:lang="de">Ihr Decoder hat</text>
                             </label>
                             <display item="Firmware Major Version" label=""/>
                             <display item="Firmware Minor Version" label=""/>
@@ -83,27 +87,29 @@
                         </row>
                         <label>
                             <text>(a "Read full sheet" may be required to view this)</text>
+                            <text xml:lang="de">&lt;html&gt;
+                                  Ein "Diese Seite vollständig lesen" kann&lt;br&gt;
+                                  notwendig sein um die Werte anzuzeigen.
+                                  &lt;/html&gt;
+                            </text>
+                            <!--text xml:lang="de">Ein "Diese Seite vollständig lesen" kann notwendig sein um die Werte anzuzeigen</text-->
                         </label>
                     </column>
                 </column>
             </griditem>
-            <griditem gridx="3" gridy="0">
+            <griditem gridx="3" gridy="1">
                 <display item="Heavy Load Option 1" format="checkbox" layout="above"/>
             </griditem>
-            <griditem gridx="4" gridy="0">
+            <griditem gridx="3" gridy="0">
                 <display item="Heavy Load" layout="above" label=""/>
                 <display item="Heavy Load" format="hslider" layout="above"/>
             </griditem>
-            <griditem gridx="3" gridy="1">
+            <griditem gridx="4" gridy="1">
                 <display item="Coast Mode Option 1" format="checkbox" layout="above"/>
             </griditem>
-            <griditem gridx="4" gridy="1">
+            <griditem gridx="4" gridy="0">
                 <display item="Coast Mode" layout="above" label=""/>
                 <display item="Coast Mode" format="hslider" layout="above"/>
-            </griditem>
-            <griditem gridx="4" gridy="1">
-                <display item="Sound Max Speed Brake" layout="above" label=""/>
-                <display item="Sound Max Speed Brake" format="hslider" layout="above"/>
             </griditem>
         </grid>
         <separator/>
@@ -210,22 +216,26 @@
                 <column>
                     <label>
                         <text>Due to the flexible and free-form design of LokSound Decoders, it is possible</text>
-                        <text xml:lang="it">="Grazie al progetto flessibile dei decoders LokSound è possibile"</text>
+                        <text xml:lang="it">Grazie al progetto flessibile dei decoders LokSound è possibile</text>
+                        <text xml:lang="de">Durch die flexible und freie Gestaltung von LokSound Decodern ist es</text>
                     </label>
                     <label>
                         <text>for project designers to assign sounds to arbitrary sound slots.</text>
-                        <text xml:lang="it">="assegnare suoni arbitrari ai singoli Slots"</text>
+                        <text xml:lang="it">assegnare suoni arbitrari ai singoli Slots</text>
+                        <text xml:lang="de">Projekt-Designern möglich Sounds beliebigen Sound-Slots zuzuordnen.</text>
                     </label>
                     <label>
                         <text> </text>
                     </label>
                     <label>
                         <text>Any sound slot labels shown below are only a guide from ESU documentation and</text>
-                        <text xml:lang="it">="Tutte le etichette degli sloto visualizzati sono solo esempi presi dalla documentazione ESU"</text>
+                        <text xml:lang="it">Tutte le etichette degli sloto visualizzati sono solo esempi presi dalla documentazione ESU</text>
+                        <text xml:lang="de">Alle unten aufgeführten Sound-Slots sind aus der Anleitung der ESU-Dokumentation und passen</text>
                     </label>
                     <label>
                         <text>may not be correct for the particular sound project loaded into your loco decoder.</text>
-                        <text xml:lang="it">="e potrebbero anche non corrispondere al particolare progetto caricato nel vostro decoder"</text>
+                        <text xml:lang="it">e potrebbero anche non corrispondere al particolare progetto caricato nel vostro decoder</text>
+                        <text xml:lang="de">möglicherweise nicht korrekt für das jeweilige Soundprojekt, das in Ihren Lokdecoder geladen wurde.</text>
                     </label>
                     <label>
                         <text> </text>

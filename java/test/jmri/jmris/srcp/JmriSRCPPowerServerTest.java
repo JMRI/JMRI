@@ -1,5 +1,6 @@
 package jmri.jmris.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +34,7 @@ public class JmriSRCPPowerServerTest{
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @After

@@ -1,7 +1,6 @@
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
-import gnu.io.CommPortIdentifier;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -29,6 +28,7 @@ import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -57,7 +57,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractSerialConnectionConfig() {
@@ -90,7 +90,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -99,7 +99,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -112,7 +112,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -121,7 +121,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -329,7 +329,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
-            log.error("UnsatisfiedLinkError - the gnu.io library has not been installed properly");
+            log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
             log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
@@ -362,18 +362,18 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
 
         if (baudList.length > 1) {
-            baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+            baudBox.setToolTipText(Bundle.getMessage("TipBaudRateMatch"));
             baudBox.setEnabled(true);
         } else {
-            baudBox.setToolTipText("The baud rate is fixed for this protocol");
+            baudBox.setToolTipText(Bundle.getMessage("TipBaudRateFixed"));
             baudBox.setEnabled(false);
         }
 
         NUMOPTIONS = NUMOPTIONS + options.size();
 
-        portBoxLabel = new JLabel("Serial port: ");
+        portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
 
-        baudBoxLabel = new JLabel("Baud rate:");
+        baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
@@ -649,8 +649,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     /**
      * This is purely here for systems that do not implement the
-     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo
-     * {@literal &} RPS and can be removed one they have been migrated
+     * SystemConnectionMemo and can be removed once they have been migrated.
      *
      * @return Resource bundle for action model
      */
@@ -693,4 +692,5 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class.getName());
+
 }

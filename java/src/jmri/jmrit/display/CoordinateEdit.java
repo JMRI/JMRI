@@ -158,13 +158,13 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("rotate", "...")) {
+        return new AbstractAction(Bundle.getMessage("Rotate", "...")) {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("rotate", ""), pos, true);
+                f.init(Bundle.getMessage("Rotate", ""), pos, true);
                 f.initRotate();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -236,7 +236,7 @@ public class CoordinateEdit extends JmriJFrame {
             }
         };
     }
-    ////////////////////////////////////////////////////////////// 
+    //////////////////////////////////////////////////////////////
 
     public static AbstractAction getNameEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("renamePanelMenu", "...")) {
@@ -253,7 +253,7 @@ public class CoordinateEdit extends JmriJFrame {
             }
         };
     }
-    ////////////////////////////////////////////////////////////// 
+    //////////////////////////////////////////////////////////////
 
     public CoordinateEdit() {
         super(false, false);
@@ -334,6 +334,8 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
+
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -372,6 +374,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -406,6 +409,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -446,6 +450,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -486,6 +491,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -538,6 +544,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -577,6 +584,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -617,6 +625,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -649,9 +658,9 @@ public class CoordinateEdit extends JmriJFrame {
                 if (pp.isIcon() || hasText) {
                     pp._text = hasText;
                     if (pp instanceof SensorIcon) {
-                       ((SensorIcon)pp).setOriginalText(t); 
+                       ((SensorIcon)pp).setOriginalText(t);
                     }
-                    pp.setText(t);                        
+                    pp.setText(t);
                     pp.updateSize();
                     dispose();
                 } else {
@@ -659,6 +668,7 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -702,6 +712,7 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -744,6 +755,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -781,6 +793,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        okButton.getRootPane().setDefaultButton(okButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {

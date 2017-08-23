@@ -1,5 +1,7 @@
 package jmri.jmrix;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
@@ -28,12 +31,14 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Manager for ConnectionConfig objects.
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
@@ -52,6 +57,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
+            this.setPortNamePattern();
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
@@ -380,6 +386,22 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             return manufacturers.toArray(new String[manufacturers.size()]);
         }
 
+    }
+
+    /**
+     * Override the default port name patterns unless the
+     * purejavacomm.portnamepattern property was set on the command line.
+     */
+    private void setPortNamePattern() {
+        final String pattern = "purejavacomm.portnamepattern";
+        Properties properties = System.getProperties();
+        if (properties.getProperty(pattern) == null) {
+            try (InputStream in = ConnectionConfigManager.class.getResourceAsStream("PortNamePatterns.properties")) { // NOI18N
+                properties.load(in);
+            } catch (IOException ex) {
+                log.error("Unable to read PortNamePatterns.properties", ex);
+            }
+        }
     }
 
     private static class ConnectionConfigManagerErrorHandler extends ErrorHandler {

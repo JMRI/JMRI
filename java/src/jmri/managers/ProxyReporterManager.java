@@ -10,7 +10,7 @@ import jmri.ReporterManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
+public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
 
     public ProxyReporterManager() {
         super();
@@ -37,7 +37,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
 
     @Override
-    protected NamedBean makeBean(int i, String systemName, String userName) {
+    protected Reporter makeBean(int i, String systemName, String userName) {
         return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
     }
 
@@ -132,6 +132,15 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
             }
         }
         return null;
+    }
+
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
     }
 
     @Override

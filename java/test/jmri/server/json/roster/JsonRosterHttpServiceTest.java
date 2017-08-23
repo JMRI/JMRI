@@ -117,9 +117,12 @@ public class JsonRosterHttpServiceTest {
 
     /**
      * Test of getRoster method, of class JsonRosterHttpService.
+     *
+     * @throws jmri.server.json.JsonException if unable to URL-encode roster
+     *                                        entry Ids
      */
     @Test
-    public void testGetRoster() {
+    public void testGetRoster() throws JsonException {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
         // no group name - check only size - it should contain all entries in Roster
         Assert.assertEquals(Roster.getDefault().numEntries(),
@@ -155,9 +158,12 @@ public class JsonRosterHttpServiceTest {
 
     /**
      * Test of getRosterEntry method, of class JsonRosterHttpService.
+     *
+     * @throws jmri.server.json.JsonException if unable to URL-encode roster
+     *                                        entry Id
      */
     @Test
-    public void testGetRosterEntry_Locale_RosterEntry() {
+    public void testGetRosterEntry_Locale_RosterEntry() throws JsonException {
         RosterEntry entry = Roster.getDefault().getEntryForId(TEST_ENTRY1);
         Assert.assertNotNull(entry);
         JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);

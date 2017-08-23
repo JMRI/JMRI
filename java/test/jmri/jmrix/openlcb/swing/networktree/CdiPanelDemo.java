@@ -57,6 +57,7 @@ public class CdiPanelDemo {
         // show
         f.pack();
         f.setVisible(true);
+        f.dispose();
     }
 
     @Test
@@ -65,6 +66,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample1.xml");
         f.setTitle("Sample1 XML");
         f.setVisible(true);
+        f.dispose();
     }
 
     @Test
@@ -73,6 +75,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample2.xml");
         f.setTitle("Sample 2 XML");
         f.setVisible(true);
+        f.dispose();
     }
 
     @Test
@@ -81,6 +84,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml");
         f.setTitle("Locomotive CDI Demonstration");
         f.setVisible(true);
+        f.dispose();
     }
 
     Element getRootFromFile(String name) {

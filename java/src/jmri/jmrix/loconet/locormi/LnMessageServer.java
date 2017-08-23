@@ -34,7 +34,9 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
     public static synchronized LnMessageServer getInstance() throws RemoteException {
         if (self == null) {
-            System.setSecurityManager(new java.rmi.RMISecurityManager());
+            if (System.getSecurityManager() == null) {
+                System.setSecurityManager(new SecurityManager());
+            }
 
             self = new LnMessageServer();
         }

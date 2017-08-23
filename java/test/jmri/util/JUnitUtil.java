@@ -1,11 +1,14 @@
 package jmri.util;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.Frame;
+import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -76,7 +79,7 @@ import org.slf4j.LoggerFactory;
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
  * </code></pre>
- *
+ * <p>
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
  *
@@ -92,25 +95,29 @@ public class JUnitUtil {
     /**
      * Release the current thread, allowing other threads to process. Waits for
      * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
-     *
+     * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use JFCUnit's flushAWT() and waitAtLeast(..)
      *
      * @param self currently ignored
+     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
+    @Deprecated
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
 
     /**
      * Release the current thread, allowing other threads to process.
-     *
+     * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
      * use JFCUnit's flushAWT() and waitAtLeast(..)
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
+     * @deprecated 4.9.1 Use the various waitFor routines instead
      */
+    @Deprecated
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
@@ -230,7 +237,7 @@ public class JUnitUtil {
     /**
      * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
      * a thread-safe way.
-     *
+     * <p>
      * You can't assume that all the consequences of that setting will have
      * propagated through when this returns; those might take a long time. But
      * the set operation itself will be complete.
@@ -257,18 +264,12 @@ public class JUnitUtil {
     }
 
     public static void resetInstanceManager() {
-        // clear system connections
-        jmri.jmrix.SystemConnectionMemo.reset();
-
-        // create a new instance manager & use initializer to clear static list of state
-        new InstanceManager() {
-            {
-                managerLists.clear();
-            }
-        };
-
-        // add the NamedBeanHandleManager, which is always needed
-        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        // close any open windows
+        resetWindows(true);
+        // clear all instances from the static InstanceManager
+        InstanceManager.getDefault().clearAll();
+        // ensure the auto-defeault UserPreferencesManager is not created
+        InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
     public static void resetTurnoutOperationManager() {
@@ -281,6 +282,9 @@ public class JUnitUtil {
     }
 
     public static void initDefaultUserMessagePreferences() {
+        // remove the existing user preferences manager (if present)
+        InstanceManager.reset(UserPreferencesManager.class);
+        // create a test user preferences manager
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
@@ -370,6 +374,23 @@ public class JUnitUtil {
         InstanceManager.setDefault(SignalMastManager.class, new DefaultSignalMastManager());
     }
 
+    public static void initDebugCommandStation() {
+        jmri.CommandStation cs = new jmri.CommandStation() {
+            public void sendPacket(@Nonnull byte[] packet, int repeats) {
+            }
+
+            public String getUserName() {
+                return "testCS";
+            }
+
+            public String getSystemPrefix() {
+                return "I";
+            }
+
+        };
+        InstanceManager.setDefault(jmri.CommandStation.class, cs);
+    }
+
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
         InstanceManager.setThrottleManager(m);
@@ -448,7 +469,7 @@ public class JUnitUtil {
      * If a profile will be written to and its contents verified as part of a
      * test use {@link #resetProfileManager(jmri.profile.Profile)} with a
      * provided profile.
-     *
+     * <p>
      * The new profile will have the name {@literal TestProfile }, the id
      * {@literal 00000000 }, and will be in the directory {@literal temp }
      * within the sources working copy.
@@ -531,6 +552,30 @@ public class JUnitUtil {
      */
     public static void setGUITestOutput(TestOut output) {
         org.netbeans.jemmy.JemmyProperties.setCurrentOutput(output);
+    }
+
+    public static void resetWindows(boolean logWindow) {
+        // close any open remaining windows from earlier tests
+        for (Frame frame : Frame.getFrames()) {
+            if (frame.isDisplayable()) {
+                if (logWindow) {
+                    log.warn("Cleaning up frame \"{}\" (a {}) from earlier test.", frame.getTitle(), frame.getClass());
+                }
+                ThreadingUtil.runOnGUI(() -> {
+                    frame.dispose();
+                });
+            }
+        }
+        for (Window window : Window.getWindows()) {
+            if (window.isDisplayable()) {
+                if (logWindow) {
+                    log.warn("Cleaning up window \"{}\" (a {}) from earlier test.", window.getName(), window.getClass());
+                }
+                ThreadingUtil.runOnGUI(() -> {
+                    window.dispose();
+                });
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

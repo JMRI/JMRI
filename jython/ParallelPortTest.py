@@ -8,8 +8,8 @@ import jmri
 name = "LPT1" 
 
 # find the port info and open the port
-import gnu.io
-port = gnu.io.CommPortIdentifier.getPortIdentifier(name)
+import purejavacomm
+port = purejavacomm.CommPortIdentifier.getPortIdentifier(name)
 parallelPort = port.open("JMRI", 50)
 outputStream = parallelPort.getOutputStream()
 print "Port opened OK"

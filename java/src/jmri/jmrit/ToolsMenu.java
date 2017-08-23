@@ -40,7 +40,7 @@ public class ToolsMenu extends JMenu {
 
         JMenu tableMenu = new JMenu(Bundle.getMessage("MenuTables"));
 
-        tableMenu.add(tableMenu);
+        ///tableMenu.add(tableMenu);    /// <=== WHY?
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableTabAction"));

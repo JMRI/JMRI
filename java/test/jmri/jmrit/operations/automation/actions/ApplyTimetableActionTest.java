@@ -33,6 +33,6 @@ public class ApplyTimetableActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ApplyTimetableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ApplyTimetableActionTest.class.getName());
 
 }

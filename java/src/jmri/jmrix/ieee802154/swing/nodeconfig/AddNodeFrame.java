@@ -5,8 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import org.slf4j.Logger;
@@ -34,6 +34,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param tc tc for connection for node
      */
     public AddNodeFrame(IEEE802154TrafficController tc) {
         super();
@@ -106,7 +107,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle add button
+     * Method to handle Add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist

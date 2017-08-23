@@ -1,27 +1,27 @@
 package jmri.jmrix.lenz.li100;
 
 /**
- * Handle configuring an XPressNet layout connection via a Lenz LI100 or LI101
+ * Handle configuring an XpressNet layout connection via a Lenz LI100 (or LI101)
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link LI100Adapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  *
+ *
  * @see LI100Adapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Ctor for an object being created during load process.
+     * Swing init is deferred.
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -29,7 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
 
     @Override
     public String name() {
-        return "Lenz LI100";
+        return "Lenz LI100"; // NOI18N
     }
 
     @Override
@@ -38,4 +38,5 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
             adapter = new LI100Adapter();
         }
     }
+
 }

@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
  */
 public class LV102ActionTest {
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
-
     @Test
     public void testStringCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -38,11 +36,11 @@ public class LV102ActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LV102Action action = new LV102Action("LV102 Configuration Manager");
         action.actionPerformed(null);
-        // wait for frame with the value of LV102config (from the 
+        // wait for frame with the value of MenuItemLV102ConfigurationManager (from the
         // resource bundle ) in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame(rb.getString("LV102Config"), false, false);
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLV102ConfigurationManager"), false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LV102Frame.class.getName(), frame.getClass().getName());

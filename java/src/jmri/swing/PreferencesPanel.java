@@ -104,11 +104,23 @@ public interface PreferencesPanel extends JmriServiceProviderInterface {
      * @return true if the application needs to restart
      */
     public abstract boolean isRestartRequired();
-    
+
     /**
      * Indicate that the preferences are valid.
-     * 
+     *
      * @return true if the preferences are valid, false otherwise
      */
     public abstract boolean isPreferencesValid();
+
+    /**
+     * Indicate the sort order to be used to sort PreferencesPanels in
+     * TabbedPreferences. PreferencesPanels with the same sort order value are
+     * alphabetically within that sort order.
+     *
+     * @return the sort order; default implementation returns
+     *         {@link java.lang.Integer#MAX_VALUE}.
+     */
+    public default int getSortOrder() {
+        return Integer.MAX_VALUE;
+    }
 }

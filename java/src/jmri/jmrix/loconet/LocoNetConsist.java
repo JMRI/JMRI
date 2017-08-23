@@ -474,6 +474,12 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = IDLESTATE;
     }
 
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        throttleManager.stealThrottleRequest(address, this, true);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class.getName());
 
 }

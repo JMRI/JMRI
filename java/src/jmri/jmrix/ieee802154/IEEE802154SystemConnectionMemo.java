@@ -45,6 +45,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     /**
      * Traffic Controller for this instance.
+     * @param newtc tc to save for connection
      */
     public void setTrafficController(IEEE802154TrafficController newtc) {
         _tc = newtc;
@@ -57,6 +58,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     /**
      * Always null as ieee802154 doesn't have a programmer
+     * @return null
      */
     @SuppressWarnings("deprecation")
     public ProgrammerManager getProgrammerManager() {
@@ -111,6 +113,3 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-
-
-

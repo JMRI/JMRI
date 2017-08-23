@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.tams.swing.locodatabase.PackageTest.class,
     jmri.jmrix.tams.swing.monitor.PackageTest.class,
     TamsComponentFactoryTest.class,
-    TamsMenuTest.class
+    TamsMenuTest.class,
+    TamsNamedPaneActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.tams.swing package.

@@ -56,7 +56,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
+     * @return current instance of connection
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -77,8 +83,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * A method that creates an array of systems names to allow bulk creation of
      * turnouts.
+     * @param start initial turnout name
+     * @param numberToAdd fixed at 1 currently
+     * @param prefix connection prefix
+     * @return array of new turnout names
      */
-    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
+    //further work needs to be done on how to format a number of TMCC turnouts, therefore this method will only return one entry.
     public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
         numberToAdd = 1;
         String range[] = new String[numberToAdd];

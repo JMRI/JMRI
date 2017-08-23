@@ -33,7 +33,9 @@ public abstract class Action {
     abstract public void cancelAction();
 
     /**
-     * for combo boxes
+     * For combo boxes.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
@@ -42,6 +44,7 @@ public abstract class Action {
 
     /**
      * Mask off menu bits.
+     *
      * @param code the integer to be modified by masking off menu bits.
      *
      * @return code {@literal &} ActionCodes.CODE_MASK
@@ -80,7 +83,7 @@ public abstract class Action {
 
     /**
      * Used to determine if this action can run concurrently with other actions.
-     * 
+     *
      * @return true if a concurrent action
      */
     public boolean isConcurrentAction() {
@@ -121,7 +124,7 @@ public abstract class Action {
      * Completes the action by displaying the correct message if there's one.
      * Will halt if the option to halt the automation is enabled or the user
      * requested the automation to halt.
-     * 
+     *
      * @param success true if action succeeded
      * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
      */
@@ -133,7 +136,7 @@ public abstract class Action {
      * Completes the action by displaying the correct message if there's one.
      * Will halt if the option to halt the automation is enabled or the user
      * requested the automation to halt.
-     * 
+     *
      * @param success true if action succeeded
      * @param buttons buttons to display in message
      * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
@@ -164,9 +167,9 @@ public abstract class Action {
 
     /**
      * Displays message if there's one.
-     * 
+     *
      * @param buttons the buttons to display, if success and two or more
-     *            buttons, the second button becomes the default
+     *                buttons, the second button becomes the default
      * @param success true if action succeeded
      * @param message the text to be displayed
      * @return which button was pressed, NO_MESSAGE_SENT, CLOSED
@@ -174,15 +177,15 @@ public abstract class Action {
     public int sendMessage(String message, Object[] buttons, boolean success) {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
-            String title = getAutomationItem().getId() + " " +
-                    (success ? "" : Bundle.getMessage("Failed")) + " " + getActionString();
+            String title = getAutomationItem().getId() + " "
+                    + (success ? "" : Bundle.getMessage("Failed")) + " " + getActionString();
             Object intialValue = buttons[0]; // normally HALT
             if (buttons.length > 1 && success) {
                 intialValue = buttons[1]; // normally OK
             }
             response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), title,
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
-                    , intialValue);
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons,
+                    intialValue);
         }
         return response;
     }
@@ -190,8 +193,9 @@ public abstract class Action {
     /**
      * Formats a message using fixed arguments in the following order:
      * <p>
-     * action name, train name, route location name, automation name, goto item id,
-     * train schedule day.
+     * action name, train name, route location name, automation name, goto item
+     * id, train schedule day.
+     *
      * @param message the string to be formated
      *
      * @return formated message

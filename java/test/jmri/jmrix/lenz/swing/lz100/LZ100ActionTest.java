@@ -18,8 +18,6 @@ import java.util.ResourceBundle;
 public class LZ100ActionTest {
 
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
-    private final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
-
 
     @Test
     public void testStringCTor() {
@@ -38,13 +36,13 @@ public class LZ100ActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LZ100Action action = new LZ100Action("LZ100 Configuration Utility",memo);
+        LZ100Action action = new LZ100Action(Bundle.getMessage("MenuItemLZ100ConfigurationManager"),memo);
         action.actionPerformed(null);
         // wait for frame with the value of "Z100Config" (from the 
         // resource bundle ) in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame(rb.getString("LZ100Config"), false, false);
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLZ100ConfigurationManager"), false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LZ100Frame.class.getName(), frame.getClass().getName());

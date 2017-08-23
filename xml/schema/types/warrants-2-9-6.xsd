@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
-<!-- $Id$ -->
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -107,6 +106,7 @@
                   <xs:attribute name="command" type="xs:string" use="required"></xs:attribute>
                   <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
                   <xs:attribute name="block" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="speed" type="xs:string"></xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="train" minOccurs="0" maxOccurs="1">

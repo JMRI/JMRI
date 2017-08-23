@@ -43,7 +43,8 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
@@ -91,7 +92,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * A method that creates an array of systems names to allow bulk creation of
      * turnouts.
      */
-    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
+    //further work needs to be done on how to format a number of CBUS turnouts, therefore this method will only return one entry.
     public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
         numberToAdd = 1;
         String range[] = new String[numberToAdd];
@@ -100,4 +101,14 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
         return range;
     }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
 }

@@ -1,5 +1,6 @@
 package jmri.server.json.power;
 
+import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -7,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Locale;
-import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -32,22 +32,24 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
     @Override
     public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         if (!this.listening) {
-            InstanceManager.getDefault(PowerManager.class).addPropertyChangeListener(this);
+            InstanceManager.getList(PowerManager.class).forEach((manager) -> {
+                manager.addPropertyChangeListener(this);
+            });
             this.listening = true;
         }
-        this.connection.sendMessage(this.service.doPost(type, null, data, locale));
+        this.connection.sendMessage(this.service.doPost(type, data.path(NAME).asText(), data, locale));
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
+    public void onList(String type, JsonNode data, Locale locale) throws JsonException, IOException {
+        this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             try {
-                this.connection.sendMessage(this.service.doGet(POWER, null, this.connection.getLocale()));
+                this.connection.sendMessage(this.service.doGet(POWER, ((PowerManager) evt.getSource()).getUserName(), this.connection.getLocale()));
             } catch (JsonException ex) {
                 this.connection.sendMessage(ex.getJsonMessage());
             }
@@ -58,8 +60,8 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
 
     @Override
     public void onClose() {
-        InstanceManager.getOptionalDefault(PowerManager.class).ifPresent((PowerManager pm) -> {
-            pm.removePropertyChangeListener(JsonPowerSocketService.this);
+        InstanceManager.getList(PowerManager.class).forEach((manager) -> {
+            manager.removePropertyChangeListener(JsonPowerSocketService.this);
         });
     }
 

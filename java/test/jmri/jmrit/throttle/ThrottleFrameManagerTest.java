@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -18,17 +19,21 @@ public class ThrottleFrameManagerTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // the constructor is private, but invoked by instance.
-        ThrottleFrameManager frame = ThrottleFrameManager.instance();
+        ThrottleFrameManager frame = InstanceManager.getDefault(ThrottleFrameManager.class);
         Assert.assertNotNull("exists", frame);
+        frame.showThrottlesList();
+        jmri.util.SwingTestCase.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"),true,true);
     }
 
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

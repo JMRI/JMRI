@@ -36,19 +36,17 @@ public class LIUSBConfigActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LIUSBConfigAction action = new LIUSBConfigAction("LIUSB Configuration",memo);
+        LIUSBConfigAction action = new LIUSBConfigAction(Bundle.getMessage("MenuItemLIUSBConfigurationManager"),memo);
         action.actionPerformed(null);
         // wait for frame with "LIUSB Configuration Utility" in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame("LIUSB Configuration Utility", false, false);
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLIUSBConfigurationManager"), false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LIUSBConfigFrame.class.getName(), frame.getClass().getName());
         frame.dispose();
     }
-
-
 
     @Before
     public void setUp(){

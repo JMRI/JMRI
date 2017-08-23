@@ -45,6 +45,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
@@ -164,7 +165,7 @@ public class PanelEditor extends Editor implements ItemListener {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
             }
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
@@ -173,7 +174,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
+                ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                 ii.pack();
                 ii.setVisible(true);
             }
@@ -224,7 +225,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     if (newName == null) {
                         return;  // cancelled
                     }
-                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)) {
+                    if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(newName)) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
                                 JOptionPane.ERROR_MESSAGE);
                         return;
@@ -233,7 +234,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         ((JFrame) getTargetPanel().getTopLevelAncestor()).setTitle(newName);
                     }
                     editor.setTitle();
-                    jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(editor);
+                    InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(editor);
                 }
 
                 ActionListener init(PanelEditor e) {
@@ -661,9 +662,9 @@ public class PanelEditor extends Editor implements ItemListener {
 
             // Positionable items with defaults or using overrides
             boolean popupSet = false;
-            popupSet = p.setRotateOrthogonalMenu(popup);
-            popupSet = p.setRotateMenu(popup);
-            popupSet = p.setScaleMenu(popup);
+            popupSet |= p.setRotateOrthogonalMenu(popup);
+            popupSet |= p.setRotateMenu(popup);
+            popupSet |= p.setScaleMenu(popup);
             if (popupSet) {
                 popup.addSeparator();
                 popupSet = false;
@@ -908,7 +909,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
+        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
         if (_dragging || event.isPopupTrigger()) {
             return;
         }
@@ -1245,7 +1246,7 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     // This adds a single CheckBox in the PopupMenu to set or clear all the selected
-    // items "Lock Position" or Positionable setting, when clicked, all the items in 
+    // items "Lock Position" or Positionable setting, when clicked, all the items in
     // the selection will be changed accordingly.
     private void setMultiItemsPositionableMenu(JPopupMenu popup) {
         // This would do great with a "greyed" CheckBox if the multiple items have different states.

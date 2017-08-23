@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
-    
+
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
@@ -30,7 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -82,8 +82,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     protected void setInstance() {
-        log.error("Unexpected call to setInstance");
-        new Exception().printStackTrace();
+        log.warn("Unexpected call to setInstance, multi-replica capability not yet present");
     }
 
     String manufacturerName = jmri.jmrix.loconet.LnConnectionTypeList.DIGITRAX;

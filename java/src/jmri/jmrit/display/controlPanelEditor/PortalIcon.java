@@ -37,7 +37,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
-        setPopupUtility(null);        // no text 
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -74,9 +73,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return super.finishClone(pos);
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     protected void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " put icon key= \"" + name + "\" icon= " + ic);
@@ -87,9 +83,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         _iconMap.put(name, icon);
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     public void setArrowOrientatuon(boolean set) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " setArrowOrientatuon regular=" + set + " from " + _regular);
@@ -97,9 +90,6 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         _regular = set;
     }
 
-    /**
-     * Called from EditPortalDirection frame in CircuitBuilder
-     */
     public void setHideArrows(boolean set) {
         if (log.isDebugEnabled()) {
             log.debug("Icon " + getPortal().getName() + " setHideArrows hide=" + set + " from " + _hide);
@@ -199,7 +189,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                     setStatus(HIDDEN);
                     return;
                 }
-                switch (((Integer) e.getNewValue()).intValue()) {
+                switch (((Integer) e.getNewValue())) {
                     case Portal.UNKNOWN:
                         setStatus(HIDDEN);
                         break;
@@ -210,7 +200,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
                         setStatus(FROM_ARROW);
                         break;
                     default:
-                        log.warn("Unhandled portal value: {}", ((Integer) e.getNewValue()).intValue());
+                        log.warn("Unhandled portal value: {}", e.getNewValue() );
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());
@@ -257,8 +247,10 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private void setShowCoordinatesMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
+
         edit.add("x = " + getX());
         edit.add("y = " + getY());
+
         edit.add(CoordinateEdit.getCoordinateEditAction(this));
         popup.add(edit);
     }
@@ -266,6 +258,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     private void setDisplayLevelMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
         edit.add("level= " + getDisplayLevel());
+
         edit.add(CoordinateEdit.getLevelEditAction(this));
         popup.add(edit);
     }

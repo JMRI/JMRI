@@ -47,7 +47,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetInstance() {
-        Assert.assertNull(InstanceManager.getNullableDefault(UserPreferencesManager.class));
+        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
         Assert.assertNotNull(JmriUserPreferencesManager.getInstance());
         Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getInstance());
         Assert.assertEquals(JmriUserPreferencesManager.getDefault(), JmriUserPreferencesManager.getInstance());
@@ -55,7 +55,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetDefault() {
-        Assert.assertNull(InstanceManager.getNullableDefault(UserPreferencesManager.class));
+        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
         Assert.assertNotNull(JmriUserPreferencesManager.getDefault());
         Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getDefault());
     }
@@ -940,9 +940,9 @@ public class JmriUserPreferencesManagerTest {
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals((Object) 42, m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals((Object) Math.PI, m2.getProperty(strClass, "doubleTest"));
-        Assert.assertEquals((Object) true, m2.getProperty(strClass, "booleanTest"));
+        Assert.assertEquals(42, m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals(Math.PI, m2.getProperty(strClass, "doubleTest"));
+        Assert.assertEquals(true, m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
@@ -980,9 +980,9 @@ public class JmriUserPreferencesManagerTest {
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals((Object) 42, m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals((Object) Math.PI, m2.getProperty(strClass, "doubleTest"));
-        Assert.assertEquals((Object) true, m2.getProperty(strClass, "booleanTest"));
+        Assert.assertEquals(42, m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals(Math.PI, m2.getProperty(strClass, "doubleTest"));
+        Assert.assertEquals(true, m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
@@ -996,6 +996,8 @@ public class JmriUserPreferencesManagerTest {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
+        // ensure no existing UserPreferencesManager interferes with this test
+        InstanceManager.reset(UserPreferencesManager.class);
     }
 
     @After

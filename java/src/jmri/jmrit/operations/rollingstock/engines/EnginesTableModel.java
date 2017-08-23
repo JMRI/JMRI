@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    EngineManager manager = EngineManager.instance(); // There is only one manager
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class); // There is only one manager
 
     // Defines the columns
     private static final int NUM_COLUMN = 0;
