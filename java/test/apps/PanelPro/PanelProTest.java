@@ -1,7 +1,7 @@
 package apps.PanelPro;
 
 import java.awt.GraphicsEnvironment;
-import java.io.File;
+import java.io.*;
 
 import org.apache.commons.io.*;
 
@@ -12,17 +12,20 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 /**
- *
+ * This is more of an acceptance test than a unit test. It confirms that the entire
+ * application can start up and configure itself.
+ * 
  * @author Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public class PanelProTest {
 
-    @Test
-    // @Ignore("Causes Exception")
+    //@Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelPro t = new PanelPro();
@@ -30,25 +33,41 @@ public class PanelProTest {
     }
 
     @Test
-    public void testLaunch() {
+    public void testLaunch() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        // create a custom profile
-        
-        //FileUtils.copyDirectory(new File("foo"), new File("bar"));
-        System.setProperty("org.jmri.profile", "java/test/apps/PanelPro/profiles/LocoNet_Simulator");
-        System.out.println("confirm as "+System.getProperty("org.jmri.profile"));
-        PanelPro.main(new String[]{"PanelPro"});  // <-- can we point to a pre-made profile here somehow?
-        
-        // last few messages from a normal startup are:
-            // INFO  - No saved user preferences file [main]
-            // INFO  - Did not find throttle preferences file.  This is normal if you haven't save the preferences before [init prefs]
-            // INFO  - Could not find WiThrottle preferences file (/Users/jake/Library/Preferences/JMRI/Nwe/throttle/WiThrottlePreferences.xml).  Normal if preferences have not been saved before. [init
+                
+        try {
+            // create a custom profile
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), new File("temp/"));
+            System.setProperty("org.jmri.profile", "temp/LocoNet_Simulator");
 
-        JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Could not find WiThrottle preferences") != null;},"init complete INFO message");
+            // launch!
+            PanelPro.main(new String[]{"PanelPro"});
         
-        // now clean up frames, depending on what's actually left
+            // last few messages from a normal startup are:
+                // INFO  - ****** JMRI log ******* [main] jmri.util.Log4JUtil.?()
+                // INFO  - PanelPro version 4.9.4ish+jake+20170823T1324Z+R0746e45604 starts under Java 1.8.0_144 on Mac OS X x86_64 v10.12.6 at Wed Aug 23 06:24:08 PDT 2017 [main] apps.Apps.?()
+                // WARN  - Unable to set active profile. No profile with id temp/LocoNet_Simulator could be found. [main] jmri.profile.ProfileManager.?()
+                // INFO  - Starting with profile My_JMRI_Railroad.3f72daeb [main] apps.Apps.?()
+                // INFO  - No saved preferences, will open preferences window.  Searched for /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/My_JMRI_Railroad/ProfileConfig.xml [main] apps.Apps.?()
+                // INFO  - File path program: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/ [main] jmri.util.FileUtilSupport.?()
+                // INFO  - File path preference: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/My_JMRI_Railroad/ [main] jmri.util.FileUtilSupport.?()
+                // INFO  - File path profile: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/My_JMRI_Railroad/ [main] jmri.util.FileUtilSupport.?()
+                // INFO  - File path settings: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/temp/ [main] jmri.util.FileUtilSupport.?()
+                // INFO  - File path home: is /Users/jake/ [main] jmri.util.FileUtilSupport.?()
+                // INFO  - File path scripts: is /Users/jake/Documents/Trains/JMRI/projects/JMRI/jython/ [main] jmri.util.FileUtilSupport.?()
+                // INFO  - Using jmri-92FD61C1C87D-3f72daeb as the JMRI Node identity [main] jmri.util.node.NodeIdentity.?()
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
         
+            // maybe have it run a script to indicate that it's really up?
+            
+            // now clean up frames, depending on what's actually left
+                // PanelPro
+        } finally {
+        
+            // need to clean up the temp directory
+        }
     }
 
      
