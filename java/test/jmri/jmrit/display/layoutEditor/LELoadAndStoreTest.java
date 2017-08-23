@@ -30,8 +30,6 @@ public class LELoadAndStoreTest extends LoadAndStoreTestBase {
     }
 
     public LELoadAndStoreTest(File inFile, boolean inPass) {
-        super(inFile, inPass);
-        System.out.println(String.format("LELoadAndStoreTest(%s, %s).",
-                inFile.getAbsolutePath(), (inPass ? "true" : "false")));
+        super(inFile, inPass, "All");
     }
 }

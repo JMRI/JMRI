@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-
 import apps.tests.Log4JFixture;
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,12 +44,19 @@ import org.slf4j.LoggerFactory;
 @RunWith(Parameterized.class)
 public class LoadAndStoreTestBase {
 
+    // allows code reuse when building the parameter collection in getFiles()
     private final File file;
-    // allows code reuse when building the parameter
-    // collection in getFiles()
+
+    // "Prefs", "UserPrefs", "Config", "User" or "All"
+    private String saveType = "Config";
 
     public LoadAndStoreTestBase(File file, boolean pass) {
+        this(file, pass, "Config");
+    }
+
+    public LoadAndStoreTestBase(File file, boolean pass, String savetype) {
         this.file = file;
+        saveType = savetype;
     }
 
     /**
@@ -94,7 +100,7 @@ public class LoadAndStoreTestBase {
         return SchemaTestBase.getDirectories(new File(directory, "load"), recurse, pass);
     }
 
-    static void checkFile(File inFile, File outFile) throws Exception {
+    private static void checkFile(File inFile, File outFile) throws Exception {
         // find comparison files
         File compFile = new File(inFile.getCanonicalFile().getParentFile().getParent() + "/loadref/" + inFile.getName());
         if (!compFile.exists()) {
@@ -116,7 +122,7 @@ public class LoadAndStoreTestBase {
         int count = 0;
         inLine = inFileStream.readLine();
         outLine = outFileStream.readLine();
-        while ( (nextIn = inFileStream.readLine()) != null && (nextOut = outFileStream.readLine()) != null) {
+        while ((nextIn = inFileStream.readLine()) != null && (nextOut = outFileStream.readLine()) != null) {
             count++;
 
             if (inLine.contains("<filehistory>") && outLine.contains("<filehistory>")) {
@@ -161,11 +167,27 @@ public class LoadAndStoreTestBase {
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
 
-    static File storeFile(File inFile) throws Exception {
+    // removed "static" here so we can access saveType field
+    private File storeFile(File inFile) throws Exception {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
+
+        // "Prefs", "UserPrefs", "Config", "User" or "All"
+        if (saveType.equals("Prefs")) {
+            InstanceManager.getDefault(ConfigureManager.class).storePrefs(outFile);
+        } else if (saveType.equals("UserPrefs")) {
+            InstanceManager.getDefault(ConfigureManager.class).storeUserPrefs(outFile);
+        } else if (saveType.equals("Config")) {
+            InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
+        } else if (saveType.equals("User")) {
+            InstanceManager.getDefault(ConfigureManager.class).storeUser(outFile);
+        } else if (saveType.equals("All")) {
+            InstanceManager.getDefault(ConfigureManager.class).storeAll(outFile);
+        } else {
+            log.error("Unknown save type {}.", saveType);
+        }
+
         return outFile;
     }
 
@@ -174,16 +196,10 @@ public class LoadAndStoreTestBase {
 
         log.debug("Start check file " + this.file.getCanonicalPath());
 
-        loadFile(this.file);
-        loadFile(this.file);
+        loadFile(this.file);    // <== I don't know why this was being called twice
+        ///loadFile(this.file); // <== If I comment out the 2nd what will break?
 
-        String name = this.file.getName();
-
-        // store file
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-        File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
-
+        File outFile = storeFile(this.file);
         checkFile(this.file, outFile);
     }
 
