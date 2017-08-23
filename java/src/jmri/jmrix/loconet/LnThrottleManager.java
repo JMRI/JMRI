@@ -90,11 +90,15 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 failedThrottleRequest(address, "Failed to get response from command station");
             }
         }
-        Thread thr = new Thread(new RetrySetup((DccLocoAddress) address, this));
-        thr.start();
-        waitingForNotification.put(((DccLocoAddress) address).getNumber(), thr);
+        
+        retrySetupThread = new Thread(new RetrySetup((DccLocoAddress) address, this));
+        retrySetupThread.setName("LnThrottleManager RetrySetup "+address);
+        retrySetupThread.start();
+        waitingForNotification.put(((DccLocoAddress) address).getNumber(), retrySetupThread);
     }
 
+    volatile Thread retrySetupThread;
+    
     Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
     
     Hashtable<Integer, LocoNetSlot> slotForAddress;
@@ -312,6 +316,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      *                address.
      * @param l       The ThrottleListener cancelling request for a throttle.
      */
+    
     @Override
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         super.cancelThrottleRequest(address, isLong, l);
@@ -324,12 +329,17 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     protected int throttleID = 0x0171;
     /**
-     * provide a mechanism to propagate the connection's "throttle ID" for use by
-     * JMRI-created LocoNet throttles.
+     * Dispose of this manager, typically for testing
      */
-    public void setThrottleID(int id) {
-        throttleID = id;
-        log.info("Throttles created by JMRI will use Throttle ID 0x{}",Integer.toHexString(id));
+    void dispose() {
+        if (retrySetupThread != null) {
+            try {
+                retrySetupThread.interrupt();
+                retrySetupThread.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            }
+        }
     }
     
     /**
