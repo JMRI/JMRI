@@ -1,6 +1,10 @@
 package apps.PanelPro;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+
+import org.apache.commons.io.*;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -28,6 +32,12 @@ public class PanelProTest {
     @Test
     public void testLaunch() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create a custom profile
+        
+        //FileUtils.copyDirectory(new File("foo"), new File("bar"));
+        System.setProperty("org.jmri.profile", "java/test/apps/PanelPro/profiles/LocoNet_Simulator");
+        System.out.println("confirm as "+System.getProperty("org.jmri.profile"));
         PanelPro.main(new String[]{"PanelPro"});  // <-- can we point to a pre-made profile here somehow?
         
         // last few messages from a normal startup are:
