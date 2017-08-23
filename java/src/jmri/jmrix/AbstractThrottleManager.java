@@ -516,13 +516,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * This applies only to those systems where "stealing" applies, such as LocoNet.
      * <p>
      * @param address The DCC Loco Address where controlling requires a steal
-     * @param reason  A text string passed by the ThrottleManae as to why
      */
     public void notifyStealRequest(DccLocoAddress address) {
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(address);
             if (a == null) {
-                log.warn("Cannot issue a steal request to a throttle listener because No throttle listeners registered for address {}",address.getNumber());
+                log.debug("Cannot issue a steal request to a throttle listener because No throttle listeners registered for address {}",address.getNumber());
                 return;
             }
             ThrottleListener l;
