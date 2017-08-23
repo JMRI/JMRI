@@ -1,25 +1,24 @@
-package jmri.managers;
+package jmri.server.json.layoutblock;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultUserPreferencesManagerFactoryTest {
+public class JsonLayoutBlockHttpServiceTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DefaultUserPreferencesManagerFactory t = new DefaultUserPreferencesManagerFactory();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonLayoutBlockHttpService t = new JsonLayoutBlockHttpService(objectMapper);
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +35,6 @@ public class DefaultUserPreferencesManagerFactoryTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultUserPreferencesManagerFactoryTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockHttpServiceTest.class.getName());
 
 }

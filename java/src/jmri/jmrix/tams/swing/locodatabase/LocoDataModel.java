@@ -172,6 +172,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
+     * @param slotTable the table to configure
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns
