@@ -53,6 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.SplitVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(CvTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndexedCvTableModelTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 

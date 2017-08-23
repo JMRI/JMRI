@@ -18,7 +18,7 @@ public class ResetTableModelTest {
     @Test
     public void testCTor() {
         JLabel jl = new JLabel("test table model");
-        ResetTableModel t = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.Programmer.class));
+        ResetTableModel t = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer());
         Assert.assertNotNull("exists",t);
     }
 
