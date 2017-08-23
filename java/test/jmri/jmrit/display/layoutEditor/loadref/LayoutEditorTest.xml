@@ -570,15 +570,15 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue Aug 22 19:57:19 PDT 2017</date>
+      <date>Tue Aug 22 21:43:29 PDT 2017</date>
       <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
       <filehistory />
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Aug 22 19:57:19 PDT 2017</date>
+      <date>Tue Aug 22 21:43:29 PDT 2017</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.9.4ish+geowar+20170823T0257Z+R2aad817ed7 on Tue Aug 22 19:57:19 PDT 2017-->
+  <!--Written by JMRI version 4.9.4ish+geowar+20170823T0443Z+Ra4428ef26d on Tue Aug 22 21:43:29 PDT 2017-->
 </layout-config>

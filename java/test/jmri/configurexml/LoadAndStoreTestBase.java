@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -193,6 +195,7 @@ public class LoadAndStoreTestBase {
 
     @Test
     public void loadLoadStoreFileCheck() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         log.debug("Start check file " + this.file.getCanonicalPath());
 
