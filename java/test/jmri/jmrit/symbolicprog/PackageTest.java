@@ -52,7 +52,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.LongAddrVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.SplitVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CvTableModelTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 
@@ -77,6 +77,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoSelTreePaneTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(FactoryResetActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CsvExportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CsvImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GenericImportActionTest.class));
 
         return suite;
     }
