@@ -1,18 +1,21 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of LayoutConnectivity
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LayoutConnectivityTest extends TestCase {
+public class LayoutConnectivityTest {
 
+    @Test
     public void testCtor() {
         LayoutBlock  b = new LayoutBlock("testb","testb");
         LayoutBlock  d = new LayoutBlock("testd","testd");
@@ -21,37 +24,18 @@ public class LayoutConnectivityTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        // reset the instance manager.
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
-
-
-    public LayoutConnectivityTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutConnectivityTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutConnectivityTest.class);
-        return suite;
-    }
-
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivityTest.class.getName());
 }

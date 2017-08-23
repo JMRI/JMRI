@@ -307,7 +307,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setEastBoundSignalName(@CheckForNull String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalEastHeadNamed = null;
             return;
         }
@@ -376,7 +376,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setWestBoundSignalName(@CheckForNull String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalWestHeadNamed = null;
             return;
         }
@@ -407,7 +407,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setEastBoundSensor(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             eastBoundSensorNamed = null;
             return;
         }
@@ -438,7 +438,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setWestBoundSensor(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             westBoundSensorNamed = null;
             return;
         }
@@ -485,7 +485,7 @@ public class PositionablePoint extends LayoutTrack {
 
     public void setEastBoundSignalMast(String signalMast) {
         SignalMast mast = null;
-        if (signalMast != null && !signalMast.equals("")) {
+        if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
@@ -549,7 +549,7 @@ public class PositionablePoint extends LayoutTrack {
 
     public void setWestBoundSignalMast(String signalMast) {
         SignalMast mast = null;
-        if (signalMast != null && !signalMast.equals("")) {
+        if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
@@ -1133,12 +1133,12 @@ public class PositionablePoint extends LayoutTrack {
                     getLinkedPoint().setWestBoundSignal("");
                 }
                 // removelocal and removeremote have been set here.
-                if (!removeremote.equals("")) {
+                if (!removeremote.isEmpty()) {
                     jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removeremote);
                     getLinkedEditor().removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
                 }
-                if (!removelocal.equals("")) {
+                if (!removelocal.isEmpty()) {
                     jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removelocal);
                     layoutEditor.removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);

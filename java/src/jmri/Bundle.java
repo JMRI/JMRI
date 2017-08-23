@@ -48,7 +48,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class Bundle {
 
     @Nullable

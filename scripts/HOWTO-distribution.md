@@ -242,11 +242,11 @@ Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.co
 If you can't use Jenkins for the actual build, you can create the files locally:
 
 If you're building locally:
-* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
+* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 3.01 with long string support)
 * Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
 
 ```
-        nsis.home=/opt/nsis/nsis-2.46/
+        nsis.home=/opt/nsis/nsis-3.01/
 ```
 
 - Get the release in your local work directory
