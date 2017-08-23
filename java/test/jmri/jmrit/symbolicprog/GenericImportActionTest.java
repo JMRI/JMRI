@@ -22,7 +22,7 @@ public class GenericImportActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CvTableModel tm = new CvTableModel(new JLabel(), null);
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test generic import");
-        GenericImportAction t = new GenericImportAction("Test Action",tm,jf,"","","");
+        GenericImportAction t = new GenericImportAction("Test Action",tm,jf,new JLabel(),"","","");
         Assert.assertNotNull("exists",t);
         jf.dispose();
     }
