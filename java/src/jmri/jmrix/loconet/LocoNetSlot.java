@@ -416,7 +416,6 @@ public class LocoNetSlot {
      * Update the status mode bits in STAT1 (D5, D4)
      *
      * @param status New values for STAT1 (D5, D4)
-     * @return Formatted LocoNet message to change value.
      */
     public void sendWriteStatus(int status) {
         LocoNetMessage l = new LocoNetMessage(4);

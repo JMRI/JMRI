@@ -356,13 +356,13 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * The LocoNet acquisition process "retry" timer is stopped as part of this 
      * process, since a positive response has been received from the command station
      * and since user intervention is required.
-     * <p>
+     *
      * Reminder: for LocoNet throttles which are not using "expanded slot" 
      * functionality, "steal" really means "share".  For those LocoNet throttles
      * which are using "expanded slots", "steal" really means take control and 
      * let the command station issue a "StealZap" LocoNet message to the other throttle.
-     * <p>
-     * @param locoAddr 
+     *
+     * @param locoAddr address of DCC loco or consist   
      */
     public void notifyStealRequest(int locoAddr) {
         // need to find the "throttleListener" associated with the request for locoAddr, and
