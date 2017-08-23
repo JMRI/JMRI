@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     JsonLayoutBlockServiceFactoryTest.class,
     JsonLayoutBlockTest.class,
-    JsonLayoutBlockSocketServiceTest.class
+    JsonLayoutBlockSocketServiceTest.class,
+    JsonLayoutBlockHttpServiceTest.class
 })
 public class PackageTest {
 }
