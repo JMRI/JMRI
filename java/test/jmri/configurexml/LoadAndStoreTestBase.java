@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * @Parameterized.Parameters(name = "{0} (pass={1})")
  * public static Iterable<Object[]> data() { return getFiles(new
  * File("java/test/jmri/configurexml"), false, true); }
- *
+ * <p>
  * public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
  * }
  * }
@@ -49,16 +49,19 @@ public class LoadAndStoreTestBase {
     // allows code reuse when building the parameter collection in getFiles()
     private final File file;
 
-    // "Prefs", "UserPrefs", "Config", "User" or "All"
-    private String saveType = "Config";
-
-    public LoadAndStoreTestBase(File file, boolean pass) {
-        this(file, pass, "Config");
+    public enum SaveType {
+        All, Config, Prefs, User, UserPrefs
     }
 
-    public LoadAndStoreTestBase(File file, boolean pass, String savetype) {
+    private SaveType saveType = SaveType.Config;
+
+    public LoadAndStoreTestBase(File file, boolean pass) {
+        this(file, pass, SaveType.Config);
+    }
+
+    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType) {
         this.file = file;
-        saveType = savetype;
+        this.saveType = saveType;
     }
 
     /**
@@ -102,92 +105,114 @@ public class LoadAndStoreTestBase {
         return SchemaTestBase.getDirectories(new File(directory, "load"), recurse, pass);
     }
 
-    private static void checkFile(File inFile, File outFile) throws Exception {
-        // find comparison files
-        File compFile = new File(inFile.getCanonicalFile().getParentFile().getParent() + "/loadref/" + inFile.getName());
-        if (!compFile.exists()) {
-            compFile = inFile;
-        }
-        log.debug("   Chose comparison file " + compFile.getCanonicalPath());
-
+    public static void checkFile(File inFile1, File inFile2) throws Exception {
         // compare files, except for certain special lines
-        BufferedReader inFileStream = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(compFile)));
-        BufferedReader outFileStream = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(outFile)));
-        String inLine;
-        String outLine;
-        String nextIn;
-        String nextOut;
+        BufferedReader fileStream1 = new BufferedReader(
+                new InputStreamReader(new FileInputStream(inFile1)));
+        BufferedReader fileStream2 = new BufferedReader(
+                new InputStreamReader(new FileInputStream(inFile2)));
+
+        String line1 = fileStream1.readLine();
+        String line2 = fileStream2.readLine();
+
         int count = 0;
-        inLine = inFileStream.readLine();
-        outLine = outFileStream.readLine();
-        while ((nextIn = inFileStream.readLine()) != null && (nextOut = outFileStream.readLine()) != null) {
+        String next1, next2;
+        while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
             count++;
 
-            if (inLine.contains("<filehistory>") && outLine.contains("<filehistory>")) {
-                break;
-            }
+            boolean match = false;  // assume failure (pessimist!)
 
-            if (!inLine.startsWith("  <!--Written by JMRI version")
-                    && !inLine.startsWith("  <timebase") // time changes from timezone to timezone
-                    && !inLine.startsWith("    <test>") // version changes over time
-                    && !inLine.startsWith("    <modifier") // version changes over time
-                    && !inLine.startsWith("    <major") // version changes over time
-                    && !inLine.startsWith("    <minor") // version changes over time
-                    && !inLine.startsWith("<?xml-stylesheet") // Linux seems to put attributes in different order
-                    && !inLine.startsWith("    <memory systemName=\"IMCURRENTTIME\"") // time varies - old format
-                    && !(inLine.contains("<memory value") && nextIn.contains("IMCURRENTTIME")) // time varies - new format
-                    && !inLine.startsWith("    <modifier>This line ignored</modifier>")) {
-                if (!inLine.contains("<date>") || !outLine.contains("<date>")) {
-                    if (!inLine.equals(outLine)) {
-                        log.error("match failed in LoadAndStoreTest: Current line " + count);
-                        log.error("   inLine = \"" + inLine + "\"");
-                        log.error("  outLine = \"" + outLine + "\"");
-                        log.error("  comparing file \"" + compFile.getPath() + "\"");
-                        log.error("         to file \"" + outFile.getPath() + "\"");
-                        log.error("    orginal file \"" + inFile.getPath() + "\"");
-                    }
-                    Assert.assertEquals(inLine, outLine);
+            String[] startsWithStrings = {
+                "  <!--Written by JMRI version",
+                "  <timebase", // time changes from timezone to timezone
+                "    <test>", // version changes over time
+                "    <modifier", // version changes over time
+                "    <major", // version changes over time
+                "    <minor", // version changes over time
+                "<?xml-stylesheet", // Linux seems to put attributes in different order
+                "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
+                "    <modifier>This line ignored</modifier>"
+            };
+            for (String startsWithString : startsWithStrings) {
+                if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
+                    match = true;
+                    break;
                 }
             }
-            inLine = nextIn;
-            outLine = nextOut;
+
+            if (!match) {
+                String memory_value = "<memory value";
+                if (line1.contains(memory_value) && line2.contains(memory_value)) {
+                    String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
+                    if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
+                        match = true;
+                        break;
+                    }
+                }
+            }
+            if (!match) {
+                String date_string = "<date>";
+                if (line1.contains(date_string) && line2.contains(date_string)) {
+                    match = true;
+                }
+            }
+            if (!match && !line1.equals(line2)) {
+                log.error("match failed in LoadAndStoreTest: Current line " + count);
+                log.error("    line1: \"" + line1 + "\"");
+                log.error("    line2: \"" + line2 + "\"");
+                log.error("  comparing file \"" + inFile1.getPath() + "\"");
+                log.error("         to file \"" + inFile2.getPath() + "\"");
+                Assert.assertEquals(line1, line2);
+            }
+            line1 = next1;
+            line2 = next2;
         }
-        inFileStream.close();
-        outFileStream.close();
+        fileStream1.close();
+        fileStream2.close();
     }
 
-    static void loadFile(File inFile) throws Exception {
+    public static void loadFile(File inFile) throws Exception {
         // load file
         InstanceManager.getDefault(ConfigureManager.class).load(inFile);
-
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
 
-    // removed "static" here so we can access saveType field
-    private File storeFile(File inFile) throws Exception {
+    public static File storeFile(File inFile, SaveType inSaveType) throws Exception {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
 
-        // "Prefs", "UserPrefs", "Config", "User" or "All"
-        if (saveType.equals("Prefs")) {
-            InstanceManager.getDefault(ConfigureManager.class).storePrefs(outFile);
-        } else if (saveType.equals("UserPrefs")) {
-            InstanceManager.getDefault(ConfigureManager.class).storeUserPrefs(outFile);
-        } else if (saveType.equals("Config")) {
-            InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
-        } else if (saveType.equals("User")) {
-            InstanceManager.getDefault(ConfigureManager.class).storeUser(outFile);
-        } else if (saveType.equals("All")) {
-            InstanceManager.getDefault(ConfigureManager.class).storeAll(outFile);
-        } else {
-            log.error("Unknown save type {}.", saveType);
+        switch (inSaveType) {
+            case All: {
+                InstanceManager.getDefault(ConfigureManager.class).storeAll(outFile);
+                break;
+
+            }
+            case Config: {
+                InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
+                break;
+
+            }
+            case Prefs: {
+                InstanceManager.getDefault(ConfigureManager.class).storePrefs(outFile);
+                break;
+
+            }
+            case User: {
+                InstanceManager.getDefault(ConfigureManager.class).storeUser(outFile);
+                break;
+
+            }
+            case UserPrefs: {
+                InstanceManager.getDefault(ConfigureManager.class).storeUserPrefs(outFile);
+                break;
+            }
+            default: {
+                log.error("Unknown save type {}.", inSaveType);
+                break;
+            }
         }
 
         return outFile;
@@ -195,15 +220,28 @@ public class LoadAndStoreTestBase {
 
     @Test
     public void loadLoadStoreFileCheck() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((saveType == SaveType.All) || (saveType == SaveType.User)) {
+            Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        }
 
         log.debug("Start check file " + this.file.getCanonicalPath());
 
-        loadFile(this.file);    // <== I don't know why this was being called twice
-        ///loadFile(this.file); // <== If I comment out the 2nd what will break?
+        loadFile(this.file);
+        // Panel sub-classes (with GUI) will fail if you try to load them twice.
+        // (So don't!)
+        if ((saveType != SaveType.All) && (saveType != SaveType.User)) {
+            loadFile(this.file);
+        }
 
-        File outFile = storeFile(this.file);
-        checkFile(this.file, outFile);
+        // find comparison files
+        File compFile = new File(this.file.getCanonicalFile().getParentFile().getParent() + "/loadref/" + this.file.getName());
+        if (!compFile.exists()) {
+            compFile = this.file;
+        }
+        log.debug("   Chose comparison file " + compFile.getCanonicalPath());
+
+        File outFile = storeFile(this.file, this.saveType);
+        checkFile(compFile, outFile);
     }
 
     @Before

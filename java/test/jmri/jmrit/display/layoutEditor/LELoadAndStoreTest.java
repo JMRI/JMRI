@@ -24,12 +24,12 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class LELoadAndStoreTest extends LoadAndStoreTestBase {
 
-    @Parameterized.Parameters(name = "{0} (pass={1})")
+    @Parameterized.Parameters(name = "{0} (pass={1} (saveType={2}))")
     public static Iterable<Object[]> data() {
         return getFiles(new File("java/test/jmri/jmrit/display/layoutEditor"), false, true);
     }
 
     public LELoadAndStoreTest(File inFile, boolean inPass) {
-        super(inFile, inPass, "All");
+        super(inFile, inPass, SaveType.User);
     }
 }
