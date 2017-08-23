@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * configuration file. Note that this is just the name, not the path; the file
  * is searched for in the usual way, first in the preferences tree and then in
  * xml/
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>

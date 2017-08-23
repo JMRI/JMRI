@@ -183,15 +183,6 @@ public class LayoutTurnout extends LayoutTrack {
     public String blockCName = "";  // Xover/slip - name for oneThirdPoint block, if there is one
     public String blockDName = "";  // Xover/slip - name for oneFourthPoint block, if there is one
 
-    //public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
-    //public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
-    //public String signalA3Name = ""; // signal 3 (second diverging) (3-way turnouts only)
-    //public String signalB1Name = ""; // continuing (RH, LH, WYE) signal 1 (double crossover)
-    //public String signalB2Name = ""; // LH_Xover and double crossover only
-    //public String signalC1Name = ""; // diverging (RH, LH, WYE) signal 1 (double crossover)
-    //public String signalC2Name = ""; // RH_Xover and double crossover only
-    //public String signalD1Name = ""; // single or double crossover only
-    //public String signalD2Name = ""; // LH_Xover and double crossover only
     protected NamedBeanHandle<SignalHead> signalA1HeadNamed = null; // signal 1 (continuing) (throat for RH, LH, WYE)
     protected NamedBeanHandle<SignalHead> signalA2HeadNamed = null; // signal 2 (diverging) (throat for RH, LH, WYE)
     protected NamedBeanHandle<SignalHead> signalA3HeadNamed = null; // signal 3 (second diverging) (3-way turnouts only)
@@ -365,8 +356,12 @@ public class LayoutTurnout extends LayoutTrack {
         double sineRot = Math.sin(rotRAD);
         double cosineRot = Math.cos(rotRAD);
 
+        // rotate displacements around origin {0, 0}
+        Point2D center_temp = center;
+        center = MathUtil.zeroPoint2D;
         dispA = rotatePoint(dispA, sineRot, cosineRot);
         dispB = rotatePoint(dispB, sineRot, cosineRot);
+        center = center_temp;
 
         pointA = rotatePoint(pointA, sineRot, cosineRot);
         pointB = rotatePoint(pointB, sineRot, cosineRot);
@@ -467,7 +462,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalA1Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalA1HeadNamed = null;
             return;
         }
@@ -489,7 +484,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalA2Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalA2HeadNamed = null;
             return;
         }
@@ -511,7 +506,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalA3Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalA3HeadNamed = null;
             return;
         }
@@ -533,7 +528,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalB1Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalB1HeadNamed = null;
             return;
         }
@@ -555,7 +550,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalB2Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalB2HeadNamed = null;
             return;
         }
@@ -577,7 +572,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalC1Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalC1HeadNamed = null;
             return;
         }
@@ -599,7 +594,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalC2Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalC2HeadNamed = null;
             return;
         }
@@ -621,7 +616,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalD1Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalD1HeadNamed = null;
             return;
         }
@@ -643,7 +638,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalD2Name(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalD2HeadNamed = null;
             return;
         }
@@ -741,7 +736,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalAMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalAMastNamed = null;
             return;
         }
@@ -770,7 +765,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalBMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalBMastNamed = null;
             return;
         }
@@ -799,7 +794,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalCMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalCMastNamed = null;
             return;
         }
@@ -828,7 +823,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSignalDMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalDMastNamed = null;
             return;
         }
@@ -857,7 +852,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSensorA(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorANamed = null;
             return;
         }
@@ -885,7 +880,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSensorB(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorBNamed = null;
             return;
         }
@@ -913,7 +908,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSensorC(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorCNamed = null;
             return;
         }
@@ -941,7 +936,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSensorD(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorDNamed = null;
             return;
         }
@@ -1011,7 +1006,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         turnoutName = tName;
         Turnout turnout = null;
-        if (turnoutName != null && !turnoutName.equals("")) {
+        if (turnoutName != null && !turnoutName.isEmpty()) {
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         }
         if (turnout != null) {
@@ -1058,7 +1053,7 @@ public class LayoutTurnout extends LayoutTrack {
             secondNamedTurnout = null;
         }
         if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
-            if (oldSecondTurnoutName != null && !oldSecondTurnoutName.equals("")) {
+            if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
                 Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
                 LayoutTurnout oldLinked = layoutEditor.getFinder().findLayoutTurnoutByTurnoutName(oldTurnout.getSystemName());
                 if (oldLinked == null) {
@@ -1128,8 +1123,8 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             }
             default: {
-                log.error("Invalid Point Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Point");
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type");
             }
         }
         return result;
@@ -2185,7 +2180,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if (blockName.equals("")) {
+            if (blockName.isEmpty()) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
                 jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
@@ -2323,7 +2318,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(ssaa);
                 }
             }
-            if (!blockName.equals("")) {
+            if (!blockName.isEmpty()) {
                 final String[] boundaryBetween = getBlockBoundaries();
                 boolean blockBoundaries = false;
                 for (int i = 0; i < 4; i++) {
@@ -2333,7 +2328,7 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
 
-                    if (blockBName.equals("") && blockCName.equals("") && blockDName.equals("")) {
+                    if (blockBName.isEmpty() && blockCName.isEmpty() && blockDName.isEmpty()) {
                         popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -2350,7 +2345,7 @@ public class LayoutTurnout extends LayoutTrack {
                                 routeTableAction.actionPerformed(e);
                             }
                         });
-                        if (!blockBName.equals("") && !blockBName.equals(blockName)) {
+                        if (!blockBName.isEmpty() && !blockBName.equals(blockName)) {
                             viewRouting.add(new AbstractAction(blockBName) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -2360,7 +2355,7 @@ public class LayoutTurnout extends LayoutTrack {
                             });
                         }
 
-                        if (!blockCName.equals("") && !blockCName.equals(blockName) && !blockCName.equals(blockBName)) {
+                        if (!blockCName.isEmpty() && !blockCName.equals(blockName) && !blockCName.equals(blockBName)) {
                             viewRouting.add(new AbstractAction(blockCName) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
@@ -2370,7 +2365,7 @@ public class LayoutTurnout extends LayoutTrack {
                             });
                         }
 
-                        if (!blockDName.equals("") && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)) {
+                        if (!blockDName.isEmpty() && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)) {
                             viewRouting.add(new AbstractAction(blockDName) {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {

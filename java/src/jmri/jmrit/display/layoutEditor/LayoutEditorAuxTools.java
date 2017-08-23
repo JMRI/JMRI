@@ -239,23 +239,13 @@ public class LayoutEditorAuxTools {
             }
         }
 
-        // Check for duplicate connectivity
-        // This occurs for the first layout editor panel when there are multiple panels
-        // connected by edge connectors.
-        boolean noDuplicate = true;
-        String connString = c.toString();
-        if (connString != null && !connString.isEmpty()) {
-            for (LayoutConnectivity dup : cList) {
-                if (connString.equals(dup.toString())) {
-                    noDuplicate = false;
-                }
-            }
-        }
-
-        if (noDuplicate) {
-            cList.add(c);
-        } else {
+        // Check to see if this connectivity is already in the list
+        // This occurs for the first layout editor panel when there 
+        // are multiple panels connected by edge connectors.
+        if (cList.contains(c)) {
             log.debug("checkConnectivity: Duplicate connection: '{}'", c);
+        } else {
+            cList.add(c);
         }
     }   // checkConnectivity
 

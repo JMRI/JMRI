@@ -148,7 +148,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
-        // a system property jmri.profile as a profile id.
+        // a system property org.jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
