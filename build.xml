@@ -1998,9 +1998,17 @@
         </exec>
     </target>
 
+    <uptodate property="launchjmri.uptodate" targetfile="scripts/WinInstallFiles/LaunchJMRI.nsi" >
+        <srcfiles dir= "scripts/WinInstallFiles/" includes="LaunchJMRI.exe"/>
+    </uptodate>
+
+    <target name="check-launchjmri" if="launchjmri.uptodate">
+        <echo message="LaunchJMRI.exe is out of date, rebuild with 'ant launchjmri.exe' and commit"/>
+    </target>
+
     <target name="package-windows"
             description="create a Windows release package"
-            depends="get-version-string, jar">
+            depends="check-launchjmri, get-version-string, jar">
         <delete dir="${dist.windows}"/>
         <mkdir dir="${dist.windows}/JMRI"/>
         <copy todir="${dist.windows}/JMRI">
