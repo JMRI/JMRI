@@ -107,9 +107,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected static final int WAIT_FOR_TRAIN = 9;
     protected static final int WAIT_FOR_DELAYED_START = 10;
     protected static final int LEARNING = 11;
+    protected static final int STOP_PENDING = 12;
     protected static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "Retry", "EStop"};
     protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resumed", "Aborts", "Retried",
-        "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor", "RunningLate"};
+        "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor", "RunningLate", 
+        "WaitingForStart", "RecordingScript", "StopPending"};
 
     // Estimated positions of the train in the block it occupies
     static final int BEG = 1;
@@ -595,6 +597,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     case Warrant.RUNNING:
                     case Warrant.SPEED_RESTRICTED:
                         return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);
+
+                    case Warrant.STOP_PENDING:
+                        return Bundle.getMessage("StopPending", speed, blockName, (_waitForSignal
+                                ? Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy")));
 
                     default:
                         return _message;
@@ -1837,15 +1843,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         String nextSpeedType;
         long _startWait = 0;
-        int _cmdIndex;
         boolean quit = false;
 
-        CommandDelay(String speedType, long startWait, int cmdIndex) {
+        CommandDelay(String speedType, long startWait) {
             nextSpeedType = speedType;
             if (startWait > 0) {
                 _startWait = startWait;
             }
-            _cmdIndex = cmdIndex;
             if (log.isDebugEnabled()) {
                 log.debug("CommandDelay: will wait {}ms, then Ramp to {}. warrant {}",
                         startWait, speedType, getDisplayName());
@@ -1879,7 +1883,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             _engineer.rampSpeedTo(nextSpeedType);
                             _curSpeedType = nextSpeedType;
                         }
-                        _engineer.advanceToCommandIndex(_cmdIndex);
                     });
                 }
             }
@@ -1974,7 +1977,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _waitForBlock, _waitForSignal, _speedUtil.getSpeedSetting(), getDisplayName());
         }
 
-        if ((runState == WAIT_FOR_CLEAR || runState == HALT) /*&& _engineer.getSpeed()<= 0.0001f*/) {
+        if ((runState == WAIT_FOR_CLEAR || runState == HALT || runState == STOP_PENDING)) {
             if (log.isDebugEnabled()) {
                 log.debug("Hold train at block \"{}\" runState= {}, speedSetting= {}.warrant {}",
                         curBlock.getDisplayName(), RUN_STATE[runState], _speedUtil.getSpeedSetting(), getDisplayName());
@@ -2158,10 +2161,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // now refine the point at which the ramp should begin
         // find wait time until starting ramp down
         if (log.isDebugEnabled()) {
-            log.debug("Get time to wait in block \"{}\" before ramping to {}. warrant {}",
+            log.debug("Get time to wait in block \"{}\" for ramping to {}. warrant {}",
                     getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), speedType, getDisplayName());
         }
-        blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         long waitTime = getWaitTime(idxBlockOrder, availDist, blkOrder.getEntranceSpace(), speedType);
         waitTime -= 500;    // shorten time a bit to allow for possible processing time.
         if (waitTime <= 0) {
@@ -2172,7 +2174,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _curSpeedType = speedType;
             }
         } else {
-            _delayCommand = new CommandDelay(speedType, waitTime, blkSpeedInfo.getLastIndex());
+            _delayCommand = new CommandDelay(speedType, waitTime);
             _delayCommand.start();
         }
         return true;
@@ -2209,7 +2211,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // the speed change to the endspeed.
         // Note getDistanceTraveled() and getTimeForDistance() are generally unreliable when only a
         // throttle factor is known (i.e. no speed profile)
-        float rampLen = 0.0f;   //_engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType)+distAdj;
+        float rampLen = 0.0f;       // _engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType)+distAdj;
         float waitDist = 0.0f;      // distance traveled until ramp is started
         int startIdx = blkSpeedInfo.getFirstIndex();
         int endIdx = blkSpeedInfo.getLastIndex();
@@ -2226,16 +2228,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     break;
                 }
 
-                if ((waitDist + dist) > (availDist - rampLen)) {
+                if ((waitDist + dist + rampLen) > availDist) { // ramp from here overruns availDist
                     float backupDist = (waitDist + dist) - (availDist - rampLen);
-                    waitTime += rampData.getTime();
+                    waitTime += speedTime * backupDist / dist;
                     waitDist += backupDist;
                     break;
 
                 }
                 waitDist += dist;
             }
-            waitTime += (long) (ts.getTime() * timeRatio);
+            waitTime += speedTime;
+
             if (cmd.equals("SPEED")) {
                 speed = Float.parseFloat(ts.getValue());
                 hasSpeed = (speed > 0.0001f);

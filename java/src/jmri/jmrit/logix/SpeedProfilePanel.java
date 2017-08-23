@@ -107,7 +107,7 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
-    public class ColorCellRenderer extends DefaultTableCellRenderer {
+    public static class ColorCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);

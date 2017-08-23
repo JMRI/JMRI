@@ -75,7 +75,7 @@ public class NXFrame extends WarrantRoute {
     private JPanel _trainPanel;
     java.awt.Point _location;
     
-    static float _mf = 0.8f;    // momentum factor (guess) for speed change
+    private float _mf = 0.8f;    // momentum factor (guess) for speed change
 
     /**
      * Get the default instance of an NXFrame.
@@ -120,18 +120,11 @@ public class NXFrame extends WarrantRoute {
         setScale(preferences.getLayoutScale());
         setTimeInterval(preferences.getTimeIncrement());
         setThrottleIncrement(preferences.getThrottleIncrement());
-//        _mf = 1f - 22167 / ((_intervalTime / _throttleIncr) + 21667); // .1->.3 2->.9 *
-//        _mf = 1f - 33833 / ((_intervalTime / _throttleIncr) + 38333); // .1->.3 3->.9
-//        _mf = 1f - 45500 / ((_intervalTime / _throttleIncr) + 55000); // .1->.3 4->.9 **
-//        _mf = 1f - 44571 / ((_intervalTime / _throttleIncr) + 45714); // .1->.2 4->.9
-        _mf = 1f - 100000 / ((_intervalTime / _throttleIncr) + 187409); // excel
-        if (_mf < 0.45f) {
-            _mf = 0.45f;            
-        }
+        _mf = preferences.getMomentumFactor();
         if (log.isDebugEnabled()) log.debug("deltaTime={} deltaThrottle={} _mf={}", _intervalTime, _throttleIncr, _mf);
         return preferences;
     }
-
+    
     private void init() {
         if (log.isDebugEnabled()) log.debug("newInstance");
         WarrantPreferences preferences = updatePreferences();
@@ -797,7 +790,7 @@ public class NXFrame extends WarrantRoute {
            }*/
         }
         if (log.isDebugEnabled()) {
-            log.debug("{} speed steps of delta= {} for dnRampLength= {} to maxThrottle= {}",
+            log.debug("{} speed steps of delta= {} for dnRampLength= {} from maxThrottle= {}",
                     numSteps, _throttleIncr, rampLength, _maxThrottle);
         }
         return rampLength;
@@ -813,6 +806,7 @@ public class NXFrame extends WarrantRoute {
         getProfileForDirection(isForward);  // establish a SpeedProfile and present anomaly dialog. if needed
         boolean hasProfileSpeeds = _speedUtil.profileHasSpeedInfo(isForward);
 
+        int cmdNum;
         w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
         if (isForward) {
             w.addThrottleCommand(new ThrottleSetting(100, "Forward", "true", blockName));
@@ -820,12 +814,14 @@ public class NXFrame extends WarrantRoute {
             w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
             w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
             w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+            cmdNum = 7;
         } else {
             w.addThrottleCommand(new ThrottleSetting(100, "Forward", "false", blockName));
             w.addThrottleCommand(new ThrottleSetting(1000, "F3", "true", blockName));
             w.addThrottleCommand(new ThrottleSetting(500, "F3", "false", blockName));
             w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
             w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
+            cmdNum = 6;
         }
 
         String msg = getTotalLength();
@@ -886,8 +882,8 @@ public class NXFrame extends WarrantRoute {
                             Float.toString(curThrottle), blockName, 
                             (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                     if (log.isDebugEnabled()) {
-                        log.debug("Ramp Up in block \"" + blockName + "\" to speed " + curThrottle + " in "
-                                + (int) speedTime + "ms to distance= " + curDistance + ", remRamp= " + remRamp);
+                        log.debug("{}. Ramp Up in block \"{}\" to speed {} in {}ms to distance= {}, remRamp= {}",
+                                cmdNum++, blockName, curThrottle, (int) speedTime, curDistance, remRamp);
                     }
                     speedTime = _intervalTime;
                 } else {
@@ -899,11 +895,14 @@ public class NXFrame extends WarrantRoute {
             // Possible case where curDistance can exceed the length of a block that was just entered.
             // Move to next block and adjust the distance times into that block
             if (curDistance >= blockLen) {
-                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen,isForward);   // time overrunning block
+                noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen, isForward);   // time overrunning block
                 speedTime = _speedUtil.getTimeForDistance(curThrottle, curDistance - blockLen, isForward); // time to next block
             } else {
                 noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen - curDistance, isForward);   // time to next block
                 speedTime = _intervalTime - noopTime;   // time to next speed change
+                if (speedTime < 0) {
+                    speedTime = 0;
+                }
             }
 
             // break out here if deceleration is to be started in this block
@@ -924,8 +923,8 @@ public class NXFrame extends WarrantRoute {
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
-                if (log.isDebugEnabled()) log.debug("Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
-                            blockName, noopTime, speedTime, blockLen);
+                if (log.isDebugEnabled()) log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
+                        cmdNum++, blockName, noopTime, speedTime, blockLen);
             }
         }
         if (log.isDebugEnabled()) {
@@ -945,8 +944,7 @@ public class NXFrame extends WarrantRoute {
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("Enter block \"" + blockName + "\" noopTime= "
-                            + noopTime + ", blockLen= " + blockLen);
+                    log.debug("{}. Enter block \"{}\" noopTime= {}, blockLen= {}", cmdNum++, blockName, noopTime, blockLen);
                 }
                 curDistance = 0;
             }
@@ -973,7 +971,7 @@ public class NXFrame extends WarrantRoute {
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("Enter block \"" + blockName + "\" noopTime= " + noopTime + ", blockLen= " + blockLen);
+                    log.debug("{}. Enter block \"{}\" noopTime= {}, blockLen= {}", cmdNum++, blockName, noopTime, blockLen);
                 }
                 curDistance = 0;
             }
@@ -995,6 +993,9 @@ public class NXFrame extends WarrantRoute {
                     w.addThrottleCommand(new ThrottleSetting(0, "Speed", "-0.5", blockName,
                             (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                     _intervalTime = 0;
+                    if (log.isDebugEnabled()) {
+                        log.debug("{}. At block \"{}\" set speed= {}", cmdNum++, blockName, -0.5);
+                    }
                     break;
                 }
             }
@@ -1010,8 +1011,8 @@ public class NXFrame extends WarrantRoute {
                 w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", Float.toString(curThrottle), blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("Ramp Down in block \"" + blockName + "\" to curThrottle "
-                            + curThrottle + " in " + (int) speedTime + "ms to reach curDistance= " + curDistance + " with remRamp= " + remRamp);
+                    log.debug("{}. Ramp Down in block \"{}\" to curThrottle {} in {}ms to reach curDistance= {}, remRamp= {}",
+                            cmdNum++, blockName, curThrottle, (int) speedTime, curDistance, remRamp);
                 }
                 if (curDistance >= blockLen) {
                     speedTime = _speedUtil.getTimeForDistance(curThrottle, curDistance - blockLen, isForward); // time to next block
@@ -1040,7 +1041,8 @@ public class NXFrame extends WarrantRoute {
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {
-                    log.debug("Enter block \"" + blockName + "\" noopTime= " + noopTime + ", blockLen= " + blockLen);
+                    log.debug("{}. Enter block \"{}\" noopTime= {}ms, blockLen= {}",
+                            cmdNum++, blockName, noopTime, blockLen);
                 }
                 curDistance = _speedUtil.getDistanceTraveled(curThrottle, Warrant.Normal, speedTime, isForward);
             } else {
@@ -1051,9 +1053,9 @@ public class NXFrame extends WarrantRoute {
             }
         }
         // Ramp down finished
-        if (curThrottle > 0) {   // cleanup fractional speeds. insure speed 0 - should never happen.
-            log.warn("Ramp down LAST speed change in block \"" + blockName + "\" to speed 0  after "
-                    + (int) speedTime + "ms. curThrottle= " + curThrottle + ", curDistance= " + curDistance + ", remRamp= " + remRamp);
+        if (curThrottle > 0) {   // cleanup fractional speeds. insure speed != 0 - should never happen.
+            log.warn("LAST speed change in block \"{}\" to speed 0  after {}ms. curThrottle= {}, curDistance= {}, remRamp= {}",
+                    blockName, (int) speedTime, curThrottle, curDistance, remRamp);
             w.addThrottleCommand(new ThrottleSetting((int) speedTime, "Speed", "0.0", blockName,
                     (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
         }

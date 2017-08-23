@@ -50,8 +50,9 @@ public class SpeedUtil {
     private RosterSpeedProfile _speedProfile; // merge of existing Roster speeedProfile and session speeedProfile
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap; 
+    private WarrantPreferences _preferences;
 
-    public static float SCALE_FACTOR = 55; // divided by _scale, gives a rough correction for track speed
+    public static float SCALE_FACTOR = 125; // divided by _scale, gives a rough correction for track speed
 
     protected SpeedUtil(Warrant war) {
         if (war !=null) {
@@ -192,6 +193,9 @@ public class SpeedUtil {
     protected int getRampTimeIncrement() {
         return _signalSpeedMap.getStepDelay();
     }
+    protected float getMomentumFactor() {
+        return _preferences.getMomentumFactor();
+    }
 
     /**
      * Must be called from eventThread
@@ -201,7 +205,7 @@ public class SpeedUtil {
     protected RosterSpeedProfile getValidSpeedProfile(java.awt.Frame frame) {
         RosterSpeedProfile speedProfile = getSpeedProfile();
         HashMap<Integer, Boolean> anomalies = MergePrompt.validateSpeedProfile(speedProfile, _rosterId);
-        if (anomalies != null && anomalies.size() > 0) {
+        if (anomalies.size() > 0) {
             if (log.isDebugEnabled()) log.debug("getValidSpeedProfile for {} #anomalies={} on Gui {}",
                     _rosterId, anomalies.size(), jmri.util.ThreadingUtil.isLayoutThread());
             if (jmri.util.ThreadingUtil.isLayoutThread()) { // safety
@@ -271,6 +275,7 @@ public class SpeedUtil {
                 }
             }
         }
+        _preferences = WarrantPreferences.getDefault();
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
         if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
@@ -421,14 +426,16 @@ public class SpeedUtil {
      * @return track speed in millimeters/millisecond (not mm/sec)
      */
     protected float getTrackSpeed(float throttleSetting, boolean isForward) {
-        float speed = 0.0f;
+        if (throttleSetting <= 0.0f) {
+            return 0.0f;
+        }
         RosterSpeedProfile speedProfile = getSpeedProfile();
         // Note SpeedProfile uses milliseconds per second.
-        speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;            
+        float speed = speedProfile.getSpeed(throttleSetting, isForward) / 1000;            
         if (speed <= 0.0f) {
             float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();
             speed = throttleSetting * factor;
-            if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, by factor= {}. train= {}",
+            if (log.isDebugEnabled()) log.debug("getTrackSpeed for setting= {}, speed= {}, by factor= {}. train= {}",
                     throttleSetting, speed, factor, _rosterId);
         } else {
             if (log.isTraceEnabled()) log.trace("getTrackSpeed for setting= {}, speed= {}, SpeedProfile. train= {}",
@@ -499,10 +506,11 @@ public class SpeedUtil {
         float rampLength = 0.0f;
         int deltaTime = getRampTimeIncrement();
         float deltaThrottle = getRampThrottleIncrement();
+        float mf = getMomentumFactor();
         float speed = fromSpeed;
         int steps = 0;
         while (speed >= toSpeed) {
-            float dist = getTrackSpeed(speed - deltaThrottle*NXFrame._mf, isForward) * deltaTime;
+            float dist = getTrackSpeed(speed - deltaThrottle*mf, isForward) * deltaTime;
             if (dist <= 0.0f) {
                 break;
             }
@@ -515,7 +523,7 @@ public class SpeedUtil {
             steps++;
         }
         int rampTime = deltaTime*steps;
-        if (log.isTraceEnabled()) log.trace("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {}",
+        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {}",
                 rampLength, rampTime, fromSpeed, curSpeedType, toSpeedType, toSpeed);
         return new RampData(rampLength, rampTime);   // add 1cm for safety (all scales)
     }
