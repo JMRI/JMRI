@@ -115,10 +115,11 @@ public class LoadAndStoreTestBase {
         String line1 = fileStream1.readLine();
         String line2 = fileStream2.readLine();
 
-        int count = 0;
+        int lineNumber1 = 0, lineNumber2 = 0;
         String next1, next2;
         while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
-            count++;
+            lineNumber1++;
+            lineNumber2++;
 
             String filehistory = "filehistory";
             if (line1.contains(filehistory) && line2.contains(filehistory)) {
@@ -127,21 +128,43 @@ public class LoadAndStoreTestBase {
 
             boolean match = false;  // assume failure (pessimist!)
 
-            String[] startsWithStrings = {
-                "  <!--Written by JMRI version",
-                "  <timebase", // time changes from timezone to timezone
-                "    <test>", // version changes over time
-                "    <modifier", // version changes over time
-                "    <major", // version changes over time
-                "    <minor", // version changes over time
-                "<?xml-stylesheet", // Linux seems to put attributes in different order
-                "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
-                "    <modifier>This line ignored</modifier>"
-            };
-            for (String startsWithString : startsWithStrings) {
-                if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
-                    match = true;
+            // where the (empty) entryexitpairs line ends up seems to be non-deterministic…
+            // so if we see it in ether file we just skip it
+            String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
+            if (line1.contains(entryexitpairs)) {
+                line1 = next1;
+                if ((next1 = fileStream1.readLine()) == null) {
                     break;
+                }
+                lineNumber1++;
+                match = true;
+            }
+            if (line2.contains(entryexitpairs)) {
+                line2 = next2;
+                if ((next2 = fileStream2.readLine()) == null) {
+                    break;
+                }
+                lineNumber2++;
+                match = true;
+            }
+
+            if (!match) {
+                String[] startsWithStrings = {
+                    "  <!--Written by JMRI version",
+                    "  <timebase", // time changes from timezone to timezone
+                    "    <test>", // version changes over time
+                    "    <modifier", // version changes over time
+                    "    <major", // version changes over time
+                    "    <minor", // version changes over time
+                    "<?xml-stylesheet", // Linux seems to put attributes in different order
+                    "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
+                    "    <modifier>This line ignored</modifier>"
+                };
+                for (String startsWithString : startsWithStrings) {
+                    if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
+                        match = true;
+                        break;
+                    }
                 }
             }
 
@@ -162,11 +185,11 @@ public class LoadAndStoreTestBase {
                 }
             }
             if (!match && !line1.equals(line2)) {
-                log.error("match failed in LoadAndStoreTest: Current line " + count);
-                log.error("    line1: \"" + line1 + "\"");
-                log.error("    line2: \"" + line2 + "\"");
-                log.error("  comparing file \"" + inFile1.getPath() + "\"");
-                log.error("         to file \"" + inFile2.getPath() + "\"");
+                log.error("match failed in LoadAndStoreTest: Current line " + lineNumber1);
+                log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
+                log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
+                log.error("  comparing file1:\"" + inFile1.getPath() + "\"");
+                log.error("         to file2:\"" + inFile2.getPath() + "\"");
                 Assert.assertEquals(line1, line2);
             }
             line1 = next1;
@@ -178,7 +201,8 @@ public class LoadAndStoreTestBase {
 
     public static void loadFile(File inFile) throws Exception {
         // load file
-        InstanceManager.getDefault(ConfigureManager.class).load(inFile);
+        boolean good = InstanceManager.getDefault(ConfigureManager.class).load(inFile);
+        Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
