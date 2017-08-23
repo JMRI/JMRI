@@ -286,7 +286,19 @@
       </states>
     </layoutSlip>
   </LayoutEditor>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Aug 23 09:19:58 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest.xml</filename>
+      <filehistory />
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Aug 23 09:19:58 PDT 2017</date>
+      <filename />
+    </operation>
   </filehistory>
-  <!--Written by JMRI version 4.9.4ish+geowar+20170823T1529Z+Re71847459e on Wed Aug 23 08:29:50 PDT 2017-->
+  <!--Written by JMRI version 4.9.4ish+geowar+20170823T1619Z+Ree7e7c8c94 on Wed Aug 23 09:19:58 PDT 2017-->
 </layout-config>
