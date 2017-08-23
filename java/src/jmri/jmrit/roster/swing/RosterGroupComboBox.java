@@ -143,6 +143,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     @Override
     public String getSelectedItem() {
         Object a = super.getSelectedItem();
+        // protect against NPE which happens when opening Throttle tool with LocoNet connection
         if (a == null) {
             return "";
         }
