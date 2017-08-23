@@ -17,12 +17,12 @@ import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
 import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -31,7 +31,7 @@ import org.junit.Ignore;
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
-    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+//    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     @Test
     public void testTrainsTableFrame() {

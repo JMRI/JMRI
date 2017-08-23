@@ -2,10 +2,10 @@ package jmri.jmrit.operations;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the CommonConductorYardmasterPanel class
@@ -28,7 +28,7 @@ public class CommonConductorYardmasterPanelTest  {
         p = new CommonConductorYardmasterPanel(){
             @Override
             protected void update(){
-            };
+            }
         };
     }
 

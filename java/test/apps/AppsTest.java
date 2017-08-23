@@ -1,28 +1,25 @@
 package apps;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AppsTest {
 
     @Test
     @Ignore("Causes Exception")
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        Apps t = new Apps(new JFrame());
-        Assert.assertNotNull("exists",t);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Apps t = new Apps();
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -39,5 +36,4 @@ public class AppsTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AppsTest.class.getName());
-
 }

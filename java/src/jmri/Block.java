@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
-
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,19 +141,19 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         String result = getFullyFormattedDisplayName() + " ";
         switch (getState()) {
             case UNDETECTED: {
-                    result += "UNDETECTED";
+                result += "UNDETECTED";
                 break;
             }
             case UNOCCUPIED: {
-                    result += "UNOCCUPIED";
+                result += "UNOCCUPIED";
                 break;
             }
             case OCCUPIED: {
-                    result += "OCCUPIED";
+                result += "OCCUPIED";
                 break;
             }
             default: {
-                    result += "unknown " + getState();
+                result += "unknown " + getState();
                 break;
             }
         }
@@ -562,7 +560,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             if (!b.getSystemName().equals(this.getSystemName())) {
                 return false;
             }
-
         }
         return true;
     }

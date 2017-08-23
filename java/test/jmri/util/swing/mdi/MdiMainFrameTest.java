@@ -10,7 +10,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
-public class MdiWindowTest {
+public class MdiMainFrameTest{
 
     @Test
     public void testShow() {

@@ -273,9 +273,22 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return inputName;
     }
 
+    /**
+     * Implemented to support the Conditional combo box name list
+     * @since 4.9.3
+     * @return a sorted array of NX names
+     */
     @Override
     public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        List<String> nxList = getEntryExitList();
+        String[] arr = new String[nxList.size()];
+        int i = 0;
+        for (String nxRow : nxList) {
+            arr[i] = nxRow;
+            i++;
+        }
+        java.util.Arrays.sort(arr);
+        return arr;
     }
 
     @Override
@@ -284,8 +297,20 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
+    /**
+     * Implemented to support the Conditional combo box name list
+     * @since 4.9.3
+     * @return a list of Destination Point beans
+     */
     public List<DestinationPoints> getNamedBeanList() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        List<DestinationPoints> beanList = new ArrayList<>();
+        for (Source e : nxpair.values()) {
+            ArrayList<String> uidList = e.getDestinationUniqueId();
+            for (String uid : uidList) {
+                beanList.add(e.getByUniqueId(uid));
+            }
+        }
+        return beanList;
     }
 
     @Override

@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
         jmri.jmrix.openlcb.swing.downloader.PackageTest.class,
         jmri.jmrix.openlcb.swing.send.PackageTest.class,
         BundleTest.class,
-        OpenLcbComponentFactoryTest.class
+        OpenLcbComponentFactoryTest.class,
+        ClientActionsTest.class
 })
 
 /**
