@@ -101,6 +101,7 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.setName(Bundle.getMessage("Feedback"));
 
         modeBox = new JComboBox<String>(((Turnout) bean).getValidFeedbackNames());
+        modeBox.setMaximumRowCount(modeBox.getItemCount());
         oldModeSelection = ((Turnout) bean).getFeedbackModeName();
         modeBox.setSelectedItem(oldModeSelection);
 
@@ -300,7 +301,35 @@ public class TurnoutEditAction extends BeanEditAction {
         BeanItemPanel lock = new BeanItemPanel();
         lock.setName(Bundle.getMessage("Lock"));
 
+<<<<<<< Updated upstream
         lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockToolTip")));
+=======
+        if (t.getPossibleLockModes() != 0) {
+            // lock operations are available, configure pane for them
+        
+            lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockToolTip")));
+
+            java.util.Vector<String> lockOperations = new java.util.Vector<>();  // Vector is a JComboBox ctor; List is not
+            int modes = t.getPossibleLockModes();
+            if ( (modes & Turnout.CABLOCKOUT) !=0 && (modes & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockOperations.add(bothText);
+            if ( (modes & Turnout.CABLOCKOUT) !=0 ) lockOperations.add(cabOnlyText);
+            if ( (modes & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockOperations.add(pushbutText);
+            lockOperations.add(noneText);
+            JComboBox<String> lockOperationBox = new JComboBox<String>(lockOperations);
+            lockOperationBox.setMaximumRowCount(lockOperationBox.getItemCount());
+
+            lock.addItem(new BeanEditItem(lockOperationBox, Bundle.getMessage("LockMode"), Bundle.getMessage("LockModeToolTip")));
+            lockOperationBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (lockOperationBox.getSelectedItem().equals(noneText)) {
+                        lockBox.setEnabled(false);
+                    } else {
+                        lockBox.setEnabled(true);
+                    }
+                }
+            });
+>>>>>>> Stashed changes
 
         String[] lockOperations = {bothText, cabOnlyText, pushbutText, noneText};
 
@@ -404,11 +433,13 @@ public class TurnoutEditAction extends BeanEditAction {
         }
 
         closedSpeedBox = new JComboBox<String>(speedListClosed);
+        closedSpeedBox.setMaximumRowCount(closedSpeedBox.getItemCount());
         closedSpeedBox.setEditable(true);
 
         speed.addItem(new BeanEditItem(closedSpeedBox, Bundle.getMessage("ClosedSpeed"), Bundle.getMessage("ClosedSpeedToolTip")));
 
         thrownSpeedBox = new JComboBox<String>(speedListThrown);
+        thrownSpeedBox.setMaximumRowCount(thrownSpeedBox.getItemCount());
         thrownSpeedBox.setEditable(true);
         speed.addItem(new BeanEditItem(thrownSpeedBox, Bundle.getMessage("ThrownSpeed"), Bundle.getMessage("ThrownSpeedToolTip")));
 

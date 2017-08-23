@@ -324,6 +324,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                 } else if (col == MODECOL) {
                     JComboBox<String> c = new JComboBox<String>(t.getValidFeedbackNames());
+                    c.setMaximumRowCount(c.getItemCount());
                     c.setSelectedItem(t.getFeedbackModeName());
                     c.addActionListener(new ActionListener() {
                         @Override
@@ -354,6 +355,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return c;
                 } else if (col == LOCKOPRCOL) {
                     JComboBox<String> c = new JComboBox<String>(lockOperations);
+<<<<<<< Updated upstream
+=======
+                    c.setMaximumRowCount(c.getItemCount());
+                    
+>>>>>>> Stashed changes
                     if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                         c.setSelectedItem(bothText);
                     } else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
@@ -377,6 +383,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         speedListClosed.add(speed);
                     }
                     JComboBox<String> c = new JComboBox<String>(speedListClosed);
+                    c.setMaximumRowCount(c.getItemCount());
                     c.setEditable(true);
                     c.setSelectedItem(speed);
 
@@ -388,6 +395,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         speedListThrown.add(speed);
                     }
                     JComboBox<String> c = new JComboBox<String>(speedListThrown);
+                    c.setMaximumRowCount(c.getItemCount());
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
@@ -1083,8 +1091,11 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     protected void setDefaultSpeeds(JFrame _who) {
         JComboBox<String> thrownCombo = new JComboBox<String>(speedListThrown);
-        JComboBox<String> closedCombo = new JComboBox<String>(speedListClosed);
+        thrownCombo.setMaximumRowCount(thrownCombo.getItemCount());
         thrownCombo.setEditable(true);
+
+        JComboBox<String> closedCombo = new JComboBox<String>(speedListClosed);
+        closedCombo.setMaximumRowCount(closedCombo.getItemCount());
         closedCombo.setEditable(true);
 
         JPanel thrown = new JPanel();
