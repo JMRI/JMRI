@@ -120,6 +120,11 @@ public class LoadAndStoreTestBase {
         while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
             count++;
 
+            String filehistory = "filehistory";
+            if (line1.contains(filehistory) && line2.contains(filehistory)) {
+                break;  // we're done!
+            }
+
             boolean match = false;  // assume failure (pessimist!)
 
             String[] startsWithStrings = {
@@ -166,7 +171,7 @@ public class LoadAndStoreTestBase {
             }
             line1 = next1;
             line2 = next2;
-        }
+        }   // while readLine() != null
         fileStream1.close();
         fileStream2.close();
     }
