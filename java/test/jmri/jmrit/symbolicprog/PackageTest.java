@@ -75,6 +75,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CombinedLocoSelTreePaneTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(KnownLocoSelPaneTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoSelTreePaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(FactoryResetActionTest.class));
 
         return suite;
     }
