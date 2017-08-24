@@ -307,9 +307,9 @@ public class TurnoutEditAction extends BeanEditAction {
 
             java.util.Vector<String> lockOperations = new java.util.Vector<>();  // Vector is a JComboBox ctor; List is not
             int modes = t.getPossibleLockModes();
-            if ( (modes & Turnout.CABLOCKOUT) !=0 && (modes & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockOperations.add(bothText);
-            if ( (modes & Turnout.CABLOCKOUT) !=0 ) lockOperations.add(cabOnlyText);
-            if ( (modes & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockOperations.add(pushbutText);
+            if ((modes & Turnout.CABLOCKOUT) !=0 && (modes & Turnout.PUSHBUTTONLOCKOUT) !=0) lockOperations.add(bothText);
+            if ((modes & Turnout.CABLOCKOUT) !=0) lockOperations.add(cabOnlyText);
+            if ((modes & Turnout.PUSHBUTTONLOCKOUT) !=0) lockOperations.add(pushbutText);
             lockOperations.add(noneText);
             JComboBox<String> lockOperationBox = new JComboBox<String>(lockOperations);
         
@@ -325,8 +325,11 @@ public class TurnoutEditAction extends BeanEditAction {
                 }
             });
 
-            if ((t.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) !=0 ) lockBox = new JComboBox<String>(t.getValidDecoderNames());
-            else lockBox = new JComboBox<String>(new String[]{t.getDecoderName()});
+            if ((t.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) !=0) {
+                lockBox = new JComboBox<String>(t.getValidDecoderNames());
+            } else {
+                lockBox = new JComboBox<String>(new String[]{t.getDecoderName()});
+            }
             lock.addItem(new BeanEditItem(lockBox, Bundle.getMessage("LockModeDecoder"), Bundle.getMessage("LockModeDecoderToolTip")));
 
             lock.setSaveItem(new AbstractAction() {
@@ -394,8 +397,10 @@ public class TurnoutEditAction extends BeanEditAction {
 
         speed.addItem(new BeanEditItem(null, null, Bundle.getMessage("SpeedTabToolTip")));
 
-        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
-        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global")
+            + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global")
+            + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
 
         useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
@@ -418,11 +423,15 @@ public class TurnoutEditAction extends BeanEditAction {
         closedSpeedBox = new JComboBox<String>(speedListClosed);
         closedSpeedBox.setEditable(true);
 
-        speed.addItem(new BeanEditItem(closedSpeedBox, Bundle.getMessage("ClosedSpeed"), Bundle.getMessage("ClosedSpeedToolTip")));
+        speed.addItem(new BeanEditItem(closedSpeedBox,
+            Bundle.getMessage("ClosedSpeed"),
+            Bundle.getMessage("ClosedSpeedToolTip")));
 
         thrownSpeedBox = new JComboBox<String>(speedListThrown);
         thrownSpeedBox.setEditable(true);
-        speed.addItem(new BeanEditItem(thrownSpeedBox, Bundle.getMessage("ThrownSpeed"), Bundle.getMessage("ThrownSpeedToolTip")));
+        speed.addItem(new BeanEditItem(thrownSpeedBox, 
+            Bundle.getMessage("ThrownSpeed"),
+            Bundle.getMessage("ThrownSpeedToolTip")));
 
         speed.setSaveItem(new AbstractAction() {
 
@@ -459,7 +468,8 @@ public class TurnoutEditAction extends BeanEditAction {
                 String speed = t.getDivergingSpeed();
 
                 speedListThrown.remove(defaultThrownSpeedText);
-                defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+                defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global")
+                    + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
                 speedListThrown.add(0, defaultThrownSpeedText);
                 if (!speedListThrown.contains(speed)) {
                     speedListThrown.add(speed);
@@ -470,7 +480,8 @@ public class TurnoutEditAction extends BeanEditAction {
                 speed = t.getStraightSpeed();
 
                 speedListClosed.remove(defaultClosedSpeedText);
-                defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+                defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global")
+                    + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
                 speedListClosed.add(0, defaultClosedSpeedText);
                 if (!speedListClosed.contains(speed)) {
                     speedListClosed.add(speed);
