@@ -208,8 +208,8 @@ public class LoadAndStoreTestBase {
         fileStream2.close();
     }
 
+    // load file
     public static void loadFile(File inFile) throws Exception {
-        // load file
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         boolean good = cm.load(inFile);
         Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
