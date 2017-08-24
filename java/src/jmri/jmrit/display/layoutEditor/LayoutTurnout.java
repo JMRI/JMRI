@@ -28,6 +28,8 @@ import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -2204,14 +2206,14 @@ public class LayoutTurnout extends LayoutTrack {
                 jmi = popup.add(rb.getString("NoTurnout"));
             } else {
                 jmi = popup.add(Bundle.getMessage("BeanNameTurnout")
-                        + ": " + turnoutName);
+                        + ": " + getTurnoutName());
             }
             jmi.setEnabled(false);
 
             if (getSecondTurnout() != null) {
                 jmi = popup.add(Bundle.getMessage("Supporting",
                         Bundle.getMessage("BeanNameTurnout"))
-                        + ": " + secondTurnoutName);
+                        + ": " + getSecondTurnoutName());
             }
             jmi.setEnabled(false);
 
@@ -2337,17 +2339,17 @@ public class LayoutTurnout extends LayoutTrack {
                             tools.setThroatToThroatFromMenu(instance, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
-                            tools.set3WayFromMenu(turnoutName, linkedTurnoutName,
+                            tools.set3WayFromMenu(getTurnoutName(), linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == SECOND_3_WAY) {
-                            tools.set3WayFromMenu(linkedTurnoutName, turnoutName,
+                            tools.set3WayFromMenu(linkedTurnoutName, getTurnoutName(),
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         }
                     }
                 };
 
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLayoutTurnoutSignalHeadInfoToMenu(turnoutName, linkedTurnoutName, jm)) {
+                if (tools.addLayoutTurnoutSignalHeadInfoToMenu(getTurnoutName(), linkedTurnoutName, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -2639,6 +2641,44 @@ public class LayoutTurnout extends LayoutTrack {
             // add combobox to select turnout
             firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
+
+            // disable items that are already in use
+            PopupMenuListener pml = new PopupMenuListener() {
+                @Override
+                public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                    // This method is called before the popup menu becomes visible.
+                    log.debug("PopupMenuWillBecomeVisible");
+                    Object o = e.getSource();
+                    if (o instanceof JmriBeanComboBox) {
+                        JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
+                        jmri.Manager m = jbcb.getManager();
+                        if (m != null) {
+                            String[] systemNames = m.getSystemNameArray();
+                            for (int idx = 0; idx < systemNames.length; idx++) {
+                                String systemName = systemNames[idx];
+                                jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(systemName, null));
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                    // This method is called before the popup menu becomes invisible
+                    log.debug("PopupMenuWillBecomeInvisible");
+                }
+
+                @Override
+                public void popupMenuCanceled(PopupMenuEvent e) {
+                    // This method is called when the popup menu is canceled
+                    log.debug("PopupMenuCanceled");
+                }
+            };
+
+            firstTurnoutComboBox.addPopupMenuListener(pml);
+            firstTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
+            firstTurnoutComboBox.setDisabledColor(Color.red);
+
             panel1.add(firstTurnoutComboBox);
             contentPane.add(panel1);
 
@@ -2647,6 +2687,10 @@ public class LayoutTurnout extends LayoutTrack {
 
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
+
+            secondTurnoutComboBox.addPopupMenuListener(pml);
+            secondTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
+            secondTurnoutComboBox.setDisabledColor(Color.red);
 
             additionalTurnout.addActionListener((ActionEvent e) -> {
                 boolean additionalEnabled = additionalTurnout.isSelected();
@@ -2668,6 +2712,7 @@ public class LayoutTurnout extends LayoutTrack {
             additionalTurnoutInvert.addActionListener((ActionEvent e) -> {
                 setSecondTurnoutInverted(additionalTurnoutInvert.isSelected());
             });
+            additionalTurnoutInvert.setEnabled(false);
             panel1b.add(additionalTurnoutInvert);
             contentPane.add(panel1b);
 
@@ -2791,10 +2836,11 @@ public class LayoutTurnout extends LayoutTrack {
             blockCNameComboBox.setText(blockCName);
             blockDNameComboBox.setText(blockDName);
         }
-        firstTurnoutComboBox.setSelectedItem(turnoutName);
+        firstTurnoutComboBox.setText(getTurnoutName());
 
         if (secondNamedTurnout != null) {
             additionalTurnout.setSelected(true);
+            additionalTurnoutInvert.setEnabled(true);
             additionalTurnoutInvert.setSelected(getSecondTurnoutInverted());
             secondTurnoutLabel.setEnabled(true);
             secondTurnoutComboBox.setEnabled(true);
