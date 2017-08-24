@@ -43,7 +43,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if (!p.getSecondTurnoutName().isEmpty()) {
             element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
             if (p.getSecondTurnoutInverted()) {
-                element.setAttribute("secondturnoutinverted", "yes");
+                element.setAttribute("secondturnoutinverted", "true");
             }
         }
 
@@ -228,7 +228,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
             boolean invert2nd = false;
             if (element.getAttribute("secondturnoutinverted") != null) {
-                if (element.getAttribute("secondturnoutinverted").getValue().equals("yes")) {
+                if (element.getAttribute("secondturnoutinverted").getValue().equals("true")) {
                     invert2nd = true;
                 }
             }
