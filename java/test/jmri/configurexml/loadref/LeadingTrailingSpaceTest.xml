@@ -3,7 +3,7 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>9</minor>
+    <minor>7</minor>
     <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
@@ -50,22 +50,5 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <filehistory>
-    <operation>
-      <type>Load OK</type>
-      <date>Wed Aug 23 09:02:51 PDT 2017</date>
-      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/LeadingTrailingSpaceTest.xml</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Wed Aug 23 09:02:52 PDT 2017</date>
-      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/LeadingTrailingSpaceTest.xml</filename>
-    </operation>
-    <operation>
-      <type>Store</type>
-      <date>Wed Aug 23 09:02:52 PDT 2017</date>
-      <filename />
-    </operation>
-  </filehistory>
-  <!--Written by JMRI version 4.9.4ish+geowar+20170823T1601Z+Ree7e7c8c94 on Wed Aug 23 09:02:52 PDT 2017-->
+  <!--Written by JMRI version 4.7.4ish+jake+20170508T0641Z+R31e3f566ff on Sun May 07 23:41:47 PDT 2017 $Id$-->
 </layout-config>

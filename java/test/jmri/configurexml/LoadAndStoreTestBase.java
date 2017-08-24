@@ -121,13 +121,6 @@ public class LoadAndStoreTestBase {
             lineNumber1++;
             lineNumber2++;
 
-            String filehistory = "filehistory";
-            if (line1.contains(filehistory) && line2.contains(filehistory)) {
-                break;  // we're done!
-            }
-
-            boolean match = false;  // assume failure (pessimist!)
-
             // where the (empty) entryexitpairs line ends up seems to be non-deterministic…
             // so if we see it in ether file we just skip it
             String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
@@ -137,7 +130,6 @@ public class LoadAndStoreTestBase {
                     break;
                 }
                 lineNumber1++;
-                match = true;
             }
             if (line2.contains(entryexitpairs)) {
                 line2 = next2;
@@ -145,26 +137,31 @@ public class LoadAndStoreTestBase {
                     break;
                 }
                 lineNumber2++;
-                match = true;
             }
 
-            if (!match) {
-                String[] startsWithStrings = {
-                    "  <!--Written by JMRI version",
-                    "  <timebase", // time changes from timezone to timezone
-                    "    <test>", // version changes over time
-                    "    <modifier", // version changes over time
-                    "    <major", // version changes over time
-                    "    <minor", // version changes over time
-                    "<?xml-stylesheet", // Linux seems to put attributes in different order
-                    "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
-                    "    <modifier>This line ignored</modifier>"
-                };
-                for (String startsWithString : startsWithStrings) {
-                    if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
-                        match = true;
-                        break;
-                    }
+            // if we get to the file history...
+            String filehistory = "filehistory";
+            if (line1.contains(filehistory) && line2.contains(filehistory)) {
+                break;  // we're done!
+            }
+
+            boolean match = false;  // assume failure (pessimist!)
+
+            String[] startsWithStrings = {
+                "  <!--Written by JMRI version",
+                "  <timebase", // time changes from timezone to timezone
+                "    <test>", // version changes over time
+                "    <modifier", // version changes over time
+                "    <major", // version changes over time
+                "    <minor", // version changes over time
+                "<?xml-stylesheet", // Linux seems to put attributes in different order
+                "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
+                "    <modifier>This line ignored</modifier>"
+            };
+            for (String startsWithString : startsWithStrings) {
+                if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
+                    match = true;
+                    break;
                 }
             }
 
@@ -189,12 +186,10 @@ public class LoadAndStoreTestBase {
                 String[] splits1 = line1.split(fontname_regexe);
                 if (splits1.length == 2) {  // (yes) remove it
                     line1 = splits1[0] + splits1[1];
-                    //log.debug("new line1: '" + line1 + "'.");
                 }
                 String[] splits2 = line2.split(fontname_regexe);
                 if (splits2.length == 2) {  // (yes) remove it
                     line2 = splits2[0] + splits2[1];
-                    //log.debug("new line2: '" + line2 + "'.");
                 }
             }
             if (!match && !line1.equals(line2)) {
@@ -210,7 +205,6 @@ public class LoadAndStoreTestBase {
         }   // while readLine() != null
 
         fileStream1.close();
-
         fileStream2.close();
     }
 
@@ -220,8 +214,7 @@ public class LoadAndStoreTestBase {
         boolean good = cm.load(inFile);
         Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.
-                LayoutBlockManager.class).initializeLayoutBlockPaths();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
 
