@@ -1,5 +1,3 @@
-image:
-- Previous Visual Studio 2017
 version: '{build}'
 clone_depth: 50
 install:
