@@ -10148,8 +10148,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
         // loop over all turnouts
+        boolean editable = isEditable();
         for (LayoutTurnout t : turnoutList) {
-            if (!(t.isHidden() && !isEditable())) {
+            if (editable || !(t.isHidden() || t.isDisabled())) {
                 t.drawControls(g2);
             }
         }
@@ -10159,8 +10160,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
         // loop over all slips
+        boolean editable = isEditable();
         for (LayoutSlip sl : slipList) {
-            if (!(sl.isHidden() && !isEditable())) {
+            if (editable || !(sl.isHidden() || sl.isDisabled())) {
                 sl.drawControls(g2);
             }
         }
