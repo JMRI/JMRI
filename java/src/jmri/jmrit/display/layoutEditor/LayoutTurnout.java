@@ -1948,22 +1948,23 @@ public class LayoutTurnout extends LayoutTrack {
             namedTurnout.getBean().addPropertyChangeListener(
                     mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
                         if (secondNamedTurnout != null) {
+                            int new2ndState = secondNamedTurnout.getBean().getState();
                             if (e.getSource().equals(secondNamedTurnout.getBean())
-                            && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
-                            && e.getOldValue().equals(namedTurnout.getBean().getState())) {
+                            && e.getNewValue().equals(new2ndState)) {
+                                int old1stState = namedTurnout.getBean().getState();
+                                int new1stState = new2ndState;
                                 if (secondTurnoutInverted) {
-                                    if (secondNamedTurnout.getBean().getState() == jmri.Turnout.CLOSED) {
-                                        namedTurnout.getBean().setCommandedState(jmri.Turnout.THROWN);
-                                    } else {
-                                        namedTurnout.getBean().setCommandedState(jmri.Turnout.CLOSED);
-                                    }
-                                } else {
-                                    namedTurnout.getBean().setCommandedState((int) e.getNewValue());
+                                    new1stState = jmri.Turnout.invertTurnoutState(new1stState);
+                                }
+                                if (old1stState != new1stState) {
+                                    namedTurnout.getBean().setCommandedState(new1stState);
                                 }
                             }
                         }
                         layoutEditor.redrawPanel();
-                    }, namedTurnout.getName(), "Layout Editor Turnout"
+                    },
+                    namedTurnout.getName(),
+                    "Layout Editor Turnout"
             );
         }
         if (secondNamedTurnout != null) {
