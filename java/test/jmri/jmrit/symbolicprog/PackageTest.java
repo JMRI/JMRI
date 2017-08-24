@@ -43,7 +43,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.QualifierAdderTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ImporerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ImporterTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.DecVariableValueTest.suite());
