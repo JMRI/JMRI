@@ -178,14 +178,27 @@ public class LoadAndStoreTestBase {
                     }
                 }
             }
+            String date_string = "<date>";
+            if (!match && line1.contains(date_string) && line2.contains(date_string)) {
+                match = true;
+            }
+
             if (!match) {
-                String date_string = "<date>";
-                if (line1.contains(date_string) && line2.contains(date_string)) {
-                    match = true;
+                // if ether line contains a fontname attribute
+                String fontname_regexe = "( fontname=\"[^\"]*\")";
+                String[] splits1 = line1.split(fontname_regexe);
+                if (splits1.length == 2) {  // (yes) remove it
+                    line1 = splits1[0] + splits1[1];
+                    //log.debug("new line1: '" + line1 + "'.");
+                }
+                String[] splits2 = line2.split(fontname_regexe);
+                if (splits2.length == 2) {  // (yes) remove it
+                    line2 = splits2[0] + splits2[1];
+                    //log.debug("new line2: '" + line2 + "'.");
                 }
             }
             if (!match && !line1.equals(line2)) {
-                log.error("match failed in LoadAndStoreTest: Current line " + lineNumber1);
+                log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                 log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
                 log.error("  comparing file1:\"" + inFile1.getPath() + "\"");
@@ -195,16 +208,20 @@ public class LoadAndStoreTestBase {
             line1 = next1;
             line2 = next2;
         }   // while readLine() != null
+
         fileStream1.close();
+
         fileStream2.close();
     }
 
     public static void loadFile(File inFile) throws Exception {
         // load file
-        boolean good = InstanceManager.getDefault(ConfigureManager.class).load(inFile);
+        ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
+        boolean good = cm.load(inFile);
         Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.
+                LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
 
@@ -213,29 +230,26 @@ public class LoadAndStoreTestBase {
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
 
+        ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         switch (inSaveType) {
             case All: {
-                InstanceManager.getDefault(ConfigureManager.class).storeAll(outFile);
+                cm.storeAll(outFile);
                 break;
-
             }
             case Config: {
-                InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
+                cm.storeConfig(outFile);
                 break;
-
             }
             case Prefs: {
-                InstanceManager.getDefault(ConfigureManager.class).storePrefs(outFile);
+                cm.storePrefs(outFile);
                 break;
-
             }
             case User: {
-                InstanceManager.getDefault(ConfigureManager.class).storeUser(outFile);
+                cm.storeUser(outFile);
                 break;
-
             }
             case UserPrefs: {
-                InstanceManager.getDefault(ConfigureManager.class).storeUserPrefs(outFile);
+                cm.storeUserPrefs(outFile);
                 break;
             }
             default: {
@@ -263,7 +277,8 @@ public class LoadAndStoreTestBase {
         }
 
         // find comparison files
-        File compFile = new File(this.file.getCanonicalFile().getParentFile().getParent() + "/loadref/" + this.file.getName());
+        File compFile = new File(this.file.getCanonicalFile().getParentFile().
+                getParent() + "/loadref/" + this.file.getName());
         if (!compFile.exists()) {
             compFile = this.file;
         }
