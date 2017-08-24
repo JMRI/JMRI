@@ -172,11 +172,11 @@ public class LayoutTurnout extends LayoutTrack {
     public String turnoutName = "";   // should be the name (system or user) of
     //  an existing physical turnout
     public String secondTurnoutName = "";
-    /* should be the name (system or user) of
-     an existing physical turnout. Second turnout is
-     used to allow the throwing of two different turnout
-     to control one cross-over
+    /* should be the name (system or user) of an existing physical turnout. 
+        Second turnout is used to allow the throwing of two different turnout
+        to control one cross-over
      */
+    private boolean secondTurnoutInverted = false;
 
     public String blockName = "";  // name for block, if there is one
     public String blockBName = "";  // Xover/slip - name for second block, if there is one
@@ -396,6 +396,10 @@ public class LayoutTurnout extends LayoutTrack {
             return secondNamedTurnout.getName();
         }
         return secondTurnoutName;
+    }
+
+    public boolean getSecondTurnoutInverted() {
+        return secondTurnoutInverted;
     }
 
     public String getBlockName() {
@@ -1075,6 +1079,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public void setSecondTurnoutInverted(boolean inverted) {
+        secondTurnoutInverted = inverted;
+    }
+
     public void setContinuingSense(int sense) {
         continuingSense = sense;
     }
@@ -1709,9 +1717,9 @@ public class LayoutTurnout extends LayoutTrack {
     /*
      * Modify coordinates methods
      */
-
     /**
      * set center coordinates
+     *
      * @param p the coordinates to set
      */
     @Override
@@ -1899,6 +1907,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -1917,6 +1926,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -1935,17 +1945,26 @@ public class LayoutTurnout extends LayoutTrack {
      */
     private void activateTurnout() {
         if (namedTurnout != null) {
-            namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
-                    = (java.beans.PropertyChangeEvent e) -> {
+            namedTurnout.getBean().addPropertyChangeListener(
+                    mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
                         if (secondNamedTurnout != null) {
                             if (e.getSource().equals(secondNamedTurnout.getBean())
                             && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
                             && e.getOldValue().equals(namedTurnout.getBean().getState())) {
-                                namedTurnout.getBean().setCommandedState((int) e.getNewValue());
+                                if (secondTurnoutInverted) {
+                                    if (secondNamedTurnout.getBean().getState() == jmri.Turnout.CLOSED) {
+                                        namedTurnout.getBean().setCommandedState(jmri.Turnout.THROWN);
+                                    } else {
+                                        namedTurnout.getBean().setCommandedState(jmri.Turnout.CLOSED);
+                                    }
+                                } else {
+                                    namedTurnout.getBean().setCommandedState((int) e.getNewValue());
+                                }
                             }
                         }
                         layoutEditor.redrawPanel();
-                    }, namedTurnout.getName(), "Layout Editor Turnout");
+                    }, namedTurnout.getName(), "Layout Editor Turnout"
+            );
         }
         if (secondNamedTurnout != null) {
             secondNamedTurnout.getBean().addPropertyChangeListener(mTurnoutListener, secondNamedTurnout.getName(), "Layout Editor Turnout");
@@ -1988,9 +2007,16 @@ public class LayoutTurnout extends LayoutTrack {
             }
             getTurnout().setCommandedState(state);
             if (getSecondTurnout() != null) {
-                getSecondTurnout().setCommandedState(state);
+                if (secondTurnoutInverted) {
+                    if (state == jmri.Turnout.CLOSED) {
+                        getSecondTurnout().setCommandedState(jmri.Turnout.THROWN);
+                    } else {
+                        getSecondTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                    }
+                } else {
+                    getSecondTurnout().setCommandedState(state);
+                }
             }
-
         }
     }
 
@@ -2182,8 +2208,8 @@ public class LayoutTurnout extends LayoutTrack {
             jmi.setEnabled(false);
 
             if (getSecondTurnout() != null) {
-                jmi = popup.add(Bundle.getMessage("Supporting", 
-                        Bundle.getMessage("BeanNameTurnout")) 
+                jmi = popup.add(Bundle.getMessage("Supporting",
+                        Bundle.getMessage("BeanNameTurnout"))
                         + ": " + secondTurnoutName);
             }
             jmi.setEnabled(false);
@@ -2586,6 +2612,7 @@ public class LayoutTurnout extends LayoutTrack {
     protected boolean needRedraw = false;
     protected boolean needsBlockUpdate = false;
     private JCheckBox additionalTurnout = new JCheckBox(rb.getString("SupportingTurnout"));
+    private JCheckBox additionalTurnoutInvert = new JCheckBox(rb.getString("SecondTurnoutInvert"));
 
     /**
      * Edit a Layout Turnout
@@ -2621,13 +2648,10 @@ public class LayoutTurnout extends LayoutTrack {
             LayoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
 
             additionalTurnout.addActionListener((ActionEvent e) -> {
-                if (additionalTurnout.isSelected()) {
-                    secondTurnoutLabel.setEnabled(true);
-                    secondTurnoutComboBox.setEnabled(true);
-                } else {
-                    secondTurnoutLabel.setEnabled(false);
-                    secondTurnoutComboBox.setEnabled(false);
-                }
+                boolean additionalEnabled = additionalTurnout.isSelected();
+                secondTurnoutLabel.setEnabled(additionalEnabled);
+                secondTurnoutComboBox.setEnabled(additionalEnabled);
+                additionalTurnoutInvert.setEnabled(additionalEnabled);
             });
             if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
                 additionalTurnout.setText(rb.getString("ThrowTwoTurnouts"));
@@ -2640,6 +2664,10 @@ public class LayoutTurnout extends LayoutTrack {
             JPanel panel1b = new JPanel();
             panel1b.add(secondTurnoutLabel);
             panel1b.add(secondTurnoutComboBox);
+            additionalTurnoutInvert.addActionListener((ActionEvent e) -> {
+                setSecondTurnoutInverted(additionalTurnoutInvert.isSelected());
+            });
+            panel1b.add(additionalTurnoutInvert);
             contentPane.add(panel1b);
 
             // add continuing state choice, if not crossover
@@ -2766,6 +2794,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (secondNamedTurnout != null) {
             additionalTurnout.setSelected(true);
+            additionalTurnoutInvert.setSelected(getSecondTurnoutInverted());
             secondTurnoutLabel.setEnabled(true);
             secondTurnoutComboBox.setEnabled(true);
             secondTurnoutComboBox.setText(getSecondTurnoutName());
@@ -2969,7 +2998,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             setSecondTurnout(null);
         }
-        
+
         // set the continuing route Turnout State
         if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
             continuingSense = Turnout.CLOSED;
@@ -2977,7 +3006,7 @@ public class LayoutTurnout extends LayoutTrack {
                 continuingSense = Turnout.THROWN;
             }
         }
-        
+
         // check if Block changed
         newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
