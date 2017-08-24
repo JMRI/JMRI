@@ -55,12 +55,12 @@ public class TurnoutEditAction extends BeanEditAction {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
 
-    JmriBeanComboBox reporterField;
-    JCheckBox useCurrent = new JCheckBox();
-    JCheckBox inverted = new JCheckBox();
+    private JmriBeanComboBox reporterField;
+    private JCheckBox useCurrent = new JCheckBox();
+    private JCheckBox inverted = new JCheckBox();
 
     @Override
-    BeanItemPanel basicDetails() {
+    protected BeanItemPanel basicDetails() {
         BeanItemPanel basic = super.basicDetails();
 
         basic.addItem(new BeanEditItem(inverted, Bundle.getMessage("Inverted"), Bundle.getMessage("InvertedToolTip")));
@@ -85,17 +85,17 @@ public class TurnoutEditAction extends BeanEditAction {
         inverted.setEnabled(turn.canInvert());
     }
 
-    JmriBeanComboBox sensorFeedBack1ComboBox;
-    JmriBeanComboBox sensorFeedBack2ComboBox;
-    JComboBox<String> modeBox;
-    JComboBox<String> automationBox;
-    String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
-    TurnoutOperationConfig config;
-    BeanItemPanel feedback;
-    JPanel turnoutOperation = new JPanel();
-    String userDefinedOperation = null;  // ERROR: Something here should be setting this to a user-selected value!
+    private JmriBeanComboBox sensorFeedBack1ComboBox;
+    private JmriBeanComboBox sensorFeedBack2ComboBox;
+    private JComboBox<String> modeBox;
+    private JComboBox<String> automationBox;
+    private String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
+    private TurnoutOperationConfig config;
+    private BeanItemPanel feedback;
+    private JPanel turnoutOperation = new JPanel();
+    private String userDefinedOperation = null;  // ERROR: Something here should be setting this to a user-selected value!
 
-    BeanItemPanel feedback() {
+    private BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
         feedback.setName(Bundle.getMessage("Feedback"));
 
@@ -215,12 +215,12 @@ public class TurnoutEditAction extends BeanEditAction {
 
         bei.add(feedback);
         return feedback;
-    }
+    }   // feedback()
 
-    String oldModeSelection;
-    TurnoutOperation oldAutomationSelection;
-    TurnoutOperation currentOperation;
-    JTextField operationsName = new JTextField(10);
+    private String oldModeSelection;
+    private TurnoutOperation oldAutomationSelection;
+    private TurnoutOperation currentOperation;
+    private JTextField operationsName = new JTextField(10);
 
     transient ActionListener automationSelectionListener = new ActionListener() {
         @Override
@@ -229,7 +229,7 @@ public class TurnoutEditAction extends BeanEditAction {
         }
     };
 
-    void updateFeedbackOptions() {
+    private void updateFeedbackOptions() {
         Turnout t = (Turnout) bean;
         sensorFeedBack1ComboBox.setEnabled(false);
         sensorFeedBack2ComboBox.setEnabled(false);
@@ -246,7 +246,7 @@ public class TurnoutEditAction extends BeanEditAction {
         jmri.jmrit.beantable.TurnoutTableAction.updateAutomationBox(t, automationBox);
     }
 
-    void updateAutomationOptions() {
+    private void updateAutomationOptions() {
 
         if (userDefinedOperation != null && userDefinedOperation.equals(automationBox.getSelectedItem())) {
             return;
@@ -288,15 +288,15 @@ public class TurnoutEditAction extends BeanEditAction {
         super.cancelButtonAction(e);
     }
 
-    final static String bothText = "Both";
-    final static String cabOnlyText = "Cab only";
-    final static String pushbutText = "Pushbutton only";
-    final static String noneText = "None";
+    private final static String bothText = "Both";
+    private final static String cabOnlyText = "Cab only";
+    private final static String pushbutText = "Pushbutton only";
+    private final static String noneText = "None";
 
-    JComboBox<String> lockBox;
-    JComboBox<String> lockOperationBox;
+    private JComboBox<String> lockBox;
+    private JComboBox<String> lockOperationBox;
 
-    BeanItemPanel lock() {
+    protected BeanItemPanel lock() {
         Turnout t = (Turnout) bean;
         BeanItemPanel lock = new BeanItemPanel();
         lock.setName(Bundle.getMessage("Lock"));
@@ -373,24 +373,23 @@ public class TurnoutEditAction extends BeanEditAction {
                     }
                 }
             });
-
          } else {
            // lock operations are not available for this kind of Turnout
             lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockModeUnavailable")));
         }
         bei.add(lock);
         return lock;
-    }
+    }   // lock() 
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
 
-    JComboBox<String> closedSpeedBox;
-    JComboBox<String> thrownSpeedBox;
-    String defaultThrownSpeedText;
-    String defaultClosedSpeedText;
+    private JComboBox<String> closedSpeedBox;
+    private JComboBox<String> thrownSpeedBox;
+    private String defaultThrownSpeedText;
+    private String defaultClosedSpeedText;
 
-    BeanItemPanel speed() {
+    protected BeanItemPanel speed() {
         BeanItemPanel speed = new BeanItemPanel();
         speed.setName(Bundle.getMessage("Speed"));
 
@@ -429,7 +428,6 @@ public class TurnoutEditAction extends BeanEditAction {
         speed.addItem(new BeanEditItem(thrownSpeedBox, Bundle.getMessage("ThrownSpeed"), Bundle.getMessage("ThrownSpeedToolTip")));
 
         speed.setSaveItem(new AbstractAction() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
@@ -455,13 +453,10 @@ public class TurnoutEditAction extends BeanEditAction {
         });
 
         speed.setResetItem(new AbstractAction() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;
-
                 String speed = t.getDivergingSpeed();
-
                 speedListThrown.remove(defaultThrownSpeedText);
                 defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
                 speedListThrown.add(0, defaultThrownSpeedText);
@@ -470,9 +465,7 @@ public class TurnoutEditAction extends BeanEditAction {
                     thrownSpeedBox.addItem(speed);
                 }
                 thrownSpeedBox.setSelectedItem(speed);
-
                 speed = t.getStraightSpeed();
-
                 speedListClosed.remove(defaultClosedSpeedText);
                 defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
                 speedListClosed.add(0, defaultClosedSpeedText);
@@ -486,6 +479,5 @@ public class TurnoutEditAction extends BeanEditAction {
 
         bei.add(speed);
         return speed;
-    }
-
-}
+    }   // speed()
+}   // class TurnoutEditAction
