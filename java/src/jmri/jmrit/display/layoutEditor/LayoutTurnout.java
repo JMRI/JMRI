@@ -3943,7 +3943,6 @@ public class LayoutTurnout extends LayoutTrack {
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
         if ((getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) && (lbA != null)) {
             // have a crossover turnout with at least one block, check for multiple blocks
-
             if ((lbA != lbB) || (lbA != lbC) || (lbA != lbD)) {
                 // have multiple blocks and therefore internal block boundaries
                 if (lbA != lbB) {

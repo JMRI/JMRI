@@ -3618,6 +3618,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // set the new zoom to the smallest of the two
         double results = setZoom(Math.min(scaleWidth, scaleHeight));
 
+        // set the new zoom (return value may be different)
+        result = setZoom(result);
+
         // calculate new scroll bounds
         scrollBounds = MathUtil.scale(layoutBounds, results);
 
@@ -3741,7 +3744,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //removeMarkers
 
     /*======================================*\
-    |*  Dialog box to enter new track widths *|
+    |* Dialog box to enter new track widths *|
     \*======================================*/
     //operational variables for enter track width pane
     private JmriJFrame enterTrackWidthFrame = null;
@@ -3906,7 +3909,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //trackWidthCancelPressed
 
     /*====================================*\
-    |*  Dialog box to enter new grid sizes *|
+    |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
     private JmriJFrame enterGridSizesFrame = null;
@@ -4071,7 +4074,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //gridSizesCancelPressed
 
     /*=======================================*\
-    |*  Dialog box to enter new reporter info *|
+    |* Dialog box to enter new reporter info *|
     \*=======================================*/
     //operational variables for enter reporter pane
     private JmriJFrame enterReporterFrame = null;
@@ -4519,7 +4522,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //scaleTrack
 
     /*=========================================*\
-    |*  Dialog box to enter move selection info *|
+    |* Dialog box to enter move selection info *|
     \*=========================================*/
     //operational variables for move selection pane
     private JmriJFrame moveSelectionFrame = null;
