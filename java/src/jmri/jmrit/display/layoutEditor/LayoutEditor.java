@@ -3616,13 +3616,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         double scaleHeight = scrollPane.getHeight() / layoutBounds.getHeight();
 
         // set the new zoom to the smallest of the two
-        double results = setZoom(Math.min(scaleWidth, scaleHeight));
+        double result = setZoom(Math.min(scaleWidth, scaleHeight));
 
         // set the new zoom (return value may be different)
         result = setZoom(result);
 
         // calculate new scroll bounds
-        scrollBounds = MathUtil.scale(layoutBounds, results);
+        scrollBounds = MathUtil.scale(layoutBounds, result);
 
         // don't let its orgin go negative
         scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
@@ -3630,7 +3630,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
 
-        return results;
+        return result;
     }   //zoomToFit
 
     //

@@ -483,5 +483,4 @@ public class TurnoutEditAction extends BeanEditAction {
         bei.add(speed);
         return speed;
     }
-
 }

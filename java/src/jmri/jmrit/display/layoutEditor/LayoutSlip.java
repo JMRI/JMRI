@@ -22,6 +22,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -833,14 +834,15 @@ public class LayoutSlip extends LayoutTurnout {
             }
             jmi.setEnabled(false);
 
-            if (hidden) {
-                jmi = popup.add(rb.getString("Hidden"));
-            } else {
-                jmi = popup.add(rb.getString("NotHidden"));
-            }
-            jmi.setEnabled(false);
-
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+            hiddenCheckBoxMenuItem.setSelected(hidden);
+            popup.add(hiddenCheckBoxMenuItem);
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                setHidden(hiddenCheckBoxMenuItem.isSelected());
+            });
+
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
