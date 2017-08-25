@@ -857,7 +857,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rotationPanel.add(rotationLabel);
         rotationPanel.add(rotationComboBox);
 
-        zoomPanel.add(new JLabel(Bundle.getMessage("ZoomLabel") + ":"));
+        zoomPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ZoomLabel"))));
         zoomPanel.add(zoomLabel);
 
         Dimension coordSize = xLabel.getPreferredSize();
@@ -865,7 +865,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
 
-        locationPanel.add(new JLabel(Bundle.getMessage("Location") + ":"));
+        locationPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Location"))));
         locationPanel.add(new JLabel("{x:"));
         locationPanel.add(xLabel);
         locationPanel.add(new JLabel(", y:"));
@@ -2702,7 +2702,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         titleItem.addActionListener((ActionEvent event) -> {
             //prompt for name
             String newName = (String) JOptionPane.showInputDialog(getTargetFrame(),
-                    Bundle.getMessage("EnterTitle") + ":",
+                    Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterTitle")),
                     Bundle.getMessage("EditTitleMessageTitle"),
                     JOptionPane.PLAIN_MESSAGE, null, null, layoutName);
 
@@ -9894,14 +9894,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void setTurnoutCircles(boolean state) {
         if (turnoutCirclesWithoutEditMode != state) {
             turnoutCirclesWithoutEditMode = state;
-            turnoutCirclesOnCheckBoxMenuItem.setSelected(turnoutCirclesWithoutEditMode);
+            if (turnoutCirclesOnCheckBoxMenuItem != null) {
+                turnoutCirclesOnCheckBoxMenuItem.setSelected(turnoutCirclesWithoutEditMode);
+            }
         }
     }   //setTurnoutCircles
 
     public void setAutoBlockAssignment(boolean boo) {
         if (autoAssignBlocks != boo) {
             autoAssignBlocks = boo;
-            autoAssignBlocksCheckBoxMenuItem.setSelected(autoAssignBlocks);
+            if (autoAssignBlocksCheckBoxMenuItem != null) {
+                autoAssignBlocksCheckBoxMenuItem.setSelected(autoAssignBlocks);
+            }
         }
     }   //setAutoBlockAssignment
 
@@ -9920,10 +9924,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //setTooltipsInEdit
 
     private void setTooltipSubMenu() {
-        tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
-        tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
-        tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
-        tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        if (tooltipNone != null) {
+            tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+            tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+            tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+            tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        }
     }   //setTooltipSubMenu
 
     //accessor routines for turnout size parameters
