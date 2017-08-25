@@ -21,7 +21,8 @@ public class LayoutTurntableTest {
 
     @Test
     public void testNew() {
-        Assert.assertNotNull("Turntable not null", lt);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("exists", lt);
     }
 
     @Test
