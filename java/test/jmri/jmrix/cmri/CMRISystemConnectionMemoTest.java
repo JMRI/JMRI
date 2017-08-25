@@ -40,8 +40,8 @@ public class CMRISystemConnectionMemoTest {
    
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
         jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }
