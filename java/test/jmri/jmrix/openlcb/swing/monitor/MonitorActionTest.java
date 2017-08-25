@@ -35,6 +35,7 @@ public class MonitorActionTest {
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
     @After

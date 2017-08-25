@@ -84,11 +84,12 @@ public class MonitorFrameTest {
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
     @After
     public void tearDown() {
-        memo.dispose();
+        jmri.util.JUnitUtil.resetWindows(false);
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
