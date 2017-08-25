@@ -54,14 +54,12 @@ public class LoadAndStoreTestBase {
     }
 
     private SaveType saveType = SaveType.Config;
+    private boolean guiOnly = false;
 
-    public LoadAndStoreTestBase(File file, boolean pass) {
-        this(file, pass, SaveType.Config);
-    }
-
-    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType) {
+    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUIOnly) {
         this.file = file;
         this.saveType = saveType;
+        this.guiOnly = isGUIOnly;
     }
 
     /**
@@ -218,6 +216,7 @@ public class LoadAndStoreTestBase {
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
 
+    // store file
     public static File storeFile(File inFile, SaveType inSaveType) throws Exception {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
@@ -256,7 +255,7 @@ public class LoadAndStoreTestBase {
 
     @Test
     public void loadLoadStoreFileCheck() throws Exception {
-        if ((saveType == SaveType.All) || (saveType == SaveType.User)) {
+        if (guiOnly) {
             Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         }
 
@@ -265,7 +264,7 @@ public class LoadAndStoreTestBase {
         loadFile(this.file);
         // Panel sub-classes (with GUI) will fail if you try to load them twice.
         // (So don't!)
-        if ((saveType != SaveType.All) && (saveType != SaveType.User)) {
+        if (!guiOnly) {
             loadFile(this.file);
         }
 
@@ -294,6 +293,7 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }

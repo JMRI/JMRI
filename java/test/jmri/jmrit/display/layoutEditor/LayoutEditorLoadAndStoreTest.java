@@ -22,14 +22,14 @@ import org.junit.runners.Parameterized;
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
 @RunWith(Parameterized.class)
-public class LELoadAndStoreTest extends LoadAndStoreTestBase {
+public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
 
-    @Parameterized.Parameters(name = "{0} (pass={1} (saveType={2}))")
+    @Parameterized.Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
         return getFiles(new File("java/test/jmri/jmrit/display/layoutEditor"), false, true);
     }
 
-    public LELoadAndStoreTest(File inFile, boolean inPass) {
-        super(inFile, inPass, SaveType.User);
+    public LayoutEditorLoadAndStoreTest(File inFile, boolean inPass) {
+        super(inFile, inPass, SaveType.User, true);
     }
 }
