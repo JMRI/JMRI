@@ -262,7 +262,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public JFrame sensorFrame = null;
 
     public MultiIconEditor signalIconEditor = null;
-    public JFrame signalFrame;
+    public JFrame signalFrame = null;
 
     private MultiIconEditor iconEditor = null;
     private JFrame iconFrame = null;
@@ -1002,9 +1002,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         signalFrame = new JFrame(Bundle.getMessage("EditSignalIcons"));
         signalFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);  //no spaces around
-        //Label as that
-        //breaks html
-        //formatting
+        //Label as that breaks html formatting
         signalFrame.getContentPane().add(signalIconEditor);
         signalFrame.pack();
         signalFrame.setVisible(false);
@@ -10760,9 +10758,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void dispose() {
-        this.sensorFrame.dispose();
-        this.signalFrame.dispose();
-        this.iconFrame.dispose();
+        sensorFrame.dispose();
+        sensorFrame = null;
+        signalFrame.dispose();
+        signalFrame = null;
+        iconFrame.dispose();
+        iconFrame = null;
         super.dispose();
     }
 
