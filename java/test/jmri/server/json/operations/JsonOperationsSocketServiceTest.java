@@ -3,10 +3,7 @@ package jmri.server.json.operations;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -42,6 +39,6 @@ public class JsonOperationsSocketServiceTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketServiceTest.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketServiceTest.class.getName());
 
 }
