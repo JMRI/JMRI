@@ -3861,8 +3861,6 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void drawEditControls(Graphics2D g2) {
-        drawControls(g2);
-
         Point2D pt = getCoordsA();
         if (type >= DOUBLE_XOVER && type <= LH_XOVER) {
             if (getConnectA() == null) {

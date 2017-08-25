@@ -2512,8 +2512,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(controlCheckBoxMenuItem);
         controlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             setAllControlling(controlCheckBoxMenuItem.isSelected());
+            repaint();
         });
         controlCheckBoxMenuItem.setSelected(allControlling());
+
+        //
+        //add "use direct turnout control" menu item
+        //
+        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl"));   //IN18N
+        optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
+        });
+        useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
         //animation item
@@ -2976,20 +2987,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             repaint();
         });
         hideTrackSegmentConstructionLinesCheckBoxMenuItem.setSelected(autoAssignBlocks);
-
-        //
-        //add "use direct turnout control" menu item
-        //
-        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl"));   //IN18N
-        optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            useDirectTurnoutControl = false;
-
-            if (useDirectTurnoutControlCheckBoxMenuItem.isSelected()) {
-                useDirectTurnoutControl = true;
-            }
-        });
-        useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         return optionMenu;
     }   //setupOptionMenu
@@ -10094,13 +10091,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             drawMemoryRects(g2);
             drawBlockContentsRects(g2);
 
-            drawTurnoutControls(g2);
-            drawSlipControls(g2);
-
+            if (allControlling()) {
+                drawTurnoutControls(g2);
+                drawSlipControls(g2);
+                drawTurntableControls(g2);
+            }
             highLightSelection(g2);
         } else if (turnoutCirclesWithoutEditMode) {
-            drawTurnoutControls(g2);
-            drawSlipControls(g2);
+            if (allControlling()) {
+                drawTurnoutControls(g2);
+                drawSlipControls(g2);
+                drawTurntableControls(g2);
+            }
         }
     }   //paintTargetPanel
 
@@ -10182,6 +10184,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             lt.draw(g2);
         }
     }   //drawTurntables
+
+    private void drawTurntableControls(Graphics2D g2) {
+        // loop over all layout turntables
+        for (LayoutTurntable lt : turntableList) {
+            lt.drawControls(g2);
+        }
+    }   //drawTurntableControls
 
     private void drawXingEditControls(Graphics2D g2) {
         // loop over all level crossings

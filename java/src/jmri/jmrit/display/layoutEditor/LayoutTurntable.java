@@ -1085,6 +1085,14 @@ public class LayoutTurntable extends LayoutTrack {
                     pt.getX() - ((pt.getX() - center.getX()) * 0.2),
                     pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
         }
+    }
+
+    /**
+     * draw this turntable's controls
+     *
+     * @param g2 the graphics port to draw to
+     */
+    public void drawControls(Graphics2D g2) {
         if (isTurnoutControlled() && getPosition() != -1) {
             Point2D pt = getRayCoordsIndexed(getPosition());
             g2.draw(new Line2D.Double(new Point2D.Double(
@@ -1092,7 +1100,11 @@ public class LayoutTurntable extends LayoutTrack {
                     pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */)), pt));
         }
     }
-
+    /**
+     * draw this turntable's edit controls
+     *
+     * @param g2 the graphics port to draw to
+     */
     public void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
