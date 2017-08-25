@@ -10758,12 +10758,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void dispose() {
-        sensorFrame.dispose();
-        sensorFrame = null;
-        signalFrame.dispose();
-        signalFrame = null;
-        iconFrame.dispose();
-        iconFrame = null;
+        if (sensorFrame != null) {
+            sensorFrame.dispose();
+            sensorFrame = null;
+        }
+        if (signalFrame != null) {
+            signalFrame.dispose();
+            signalFrame = null;
+        }
+        if (iconFrame != null) {
+            iconFrame.dispose();
+            iconFrame = null;
+        }
         super.dispose();
     }
 
