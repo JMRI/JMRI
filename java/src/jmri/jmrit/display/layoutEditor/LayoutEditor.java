@@ -240,7 +240,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //4th row of radio buttons (and any associated text fields)
-    private JRadioButton multiSensorButton = new JRadioButton(String.format("{}...", Bundle.getMessage("MultiSensor")));
+    private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
     private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
@@ -256,7 +256,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
 
-    private JButton changeIconsButton = new JButton(String.format("{}..."Bundle.getMessage("ChangeIcons")));
+    private JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
     public MultiIconEditor sensorIconEditor = null;
     public JFrame sensorFrame = null;
@@ -857,7 +857,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rotationPanel.add(rotationLabel);
         rotationPanel.add(rotationComboBox);
 
-        zoomPanel.add(new JLabel(String.format("{}:", Bundle.getMessage("ZoomLabel"))));
+        zoomPanel.add(new JLabel(Bundle.getMessage("ZoomLabel") + ":"));
         zoomPanel.add(zoomLabel);
 
         Dimension coordSize = xLabel.getPreferredSize();
@@ -865,7 +865,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
 
-        locationPanel.add(new JLabel(String.format("{}:",Bundle.getMessage("Location"))));
+        locationPanel.add(new JLabel(Bundle.getMessage("Location") + ":"));
         locationPanel.add(new JLabel("{x:"));
         locationPanel.add(xLabel);
         locationPanel.add(new JLabel(", y:"));
