@@ -18,13 +18,17 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
         n = new SerialNode(0, SerialNode.SMINI,tcis);
         t = new SerialTurnout("CT4", "t4",memo);
-        Assert.assertNotNull("exists", n);
+        Assert.assertNotNull("node exists", n);
+        Assert.assertNotNull("turnout exists", t);
     }
 
     @Override
