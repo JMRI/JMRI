@@ -210,10 +210,10 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
         JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
         JUnitUtil.resetInstanceManager();
+        super.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());

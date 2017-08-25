@@ -2151,14 +2151,14 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 String pBlkNames = "";
                 StringBuffer lBlksNamesBuf = new StringBuffer();
                 for (LayoutBlock pBlk : protectingBlocks) {
-                    pBlkNames = pBlkNames + " " + pBlk.blockName + " " + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST) + ", ";
+                    pBlkNames = pBlkNames + " " + pBlk.getDisplayName() + " " + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST) + ", ";
                     if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)) {
                         try {
                             lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
                             protectingBlock = pBlk;
                             for (LayoutBlock lBlk : lblks) {
                                 lBlksNamesBuf.append(" ");
-                                lBlksNamesBuf.append(lBlk.blockName);
+                                lBlksNamesBuf.append(lBlk.getDisplayName());
                             }
                             break;
                         } catch (jmri.JmriException ee) {
@@ -2169,7 +2169,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 String lBlksNames = new String(lBlksNamesBuf);
 
                 if (protectingBlock == null) {
-                    throw new jmri.JmriException("Path not valid, protecting block null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.blockName + " layout block names: " + lBlksNames);
+                    throw new jmri.JmriException("Path not valid, protecting block null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.getDisplayName() + " layout block names: " + lBlksNames);
                 }
             }
             try {
@@ -2264,30 +2264,29 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     turnoutlist = connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
                     throwlist = connection.getTurnoutSettingList();
                     for (int x = 0; x < turnoutlist.size(); x++) {
-                        if (turnoutlist.get(x) instanceof LayoutSlip) {
+                        LayoutTurnout lt = turnoutlist.get(x);
+                        if (lt instanceof LayoutSlip) {
+                            LayoutSlip ls = (LayoutSlip) lt;
                             int slipState = throwlist.get(x);
-                            LayoutSlip ls = (LayoutSlip) turnoutlist.get(x);
                             int taState = ls.getTurnoutState(slipState);
                             turnoutSettings.put(ls.getTurnout(), taState);
-
                             int tbState = ls.getTurnoutBState(slipState);
                             turnoutSettings.put(ls.getTurnoutB(), tbState);
                         } else {
-                            String t = turnoutlist.get(x).getTurnoutName();
+                            String t = lt.getTurnoutName();
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                             if (log.isDebugEnabled()) {
-                                if ((turnoutlist.get(x).getTurnoutType() <= 3) && (!turnoutlist.get(x).getBlockName().equals(""))) {
+                                if ((lt.getTurnoutType() <= 3) && (!lt.getBlockName().equals(""))) {
                                     log.debug("turnout in list is straight left/right wye");
-                                    log.debug("turnout block Name " + turnoutlist.get(x).getBlockName());
+                                    log.debug("turnout block Name " + lt.getBlockName());
                                     log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
-                                    log.debug("A " + turnoutlist.get(x).getConnectA());
-                                    log.debug("B " + turnoutlist.get(x).getConnectB());
-                                    log.debug("C " + turnoutlist.get(x).getConnectC());
-                                    log.debug("D " + turnoutlist.get(x).getConnectD());
+                                    log.debug("A " + lt.getConnectA());
+                                    log.debug("B " + lt.getConnectB());
+                                    log.debug("C " + lt.getConnectC());
+                                    log.debug("D " + lt.getConnectD());
                                 }
                             }
                             turnoutSettings.put(turnout, throwlist.get(x));
-                            LayoutTurnout lt = turnoutlist.get(x);
                             if (lt.getSecondTurnout() != null) {
                                 turnoutSettings.put(lt.getSecondTurnout(), throwlist.get(x));
                             }

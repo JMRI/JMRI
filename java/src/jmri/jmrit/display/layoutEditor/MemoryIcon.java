@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 //@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    String defaultText = " ";
+    private String defaultText = " ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
@@ -29,14 +29,14 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     @Override
     public void setText(String text) {
-        if (text == null || !text.isEmpty()) {
+        if (text == null || text.isEmpty()) {
             super.setText(defaultText);
         } else {
             super.setText(text);
         }
     }
 
-    LayoutBlock lBlock = null;
+    private LayoutBlock lBlock = null;
 
     public LayoutBlock getLayoutBlock() {
         return lBlock;
@@ -73,7 +73,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     }
                 }
                 if (val instanceof String) {
-                    if (val.equals("")) {
+                    if (((String)val).isEmpty()) {
                         setText(defaultText);
                     } else {
                         setText((String) val);
@@ -131,7 +131,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    JCheckBoxMenuItem updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
+    private JCheckBoxMenuItem updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
 
     @Override
     public boolean showPopUp(JPopupMenu popup) {

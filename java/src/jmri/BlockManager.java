@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Note this is a concrete class, unlike the interface/implementation pairs of
  * most Managers, because there are currently only one implementation for
  * Blocks.
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -53,8 +52,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
     @Override
     @CheckReturnValue
-    @Nonnull public
-    String getSystemPrefix() {
+    @Nonnull
+    public String getSystemPrefix() {
         return "I";
     }
 
@@ -112,7 +111,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
                     lastAutoBlockRef = autoNumber;
                 }
             } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
         }
         try {
@@ -148,7 +147,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      *
      * @param name the system name or the user name for the block
      * @return a new or existing Block
-     * @throws IllegalArgumentException if cannot create block; never returns null
+     * @throws IllegalArgumentException if cannot create block; never returns
+     *                                  null
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
@@ -161,8 +161,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         } else {
             b = createNewBlock(makeSystemName(name), null);
         }
-        if (b==null) {
-            throw new IllegalArgumentException("Could not create block \""+name+"\"");
+        if (b == null) {
+            throw new IllegalArgumentException("Could not create block \"" + name + "\"");
         }
         return b;
     }
@@ -175,6 +175,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      * Method to get an existing Block. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     *
      * @param name the name of an existing block
      * @return a Block or null if none found
      */
@@ -189,21 +190,21 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     }
 
     @CheckReturnValue
-    @CheckForNull public
-    Block getBySystemName(@Nonnull String name) {
+    @CheckForNull
+    public Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
         return (Block) _tsys.get(key);
     }
 
     @CheckReturnValue
-    @CheckForNull public
-    Block getByUserName(@Nonnull String key) {
+    @CheckForNull
+    public Block getByUserName(@Nonnull String key) {
         return (Block) _tuser.get(key);
     }
 
     @CheckReturnValue
-    @CheckForNull public
-    Block getByDisplayName(@Nonnull String key) {
+    @CheckForNull
+    public Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Block retv = this.getByUserName(key);
@@ -215,11 +216,13 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     }
 
     /**
-     * @deprecated 4.9.1 Use InstanceManager
+     * @return the default BlockManager instance
+     * @deprecated since 4.9.1; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
     @Deprecated
-    static @CheckForNull public
-    BlockManager instance() {
+    @CheckForNull
+    static public BlockManager instance() {
         return InstanceManager.getDefault(BlockManager.class);
     }
 
@@ -249,15 +252,15 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     }
 
     @CheckReturnValue
-    @Nonnull public
-    String getDefaultSpeed() {
+    @Nonnull
+    public String getDefaultSpeed() {
         return defaultSpeed;
     }
 
     @Override
     @CheckReturnValue
-    @Nonnull public
-    String getBeanTypeHandled() {
+    @Nonnull
+    public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
 
@@ -271,8 +274,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      * @return list of block system names
      */
     @CheckReturnValue
-    @Nonnull public
-    List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
+    @Nonnull
+    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 
         getSystemNameList().stream().forEach((sysName) -> {

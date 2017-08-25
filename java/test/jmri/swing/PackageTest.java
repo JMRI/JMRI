@@ -18,7 +18,8 @@ import org.junit.runners.Suite.SuiteClasses;
     AboutDialogTest.class,
     DefaultEditableListModelTest.class,
     RowSorterUtilTest.class,
-    JTitledSeparatorTest.class
+    JTitledSeparatorTest.class,
+    DefaultListCellEditorTest.class
 })
 public class PackageTest {
 }

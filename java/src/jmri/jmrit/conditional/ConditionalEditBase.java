@@ -11,12 +11,11 @@ import java.util.List;
 import java.util.TreeSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import jmri.Audio;
 import jmri.Conditional;
 import jmri.ConditionalManager;
@@ -45,25 +44,24 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.picker.PickFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
+import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is the base class for the Conditional edit view classes.
- * Contains shared variables and methods.
+ * This is the base class for the Conditional edit view classes. Contains shared
+ * variables and methods.
  * <p>
  * @author Dave Sand copyright (c) 2017
  */
 public class ConditionalEditBase {
 
     /**
-     * Set the Logix and Conditional managers
-     * Get the Logix
-     * Set the selection mode: Multi, Single, Combo
-     * @param sName is the Logix system name that is being edited.
+     * Set the Logix and Conditional managers and set the selection mode.
+     *
+     * @param sName the Logix system name being edited
      */
     public ConditionalEditBase(String sName) {
 //         _logixManager = InstanceManager.getNullableDefault(jmri.LogixManager.class);
@@ -78,13 +76,11 @@ public class ConditionalEditBase {
     }
 
     // ------------ variable definitions ------------
-
     ConditionalManager _conditionalManager = null;
     LogixManager _logixManager = null;
     Logix _curLogix = null;
 
     int _numConditionals = 0;
-    int _conditionalEditCount = 0;
     boolean _inEditMode = false;
 
     boolean _showReminder = false;
@@ -95,22 +91,34 @@ public class ConditionalEditBase {
 
     /**
      * Input selection names
+     *
      * @since 4.7.3
      */
     public enum SelectionMode {
-        /** Use the traditional text field, with the tabbed Pick List available for drag-n-drop */
+        /**
+         * Use the traditional text field, with the tabbed Pick List available
+         * for drag-n-drop
+         */
         USEMULTI,
-        /** Use the traditional text field, but with a single Pick List that responds with a click */
+        /**
+         * Use the traditional text field, but with a single Pick List that
+         * responds with a click
+         */
         USESINGLE,
-        /** Use combo boxes to select names instead of a text field. */
+        /**
+         * Use combo boxes to select names instead of a text field.
+         */
         USECOMBO;
     }
     SelectionMode _selectionMode;
 
     /**
-     * Get the saved mode selection, default to the tranditional tabbed pick list.
+     * Get the saved mode selection, default to the tranditional tabbed pick
+     * list.
      * <p>
-     * During the menu build process, the corresponding menu item is set to selected.
+     * During the menu build process, the corresponding menu item is set to
+     * selected.
+     *
      * @since 4.7.3
      */
     void loadSelectionMode() {
@@ -136,7 +144,6 @@ public class ConditionalEditBase {
         }
     }
 
-
     // ------------ PickList components ------------
     JTable _pickTable = null;               // Current pick table
     JTabbedPane _pickTabPane = null;        // The tabbed panel for the pick table
@@ -155,11 +162,11 @@ public class ConditionalEditBase {
     // 1) Notify the calling Logix that the Logix user name has been changed.
     // 2) Notify the calling Logix that the conditional view is closing
     // 3) Notify the calling Logix that it is to be deleted
-    
     /**
      * Create a custom listener event
      */
     public interface LogixEventListener extends EventListener {
+
         void LogixEventOccurred();
     }
 
@@ -169,12 +176,14 @@ public class ConditionalEditBase {
     List<LogixEventListener> listenerList = new ArrayList<>();
 
     /**
-     * This contains a list of commands to be processed by the listener recipient
-     */    
+     * This contains a list of commands to be processed by the listener
+     * recipient
+     */
     public HashMap<String, String> logixData = new HashMap<>();
 
     /**
      * Add a listener
+     *
      * @param listener The recipient
      */
     public void addLogixEventListener(LogixEventListener listener) {
@@ -183,6 +192,7 @@ public class ConditionalEditBase {
 
     /**
      * Remove a listener -- not used
+     *
      * @param listener The recipient
      */
     public void removeLogixEventListener(LogixEventListener listener) {
@@ -191,7 +201,7 @@ public class ConditionalEditBase {
 
     /**
      * Notify the listeners to check for new data
-     */    
+     */
     void fireLogixEvent() {
         for (LogixEventListener l : listenerList) {
             l.LogixEventOccurred();
@@ -199,23 +209,23 @@ public class ConditionalEditBase {
     }
 
     // ------------ Shared Conditional Methods ------------
-
     /**
      * Verify that the user name is not a duplicate for the selected Logix
+     *
      * @param uName is the user name to be checked
      * @param logix is the Logix that is being updated
-     * @return true if  the name is unique
+     * @return true if the name is unique
      */
     boolean checkConditionalUserName(String uName, Logix logix) {
         if (uName != null && uName.length() > 0) {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: "  // NOI18N
+                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
                         + uName);
                 javax.swing.JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("Error10"),     // NOI18N
-                        Bundle.getMessage("ErrorTitle"),        // NOI18N
+                        null, Bundle.getMessage("Error10"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -225,6 +235,7 @@ public class ConditionalEditBase {
 
     /**
      * Create a combo name box for Variable and Action name selection.
+     *
      * @param itemType The selected variable or action type
      * @return nameBox A combo box based on the item type
      */
@@ -269,7 +280,7 @@ public class ConditionalEditBase {
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
                 nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
             default:
                 return null;             // Skip any other items.
@@ -281,10 +292,13 @@ public class ConditionalEditBase {
     /**
      * Listen for name combo box selection events.
      * <p>
-     * When a combo box row is selected, the user/system name is copied to the Action or Variable name field.
+     * When a combo box row is selected, the user/system name is copied to the
+     * Action or Variable name field.
+     *
      * @since 4.7.3
      */
-    class NameBoxListener implements ItemListener {
+    static class NameBoxListener implements ItemListener {
+
         /**
          * @param textField The target field object when an entry is selected
          */
@@ -315,12 +329,13 @@ public class ConditionalEditBase {
     }
 
     // ------------ Single Pick List Table Methods ------------
-
     /**
-     * Create a single panel picklist JFrame for choosing action and variable names.
+     * Create a single panel picklist JFrame for choosing action and variable
+     * names.
+     *
      * @since 4.7.3
-     * @param itemType The selected variable or action type
-     * @param listener The listener to be assigned to the picklist
+     * @param itemType   The selected variable or action type
+     * @param listener   The listener to be assigned to the picklist
      * @param actionType True if Action, false if Variable.
      */
     void createSinglePanelPickList(int itemType, PickSingleListener listener, boolean actionType) {
@@ -389,6 +404,7 @@ public class ConditionalEditBase {
 
     /**
      * Close a single panel picklist JFrame and related items.
+     *
      * @since 4.7.3
      */
     void closeSinglePanelPickList() {
@@ -405,13 +421,16 @@ public class ConditionalEditBase {
     /**
      * Listen for Pick Single table click events.
      * <p>
-     * When a table row is selected, the user/system name is copied to the Action or Variable name field.
+     * When a table row is selected, the user/system name is copied to the
+     * Action or Variable name field.
+     *
      * @since 4.7.3
      */
     class PickSingleListener implements ListSelectionListener {
+
         /**
          * @param textField The target field object when an entry is selected
-         * @param itemType The current selected table type number
+         * @param itemType  The current selected table type number
          */
         public PickSingleListener(JTextField textField, int itemType) {
             saveItemType = itemType;
@@ -428,22 +447,22 @@ public class ConditionalEditBase {
                 int selectedCol = _pickTable.getSelectedColumn();
                 String newName = (String) _pickTable.getValueAt(selectedRow, selectedCol);
                 if (log.isDebugEnabled()) {
-                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'",  // NOI18N
-                             selectedRow, selectedCol, newName);
+                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'", // NOI18N
+                            selectedRow, selectedCol, newName);
                 }
                 saveTextField.setText(newName);
             }
         }
 
-       public int getItemType() {
-           return saveItemType;
-       }
+        public int getItemType() {
+            return saveItemType;
+        }
     }
 
     // ------------ Pick List Table Methods ------------
-
     /**
-     * Open a new drag-n-drop Pick List to drag Variable and Action names from to form Logix Conditionals.
+     * Open a new drag-n-drop Pick List to drag Variable and Action names from
+     * to form Logix Conditionals.
      */
     void openPickListTable() {
         if (_pickTables == null) {
@@ -464,9 +483,10 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Set the pick list tab based on the variable or action type
-     * If there is not a corresponding tab, hide the picklist
-     * @param curType is the current type
+     * Set the pick list tab based on the variable or action type If there is
+     * not a corresponding tab, hide the picklist
+     *
+     * @param curType    is the current type
      * @param actionType True if Action, false if Variable.
      */
     void setPickListTab(int curType, boolean actionType) {
@@ -530,8 +550,9 @@ public class ConditionalEditBase {
 
     /**
      * Recursive search for the tab panel
+     *
      * @param compList The components for the current Level
-     * @param level The current level in the structure
+     * @param level    The current level in the structure
      */
     void findPickListTabPane(Component[] compList, int level) {
         for (Component compItem : compList) {
@@ -541,7 +562,7 @@ public class ConditionalEditBase {
                 return;
             }
 
-            if (compItem instanceof JTabbedPane ) {
+            if (compItem instanceof JTabbedPane) {
                 _pickTabPane = (JTabbedPane) compItem;
             } else {
                 int nextLevel = level + 1;
@@ -554,11 +575,12 @@ public class ConditionalEditBase {
     }
 
     // ------------ Manage Conditional Reference map ------------
-
     /**
      * Build a tree set from conditional references.
+     *
      * @since 4.7.4
-     * @param varList The ConditionalVariable list that might contain conditional references
+     * @param varList The ConditionalVariable list that might contain
+     *                conditional references
      * @param treeSet A tree set to be built from the varList data
      */
     void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet treeSet) {
@@ -600,7 +622,7 @@ public class ConditionalEditBase {
                     String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
                     javax.swing.JOptionPane.showMessageDialog(null,
-                            java.text.MessageFormat.format(Bundle.getMessage("Error11"), (Object[]) msgs),  // NOI18N
+                            java.text.MessageFormat.format(Bundle.getMessage("Error11"), (Object[]) msgs), // NOI18N
                             Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);        // NOI18N
                     return false;
                 }
@@ -612,12 +634,13 @@ public class ConditionalEditBase {
     /**
      * Update the conditional reference where used.
      * <p>
-     * The difference between the saved target names and new target names
-     * is used to add/remove where used references.
+     * The difference between the saved target names and new target names is
+     * used to add/remove where used references.
+     *
      * @since 4.7.4
      * @param oldTargetNames The conditional target names before updating
      * @param newTargetNames The conditional target names after updating
-     * @param refName The system name for the referencing conditional
+     * @param refName        The system name for the referencing conditional
      */
     void updateWhereUsed(TreeSet<String> oldTargetNames, TreeSet<String> newTargetNames, String refName) {
         TreeSet<String> deleteNames = new TreeSet<>(oldTargetNames);
@@ -634,7 +657,6 @@ public class ConditionalEditBase {
     }
 
     // ------------ Utility Methods - Data Validation ------------
-
     /**
      * Display reminder to save.
      */
@@ -642,8 +664,8 @@ public class ConditionalEditBase {
         if (_showReminder) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString",  // NOI18N
-                                Bundle.getMessage("MenuItemLogixTable")),  // NOI18N
+                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", // NOI18N
+                                Bundle.getMessage("MenuItemLogixTable")), // NOI18N
                                 getClassName(),
                                 "remindSaveLogix"); // NOI18N
             }
@@ -651,31 +673,14 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Maintain a count of conditional edit sessions.
-     * Enable/Disable Logix as needed.
-     * @param status True for starting a session, false for closing a session
-     */
-    void setConditionalEdit(boolean status) {
-        if (status) {
-            _conditionalEditCount++;
-            _curLogix.deActivateLogix();
-        } else {
-            _conditionalEditCount--;
-            if (_conditionalEditCount < 0) {
-                _conditionalEditCount = 0;
-            }
-            if (_conditionalEditCount == 0) {
-                _curLogix.activateLogix();
-            }
-        }
-    }
-
-    /**
      * Check if String is an integer or references an integer.
      *
-     * @param actionType Conditional action to check for, i.e. ACTION_SET_LIGHT_INTENSITY
-     * @param intReference string referencing a decimal for light intensity or the name of a memory
-     * @return true if either correct decimal format or a memory with the given name is present
+     * @param actionType   Conditional action to check for, i.e.
+     *                     ACTION_SET_LIGHT_INTENSITY
+     * @param intReference string referencing a decimal for light intensity or
+     *                     the name of a memory
+     * @return true if either correct decimal format or a memory with the given
+     *         name is present
      */
     boolean validateIntensityReference(int actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
@@ -700,10 +705,13 @@ public class ConditionalEditBase {
                     m = InstanceManager.memoryManagerInstance().getBySystemName(intRef);
                 }
                 try {
+                    if (m == null || m.getValue() == null) {
+                        throw new NumberFormatException();
+                    }
                     validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
-                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"),  // NOI18N
+                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"), // NOI18N
                                     intReference), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE); // NOI18N
                 }
                 return true;    // above is a warning to set memory correctly
@@ -714,8 +722,8 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Check if text represents an integer is suitable for percentage
-     * w/o NumberFormatException.
+     * Check if text represents an integer is suitable for percentage w/o
+     * NumberFormatException.
      *
      * @param time value to use as light intensity percentage
      * @return true if time is an integer in range 0 - 100
@@ -723,7 +731,7 @@ public class ConditionalEditBase {
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
             javax.swing.JOptionPane.showMessageDialog(
-                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"),      // NOI18N
+                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"), // NOI18N
                             time, Bundle.getMessage("Error42")), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);   // NOI18N
             return false;
         }
@@ -733,11 +741,13 @@ public class ConditionalEditBase {
     /**
      * Check if a string is decimal or references a decimal.
      *
-     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
-     * @param ref entry to check
-     * @return true if ref is itself a decimal or user will provide one from a Memory at run time
+     * @param actionType integer representing the Conditional action type being
+     *                   checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param ref        entry to check
+     * @return true if ref is itself a decimal or user will provide one from a
+     *         Memory at run time
      */
-    boolean validateTimeReference (int actionType, String ref) {
+    boolean validateTimeReference(int actionType, String ref) {
         if (ref == null || ref.trim().length() == 0) {
             displayBadNumberReference(actionType);
             return false;
@@ -761,10 +771,13 @@ public class ConditionalEditBase {
                     m = InstanceManager.memoryManagerInstance().getBySystemName(memRef);
                 }
                 try {
+                    if (m == null || m.getValue() == null) {
+                        throw new NumberFormatException();
+                    }
                     validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
-                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"),  // NOI18N
+                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"), // NOI18N
                                     memRef), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);   // NOI18N
                 }
                 return true;    // above is a warning to set memory correctly
@@ -777,8 +790,9 @@ public class ConditionalEditBase {
     /**
      * Range check time entry (assumes seconds).
      *
-     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
-     * @param time value to be checked
+     * @param actionType integer representing the Conditional action type being
+     *                   checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param time       value to be checked
      * @return false if time &gt; 3600 (seconds) or too small
      */
     boolean validateTime(int actionType, float time) {
@@ -806,7 +820,7 @@ public class ConditionalEditBase {
                     break;
             }
             javax.swing.JOptionPane.showMessageDialog(
-                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"),       // NOI18N
+                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"), // NOI18N
                             time, Bundle.getMessage(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
             return false;
         }
@@ -814,9 +828,11 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Display an error message to user when an invalid number is provided in Conditional set up.
+     * Display an error message to user when an invalid number is provided in
+     * Conditional set up.
      *
-     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param actionType integer representing the Conditional action type being
+     *                   checked, i.e. ACTION_DELAYED_TURNOUT
      */
     void displayBadNumberReference(int actionType) {
         String errorNum = " ";
@@ -835,7 +851,7 @@ public class ConditionalEditBase {
                 break;
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
                 javax.swing.JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("Error43"),       // NOI18N
+                        null, Bundle.getMessage("Error43"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
                 return;
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
@@ -845,7 +861,7 @@ public class ConditionalEditBase {
                 log.warn("Unexpected action type {} in displayBadNumberReference", actionType);  // NOI18N
         }
         javax.swing.JOptionPane.showMessageDialog(
-                null, java.text.MessageFormat.format(Bundle.getMessage("Error9"),       // NOI18N
+                null, java.text.MessageFormat.format(Bundle.getMessage("Error9"), // NOI18N
                         Bundle.getMessage(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
     }
 
@@ -855,7 +871,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Memory, null if not found
+     * @return the system or user name of the corresponding Memory, null if not
+     *         found
      */
     String validateMemoryReference(String name) {
         Memory m = null;
@@ -884,8 +901,8 @@ public class ConditionalEditBase {
     boolean confirmIndirectMemory(String memName) {
         if (!_suppressIndirectRef) {
             int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                    Bundle.getMessage("ConfirmIndirectReference"), memName),       // NOI18N
-                    Bundle.getMessage("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION,       // NOI18N
+                    Bundle.getMessage("ConfirmIndirectReference"), memName), // NOI18N
+                    Bundle.getMessage("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION, // NOI18N
                     JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
                 return false;
@@ -902,7 +919,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Turnout, null if not found
+     * @return the system or user name of the corresponding Turnout, null if not
+     *         found
      */
     String validateTurnoutReference(String name) {
         Turnout t = null;
@@ -928,7 +946,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding SignalHead, null if not found
+     * @return the system or user name of the corresponding SignalHead, null if
+     *         not found
      */
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
@@ -954,7 +973,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Signal Mast, null if not found
+     * @return the system or user name of the corresponding Signal Mast, null if
+     *         not found
      */
     String validateSignalMastReference(String name) {
         SignalMast h = null;
@@ -984,7 +1004,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Warrant, null if not found
+     * @return the system or user name of the corresponding Warrant, null if not
+     *         found
      */
     String validateWarrantReference(String name) {
         Warrant w = null;
@@ -1010,7 +1031,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding OBlock, null if not found
+     * @return the system or user name of the corresponding OBlock, null if not
+     *         found
      */
     String validateOBlockReference(String name) {
         OBlock b = null;
@@ -1036,7 +1058,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Sensor, null if not found
+     * @return the system or user name of the corresponding Sensor, null if not
+     *         found
      */
     String validateSensorReference(String name) {
         Sensor s = null;
@@ -1062,7 +1085,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Light, null if not found
+     * @return the system or user name of the corresponding Light, null if not
+     *         found
      */
     String validateLightReference(String name) {
         Light l = null;
@@ -1088,7 +1112,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Conditional, null if not found
+     * @return the system or user name of the corresponding Conditional, null if
+     *         not found
      */
     String validateConditionalReference(String name) {
         Conditional c = null;
@@ -1114,7 +1139,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Logix, null if not found
+     * @return the system or user name of the corresponding Logix, null if not
+     *         found
      */
     String validateLogixReference(String name) {
         Logix l = null;
@@ -1140,7 +1166,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding Route, null if not found
+     * @return the system or user name of the corresponding Route, null if not
+     *         found
      */
     String validateRouteReference(String name) {
         Route r = null;
@@ -1166,7 +1193,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system or user name of the corresponding AudioManager, null if not found
+     * @return the system or user name of the corresponding AudioManager, null
+     *         if not found
      */
     String validateAudioReference(String name) {
         Audio a = null;
@@ -1192,7 +1220,8 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system name of the corresponding EntryExit pair, null if not found
+     * @return the system name of the corresponding EntryExit pair, null if not
+     *         found
      */
     String validateEntryExitReference(String name) {
         NamedBean nb = null;
@@ -1244,7 +1273,7 @@ public class ConditionalEditBase {
         try {
             if (index > 0) { // : after start
                 hour = s.substring(0, index);
-                if (index+1 < s.length()) { // check for : at end
+                if (index + 1 < s.length()) { // check for : at end
                     minute = s.substring(index + 1);
                 } else {
                     minute = "0";
@@ -1276,8 +1305,8 @@ public class ConditionalEditBase {
         if (error) {
             // if unsuccessful, print error message
             javax.swing.JOptionPane.showMessageDialog(null,
-                    java.text.MessageFormat.format(Bundle.getMessage("Error26"),       // NOI18N
-                            new Object[]{s}), Bundle.getMessage("ErrorTitle"),       // NOI18N
+                    java.text.MessageFormat.format(Bundle.getMessage("Error26"), // NOI18N
+                            new Object[]{s}), Bundle.getMessage("ErrorTitle"), // NOI18N
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return (-1);
         }
@@ -1288,7 +1317,7 @@ public class ConditionalEditBase {
     /**
      * Format time to hh:mm given integer hour and minute.
      *
-     * @param hour value for time hours
+     * @param hour   value for time hours
      * @param minute value for time minutes
      * @return Formatted time string
      */
@@ -1314,30 +1343,29 @@ public class ConditionalEditBase {
     }
 
     // ------------ Error Dialogs ------------
-
     /**
      * Send an Invalid Conditional SignalHead state message for Edit Logix pane.
      *
-     * @param name proposed appearance description
+     * @param name       proposed appearance description
      * @param appearance to compare to
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
         javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error21"),       // NOI18N
-                        new Object[]{name, appearance}), Bundle.getMessage("ErrorTitle"),       // NOI18N
+                java.text.MessageFormat.format(Bundle.getMessage("Error21"), // NOI18N
+                        new Object[]{name, appearance}), Bundle.getMessage("ErrorTitle"), // NOI18N
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     /**
      * Send an Invalid Conditional Action name message for Edit Logix pane.
      *
-     * @param name user or system name to look up
+     * @param name     user or system name to look up
      * @param itemType type of Bean to look for
      */
     void messageInvalidActionItemName(String name, String itemType) {
         javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error22"),       // NOI18N
-                        new Object[]{name, Bundle.getMessage("BeanName" + itemType)}), Bundle.getMessage("ErrorTitle"),       // NOI18N
+                java.text.MessageFormat.format(Bundle.getMessage("Error22"), // NOI18N
+                        new Object[]{name, Bundle.getMessage("BeanName" + itemType)}), Bundle.getMessage("ErrorTitle"), // NOI18N
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -1348,15 +1376,14 @@ public class ConditionalEditBase {
      */
     void messageDuplicateConditionalUserName(String svName) {
         javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error30"),       // NOI18N
-                        new Object[]{svName}), Bundle.getMessage("ErrorTitle"),       // NOI18N
+                java.text.MessageFormat.format(Bundle.getMessage("Error30"), // NOI18N
+                        new Object[]{svName}), Bundle.getMessage("ErrorTitle"), // NOI18N
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    
+
     protected String getClassName() {
         return ConditionalEditBase.class.getName();
     }
-    
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class.getName());
 }

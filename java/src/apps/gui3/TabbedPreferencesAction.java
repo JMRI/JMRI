@@ -16,6 +16,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
+    // must be null until first use to allow app initialization before construction
+    static TabbedPreferencesFrame f = null;
+    String preferencesItem = null;
+    String preferenceSubCat = null;
+    static boolean inWait = false;
+
     /**
      * Create an action with a specific title.
      * <P>
@@ -63,11 +69,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         super(s, i, wi);
         preferencesItem = category;
     }
-
-    static TabbedPreferencesFrame f;
-    String preferencesItem = null;
-    String preferenceSubCat = null;
-    static boolean inWait = false;
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean

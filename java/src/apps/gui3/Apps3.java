@@ -140,7 +140,7 @@ public abstract class Apps3 extends AppsBase {
         // tell help to use default browser for external types
         SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-        // help items are set in the various Tree/Menu/Toolbar constructors        
+        // help items are set in the various Tree/Menu/Toolbar constructors
     }
 
     abstract protected void createMainFrame();
@@ -319,7 +319,7 @@ public abstract class Apps3 extends AppsBase {
         }
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
-        // a system property jmri.profile as a profile id.
+        // a system property org.jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
