@@ -243,7 +243,7 @@ public class MemoryTableAction extends AbstractTableAction {
             sysName.setBackground(Color.white);
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
+        // Add some entry pattern checking, before assembling sName and handing it to the memoryManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameMemory"));
         String errorMessage = new String();
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
@@ -269,14 +269,18 @@ public class MemoryTableAction extends AbstractTableAction {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
                 user = null; // new Memory objects always receive a valid system name using the next free index, but user names must not be in use so use none in that case
+                // show in status bar
+                errorMessage = Bundle.getMessage("ErrorDuplicateUserName", user);
+                statusBar.setForeground(Color.red);
             }
-
             if (sName != null && !sName.equals("") && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
+                // show in status bar
+                errorMessage = Bundle.getMessage("ErrorDuplicateSystemName", sName);
+                statusBar.setForeground(Color.red);
                 return; // new Memory objects are always valid, but system names must not be in use so skip in that case
             }
-
             try {
                 if (autoSystemName.isSelected()) {
                     InstanceManager.memoryManagerInstance().newMemory(user);
@@ -286,6 +290,8 @@ public class MemoryTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
+                errorMessage = "An error has occurred";
+                statusBar.setForeground(Color.red);
                 return; // without creating
             }
             // add first and last names to statusMessage user feedback string

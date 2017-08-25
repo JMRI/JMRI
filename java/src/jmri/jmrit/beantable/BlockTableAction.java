@@ -1008,7 +1008,7 @@ public class BlockTableAction extends AbstractTableAction {
             sysName.setBackground(Color.white);
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
+        // Add some entry pattern checking, before assembling sName and handing it to the blockManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
         String errorMessage = new String();
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
@@ -1039,6 +1039,8 @@ public class BlockTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
+                errorMessage = "An error has occurred";
+                statusBar.setForeground(Color.red);
                 return; // without creating       
             }
             if (blk != null) {
