@@ -41,5 +41,4 @@ public class TrackSegmentTest {
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
 }

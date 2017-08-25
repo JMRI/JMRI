@@ -1,13 +1,12 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
+import jmri.util.JUnitUtil;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
 
 /**
  *
