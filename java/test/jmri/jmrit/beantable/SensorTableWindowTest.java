@@ -70,7 +70,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
 
         // Find the Create button
-        abfinder = new AbstractButtonFinder("Create new");
+        abfinder = new AbstractButtonFinder("Create");
         button = (JButton) abfinder.find(fa, 0);
         Assert.assertNotNull(button);
 
