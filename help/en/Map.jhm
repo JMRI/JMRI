@@ -20,6 +20,8 @@
 
 <mapID target="manual.DecoderPro.index_Installing" url="manual/DecoderPro/index.shtml#Installing"/>
 
+<mapID target="package.jmri.jmrit.conditional.StateVariableActionList" url="package/jmri/jmrit/conditional/StateVariableActionList.shtml"/>
+
 <mapID target="html.hardware.powerline.Compatibility" url="html/hardware/powerline/Compatibility.shtml"/>
 
 <mapID target="manual.DecoderPro3.Basic_BasicPane_ReadData" url="manual/DecoderPro3/Basic_BasicPane.shtml#ReadData"/>
@@ -469,8 +471,6 @@
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_intro" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#intro"/>
 
 <mapID target="html.tools.LRoutes" url="html/tools/LRoutes.shtml"/>
-
-<mapID target="package.jmri.jmrit.beantable.LogixTable_selectMethod" url="package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
@@ -2190,6 +2190,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_schedule_Schedules" url="manual/JMRI_OPS_UsersGuide/Ops_schedule.shtml#Schedules"/>
 
+<mapID target="package.jmri.jmrit.conditional.ConditionalTreeEditor" url="package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_LocationServiceDirection" url="package/jmri/jmrit/operations/Operations.shtml#LocationServiceDirection"/>
 
 <mapID target="html.hardware.loconet.Digitrax_TurnoutCmdHandling" url="html/hardware/loconet/Digitrax.shtml#TurnoutCmdHandling"/>
@@ -2197,6 +2199,8 @@
 <mapID target="html.hardware.maple.index_tools" url="html/hardware/maple/index.shtml#tools"/>
 
 <mapID target="manual.DecoderPro.Comp_ManfSpecific" url="manual/DecoderPro/Comp_ManfSpecific.shtml"/>
+
+<mapID target="package.jmri.jmrit.conditional.ConditionalListEditor" url="package/jmri/jmrit/conditional/ConditionalListEditor.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_markermenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#markermenu"/>
 
@@ -3428,6 +3432,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_SwitchList_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_SwitchList.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.conditional.StateVariableActionList_variable" url="package/jmri/jmrit/conditional/StateVariableActionList.shtml#variable"/>
+
 <mapID target="html.doc.Technical.FileNames" url="html/doc/Technical/FileNames.shtml"/>
 
 <mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
@@ -3533,6 +3539,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_setCars_setcarlocation" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_setCars.shtml#setcarlocation"/>
 
 <mapID target="html.tools.index_scripting" url="html/tools/index.shtml#scripting"/>
+
+<mapID target="package.jmri.jmrit.conditional.StateVariableActionList_action" url="package/jmri/jmrit/conditional/StateVariableActionList.shtml#action"/>
 
 <mapID target="html.setup.Files" url="html/setup/Files.shtml"/>
 
@@ -3741,6 +3749,8 @@
 <mapID target="html.hardware.loconet.StandaloneLocoNet_pseudoground" url="html/hardware/loconet/StandaloneLocoNet.shtml#pseudoground"/>
 
 <mapID target="manual.DecoderPro3.Main_OakTreeSystems" url="manual/DecoderPro3/Main_OakTreeSystems.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.LogixTable_logixOptions" url="package/jmri/jmrit/beantable/LogixTable.shtml#logixOptions"/>
 
 <mapID target="manual.DecoderPro.Main_LocoNet_DS64" url="manual/DecoderPro/Main_LocoNet.shtml#DS64"/>
 

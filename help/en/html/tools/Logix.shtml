@@ -75,8 +75,8 @@
 
       <p>Detail <strong>State Variable</strong> and <strong>Action</strong> Lists:</p>
       <ul>
-        <li><a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State Variables</a> </li>
-        <li><a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action">Actions</a></li>
+        <li><a href="../../package/jmri/jmrit/conditional/StateVariableActionList.shtml#variable">State Variables</a> </li>
+        <li><a href="../../package/jmri/jmrit/conditional/StateVariableActionList.shtml#action">Actions</a></li>
       </ul>
       <h2>Introduction to Logix and Conditionals</h2>
 
