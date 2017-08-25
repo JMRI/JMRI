@@ -2224,7 +2224,7 @@ public class LayoutTurnout extends LayoutTrack {
                         // prompt for rotation angle
                         error = false;
                         newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                rb.getString("EnterRotation") + " :");
+                            Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
                         if (newAngle.isEmpty()) {
                             return;  // cancelled
                         }
