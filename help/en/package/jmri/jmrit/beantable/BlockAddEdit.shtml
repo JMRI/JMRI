@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Add Block Help</title>
+  <title>JMRI: Adding Blocks Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta content="Bob Jacobsen" name="Author">
@@ -23,22 +23,23 @@
 
       <p>To add a new Block, click the <strong>Add...</strong>
       button at the bottom left edge of the Block Table
-      pane.</p><img src="images/BlockAdd.png">
+      pane.</p><img src="images/BlockAdd.png" width="592" height=
+      "162">
 
       <p>In the pane that opens, enter a valid System Name for
       the Block and if desired enter a User Name. For example, a
       valid System Name for a LocoNet layout could be LB456.
       Another example, a valid Internal Block system name could be
-      IB123. The optional User Name can be anything you wish to
-      describe the Block as long as it is unique in your JMRI
-      setup. See the "<a href=
-      "../../../../html/doc/Technical/Names.shtml">Names</a>" Help
-      page for more information.</p>
+      IB123.<br>
+      <p>The User Name is optional, unless you check "Automatically generate System Name",
+      and if you enter one it has to be unique in your JMRI
+      setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>"
+      Help page for more information.</p>
 
       <p>Complete the definition of the new Block by closing the
-      Add Block pane and clicking the <strong>Edit</strong>
+      Add New Block pane and clicking the <strong>Edit</strong>
       button at the right of the newly created Block entry in the
-      <a href="BlockTable.shtml">Block Table</a>. Fill out all
+      <a href="BlockTable.shtml">Block Table</a>.<br>Fill out all
       fields as described on the <a href="BlockEdit.shtml">Block
       Attributes</a> Help page.</p>
 
@@ -50,8 +51,8 @@
       enabled.</p>
 
       <p>Checking the "Add a sequential range" box will enable
-      the "Number of items" field. Enter the number of Blocks that
-      you wish to add. This will create a number of sequentially
+      the "Number of items" field. Set the number of Blocks that
+      you wish to add. Clicking [Create] will create a number of sequentially
       numbered Blocks.<br>
       If a User Name has been entered, a number will be added to
       the end of that name (starting by #2) to keep each Block User

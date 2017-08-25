@@ -832,7 +832,7 @@ public class BlockTableAction extends AbstractTableAction {
         }
         Object retval = pane.getValue();
         log.debug("Retval = {}", retval.toString());
-        // only 2 buttons to choose from, OK = button 2
+        // only 2 buttons to choose from, Create = button 2
         if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
             return;
         }
@@ -897,7 +897,7 @@ public class BlockTableAction extends AbstractTableAction {
                 @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener, statusBar));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonCreate", oklistener, cancellistener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
         }
         sysName.setBackground(Color.white);

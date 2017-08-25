@@ -69,7 +69,7 @@
       or Bean Settings. Paths and Bean Settings are not shown in
       the Block Table, and are described here only for
       completeness.<br>
-        Paths may however be deleted using the <b>Paths</b> menu.</p>
+      Paths may however be deleted using the <b>Paths</b> menu.</p>
 
       <h3>The Block Table</h3>
 
@@ -89,10 +89,10 @@
       <ul>
         <li>Below the Block Table you'll find the
         <a href="../../package/jmri/jmrit/beantable/BlockAddEdit.shtml">Add...</a>
-        button</li>
+        button to add new Blocks.</li>
 
         <li>The <b>Paths</b> menu contains a <b>Delete Paths...</b>
-        item</li>
+        item.</li>
 
         <li>The <b>Speeds</b> menu lets you set system wide
         Defaults...</li>
@@ -110,6 +110,7 @@
       state of each Block is not saved in the configuration file.
       When Blocks are loaded from a configuration file, their
       status is read from the Sensors.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

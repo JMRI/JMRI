@@ -189,7 +189,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener, statusBar));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonCreate", okListener, cancelListener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
         }
         sysName.setBackground(Color.white);
