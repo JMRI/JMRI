@@ -1122,8 +1122,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    public void reCheckBlockBoundary()
-    {
+    public void reCheckBlockBoundary() {
         // nothing to do here... move along...
     }
 
