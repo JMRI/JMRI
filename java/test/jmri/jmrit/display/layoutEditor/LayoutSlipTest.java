@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,20 +27,13 @@ public class LayoutSlipTest {
     @Test
     public void testNew() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        layoutEditor = new LayoutEditor();
-        Assert.assertNotNull("LayoutEditor not null", layoutEditor);
-
-        lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
         Assert.assertNotNull("LayoutSlip single not null", lts);
-
-        ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
     }
 
     @Test
     public void testToString() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         String ltsString = lts.toString();
         Assert.assertNotNull("ltsString not null", ltsString);
@@ -52,7 +46,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetDisplayName() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertEquals(lts.getDisplayName(), "Slip single");
         Assert.assertEquals(ltd.getDisplayName(), "Slip double");
@@ -60,7 +54,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testSlipTypeAndState() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.SINGLE_SLIP);
         Assert.assertTrue("lts.getSlipState() is UNKNOWN", lts.getSlipState() == LayoutTurnout.UNKNOWN);
@@ -71,7 +65,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testTurnoutB() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertTrue("lts.getTurnoutBName() is ''", lts.getTurnoutBName() == "");
         Assert.assertNull("lts.getTurnoutB() is null", lts.getTurnoutB());
@@ -81,27 +75,23 @@ public class LayoutSlipTest {
     }
 
     @Test
-    public void testGetConnectionTypes() {
-        testNew();  // to create layout editor & layout slips
+    public void testGetConnectionTypes() throws jmri.JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        try {
-            Assert.assertNull("lts.getConnectionType(SLIP_A) is null", lts.getConnection(LayoutTrack.SLIP_A));
-            Assert.assertNull("lts.getConnectionType(SLIP_B) is null", lts.getConnection(LayoutTrack.SLIP_B));
-            Assert.assertNull("lts.getConnectionType(SLIP_C) is null", lts.getConnection(LayoutTrack.SLIP_C));
-            Assert.assertNull("lts.getConnectionType(SLIP_D) is null", lts.getConnection(LayoutTrack.SLIP_D));
+        Assert.assertNull("lts.getConnectionType(SLIP_A) is null", lts.getConnection(LayoutTrack.SLIP_A));
+        Assert.assertNull("lts.getConnectionType(SLIP_B) is null", lts.getConnection(LayoutTrack.SLIP_B));
+        Assert.assertNull("lts.getConnectionType(SLIP_C) is null", lts.getConnection(LayoutTrack.SLIP_C));
+        Assert.assertNull("lts.getConnectionType(SLIP_D) is null", lts.getConnection(LayoutTrack.SLIP_D));
 
-            Assert.assertNull("ltd.getConnectionType(SLIP_A) is null", ltd.getConnection(LayoutTrack.SLIP_A));
-            Assert.assertNull("ltd.getConnectionType(SLIP_B) is null", ltd.getConnection(LayoutTrack.SLIP_B));
-            Assert.assertNull("ltd.getConnectionType(SLIP_C) is null", ltd.getConnection(LayoutTrack.SLIP_C));
-            Assert.assertNull("ltd.getConnectionType(SLIP_D) is null", ltd.getConnection(LayoutTrack.SLIP_D));
-        } catch (jmri.JmriException e) {
-            Assert.fail("lts.getConnectionType(SLIP_D): Unexpected exception thrown");
-        } // OK
+        Assert.assertNull("ltd.getConnectionType(SLIP_A) is null", ltd.getConnection(LayoutTrack.SLIP_A));
+        Assert.assertNull("ltd.getConnectionType(SLIP_B) is null", ltd.getConnection(LayoutTrack.SLIP_B));
+        Assert.assertNull("ltd.getConnectionType(SLIP_C) is null", ltd.getConnection(LayoutTrack.SLIP_C));
+        Assert.assertNull("ltd.getConnectionType(SLIP_D) is null", ltd.getConnection(LayoutTrack.SLIP_D));
     }
 
     @Test
     public void testGetConnectionTypesFail() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
             // this should throw up (SLIP_CENTER is not a valid connection type)
@@ -121,7 +111,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testSlipState() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertTrue("Single slip state unknown", lts.getSlipState() == LayoutTurnout.UNKNOWN);
         lts.toggleState(LayoutTrack.SLIP_LEFT);
@@ -157,22 +147,24 @@ public class LayoutSlipTest {
     }
 
     @Test
+    @Ignore("No Test yet")
     public void testActivateTurnout() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // nothing to do here until we've assigned physical turnouts
     }
 
     @Test
+    @Ignore("No Test yet")
     public void testDeactivateTurnout() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // nothing to do here until we've assigned physical turnouts
     }
 
     @Test
     public void testGetCoordsForConnectionType() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
@@ -243,7 +235,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetBounds() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertEquals("lts.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
@@ -257,7 +249,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testIsMainline() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertFalse("lts.isMainline() false", lts.isMainline());
         Assert.assertFalse("ltd.isMainline() false", ltd.isMainline());
@@ -265,7 +257,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testSetCoordsCenter() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Point2D newCenterPoint = new Point2D.Double(75.0, 150.0);
         lts.setCoordsCenter(newCenterPoint);
@@ -334,7 +326,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testScaleCoords() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         lts.scaleCoords(1.5F, 2.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
@@ -405,7 +397,7 @@ public class LayoutSlipTest {
 
     @Test
     public void testTranslateCoords() {
-        testNew();  // to create layout editor & layout slips
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         lts.translateCoords(15.5F, 25.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
@@ -480,6 +472,11 @@ public class LayoutSlipTest {
         apps.tests.Log4JFixture.setUp();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           layoutEditor = new LayoutEditor();
+           lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
+           ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+        }
     }
 
     @After
@@ -488,6 +485,9 @@ public class LayoutSlipTest {
         if (layoutEditor != null) {
             layoutEditor.dispose();
         }
+        layoutEditor = null;
+        lts = null;
+        ltd = null;
 
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
