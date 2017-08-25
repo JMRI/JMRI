@@ -224,7 +224,6 @@ public class TurnoutEditAction extends BeanEditAction {
                 updateFeedbackOptions();
             }
         });
-
         bei.add(feedback);
         return feedback;
     }   // feedback()
