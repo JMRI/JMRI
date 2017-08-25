@@ -841,8 +841,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     @Override
     public void dispose() {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) 
-              log.error("operations while not on GUI thread", new Exception("Traceback"));
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());
