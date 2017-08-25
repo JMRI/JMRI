@@ -655,10 +655,7 @@ public class LayoutEditorTest {
 
     @After
     public void tearDown() throws Exception {
-        if (le != null) {
-            le.dispose();
-            le = null;
-        }
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

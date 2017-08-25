@@ -31,10 +31,9 @@ public class LayoutBlockRouteTableTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false);
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
     // private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableTest.class.getName());
-
 }

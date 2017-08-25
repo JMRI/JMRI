@@ -35,6 +35,7 @@ public class MultiIconEditorTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false);
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

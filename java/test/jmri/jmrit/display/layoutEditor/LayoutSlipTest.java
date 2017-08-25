@@ -484,11 +484,7 @@ public class LayoutSlipTest {
 
     @After
     public void tearDown() throws Exception {
-        // do this to dispose of the sensor, signal and icon frames
-        if (layoutEditor != null) {
-            layoutEditor.dispose();
-        }
-
+        JUnitUtil.resetWindows(false);
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

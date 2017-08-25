@@ -27,7 +27,7 @@ public class LayoutSlipXmlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false);
         apps.tests.Log4JFixture.tearDown();
     }
-
 }

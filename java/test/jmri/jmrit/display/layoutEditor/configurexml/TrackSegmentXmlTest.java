@@ -27,6 +27,7 @@ public class TrackSegmentXmlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false);
         apps.tests.Log4JFixture.tearDown();
     }
 
