@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -167,6 +168,7 @@ public class MemoryTableAction extends AbstractTableAction {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
 
     @Override
@@ -187,9 +189,13 @@ public class MemoryTableAction extends AbstractTableAction {
                 @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
         }
+        sysName.setBackground(Color.white);
+        // reset statusBar text
+        statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
+        statusBar.setForeground(Color.gray);
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);
         }
@@ -222,23 +228,37 @@ public class MemoryTableAction extends AbstractTableAction {
             }
         }
 
-        String user = userName.getText();
+        String user = userName.getText().trim(); // N11N
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText();
+        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        // initial check for empty entry
+        if (sName.length() < 1 && !autoSystemName.isSelected()) {
+            statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
+            statusBar.setForeground(Color.red);
+            sysName.setBackground(Color.red);
+            return;
+        } else {
+            sysName.setBackground(Color.white);
+        }
+
+        // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
+        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameMemory"));
+        String errorMessage = new String();
+        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         StringBuilder b;
         for (int x = 0; x < numberOfMemory; x++) {
 
             if (x != 0) {
                 if (user != null) {
-                    b = new StringBuilder(userName.getText());
+                    b = new StringBuilder(userName.getText().trim()); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     user = b.toString(); // add :x to user name starting with 2nd item
                 }
                 if (!autoSystemName.isSelected()) {
-                    b = new StringBuilder(sysName.getText());
+                    b = new StringBuilder(sysName.getText().trim()); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
@@ -268,7 +288,21 @@ public class MemoryTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 return; // without creating
             }
+            // add first and last names to statusMessage user feedback string
+            if (x == 0 || x == numberOfMemory - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
+            if (x == numberOfMemory - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            // only mention first and last of range added
+        } // end of for loop creating range of Memories
+
+        // provide feedback to user
+        if (errorMessage.equals("")) {
+            statusBar.setText(statusMessage);
+            statusBar.setForeground(Color.gray);
+        } else {
+            statusBar.setText(errorMessage);
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
+
         p.setSimplePreferenceState(systemNameAuto, autoSystemName.isSelected());
     }
 
