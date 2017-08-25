@@ -21,20 +21,12 @@ public class LayoutTurntableTest {
 
     @Test
     public void testNew() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        layoutEditor = new LayoutEditor();
-        Assert.assertNotNull("LayoutEditor not null", layoutEditor);
-
-        lt = new LayoutTurntable("My Turntable", new Point2D.Double(50.0, 100.0), layoutEditor);
         Assert.assertNotNull("Turntable not null", lt);
     }
 
     @Test
     public void testToString() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        testNew();  // to create layout editor & LayoutTurntable
 
         String ltString = lt.toString();
         Assert.assertNotNull("ltString not null", ltString);
@@ -46,10 +38,23 @@ public class LayoutTurntableTest {
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+
+        if(!GraphicsEnvironment.isHeadless()){
+
+            layoutEditor = new LayoutEditor();
+            Assert.assertNotNull("LayoutEditor not null", layoutEditor);
+
+            lt = new LayoutTurntable("My Turntable", new Point2D.Double(50.0, 100.0), layoutEditor);
+        }
     }
 
     @After
     public void tearDown() throws Exception {
+        if(layoutEditor!=null){
+           layoutEditor.dispose();
+        }
+        lt = null;
+        layoutEditor = null;
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
