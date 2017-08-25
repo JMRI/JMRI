@@ -24,7 +24,6 @@ import jmri.util.swing.JmriBeanComboBox;
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class TurnoutEditAction extends BeanEditAction {
-
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
