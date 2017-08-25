@@ -23,7 +23,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
         n = new SerialNode(0, SerialNode.SMINI,tcis);
-        t = new SerialTurnout("CT4", "t4",memo);
+
+        t = memo.getTurnoutManager().provideTurnout("4");
         Assert.assertNotNull("exists", n);
     }
 
