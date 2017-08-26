@@ -137,8 +137,7 @@ public class XmlLoadTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
 
         super.tearDown();
     }

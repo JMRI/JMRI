@@ -48,8 +48,7 @@ public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

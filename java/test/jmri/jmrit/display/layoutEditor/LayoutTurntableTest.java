@@ -56,7 +56,6 @@ public class LayoutTurntableTest {
         }
         lt = null;
         layoutEditor = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

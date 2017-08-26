@@ -355,7 +355,6 @@ public class BlockBossLogicTest extends TestCase {
     protected void tearDown() {
         stopLogic();
         // reset InstanceManager
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

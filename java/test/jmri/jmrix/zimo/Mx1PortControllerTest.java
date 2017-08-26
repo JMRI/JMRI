@@ -71,8 +71,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

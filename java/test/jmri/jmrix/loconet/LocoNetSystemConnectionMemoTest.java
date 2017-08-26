@@ -30,7 +30,6 @@ public class LocoNetSystemConnectionMemoTest {
 
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 }

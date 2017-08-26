@@ -50,7 +50,6 @@ public class WiFiConsistFileTest extends TestCase {
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

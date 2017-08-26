@@ -35,7 +35,6 @@ public class XNetNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPor
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 }

@@ -28,8 +28,7 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Override
     public void tearDown(){
        tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

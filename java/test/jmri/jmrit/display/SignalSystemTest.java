@@ -185,8 +185,7 @@ public class SignalSystemTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     static Logger log = LoggerFactory.getLogger(SignalSystemTest.class.getName());

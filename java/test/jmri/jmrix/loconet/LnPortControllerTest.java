@@ -59,8 +59,7 @@ public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

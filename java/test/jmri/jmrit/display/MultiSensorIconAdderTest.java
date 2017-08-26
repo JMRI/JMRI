@@ -19,7 +19,7 @@ public class MultiSensorIconAdderTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MultiSensorIconAdder frame = new MultiSensorIconAdder();
-        Assert.assertNotNull("exists", frame );
+        Assert.assertNotNull("exists", frame);
     }
 
     @Before
@@ -28,7 +28,8 @@ public class MultiSensorIconAdderTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

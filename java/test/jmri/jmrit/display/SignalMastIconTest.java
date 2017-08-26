@@ -168,8 +168,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
             panel.getTargetFrame().dispose();
             JUnitUtil.dispose(panel);
         }
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());

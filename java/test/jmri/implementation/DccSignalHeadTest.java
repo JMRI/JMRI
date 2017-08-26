@@ -191,7 +191,6 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

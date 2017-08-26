@@ -47,8 +47,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

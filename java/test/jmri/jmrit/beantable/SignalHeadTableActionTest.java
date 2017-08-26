@@ -98,7 +98,6 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     @After
     public void tearDown() {
         a = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

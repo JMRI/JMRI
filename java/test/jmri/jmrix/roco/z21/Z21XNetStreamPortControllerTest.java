@@ -43,8 +43,7 @@ public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

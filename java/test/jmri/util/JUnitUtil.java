@@ -100,7 +100,7 @@ public class JUnitUtil {
      */
     public static void setUp() {
         Log4JFixture.setUp();
-        resetWindows(false, true);
+        resetWindows(false, true); // error
         resetInstanceManager();
     }
 
@@ -109,7 +109,7 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
-        resetWindows(true, false);
+        resetWindows(true, false); // warn
         resetInstanceManager();
         Log4JFixture.tearDown();
     }

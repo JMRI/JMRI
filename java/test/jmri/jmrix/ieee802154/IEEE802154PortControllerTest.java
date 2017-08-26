@@ -58,8 +58,7 @@ public class IEEE802154PortControllerTest extends jmri.jmrix.AbstractSerialPortC
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

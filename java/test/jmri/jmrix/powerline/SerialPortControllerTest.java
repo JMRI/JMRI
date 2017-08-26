@@ -63,8 +63,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }
