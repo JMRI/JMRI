@@ -2,10 +2,10 @@ package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.

@@ -21,7 +21,7 @@ public class LayoutEditorAuxToolsTest {
         LayoutEditor e = new LayoutEditor();
         LayoutEditorAuxTools t = new LayoutEditorAuxTools(e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure

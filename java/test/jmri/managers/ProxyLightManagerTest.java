@@ -4,10 +4,10 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the ProxyLightManager
@@ -69,7 +69,7 @@ public class ProxyLightManagerTest extends TestCase {
             correct = true;
         }
         Assert.assertTrue("Exception thrown properly", correct);
-        
+
     }
 
     public void testSingleObject() {

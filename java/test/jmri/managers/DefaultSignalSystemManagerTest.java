@@ -1,10 +1,10 @@
 package jmri.managers;
 
 import jmri.implementation.SignalSystemTestUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.managers.InternalTurnoutManager class.

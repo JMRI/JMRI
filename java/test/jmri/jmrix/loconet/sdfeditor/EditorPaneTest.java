@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

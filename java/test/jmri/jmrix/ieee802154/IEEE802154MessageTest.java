@@ -1,9 +1,9 @@
 package jmri.jmrix.ieee802154;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * IEEE802154MessageTest.java

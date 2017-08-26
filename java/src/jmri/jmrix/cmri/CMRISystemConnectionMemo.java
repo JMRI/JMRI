@@ -4,14 +4,10 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Light;
-import jmri.LightManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.SystemConnectionMemo;
-//import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.*;
 
 /**

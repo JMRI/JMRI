@@ -4,10 +4,10 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the AbstractProgrammer class

@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -57,7 +58,7 @@ public class QualifiedVarTest extends TestCase {
                 p.setVisible(true);
 
                 // close the window for cleanliness
-                p.dispose();
+                JUnitUtil.dispose(p);
             }
         });
     }

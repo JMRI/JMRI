@@ -30,7 +30,7 @@ public class OsIndicatorActionTest {
         new OsIndicatorAction("test").actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(OsIndicatorPanel.rb.getString("TitleOsIndicator"), true, true);
         Assert.assertNotNull(f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Before

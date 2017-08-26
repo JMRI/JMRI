@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz;
 
-import org.junit.Assert;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * <p>

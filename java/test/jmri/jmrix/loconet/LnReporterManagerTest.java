@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -23,8 +24,7 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new LocoNetInterfaceScaffold();
         l = new LnReporterManager(tc,"L");
     }
@@ -32,8 +32,7 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override

@@ -2,13 +2,13 @@ package jmri.jmrit.decoderdefn;
 
 import java.util.List;
 import javax.swing.JComboBox;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Tests for DecoderIndexFile class

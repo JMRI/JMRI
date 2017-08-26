@@ -11,10 +11,10 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for BlockManagerXml.

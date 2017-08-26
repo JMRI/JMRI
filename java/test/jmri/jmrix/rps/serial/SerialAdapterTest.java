@@ -2,7 +2,6 @@ package jmri.jmrix.rps.serial;
 
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

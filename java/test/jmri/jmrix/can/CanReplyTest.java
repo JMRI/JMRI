@@ -1,8 +1,8 @@
 package jmri.jmrix.can;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.can.CanReply class

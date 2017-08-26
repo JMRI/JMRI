@@ -4,6 +4,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -238,9 +239,7 @@ public class OBlockTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        blkMgr = new OBlockManager();
+        JUnitUtil.setUp();        blkMgr = new OBlockManager();
     }
 
     @After

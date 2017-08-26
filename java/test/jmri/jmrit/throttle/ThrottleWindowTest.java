@@ -20,7 +20,7 @@ public class ThrottleWindowTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThrottleWindow frame = new ThrottleWindow();
         Assert.assertNotNull("exists", frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Before

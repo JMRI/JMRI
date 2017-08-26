@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -48,7 +49,7 @@ public class PaneProgFrameTest extends TestCase {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // show me the specially-created frame
@@ -79,7 +80,7 @@ public class PaneProgFrameTest extends TestCase {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // static variables for internal classes to report their interpretations

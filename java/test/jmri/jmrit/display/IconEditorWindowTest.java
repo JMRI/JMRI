@@ -415,9 +415,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
@@ -444,9 +442,8 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
             _editor.dispose(true);
         }
 
-        JUnitUtil.resetWindows(false); // don't log existing windows here, should just be from this class
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
+        JUnitUtil.tearDown();
 
         super.tearDown();
     }

@@ -3,6 +3,7 @@ package jmri.util.swing.multipane;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.swing.SamplePane;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -20,7 +21,7 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
     public void testShow() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
-            return ; // Can't assume in TestCase
+            return; // Can't assume in TestCase
         }
         // show the window
         JFrame f1 = new MultiPaneWindow("test",
@@ -120,8 +121,7 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         //jmri.util.JUnitUtil.initInternalTurnoutManager();
         //jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<>();
@@ -130,7 +130,7 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

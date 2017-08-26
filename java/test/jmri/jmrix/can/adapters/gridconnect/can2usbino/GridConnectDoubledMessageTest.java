@@ -1,10 +1,10 @@
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectDoubledMessage class

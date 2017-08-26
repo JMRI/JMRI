@@ -1,6 +1,7 @@
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package jmri.jmris.srcp;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -19,7 +20,7 @@ public class JmriSRCPServerFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriSRCPServerFrame a = new JmriSRCPServerFrame();
         Assert.assertNotNull(a);
-        a.dispose();
+        JUnitUtil.dispose(a);
     }
 
     // The minimal setup for log4J

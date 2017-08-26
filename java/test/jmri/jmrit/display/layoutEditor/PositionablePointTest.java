@@ -22,7 +22,7 @@ public class PositionablePointTest {
         LayoutEditor e = new LayoutEditor();
         PositionablePoint t = new PositionablePoint("test", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure

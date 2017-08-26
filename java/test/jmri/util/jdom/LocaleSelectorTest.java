@@ -1,11 +1,11 @@
 package jmri.util.jdom;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.util.LocaleSelector class.

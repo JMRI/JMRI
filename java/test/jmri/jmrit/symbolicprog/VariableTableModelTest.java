@@ -3,13 +3,13 @@ package jmri.jmrit.symbolicprog;
 import javax.swing.JLabel;
 import jmri.jmrit.XmlFile;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Test VariableTableModel table methods.

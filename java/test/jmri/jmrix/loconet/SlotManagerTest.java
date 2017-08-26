@@ -2,13 +2,11 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.util.*;
-
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.beans.*;
+import org.junit.Assert;
 
 public class SlotManagerTest extends TestCase {
 

@@ -21,7 +21,7 @@ public class ConnectivityUtilTest {
         LayoutEditor e = new LayoutEditor();
         ConnectivityUtil t = new ConnectivityUtil(e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure

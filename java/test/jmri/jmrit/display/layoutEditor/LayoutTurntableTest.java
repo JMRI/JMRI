@@ -52,7 +52,7 @@ public class LayoutTurntableTest {
     @After
     public void tearDown() throws Exception {
         if(layoutEditor!=null){
-           layoutEditor.dispose();
+           JUnitUtil.dispose(layoutEditor);
         }
         lt = null;
         layoutEditor = null;

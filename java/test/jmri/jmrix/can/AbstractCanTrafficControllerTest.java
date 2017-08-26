@@ -1,11 +1,11 @@
 package jmri.jmrix.can;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for AbstractCanTrafficController.

@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
+import javax.annotation.CheckReturnValue;
 import jmri.Light;
 
 /**

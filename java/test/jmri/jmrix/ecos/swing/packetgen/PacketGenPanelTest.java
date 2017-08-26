@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos.swing.packetgen;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -24,8 +23,7 @@ public class PacketGenPanelTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
 
@@ -33,8 +31,5 @@ public class PacketGenPanelTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

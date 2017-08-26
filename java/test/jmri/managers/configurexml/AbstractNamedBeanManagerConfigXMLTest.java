@@ -2,11 +2,11 @@ package jmri.managers.configurexml;
 
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Checks of basic NamedBean storage

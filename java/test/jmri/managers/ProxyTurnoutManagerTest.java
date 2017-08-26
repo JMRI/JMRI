@@ -4,10 +4,10 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the ProxyTurnoutManager
@@ -98,7 +98,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
     }
 
     public void testRename() {
-        // get 
+        // get
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");

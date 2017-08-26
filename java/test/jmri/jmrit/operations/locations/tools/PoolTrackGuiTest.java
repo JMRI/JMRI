@@ -7,6 +7,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -140,7 +141,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         //f.setVisible(true);
 
         // close windows
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -155,7 +156,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
             f.setVisible(true);
 
             // close windows
-            f.dispose();
+            JUnitUtil.dispose(f);
         } catch (NullPointerException e) {
             // Here we don't do anything, as this was expected.
         }
@@ -214,7 +215,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("Pool size", 2, count);
 
         // close window
-        f.dispose();
+        JUnitUtil.dispose(f);
 
     }
 
@@ -249,7 +250,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         f.setVisible(true);
 
         // close window
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -284,7 +285,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         f.setVisible(true);
 
         // close window
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // // should be 5 rows
@@ -330,9 +331,9 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     // Assert.assertNotNull("EditFrame", elf);
     //
     // // close windows
-    // f.dispose();
-    // lef.dispose();
-    // elf.dispose();
+    // JUnitUtil.dispose(f);
+    // JUnitUtil.dispose(lef);
+    // JUnitUtil.dispose(elf);
     //
     // }
     @Test

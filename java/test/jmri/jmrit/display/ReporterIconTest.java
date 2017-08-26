@@ -51,7 +51,7 @@ public class ReporterIconTest {
 
         jf.pack();
         jf.setVisible(true);
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ReporterIconTest {
 
         jf.pack();
         jf.setVisible(true);
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     // The minimal setup for log4J
@@ -100,7 +100,7 @@ public class ReporterIconTest {
             }
             ThreadingUtil.runOnGUI(() -> {
                 panel.getTargetFrame().dispose();
-                panel.dispose();
+                JUnitUtil.dispose(panel);
             });
         }
         apps.tests.Log4JFixture.tearDown();

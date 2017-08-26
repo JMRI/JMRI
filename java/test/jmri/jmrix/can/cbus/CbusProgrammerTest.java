@@ -5,10 +5,10 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.

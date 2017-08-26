@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import apps.tests.Log4JFixture;
 import jmri.PowerManager;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -26,17 +25,13 @@ public class ManagerDefaultSelectorTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetPreferencesProviders();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
     @Ignore("Fails if some yet-to-be-identified test is run beforehand")
     @Test

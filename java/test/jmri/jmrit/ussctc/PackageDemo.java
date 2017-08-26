@@ -3,10 +3,6 @@ package jmri.jmrit.ussctc;
 import java.util.*;
 import jmri.*;
 import jmri.util.*;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Demo of classes in jmri.jmrit.ussctc

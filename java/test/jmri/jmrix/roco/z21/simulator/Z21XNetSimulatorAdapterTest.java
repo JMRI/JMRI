@@ -1,12 +1,11 @@
 package jmri.jmrix.roco.z21.simulator;
 
+import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XNetReply;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 
 /**
  * Z21XNetSimulatorAdapterTest.java

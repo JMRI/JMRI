@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,10 +9,8 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
-import java.nio.ByteBuffer;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import java.lang.Math;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -6,6 +6,7 @@ import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
+import jmri.util.JUnitUtil;
 import org.junit.Assume;
 import org.junit.Test;
 

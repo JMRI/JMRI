@@ -1,12 +1,11 @@
 package jmri.jmrix.lenz.xnetsimulator;
 
+import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XNetReply;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 
 /**
  * XNetSimulatorAdapterTest.java

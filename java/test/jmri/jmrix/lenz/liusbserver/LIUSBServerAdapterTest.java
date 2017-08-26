@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz.liusbserver;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * LIUSBServerAdapterTest.java

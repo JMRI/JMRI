@@ -73,7 +73,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.setVisible(true);
 
         // close
-        jf.dispose();
+        JUnitUtil.dispose(jf);
 
     }
 
@@ -127,7 +127,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jf.setVisible(true);
 
         // close
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     // from here down is testing infrastructure
@@ -166,7 +166,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             panel.getTargetFrame().dispose();
-            panel.dispose();
+            JUnitUtil.dispose(panel);
         }
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

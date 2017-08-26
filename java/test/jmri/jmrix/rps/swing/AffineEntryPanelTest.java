@@ -3,6 +3,7 @@ package jmri.jmrix.rps.swing;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.AffineTransform;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.Assert;
 import org.junit.Assume;

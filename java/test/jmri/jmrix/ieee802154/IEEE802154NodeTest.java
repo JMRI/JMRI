@@ -1,12 +1,11 @@
 package jmri.jmrix.ieee802154;
 
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
 
 /**
  * IEEE802154NodeTest.java

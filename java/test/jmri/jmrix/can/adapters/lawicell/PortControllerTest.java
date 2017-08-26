@@ -1,9 +1,9 @@
 package jmri.jmrix.can.adapters.lawicell;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * JUnit tests for the PortController class

@@ -1,13 +1,13 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
-import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
+import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;

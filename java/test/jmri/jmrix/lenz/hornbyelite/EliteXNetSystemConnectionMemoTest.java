@@ -1,11 +1,10 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
 
 /**
  * EliteXNetSystemConnectionMemoTest.java

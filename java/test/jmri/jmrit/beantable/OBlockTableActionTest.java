@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 import junit.framework.Test;
@@ -37,7 +38,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         flushAWT();
         // Ask to close add window
         ThreadingUtil.runOnGUI(() -> {
-            doc.dispose();
+            JUnitUtil.dispose(doc);
         });
     }
 
@@ -62,14 +63,13 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

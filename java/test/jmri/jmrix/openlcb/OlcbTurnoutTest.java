@@ -1,27 +1,22 @@
 package jmri.jmrix.openlcb;
 
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
-
-import org.junit.Assert;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.Matches;
-import org.openlcb.EventID;
-import org.openlcb.implementations.EventTable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.regex.Pattern;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import jmri.Turnout;
+import jmri.jmrix.can.CanMessage;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.openlcb.EventID;
+import org.openlcb.implementations.EventTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *

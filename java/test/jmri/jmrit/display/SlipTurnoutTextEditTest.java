@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -21,7 +20,7 @@ public class SlipTurnoutTextEditTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SlipTurnoutTextEdit frame = new SlipTurnoutTextEdit();
         Assert.assertNotNull("exists", frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -37,19 +36,15 @@ public class SlipTurnoutTextEditTest {
         } catch (Exception e) {
             Assert.fail("Exception " + e + " Thrown during initComponents call ");
         }
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

@@ -412,7 +412,7 @@ public class LayoutTurnoutTest {
     @After
     public void tearDown() throws Exception {
         if(layoutEditor!=null) {
-           layoutEditor.dispose();
+           JUnitUtil.dispose(layoutEditor);
         }
         layoutEditor = null;
         ltRH = null;

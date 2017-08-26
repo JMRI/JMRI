@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz.li100f;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.lenz.li100f.LI100fAdapter class

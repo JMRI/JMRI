@@ -1,10 +1,10 @@
 package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.

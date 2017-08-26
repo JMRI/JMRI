@@ -1,10 +1,10 @@
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class

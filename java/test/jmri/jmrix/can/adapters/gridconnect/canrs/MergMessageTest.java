@@ -2,10 +2,10 @@ package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergMessage class

@@ -1,11 +1,9 @@
 package jmri.jmrix.grapevine;
 
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Sensor;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.NamedBean;
+import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

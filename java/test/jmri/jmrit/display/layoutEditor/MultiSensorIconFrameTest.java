@@ -21,7 +21,7 @@ public class MultiSensorIconFrameTest {
         LayoutEditor e = new LayoutEditor();
         MultiSensorIconFrame t = new MultiSensorIconFrame(e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure

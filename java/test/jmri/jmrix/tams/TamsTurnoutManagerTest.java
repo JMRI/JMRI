@@ -1,6 +1,7 @@
 package jmri.jmrix.tams;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,9 +26,9 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Override
     @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         // prepare an interface, register
         nis = new TamsInterfaceScaffold();

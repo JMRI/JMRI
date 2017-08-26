@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
 

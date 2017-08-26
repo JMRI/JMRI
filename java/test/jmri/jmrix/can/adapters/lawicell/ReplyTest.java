@@ -1,10 +1,10 @@
 package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.can.CanReply;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.lawicell.Reply class

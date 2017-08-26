@@ -25,7 +25,7 @@ public class UserInterfaceTest {
         };
 
         Assert.assertNotNull("exists", panel);
-        panel.dispose();
+        JUnitUtil.dispose(panel);
     }
 
     @Before

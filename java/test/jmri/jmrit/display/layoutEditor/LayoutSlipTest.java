@@ -483,7 +483,7 @@ public class LayoutSlipTest {
     public void tearDown() throws Exception {
         // do this to dispose of the sensor, signal and icon frames
         if (layoutEditor != null) {
-            layoutEditor.dispose();
+            JUnitUtil.dispose(layoutEditor);
         }
         layoutEditor = null;
         lts = null;

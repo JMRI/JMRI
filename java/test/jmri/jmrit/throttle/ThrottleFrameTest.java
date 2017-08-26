@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -20,7 +21,7 @@ public class ThrottleFrameTest {
         ThrottleWindow frame = new ThrottleWindow();
         ThrottleFrame panel = new ThrottleFrame(frame);
         Assert.assertNotNull("exists", panel);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @After

@@ -1,9 +1,9 @@
 package jmri.jmrix.roco;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.roco.RocoConnectionTypeList class

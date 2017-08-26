@@ -114,7 +114,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
             }
             ThreadingUtil.runOnGUI(() -> {
                 panel.getTargetFrame().dispose();
-                panel.dispose();
+                JUnitUtil.dispose(panel);
             });
         }
         apps.tests.Log4JFixture.tearDown();

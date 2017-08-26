@@ -1,15 +1,14 @@
 package jmri.jmrix.ieee802154.swing.mon;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
-import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
+import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of IEEE802154MonFrame
@@ -35,13 +34,9 @@ public class IEEE802154MonFrameTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -29,7 +29,7 @@ public class LayoutEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor(); // create layout editor
         Assert.assertNotNull("exists", e);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -660,7 +660,7 @@ public class LayoutEditorTest {
     @After
     public void tearDown() throws Exception {
         if (le != null) {
-            le.dispose();
+            JUnitUtil.dispose(le);
             le = null;
         }
         JUnitUtil.resetInstanceManager();

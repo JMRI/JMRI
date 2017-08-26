@@ -1,8 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
 import java.util.*;
+import org.junit.*;
 
 /**
  * Tests for CombinedLock classes in the jmri.jmrit.ussctc package

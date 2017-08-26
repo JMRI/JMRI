@@ -1,11 +1,10 @@
 package jmri.jmrit;
 
-import org.junit.Assert;
+import jmri.Programmer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.Programmer;
+import org.junit.Assert;
 
 /**
  * Test the AbstractIdentify class. Since that's an abstract base class, we
