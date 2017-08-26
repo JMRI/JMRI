@@ -22,6 +22,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -32,6 +33,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
@@ -833,14 +836,15 @@ public class LayoutSlip extends LayoutTurnout {
             }
             jmi.setEnabled(false);
 
-            if (hidden) {
-                jmi = popup.add(rb.getString("Hidden"));
-            } else {
-                jmi = popup.add(rb.getString("NotHidden"));
-            }
-            jmi.setEnabled(false);
-
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+            hiddenCheckBoxMenuItem.setSelected(hidden);
+            popup.add(hiddenCheckBoxMenuItem);
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                setHidden(hiddenCheckBoxMenuItem.isSelected());
+            });
+
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1031,7 +1035,45 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
             panel1.add(turnoutNameLabel);
             turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(turnoutAComboBox, false, true);
+            LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
+
+            // disable items that are already in use
+            PopupMenuListener pml = new PopupMenuListener() {
+                @Override
+                public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                    // This method is called before the popup menu becomes visible.
+                    log.debug("PopupMenuWillBecomeVisible");
+                    Object o = e.getSource();
+                    if (o instanceof JmriBeanComboBox) {
+                        JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
+                        jmri.Manager m = jbcb.getManager();
+                        if (m != null) {
+                            String[] systemNames = m.getSystemNameArray();
+                            for (int idx = 0; idx < systemNames.length; idx++) {
+                                String systemName = systemNames[idx];
+                                jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(systemName, null));
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                    // This method is called before the popup menu becomes invisible
+                    log.debug("PopupMenuWillBecomeInvisible");
+                }
+
+                @Override
+                public void popupMenuCanceled(PopupMenuEvent e) {
+                    // This method is called when the popup menu is canceled
+                    log.debug("PopupMenuCanceled");
+                }
+            };
+
+            turnoutAComboBox.addPopupMenuListener(pml);
+            turnoutAComboBox.setEnabledColor(Color.green.darker().darker());
+            turnoutAComboBox.setDisabledColor(Color.red);
+
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
 
@@ -1042,7 +1084,12 @@ public class LayoutSlip extends LayoutTurnout {
 
             turnoutBComboBox = new JmriBeanComboBox(
                     InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(turnoutBComboBox, false, true);
+            LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
+
+            turnoutBComboBox.addPopupMenuListener(pml);
+            turnoutBComboBox.setEnabledColor(Color.green.darker().darker());
+            turnoutBComboBox.setDisabledColor(Color.red);
+
             panel1a.add(turnoutBComboBox);
 
             contentPane.add(panel1a);
@@ -1133,6 +1180,8 @@ public class LayoutSlip extends LayoutTurnout {
         hiddenBox.setSelected(hidden);
 
         // Set up for Edit
+        turnoutAComboBox.setText(turnoutName);
+        turnoutBComboBox.setText(turnoutBName);
         blockNameComboBox.setText(blockName);
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {

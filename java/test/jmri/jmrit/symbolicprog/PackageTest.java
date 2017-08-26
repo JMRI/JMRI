@@ -43,7 +43,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.QualifierAdderTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ImporterTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.DecVariableValueTest.suite());
@@ -52,7 +52,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.LongAddrVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.SplitVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CvTableModelTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 
@@ -71,6 +71,20 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedTableVarValueTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ValueEditorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ValueRendererTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CombinedLocoSelPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CombinedLocoSelTreePaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(KnownLocoSelPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoSelTreePaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(FactoryResetActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CsvExportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CsvImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GenericImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LokProgImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ImportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1ExportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Pr1WinExportActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(QuantumCvMgrImportActionTest.class));
 
         return suite;
     }
