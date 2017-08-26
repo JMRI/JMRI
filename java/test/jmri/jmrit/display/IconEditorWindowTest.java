@@ -127,13 +127,13 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
                         location
                 ));
         JUnitUtil.waitFor(() -> {
-            return turnout.getState() == Sensor.CLOSED;
+            return turnout.getState() == Turnout.CLOSED;
         }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
         JUnitUtil.waitFor(() -> {
-            return turnout.getState() == Sensor.THROWN;
+            return turnout.getState() == Turnout.THROWN;
         }, "state after two clicks");
 
         TestHelper.disposeWindow(iconEditorFrame, this);
@@ -282,12 +282,12 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         for (int i = 1; i < states.length; i++) {
             //Assert.assertEquals("state after " + i + " click", states[i], signalHead.getState());
-
+            final int state = states[i];
             // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
             // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
             // if it's still false after max wait it throws an assert.
             JUnitUtil.waitFor(() -> {
-                return signalHead.getState() == states[i];
+                return signalHead.getState() == state;
             }, "state after " + i + " click(s)");
 
             getHelper().enterClickAndLeave(new MouseEventData(this, icon));
