@@ -1,6 +1,5 @@
-package jmri.jmrit.display.layoutEditor.blockRoutingTable;
+package jmri.jmrit.symbolicprog;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,18 +7,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import javax.swing.JLabel;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LayoutBlockRouteTableActionTest {
+public class ResetTableModelTest {
 
     @Test
     public void testCTor() {
-        LayoutBlock  b = new LayoutBlock("test","test");
-        LayoutBlockRouteTableAction t = new LayoutBlockRouteTableAction("Test Action",b);
+        JLabel jl = new JLabel("test table model");
+        ResetTableModel t = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer());
         Assert.assertNotNull("exists",t);
     }
 
@@ -28,13 +27,15 @@ public class LayoutBlockRouteTableActionTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetWindows(false);
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableActionTest.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(ResetTableModelTest.class.getName());
+
 }

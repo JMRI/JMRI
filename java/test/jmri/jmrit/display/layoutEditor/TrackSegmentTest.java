@@ -37,8 +37,8 @@ public class TrackSegmentTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
 }

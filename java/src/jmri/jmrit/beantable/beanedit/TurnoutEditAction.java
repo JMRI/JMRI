@@ -354,7 +354,7 @@ public class TurnoutEditAction extends BeanEditAction {
                     Bundle.getMessage("LockModeDecoder"),
                     Bundle.getMessage("LockModeDecoderToolTip")));
 
-            lock.setSaveItem(new AbstractAction() {
+          lock.setSaveItem(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Turnout t = (Turnout) bean;
@@ -422,7 +422,7 @@ public class TurnoutEditAction extends BeanEditAction {
         defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global")
                 + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
 
-        useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
+      useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
         speedListClosed.add(defaultClosedSpeedText);
         speedListThrown.add(defaultThrownSpeedText);
@@ -448,7 +448,6 @@ public class TurnoutEditAction extends BeanEditAction {
         speed.addItem(new BeanEditItem(closedSpeedBox,
                 Bundle.getMessage("ClosedSpeed"),
                 Bundle.getMessage("ClosedSpeedToolTip")));
-
         thrownSpeedBox = new JComboBox<String>(speedListThrown);
         thrownSpeedBox.setMaximumRowCount(thrownSpeedBox.getItemCount());
         thrownSpeedBox.setEditable(true);
@@ -456,7 +455,7 @@ public class TurnoutEditAction extends BeanEditAction {
                 Bundle.getMessage("ThrownSpeed"),
                 Bundle.getMessage("ThrownSpeedToolTip")));
 
-        speed.setSaveItem(new AbstractAction() {
+      speed.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Turnout t = (Turnout) bean;

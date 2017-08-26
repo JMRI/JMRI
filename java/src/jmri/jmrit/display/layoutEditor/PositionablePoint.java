@@ -85,7 +85,7 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
     /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
-     this is so that we can keep up with moves and changes of userNames */
+                     this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
@@ -1293,7 +1293,6 @@ public class PositionablePoint extends LayoutTrack {
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
         ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
         LayoutConnectivity lc = null;
-
         LayoutBlock blk1 = null, blk2 = null;
         TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
         Point2D p1, p2;

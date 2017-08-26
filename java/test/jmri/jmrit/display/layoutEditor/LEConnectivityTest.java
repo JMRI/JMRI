@@ -388,6 +388,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

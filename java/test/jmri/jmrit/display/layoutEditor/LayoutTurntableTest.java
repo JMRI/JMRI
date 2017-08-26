@@ -51,11 +51,7 @@ public class LayoutTurntableTest {
 
     @After
     public void tearDown() throws Exception {
-        if(layoutEditor!=null){
-           layoutEditor.dispose();
-        }
-        lt = null;
-        layoutEditor = null;
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
