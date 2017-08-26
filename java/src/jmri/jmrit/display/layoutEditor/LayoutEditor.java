@@ -2112,8 +2112,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }   //initStringsToVTCodes
 
-    LayoutEditorTools tools = null;
-    jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
+    private LayoutEditorTools tools = null;
+    private jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 
     protected void setupToolsMenu(JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
