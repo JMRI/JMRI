@@ -929,7 +929,7 @@ public class RouteTableAction extends AbstractTableAction {
         String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length() == 0) {
-            status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
+            status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
             return false;
         }
         Route g;
@@ -964,7 +964,7 @@ public class RouteTableAction extends AbstractTableAction {
             g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
-                status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
+                status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
                 return null;
             }
             try {
