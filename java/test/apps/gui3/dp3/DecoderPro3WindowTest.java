@@ -25,7 +25,8 @@ public class DecoderPro3WindowTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConnectionConfigManager();
         jmri.util.JUnitUtil.initDebugProgrammerManager();

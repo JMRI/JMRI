@@ -97,7 +97,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
+        panel.dispose(true);
     }
 
     @SuppressWarnings("unchecked") // DialogFinder not parameterized

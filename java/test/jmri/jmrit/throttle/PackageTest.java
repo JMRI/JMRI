@@ -47,7 +47,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(ThrottleFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(ThrottleFrameManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(ThrottleFramePropertyEditorTest.class));
-        suite.addTest(ThrottlesListActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ThrottlesListActionTest.class));
         suite.addTest(ThrottlesPreferencesActionTest.suite());
         suite.addTest(ThrottlesPreferencesTest.suite());
         suite.addTest(ThrottlesPreferencesPaneTest.suite());
@@ -62,12 +62,12 @@ public class PackageTest extends TestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @Override
-    protected void tearDown() {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

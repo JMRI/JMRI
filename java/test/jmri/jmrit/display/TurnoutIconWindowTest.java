@@ -229,7 +229,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }
