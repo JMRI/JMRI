@@ -411,19 +411,12 @@ public class TransitTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TransitAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
+            // system name
             p = new JPanel();
             p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
             p.add(sysNameFixed);
             p.add(sysName);
-            sysName.setToolTipText(rbx.getString("TransitSystemNameHint"));
-            p.add(new JLabel("     "));
-            p.add(userNameLabel);
-            p.add(userName);
-            userName.setToolTipText(rbx.getString("TransitUserNameHint"));
-            addFrame.getContentPane().add(p);
-            p = new JPanel();
-            ((FlowLayout) p.getLayout()).setVgap(0);
             p.add(_autoSystemName);
             _autoSystemName.addActionListener(new ActionListener() {
                 @Override
@@ -434,8 +427,16 @@ public class TransitTableAction extends AbstractTableAction {
             if (pref.getSimplePreferenceState(systemNameAuto)) {
                 _autoSystemName.setSelected(true);
             }
+            sysName.setToolTipText(rbx.getString("TransitSystemNameHint"));
+            addFrame.getContentPane().add(p);
+            // user name
+            p = new JPanel();
+            p.add(userNameLabel);
+            p.add(userName);
+            userName.setToolTipText(rbx.getString("TransitUserNameHint"));
             addFrame.getContentPane().add(p);
             addFrame.getContentPane().add(new JSeparator());
+            // instruction text fields
             JPanel p1 = new JPanel();
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
             JPanel p11 = new JPanel();
