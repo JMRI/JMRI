@@ -185,7 +185,6 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
     }
 
     // from here down is testing infrastructure
