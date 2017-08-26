@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,6 +28,7 @@ public class TrackSegmentXmlTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false);
         apps.tests.Log4JFixture.tearDown();
     }
 

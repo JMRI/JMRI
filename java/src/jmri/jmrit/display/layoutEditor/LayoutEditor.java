@@ -2511,8 +2511,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(controlCheckBoxMenuItem);
         controlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             setAllControlling(controlCheckBoxMenuItem.isSelected());
+            repaint();
         });
         controlCheckBoxMenuItem.setSelected(allControlling());
+
+        //
+        //add "use direct turnout control" menu item
+        //
+        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl"));   //IN18N
+        optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
+        });
+        useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
         //animation item
@@ -2975,20 +2986,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             repaint();
         });
         hideTrackSegmentConstructionLinesCheckBoxMenuItem.setSelected(autoAssignBlocks);
-
-        //
-        //add "use direct turnout control" menu item
-        //
-        useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl"));   //IN18N
-        optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            useDirectTurnoutControl = false;
-
-            if (useDirectTurnoutControlCheckBoxMenuItem.isSelected()) {
-                useDirectTurnoutControl = true;
-            }
-        });
-        useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         return optionMenu;
     }   //setupOptionMenu
@@ -3615,10 +3612,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         double scaleHeight = scrollPane.getHeight() / layoutBounds.getHeight();
 
         // set the new zoom to the smallest of the two
-        double results = setZoom(Math.min(scaleWidth, scaleHeight));
+        double result = setZoom(Math.min(scaleWidth, scaleHeight));
+
+        // set the new zoom (return value may be different)
+        result = setZoom(result);
 
         // calculate new scroll bounds
-        scrollBounds = MathUtil.scale(layoutBounds, results);
+        scrollBounds = MathUtil.scale(layoutBounds, result);
 
         // don't let its orgin go negative
         scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
@@ -3626,7 +3626,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
 
-        return results;
+        return result;
     }   //zoomToFit
 
     //
@@ -3740,7 +3740,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //removeMarkers
 
     /*======================================*\
-    |*  Dialog box to enter new track widths *|
+    |* Dialog box to enter new track widths *|
     \*======================================*/
     //operational variables for enter track width pane
     private JmriJFrame enterTrackWidthFrame = null;
@@ -3906,7 +3906,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //trackWidthCancelPressed
 
     /*====================================*\
-    |*  Dialog box to enter new grid sizes *|
+    |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
     private JmriJFrame enterGridSizesFrame = null;
@@ -4075,7 +4075,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //gridSizesCancelPressed
 
     /*=======================================*\
-    |*  Dialog box to enter new reporter info *|
+    |* Dialog box to enter new reporter info *|
     \*=======================================*/
     //operational variables for enter reporter pane
     private JmriJFrame enterReporterFrame = null;
@@ -4535,7 +4535,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //scaleTrack
 
     /*=========================================*\
-    |*  Dialog box to enter move selection info *|
+    |* Dialog box to enter move selection info *|
     \*=========================================*/
     //operational variables for move selection pane
     private JmriJFrame moveSelectionFrame = null;
@@ -10116,13 +10116,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             drawMemoryRects(g2);
             drawBlockContentsRects(g2);
 
-            drawTurnoutControls(g2);
-            drawSlipControls(g2);
-
+            if (allControlling()) {
+                drawTurnoutControls(g2);
+                drawSlipControls(g2);
+                drawTurntableControls(g2);
+            }
             highLightSelection(g2);
         } else if (turnoutCirclesWithoutEditMode) {
-            drawTurnoutControls(g2);
-            drawSlipControls(g2);
+            if (allControlling()) {
+                drawTurnoutControls(g2);
+                drawSlipControls(g2);
+                drawTurntableControls(g2);
+            }
         }
     }   //paintTargetPanel
 
@@ -10170,8 +10175,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
         // loop over all turnouts
+        boolean editable = isEditable();
         for (LayoutTurnout t : turnoutList) {
-            if (!(t.isHidden() && !isEditable())) {
+            if (editable || !(t.isHidden() || t.isDisabled())) {
                 t.drawControls(g2);
             }
         }
@@ -10181,8 +10187,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.setColor(turnoutCircleColor);
         // loop over all slips
+        boolean editable = isEditable();
         for (LayoutSlip sl : slipList) {
-            if (!(sl.isHidden() && !isEditable())) {
+            if (editable || !(sl.isHidden() || sl.isDisabled())) {
                 sl.drawControls(g2);
             }
         }
@@ -10202,6 +10209,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             lt.draw(g2);
         }
     }   //drawTurntables
+
+    private void drawTurntableControls(Graphics2D g2) {
+        // loop over all layout turntables
+        for (LayoutTurntable lt : turntableList) {
+            lt.drawControls(g2);
+        }
+    }   //drawTurntableControls
 
     private void drawXingEditControls(Graphics2D g2) {
         // loop over all level crossings

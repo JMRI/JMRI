@@ -1142,8 +1142,8 @@
       <xs:attribute name="signald2name" type="beanNameType"></xs:attribute>
       <xs:attribute name="linkedturnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="secondturnoutname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
       <xs:attribute name="linktype" type="xs:string"></xs:attribute>
-
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutSlipType">
