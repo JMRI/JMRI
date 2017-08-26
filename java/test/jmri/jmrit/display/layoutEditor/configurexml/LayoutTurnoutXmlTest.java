@@ -30,6 +30,5 @@ public class LayoutTurnoutXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

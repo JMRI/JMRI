@@ -30,6 +30,5 @@ public class PositionablePointXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

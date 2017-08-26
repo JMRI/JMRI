@@ -9,15 +9,15 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LayoutBlockNeighbourTableModelTest {
 
     @Test
     public void testCTor() {
-        LayoutBlock  b = new LayoutBlock("test","test");
-        LayoutBlockNeighbourTableModel t = new LayoutBlockNeighbourTableModel(false,b);
-        Assert.assertNotNull("exists",t);
+        LayoutBlock b = new LayoutBlock("test", "test");
+        LayoutBlockNeighbourTableModel t = new LayoutBlockNeighbourTableModel(false, b);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -30,7 +30,5 @@ public class LayoutBlockNeighbourTableModelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
     // private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModelTest.class.getName());
-
 }

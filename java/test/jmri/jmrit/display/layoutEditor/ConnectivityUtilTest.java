@@ -34,5 +34,4 @@ public class ConnectivityUtilTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-
 }

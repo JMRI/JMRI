@@ -30,7 +30,5 @@ public class LayoutBlockThroughPathsTableModelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
     // private final static Logger log = LoggerFactory.getLogger(LayoutBlockThroughPathsTableModelTest.class.getName());
-
 }

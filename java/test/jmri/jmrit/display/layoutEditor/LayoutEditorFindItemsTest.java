@@ -35,5 +35,4 @@ public class LayoutEditorFindItemsTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItemsTest.class.getName());
-
 }

@@ -30,6 +30,5 @@ public class LayoutEditorXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

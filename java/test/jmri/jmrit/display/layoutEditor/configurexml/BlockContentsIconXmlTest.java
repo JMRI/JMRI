@@ -30,6 +30,5 @@ public class BlockContentsIconXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

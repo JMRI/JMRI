@@ -34,5 +34,4 @@ public class LayoutEditorAuxToolsTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-
 }

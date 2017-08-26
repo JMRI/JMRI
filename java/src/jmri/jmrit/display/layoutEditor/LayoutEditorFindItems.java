@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
- *
-*/
+ * <p>
+ */
 public class LayoutEditorFindItems {
 
     private LayoutEditor layoutEditor;
@@ -416,7 +416,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
         LayoutTurnout result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getName().equals(name)) {
                     result = t;
@@ -429,7 +429,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
         LayoutTurnout result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getTurnoutName().equals(name)) {
                     result = t;
@@ -441,7 +441,7 @@ public class LayoutEditorFindItems {
 
     public LevelXing findLevelXingByName(String name) {
         LevelXing result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LevelXing x : layoutEditor.xingList) {
                 if (x.getID().equals(name)) {
                     result = x;
@@ -454,7 +454,7 @@ public class LayoutEditorFindItems {
 
     public LayoutSlip findLayoutSlipByName(String name) {
         LayoutSlip result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutSlip x : layoutEditor.slipList) {
                 if (x.getName().equals(name)) {
                     result = x;
@@ -467,7 +467,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurntable findLayoutTurntableByName(String name) {
         LayoutTurntable result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutTurntable x : layoutEditor.turntableList) {
                 if (x.getID().equals(name)) {
                     result = x;
@@ -538,6 +538,7 @@ public class LayoutEditorFindItems {
 
     /**
      * find object by name
+     *
      * @param name the name of the object that you are looking for
      * @return object the named object
      */
@@ -550,7 +551,7 @@ public class LayoutEditorFindItems {
     // code you would just call this method instead.
     public Object findObjectByName(String name) {
         Object result = null;   // assume failure (pessimist!)
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
             } else if (name.startsWith("A") || name.startsWith("EB") || name.startsWith("EC")) {

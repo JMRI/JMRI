@@ -123,10 +123,10 @@
     <node>
         <name>Consisting Tool</name>
         <name xml:lang="it">Strumento Multi-Trazione</name>
-        <name xml:lang="de">Mehrfachtraktionswerkzeug</name>
+        <name xml:lang="de">Mehrfachtraktion</name>
 		<name xml:lang="ca">Eina de multi-traccions</name>
         <name xml:lang="cs">Nástroj soupravy</name>
-        <name xml:lang="nl">Dubbeltractie</name>
+        <name xml:lang="nl">Multitractie</name>
     </node>
   </node>
 </node>

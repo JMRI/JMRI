@@ -30,6 +30,5 @@ public class LayoutTurntableXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

@@ -30,6 +30,5 @@ public class LayoutBlockManagerXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

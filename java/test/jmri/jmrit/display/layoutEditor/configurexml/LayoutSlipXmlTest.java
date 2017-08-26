@@ -30,5 +30,4 @@ public class LayoutSlipXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }

@@ -30,6 +30,5 @@ public class MemoryIconXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

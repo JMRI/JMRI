@@ -30,6 +30,5 @@ public class LevelXingXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
 

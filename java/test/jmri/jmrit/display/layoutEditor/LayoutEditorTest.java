@@ -601,6 +601,7 @@ public class LayoutEditorTest {
         le.setXOverLong(2.0);
         le.setXOverHWid(2.0);
         le.setXOverShort(2.0);
+
         // reset - uses reflection to get a private method.
         java.lang.reflect.Method resetTurnoutSize = null;
         try {

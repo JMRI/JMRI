@@ -37,5 +37,4 @@ public class TrackSegmentTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-
 }

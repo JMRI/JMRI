@@ -39,5 +39,4 @@ public class TrackNodeTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-
 }
