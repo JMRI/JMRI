@@ -60,21 +60,29 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sensor.getState());
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
-        Assert.assertEquals("state after one click", Sensor.INACTIVE, sensor.getState());
+        getHelper().enterClickAndLeave(new MouseEventData(
+                this,
+                _panel, // component
+                1, // number clicks
+                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
+                false, // isPopUpTrigger
+                10, // sleeptime
+                EventDataConstants.CUSTOM, // position
+                location)
+        );
+
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+        // if it's still false after max wait it throws an assert.
+        JUnitUtil.waitFor(() -> {
+            return sensor.getState() == Sensor.INACTIVE;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
-        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sensor.getState());
+        JUnitUtil.waitFor(() -> {
+            return sensor.getState() == Sensor.ACTIVE;
+        }, "state after two clicks");
 
         TestHelper.disposeWindow(iconEditorFrame, this);
     }
@@ -118,11 +126,15 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
                         EventDataConstants.CUSTOM, // position
                         location
                 ));
-        Assert.assertEquals("state after one click", Turnout.CLOSED, turnout.getState());
+        JUnitUtil.waitFor(() -> {
+            return turnout.getState() == Turnout.CLOSED;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
-        Assert.assertEquals("state after two clicks", Turnout.THROWN, turnout.getState());
+        JUnitUtil.waitFor(() -> {
+            return turnout.getState() == Turnout.THROWN;
+        }, "state after two clicks");
 
         TestHelper.disposeWindow(iconEditorFrame, this);
     }
@@ -166,11 +178,15 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
                         EventDataConstants.CUSTOM, // position
                         location
                 ));
-        Assert.assertEquals("state after one click", Turnout.CLOSED, turnout.getState());
+        JUnitUtil.waitFor(() -> {
+            return turnout.getState() == Turnout.CLOSED;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
-        Assert.assertEquals("state after two clicks", Turnout.THROWN, turnout.getState());
+        JUnitUtil.waitFor(() -> {
+            return turnout.getState() == Turnout.THROWN;
+        }, "state after two clicks");
 
         TestHelper.disposeWindow(iconEditorFrame, this);
     }
@@ -211,11 +227,15 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
                         EventDataConstants.CUSTOM, // position
                         location
                 ));
-        Assert.assertEquals("state after one click", Light.ON, light.getState());
+        JUnitUtil.waitFor(() -> {
+            return light.getState() == Light.ON;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
-        Assert.assertEquals("state after two clicks", Light.OFF, light.getState());
+        JUnitUtil.waitFor(() -> {
+            return light.getState() == Light.OFF;
+        }, "state after two clicks");
 
         TestHelper.disposeWindow(iconEditorFrame, this);
     }
@@ -249,19 +269,27 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         int[] states = signalHead.getValidStates();
         Assert.assertEquals("initial state", states[0], signalHead.getState());
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        getHelper().enterClickAndLeave(new MouseEventData(
+                this,
+                _panel, // component
+                1, // number clicks
+                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
+                false, // isPopUpTrigger
+                10, // sleeptime
+                EventDataConstants.CUSTOM, // position
+                location)
+        );
 
         for (int i = 1; i < states.length; i++) {
-            Assert.assertEquals("state after " + i + " click", states[i], signalHead.getState());
+            //Assert.assertEquals("state after " + i + " click", states[i], signalHead.getState());
+            final int state = states[i];
+            // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+            // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+            // if it's still false after max wait it throws an assert.
+            JUnitUtil.waitFor(() -> {
+                return signalHead.getState() == state;
+            }, "state after " + i + " click(s)");
+
             getHelper().enterClickAndLeave(new MouseEventData(this, icon));
         }
 

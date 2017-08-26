@@ -28,13 +28,13 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
-
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutBlockTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutBlockManagerTest.class)); 
         suite.addTest(new JUnit4TestAdapter(BlockValueFileTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutBlockConnectivityToolsTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutConnectivityTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorLoadAndStoreTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.blockRoutingTable.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
@@ -56,7 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TrackSegmentTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitCreationToolTest.class));
         suite.addTest(LayoutEditorWindowTest.suite());
-        suite.addTest(LEConnectivityTest.suite());
+        suite.addTest(LayoutEditorConnectivityTest.suite());
         suite.addTest(new JUnit4TestAdapter(LayoutEditorFindItemsTest.class));
         return suite;
     }
