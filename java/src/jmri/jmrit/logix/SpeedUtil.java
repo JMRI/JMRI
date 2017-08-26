@@ -15,7 +15,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.logix.Engineer.RampData;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
@@ -84,7 +83,8 @@ public class SpeedUtil {
     }
 
     public void setRosterId(String id) {
-        if (id == null || !id.equals(_rosterId)) {
+       if (log.isDebugEnabled()) log.debug("setRosterId({}) _rosterId= {}", id, _rosterId);
+       if (id == null || !id.equals(_rosterId)) {
             _speedProfile = null;
             _sessionProfile = null;
             if (id != null) {
@@ -100,7 +100,7 @@ public class SpeedUtil {
         if (_dccAddress == null) {
             if (_rosterEntry != null) {
                 _dccAddress = _rosterEntry.getDccLocoAddress();
-            } else {
+            } else if (_rosterId != null){
                 setDccAddress(_rosterId);
             }
         }
@@ -130,6 +130,7 @@ public class SpeedUtil {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
+        if (log.isDebugEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
         if (id == null || id.trim().length()==0) {
             _rosterEntry = null;
             setRosterId(null);   // set _rosterId
@@ -492,9 +493,9 @@ public class SpeedUtil {
      * @param isForward direction
      * @return distance in millimeters
      */
-    protected RampData rampLengthForSpeedChange(float curSetting, String curSpeedType, String toSpeedType, boolean isForward) {
+    protected float rampLengthForSpeedChange(float curSetting, String curSpeedType, String toSpeedType, boolean isForward) {
         if (curSpeedType.equals(toSpeedType)) {
-            return new RampData(0.0f, 0);
+            return 0.0f;
         }
         float fromSpeed = modifySpeed(curSetting, curSpeedType, isForward);
         float toSpeed = modifySpeed(curSetting, toSpeedType, isForward);
@@ -525,7 +526,7 @@ public class SpeedUtil {
         int rampTime = deltaTime*steps;
         if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {}",
                 rampLength, rampTime, fromSpeed, curSpeedType, toSpeedType, toSpeed);
-        return new RampData(rampLength, rampTime);   // add 1cm for safety (all scales)
+        return rampLength;   // add 1cm for safety (all scales)
     }
     
     protected float getSpeedSetting() {
@@ -547,14 +548,15 @@ public class SpeedUtil {
      * @param newIdx BlockOrder index of block just entered
      */
     protected void enteredBlock(int lastIdx, int newIdx) {
-        if (lastIdx > 0) {   // Distance traveled in 1st block unknown
+        long elpsedTime = _warrant._orders.get(newIdx).getBlock()._entryTime - _warrant._orders.get(lastIdx).getBlock()._entryTime;
+        if (_distanceValid && lastIdx > 0 && elpsedTime > 0 && _timeAtSpeed > 0) {   // Distance traveled in 1st block unknown
             speedChange();
  
             float throttle = getSpeedSetting();
             float totalLength = 0.0f;
             boolean isForward = _throttle.getIsForward();
             boolean mergeOK = true;
-            long elpsedTime = _warrant._orders.get(newIdx).getBlock()._entryTime - _warrant._orders.get(lastIdx).getBlock()._entryTime;
+            // actual exit - entry times
             if (newIdx > 1) {
                 for (int i=lastIdx; i<newIdx; i++) {
                     BlockOrder blkOrder = _warrant._orders.get(i);
@@ -570,7 +572,8 @@ public class SpeedUtil {
             float aveSpeed = 0;
             float aveThrottle = 0;
             float speed = 0;
-            if (_timeAtSpeed > 1) {
+            float compare = _timeAtSpeed / elpsedTime;  // ideally this == 1.0
+            if (compare < 1.05f && compare > 0.95f) {
                 aveSpeed = totalLength / _timeAtSpeed;
                 aveSpeed *= 1000;   // SpeedProfile is mm/sec
                 speed = totalLength / elpsedTime;
@@ -579,6 +582,8 @@ public class SpeedUtil {
                 // throttle setting should be a step increment
                 aveThrottle = _stepIncrement * Math.round(aveThrottle/_stepIncrement);
                 
+            } else {
+                mergeOK = false;
             }
             float spSpeed = _speedProfile.getSpeed(aveThrottle, isForward);                
 
@@ -589,8 +594,9 @@ public class SpeedUtil {
                         spSpeed, aveSpeed, speed, _warrant._orders.get(lastIdx).getBlock().getDisplayName(),
                         _warrant._orders.get(newIdx).getBlock().getDisplayName());
             }
+            float mergeSpeed =aveSpeed;
             if (spSpeed > 0.0f && aveSpeed > 0.0f) {   // perhaps spSpeed should be weighted.  but how much?
-                aveSpeed = (aveSpeed + spSpeed) / 2;
+                mergeSpeed = (aveSpeed + spSpeed) / 2;
             } else if (aveSpeed < _stepIncrement){
                 mergeOK = false;
             }
@@ -600,10 +606,10 @@ public class SpeedUtil {
                     aveSpeed = speed;
                 }
                 if (isForward) {
-                    _speedProfile.setForwardSpeed(aveThrottle, aveSpeed);
+                    _speedProfile.setForwardSpeed(aveThrottle, mergeSpeed);
                     _sessionProfile.setForwardSpeed(aveThrottle, aveSpeed);
                 } else {
-                    _speedProfile.setReverseSpeed(aveThrottle, aveSpeed);            
+                    _speedProfile.setReverseSpeed(aveThrottle, mergeSpeed);            
                     _sessionProfile.setReverseSpeed(aveThrottle, aveSpeed);
                 }
                 if (log.isDebugEnabled()) log.debug("Set ProfileSpeed aveThrottle= {}, aveSpeed= {}", aveThrottle, aveSpeed);
@@ -634,6 +640,8 @@ public class SpeedUtil {
                 _distanceValid = false;
             }
             _settingsTravelled += throttleSetting * elapsedTime;
+        } else {
+            _distanceValid = false;
         }
         _numchanges++;
         _changetime = time;
