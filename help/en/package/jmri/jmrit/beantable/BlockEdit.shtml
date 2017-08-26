@@ -73,7 +73,7 @@
       <p>This tab allows you to assign a Sensor to the Block to
       change the occupancy state. It also allows certain
       information about the Sensor to be changed:</p><img src=
-      "images/BlocksEditSensorTab.png" width="460" height="155">
+      "images/BlocksEditSensorTab.png" width="460" height="191">
 
       <ul>
         <li>
@@ -88,13 +88,13 @@
         Such false triggers could be due to a dirty piece of track
         or electrical interference.</li>
 
-        <li><b>Use Global Debounce Values</b> check box, allows you
+        <li>The <b>Use Global Debounce Values</b> check box, allows you
         to select if the sensor will use the default sensor
         debounce values if configured.</li>
 
         <li><b>Sensor Inactive Debounce</b> and <b>Sensor Active
         Debounce</b> allow you to specify the amount of time in
-        milliSeconds that the system waits before registering the
+        milliseconds that the system waits before registering the
         state change of a sensor.</li>
       </ul>
 
@@ -111,16 +111,16 @@
         Block value.</li>
 
         <li>
-          <b>Use Current?</b> If we consider the scenario whereby
-          we want track a train around the layout, typically this
+          <b>Use Current</b> If we consider the scenario whereby
+          we want to track a train around the layout, typically this
           is achieved via the use of Memory objects associated with
           Blocks. Until the train is known, we have nothing to
-          track. Typically, we can manually type in the train ID
+          track. Typically, we can manually type in the Train ID
           into a panel and then this is tracked around the layout
-          based on block occupancy. If, however, we have an
-          attached device that can provide us with the train ID,
+          based on Block occupancy. If, however, we have an
+          attached device that can provide us with the Train ID,
           such as an RFID reader, we no longer need to manually
-          type the train ID in - the reader does this for us. In
+          type in the Train ID - the reader does this for us. In
           essence, the reader is little more than an 'intelligent'
           sensor - not only can it sense that 'something' is there,
           it can tell us which something it is. Now to the
@@ -138,14 +138,15 @@
             it'</li>
 
             <li>'Hmm, I've not seen anything yet'</li>
-          </ol>The first two are from the CurrentReport; the last
+          </ol>
+          The first two are from the CurrentReport; the last
           two from LastReport. At start-up (assuming there is
           nothing within the range of the reader), both 2 and 4 are
           the initial state. Once something is seen, both 1 and 3
           return the same result. When the something is
           'out-of-range' 2 and 3 are then active. With 'Use
-          Current?' selected the Block value will switch between 1
-          and 2, whereas with 'Use Current?' unselected the Block
+          Current' selected the Block value will switch between 1
+          and 2, whereas with 'Use Current' unselected the Block
           value will switch between 3 and 4.
         </li>
       </ul>
@@ -157,7 +158,7 @@
       shown.</p>
 
       <p><img src="images/BlocksEditPhysicalTab.png" width="460" height=
-      "154"></p>
+      "191"></p>
 
       <table>
         <tr valign="top">
