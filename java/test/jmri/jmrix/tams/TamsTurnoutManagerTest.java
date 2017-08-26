@@ -20,8 +20,8 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     private TamsSystemConnectionMemo tm = null;
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override

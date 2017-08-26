@@ -3,6 +3,7 @@ package jmri.jmrix.ieee802154;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -193,7 +194,7 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

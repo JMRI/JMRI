@@ -2,6 +2,7 @@ package jmri.jmrit.decoderdefn;
 
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -255,12 +256,12 @@ public class DecoderIndexFileTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class.getName());

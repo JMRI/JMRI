@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.Assert;
 import org.junit.Assume;

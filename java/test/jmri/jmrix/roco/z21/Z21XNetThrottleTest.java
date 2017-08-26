@@ -39,7 +39,6 @@ public class Z21XNetThrottleTest extends XNetThrottleTest {
     @Override
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
@@ -47,7 +46,6 @@ public class Z21XNetThrottleTest extends XNetThrottleTest {
     @After
     public void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }

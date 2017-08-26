@@ -23,8 +23,8 @@ public class ControllerFilterActionTest {
     }
 
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After

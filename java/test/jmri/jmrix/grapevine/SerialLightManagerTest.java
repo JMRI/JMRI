@@ -3,6 +3,7 @@ package jmri.jmrix.grapevine;
 import jmri.Light;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,7 +88,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     // The minimal setup for log4J
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class.getName());

@@ -1,6 +1,7 @@
 package jmri.jmrit.ussctc;
 
 import java.util.*;
+import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -62,12 +63,12 @@ public class CombinedLockTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

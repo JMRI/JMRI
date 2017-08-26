@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -155,7 +156,7 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

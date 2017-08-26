@@ -2,7 +2,6 @@ package jmri.jmrix.rps.swing.polling;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;

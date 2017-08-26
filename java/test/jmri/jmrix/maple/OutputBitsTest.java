@@ -1,6 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -78,7 +79,7 @@ public class OutputBitsTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

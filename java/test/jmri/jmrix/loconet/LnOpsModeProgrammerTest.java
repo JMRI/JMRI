@@ -4,6 +4,7 @@ import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
@@ -264,6 +265,6 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

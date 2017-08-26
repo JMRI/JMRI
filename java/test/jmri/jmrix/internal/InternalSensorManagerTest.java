@@ -2,6 +2,7 @@ package jmri.jmrix.internal;
 
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -74,7 +75,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     static Logger log = LoggerFactory.getLogger(InternalSensorManagerTest.class.getName());

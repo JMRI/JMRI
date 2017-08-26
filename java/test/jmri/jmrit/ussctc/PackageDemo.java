@@ -1,8 +1,8 @@
 package jmri.jmrit.ussctc;
 
+import jmri.util.JUnitUtil;
 import java.util.*;
 import jmri.*;
-import jmri.util.*;
 
 /**
  * Demo of classes in jmri.jmrit.ussctc

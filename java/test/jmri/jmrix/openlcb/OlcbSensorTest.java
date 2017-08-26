@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb;
 import java.util.regex.Pattern;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -203,6 +204,6 @@ public class OlcbSensorTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }
