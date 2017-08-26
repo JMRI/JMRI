@@ -16,8 +16,7 @@ public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
        apc = new GcPortController(memo){
             @Override

@@ -15,8 +15,7 @@ public class TamsPortControllerTest extends jmri.jmrix.AbstractSerialPortControl
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        TamsTrafficController tc = new TamsInterfaceScaffold(){
           @Override
           public void sendTamsMessage(TamsMessage m,TamsListener reply) {

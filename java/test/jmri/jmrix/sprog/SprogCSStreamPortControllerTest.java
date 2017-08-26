@@ -29,8 +29,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();

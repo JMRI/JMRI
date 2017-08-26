@@ -29,8 +29,7 @@ public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPort
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();

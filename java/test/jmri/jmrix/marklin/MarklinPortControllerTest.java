@@ -15,8 +15,7 @@ public class MarklinPortControllerTest extends jmri.jmrix.AbstractNetworkPortCon
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        MarklinSystemConnectionMemo memo = new MarklinSystemConnectionMemo();
        apc = new MarklinPortController(memo){
             @Override

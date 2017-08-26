@@ -15,8 +15,7 @@ public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        AcelaSystemConnectionMemo memo = new AcelaSystemConnectionMemo();
        AcelaTrafficController tc = new AcelaTrafficControlScaffold();
        apc = new AcelaPortController(memo){

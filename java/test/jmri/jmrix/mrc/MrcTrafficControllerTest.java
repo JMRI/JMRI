@@ -23,8 +23,7 @@ public class MrcTrafficControllerTest {
 
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        tc = new MrcTrafficController(){
           @Override
           public boolean status() { return true; }

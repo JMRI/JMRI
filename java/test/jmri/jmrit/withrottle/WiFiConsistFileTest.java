@@ -42,8 +42,7 @@ public class WiFiConsistFileTest extends TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     

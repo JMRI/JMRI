@@ -15,8 +15,7 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new XNetTrafficController(new LenzCommandStation()){
             @Override
             public void sendXNetMessage(XNetMessage m, XNetListener reply){

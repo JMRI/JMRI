@@ -15,8 +15,7 @@ public class XNetNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPor
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        apc = new XNetNetworkPortController(){
            @Override
            public boolean status(){

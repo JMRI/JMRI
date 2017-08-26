@@ -15,8 +15,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        Mx1TrafficController tc = new Mx1TrafficController(){
           @Override
           public boolean status(){

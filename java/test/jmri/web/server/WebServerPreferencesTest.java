@@ -21,8 +21,7 @@ public class WebServerPreferencesTest {
 
     @Before
     public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 

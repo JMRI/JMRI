@@ -15,8 +15,7 @@ public class DCCppNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPo
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);

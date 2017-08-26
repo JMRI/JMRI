@@ -23,8 +23,7 @@ public class EasyDccSystemConnectionMemoTest {
 
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        memo = new EasyDccSystemConnectionMemo();
     }
 

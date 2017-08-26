@@ -83,8 +83,7 @@ public class ReporterIconTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test ReporterIcon Panel");
         }

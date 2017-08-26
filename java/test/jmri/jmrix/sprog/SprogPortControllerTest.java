@@ -15,8 +15,7 @@ public class SprogPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
        SprogTrafficController tc = new SprogTrafficControlScaffold(memo);
        apc = new SprogPortController(memo){

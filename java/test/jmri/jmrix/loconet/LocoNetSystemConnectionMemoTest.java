@@ -23,8 +23,7 @@ public class LocoNetSystemConnectionMemoTest {
 
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        memo = new LocoNetSystemConnectionMemo();
     }
 

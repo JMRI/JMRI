@@ -23,8 +23,7 @@ public class Mx1TrafficControllerTest {
 
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        tc = new Mx1TrafficController(){
           @Override
           public boolean status() {return true;}

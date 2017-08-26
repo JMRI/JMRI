@@ -15,8 +15,7 @@ public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortContro
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        SRCPSystemConnectionMemo memo = new SRCPSystemConnectionMemo();
        apc = new SRCPPortController(memo){
            @Override

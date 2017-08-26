@@ -173,8 +173,7 @@ public class SignalSystemTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         JUnitUtil.initInternalTurnoutManager();

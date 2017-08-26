@@ -15,8 +15,7 @@ public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
        MrcTrafficController tc = new MrcInterfaceScaffold();
        apc = new MrcPortController(memo){

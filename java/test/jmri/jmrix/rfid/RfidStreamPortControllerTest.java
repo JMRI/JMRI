@@ -30,8 +30,7 @@ public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();

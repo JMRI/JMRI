@@ -15,8 +15,7 @@ public class JMRIClientPortControllerTest extends jmri.jmrix.AbstractNetworkPort
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        JMRIClientSystemConnectionMemo memo = new JMRIClientSystemConnectionMemo();
        apc = new JMRIClientPortController(memo){
             @Override

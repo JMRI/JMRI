@@ -26,8 +26,7 @@ public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();

@@ -150,8 +150,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test SignalMastIcon Panel");
         }
