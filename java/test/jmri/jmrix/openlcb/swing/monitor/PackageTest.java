@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
     MonitorFrameTest.class,
     MonitorFrameDemo.class,
     MonitorActionTest.class,
-    MonitorPaneTest.class
+    MonitorPaneTest.class,
+    BundleTest.class
 })
 
 /**
