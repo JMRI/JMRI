@@ -3,6 +3,7 @@ package jmri.jmrix.cmri.serial;
 import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
@@ -15,6 +16,11 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     private SerialTrafficControlScaffold tcis = null;
     private SerialNode n = null;
 
+    @Test
+    public void testCtor() {
+        new SerialTurnout("5", "to5", memo);
+    }
+    
     @Override
     @Before
     public void setUp() {
