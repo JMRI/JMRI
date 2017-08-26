@@ -1,26 +1,30 @@
-package jmri.jmrit.display.layoutEditor.blockRoutingTable;
+package jmri.jmrit.symbolicprog;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import javax.swing.JLabel;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LayoutBlockRouteTableActionTest {
+public class QuantumCvMgrImportActionTest {
 
     @Test
     public void testCTor() {
-        LayoutBlock  b = new LayoutBlock("test","test");
-        LayoutBlockRouteTableAction t = new LayoutBlockRouteTableAction("Test Action",b);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        CvTableModel tm = new CvTableModel(new JLabel(), null);
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("test Quantum Import");
+        QuantumCvMgrImportAction t = new QuantumCvMgrImportAction("Test Action",tm,jf,new JLabel());
         Assert.assertNotNull("exists",t);
+        jf.dispose();
     }
 
     // The minimal setup for log4J
@@ -32,9 +36,10 @@ public class LayoutBlockRouteTableActionTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetWindows(false);
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableActionTest.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImportActionTest.class.getName());
+
 }
