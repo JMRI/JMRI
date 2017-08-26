@@ -486,9 +486,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
 
         boolean dgValue = false;
-        if ((a = shared.getAttribute("drawgrid")) != null && a.getValue().equals("yes")) {
-            dgValue = true;
-        }
+        try {
+            dgValue = shared.getAttribute("drawgrid").getBooleanValue();
+        } catch (Exception e) {}
 
         boolean sgaValue = false;
         if ((a = shared.getAttribute("snaponadd")) != null && a.getValue().equals("yes")) {
