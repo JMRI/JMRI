@@ -2129,6 +2129,7 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + ident);
             }
         }
+
         //Do the second one first then the activate is only called the once
         if (!tSecondTurnoutName.isEmpty()) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
@@ -2155,10 +2156,8 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    JPopupMenu popup = null;
-    JCheckBoxMenuItem disableItem = null;
-    JCheckBoxMenuItem disableWhenOccupiedItem = null;
-    LayoutEditorTools tools = null;
+    private JPopupMenu popup = null;
+    private LayoutEditorTools tools = null;
 
     /**
      * Display popup menu for information and editing
@@ -2285,21 +2284,20 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 });
             }
-            if (disableItem == null) {
-                disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
-            }
-            disableItem.setSelected(disabled);
-            popup.add(disableItem);
-            disableItem.addActionListener((java.awt.event.ActionEvent e2) -> {
-                disabled = disableItem.isSelected();
+            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+            cbmi.setSelected(disabled);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
+                disabled = o.isSelected();
             });
-            if (disableWhenOccupiedItem == null) {
-                disableWhenOccupiedItem = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
-            }
-            disableWhenOccupiedItem.setSelected(disableWhenOccupied);
-            popup.add(disableWhenOccupiedItem);
-            disableWhenOccupiedItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                disableWhenOccupied = disableWhenOccupiedItem.isSelected();
+
+            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            cbmi.setSelected(disableWhenOccupied);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
+                disableWhenOccupied = o.isSelected();
             });
 
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
@@ -2427,8 +2425,11 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tools.setSensorsAtTurnoutFromMenu(instance,
-                                    boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                            tools.setSensorsAtTurnoutFromMenu(
+                                    instance,
+                                    boundaryBetween,
+                                    layoutEditor.sensorIconEditor,
+                                    layoutEditor.sensorFrame);
                         }
                     });
                 }
