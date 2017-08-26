@@ -175,7 +175,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
+        panel.dispose(true);
     }
 
     // from here down is testing infrastructure
@@ -207,7 +207,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

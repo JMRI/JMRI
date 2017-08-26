@@ -616,9 +616,9 @@ public class JUnitUtil {
     }
 
     /**
-     * Dispose of a frame searched for by title. Disposes of the first frame
-     * found with the given title. Asserts that the calling test failed if the
-     * frame cannot be found.
+     * Dispose of a visible frame searched for by title. Disposes of the first
+     * visible frame found with the given title. Asserts that the calling test
+     * failed if the frame cannot be found.
      *
      * @param title the title of the frame to dispose of
      * @param ce    true to match title param as a substring of the frame's

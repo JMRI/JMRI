@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -22,6 +23,9 @@ public class ThrottleFrameTest {
         ThrottleFrame panel = new ThrottleFrame(frame);
         Assert.assertNotNull("exists", panel);
         JUnitUtil.dispose(frame);
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @After
