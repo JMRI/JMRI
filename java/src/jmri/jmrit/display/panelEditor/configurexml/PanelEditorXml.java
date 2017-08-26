@@ -121,16 +121,14 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         }
         // confirm that panel hasn't already been loaded
         if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
-            log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
+            log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
         PanelEditor panel = new PanelEditor(name);
-        //panel.makeFrame(name);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        panel.setTitle();
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
-
-        panel.setTitle();
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
 
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings

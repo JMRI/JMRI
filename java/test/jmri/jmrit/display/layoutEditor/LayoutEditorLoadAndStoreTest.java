@@ -1,7 +1,9 @@
-package jmri.configurexml;
+package jmri.jmrit.display.layoutEditor;
 
+import static jmri.configurexml.LoadAndStoreTestBase.getFiles;
 
 import java.io.File;
+import jmri.configurexml.LoadAndStoreTestBase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -20,14 +22,14 @@ import org.junit.runners.Parameterized;
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
 @RunWith(Parameterized.class)
-public class LoadAndStoreTest extends LoadAndStoreTestBase {
+public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
 
     @Parameterized.Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
-        return getFiles(new File("java/test/jmri/configurexml"), false, true);
+        return getFiles(new File("java/test/jmri/jmrit/display/layoutEditor"), false, true);
     }
 
-    public LoadAndStoreTest(File file, boolean pass) {
-        super(file, pass, SaveType.Config, false);
+    public LayoutEditorLoadAndStoreTest(File inFile, boolean inPass) {
+        super(inFile, inPass, SaveType.User, true);
     }
 }

@@ -100,7 +100,6 @@ public class LayoutEditorAuxTools {
             lcs = p.getLayoutConnectivity();
             if (lcs != null) {
                 cList.addAll(lcs); // append to list
-
             }
         }
 
