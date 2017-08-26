@@ -48,7 +48,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public String getTitle() {
-        return "OpenLCB Monitor";
+        return Bundle.getMessage("MonitorTitle");
     }
 
     @Override
@@ -174,7 +174,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Openlcb Monitor",
+            super(Bundle.getMessage("MonitorTitle"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     MonitorPane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
