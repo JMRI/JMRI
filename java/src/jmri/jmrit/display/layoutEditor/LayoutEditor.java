@@ -1457,7 +1457,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             FlowLayout verticalTitleLayout = new FlowLayout(FlowLayout.CENTER, 5, 5);   //5 pixel gap between items, 5 vertical gap
             FlowLayout verticalContentLayout = new FlowLayout(FlowLayout.LEFT, 5, 2);   //5 pixel gap between items, 2 vertical gap
 
-            turnoutLabel = new JLabel(String.format("-- %s ---", Bundle.getMessage("BeanNameTurnout")));
+            turnoutLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("BeanNameTurnout")));
 
             if (!useBorders) {
                 JPanel vTop1TitlePanel = new JPanel(verticalTitleLayout);
@@ -1508,7 +1508,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (useBorders) {
                 outerBorderPanel.add(innerBorderPanel);
             }
-            trackLabel = new JLabel(String.format("-- %s ---", Bundle.getMessage("Track")));
+            trackLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Track")));
 
             if (!useBorders) {
                 JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
@@ -1548,7 +1548,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             JPanel nodesBorderPanel = editToolBarPanel;
-            nodesLabel = new JLabel(String.format("-- %s ---", Bundle.getMessage("Nodes")));
+            nodesLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Nodes")));
 
             if (useBorders) {
                 nodesBorderPanel = new JPanel();
@@ -1580,7 +1580,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             JPanel labelsBorderPanel = editToolBarPanel;
-            labelsLabel = new JLabel(String.format("-- %s ---", Bundle.getMessage("Labels")));
+            labelsLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Labels")));
 
             if (useBorders) {
                 labelsBorderPanel = new JPanel();
@@ -1629,7 +1629,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 iconsBorderPanel.setBorder(innerTitleBorder);
             } else {
                 JPanel vTop17TitlePanel = new JPanel(verticalTitleLayout);
-                JLabel iconsLabel = new JLabel(String.format("-- %s ---", Bundle.getMessage("IconsTitle")));
+                JLabel iconsLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("IconsTitle")));
                 vTop17TitlePanel.add(iconsLabel);
                 vTop17TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17TitlePanel.getPreferredSize().height));
                 editToolBarPanel.add(vTop17TitlePanel);
