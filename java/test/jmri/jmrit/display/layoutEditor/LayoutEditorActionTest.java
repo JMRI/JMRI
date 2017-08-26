@@ -17,14 +17,14 @@ public class LayoutEditorActionTest {
 
     @Test
     public void testCtor() {
-        LayoutEditorAction  b = new LayoutEditorAction();
-        Assert.assertNotNull("exists", b );
+        LayoutEditorAction b = new LayoutEditorAction();
+        Assert.assertNotNull("exists", b);
     }
 
     @Test
     public void testCtorWithParam() {
-        LayoutEditorAction  b = new LayoutEditorAction("test");
-        Assert.assertNotNull("exists", b );
+        LayoutEditorAction b = new LayoutEditorAction("test");
+        Assert.assertNotNull("exists", b);
     }
 
     // from here down is testing infrastructure
@@ -35,8 +35,6 @@ public class LayoutEditorActionTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        // reset the instance manager.
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorActionTest.class.getName());

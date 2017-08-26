@@ -17,8 +17,8 @@ public class BlockValueFileTest {
 
     @Test
     public void testCtor() {
-        BlockValueFile  f = new BlockValueFile();
-        Assert.assertNotNull("exists", f );
+        BlockValueFile f = new BlockValueFile();
+        Assert.assertNotNull("exists", f);
     }
 
     // from here down is testing infrastructure
@@ -29,8 +29,6 @@ public class BlockValueFileTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        // reset the instance manager.
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(BlockValueFileTest.class.getName());

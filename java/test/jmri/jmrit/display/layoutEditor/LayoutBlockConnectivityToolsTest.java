@@ -17,8 +17,8 @@ public class LayoutBlockConnectivityToolsTest {
 
     @Test
     public void testCtor() {
-        LayoutBlockConnectivityTools  t = new LayoutBlockConnectivityTools();
-        Assert.assertNotNull("exists", t );
+        LayoutBlockConnectivityTools t = new LayoutBlockConnectivityTools();
+        Assert.assertNotNull("exists", t);
     }
 
     // from here down is testing infrastructure
@@ -29,8 +29,6 @@ public class LayoutBlockConnectivityToolsTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        // reset the instance manager.
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockConnectivityToolsTest.class.getName());

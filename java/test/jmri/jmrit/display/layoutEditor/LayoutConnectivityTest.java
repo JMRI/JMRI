@@ -17,10 +17,10 @@ public class LayoutConnectivityTest {
 
     @Test
     public void testCtor() {
-        LayoutBlock  b = new LayoutBlock("testb","testb");
-        LayoutBlock  d = new LayoutBlock("testd","testd");
-        LayoutConnectivity c = new LayoutConnectivity(b,d);
-        Assert.assertNotNull("exists", c );
+        LayoutBlock b = new LayoutBlock("testb", "testb");
+        LayoutBlock d = new LayoutBlock("testd", "testd");
+        LayoutConnectivity c = new LayoutConnectivity(b, d);
+        Assert.assertNotNull("exists", c);
     }
 
     // from here down is testing infrastructure
@@ -31,8 +31,6 @@ public class LayoutConnectivityTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        // reset the instance manager.
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(LayoutConnectivityTest.class.getName());

@@ -29,8 +29,6 @@ public class LayoutBlockTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        // reset the instance manager.
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class.getName());
