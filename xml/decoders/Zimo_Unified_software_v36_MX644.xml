@@ -29,7 +29,7 @@
   <!-- version 1.1,  updated to V34 firmware   Nigel Cliffe, 23 Jan 2015 -->
   <!-- version 1.2,  updated to hide V34 as v34 updates are included in v32 files   Mark Waters, 03 Jan 2016 -->
   <!-- version 1.3,  version 36 Firmware based on hidden v34, no other changes, as no updated documents from ZIMO updated to allow FW version up to 40, Alain Carasso, 29 Jul 2017 -->
-  <!-- version 1.3.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_V36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
+  <!-- version 1.3.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
 
   <decoder>
     <family name="Zimo Unified software (version 36+)" mfg="Zimo">
@@ -92,7 +92,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV372-CV399sound.xml"/>
       <!-- End sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_V36.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
