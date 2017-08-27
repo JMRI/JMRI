@@ -36,10 +36,11 @@
         </li>
 
         <li>
-          <p>Do either:</p>
+          <p>Choose from:</p>
 
           <ul>
-            <li>Allow the program to automatically generate a
+            <li>Checking <b>Automatically Generate System Name</b>
+            will allow the program to automatically generate a
             <b>System Name</b> for you. The created name will be
             IZnn, where nn is the next available number.</li>
 
@@ -121,7 +122,7 @@
 
           <div style="margin-left: 2em">
             <p>If at any time you decide you want to start over,
-            click <b>Delete All Sections</b> to clear the table of
+            click <b>Remove Sections from Transit</b> to clear the table of
             Sections, and return to step 4 above.</p>
 
             <p>The <b>Remove Last Section</b> and <b>Remove First
