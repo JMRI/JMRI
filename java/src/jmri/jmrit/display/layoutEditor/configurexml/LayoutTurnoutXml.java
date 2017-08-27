@@ -42,7 +42,11 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
         if (!p.getSecondTurnoutName().isEmpty()) {
             element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
+            if (p.getSecondTurnoutInverted()) {
+                element.setAttribute("secondturnoutinverted", "true");
+            }
         }
+
         if (!p.getBlockName().isEmpty()) {
             element.setAttribute("blockname", p.getBlockName());
         }
@@ -57,7 +61,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
         element.setAttribute("type", "" + p.getTurnoutType());
         if (p.isHidden()) {
-            element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
+            element.setAttribute("hidden", "yes");
         }
         if (p.getConnectA() != null) {
             element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
@@ -221,7 +225,16 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("secondturnoutname");
         if (a != null) {
             l.tSecondTurnoutName = a.getValue();
+
+            boolean invert2nd = false;
+            if (element.getAttribute("secondturnoutinverted") != null) {
+                if (element.getAttribute("secondturnoutinverted").getValue().equals("true")) {
+                    invert2nd = true;
+                }
+            }
+            l.setSecondTurnoutInverted(invert2nd);
         }
+
         a = element.getAttribute("connectaname");
         if (a != null) {
             l.connectAName = a.getValue();

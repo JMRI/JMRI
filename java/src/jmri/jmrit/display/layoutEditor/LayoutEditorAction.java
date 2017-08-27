@@ -30,9 +30,11 @@ public class LayoutEditorAction extends AbstractAction {
             }
         }
         LayoutEditor panel = new LayoutEditor(name);
+        panel.setLayoutName(name);
         panel.pack();
         panel.setVisible(true);
         panel.setAllEditable(true);
         panel.setCurrentPositionAndSize();
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
     }
 }
