@@ -64,11 +64,36 @@ import org.slf4j.LoggerFactory;
  * crossovers) is an illegal condition.
  * <P>
  * {@literal
- * ==A==-==B==
- *    \\ //
- *      X
- *    // \\
- * ==D==-==C==
+ *           Turnouts
+ * Right-hand       Left-hand
+ *
+ *                        C
+ *                       //
+ * A ==**== B       A ==**== B
+ *      \\
+ *       C
+ *
+ *    Wye           Three-way
+ *
+ *       B                D
+ *      //               //
+ * A ==**           A ==**== B
+ *      \\               \\
+ *       C                C
+ *
+ *           Crossovers
+ * Right-hand            left-hand
+ * A ==**===== B      A ====**== B
+ *      \\                 //
+ *       \\               //
+ *  D ====**== C     D ==**===== C
+ *
+ *             Double
+ *        A ==**==**== B
+ *             \\//
+ *              XX
+ *             //\\
+ *        D ==**==**== C
  * literal}
  * <P>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
@@ -344,7 +369,7 @@ public class LayoutTurnout extends LayoutTrack {
                 Math.round(dispA.getY() * yFactor));
         dispA = pt;
 
-        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
+        LayoutTrack.defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
     }
 
     // this should only be used for debugging...
@@ -2261,7 +2286,7 @@ public class LayoutTurnout extends LayoutTrack {
                         // prompt for rotation angle
                         error = false;
                         newAngle = JOptionPane.showInputDialog(layoutEditor,
-                            Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
+                                Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
                         if (newAngle.isEmpty()) {
                             return;  // cancelled
                         }
