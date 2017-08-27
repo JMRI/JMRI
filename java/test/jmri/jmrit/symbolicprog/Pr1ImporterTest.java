@@ -99,12 +99,12 @@ public class Pr1ImporterTest {
     }
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @After
-    protected void tearDown() {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
