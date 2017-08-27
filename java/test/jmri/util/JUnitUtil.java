@@ -100,7 +100,10 @@ public class JUnitUtil {
      */
     public static void setUp() {
         Log4JFixture.setUp();
-        resetWindows(false, true); // error
+        // ideally this would be false, true to force an error if an earlier
+        // test left a window open, but different platforms seem to have just
+        // enough differences that this is, for now, only emitting a warning
+        resetWindows(true, false);
         resetInstanceManager();
     }
 
@@ -575,7 +578,11 @@ public class JUnitUtil {
     }
 
     /**
-     * Dispose of any disposable windows.
+     * Dispose of any disposable windows. This should only be used if there is
+     * no ability to actually close windows opened by a test using
+     * {@link #dispose(java.awt.Window)} or
+     * {@link #disposeFrame(java.lang.String, boolean, boolean)}, since this may
+     * mask other side effects that should be dealt with explicitly.
      *
      * @param warn  log a warning for each window if true
      * @param error log an error (failing the test) for each window if true

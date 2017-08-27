@@ -37,9 +37,9 @@ public class Pr1ImporterTest {
         if (f.exists()) {
             f.delete();
         }
-        PrintStream p = new PrintStream(new FileOutputStream(f));
-        p.print(contents);
-        p.close();
+        try (PrintStream p = new PrintStream(new FileOutputStream(f))) {
+            p.print(contents);
+        }
 
         return f;
     }
