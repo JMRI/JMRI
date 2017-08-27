@@ -411,16 +411,7 @@ public class LayoutTurnoutTest {
 
     @After
     public void tearDown() throws Exception {
-        if(layoutEditor!=null) {
-           layoutEditor.dispose();
-        }
-        layoutEditor = null;
-        ltRH = null;
-        ltLH = null;
-        ltWY = null;
-        ltDX = null;
-        ltRX = null;
-        ltLX = null;
+        JUnitUtil.resetWindows(false);
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
