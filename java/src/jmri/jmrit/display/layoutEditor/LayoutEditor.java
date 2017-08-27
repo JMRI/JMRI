@@ -262,7 +262,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public JFrame sensorFrame = null;
 
     public MultiIconEditor signalIconEditor = null;
-    public JFrame signalFrame;
+    public JFrame signalFrame = null;
 
     private MultiIconEditor iconEditor = null;
     private JFrame iconFrame = null;
@@ -1000,9 +1000,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         signalFrame = new JFrame(Bundle.getMessage("EditSignalIcons"));
         signalFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);  //no spaces around
-        //Label as that
-        //breaks html
-        //formatting
+        //Label as that breaks html formatting
         signalFrame.getContentPane().add(signalIconEditor);
         signalFrame.pack();
         signalFrame.setVisible(false);
@@ -2113,8 +2111,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }   //initStringsToVTCodes
 
-    LayoutEditorTools tools = null;
-    jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
+    private LayoutEditorTools tools = null;
+    private jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 
     protected void setupToolsMenu(JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
@@ -10799,9 +10797,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void dispose() {
-        this.sensorFrame.dispose();
-        this.signalFrame.dispose();
-        this.iconFrame.dispose();
+        if (sensorFrame != null) {
+            sensorFrame.dispose();
+            sensorFrame = null;
+        }
+        if (signalFrame != null) {
+            signalFrame.dispose();
+            signalFrame = null;
+        }
+        if (iconFrame != null) {
+            iconFrame.dispose();
+            iconFrame = null;
+        }
         super.dispose();
     }
 
