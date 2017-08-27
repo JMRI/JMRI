@@ -92,23 +92,23 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelEditor extends Editor implements ItemListener {
 
-    JTextField nextX = new JTextField("0", 4);
-    JTextField nextY = new JTextField("0", 4);
+    private JTextField nextX = new JTextField("0", 4);
+    private JTextField nextY = new JTextField("0", 4);
 
-    JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
-    JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
-    JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
-    //JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
-    JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
-    JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
-    JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
-    JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
-    JComboBox<String> scrollableComboBox = new JComboBox<String>();
+    private JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
+    private JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
+    private JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
+    //private JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
+    private JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
+    private JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
+    private JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
+    private JComboBox<String> scrollableComboBox = new JComboBox<String>();
 
-    JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
-    JTextField nextLabel = new JTextField(10);
+    private JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
+    private JTextField nextLabel = new JTextField(10);
 
-    JComboBox<ComboBoxItem> _addIconBox;
+    private JComboBox<ComboBoxItem> _addIconBox;
 
     public PanelEditor() {
     }
@@ -466,14 +466,14 @@ public class PanelEditor extends Editor implements ItemListener {
 
     static class ComboBoxItem {
 
-        String name;
-        String BundleName;
+        private String name;
+        private String BundleName;
 
-        ComboBoxItem(String n) {
+        protected ComboBoxItem(String n) {
             name = n;
         }
 
-        String getName() {
+        protected String getName() {
             return name;
         }
 
@@ -500,9 +500,9 @@ public class PanelEditor extends Editor implements ItemListener {
         }
     }
 
-    int locationX = 0;
-    int locationY = 0;
-    static final int DELTA = 20;
+    private int locationX = 0;
+    private int locationY = 0;
+    private static final int DELTA = 20;
 
     /*
      *  itemListener for JComboBox
@@ -711,7 +711,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * ***************************************************
      */
-    boolean delayedPopupTrigger;
+    private boolean delayedPopupTrigger;
 
     @Override
     public void mousePressed(MouseEvent event) {

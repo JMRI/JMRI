@@ -318,7 +318,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             if (adrSelector.getAddress() != null) {
                 if (consistModel.getConsist() != null) {
                     consistModel.getConsist().removeConsistListener(this);
-                    _status.setText("Ready");
+                    _status.setText(Bundle.getMessage("DefaultStatusText"));
                 }
                 consistModel.setConsist(adrSelector.getAddress());
                 consistModel.getConsist().addConsistListener(this);
@@ -326,7 +326,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             } else {
                 if (consistModel.getConsist() != null) {
                     consistModel.getConsist().removeConsistListener(this);
-                    _status.setText("Ready");
+                    _status.setText(Bundle.getMessage("DefaultStatusText"));
                 }
                 consistModel.setConsist((Consist) null);
                 adrSelector.setEnabled(true);
@@ -338,7 +338,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             consistAdrBox.setSelectedIndex(0);
             if (consistModel.getConsist() != null) {
                 consistModel.getConsist().removeConsistListener(this);
-                _status.setText("Ready");
+                _status.setText(Bundle.getMessage("DefaultStatusText"));
             }
             consistModel.setConsist((Consist) null);
             adrSelector.setEnabled(true);
@@ -350,42 +350,49 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NoConsistSelectedError"));
             return;
-        }
-        DccLocoAddress address = adrSelector.getAddress();
-        ConsistMan.getConsist(address);
-        /*
-         * get the list of locomotives to delete
-         */
-        /*ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
-        addressList.forEach((locoaddress)->{
-            if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: " + locoaddress.toString());
+        } else {
+            DccLocoAddress address = adrSelector.getAddress();
+            ConsistMan.getConsist(address);
+            // confirm delete
+            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("DeleteWarningDialog", address),
+                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+                return; // do not delete
             }
+            /*
+             * get the list of locomotives to delete
+             */
+            /*ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
+            addressList.forEach((locoaddress)->{
+                if (log.isDebugEnabled()) {
+                    log.debug("Deleting Locomotive: " + locoaddress.toString());
+                }
+                try {
+                    tempConsist.remove(locoaddress);
+                } catch (Exception ex) {
+                    log.error("Error removing address "
+                            + locoaddress.toString()
+                            + " from consist "
+                            + address.toString());
+                }
+            });*/
             try {
-                tempConsist.remove(locoaddress);
+                ConsistMan.delConsist(address);
             } catch (Exception ex) {
-                log.error("Error removing address "
-                        + locoaddress.toString()
-                        + " from consist "
-                        + address.toString());
+                log.error("Error delting consist "
+                        + address);
             }
-        });*/
-        try {
-            ConsistMan.delConsist(address);
-        } catch (Exception ex) {
-            log.error("Error delting consist "
-                    + address);
+            adrSelector.reset();
+            adrSelector.setEnabled(true);
+            initializeConsistBox();
+            try {
+                consistFile.writeFile(ConsistMan.getConsistList());
+            } catch (Exception ex) {
+                log.warn("error writing consist file: " + ex);
+            }
+            resetLocoButtonActionPerformed(e);
+            canAdd();
         }
-        adrSelector.reset();
-        adrSelector.setEnabled(true);
-        initializeConsistBox();
-        try {
-            consistFile.writeFile(ConsistMan.getConsistList());
-        } catch (Exception ex) {
-            log.warn("error writing consist file: " + ex);
-        }
-        resetLocoButtonActionPerformed(e);
-        canAdd();
     }
 
     public void throttleButtonActionPerformed(ActionEvent e) {
@@ -495,7 +502,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             locoRosterBox.setSelectedIndex(0);
             if (consistModel.getConsist() != null) {
                 consistModel.getConsist().removeConsistListener(this);
-                _status.setText("Ready");
+                _status.setText(Bundle.getMessage("DefaultStatusText"));
             }
             consistModel.setConsist((Consist) null);
 
@@ -506,7 +513,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         DccLocoAddress address = adrSelector.getAddress();
         if (consistModel.getConsist() != null) {
             consistModel.getConsist().removeConsistListener(this);
-            _status.setText("Ready");
+            _status.setText(Bundle.getMessage("DefaultStatusText"));
         }
         Consist selectedConsist = ConsistMan.getConsist(address);
         consistModel.setConsist(selectedConsist);
@@ -683,7 +690,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     @Override
     public void consistReply(DccLocoAddress locoaddress, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("Consist Reply recieved for Locomotive " + locoaddress.toString() + " with status " + status);
+            log.debug("Consist Reply received for Locomotive " + locoaddress.toString() + " with status " + status);
         }
         _status.setText(ConsistMan.decodeErrorCode(status));
         // For some status codes, we want to trigger specific actions
@@ -731,4 +738,5 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class.getName());
+
 }

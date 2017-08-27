@@ -29,6 +29,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
+
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("SensorIconWindowTest.testPanelEditor");
 
@@ -98,6 +99,8 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
 
+        panel.dispose();
+        panel = null;
     }
 
     @SuppressWarnings("unchecked") // DialogFinder not parameterized
@@ -105,6 +108,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
+
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("SensorIconWindowTest.testLayoutEditor");
 
@@ -176,6 +180,8 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
 
+        panel.dispose();
+        panel = null;
     }
 
     // from here down is testing infrastructure
@@ -208,6 +214,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false);
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }

@@ -27,7 +27,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI&reg;: Fast Clock</h1>JMRI provides two kinds of Fast
+      <h1>JMRI: Fast Clock</h1>JMRI provides two kinds of Fast
       Clock capability:
 
       <ul>
@@ -89,7 +89,8 @@
       IMCURRENTTIME memory contains the current fast-clock time,
       and can be easily accessed from Logix and scripts.</p>
 
-      <p>Happy timekeeping! <!--#include virtual="/Footer" --></p>
+      <p>Happy timekeeping!</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
