@@ -29,6 +29,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
+
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("SensorIconWindowTest.testPanelEditor");
 
@@ -53,30 +54,23 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
                 icon.getLocation().x + icon.getSize().width / 2,
                 icon.getLocation().y + icon.getSize().height / 2);
 
-        getHelper().enterClickAndLeave(new MouseEventData(
-                this,
-                jf, // component
-                1, // number clicks
-                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                false, // isPopUpTrigger
-                10, // sleeptime
-                EventDataConstants.CUSTOM, // position
-                location)
-        );
+        getHelper().enterClickAndLeave(
+                new MouseEventData(this,
+                        jf, // component
+                        1, // number clicks
+                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
+                        false, // isPopUpTrigger
+                        10, // sleeptime
+                        EventDataConstants.CUSTOM, // position
+                        location
+                ));
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
-        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
-        // if it's still false after max wait it throws an assert.
-        JUnitUtil.waitFor(() -> {
-            return sn.getState() == Sensor.INACTIVE;
-        }, "state after one click");
+        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
 
-        JUnitUtil.waitFor(() -> {
-            return sn.getState() == Sensor.ACTIVE;
-        }, "state after two click");
+        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
 
         // if OK to here, close window
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
@@ -104,6 +98,9 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
+
+        panel.dispose();
+        panel = null;
     }
 
     @SuppressWarnings("unchecked") // DialogFinder not parameterized
@@ -111,6 +108,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
+
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("SensorIconWindowTest.testLayoutEditor");
 
@@ -137,27 +135,23 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
                 icon.getLocation().x + icon.getSize().width / 2,
                 icon.getLocation().y + icon.getSize().height / 2);
 
-        getHelper().enterClickAndLeave(new MouseEventData(
-                this,
-                jf, // component
-                1, // number clicks
-                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                false, // isPopUpTrigger
-                10, // sleeptime
-                EventDataConstants.CUSTOM, // position
-                location)
-        );
+        getHelper().enterClickAndLeave(
+                new MouseEventData(this,
+                        jf, // component
+                        1, // number clicks
+                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
+                        false, // isPopUpTrigger
+                        10, // sleeptime
+                        EventDataConstants.CUSTOM, // position
+                        location
+                ));
 
-        JUnitUtil.waitFor(() -> {
-            return sn.getState() == Sensor.INACTIVE;
-        }, "state after one click");
+        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
 
-        JUnitUtil.waitFor(() -> {
-            return sn.getState() == Sensor.ACTIVE;
-        }, "state after two click");
+        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
 
         // if OK to here, close window
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
@@ -185,6 +179,9 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
+
+        panel.dispose();
+        panel = null;
     }
 
     // from here down is testing infrastructure
