@@ -32,7 +32,7 @@
           bring up the Transit Table, and click the <b>Add...</b>
           button at the bottom of the table to bring up the
           Add/Edit Transit window.</p><img src=
-          "TransitAddFrame.jpg" height="550" width="770">
+          "images/TransitAddFrame.png" height="569" width="679">
         </li>
 
         <li>
@@ -191,8 +191,8 @@
           Add/Edit Transit window. The window will be the same as
           that shown above, except the System Name will be fixed,
           and the <b>Create</b> button will be replaced with an
-          <b>Update</b> Button.</p><img src="TransitEditFrame.jpg"
-          height="550" width="770">
+          <b>Update</b> Button.</p><img src="images/TransitEditFrame.png"
+          height="558" width="677">
         </li>
 
         <li>

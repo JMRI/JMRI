@@ -612,6 +612,7 @@ public class TransitTableAction extends AbstractTableAction {
         }
         if (editMode) {
             // setup for edit window
+            addFrame.setTitle(Bundle.getMessage("TitleEditTransit"));
             _autoSystemName.setVisible(false);
             sysNameLabel.setEnabled(true);
             create.setVisible(false);
@@ -621,6 +622,7 @@ public class TransitTableAction extends AbstractTableAction {
             initializeEditInformation();
         } else {
             // setup for create window
+            addFrame.setTitle(Bundle.getMessage("TitleAddTransit"));
             _autoSystemName.setVisible(true);
             _autoSystemName.setEnabled(true);
             autoSystemName();
