@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE throttle-layout-config SYSTEM "/xml/DTD/throttle-layout-config.dtd"><throttle-layout-config>
+  <ThrottlesListPanel>
+    <window x="45" y="45" width="342" height="256" isVisible="true" />
+  </ThrottlesListPanel><ThrottleWindow title="" titleType="rosterID">
+    <window x="1089" y="223" width="598" height="577" isVisible="true" /><ThrottleFrame ThrottleXMLFile="preference:throttle/AnyOldThing.xml" />
+  </ThrottleWindow><ThrottleWindow title="" titleType="rosterID">
+    <window x="45" y="45" width="598" height="577" isVisible="true" /><ThrottleFrame border="38">
+      <ControlPanel displaySpeedSlider="0" trackSlider="false" trackSliderMinInterval="200" switchSliderOnFunction="Fxx">
+        <window x="0" y="0" width="113" height="421" isVisible="true" isIconified="false" />
+      </ControlPanel><FunctionPanel>
+        <window x="113" y="0" width="322" height="260" isVisible="true" isIconified="false" /><FunctionButton id="0" text="Light" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="1" text="F1" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="2" text="F2" isLockable="false" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="3" text="F3" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="4" text="F4" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="5" text="F5" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="6" text="F6" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="7" text="F7" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="8" text="F8" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="9" text="F9" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="10" text="F10" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="11" text="F11" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="12" text="F12" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="13" text="F13" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="14" text="F14" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="15" text="F15" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="16" text="F16" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="17" text="F17" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="18" text="F18" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="19" text="F19" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="20" text="F20" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="21" text="F21" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="22" text="F22" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="23" text="F23" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="24" text="F24" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="25" text="F25" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="26" text="F26" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="27" text="F27" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" /><FunctionButton id="28" text="F28" isLockable="true" isVisible="true" fontSize="12" iconPath="" selectedIconPath="" />
+      </FunctionPanel><AddressPanel>
+        <window x="113" y="260" width="322" height="161" isVisible="true" isIconified="false" /><locoaddress>
+          <dcclocoaddress number="9997" longaddress="yes" /><number>
+            9997
+          </number><protocol>
+            dcc_long
+          </protocol>
+        </locoaddress><locoaddress>
+          <dcclocoaddress number="" longaddress="no" /><number>
+            
+          </number><protocol>
+            
+          </protocol>
+        </locoaddress>
+      </AddressPanel>
+    </ThrottleFrame>
+  </ThrottleWindow>
+</throttle-layout-config>
