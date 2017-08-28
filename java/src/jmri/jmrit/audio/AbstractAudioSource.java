@@ -100,7 +100,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 log.error("No audio factory available.");
             }
         } else {
-            log.error("Attempted to queue buffers " + audioBuffers.peek().getSystemName() + " (etc) to Bound Source " + this.getSystemName());
+            log.error("Attempted to queue buffers {} (etc) to Bound Source {}", audioBuffers.peek().getSystemName(), this.getSystemName());
         }
         return false;
     }
@@ -128,7 +128,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public boolean unqueueBuffers() {
         if (bound) {
-            log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
+            log.error("Attempted to unqueue buffers on Bound Source {}", this.getSystemName());
             return false;
         } else if (queued) {
             AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
@@ -141,7 +141,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 log.error("No audio factory available.");
             }
         } else {
-            log.debug("Source neither queued nor bound. Not an error. " + this.getSystemName());
+            log.debug("Source neither queued nor bound. Not an error. {}", this.getSystemName());
         }
         return false;
     }
@@ -165,7 +165,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 log.error("No audio factory available.");
             }
         } else {
-            log.error("Attempted to assign buffer " + audioBuffer.getSystemName() + " to Queued Source " + this.getSystemName());
+            log.error("Attempted to assign buffer {} to Queued Source {}", audioBuffer.getSystemName(), this.getSystemName());
         }
     }
 
@@ -182,7 +182,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 this.bound = false;
             }
         } else {
-            log.error("Attempted to assign buffer " + bufferSystemName + " to Queued Source " + this.getSystemName());
+            log.error("Attempted to assign buffer {} to Queued Source {}", bufferSystemName, this.getSystemName());
         }
     }
 
@@ -259,10 +259,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         if (activeAudioFactory != null) {
             metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
         }
-        log.debug("timePassed = " + timePassed
-                + " metersPerUnit = " + metersPerUnit
-                + " source = " + this.getSystemName()
-                + " state = " + this.getState());
+        log.debug("timePassed = {} metersPerUnit = {} source = {} state = {}", timePassed, metersPerUnit, this.getSystemName(), this.getState());
         if (this.velocity.length() != 0) {
             this.currentPosition.scaleAdd((timePassed / 1000) * metersPerUnit,
                     this.velocity,
