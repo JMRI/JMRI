@@ -291,6 +291,7 @@
       <raytrack angle="180.0" index="2" />
       <raytrack angle="270.0" index="3" />
     </layoutturntable>
+    <levelxing ident="X1" xcen="348.0" ycen="204.0" xa="336.0" ya="192.0" xb="336.0" yb="216.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
   </LayoutEditor>
   <filehistory>
   </filehistory>

@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -2024,7 +2023,7 @@ public class LayoutTurnout extends LayoutTrack {
     public void setState(int state) {
         if ((getTurnout() != null) && (!disabled)) {
             if (disableWhenOccupied) {
-                if (disableOccupiedTurnout()) {
+                if (isOccupied()) {
                     log.debug("Turnout not changed as Block is Occupied");
                     return;
                 }
@@ -2052,7 +2051,11 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
-    private boolean disableOccupiedTurnout() {
+    /**
+     * is this turnout occupied?
+     * @return true if occupied
+     */
+    private boolean isOccupied() {
         if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
             if (block.getOccupancy() == LayoutBlock.OCCUPIED) {
                 log.debug("Block " + blockName + "is Occupied");
@@ -2271,19 +2274,19 @@ public class LayoutTurnout extends LayoutTrack {
                     || (connectC != null) || (connectD != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
                 if (connectA != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack)connectA).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName());
                     jmi.setEnabled(false);
                 }
                 if (connectB != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack)connectB).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack) connectB).getName());
                     jmi.setEnabled(false);
                 }
                 if (connectC != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack)connectC).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack) connectC).getName());
                     jmi.setEnabled(false);
                 }
                 if (connectD != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack)connectD).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack) connectD).getName());
                     jmi.setEnabled(false);
                 }
                 popup.add(connectionsMenu);
@@ -2295,6 +2298,25 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
                 setHidden(hiddenCheckBoxMenuItem.isSelected());
+                layoutEditor.redrawPanel();
+            });
+            
+           JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+            cbmi.setSelected(disabled);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
+                disabled = o.isSelected();
+                layoutEditor.redrawPanel();
+            });
+
+            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            cbmi.setSelected(disableWhenOccupied);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
+                disableWhenOccupied = o.isSelected();
+                layoutEditor.redrawPanel();
             });
 
             // Rotate if there are no track connections
@@ -2333,22 +2355,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 });
             }
-            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
-            cbmi.setSelected(disabled);
-            popup.add(cbmi);
-            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
-                disabled = o.isSelected();
-            });
-
-            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
-            cbmi.setSelected(disableWhenOccupied);
-            popup.add(cbmi);
-            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
-                disableWhenOccupied = o.isSelected();
-            });
-
+ 
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -2364,7 +2371,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutTurnout((LayoutTurnout)instance)) {
+                    if (layoutEditor.removeLayoutTurnout((LayoutTurnout) instance)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -2377,13 +2384,13 @@ public class LayoutTurnout extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER) || (getTurnoutType() == LH_XOVER)) {
-                            tools.setSignalsAtXoverTurnoutFromMenu((LayoutTurnout)instance,
+                            tools.setSignalsAtXoverTurnoutFromMenu((LayoutTurnout) instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == NO_LINK) {
-                            tools.setSignalsAtTurnoutFromMenu((LayoutTurnout)instance,
+                            tools.setSignalsAtTurnoutFromMenu((LayoutTurnout) instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
-                            tools.setThroatToThroatFromMenu((LayoutTurnout)instance, linkedTurnoutName,
+                            tools.setThroatToThroatFromMenu((LayoutTurnout) instance, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
                             tools.set3WayFromMenu(getTurnoutName(), linkedTurnoutName,
@@ -2467,7 +2474,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tools.setSignalMastsAtTurnoutFromMenu((LayoutTurnout)instance,
+                            tools.setSignalMastsAtTurnoutFromMenu((LayoutTurnout) instance,
                                     boundaryBetween);
                         }
                     });
@@ -2475,7 +2482,7 @@ public class LayoutTurnout extends LayoutTrack {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             tools.setSensorsAtTurnoutFromMenu(
-                                    (LayoutTurnout)instance,
+                                    (LayoutTurnout) instance,
                                     boundaryBetween,
                                     layoutEditor.sensorIconEditor,
                                     layoutEditor.sensorFrame);

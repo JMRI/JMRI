@@ -305,14 +305,50 @@ public class LayoutSlip extends LayoutTurnout {
         setSlipState(turnoutStates.get(currentState));
     }
 
-    void setSlipState(TurnoutState ts) {
-        if (getTurnout() != null) {
-            getTurnout().setCommandedState(ts.getTurnoutAState());
-        }
-        if (getTurnoutB() != null) {
-            getTurnoutB().setCommandedState(ts.getTurnoutBState());
+    private void setSlipState(TurnoutState ts) {
+        if (!disableWhenOccupied || !isOccupied()) {
+            if (getTurnout() != null) {
+                getTurnout().setCommandedState(ts.getTurnoutAState());
+            }
+            if (getTurnoutB() != null) {
+                getTurnoutB().setCommandedState(ts.getTurnoutBState());
+            }
+        } else {
+            log.debug("Turnout not changed as Block is Occupied");
         }
     }
+
+    /**
+     * is this turnout occupied?
+     *
+     * @return true if occupied
+     */
+    private boolean isOccupied() {
+        Boolean result = false; // assume failure (pessimist!)
+        switch (currentState) {
+            case STATE_AC: {
+                result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+            case STATE_AD: {
+                result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+            case STATE_BC: {
+                result = ((blockB.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+            case STATE_BD: {
+                result = ((blockB.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+        }
+        return result;
+    }   // isOccupied()
 
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
@@ -863,16 +899,34 @@ public class LayoutSlip extends LayoutTurnout {
                 setHidden(hiddenCheckBoxMenuItem.isSelected());
             });
 
+            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+            cbmi.setSelected(disabled);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
+                disabled = o.isSelected();
+                layoutEditor.redrawPanel();
+            });
+
+            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            cbmi.setSelected(disableWhenOccupied);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
+                disableWhenOccupied = o.isSelected();
+                layoutEditor.redrawPanel();
+            });
+
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLayoutSlip((LayoutSlip)instance);
+                    editLayoutSlip((LayoutSlip) instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutSlip((LayoutSlip)instance)) {
+                    if (layoutEditor.removeLayoutSlip((LayoutSlip) instance)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -925,7 +979,7 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLayoutSlipSignalHeadInfoToMenu((LayoutSlip)instance, jm)) {
+                if (tools.addLayoutSlipSignalHeadInfoToMenu((LayoutSlip) instance, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {

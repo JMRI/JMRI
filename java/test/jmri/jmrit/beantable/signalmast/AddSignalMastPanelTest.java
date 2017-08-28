@@ -59,5 +59,4 @@ public class AddSignalMastPanelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }
