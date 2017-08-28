@@ -32,20 +32,26 @@ import org.slf4j.LoggerFactory;
  * {@link InstanceManager#getNullableDefault} method instead.
  * <p>
  * Multiple items can be held, and are retrieved as a list with
- * {@link    InstanceManager#getList}.
+ * {@link InstanceManager#getList}.
  * <p>
  * If a specific item is needed, e.g. one that has been constructed via a
  * complex process during startup, it should be installed with
  * {@link InstanceManager#store}.
  * <p>
- * If it's OK for the InstanceManager to create an object on first request, have
- * that object's class implement the {@link InstanceManagerAutoDefault} flag
- * interface. The InstanceManager will then construct a default object via the
- * no-argument constructor when one is first requested.
+ * If it is desirable for the InstanceManager to create an object on first
+ * request, have that object's class implement the
+ * {@link InstanceManagerAutoDefault} flag interface. The InstanceManager will
+ * then construct a default object via the no-argument constructor when one is
+ * first requested.
  * <p>
  * For initialization of more complex default objects, see the
  * {@link InstanceInitializer} mechanism and its default implementation in
  * {@link jmri.managers.DefaultInstanceInitializer}.
+ * <p>
+ * Implement the {@link InstanceManagerAutoInitialize} interface when default
+ * objects need to be initialized after the default instance has been
+ * constructed and registered with the InstanceManager. This will allow
+ * references to the default instance during initialization to work as expected.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -218,6 +224,7 @@ public final class InstanceManager {
                 try {
                     T obj = (T) type.getConstructor((Class[]) null).newInstance((Object[]) null);
                     l.add(obj);
+                    // obj has been added, now initialize it if needed
                     if (obj instanceof InstanceManagerAutoInitialize) {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
@@ -236,6 +243,7 @@ public final class InstanceManager {
                     T obj = (T) getDefault().initializers.get(type).getDefault(type);
                     log.debug("      initializer created default of {}", type.getName());
                     l.add(obj);
+                    // obj has been added, now initialize it if needed
                     if (obj instanceof InstanceManagerAutoInitialize) {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
