@@ -1,6 +1,5 @@
 package jmri.jmrix.can.nmranet.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanNamedPaneAction;

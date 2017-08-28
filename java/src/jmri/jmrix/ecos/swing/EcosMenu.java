@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import org.slf4j.Logger;

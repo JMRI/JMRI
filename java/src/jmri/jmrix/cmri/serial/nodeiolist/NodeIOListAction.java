@@ -2,8 +2,8 @@
 
 package jmri.jmrix.cmri.serial.nodeiolist;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**

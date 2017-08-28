@@ -1,14 +1,9 @@
 package jmri.implementation;
 
-import jmri.CommandStation;
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import java.util.Arrays;
+import jmri.SignalHead;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Base support for testing SignalHead implementations

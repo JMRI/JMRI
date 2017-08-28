@@ -1,19 +1,16 @@
 package jmri.jmrit.roster;
 
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+import org.jdom2.JDOMException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JmriJFrame;
-import org.jdom2.JDOMException;
 
 /**
  *
@@ -28,20 +25,18 @@ public class PrintRosterEntryTest {
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
         PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
         Assert.assertNotNull("exists",t);
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintRosterEntryTest.class.getName());

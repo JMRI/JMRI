@@ -1,16 +1,16 @@
 package jmri.jmrix.mrc.swing;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.mrc.MrcInterfaceScaffold;
+import jmri.jmrix.mrc.MrcSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.mrc.MrcSystemConnectionMemo;
-import jmri.jmrix.mrc.MrcInterfaceScaffold;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -34,14 +34,12 @@ public class MrcNamedPaneActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MrcNamedPaneActionTest.class.getName());

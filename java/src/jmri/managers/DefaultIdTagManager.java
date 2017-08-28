@@ -13,7 +13,6 @@ import jmri.Application;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;

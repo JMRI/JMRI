@@ -3,9 +3,9 @@ package jmri.jmrix.cmri.serial;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -205,7 +205,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
 
         String tmpSName = "";
@@ -238,6 +238,26 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return _memo.validSystemNameFormat(systemName, 'S');
+    }
+
+    /**
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else return "".
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return _memo.normalizeSystemName(systemName);
     }
 
     /**

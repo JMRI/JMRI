@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
+import javax.annotation.CheckReturnValue;
 import jmri.Light;
 
 /**
@@ -510,4 +510,5 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);
+
 }

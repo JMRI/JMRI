@@ -187,6 +187,55 @@
         <dd>Brake</dd>
       </dl><a name="documentation" id="documentation"></a>
 
+      <h3>TMCC New Entry Format Summary</h3>
+      <p>Here's a summary on how to enter the address for a new item (eg. Turnouts):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>o</td>
+          <td>3</td>
+          <td>Node 0, Bit 3</td>
+          <td>TT3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>999</td>
+        </tr>
+        <tr>
+          <td>o</td>
+          <td>4003</td>
+          <td>Node 4, Bit 3</td>
+          <td>TT4003</td>
+          <td>n digits (node) + 3 digit (pin)</td>
+          <td>4:3</td>
+          <td>node: 1; bit: 1</td>
+          <td>node: 127; bit: 999</td>
+        </tr>
+        <tr>
+          <td>o</td>
+          <td>4B3</td>
+          <td>Node 4, Bit 3</td>
+          <td>TT4B3</td>
+          <td> </td>
+          <td>4003</td>
+          <td>0B1</td>
+          <td>node: 127; bit: 2048</td>
+        </tr>
+      </table>
+      <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
       <h2>Documentation</h2>
 
       <h3>Third Party info</h3>

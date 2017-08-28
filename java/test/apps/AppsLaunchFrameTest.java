@@ -1,6 +1,7 @@
 package apps;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,21 +24,18 @@ public class AppsLaunchFrameTest {
             }
         }, "Test Launch Frame");
         Assert.assertNotNull("exists", t);
-        t.dispose();
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConnectionConfigManager();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initConnectionConfigManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrameTest.class.getName());

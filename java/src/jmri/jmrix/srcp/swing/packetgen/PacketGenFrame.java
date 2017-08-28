@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
-import jmri.jmrix.srcp.SRCPTrafficController;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.srcp.SRCPTrafficController;
 
 /**
  * Description:	Frame for user input of SRCP messages

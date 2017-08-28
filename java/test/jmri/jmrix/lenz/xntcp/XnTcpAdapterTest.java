@@ -1,10 +1,10 @@
 package jmri.jmrix.lenz.xntcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XnTcpAdapterTest.java
@@ -24,14 +24,13 @@ public class XnTcpAdapterTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConnectionConfigManager();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

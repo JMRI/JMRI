@@ -15,6 +15,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
@@ -41,7 +42,7 @@ public class TrainIconAnimationTest {
         r1.register(rl1);
         TrainIconAnimation t = new TrainIconAnimation(ti, rl1, null);
         Assert.assertNotNull("exists", t);
-        es.dispose();
+        JUnitUtil.dispose(es);
     }
 
     // This test tests that the train icon actually follows movement
@@ -376,15 +377,13 @@ public class TrainIconAnimationTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class.getName());

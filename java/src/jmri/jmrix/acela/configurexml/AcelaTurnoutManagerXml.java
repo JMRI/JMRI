@@ -1,6 +1,5 @@
 package jmri.jmrix.acela.configurexml;
 
-import jmri.jmrix.acela.AcelaTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

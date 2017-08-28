@@ -1,10 +1,9 @@
 package jmri.implementation;
 
 import java.util.Arrays;
-import javax.annotation.CheckReturnValue;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.annotation.CheckReturnValue;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;

@@ -238,6 +238,19 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return prefix + typeLetter() + curAddress;
     }
 
+    /**
+     * Validate system name format.
+     *
+     * @since 2.9.3
+     * @see jmri.jmrit.beantable.TurnoutTableAction.CheckedTextField
+     * @param systemName proposed complete system name incl. prefix
+     * @return always 'true' to let undocumented connection system managers pass entry validation.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
@@ -247,7 +260,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
 
@@ -263,7 +276,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
         // The Number of Output Bits of the previous turnout will help determine the next
@@ -360,7 +373,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

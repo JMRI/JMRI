@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,8 +55,7 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         stc = new SRCPTrafficControlScaffold();
         SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
         memo.setTurnoutManager(new SRCPTurnoutManager(memo, memo.getBus()));
@@ -64,6 +64,6 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.swing.lv102;
 
 import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 

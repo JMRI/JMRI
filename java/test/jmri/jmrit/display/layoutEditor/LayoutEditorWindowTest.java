@@ -61,7 +61,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 
         // Click to say yes, I really mean it.
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-        le.dispose();
+        JUnitUtil.dispose(le);
     }
 
     // from here down is testing infrastructure
@@ -85,8 +85,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initShutDownManager();
@@ -94,9 +93,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

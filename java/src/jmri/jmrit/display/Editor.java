@@ -2627,6 +2627,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return (selectedValue == JOptionPane.YES_OPTION);
     }
 
+    /**
+     * Dispose of the editor.
+     *
+     * @param clear true to discard Positionables; false to retain Positionables
+     *              for future use
+     */
     public void dispose(boolean clear) {
         log.debug("Editor delete and dispose done. clear= {}", clear);
         Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();

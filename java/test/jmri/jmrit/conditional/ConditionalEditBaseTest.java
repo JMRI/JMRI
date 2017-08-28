@@ -1,28 +1,16 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.jmrit.conditional.ConditionalEditBase;
 import jmri.jmrit.picker.PickSinglePanel;
 import jmri.util.JUnitUtil;
-import jmri.util.swing.JmriBeanComboBox;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 
@@ -62,7 +50,7 @@ public class ConditionalEditBaseTest {
 
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("TitlePickList"), false, false);  // NOI18N
         Assert.assertNotNull(frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -81,7 +69,7 @@ public class ConditionalEditBaseTest {
         tableOp.clickOnCell(2, 1);
         Assert.assertEquals("Turnout 3", _actionNameField.getText());  // NOI18N
 
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -96,8 +84,7 @@ public class ConditionalEditBaseTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -106,8 +93,7 @@ public class ConditionalEditBaseTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

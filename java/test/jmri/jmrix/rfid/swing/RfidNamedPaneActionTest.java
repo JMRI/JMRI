@@ -1,15 +1,15 @@
 package jmri.jmrix.rfid.swing;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.rfid.RfidSystemConnectionMemo;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -31,16 +31,14 @@ public class RfidNamedPaneActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new RfidSystemConnectionMemo();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(RfidNamedPaneActionTest.class.getName());

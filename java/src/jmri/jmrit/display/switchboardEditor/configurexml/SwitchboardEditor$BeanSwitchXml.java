@@ -2,9 +2,6 @@ package jmri.jmrit.display.switchboardEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
-import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
-import jmri.jmrit.display.ToolTip;
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

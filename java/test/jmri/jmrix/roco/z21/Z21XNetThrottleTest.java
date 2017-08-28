@@ -1,14 +1,13 @@
 package jmri.jmrix.roco.z21;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottleTest;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.lenz.z21XNetThrottle class
@@ -40,7 +39,6 @@ public class Z21XNetThrottleTest extends XNetThrottleTest {
     @Override
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
@@ -48,7 +46,6 @@ public class Z21XNetThrottleTest extends XNetThrottleTest {
     @After
     public void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }

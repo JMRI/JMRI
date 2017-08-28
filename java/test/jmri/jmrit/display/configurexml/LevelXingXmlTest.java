@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,12 +23,12 @@ public class LevelXingXmlTest {
 
     // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

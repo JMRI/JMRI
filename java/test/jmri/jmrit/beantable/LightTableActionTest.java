@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -96,9 +97,9 @@ public class LightTableActionTest extends AbstractTableActionBase {
         // clean up
         JFrame f = a.getFrame();
         if (f != null) {
-            f.dispose();
+            JUnitUtil.dispose(f);
         }
-        af.dispose();
+        JUnitUtil.dispose(af);
         _lTable.dispose();
         _l1Table.dispose();
     }

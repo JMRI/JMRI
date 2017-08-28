@@ -12,8 +12,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -81,22 +79,19 @@ public class DefaultShutDownManagerTest {
         dsdm.shutdown(0, false);
         Assert.assertTrue(dsdm.isShuttingDown());
         if (frame != null) {
-            frame.dispose();
+            JUnitUtil.dispose(frame);
         }
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private ArrayList exposeTasks(DefaultShutDownManager manager) {

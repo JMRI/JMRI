@@ -141,6 +141,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         return curAddress;
     }
