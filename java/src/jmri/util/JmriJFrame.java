@@ -6,7 +6,9 @@ import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,18 +50,10 @@ import org.slf4j.LoggerFactory;
  * methods.
  * <li>Maintains a list of existing JmriJFrames
  * </ul>
- *
  * <h3>Window Closing</h3>
  * Normally, a JMRI window wants to be disposed when it closes. This is what's
  * needed when each invocation of the corresponding action can create a new copy
  * of the window. To do this, you don't have to do anything in your subclass.
- * This class has
- *
- * <pre>
- * <code>
- *  setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE)
- * </code>
- * </pre>
  * <p>
  * If you want this behavior, but need to do something when the window is
  * closing, override the {@link #windowClosing(java.awt.event.WindowEvent)}
@@ -72,8 +66,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2003, 2008
  */
-public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag,
-        java.awt.event.ComponentListener, WindowInterface, BeanInterface {
+public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedFlag,
+        ComponentListener, WindowInterface, BeanInterface {
 
     protected boolean allowInFrameServlet = true;
 
@@ -279,7 +273,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         Dimension dim = getMaximumSize();
         int width = this.getPreferredSize().width;
         int height = this.getPreferredSize().height;
-        log.trace("reSizeToFitOnScreen of \"{}\" starts with maximum size ", getTitle(), dim);
+        log.trace("reSizeToFitOnScreen of \"{}\" starts with maximum size {}", getTitle(), dim);
         log.trace("reSizeToFitOnScreen starts with preferred height {} width {}", height, width);
         log.trace("reSizeToFitOnScreen starts with location {},{}", getX(), getY());
 
@@ -543,7 +537,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                     try {
                         widthInset = Integer.parseInt(sw);
                     } catch (NumberFormatException e1) {
-                        log.error("Error parsing jmri.inset.width: " + e1);
+                        log.error("Error parsing jmri.inset.width: {}", e1.getMessage());
                     }
                 }
                 String sh = System.getProperty("jmri.inset.height");
@@ -551,7 +545,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                     try {
                         heightInset = Integer.parseInt(sh);
                     } catch (NumberFormatException e1) {
-                        log.error("Error parsing jmri.inset.height: " + e1);
+                        log.error("Error parsing jmri.inset.height: {}", e1.getMessage());
                     }
                 }
 
@@ -754,11 +748,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     protected void storeValues() {
-        log.error("default storeValues does nothing for \"" + getTitle() + "\"");
+        log.error("default storeValues does nothing for \"{}\"", getTitle());
     }
 
     // For marking the window as modified on Mac OS X
-    // See: http://developer.apple.com/qa/qa2001/qa1146.html
+    // See: https://web.archive.org/web/20090712161630/http://developer.apple.com/qa/qa2001/qa1146.html
     final static String WINDOW_MODIFIED = "windowModified";
 
     public void markWindowModified(boolean yes) {
@@ -1018,6 +1012,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         });
     }
 
+    /**
+     * A list container of JmriJFrame objects. Not a straight ArrayList, but a
+     * specific class so that the {@link jmri.InstanceManager} can be used to
+     * retain the reference to the list instead of relying on a static variable.
+     */
     private static class JmriJFrameManager extends ArrayList<JmriJFrame> {
 
     }

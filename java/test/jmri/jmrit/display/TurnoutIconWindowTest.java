@@ -67,23 +67,29 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
                 icon.getLocation().x + icon.getSize().width / 2,
                 icon.getLocation().y + icon.getSize().height / 2);
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        jf, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        getHelper().enterClickAndLeave(new MouseEventData(
+                this,
+                jf, // component
+                1, // number clicks
+                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
+                false, // isPopUpTrigger
+                10, // sleeptime
+                EventDataConstants.CUSTOM, // position
+                location)
+        );
 
-        Assert.assertEquals("state after one click", Turnout.CLOSED, sn.getState());
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+        // if it's still false after max wait it throws an assert.
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() == Turnout.CLOSED;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
-
-        Assert.assertEquals("state after two clicks", Turnout.THROWN, sn.getState());
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() == Turnout.THROWN;
+        }, "state after two clicks");
 
         // if OK to here, close window
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
@@ -111,7 +117,6 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
     }
 
     @SuppressWarnings("unchecked")
@@ -153,23 +158,31 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
                 icon.getLocation().x + icon.getSize().width / 2,
                 icon.getLocation().y + icon.getSize().height / 2);
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        jf, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        getHelper().enterClickAndLeave(new MouseEventData(
+                this,
+                jf, // component
+                1, // number clicks
+                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
+                false, // isPopUpTrigger
+                10, // sleeptime
+                EventDataConstants.CUSTOM, // position
+                location)
+        );
 
-        Assert.assertEquals("state after one click", Turnout.CLOSED, sn.getState());
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() != Turnout.UNKNOWN;
+        }, "Not initial state");
+
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() == Turnout.CLOSED;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));
 
-        Assert.assertEquals("state after two clicks", Turnout.THROWN, sn.getState());
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() == Turnout.THROWN;
+        }, "state after two clicks");
 
         // if OK to here, close window
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
@@ -197,7 +210,6 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
         // Click button to delete panel and close window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
     }
 
     // from here down is testing infrastructure

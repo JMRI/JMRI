@@ -74,18 +74,20 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name formateturns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
-        return (AcelaAddress.validSystemNameFormat(systemName, 'L',getSystemPrefix()));
+        return (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {

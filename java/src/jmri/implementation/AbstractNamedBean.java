@@ -17,17 +17,25 @@ import jmri.NamedBean;
  */
 public abstract class AbstractNamedBean implements NamedBean {
 
+    /**
+     * simple constructor
+     *
+     * @param sys the system name for this bean
+     */
     protected AbstractNamedBean(String sys) {
         mSystemName = sys;
-        mUserName = null;
+        ///mUserName = null; // <== default value
     }
 
+    /**
+     * designated constructor
+     *
+     * @param sys  the system name for this bean
+     * @param user the user name for this bean
+     */
     protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
         this(sys);
-
-        // this is really a transition from null -> name, but nobody is
-        // listening yet
-        setUserName(user);
+        mUserName = user;
     }
 
     /**
@@ -49,7 +57,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public void setComment(String comment) {
         String old = this.comment;
-        if (comment == null || comment.isEmpty() || comment.trim().length() < 1) {
+        if (comment == null || comment.trim().isEmpty()) {
             this.comment = null;
         } else {
             this.comment = comment;
@@ -58,10 +66,15 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
     private String comment;
 
+    /**
+     * if not null or empty return user name else system name
+     *
+     * @return user name or system name
+     */
     @Override
     public String getDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             return name;
         } else {
             return getSystemName();
@@ -189,9 +202,8 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Sync of mUserName protected by ctor invocation")
-    protected String mUserName;
-
-    protected String mSystemName;
+    protected String mUserName = null;
+    protected String mSystemName = null;
 
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
@@ -258,10 +270,54 @@ public abstract class AbstractNamedBean implements NamedBean {
         parameters.remove(key);
     }
 
-    HashMap<String, Object> parameters = null;
+    private HashMap<String, Object> parameters = null;
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
+    /**
+     * compare for equality
+     * @param o the object to compare us to
+     * @return true if we are equal to the object
+     */
+    @Override
+    public boolean equals(Object o) {
+        boolean result = super.equals(o);
+        if (!result && (o != null) && o instanceof AbstractNamedBean) {
+            AbstractNamedBean b = (AbstractNamedBean) o;
+            if (this == b) {
+                result = true;
+            } else {
+                String bSystemName = b.getSystemName();
+                if ((mSystemName != null) && (bSystemName != null)
+                        && mSystemName.equals(bSystemName)) {
+                    String bUserName = b.getUserName();
+                    if ((mUserName != null) && (bUserName != null)
+                            && mUserName.equals(bUserName)) {
+                        result = true;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * calculate our hash code
+     * @return our hash code
+     */
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        if (mSystemName != null) {
+            result = mSystemName.hashCode();
+            if (mUserName != null) {
+                result = (result * 37) + mUserName.hashCode();
+            }
+        } else if (mUserName != null) {
+            result = mUserName.hashCode();
+        }
+        return result;
+    }
 }

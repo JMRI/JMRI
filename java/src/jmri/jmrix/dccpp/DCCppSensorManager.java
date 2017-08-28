@@ -39,11 +39,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     // DCCpp specific methods
 
-    @Override
-    public Sensor createNewSensor(String systemName, String userName) {
-        return new DCCppSensor(systemName, userName, tc);
-    }
-
     /**
      * Ctor
      * Has to register for DCC++ events.
@@ -55,7 +50,20 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         DCCppMessage msg = DCCppMessage.makeSensorListMsg();
         //Then Send the version request to the controller
         tc.sendDCCppMessage(msg, this);
+    }
 
+    @Override
+    public Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
+        int addr;
+        try {
+            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Can't convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to DCC++ sensor address"); // NOI18N
+        }
+        Sensor s = new DCCppSensor(prefix + "S" + addr, userName, tc);
+        return s;
     }
 
     /**
@@ -182,6 +190,45 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         } else {
             return Integer.toString(iName);
         }
+    }
+
+    /**
+     * Get the bit address from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
+            // here if an illegal DCC++ sensor system name
+            log.error("illegal character in header field of DCC++ sensor system name: {} prefix {} type {}",
+                    systemName, getSystemPrefix(), typeLetter());
+            return (0);
+        }
+        // name must be in the DCCppSnnnnn format (DCCPP is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+        } catch (Exception e) {
+            log.debug("illegal character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.warn("invalid DCC++ sensor system name: " + systemName);
+            return (0);
+        } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
+            log.warn("bit number out of range in DCC++ sensor system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Public method to validate system name format returns 'true' if system
+     * name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0);
     }
 
     /**

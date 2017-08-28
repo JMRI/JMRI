@@ -42,7 +42,11 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
         if (!p.getSecondTurnoutName().isEmpty()) {
             element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
+            if (p.getSecondTurnoutInverted()) {
+                element.setAttribute("secondturnoutinverted", "true");
+            }
         }
+
         if (!p.getBlockName().isEmpty()) {
             element.setAttribute("blockname", p.getBlockName());
         }
@@ -57,7 +61,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
         element.setAttribute("type", "" + p.getTurnoutType());
         if (p.isHidden()) {
-            element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
+            element.setAttribute("hidden", "yes");
         }
         if (p.getConnectA() != null) {
             element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
@@ -221,7 +225,16 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("secondturnoutname");
         if (a != null) {
             l.tSecondTurnoutName = a.getValue();
+
+            boolean invert2nd = false;
+            if (element.getAttribute("secondturnoutinverted") != null) {
+                if (element.getAttribute("secondturnoutinverted").getValue().equals("true")) {
+                    invert2nd = true;
+                }
+            }
+            l.setSecondTurnoutInverted(invert2nd);
         }
+
         a = element.getAttribute("connectaname");
         if (a != null) {
             l.connectAName = a.getValue();
@@ -348,56 +361,56 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
         if (element.getChild("signalAMast") != null) {
             String mast = element.getChild("signalAMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalAMast(mast);
             }
         }
 
         if (element.getChild("signalBMast") != null) {
             String mast = element.getChild("signalBMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalBMast(mast);
             }
         }
 
         if (element.getChild("signalCMast") != null) {
             String mast = element.getChild("signalCMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalCMast(mast);
             }
         }
 
         if (element.getChild("signalDMast") != null) {
             String mast = element.getChild("signalDMast").getText();
-            if (mast != null && !mast.equals("")) {
+            if (mast != null && !mast.isEmpty()) {
                 l.setSignalDMast(mast);
             }
         }
 
         if (element.getChild("sensorA") != null) {
             String sensor = element.getChild("sensorA").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorA(sensor);
             }
         }
 
         if (element.getChild("sensorB") != null) {
             String sensor = element.getChild("sensorB").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorB(sensor);
             }
         }
 
         if (element.getChild("sensorC") != null) {
             String sensor = element.getChild("sensorC").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorC(sensor);
             }
         }
 
         if (element.getChild("sensorD") != null) {
             String sensor = element.getChild("sensorD").getText();
-            if (sensor != null && !sensor.equals("")) {
+            if (sensor != null && !sensor.isEmpty()) {
                 l.setSensorD(sensor);
             }
         }

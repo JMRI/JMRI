@@ -27,7 +27,6 @@ public class BeanSelectCreatePanel extends JPanel {
     JmriBeanComboBox existingCombo;
     JTextField hardwareAddress = new JTextField(8);
     JComboBox<String> prefixBox = new JComboBox<>();
-    jmri.UserPreferencesManager p;
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
 
     /**
@@ -41,7 +40,7 @@ public class BeanSelectCreatePanel extends JPanel {
     public BeanSelectCreatePanel(Manager manager, NamedBean defaultSelect) {
         _manager = manager;
         _defaultSelect = defaultSelect;
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         existingItem = new JRadioButton(Bundle.getMessage("UseExisting"), true);
         newItem = new JRadioButton(Bundle.getMessage("CreateNew"));
         existingItem.addActionListener((ActionEvent e) -> {

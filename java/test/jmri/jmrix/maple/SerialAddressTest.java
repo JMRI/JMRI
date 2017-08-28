@@ -65,8 +65,9 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - KL1", SerialAddress.validSystemNameFormat("KL1", 'L'));
         Assert.assertTrue("valid format - KL1000", SerialAddress.validSystemNameFormat("KL1000", 'L'));
 
-        // note: address is invalid, but format is valid
-        Assert.assertTrue("valid format - KL0", SerialAddress.validSystemNameFormat("KL0", 'L'));
+        // note: address format is invalid (out of range) as checked upon user input
+        Assert.assertTrue("invalid format - KL0", !SerialAddress.validSystemNameFormat("KL0", 'L'));
+        JUnitAppender.assertErrorMessage("node address field out of range in system name - KL0");
 
         Assert.assertTrue("valid format - KL2999", SerialAddress.validSystemNameFormat("KL2999", 'L'));
 
@@ -105,7 +106,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid config KS40", SerialAddress.validSystemNameConfig("KS40", 'S'));
         Assert.assertTrue("invalid config KS41", !SerialAddress.validSystemNameConfig("KS41", 'S'));
         Assert.assertTrue("invalid config KS0", !SerialAddress.validSystemNameConfig("KS0", 'S'));
-        JUnitAppender.assertErrorMessage("invalid system name: KS0");
+        JUnitAppender.assertErrorMessage("node address field out of range in system name - KS0");
         Assert.assertTrue("valid config KT201", SerialAddress.validSystemNameConfig("KT201", 'T'));
         Assert.assertTrue("invalid config KT202", !SerialAddress.validSystemNameConfig("KT202", 'T'));
         Assert.assertTrue("invalid config KT4129", !SerialAddress.validSystemNameConfig("KT4129", 'T'));

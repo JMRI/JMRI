@@ -30,7 +30,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
-    //Implimented ready for new system connection memo
+    //Implemented ready for new system connection memo
     public CbusSensorManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
         memo.getTrafficController().addCanListener(this);
@@ -39,6 +39,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     CanSystemConnectionMemo memo;
 
     // CBUS-specific methods
+
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
@@ -49,6 +50,14 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
             log.error(e.toString());
             throw e;
         }
+        try {
+            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
+                // accept unsigned positive integer, prefix "+"
+                addr = "+" + addr;
+            }
+        } catch (NumberFormatException ex) {
+            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+        };
 
         // OK, make
         Sensor s = new CbusSensor(getSystemPrefix(), addr, memo.getTrafficController());
@@ -58,26 +67,68 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
 
     @Override
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+        // first, check validity
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
+        // prefix + as service to user
+        int unsigned = 0;
+        try {
+            unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
+        } catch (NumberFormatException ex) {
+            // already warned
+        };
+        if (unsigned > 0) {
+            curAddress = "+" + curAddress;
+        }
         return getSystemPrefix() + typeLetter() + curAddress;
+    }
+
+    @Override
+    public String getNextValidAddress(String curAddress, String prefix) {
+        // always return this (the current) name without change
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + e, "", true, false);
+            return null;
+        }
+        return curAddress;
+    }
+
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e){
+            log.debug("Warning: " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Cbus sensor address");
+            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
         }
         switch (v.length) {
             case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
+                int unsigned = 0;
+                try {
+                    unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
+                } catch (NumberFormatException ex) {
+                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                };
+                if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
+                throw new IllegalArgumentException("can't make 2nd event from address " + address);
             case 2:
                 break;
             default:

@@ -29,6 +29,5 @@ public class LayoutTurnoutXmlTest {
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
 }
 
