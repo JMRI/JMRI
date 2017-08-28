@@ -15,6 +15,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
 import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 import org.junit.After;
@@ -81,9 +82,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("train switchlist edit frame", tsle);
 
         // kill panels
-        tef.dispose();
-        tsle.dispose();
-        f.dispose();
+        JUnitUtil.dispose(tef);
+        JUnitUtil.dispose(tsle);
+        JUnitUtil.dispose(f);
     }
 
     /**
@@ -216,8 +217,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), "No");
 
         ThreadingUtil.runOnGUI(() -> {
-            ref.dispose();
-            trainEditFrame.dispose();
+            JUnitUtil.dispose(ref);
+            JUnitUtil.dispose(trainEditFrame);
         });
 
         // now reload the window
@@ -251,7 +252,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
 
         ThreadingUtil.runOnGUI(() -> {
-            f.dispose();
+            JUnitUtil.dispose(f);
         });
     }
 
@@ -501,8 +502,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("none 2", 0, t.getThirdLegOptions());
 
-        trainEditFrame.dispose();
-        f.dispose();
+        JUnitUtil.dispose(trainEditFrame);
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -566,7 +567,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         //		Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
         //		Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
         ThreadingUtil.runOnGUI(() -> {
-            f.dispose();
+            JUnitUtil.dispose(f);
         });
     }
 
@@ -597,7 +598,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull("train added", t);
 
-        trainEditFrame.dispose();
+        JUnitUtil.dispose(trainEditFrame);
     }
 
     @Test
@@ -609,7 +610,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.initComponents(train);
 
         Assert.assertNotNull("frame exists", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -622,7 +623,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         Assert.assertNotNull("frame exists", f);
         ThreadingUtil.runOnGUI(() -> {
-            f.dispose();
+            JUnitUtil.dispose(f);
         });
     }
 

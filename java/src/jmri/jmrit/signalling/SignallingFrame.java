@@ -1,6 +1,5 @@
 package jmri.jmrit.signalling;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 

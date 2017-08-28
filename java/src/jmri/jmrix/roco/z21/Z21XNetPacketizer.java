@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.ConnectionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -25,13 +25,12 @@ public class UserInterfaceTest {
         };
 
         Assert.assertNotNull("exists", panel);
-        panel.dispose();
+        JUnitUtil.dispose(panel);
     }
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

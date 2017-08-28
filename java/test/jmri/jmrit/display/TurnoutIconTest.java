@@ -147,10 +147,7 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
         }
@@ -165,10 +162,9 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
+            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         }
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());

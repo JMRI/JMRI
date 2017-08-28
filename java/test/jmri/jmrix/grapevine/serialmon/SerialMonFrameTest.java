@@ -3,9 +3,10 @@ package jmri.jmrix.grapevine.serialmon;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,14 +60,13 @@ public class SerialMonFrameTest {
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

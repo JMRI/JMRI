@@ -1,12 +1,12 @@
 package jmri.util;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Level;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.log4j.Level;
 
 /**
  * Tests for the jmri.util.JUnitAppender class.
@@ -158,7 +158,7 @@ public class JUnitAppenderTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override

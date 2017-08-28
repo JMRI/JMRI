@@ -1,13 +1,13 @@
 package apps.gui3.mdi;
 
 import apps.AppsBase;
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 
 /**
  *
@@ -22,7 +22,7 @@ public class MDITest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new MDI(args) {
-            // force the application to not actually start.  
+            // force the application to not actually start.
             // Just checking construction.
             @Override
             protected void start() {

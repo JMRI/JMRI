@@ -15,8 +15,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
        EasyDccTrafficController tc = new EasyDccTrafficControlScaffold();
        apc = new EasyDccPortController(memo){
@@ -59,8 +58,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

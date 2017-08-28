@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -122,20 +123,19 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 //        JButtonOperator jbs = new JButtonOperator(as, "OK");
 //        jbs.pushNoBlock();
         // clean up
-        af.dispose();
+        JUnitUtil.dispose(af);
         am.dispose();
         //as.dispose(); // uncomment when test is Speeds menu activated
-        tof.dispose();
+        JUnitUtil.dispose(tof);
         _t1Table.dispose();
-        t1Frame.dispose();
+        JUnitUtil.dispose(t1Frame);
     }
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new TurnoutTableAction();
@@ -145,8 +145,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     //private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class.getName());

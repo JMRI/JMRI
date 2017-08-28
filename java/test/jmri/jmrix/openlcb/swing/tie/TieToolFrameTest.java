@@ -1,10 +1,11 @@
 package jmri.jmrix.openlcb.swing.tie;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for the jmri.jmrix.can.swing.tie.TieToolFrame class
@@ -30,11 +31,11 @@ public class TieToolFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

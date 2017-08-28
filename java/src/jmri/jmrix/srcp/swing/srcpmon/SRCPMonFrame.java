@@ -3,8 +3,8 @@ package jmri.jmrix.srcp.swing.srcpmon;
 import jmri.jmrix.srcp.SRCPListener;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
-import jmri.jmrix.srcp.SRCPTrafficController;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.srcp.SRCPTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

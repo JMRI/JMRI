@@ -1,14 +1,13 @@
 package jmri.jmrix.jmriclient.swing.packetgen;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of PacketGenFrame
@@ -29,15 +28,11 @@ public class PacketGenFrameTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new JMRIClientTrafficController();
     } 
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-        tc = null;
+    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }
 }

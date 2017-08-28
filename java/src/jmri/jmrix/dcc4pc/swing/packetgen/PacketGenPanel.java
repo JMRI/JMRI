@@ -2,10 +2,10 @@ package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;

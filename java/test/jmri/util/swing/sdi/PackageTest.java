@@ -2,6 +2,7 @@ package jmri.util.swing.sdi;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ButtonTestAction;
 import junit.framework.JUnit4TestAdapter;
@@ -29,7 +30,7 @@ public class PackageTest extends TestCase {
 //    public void testFrameCreation() {
         JFrame f2 = jmri.util.JmriJFrame.getFrame("SDI test");
         Assert.assertTrue("found frame", f2 != null);
-        f2.dispose();
+        JUnitUtil.dispose(f2);
     }
 
     // from here down is testing infrastructure
@@ -57,12 +58,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

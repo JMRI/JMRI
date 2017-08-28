@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.Scale;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Test;
@@ -94,8 +95,7 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override

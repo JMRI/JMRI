@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 import javax.annotation.Nonnull;
-
 import jmri.CommandStation;
 import jmri.ProgListener;
 import jmri.Programmer;

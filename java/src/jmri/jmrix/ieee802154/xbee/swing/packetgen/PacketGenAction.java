@@ -7,10 +7,10 @@ package jmri.jmrix.ieee802154.xbee.swing.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
+import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 
 public class PacketGenAction extends AbstractAction {
 

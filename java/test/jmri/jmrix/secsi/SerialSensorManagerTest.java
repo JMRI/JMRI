@@ -1,16 +1,16 @@
 package jmri.jmrix.secsi;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -22,7 +22,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public String getSystemName(int i) {
         return "VS" + i;
     }
-    
+
     @Test
     public void testSensorCreationAndRegistration() {
         Assert.assertTrue("none expected A0", !(n0.getSensorsActive()));
@@ -57,8 +57,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
         SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {
@@ -78,8 +77,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

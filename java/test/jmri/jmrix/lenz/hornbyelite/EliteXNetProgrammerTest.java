@@ -11,10 +11,11 @@ import jmri.JmriException;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class EliteXNetProgrammerTest extends TestCase {
 
@@ -268,12 +269,12 @@ public class EliteXNetProgrammerTest extends TestCase {
     // The minimal setup is for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

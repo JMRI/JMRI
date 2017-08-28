@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
 import jmri.util.FileUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.PositionFile class.

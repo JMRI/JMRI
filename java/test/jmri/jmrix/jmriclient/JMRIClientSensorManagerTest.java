@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,12 +8,12 @@ import org.junit.Test;
 
 /**
  * JMRIClientSensorManagerTest.java
- *
+ * <p>
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientSensorManager
  * class
  *
  * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -30,12 +31,11 @@ public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgr
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        JMRIClientTrafficController tc = new JMRIClientTrafficController(){
-                @Override
-                public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
-                }
+        JUnitUtil.setUp();
+        JMRIClientTrafficController tc = new JMRIClientTrafficController() {
+            @Override
+            public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
+            }
         };
         JMRIClientSystemConnectionMemo m = new JMRIClientSystemConnectionMemo(tc);
         l = new JMRIClientSensorManager(m);
@@ -44,8 +44,7 @@ public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgr
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }
