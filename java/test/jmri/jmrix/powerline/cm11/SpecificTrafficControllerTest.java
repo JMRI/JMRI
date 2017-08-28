@@ -10,6 +10,7 @@ import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -247,7 +248,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     @Override
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class.getName());

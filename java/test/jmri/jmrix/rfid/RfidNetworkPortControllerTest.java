@@ -15,8 +15,7 @@ public class RfidNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPor
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
        apc = new RfidNetworkPortController(memo){
             @Override
@@ -28,8 +27,7 @@ public class RfidNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPor
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

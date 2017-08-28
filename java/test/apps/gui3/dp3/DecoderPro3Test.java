@@ -1,13 +1,13 @@
 package apps.gui3.dp3;
 
 import apps.AppsBase;
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 
 /**
  *
@@ -22,7 +22,7 @@ public class DecoderPro3Test {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new DecoderPro3(args) {
-            // force the application to not actually start.  
+            // force the application to not actually start.
             // Just checking construction.
             @Override
             protected void start() {
@@ -57,6 +57,8 @@ public class DecoderPro3Test {
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
+        // remove a frame opened by DecoderPro3
+        JUnitUtil.disposeFrame("Decoder Pro Wizard", false, false);
     }
 
     // The minimal setup for log4J

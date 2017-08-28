@@ -15,8 +15,7 @@ public class NceNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPort
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        NceSystemConnectionMemo memo = new NceSystemConnectionMemo();
        memo.setNceTrafficController(new NceTrafficController());
        apc = new NceNetworkPortController(memo){
@@ -29,7 +28,6 @@ public class NceNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPort
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 }

@@ -6,24 +6,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility Class supporting parsing and testing of addresses
- * <P>
- * Multiple address formats are supported: Gtnnnxxx where: t is the type code,
- * 'T' for turnouts, 'S' for sensors, 'H' for signals and 'L' for lights nn is
- * the node address (0-127) xxx is a bit number of the input or output bit
- * (001-999) nnxxx = (node address x 1000) + bit number examples: GT2 (node
+ * Utility Class supporting parsing and testing of Grapevine addresses.
+ * <p>
+ * Multiple address formats are supported:
+ * <ul>
+ * <li>Gtnnnxxx where: t is the type code,
+ * 'T' for turnouts, 'S' for sensors, 'H' for signals and 'L' for lights; nn is
+ * the node address (0-127); xxx is a bit number of the input or output bit
+ * (001-999)</li>
+ * <li>Gtnnxxx = (node address x 1000) + bit number.<br>Examples: GT2 (node
  * address 0, bit 2), GS1003 (node address 1, bit 3), GL11234 (node address 11,
- * bit234) Gtnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
- * sensors, 'H' for signals and 'L' for lights nnn is the node address of the
- * input or output bit (0-127) xxxx is a bit number of the input or output bit
- * (1-2048) a is a subtype-specific letter: 'B' for a bit number (e.g. GT12B3 is
- * a shorter form of GT12003) 'a' is for advanced serial occupancy sensors 'm'
- * is for advanced serial motion sensors 'p' is for parallel sensors 's' is for
- * serial occupancy sensors
- *
- * examples: GT0B2 (node address 0, bit 2), GS1B3 (node address 1, bit 3),
+ * bit234)</li>
+ * <li>Gtnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
+ * sensors, 'H' for signals and 'L' for lights; nnn is the node address of the
+ * input or output bit (0-127); xxxx is a bit number of the input or output bit
+ * (1-2048); a is a subtype-specific letter: 'B' for a bit number (e.g. GT12B3 is
+ * a shorter form of GT12003), 'a' is for advanced serial occupancy sensors, 'm'
+ * is for advanced serial motion sensors, 'p' is for parallel sensors, 's' is for
+ * serial occupancy sensors.<br>
+ * Examples: GT0B2 (node address 0, bit 2), GS1B3 (node address 1, bit 3),
  * GL11B234 (node address 11, bit234)
- * <P>
+ * </li>
+ * </ul>
+ *
  * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  */
@@ -83,7 +88,7 @@ public class SerialAddress {
     }
 
     /**
-     * Regular expression used to parse signalHead names.
+     * Regular expression used to parse SignalHead names.
      * <p>
      * Groups:
      * <ul>
@@ -180,8 +185,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the Serial Node
-     * Note: Returns 'NULL' if illegal systemName format or if the node is not
+     * Public static method to parse a system name and return the Serial Node.
+     *
+     * @return 'NULL' if illegal systemName format or if the node is not
      * found
      */
     public static SerialNode getNodeFromSystemName(String systemName) {
@@ -211,7 +217,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the bit number
+     * Public static method to parse a system name and return the bit number.
      * Notes: Bits are numbered from 1. If an error is found, 0 is returned.
      */
     public static int getBitFromSystemName(String systemName) {
@@ -242,7 +248,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the node number
+     * Public static method to parse a system name and return the node number.
      * Notes: Nodes are numbered from 1. If an error is found, -1 is returned.
      */
     public static int getNodeAddressFromSystemName(String systemName) {
@@ -272,7 +278,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format
+     * Public static method to validate system name format.
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      * @param systemName name to check
@@ -390,8 +396,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name for configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
+     * Public static method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
@@ -429,7 +436,7 @@ public class SerialAddress {
 
     /**
      * Public static method to convert any format system name for the alternate
-     * format (nnBnn) If the supplied system name does not have a valid format,
+     * format (nnBnn). If the supplied system name does not have a valid format,
      * or if there is no representation in the alternate naming scheme, an empty
      * string is returned.
      */
@@ -491,4 +498,5 @@ public class SerialAddress {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+
 }

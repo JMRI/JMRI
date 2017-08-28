@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -22,21 +23,19 @@ public class AutoTrainsFrameTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         AutoTrainsFrame t = new AutoTrainsFrame(d);
         Assert.assertNotNull("exists",t);
-        t.dispose();
-        d.dispose();
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(d);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrameTest.class.getName());

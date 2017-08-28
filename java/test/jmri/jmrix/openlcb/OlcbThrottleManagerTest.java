@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -16,8 +17,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         OlcbSystemConnectionMemo m = new OlcbSystemConnectionMemo();
         m.setTrafficController(new jmri.jmrix.can.TestTrafficController());
         tm = new OlcbThrottleManager(m,new OlcbConfigurationManager(m));
@@ -25,7 +25,6 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @After
     public  void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

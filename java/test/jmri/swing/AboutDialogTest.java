@@ -1,6 +1,5 @@
 package jmri.swing;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
@@ -27,8 +26,8 @@ public class AboutDialogTest {
         JFrame frame = new JFrame();
         AboutDialog dialog = new AboutDialog(frame, true);
         Assert.assertNotNull(dialog);
-        dialog.dispose();
-        frame.dispose();
+        JUnitUtil.dispose(dialog);
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -48,24 +47,21 @@ public class AboutDialogTest {
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "About dialog did not close");
-        dialog.dispose();
-        frame.dispose();
+        JUnitUtil.dispose(dialog);
+        JUnitUtil.dispose(frame);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetWindows(true);
+        JUnitUtil.setUp();
         JUnitUtil.initConnectionConfigManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetWindows(false); // don't display the list of windows,
+        JUnitUtil.resetWindows(false, false); // don't display the list of windows,
         // it will display only show the ones
         // from the current test.
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

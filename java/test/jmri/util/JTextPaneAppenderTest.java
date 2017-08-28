@@ -1,16 +1,12 @@
 package jmri.util;
 
+import apps.tests.Log4JFixture;
+import java.util.*;
+import org.apache.log4j.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.*;
-import org.apache.log4j.*;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import java.util.*;
-import apps.tests.Log4JFixture;
 
 /**
  *
@@ -42,8 +38,7 @@ public class JTextPaneAppenderTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After

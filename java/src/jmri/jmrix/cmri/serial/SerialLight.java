@@ -1,9 +1,9 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractLight;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * SerialLight.java

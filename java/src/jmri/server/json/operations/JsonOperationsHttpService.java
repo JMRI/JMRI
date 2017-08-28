@@ -23,8 +23,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

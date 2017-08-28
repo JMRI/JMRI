@@ -1,13 +1,12 @@
 package jmri.jmrix.dccpp.swing.packetgen;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of PacketGenFrame
@@ -27,8 +26,7 @@ public class PacketGenFrameTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.jmrix.dccpp.DCCppInterfaceScaffold t = new jmri.jmrix.dccpp.DCCppInterfaceScaffold(new jmri.jmrix.dccpp.DCCppCommandStation());
         memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo(t);
 
@@ -36,8 +34,5 @@ public class PacketGenFrameTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

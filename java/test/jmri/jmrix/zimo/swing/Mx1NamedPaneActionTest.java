@@ -1,18 +1,18 @@
 package jmri.jmrix.zimo.swing;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.zimo.Mx1Listener;
+import jmri.jmrix.zimo.Mx1Message;
+import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
+import jmri.jmrix.zimo.Mx1TrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
-import jmri.jmrix.zimo.Mx1TrafficController;
-import jmri.jmrix.zimo.Mx1Message;
-import jmri.jmrix.zimo.Mx1Listener;
-import java.awt.GraphicsEnvironment;
 
 
 /**
@@ -35,8 +35,7 @@ public class Mx1NamedPaneActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController(){
            @Override
            public boolean status(){
@@ -51,8 +50,7 @@ public class Mx1NamedPaneActionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Mx1NamedPaneActionTest.class.getName());

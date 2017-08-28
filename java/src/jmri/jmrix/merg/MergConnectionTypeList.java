@@ -1,7 +1,7 @@
 package jmri.jmrix.merg;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Return a list of valid connection types for MERG.

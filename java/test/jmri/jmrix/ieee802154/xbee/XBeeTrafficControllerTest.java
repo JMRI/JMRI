@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -209,7 +210,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }
