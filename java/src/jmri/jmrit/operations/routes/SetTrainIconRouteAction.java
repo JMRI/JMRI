@@ -21,13 +21,13 @@ public class SetTrainIconRouteAction extends AbstractAction {
     public SetTrainIconRouteAction(String s, String routeName) {
         super(s);
         this.routeName = routeName;
+        setEnabled(routeName != null);
     }
 
     SetTrainIconRouteFrame f = null;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a copy route frame
         if (f == null || !f.isVisible()) {
             f = new SetTrainIconRouteFrame(routeName);
         }

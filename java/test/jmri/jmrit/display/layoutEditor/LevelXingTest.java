@@ -19,8 +19,10 @@ public class LevelXingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LevelXing t = new LevelXing("test", new Point2D.Double(0.0, 0.0), new LayoutEditor());
+        LayoutEditor e = new LayoutEditor();
+        LevelXing t = new LevelXing("test", new Point2D.Double(0.0, 0.0),e);
         Assert.assertNotNull("exists", t);
+        e.dispose();
     }
 
     // from here down is testing infrastructure
@@ -33,6 +35,7 @@ public class LevelXingTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

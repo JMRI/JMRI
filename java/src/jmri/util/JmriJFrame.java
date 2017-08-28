@@ -50,7 +50,6 @@ import org.slf4j.LoggerFactory;
  * methods.
  * <li>Maintains a list of existing JmriJFrames
  * </ul>
- * <p>
  * <h3>Window Closing</h3>
  * Normally, a JMRI window wants to be disposed when it closes. This is what's
  * needed when each invocation of the corresponding action can create a new copy

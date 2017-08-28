@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * System names are "OSnnnn", where nnnn is the sensor number without padding.
  * <P>
  * Sensors are numbered from 1.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dave Duchamp, multi node extensions, 2004
   */
@@ -91,6 +91,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         // register this sensor with the Serial Node
         node.registerSensor(s, bit - 1);
         return s;
+    }
+
+    /**
+     * Public method to validate system name format returns 'true' if system
+     * name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'S'));
     }
 
     /**

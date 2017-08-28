@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,10 +32,9 @@ public class LayoutBlockRouteTableActionTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false);
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-
     // private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableActionTest.class.getName());
-
 }

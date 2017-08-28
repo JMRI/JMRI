@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
  * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
  * (bit134)
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2004 - 2006
  *
  * @author Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
@@ -69,8 +69,9 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to parse a Acela system name and return the Acela
-     * Node Note: Returns 'null' if illegal systemName format or if the node is
+     * Public static method to parse a Acela system name.
+     *
+     * @return the Acela Node number, return 'null' if illegal systemName format or if the node is
      * not found
      */
     public static AcelaNode getNodeFromSystemName(String systemName,AcelaSystemConnectionMemo memo) {
@@ -95,9 +96,10 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to parse a Acela system name and return the bit
-     * number Notes: Bits are numbered from 1. If an error is found, 0 is
-     * returned.
+     * Public static method to parse a Acela system name.
+     * Note: Bits are numbered from 1.
+     *
+     * @return the bit number, return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -125,8 +127,9 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to validate system name format returns 'true' if
-     * system name has a valid format, else returns 'false'
+     * Public static method to validate system name format
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
@@ -152,9 +155,10 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to validate Acela system name for configuration
-     * returns 'true' if system name has a valid meaning in current
-     * configuration, else returns 'false'
+     * Public static method to validate Acela system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current
+     * configuration, else return 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type,AcelaSystemConnectionMemo memo) {
         if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix() )) {
@@ -217,9 +221,11 @@ public class AcelaAddress {
 
     /**
      * Public static method to convert one format Acela system name for the
-     * alternate format. If the supplied system name does not have a valid
-     * format, or if there is no representation in the alternate naming scheme,
-     * an empty string is returned.
+     * alternate format.
+     *
+     * @return name (string) in alternate format, or empty string if the supplied
+     * system name does not have a valid format, or if there is no representation
+     * in the alternate naming scheme.
      */
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
@@ -237,10 +243,10 @@ public class AcelaAddress {
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one Acela bit, by removing extra zeros inserted by the user.
-     * <P>
-     * If the supplied system name does not have a valid format, an empty string
-     * is returned. Otherwise a normalized name is returned in the same format
-     * as the input name.
+     *
+     * @return a normalized name is returned in the same format as the input name,
+     * or an empty string if the supplied system name does not have a valid format.
+     *
      */
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
@@ -263,13 +269,12 @@ public class AcelaAddress {
     /**
      * Public static method to construct a Acela system name from type
      * character, node address, and bit number
-     * <P>
-     * This routine returns a system name in the CLxxxx, CTxxxx, or CSxxxx
+     *
+     * @return a system name in the CLxxxx, CTxxxx, or CSxxxx
      * format. The returned name is normalized.
-     * <P>
-     * If the supplied character is not valid, or the node address is out of the
-     * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
-     * message is logged and the null string "" is returned.
+     * Return the null string "" if the supplied character is not valid,
+     * or if the node address is out of the 0 - 127 range, or the bit number is
+     * out of the 1 - 2048 range and an error message is logged.
      */
     public static String makeSystemName(String type, int nAddress, int bitNum, AcelaSystemConnectionMemo memo) {
         String nName = "";
@@ -302,8 +307,9 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to the user name for a valid system name Returns ""
-     * (null string) if the system name is not valid or does not exist
+     * Public static method to the user name for a valid system name.
+     *
+     * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName) {
         // check for a valid system name
@@ -346,4 +352,5 @@ public class AcelaAddress {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class.getName());
+
 }

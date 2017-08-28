@@ -22,7 +22,7 @@ import org.junit.Assert;
  *
  * @author	Dave Duchamp Copyright 2011
  */
-public class LEConnectivityTest extends jmri.util.SwingTestCase {
+public class LayoutEditorConnectivityTest extends jmri.util.SwingTestCase {
 
     @SuppressWarnings("unchecked")
     public void testShowAndClose() throws Exception {
@@ -359,19 +359,19 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
     }
 
     // from here down is testing infrastructure
-    public LEConnectivityTest(String s) {
+    public LayoutEditorConnectivityTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LEConnectivityTest.class.getName()};
+        String[] testCaseName = {LayoutEditorConnectivityTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LEConnectivityTest.class);
+        TestSuite suite = new TestSuite(LayoutEditorConnectivityTest.class);
         return suite;
     }
 
@@ -388,6 +388,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false);
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

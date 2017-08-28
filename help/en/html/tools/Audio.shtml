@@ -209,11 +209,11 @@
       Debian-based distributions, this will typically be achieved
       by the command:
       <pre>
-$ sudo apt-get install libopenal-dev
-</pre>
+      $ sudo apt-get install libopenal-dev
+      </pre>
 
-      <p>For Ubuntu, the 'Universe' repository should be enabled. 
-      <!--#include virtual="/Footer" --></p>
+      <p>For Ubuntu, the 'Universe' repository should be enabled.
+      </p><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

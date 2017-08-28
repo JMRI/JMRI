@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -80,10 +81,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
-     * Handles ConfigureXml classes that have moved to a new package or been superceded.
+     * Handles ConfigureXml classes that have moved to a new package or been
+     * superceded.
      *
      * @param name name of the moved or superceded ConfigureXml class
-     * @return name of the ConfigureXml class in newer package or of superseding class
+     * @return name of the ConfigureXml class in newer package or of superseding
+     *         class
      */
     static public String currentClassName(String name) {
         return InstanceManager.getDefault(ClassMigrationManager.class).getClassName(name);
@@ -106,10 +109,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         temp.addAll(tlist);
         temp.addAll(ulist);
         temp.addAll(uplist);
-        for (int i = 0; i < temp.size(); i++) {
-            if (c.isInstance(temp.get(i))) {
+        for (Object o : temp) {
+            if (c.isInstance(o)) {
                 if (index-- == 0) {
-                    return temp.get(i);
+                    return o;
                 }
             }
         }
@@ -251,9 +254,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handle failure to load adapter class. Although only a one-liner in this
      * class, it is a separate member to facilitate testing.
      *
-     * @param ex the exception throw failing to load adapterName as o
+     * @param ex          the exception throw failing to load adapterName as o
      * @param adapterName name of the adapter class
-     * @param o adapter object
+     * @param o           adapter object
      */
     void locateClassFailed(Throwable ex, String adapterName, Object o) {
         log.error("{} could not load adapter class {}", ex, adapterName);
@@ -627,12 +630,20 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     private XmlFile.Validate validate = XmlFile.Validate.CheckDtdThenSchema;
-    /** Default XML verification.
-     * Public to allow scripting. */
-    public void setValidate(XmlFile.Validate v) { validate = v;}
-    /** Default XML verification.
-     * Public to allow scripting. */
-    public XmlFile.Validate getValidate() { return validate; }
+
+    /**
+     * Default XML verification. Public to allow scripting.
+     */
+    public void setValidate(XmlFile.Validate v) {
+        validate = v;
+    }
+
+    /**
+     * Default XML verification. Public to allow scripting.
+     */
+    public XmlFile.Validate getValidate() {
+        return validate;
+    }
 
     private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
@@ -651,12 +662,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             for (int i = 0; i < items.size(); i++) {
                 //Put things into an ordered list
                 Element item = items.get(i);
-                if (item.getAttribute("class") == null) {
+                Attribute a = item.getAttribute("class");
+                if (a == null) {
                     // this is an element that we're not meant to read
                     log.debug("skipping {}", item);
                     continue;
                 }
-                String adapterName = item.getAttribute("class").getValue();
+                String adapterName = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }

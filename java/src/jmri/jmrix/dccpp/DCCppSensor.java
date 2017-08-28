@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for DCC++ layouts.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
  *
@@ -186,6 +186,3 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private final static Logger log = LoggerFactory.getLogger(DCCppSensor.class.getName());
 
 }
-
-
-
