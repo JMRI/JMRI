@@ -1,8 +1,5 @@
 package jmri.jmrix.srcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Encodes a message to an SRCP server. The SRCPReply class handles the response
  * from the command station.

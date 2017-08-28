@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +11,7 @@ import org.junit.Test;
  * JUnit tests for the RPS SensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -18,7 +19,6 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     public String getSystemName(int i) {
         return "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
     }
-
 
     @Test
     public void testCtor() {
@@ -29,7 +29,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @Test
     public void testDefaultSystemName() {
         // create
-        // RPS sensors use coordinates as their address, and they require a 
+        // RPS sensors use coordinates as their address, and they require a
         // 2 characterprefix (for now).
         Sensor t = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         // check
@@ -40,7 +40,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @Override
     @Test
     public void testUpperLower() {
-        // RPS sensors use coordinates as their address, and they require a 
+        // RPS sensors use coordinates as their address, and they require a
         // 2 characterprefix (for now).
         Sensor t = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         String name = t.getSystemName();
@@ -53,7 +53,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         Sensor t2 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,2)");
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
@@ -62,17 +62,16 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
 
     @Override
     @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
         l = new RpsSensorManager();
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
 
     }
 }

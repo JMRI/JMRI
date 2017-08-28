@@ -3,8 +3,8 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the FloatTrigger class

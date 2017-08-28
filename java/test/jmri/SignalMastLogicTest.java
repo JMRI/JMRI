@@ -1,12 +1,7 @@
 package jmri;
 
 import java.util.Hashtable;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.SignalMastLogic;
-import jmri.SignalMast;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,16 +84,13 @@ public class SignalMastLogicTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

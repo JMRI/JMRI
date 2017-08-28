@@ -2,19 +2,16 @@ package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +19,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor; // for iconLabel
+import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -279,7 +275,7 @@ public class LightTableAction extends AbstractTableAction {
                             fireTableRowsUpdated(row, row);
                             break;
                         }
-                        //$FALL-THROUGH$
+                    //$FALL-THROUGH$
                     default:
                         super.setValueAt(value, row, col);
                         break;
@@ -353,9 +349,10 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             /**
-             * Customize the light table Value (State) column to show an appropriate graphic for the light state
-             * if _graphicState = true, or (default) just show the localized state text
-             * when the TableDataModel is being called from ListedTableAction.
+             * Customize the light table Value (State) column to show an
+             * appropriate graphic for the light state if _graphicState = true,
+             * or (default) just show the localized state text when the
+             * TableDataModel is being called from ListedTableAction.
              *
              * @param table a JTable of Lights
              */
@@ -374,11 +371,13 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             /**
-             * Visualize state in table as a graphic, customized for Lights (2 states + ... for transitioning).
-             * Renderer and Editor are identical, as the cell contents are not actually edited,
-             * only used to toggle state using {@link #clickOn(NamedBean)}.
+             * Visualize state in table as a graphic, customized for Lights (2
+             * states + ... for transitioning). Renderer and Editor are
+             * identical, as the cell contents are not actually edited, only
+             * used to toggle state using {@link #clickOn(NamedBean)}.
              *
-             * @see jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
+             * @see
+             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              */
@@ -446,11 +445,9 @@ public class LightTableAction extends AbstractTableAction {
                         iconHeight = 0;
                     }
                     label.setToolTipText(value);
-                    label.addMouseListener (new MouseAdapter ()
-                    {
+                    label.addMouseListener(new MouseAdapter() {
                         @Override
-                        public final void mousePressed (MouseEvent evt)
-                        {
+                        public final void mousePressed(MouseEvent evt) {
                             log.debug("Clicked on icon in row {}", row);
                             stopCellEditing();
                         }
@@ -467,7 +464,8 @@ public class LightTableAction extends AbstractTableAction {
                 /**
                  * Read and buffer graphics. Only called once for this table.
                  *
-                 * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+                 * @see #getTableCellEditorComponent(JTable, Object, boolean,
+                 * int, int)
                  */
                 protected void loadIcons() {
                     try {
@@ -634,7 +632,7 @@ public class LightTableAction extends AbstractTableAction {
                     Bundle.getMessage("LightVariableBorder"));
             varPanel.setBorder(varPanelTitled);
             contentPane.add(varPanel);
-            // light control table            
+            // light control table
             JPanel panel3 = new JPanel();
             panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
             JPanel panel31 = new JPanel();
@@ -774,7 +772,7 @@ public class LightTableAction extends AbstractTableAction {
         NumberToAdd.setEnabled(false);
         labelNumToAdd.setEnabled(false);
         // show tooltip for selected system connection
-        String connectionChoice = (String) prefixBox.getSelectedItem();
+        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, keep default tooltip
             connectionChoice = "TBD";
@@ -805,9 +803,9 @@ public class LightTableAction extends AbstractTableAction {
         log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
         if (addEntryToolTip != null) {
-            hardwareAddressTextField.setToolTipText("<html>" +
-                    Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights")) +
-                    "<br>" + addEntryToolTip + "</html>");
+            hardwareAddressTextField.setToolTipText("<html>"
+                    + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights"))
+                    + "<br>" + addEntryToolTip + "</html>");
         }
         addFrame.pack();
         addFrame.setVisible(true);
@@ -860,12 +858,15 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create lights when the Create New button on the Add/Create pane is pressed and entry is valid.
+     * Create lights when the Create New button on the Add/Create pane is
+     * pressed and entry is valid.
      *
      * @param e the button press action
      */
     void createPressed(ActionEvent e) {
 
+        status1.setForeground(Color.gray); // reset
+        status1.setText("");
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
         String curAddress = hardwareAddressTextField.getText().trim();
@@ -988,7 +989,7 @@ public class LightTableAction extends AbstractTableAction {
         int startingAddress = 0;
         if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(sName))
                 && addRangeBox.isSelected()) {
-            // get number requested   
+            // get number requested
             numberOfLights = (Integer) NumberToAdd.getValue();
 
             // convert numerical hardware address
@@ -1035,7 +1036,7 @@ public class LightTableAction extends AbstractTableAction {
         } catch (IllegalArgumentException ex) {
             // user input no good
             handleCreateException(ex, sName);
-            return; // without creating       
+            return; // without creating
         }
         // set control information if any
         setLightControlInformation(g);
@@ -1085,7 +1086,7 @@ public class LightTableAction extends AbstractTableAction {
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName);
-                    return; // without creating any more Lights     
+                    return; // without creating any more Lights
                 }
             }
             feedback = feedback + " - " + sxName + ", " + uxName;
@@ -1544,7 +1545,7 @@ public class LightTableAction extends AbstractTableAction {
             stateBox.setVisible(true);
             defaultControlIndex = twoSensorControlIndex;
         } else if (noControl.equals(ctype)) {
-            // set up window for no control 
+            // set up window for no control
             f1Label.setText(Bundle.getMessage("LightNoneSelected"));
             f2Label.setVisible(false);
             field1a.setVisible(false);
@@ -2207,11 +2208,14 @@ public class LightTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     * @author E. Broerse 2017, based on
+     * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
 
         CheckedTextField fld;
+        boolean allow0Length = false; // for Add new bean item, a value that is zero-length is considered invalid.
+        private MyVerifier verifier; // internal mechanism used for verifying field data before focus is lost
 
         /**
          * Text entry field with an active key event checker.
@@ -2221,22 +2225,95 @@ public class LightTableAction extends AbstractTableAction {
         public CheckedTextField(int len) {
             super("", len);
             fld = this;
-            // set background color for invalid field data
-            fld.setBackground(Color.red);
 
-//            fld.addFocusListener(new FocusListener() {
-//                @Override
-//                public void focusGained(FocusEvent e) {
-//                    setEditable(true);
-//                    setEnabled(true);
-//                }
-//
-//                @Override
-//                public void focusLost(FocusEvent e) {
-//                    exitFieldColorizer();
-//                    setEditable(true);
-//                }
-//            });
+            // configure InputVerifier
+            verifier = new MyVerifier();
+            fld = this;
+            fld.setInputVerifier(verifier);
+
+            fld.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    setEditable(true);
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    setEditable(true);
+                }
+            });
+        }
+
+        /**
+         * Validate the field information. Does not make any GUI changes.
+         *
+         * @return 'true' if current field entry is valid according to the
+         *         system manager; otherwise 'false'
+         */
+        @Override
+        public boolean isValid() {
+            String value;
+            String prefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice); // connectionChoice is set by canAddRange()
+
+            if (fld == null) {
+                return false;
+            }
+            value = getText().trim();
+            if ((value.length() < 1) && (allow0Length == false)) {
+                return false;
+            } else if ((allow0Length == true) && (value.length() == 0)) {
+                return true;
+            } else if (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value)) {
+                // get prefixSelectedItem
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Private class used in conjunction with CheckedTextField to provide
+         * the mechanisms required to validate the text field data upon loss of
+         * focus, and colorize the text field in case of validation failure.
+         */
+        private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
+
+            // set default background color for invalid field data
+            Color mark = Color.orange;
+
+            @Override
+            public boolean shouldYieldFocus(javax.swing.JComponent input) {
+                if (input.getClass() == CheckedTextField.class) {
+
+                    boolean inputOK = verify(input);
+                    if (inputOK) {
+                        input.setBackground(Color.white);
+                        return true;
+                    } else {
+                        input.setBackground(mark);
+                        ((javax.swing.text.JTextComponent) input).selectAll();
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public boolean verify(javax.swing.JComponent input) {
+                if (input.getClass() == CheckedTextField.class) {
+                    return ((CheckedTextField) input).isValid();
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                JTextField source = (JTextField) e.getSource();
+                shouldYieldFocus(source); //ignore return value
+                source.selectAll();
+            }
         }
     }
 

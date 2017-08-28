@@ -1,13 +1,11 @@
 package jmri.jmrix.sprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.PowerManager;
+import java.util.*;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-
-import java.util.*;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement the jmri.Programmer interface via commands for the Sprog

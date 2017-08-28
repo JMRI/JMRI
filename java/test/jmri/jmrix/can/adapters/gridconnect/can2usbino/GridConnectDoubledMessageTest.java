@@ -1,10 +1,11 @@
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
+import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectDoubledMessage class
@@ -62,11 +63,11 @@ public class GridConnectDoubledMessageTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

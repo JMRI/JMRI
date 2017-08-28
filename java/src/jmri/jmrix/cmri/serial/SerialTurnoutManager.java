@@ -3,10 +3,10 @@ package jmri.jmrix.cmri.serial;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Implement turnout manager for CMRI serial systems
@@ -333,6 +333,26 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return _memo.validSystemNameFormat(systemName, 'T');
+    }
+
+    /**
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else return "".
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return _memo.normalizeSystemName(systemName);
     }
 
     /**

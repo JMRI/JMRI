@@ -4,28 +4,21 @@
  */
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import java.io.IOException;
-
-import java.util.ResourceBundle;
 import java.util.ArrayList;
-
-import javax.swing.border.Border;
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.*;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
+import jmri.util.davidflanagan.HardcopyWriter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**

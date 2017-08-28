@@ -1,10 +1,8 @@
 package jmri.jmrit.ussctc;
 
+import jmri.util.JUnitUtil;
 import org.junit.*;
 
-import jmri.*;
-
-import java.util.*;
 
 /**
  * Tests for TrafficLock class in the jmri.jmrit.ussctc package
@@ -19,9 +17,9 @@ public class TrafficLockTest {
             public String getName() { return "";}
         };
         s.lastIndication = SignalHeadSection.CODE_LEFT;
-        
+
         TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
-        
+
         Assert.assertTrue(! lock.isLockClear());
     }
 
@@ -31,26 +29,24 @@ public class TrafficLockTest {
             public String getName() { return "";}
         };
         s.lastIndication = SignalHeadSection.CODE_RIGHT;
-        
+
         TrafficLock lock = new TrafficLock(s, SignalHeadSection.CODE_LEFT);
-        
+
         Assert.assertTrue(lock.isLockClear());
     }
 
-      
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initMemoryManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initMemoryManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

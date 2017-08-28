@@ -1,8 +1,6 @@
 package jmri.jmrix.ztc.ztc611;
 
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager - Specific to ZTC ZTC611

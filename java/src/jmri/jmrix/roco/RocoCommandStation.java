@@ -1,8 +1,5 @@
 package jmri.jmrix.roco;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Defines the standard/common routines used in multiple classes related to 
  * a Roco Command Station, on an XpressNet network.

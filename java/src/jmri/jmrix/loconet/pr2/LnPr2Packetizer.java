@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet.pr2;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Special LnPr2Packetizer implementation for PR2.

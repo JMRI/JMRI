@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
@@ -282,8 +281,7 @@ public class LoadAndStoreTestBase {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -293,9 +291,7 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);

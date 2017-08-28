@@ -25,7 +25,7 @@ public abstract class AbstractTurnoutMgrTestBase {
      * Overload to load l with actual object; create scaffolds as needed
      */
     @Before
-    abstract public void setUp(); 
+    abstract public void setUp();
 
     protected TurnoutManager l = null;	// holds objects under test
 
@@ -62,7 +62,7 @@ public abstract class AbstractTurnoutMgrTestBase {
           throw ex;
         }
     }
-    
+
     @Test
     public void testTurnoutPutGet() {
         // create

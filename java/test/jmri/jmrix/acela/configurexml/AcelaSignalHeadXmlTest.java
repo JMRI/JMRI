@@ -2,6 +2,7 @@ package jmri.jmrix.acela.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +31,7 @@ public class AcelaSignalHeadXmlTest {
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

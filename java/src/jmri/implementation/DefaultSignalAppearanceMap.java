@@ -1,11 +1,11 @@
 package jmri.implementation;
 
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 import jmri.SignalHead;
 import jmri.SignalSystem;
-import java.util.Enumeration;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;

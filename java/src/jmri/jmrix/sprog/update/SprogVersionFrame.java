@@ -1,9 +1,9 @@
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Display the firmware version of the attached SPROG hardware.

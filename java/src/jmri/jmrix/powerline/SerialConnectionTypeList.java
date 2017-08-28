@@ -1,7 +1,7 @@
 package jmri.jmrix.powerline;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid Powerline Connection Types
