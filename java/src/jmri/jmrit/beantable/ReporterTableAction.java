@@ -3,6 +3,8 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -98,7 +100,7 @@ public class ReporterTableAction extends AbstractTableAction {
 
             @Override
             public void clickOn(NamedBean t) {
-                // don't do anything on click; not used in this class, because 
+                // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
 
@@ -230,7 +232,9 @@ public class ReporterTableAction extends AbstractTableAction {
             };
             ActionListener cancelListener = new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
             };
             ActionListener rangeListener = new ActionListener() {
                 @Override
@@ -353,8 +357,12 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             // add first and last names to statusMessage user feedback string
-            if (x == 0 || x == numberOfReporters - 1) statusMessage = statusMessage + " " + rName + " (" + user + ")";
-            if (x == numberOfReporters - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            if (x == 0 || x == numberOfReporters - 1) {
+                statusMessage = statusMessage + " " + rName + " (" + user + ")";
+            }
+            if (x == numberOfReporters - 2) {
+                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            }
             // only mention first and last of range added
 
             // end of for loop creating range of Reporters
@@ -403,9 +411,9 @@ public class ReporterTableAction extends AbstractTableAction {
             log.debug("ReporterManager tip");
         }
         // show hwAddressTextField field tooltip in the Add Reporter pane that matches system connection selected from combobox
-        hardwareAddressTextField.setToolTipText("<html>" +
-                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
-                "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setToolTipText("<html>"
+                + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
+                + "<br>" + addEntryToolTip + "</html>");
     }
 
     void handleCreateException(String sysName) {
@@ -418,7 +426,8 @@ public class ReporterTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
+     * @author E. Broerse 2017, based on
+     * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
 
@@ -456,7 +465,8 @@ public class ReporterTableAction extends AbstractTableAction {
         /**
          * Validate the field information. Does not make any GUI changes.
          *
-         * @return 'true' if current field entry is valid according to the system manager; otherwise 'false'
+         * @return 'true' if current field entry is valid according to the
+         *         system manager; otherwise 'false'
          */
         @Override
         public boolean isValid() {
@@ -480,9 +490,9 @@ public class ReporterTableAction extends AbstractTableAction {
         }
 
         /**
-         * Private class used in conjunction with CheckedTextField to
-         * provide the mechanisms required to validate the text field data upon loss
-         * of focus, and colorize the text field in case of validation failure.
+         * Private class used in conjunction with CheckedTextField to provide
+         * the mechanisms required to validate the text field data upon loss of
+         * focus, and colorize the text field in case of validation failure.
          */
         private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 
