@@ -90,10 +90,9 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Ds64TabbedPanel constructor when the boardNum is not already known.
-     * <P>
+     * <p>
      * At instantiation, the object will automatically assume BoardID 1 and will
      * not pre-read the basic board configuration information.
-     * <p>
      */
     public Ds64TabbedPanel() {
         // this is a constructor which is in-place to support legacy applications.

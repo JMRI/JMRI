@@ -6,7 +6,8 @@ import jmri.configurexml.ClassMigration;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Default class migrations for the {@link ConfigXmlManager} to use.
+ * Default class migrations for the {@link jmri.configurexml.ConfigXmlManager}
+ * to use.
  *
  * @author Randall Wood Copyright 2017
  */
