@@ -18,24 +18,23 @@ import jmri.NamedBean;
 public abstract class AbstractNamedBean implements NamedBean {
 
     /**
-     * simple constructor
+     * Simple constructor.
      *
      * @param sys the system name for this bean
      */
     protected AbstractNamedBean(String sys) {
         mSystemName = sys;
-        ///mUserName = null; // <== default value
     }
 
     /**
-     * designated constructor
+     * Designated constructor.
      *
      * @param sys  the system name for this bean
      * @param user the user name for this bean
      */
     protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
         this(sys);
-        mUserName = user;
+        AbstractNamedBean.this.setUserName(mUserName); // written this way to prevent overridden method call in this constructor
     }
 
     /**
@@ -278,6 +277,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * compare for equality
+     *
      * @param o the object to compare us to
      * @return true if we are equal to the object
      */
@@ -305,6 +305,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * calculate our hash code
+     *
      * @return our hash code
      */
     @Override
