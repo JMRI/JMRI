@@ -16,6 +16,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -72,8 +73,6 @@ public class PositionablePoint extends LayoutTrack {
     public static final int EDGE_CONNECTOR = 3;
 
     // operational instance variables (not saved between sessions)
-    private PositionablePoint instance = null;
-
     // persistent instances variables (saved between sessions)
     private int type = 0;
     private TrackSegment connect1 = null;
@@ -89,17 +88,15 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
-    public PositionablePoint(String id, int t, Point2D p, LayoutEditor myPanel) {
-        instance = this;
-        layoutEditor = myPanel;
+    public PositionablePoint(String id, int t, Point2D c, LayoutEditor layoutEditor) {
+        super(id, c, layoutEditor);
+
         if ((t == ANCHOR) || (t == END_BUMPER) || (t == EDGE_CONNECTOR)) {
             type = t;
         } else {
             log.error("Illegal type of PositionablePoint - " + t);
             type = ANCHOR;
         }
-        ident = id;
-        center = p;
     }
 
     // this should only be used for debugging...
@@ -775,8 +772,9 @@ public class PositionablePoint extends LayoutTrack {
         JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
-                jmi = popup.add(rb.getString("Anchor"));
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + ident);
                 jmi.setEnabled(false);
+
                 LayoutBlock block1 = null;
                 LayoutBlock block2 = null;
                 if (connect1 != null) {
@@ -799,7 +797,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
                 break;
             case END_BUMPER:
-                jmi = popup.add(rb.getString("EndBumper"));
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + ident);
                 jmi.setEnabled(false);
 
                 LayoutBlock blockEnd = null;
@@ -813,7 +811,7 @@ public class PositionablePoint extends LayoutTrack {
                 endBumper = true;
                 break;
             case EDGE_CONNECTOR:
-                jmi = popup.add(rb.getString("EdgeConnector"));
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + ident);
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
@@ -860,17 +858,49 @@ public class PositionablePoint extends LayoutTrack {
         }
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (layoutEditor.removePositionablePoint(instance)) {
+                if (layoutEditor.removePositionablePoint((PositionablePoint) instance)) {
                     // user is serious about removing this point from the panel
                     remove();
                     dispose();
                 }
             }
         });
+
+        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Anchor")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ident = layoutEditor.getFinder().uniqueName("A", 1);
+                type = ANCHOR;
+            }
+        }));
+        jmi.setSelected(getType() == ANCHOR);
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EndBumper")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ident = layoutEditor.getFinder().uniqueName("EB", 1);
+                type = END_BUMPER;
+            }
+        }));
+        jmi.setSelected(getType() == END_BUMPER);
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EdgeConnector")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ident = layoutEditor.getFinder().uniqueName("EC", 1);
+                type = EDGE_CONNECTOR;
+            }
+        }));
+        jmi.setSelected(getType() == EDGE_CONNECTOR);
+        popup.add(lineType);
+
         if (blockBoundary) {
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
             if (getType() == EDGE_CONNECTOR) {
                 popup.add(new AbstractAction(rb.getString("EdgeEditLink")) {
                     @Override
@@ -883,7 +913,7 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         tools = new LayoutEditorTools(layoutEditor);
                         // bring up signals at level crossing tool dialog
-                        tools.setSignalAtEdgeConnector(instance,
+                        tools.setSignalAtEdgeConnector((PositionablePoint) instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 });
@@ -891,7 +921,7 @@ public class PositionablePoint extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         // bring up signals at block boundary tool dialog
-                        tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
+                        tools.setSignalMastsAtBlockBoundaryFromMenu((PositionablePoint) instance);
                     }
                 });
             } else {
@@ -899,13 +929,13 @@ public class PositionablePoint extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
-                        tools.setSignalsAtBlockBoundaryFromMenu(instance,
+                        tools.setSignalsAtBlockBoundaryFromMenu((PositionablePoint) instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 };
 
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addBlockBoundarySignalHeadInfoToMenu(instance, jm)) {
+                if (tools.addBlockBoundarySignalHeadInfoToMenu((PositionablePoint) instance, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -916,7 +946,7 @@ public class PositionablePoint extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         // bring up signals at block boundary tool dialog
-                        tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
+                        tools.setSignalMastsAtBlockBoundaryFromMenu((PositionablePoint) instance);
                     }
                 });
             }
@@ -926,7 +956,7 @@ public class PositionablePoint extends LayoutTrack {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
-                    tools.setSensorsAtBlockBoundaryFromMenu(instance,
+                    tools.setSensorsAtBlockBoundaryFromMenu((PositionablePoint) instance,
                             layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                 }
             });
@@ -934,7 +964,7 @@ public class PositionablePoint extends LayoutTrack {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
-                    tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
+                    tools.setSignalMastsAtBlockBoundaryFromMenu((PositionablePoint) instance);
                 }
             });
         }
@@ -1037,6 +1067,9 @@ public class PositionablePoint extends LayoutTrack {
             } else {
                 dir = Path.NORTH + Path.EAST;
             }
+        }
+        if (dir != LayoutEditorAuxTools.computeDirection(getCoordsCenter(), p1)) {
+            log.warn("computeDirection invalid");
         }
         return dir;
     }

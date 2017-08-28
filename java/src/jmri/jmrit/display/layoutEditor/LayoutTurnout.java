@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -146,8 +147,6 @@ public class LayoutTurnout extends LayoutTrack {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    protected LayoutTurnout instance = null;
-
     // defined constants - turnout types
     public static final int RH_TURNOUT = 1;
     public static final int LH_TURNOUT = 2;
@@ -266,22 +265,21 @@ public class LayoutTurnout extends LayoutTrack {
 
     private boolean useBlockSpeed = false;
 
-    protected LayoutTurnout() {
+    protected LayoutTurnout(String id, Point2D c, LayoutEditor layoutEditor) {
+        super(id, c, layoutEditor);
     }
 
     public LayoutTurnout(String id, int t, Point2D c, double rot,
-            double xFactor, double yFactor, LayoutEditor myPanel) {
-        this(id, t, c, rot, xFactor, yFactor, myPanel, 1);
+            double xFactor, double yFactor, LayoutEditor layoutEditor) {
+        this(id, t, c, rot, xFactor, yFactor, layoutEditor, 1);
     }
 
     /**
      * constructor method
      */
     public LayoutTurnout(String id, int t, Point2D c, double rot,
-            double xFactor, double yFactor, LayoutEditor myPanel, int v) {
-        super();
-
-        instance = this;
+            double xFactor, double yFactor, LayoutEditor layoutEditor, int v) {
+        super(id, c, layoutEditor);
 
         namedTurnout = null;
         turnoutName = "";
@@ -290,11 +288,9 @@ public class LayoutTurnout extends LayoutTrack {
         disableWhenOccupied = false;
         block = null;
         blockName = "";
-        layoutEditor = myPanel;
-        ident = id;
         type = t;
-        center = c;
         version = v;
+
         // adjust initial coordinates
         if (type == LH_TURNOUT) {
             dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
@@ -2206,32 +2202,30 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (layoutEditor.isEditable()) {
-            JMenuItem jmi = null;
+            String label = "";
             switch (getTurnoutType()) {
                 case RH_TURNOUT:
-                    jmi = popup.add(Bundle.getMessage("RightTurnout"));
+                    label = Bundle.getMessage("RightTurnout");
                     break;
                 case LH_TURNOUT:
-                    jmi = popup.add(Bundle.getMessage("LeftTurnout"));
+                    label = Bundle.getMessage("LeftTurnout");
                     break;
                 case WYE_TURNOUT:
-                    jmi = popup.add(rb.getString("WYETurnout"));
+                    label = rb.getString("WYETurnout");
                     break;
                 case DOUBLE_XOVER:
-                    jmi = popup.add(rb.getString("DoubleCrossover"));
+                    label = rb.getString("DoubleCrossover");
                     break;
                 case RH_XOVER:
-                    jmi = popup.add(Bundle.getMessage("RightCrossover"));
+                    label = Bundle.getMessage("RightCrossover");
                     break;
                 case LH_XOVER:
-                    jmi = popup.add(Bundle.getMessage("LeftCrossover"));
+                    label = Bundle.getMessage("LeftCrossover");
                     break;
                 default:
                     break;
             }
-            jmi.setEnabled(false);
-
-            jmi = popup.add(ident);
+            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", label) + ident);
             jmi.setEnabled(false);
 
             if (getTurnout() == null) {
@@ -2370,7 +2364,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutTurnout(instance)) {
+                    if (layoutEditor.removeLayoutTurnout((LayoutTurnout)instance)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -2383,13 +2377,13 @@ public class LayoutTurnout extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER) || (getTurnoutType() == LH_XOVER)) {
-                            tools.setSignalsAtXoverTurnoutFromMenu(instance,
+                            tools.setSignalsAtXoverTurnoutFromMenu((LayoutTurnout)instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == NO_LINK) {
-                            tools.setSignalsAtTurnoutFromMenu(instance,
+                            tools.setSignalsAtTurnoutFromMenu((LayoutTurnout)instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
-                            tools.setThroatToThroatFromMenu(instance, linkedTurnoutName,
+                            tools.setThroatToThroatFromMenu((LayoutTurnout)instance, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
                             tools.set3WayFromMenu(getTurnoutName(), linkedTurnoutName,
@@ -2473,7 +2467,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tools.setSignalMastsAtTurnoutFromMenu(instance,
+                            tools.setSignalMastsAtTurnoutFromMenu((LayoutTurnout)instance,
                                     boundaryBetween);
                         }
                     });
@@ -2481,7 +2475,7 @@ public class LayoutTurnout extends LayoutTrack {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             tools.setSensorsAtTurnoutFromMenu(
-                                    instance,
+                                    (LayoutTurnout)instance,
                                     boundaryBetween,
                                     layoutEditor.sensorIconEditor,
                                     layoutEditor.sensorFrame);

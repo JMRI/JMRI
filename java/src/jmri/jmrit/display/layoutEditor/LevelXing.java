@@ -82,7 +82,6 @@ public class LevelXing extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     private LayoutBlock blockAC = null;
     private LayoutBlock blockBD = null;
-    private LevelXing instance = null;
 
     // persistent instances variables (saved between sessions)
     private String blockNameAC = "";
@@ -119,11 +118,8 @@ public class LevelXing extends LayoutTrack {
     /**
      * constructor method
      */
-    public LevelXing(String id, Point2D c, LayoutEditor myPanel) {
-        instance = this;
-        layoutEditor = myPanel;
-        ident = id;
-        center = c;
+    public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
+        super(id, c, layoutEditor);
     }
 
     // this should only be used for debugging...
@@ -1080,10 +1076,7 @@ public class LevelXing extends LayoutTrack {
             tools = new LayoutEditorTools(layoutEditor);
         }
         if (layoutEditor.isEditable()) {
-            JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
-            jmi.setEnabled(false);
-
-            jmi = popup.add(ident);
+            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + ident);
             jmi.setEnabled(false);
 
             boolean blockACAssigned = false;
@@ -1139,13 +1132,13 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLevelXing(instance);
+                    editLevelXing((LevelXing)instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLevelXing(instance)) {
+                    if (layoutEditor.removeLevelXing((LevelXing)instance)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -1160,12 +1153,12 @@ public class LevelXing extends LayoutTrack {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
                         // bring up signals at level crossing tool dialog
-                        tools.setSignalsAtLevelXingFromMenu(instance,
+                        tools.setSignalsAtLevelXingFromMenu((LevelXing)instance,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLevelXingSignalHeadInfoToMenu(instance, jm)) {
+                if (tools.addLevelXingSignalHeadInfoToMenu((LevelXing)instance, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -1227,7 +1220,7 @@ public class LevelXing extends LayoutTrack {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
 
-                        tools.setSignalMastsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.signalFrame);
+                        tools.setSignalMastsAtLevelXingFromMenu((LevelXing)instance, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
@@ -1237,7 +1230,7 @@ public class LevelXing extends LayoutTrack {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
 
-                        tools.setSensorsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                        tools.setSensorsAtLevelXingFromMenu((LevelXing)instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
             }

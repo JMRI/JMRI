@@ -92,11 +92,9 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * constructor method
      */
-    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor myPanel, int type) {
-        instance = this;
-        layoutEditor = myPanel;
-        ident = id;
-        center = c;
+    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, int type) {
+        super(id, c, layoutEditor);
+
         dispA = new Point2D.Double(-20.0, 0.0);
         pointA = MathUtil.add(center, dispA);
         pointC = MathUtil.subtract(center, dispA);
@@ -800,17 +798,14 @@ public class LayoutSlip extends LayoutTurnout {
             JMenuItem jmi = null;
             switch (type) {
                 case SINGLE_SLIP: {
-                    jmi = popup.add(rb.getString("LayoutSingleSlip"));
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutSingleSlip")) + ident);
                     break;
                 }
                 case DOUBLE_SLIP: {
-                    jmi = popup.add(rb.getString("LayoutDoubleSlip"));
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutDoubleSlip")) + ident);
                     break;
                 }
             }
-            jmi.setEnabled(false);
-
-            jmi = popup.add(ident);
             jmi.setEnabled(false);
 
             if (getTurnout() == null) {
@@ -841,19 +836,19 @@ public class LayoutSlip extends LayoutTurnout {
                     || (connectC != null) || (connectD != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
                 if (connectA != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack)connectA).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName());
                     jmi.setEnabled(false);
                 }
                 if (connectB != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack)connectB).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack) connectB).getName());
                     jmi.setEnabled(false);
                 }
                 if (connectC != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack)connectC).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack) connectC).getName());
                     jmi.setEnabled(false);
                 }
                 if (connectD != null) {
-                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack)connectD).getName());
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack) connectD).getName());
                     jmi.setEnabled(false);
                 }
                 popup.add(connectionsMenu);
@@ -871,13 +866,13 @@ public class LayoutSlip extends LayoutTurnout {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLayoutSlip(instance);
+                    editLayoutSlip((LayoutSlip)instance);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutSlip(instance)) {
+                    if (layoutEditor.removeLayoutSlip((LayoutSlip)instance)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -897,7 +892,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 // prompt for rotation angle
                                 error = false;
                                 newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                    Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
+                                        Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
                                 if (newAngle.isEmpty()) {
                                     return;  // cancelled
                                 }
@@ -930,7 +925,7 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLayoutSlipSignalHeadInfoToMenu(instance, jm)) {
+                if (tools.addLayoutSlipSignalHeadInfoToMenu((LayoutSlip)instance, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -1026,7 +1021,6 @@ public class LayoutSlip extends LayoutTurnout {
     /*====================================*\
     |*      Dialog box to edit slip       *|
     \*====================================*/
-
     // variables for Edit slip Crossing pane
     JButton slipEditDone;
     JButton slipEditCancel;
@@ -1794,7 +1788,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
-    */
+     */
     protected int getConnectivityStateForLayoutBlocks(LayoutBlock thisLayoutBlock, LayoutBlock prevLayoutBlock, LayoutBlock nextLayoutBlock, boolean suppress) {
         int result = Turnout.UNKNOWN;
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();

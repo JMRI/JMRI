@@ -67,7 +67,6 @@ public class TrackSegment extends LayoutTrack {
     // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutBlock block = null;
-    private TrackSegment instance = null;
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
@@ -88,8 +87,9 @@ public class TrackSegment extends LayoutTrack {
     private ArrayList<Point2D> bezierControlPoints = new ArrayList<Point2D>(); // list of control point displacements
 
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
-            boolean main, LayoutEditor myPanel) {
-        layoutEditor = myPanel;
+            boolean main, LayoutEditor layoutEditor) {
+        super(id, MathUtil.zeroPoint2D, layoutEditor);
+
         // validate input
         if ((c1 == null) || (c2 == null)) {
             log.error("Invalid object in TrackSegment constructor call - " + id);
@@ -107,8 +107,6 @@ public class TrackSegment extends LayoutTrack {
         } else {
             log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         }
-        instance = this;
-        ident = id;
 
         mainline = main;
         dashed = dash;
@@ -122,14 +120,13 @@ public class TrackSegment extends LayoutTrack {
 
     // alternate constructor for loading layout editor panels
     public TrackSegment(String id, String c1Name, int t1, String c2Name, int t2, boolean dash,
-            boolean main, boolean hide, LayoutEditor myPanel) {
-        layoutEditor = myPanel;
+            boolean main, boolean hide, LayoutEditor layoutEditor) {
+        super(id, MathUtil.zeroPoint2D, layoutEditor);
+
         tConnect1Name = c1Name;
         type1 = t1;
         tConnect2Name = c2Name;
         type2 = t2;
-        instance = this;
-        ident = id;
 
         mainline = main;
         dashed = dash;
@@ -556,10 +553,7 @@ public class TrackSegment extends LayoutTrack {
             info = info + " (" + Bundle.getMessage("Line") + ")";
         }
 
-        JMenuItem jmi = popup.add(info);
-        jmi.setEnabled(false);
-
-        jmi = popup.add(ident);
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", info) + ident);
         jmi.setEnabled(false);
 
         if (blockName.isEmpty()) {
@@ -615,13 +609,13 @@ public class TrackSegment extends LayoutTrack {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.removeTrackSegment(instance);
+                layoutEditor.removeTrackSegment((TrackSegment)instance);
                 remove();
                 dispose();
             }
         });
-        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
 
+        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
             @Override
             public void actionPerformed(ActionEvent e) {

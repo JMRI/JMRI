@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,15 +53,15 @@ public abstract class LayoutTrack {
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
+    // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
-
+    protected LayoutTrack instance = null;
     protected String ident = "";
+    protected Point2D center = new Point2D.Double(50.0, 50.0);
 
     // dashed line parameters (unused)
     //protected static int minNumDashes = 3;
     //protected static double maxDashLength = 10;
-    protected Point2D center = new Point2D.Double(50.0, 50.0);
-
     protected boolean hidden = false;
 
     protected static Color defaultTrackColor = Color.black;
@@ -71,7 +72,11 @@ public abstract class LayoutTrack {
     /**
      * constructor method
      */
-    public LayoutTrack() {
+    public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        this.instance = this;
+        this.ident = ident;
+        this.center = c;
+        this.layoutEditor = layoutEditor;
     }
 
     /**
@@ -157,6 +162,7 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
+ 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
      *
