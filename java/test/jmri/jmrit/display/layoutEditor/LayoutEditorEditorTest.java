@@ -280,7 +280,7 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
+        JUnitUtil.resetWindows(false, false);
         apps.tests.Log4JFixture.tearDown();
         JUnitUtil.resetInstanceManager();
         super.tearDown();
