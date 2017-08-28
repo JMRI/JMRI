@@ -13,8 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Added CVs 490-507, enumChoice selections moved to seperate files, Mark Waters 26 Jan 2015 -->
-<!-- version 1.2 - Added CVs 800-823, Swiss Mapping group 14 to 17, Alain Carasso 20 aug 2017 -->
-
+<!-- version 1.2 - Alain Carasso, new file CVSwissMapping_v36 adding groups 14 to 17 , 28 August 2017-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
@@ -728,6 +727,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 11 A2 vzad</label>
   </variable>
+
   <variable item="Swiss Mapping Group 12 F-key" CV="496">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
@@ -776,6 +776,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 12 A2 vzad</label>
   </variable>
+
   <variable item="Swiss Mapping Group 13 F-key" CV="502">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
@@ -825,7 +826,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 13 A2 vzad</label>
   </variable>
 
-  <variable item="Swiss Mapping Group 14 F-key" CV="800">
+ <variable item="Swiss Mapping Group 14 F-key" CV="800">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -874,7 +875,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 A2 vzad</label>
   </variable>
 
-  <variable item="Swiss Mapping Group 15 F-key" CV="806">
+ <variable item="Swiss Mapping Group 15 F-key" CV="806">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -923,7 +924,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 A2 vzad</label>
   </variable>
 
-  <variable item="Swiss Mapping Group 16 F-key" CV="812">
+ <variable item="Swiss Mapping Group 16 F-key" CV="812">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -972,7 +973,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 A2 vzad</label>
   </variable>
 
-  <variable item="Swiss Mapping Group 17 F-key" CV="818">
+ <variable item="Swiss Mapping Group 17 F-key" CV="818">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
