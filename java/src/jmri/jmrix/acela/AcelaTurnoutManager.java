@@ -85,20 +85,22 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in the current
+     * configuration, else return 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'T',_memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'T', _memo));
     }
 
     /**

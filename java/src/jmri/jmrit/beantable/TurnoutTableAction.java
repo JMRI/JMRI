@@ -1581,7 +1581,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -1686,8 +1686,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     statusBar.setForeground(Color.red);
                     return; // without creating
                 }
-
-                String user = userNameTextField.getText().trim();
+                String user = userNameTextField.getText().trim(); // N11N
                 if ((x != 0) && user != null && !user.equals("")) {
                     user = user + ":" + x; // add :x to user name starting with 2nd item
                 }
@@ -1730,7 +1729,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             statusBar.setForeground(Color.gray);
         } else {
             statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
         }
 
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
@@ -1746,7 +1745,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         range.setEnabled(false);
         log.debug("T Add box disabled");
         range.setSelected(false);
-        String connectionChoice = (String) prefixBox.getSelectedItem();
+        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, use default tooltip
             connectionChoice = "TBD";
@@ -1759,15 +1758,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
+                    log.debug("T Add box enabled1");
                     // get tooltip from ProxyTurnoutManager
                     addEntryToolTip = mgr.getEntryToolTip();
-                    log.debug("T add box set");
                     break;
                 }
             }
         } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
             range.setEnabled(true);
-            log.debug("T add box enabled2");
+            log.debug("T Add box enabled2");
             // get tooltip from turnout manager
             addEntryToolTip = turnManager.getEntryToolTip();
             log.debug("TurnoutManager tip");
@@ -1792,7 +1791,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     JOptionPane.ERROR_MESSAGE);
         }
         // provide feedback to user
-        statusBar.setText("Error creating Turnouts. Check entered format and domain");
+        statusBar.setText(Bundle.getMessage("WarningInvalidRange"));
         statusBar.setForeground(Color.red);
     }
 
@@ -1850,11 +1849,13 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     * @author E. Broerse 2017, based on jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
 
         CheckedTextField fld;
+        boolean allow0Length = false; // for Add new bean item, a value that is zero-length is considered invalid.
+        private MyVerifier verifier; // internal mechanism used for verifying field data before focus is lost
 
         /**
          * Text entry field with an active key event checker.
@@ -1864,22 +1865,94 @@ public class TurnoutTableAction extends AbstractTableAction {
         public CheckedTextField(int len) {
             super("", len);
             fld = this;
-            // set background color for invalid field data
-            fld.setBackground(Color.red);
 
-//            fld.addFocusListener(new FocusListener() {
-//                @Override
-//                public void focusGained(FocusEvent e) {
-//                    setEditable(true);
-//                    setEnabled(true);
-//                }
-//
-//                @Override
-//                public void focusLost(FocusEvent e) {
-//                    exitFieldColorizer();
-//                    setEditable(true);
-//                }
-//            });
+            // configure InputVerifier
+            verifier = new MyVerifier();
+            fld = this;
+            fld.setInputVerifier(verifier);
+
+            fld.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    setEditable(true);
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    setEditable(true);
+                }
+            });
+        }
+
+        /**
+         * Validate the field information. Does not make any GUI changes.
+         *
+         * @return 'true' if current field entry is valid according to the system manager; otherwise 'false'
+         */
+        @Override
+        public boolean isValid() {
+            String value;
+            String prefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice); // connectionChoice is set by canAddRange()
+
+            if (fld == null) {
+                return false;
+            }
+            value = getText().trim();
+            if ((value.length() < 1) && (allow0Length == false)) {
+                return false;
+            } else if ((allow0Length == true) && (value.length() == 0)) {
+                return true;
+            } else if (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value)) {
+                // get prefixSelectedItem
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Private class used in conjunction with CheckedTextField to
+         * provide the mechanisms required to validate the text field data upon loss
+         * of focus, and colorize the text field in case of validation failure.
+         */
+        private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
+
+            // set default background color for invalid field data
+            Color mark = Color.orange;
+
+            @Override
+            public boolean shouldYieldFocus(javax.swing.JComponent input) {
+                if (input.getClass() == CheckedTextField.class) {
+
+                    boolean inputOK = verify(input);
+                    if (inputOK) {
+                        input.setBackground(Color.white);
+                        return true;
+                    } else {
+                        input.setBackground(mark);
+                        ((javax.swing.text.JTextComponent) input).selectAll();
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public boolean verify(javax.swing.JComponent input) {
+                if (input.getClass() == CheckedTextField.class) {
+                    return ((CheckedTextField) input).isValid();
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                JTextField source = (JTextField) e.getSource();
+                shouldYieldFocus(source); //ignore return value
+                source.selectAll();
+            }
         }
     }
 

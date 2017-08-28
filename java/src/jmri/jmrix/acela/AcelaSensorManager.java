@@ -98,6 +98,16 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+    }
+
+    /**
      * Dummy routine
      */
     @Override
@@ -236,4 +246,5 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
+
 }
