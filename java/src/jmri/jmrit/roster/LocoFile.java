@@ -1,8 +1,8 @@
 package jmri.jmrit.roster;
 
 import java.io.*;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.*;
 import org.jdom2.*;

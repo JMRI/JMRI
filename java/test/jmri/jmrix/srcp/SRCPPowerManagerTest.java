@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,6 +88,6 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

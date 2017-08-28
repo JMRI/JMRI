@@ -27,7 +27,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         return prefix;
     }
 
-    // for now, set this to false. multiple additions currently works 
+    // for now, set this to false. Multiple additions currently works
     // partially, but not for all possible cases.
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -73,12 +73,10 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Validate system name for the current hardware configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * Public method to validate system name format.
      *
-     * @param systemName Xbee id format with pins
-     * @return true for valid formatted name
+     * @param systemName Xbee id format with pins to be checked
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
@@ -96,6 +94,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             } catch (java.lang.NumberFormatException nfe) {
                 // if there was a number format exception, we couldn't
                 // find the node.
+                log.error("Unable to convert " + systemName + " into the Xbee node and pin format of nn:xx");
                 return false;
             }
 
@@ -140,7 +139,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                     input = Integer.valueOf(systemName.substring(seperator + 1, len)).intValue();
                 }
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                log.debug("Unable to convert {} into the XBee node and pin format of nn:xx", systemName);
                 return -1;
             }
         } else {
@@ -148,7 +147,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
                 input = iName % 10;
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                log.debug("Unable to convert " + systemName + " system name to a number");
                 return -1;
             }
         }
@@ -194,8 +193,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 try {
                     curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
                 } catch (java.lang.NumberFormatException nfe) {
-                    // if there was a number format exception, we couldn't
-                    // find the node.
+                    // if there was a number format exception, we couldn't find the node.
                     curNode = null;
                 }
             }

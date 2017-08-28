@@ -1,5 +1,6 @@
 package jmri.jmrix.xpa;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,8 +32,7 @@ public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
     @Override
     @Before 
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();
         memo.setXpaTrafficController(new XpaTrafficController());
         l = new XpaTurnoutManager(memo);
@@ -40,8 +40,7 @@ public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     @After 
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         memo = null;
         l = null;
     }

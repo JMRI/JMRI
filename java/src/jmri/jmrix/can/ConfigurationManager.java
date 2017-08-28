@@ -66,6 +66,5 @@ abstract public class ConfigurationManager {
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
+
 }
-
-

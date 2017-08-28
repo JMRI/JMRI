@@ -1,16 +1,17 @@
 package jmri.jmrix.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
 /**
  * SRCPSensorManagerTest.java
- *
+ * <p>
  * Description:	tests for the jmri.jmrix.srcp.SRCPSensorManager class
  *
  * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -27,8 +28,7 @@ public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
@@ -41,7 +41,6 @@ public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

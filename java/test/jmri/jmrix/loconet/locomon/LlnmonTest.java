@@ -1,11 +1,12 @@
 package jmri.jmrix.loconet.locomon;
 
-import jmri.jmrix.loconet.LnTurnout;
-import jmri.jmrix.loconet.LnTurnoutManager;
-import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
+import jmri.jmrix.loconet.LnSensorManager;
+import jmri.jmrix.loconet.LnTurnout;
+import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -6164,8 +6165,7 @@ public class LlnmonTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initReporterManager();
 
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();

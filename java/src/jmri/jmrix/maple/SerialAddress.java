@@ -67,13 +67,19 @@ public class SerialAddress {
             return (false);
         }
 
-        // This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK 
+        // This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK
+        int bitNum = 0;
         try {
             // we're justing using this to check, and failure is interesting
-            Integer.valueOf(systemName.substring(2)).intValue();
+            bitNum = Integer.valueOf(systemName.substring(2)).intValue();
         } catch (Exception e) {
             log.error("illegal character in number field of system name: "
                     + systemName);
+            return false;
+        }
+        // now check range
+        if ((bitNum <= 0) || (type == 'S' && bitNum > 1000) || (bitNum > 8000)) {
+            log.error("node address field out of range in system name - " + systemName);
             return false;
         }
         return true;
@@ -170,7 +176,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to test if a output bit is free for assignment.
+     * Public static method to test if an output bit is free for assignment.
      *
      * @return "" (null string) if the specified output bit is free for
      * assignment, else returns the system name of the conflicting assignment.
@@ -246,7 +252,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to the user name for a valid system name.
+     * Public static method to get the user name for a valid system name.
      *
      * @return "" (null string) if the system name is not valid or does not exist
      */

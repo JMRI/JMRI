@@ -2,6 +2,8 @@ package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -9,7 +11,7 @@ import org.junit.Before;
  *
  * @author	Bob Jacobsen Copyright 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialSystemConnectionMemo memo = null;
@@ -18,8 +20,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // prepare an interface
         memo = new SpecificSystemConnectionMemo();
         tc = new SerialTrafficControlScaffold();
@@ -27,6 +28,11 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         memo.setTrafficController(tc);
         memo.setSerialAddress(new SerialAddress(memo));
         t = new SerialTurnout("PTA4", tc, "tA4");
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override

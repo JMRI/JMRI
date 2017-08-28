@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -61,10 +62,7 @@ public class IndicatorTurnoutIconTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        jmri.util.JUnitUtil.resetInstanceManager();
-        if (!GraphicsEnvironment.isHeadless()) {
+        JUnitUtil.setUp();        if (!GraphicsEnvironment.isHeadless()) {
             panel = new PanelEditor("Test IndicatorTurnoutIcon Panel");
         }
     }
@@ -78,7 +76,7 @@ public class IndicatorTurnoutIconTest {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             panel.getTargetFrame().dispose();
-            panel.dispose();
+            JUnitUtil.dispose(panel);
         }
         apps.tests.Log4JFixture.tearDown();
     }

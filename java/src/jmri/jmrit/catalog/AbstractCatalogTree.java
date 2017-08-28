@@ -1,11 +1,11 @@
 package jmri.jmrit.catalog;
 
-import javax.annotation.CheckReturnValue;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import javax.annotation.CheckReturnValue;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
 import org.slf4j.Logger;

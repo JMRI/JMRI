@@ -29,6 +29,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -36,10 +37,9 @@ import jmri.util.swing.XTableColumnModel;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Default implementation of {@link JTablePersistenceManager}.

@@ -3,8 +3,8 @@ package jmri.jmrix.lenz.swing.lzv100;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Frame displaying the LZV100 configuration utility.

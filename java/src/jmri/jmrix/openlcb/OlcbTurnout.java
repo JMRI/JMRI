@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Turnout;
 import org.openlcb.OlcbInterface;
@@ -8,8 +9,6 @@ import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Turnout for OpenLCB connections.

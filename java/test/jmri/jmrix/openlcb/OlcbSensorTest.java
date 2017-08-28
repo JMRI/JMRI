@@ -1,18 +1,17 @@
 package jmri.jmrix.openlcb;
 
+import java.util.regex.Pattern;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
+import org.junit.Assert;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.regex.Pattern;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -205,6 +204,6 @@ public class OlcbSensorTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

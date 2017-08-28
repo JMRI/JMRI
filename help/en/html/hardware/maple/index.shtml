@@ -98,9 +98,48 @@
       the 1st turnout on that node, and would therefore be LB 101
       in that unit.</p>
 
+      <p>Here's a summary of the options per Connection, split up for
+      outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+      <tr>
+        <td>i</td>
+        <td>2010</td>
+        <td>Node 2 Input bit 10</td>
+        <td>KS2010</td>
+        <td> </td>
+        <td> </td>
+        <td>1</td>
+        <td>1000</td>
+      </tr>
+      <tr>
+        <td>o</td>
+        <td>1016</td>
+        <td>Node 1 Output (Turnout) 16</td>
+        <td>KT1016</td>
+        <td> </td>
+        <td> </td>
+        <td>1</td>
+        <td>8000</td>
+      </tr>
+        </tbody></table>
+      <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
       <p><strong>It is very likely that we will rework and improve
-      the addressing soon.</strong> <a name="tools" id=
-      "tools"></a></p>
+      the addressing soon.</strong>
+
+      <a name="tools" id="tools"></a></p>
 
       <h2>JMRI Maple Systems Tools</h2>N/A <a name="documentation"
       id="documentation"></a>

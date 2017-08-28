@@ -56,6 +56,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    //Turnout address format is more than a simple number.
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -78,11 +79,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Deprecated
     static SerialTurnoutManager _instance = null;
 
-    //Turnout address format is more than a simple number.
-    //public boolean allowMultipleAdditions(String systemName) { return true;  }
     /**
      * A method that creates an array of systems names to allow bulk creation of
      * turnouts.
+     *
      * @param start initial turnout name
      * @param numberToAdd fixed at 1 currently
      * @param prefix connection prefix
@@ -140,8 +140,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
 
-        //If the hardware address past does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
             int seperator = tmpSName.lastIndexOf("T") + 1;
@@ -174,6 +174,24 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
+     */
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
