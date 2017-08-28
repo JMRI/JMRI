@@ -148,11 +148,12 @@ public class MonitorFrameDemo {
         tcs = new OurScaffold();
 
         memo.setTrafficController(tcs);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
     @After
     public void tearDown() throws Exception {
-        memo.dispose();
+        jmri.util.JUnitUtil.resetWindows(false);
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

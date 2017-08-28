@@ -9,7 +9,9 @@ import org.junit.runners.Suite;
     BundleTest.class,
     JsonOperationsTest.class,
     JsonOperationsServiceFactoryTest.class,
-    JsonOperationsSocketServiceTest.class
+    JsonOperationsSocketServiceTest.class,
+    JsonOperationsHttpServiceTest.class,
+    JsonUtilTest.class
 })
 /**
  * Tests for the jmri.server.json.operations package

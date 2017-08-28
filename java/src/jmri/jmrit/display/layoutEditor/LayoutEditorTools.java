@@ -2632,7 +2632,7 @@ public class LayoutEditorTools {
         if (!xoverFromMenu) {
             //TODO: convert to use turnout ComboBox
             xoverTurnoutName = JOptionPane.showInputDialog(layoutEditor,
-                    rb.getString("EnterXOverTurnout") + " :");
+                Bundle.getMessage("MakeLabel", rb.getString("EnterXOverTurnout")));
             if (xoverTurnoutName.length() < 3) {
                 return;	 // cancelled
             }

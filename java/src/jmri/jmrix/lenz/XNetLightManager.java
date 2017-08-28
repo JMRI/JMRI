@@ -65,7 +65,7 @@ public class XNetLightManager extends AbstractLightManager {
             log.error("illegal character in header field of XPressNet light system name: " + systemName);
             return (0);
         }
-        // name must be in the XLnnnnn format
+        // name must be in the XLnnnnn format (X is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(

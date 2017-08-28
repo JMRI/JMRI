@@ -21,8 +21,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -389,6 +387,6 @@ public class TrainIconAnimationTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class.getName());
 
 }

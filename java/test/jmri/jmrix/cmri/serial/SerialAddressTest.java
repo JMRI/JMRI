@@ -78,7 +78,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL");
 
         Assert.assertTrue("invalid format - CLB2", !memo.validSystemNameFormat("CLB2", 'L'));
-        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: CLB2");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB2");
 
         Assert.assertTrue("valid format - CL2005", memo.validSystemNameFormat("CL2005", 'L'));
         Assert.assertTrue("valid format - CL2B5", memo.validSystemNameFormat("CL2B5", 'L'));
@@ -97,35 +97,35 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - CL22B1", memo.validSystemNameFormat("CL22B1", 'L'));
 
         Assert.assertTrue("invalid format - CL22000", !memo.validSystemNameFormat("CL22000", 'L'));
-        JUnitAppender.assertErrorMessage("bit number not in range 1 - 999 in CMRI system name: CL22000");
+        JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CL22000");
 
         Assert.assertTrue("invalid format - CL22B0", !memo.validSystemNameFormat("CL22B0", 'L'));
-        JUnitAppender.assertErrorMessage("bit number field out of range in CMRI system name: CL22B0");
+        JUnitAppender.assertWarnMessage("bit number field out of range in CMRI system name: CL22B0");
 
         Assert.assertTrue("valid format - CL2999", memo.validSystemNameFormat("CL2999", 'L'));
         Assert.assertTrue("valid format - CL2B2048", memo.validSystemNameFormat("CL2B2048", 'L'));
 
         Assert.assertTrue("invalid format - CL2B2049", !memo.validSystemNameFormat("CL2B2049", 'L'));
-        JUnitAppender.assertErrorMessage("bit number field out of range in CMRI system name: CL2B2049");
+        JUnitAppender.assertWarnMessage("bit number field out of range in CMRI system name: CL2B2049");
 
         Assert.assertTrue("valid format - CL127999", memo.validSystemNameFormat("CL127999", 'L'));
 
         Assert.assertTrue("invalid format - CL128000", !memo.validSystemNameFormat("CL128000", 'L'));
-        JUnitAppender.assertErrorMessage("number field out of range in CMRI system name: CL128000");
+        JUnitAppender.assertWarnMessage("number field out of range in CMRI system name: CL128000");
 
         Assert.assertTrue("valid format - CL127B7", memo.validSystemNameFormat("CL127B7", 'L'));
 
         Assert.assertTrue("invalid format - CL128B7", !memo.validSystemNameFormat("CL128B7", 'L'));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
 
         Assert.assertTrue("invalid format - CL2oo5", !memo.validSystemNameFormat("CL2oo5", 'L'));
         JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL2oo5");
 
         Assert.assertTrue("invalid format - CL2aB5", !memo.validSystemNameFormat("CL2aB5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in node address field of CMRI system name: CL2aB5");
+        JUnitAppender.assertWarnMessage("illegal character in node address field of CMRI system name: CL2aB5");
 
         Assert.assertTrue("invalid format - CL2B5x", !memo.validSystemNameFormat("CL2B5x", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in bit number field of CMRI system name: CL2B5x");
+        JUnitAppender.assertWarnMessage("illegal character in bit number field of CMRI system name: CL2B5x");
     }
 
     public void testGetBitFromSystemName() {
@@ -146,7 +146,6 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("CL0B2048", 2048, memo.getBitFromSystemName("CL0B2048"));
         Assert.assertEquals("CL11B2048", 2048, memo.getBitFromSystemName("CL11B2048"));
     }
-
 
     public void testGetNodeFromSystemName() {
         SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC,stcs);
@@ -223,7 +222,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("convert CL14B8", "CL14008", memo.convertSystemNameToAlternate("CL14B8"));
 
         Assert.assertEquals("convert CL128B7", "", memo.convertSystemNameToAlternate("CL128B7"));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
     }
 
     public void testNormalizeSystemName() {
@@ -236,7 +235,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("normalize CL014B0008", "CL14B8", memo.normalizeSystemName("CL014B0008"));
 
         Assert.assertEquals("normalize CL128B7", "", memo.normalizeSystemName("CL128B7"));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
     }
 
     public void testConstructSystemName() {
