@@ -34,7 +34,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
         this(sys);
-        AbstractNamedBean.this.setUserName(mUserName); // written this way to prevent overridden method call in this constructor
+        mUserName = user;
     }
 
     /**
