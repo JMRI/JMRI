@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.Scale;
@@ -31,7 +33,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Sets up and processes items in the Dispatcher Options menu.
- *
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -130,11 +131,11 @@ public class OptionsMenu extends JMenu {
     JRadioButton scaleFeet = new JRadioButton(Bundle.getMessage("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(Bundle.getMessage("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
-    JFormattedTextField minThrottleIntervalTextField = new JFormattedTextField();
-    JFormattedTextField fullRampTimeTextField = new JFormattedTextField();
+    JSpinner minThrottleIntervalSpinner = new JSpinner(new SpinnerNumberModel(100, 20, 1000, 1));
+    JSpinner fullRampTimeSpinner = new JSpinner(new SpinnerNumberModel(5000, 1000, 20000, 1));
     JCheckBox trustKnownTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("trustKnownTurnouts"));
 
-    String[] signalTypes = {"SignalHeads/SSL", "SignalMasts"};
+    String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2")};
 
     private void optionWindowRequested(ActionEvent e) {
         if (optionsFrame == null) {
@@ -261,30 +262,16 @@ public class OptionsMenu extends JMenu {
             JPanel p15 = new JPanel();
             p15.setLayout(new FlowLayout());
             p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + " :"));
-            NumberFormatter numberFormatter = new NumberFormatter(NumberFormat.getIntegerInstance());
-            numberFormatter.setValueClass(Integer.class);
-            numberFormatter.setMinimum(20);
-            numberFormatter.setMaximum(1000);
-            minThrottleIntervalTextField = new JFormattedTextField(numberFormatter);
-            minThrottleIntervalTextField.setColumns(4);
-            minThrottleIntervalTextField.setValue(250);
-            minThrottleIntervalTextField.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
-            p15.add(minThrottleIntervalTextField);
+            minThrottleIntervalSpinner.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
+            p15.add(minThrottleIntervalSpinner);
             p15.add(new JLabel(Bundle.getMessage("ms")));
             optionsPane.add(p15);
 
             JPanel p17 = new JPanel();
             p17.setLayout(new FlowLayout());
             p17.add(new JLabel(Bundle.getMessage("fullRampTime") + " :"));
-            numberFormatter = new NumberFormatter(NumberFormat.getIntegerInstance());
-            numberFormatter.setValueClass(Integer.class);
-            numberFormatter.setMinimum(1000);
-            numberFormatter.setMaximum(20000);
-            fullRampTimeTextField = new JFormattedTextField(numberFormatter);
-            fullRampTimeTextField.setColumns(4);
-            fullRampTimeTextField.setValue(5000);
-            fullRampTimeTextField.setToolTipText(Bundle.getMessage("fullRampTimeHint"));
-            p17.add(fullRampTimeTextField);
+            fullRampTimeSpinner.setToolTipText(Bundle.getMessage("fullRampTimeHint"));
+            p17.add(fullRampTimeSpinner);
             p17.add(new JLabel(Bundle.getMessage("ms")));
             optionsPane.add(p17);
 
@@ -342,8 +329,8 @@ public class OptionsMenu extends JMenu {
         supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
         scaleMeters.setSelected(dispatcher.getUseScaleMeters());
         scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
-        minThrottleIntervalTextField.setValue(dispatcher.getMinThrottleInterval());
-        fullRampTimeTextField.setValue(dispatcher.getFullRampTime());
+        minThrottleIntervalSpinner.setValue(dispatcher.getMinThrottleInterval());
+        fullRampTimeSpinner.setValue(dispatcher.getFullRampTime());
 
         if (dispatcher.getLayoutEditor() != null) {
             openDispatcherWithPanel.setSelected(dispatcher.getLayoutEditor().getOpenDispatcherOnLoad());
@@ -381,8 +368,8 @@ public class OptionsMenu extends JMenu {
         dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
         dispatcher.setScale(layoutScaleBox.getSelectedIndex() + 1);
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
-        dispatcher.setMinThrottleInterval((int) minThrottleIntervalTextField.getValue());
-        dispatcher.setFullRampTime((int) fullRampTimeTextField.getValue());
+        dispatcher.setMinThrottleInterval((int) minThrottleIntervalSpinner.getValue());
+        dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
         dispatcher.getLayoutEditor().setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
         optionsFrame.setVisible(false);
         optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
