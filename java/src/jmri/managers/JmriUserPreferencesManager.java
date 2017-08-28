@@ -25,6 +25,7 @@ import javax.swing.SortOrder;
 import jmri.ConfigureManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.JmriException;
 import jmri.UserPreferencesManager;
 import jmri.beans.Bean;
@@ -57,7 +58,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
-public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager {
+public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager, InstanceManagerAutoInitialize {
 
     public final static String SAVE_ALLOWED = "saveAllowed";
 
@@ -1218,6 +1219,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         });
     }
 
+    @Override
+    public void initialize() {
+        this.readUserPreferences();
+    }
+
     /**
      * Holds details about the specific class.
      */
@@ -1449,9 +1455,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(UserPreferencesManager.class)) {
-                JmriUserPreferencesManager instance = new JmriUserPreferencesManager();
-                instance.readUserPreferences();
-                return instance;
+                return new JmriUserPreferencesManager();
             }
             return super.getDefault(type);
         }
