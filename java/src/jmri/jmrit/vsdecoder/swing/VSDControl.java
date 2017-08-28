@@ -65,23 +65,14 @@ public class VSDControl extends JPanel {
 
     public static enum PropertyChangeID {
 
-        ADDRESS_CHANGE, CONFIG_CHANGE, OPTION_CHANGE, PROFILE_SELECT, HORN, BELL, NOTCH, COUPLER, BRAKE, ESTART, DELETE
+        OPTION_CHANGE, DELETE
     }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
 
     static {
         Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-        aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange"); // NOI18N
-        aMap.put(PropertyChangeID.CONFIG_CHANGE, "ConfigChange"); // NOI18N
         aMap.put(PropertyChangeID.OPTION_CHANGE, "OptionChange"); // NOI18N
-        aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect"); // NOI18N
-        aMap.put(PropertyChangeID.HORN, "HornSound"); // NOI18N
-        aMap.put(PropertyChangeID.BELL, "BellSound"); // NOI18N
-        aMap.put(PropertyChangeID.NOTCH, "EngineNotch"); // NOI18N
-        aMap.put(PropertyChangeID.COUPLER, "CouplerSound"); // NOI18N
-        aMap.put(PropertyChangeID.BRAKE, "BrakeSound"); // NOI18N
-        aMap.put(PropertyChangeID.ESTART, "EngineStart"); // NOI18N
         aMap.put(PropertyChangeID.DELETE, "DeleteDecoder"); // NOI18N
         PCIDMap = Collections.unmodifiableMap(aMap);
     }
@@ -90,7 +81,6 @@ public class VSDControl extends JPanel {
 
     Border tb;
     JLabel addressLabel;
-    JButton configButton;
     JButton optionButton;
     JButton deleteButton;
 
@@ -186,10 +176,8 @@ public class VSDControl extends JPanel {
 
         configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS));
-        configButton = new JButton(Bundle.getMessage("ConfigButtonLabel"));
         optionButton = new JButton(Bundle.getMessage("OptionsButtonLabel"));
         deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        configPanel.add(configButton); // maybe don't allow this anymore.
         configPanel.add(Box.createHorizontalGlue());
         configPanel.add(optionButton);
         configPanel.add(Box.createHorizontalGlue());
@@ -213,13 +201,6 @@ public class VSDControl extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 optionButtonPressed(e);
-            }
-
-        });
-        configButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                configButtonPressed(e);
             }
 
         });
@@ -271,23 +252,6 @@ public class VSDControl extends JPanel {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 optionsDialogPropertyChange(event);
             }
-
-        });
-    }
-
-    /**
-     * Handle "Config" button presses
-     */
-    protected void configButtonPressed(ActionEvent e) {
-        log.debug("(" + address + ") Config Button Pressed");
-        VSDConfigDialog d = new VSDConfigDialog(this, Bundle.getMessage("ConfigDialogTitlePrefix") + " " + this.address, config);
-        d.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
-                configDialogPropertyChange(event);
-            }
-
         });
     }
 
@@ -300,15 +264,7 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Callback for the Config Dialog
-     */
-    protected void configDialogPropertyChange(PropertyChangeEvent event) {
-        log.debug("internal config dialog handler");
-        firePropertyChange(PropertyChangeID.CONFIG_CHANGE, event.getOldValue(), event.getNewValue());
-    }
-
-    /**
-     * Callback for the Config Dialog
+     * Callback for the Option Dialog
      */
     protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal options dialog handler");

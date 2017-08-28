@@ -41,12 +41,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+import javax.swing.WindowConstants;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.SoundEvent;
@@ -103,14 +105,17 @@ public class VSDManagerFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    //private List<JMenu> menuList;
+    private List<VSDecoder> vsd_list;
+
     /**
      * Constructor
      */
     public VSDManagerFrame() {
         super(false, false);
         config = new VSDConfig();
+        vsd_list = new ArrayList<>();
         this.addPropertyChangeListener(VSDecoderManager.instance());
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         initGUI();
     }
 
@@ -237,33 +242,37 @@ public class VSDManagerFrame extends JmriJFrame {
             log.debug("no New Decoder constructed!" + config.toString());
             return;
         }
-        // Need to add something here... if this Control already exists, don't
-        // create a new one.
-        VSDControl newControl = new VSDControl(config);
-        // Set the Decoder to listen to PropertyChanges from the control
-        newControl.addPropertyChangeListener(newDecoder);
-        this.addPropertyChangeListener(newDecoder);
-        // Set US to listen to PropertyChanges from the control (mainly for DELETE)
-        newControl.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
-                vsdControlPropertyChange(event);
+        // If this decoder already exists, don't create a new Control
+        if (vsd_list.contains(newDecoder)) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
+        } else {
+            vsd_list.add(newDecoder);
+            VSDControl newControl = new VSDControl(config);
+            // Set the Decoder to listen to PropertyChanges from the control
+            newControl.addPropertyChangeListener(newDecoder);
+            this.addPropertyChangeListener(newDecoder);
+            // Set US to listen to PropertyChanges from the control (mainly for DELETE)
+            newControl.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent event) {
+                    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+                    vsdControlPropertyChange(event);
+                }
+            });
+            if (decoderPane.isAncestorOf(decoderBlank)) {
+                decoderPane.remove(decoderBlank);
             }
-        });
-        if (decoderPane.isAncestorOf(decoderBlank)) {
-            decoderPane.remove(decoderBlank);
-        }
-        decoderPane.add(newControl);
-        newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
-        //debugPrintDecoderList();
-        decoderPane.revalidate();
-        decoderPane.repaint();
+            decoderPane.add(newControl);
+            newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
+            //debugPrintDecoderList();
+            decoderPane.revalidate();
+            decoderPane.repaint();
 
-        this.pack();
-        //this.setVisible(true);
-        // Do we need to make newControl a listener to newDecoder?
-        //firePropertyChange(PropertyChangeID.ADD_DECODER, null, newDecoder);
+            this.pack();
+            //this.setVisible(true);
+            // Do we need to make newControl a listener to newDecoder?
+            //firePropertyChange(PropertyChangeID.ADD_DECODER, null, newDecoder);
+        }
     }
 
     /**
@@ -278,6 +287,7 @@ public class VSDManagerFrame extends JmriJFrame {
             if (vsd == null) {
                 log.debug("VSD is null.");
             }
+            vsd_list.remove(vsd);
             this.removePropertyChangeListener(vsd);
             log.debug("vsdControlPropertyChange: ID = " + PCIDMap.get(PropertyChangeID.REMOVE_DECODER) + " Old " + ov + " New " + nv);
             firePropertyChange(PropertyChangeID.REMOVE_DECODER, ov, nv);
@@ -287,8 +297,9 @@ public class VSDManagerFrame extends JmriJFrame {
             }
             //debugPrintDecoderList();
             decoderPane.revalidate();
+            decoderPane.repaint();
+
             this.pack();
-            this.setVisible(true);
         }
     }
 
@@ -334,7 +345,6 @@ public class VSDManagerFrame extends JmriJFrame {
         this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true); // Fix this... needs to be help for the new frame
-
     }
 
     /**
@@ -369,6 +379,8 @@ public class VSDManagerFrame extends JmriJFrame {
         //super.windowClosing(e);
 
         log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
+		
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrQuitMessage", Bundle.getMessage("ButtonClose")));
 
         log.debug("Calling decoderPane.windowClosing() directly " + e.toString());
         //decoderPane.windowClosing(e);
@@ -422,6 +434,5 @@ public class VSDManagerFrame extends JmriJFrame {
         }
     }
 
-    //public List<JMenu> getMenus() { return menuList; }
     private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
 }

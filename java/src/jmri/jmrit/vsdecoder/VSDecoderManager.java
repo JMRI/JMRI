@@ -110,6 +110,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     public JmriJFrame provideManagerFrame() {
         if (managerFrame == null) {
             managerFrame = new VSDManagerFrame();
+        } else {
+            log.warn("Could not start Virtual Sound Decoder Manager");
         }
         return (managerFrame);
     }
