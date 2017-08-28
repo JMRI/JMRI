@@ -29,6 +29,7 @@
   <!-- version 1.1,  updated to V34 firmware   Nigel Cliffe, 23 Jan 2015 -->
   <!-- version 1.2,  updated to hide V34 as v34 updates are included in v32 files   Mark Waters, 03 Jan 2016 -->
   <!-- version 1.3,  version 36 Firmware based on hidden v34, no other changes, as no updated documents from ZIMO updated to allow FW version up to 40, Alain Carasso, 29 Jul 2017 -->
+  <!-- version 1.3.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
 
   <decoder>
     <family name="Zimo Unified software (version 36+)" mfg="Zimo">
@@ -52,7 +53,15 @@
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes">
+     <!-- CV7 set to default 36 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
+      <variable CV="7" readOnly="yes" default="36">
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>  
+     <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
@@ -83,7 +92,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV372-CV399sound.xml"/>
       <!-- End sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v36.xml"/>
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
@@ -96,7 +105,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap6.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v36.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
