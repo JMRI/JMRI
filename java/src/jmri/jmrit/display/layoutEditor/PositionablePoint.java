@@ -123,7 +123,8 @@ public class PositionablePoint extends LayoutTrack {
      * @see #getCoordsCenter()
      * @since 4.9.2
      *
-     * note: done for Polymorphism so all LayoutTrack sub-classes use same method
+     * note: done for Polymorphism so all LayoutTrack sub-classes use same
+     * method
      */
     @Deprecated
     public Point2D getCoords() {
@@ -132,13 +133,15 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * set the coordinates
+     *
      * @param p the coordinates
      *
      * @deprecated replaced by
      * @see #setCoordsCenter(Point2D)
      * @since 4.9.2
      *
-     * note: done for Polymorphism so all LayoutTrack sub-classes use same method
+     * note: done for Polymorphism so all LayoutTrack sub-classes use same
+     * method
      */
     @Deprecated
     public void setCoords(Point2D p) {
@@ -158,6 +161,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -168,6 +172,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -781,13 +786,14 @@ public class PositionablePoint extends LayoutTrack {
                     block2 = connect2.getLayoutBlock();
                 }
                 if ((block1 != null) && (block1 == block2)) {
-                    jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + block1.getID());
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     jmi = popup.add(rb.getString("BlockDivider"));
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
+                    jmi.setEnabled(false);
                     blockBoundary = true;
                 }
                 jmi.setEnabled(false);
@@ -801,7 +807,7 @@ public class PositionablePoint extends LayoutTrack {
                     blockEnd = connect1.getLayoutBlock();
                 }
                 if (blockEnd != null) {
-                    jmi = popup.add(rb.getString("BlockID") + ": " + blockEnd.getID());
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")) + blockEnd.getDisplayName());
                     jmi.setEnabled(false);
                 }
                 endBumper = true;
@@ -828,9 +834,9 @@ public class PositionablePoint extends LayoutTrack {
                 if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     jmi = popup.add(rb.getString("BlockDivider"));
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
                     jmi.setEnabled(false);
                 }
                 blockBoundary = true;
@@ -838,6 +844,21 @@ public class PositionablePoint extends LayoutTrack {
             default:
                 break;
         }
+
+        // if there are any track connections
+        if ((connect1 != null) || (connect2 != null)) {
+            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+            if (connect1 != null) {
+                jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName());
+                jmi.setEnabled(false);
+            }
+            if (connect2 != null) {
+                jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName());
+                jmi.setEnabled(false);
+            }
+            popup.add(connectionsMenu);
+        }
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
@@ -1289,7 +1310,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /*
         return the layout connectivity for this PositionablePoint
-    */
+     */
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
         ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
         LayoutConnectivity lc = null;

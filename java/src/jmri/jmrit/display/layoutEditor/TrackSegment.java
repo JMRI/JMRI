@@ -565,9 +565,24 @@ public class TrackSegment extends LayoutTrack {
         if (blockName.isEmpty()) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
-            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
         }
         jmi.setEnabled(false);
+
+        // if there are any track connections
+        if ((connect1 != null) || (connect2 != null)) {
+            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+            if (connect1 != null) {
+                jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName());
+                jmi.setEnabled(false);
+            }
+            if (connect2 != null) {
+                jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName());
+                jmi.setEnabled(false);
+            }
+            popup.add(connectionsMenu);
+        }
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         mainlineCheckBoxMenuItem.setSelected(mainline);

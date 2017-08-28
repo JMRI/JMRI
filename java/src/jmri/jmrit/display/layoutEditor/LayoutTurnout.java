@@ -1981,7 +1981,7 @@ public class LayoutTurnout extends LayoutTrack {
                                 int old1stState = namedTurnout.getBean().getState();
                                 int new1stState = new2ndState;
                                 if (secondTurnoutInverted) {
-                                    new1stState = jmri.Turnout.invertTurnoutState(new1stState);
+                                    new1stState = Turnout.invertTurnoutState(new1stState);
                                 }
                                 if (old1stState != new1stState) {
                                     namedTurnout.getBean().setCommandedState(new1stState);
@@ -2015,10 +2015,10 @@ public class LayoutTurnout extends LayoutTrack {
     public void toggleTurnout() {
         if (getTurnout() != null) {
             // toggle turnout
-            if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
-                setState(jmri.Turnout.THROWN);
+            if (getTurnout().getKnownState() == Turnout.CLOSED) {
+                setState(Turnout.THROWN);
             } else {
-                setState(jmri.Turnout.CLOSED);
+                setState(Turnout.CLOSED);
             }
         } else {
             log.debug("Turnout Icon not associated with a Turnout");
@@ -2036,16 +2036,24 @@ public class LayoutTurnout extends LayoutTrack {
             getTurnout().setCommandedState(state);
             if (getSecondTurnout() != null) {
                 if (secondTurnoutInverted) {
-                    if (state == jmri.Turnout.CLOSED) {
-                        getSecondTurnout().setCommandedState(jmri.Turnout.THROWN);
+                    if (state == Turnout.CLOSED) {
+                        getSecondTurnout().setCommandedState(Turnout.THROWN);
                     } else {
-                        getSecondTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                        getSecondTurnout().setCommandedState(Turnout.CLOSED);
                     }
                 } else {
                     getSecondTurnout().setCommandedState(state);
                 }
             }
         }
+    }
+
+    public int getState() {
+        int result = Turnout.UNKNOWN;
+        if (getTurnout() != null) {
+            result = getTurnout().getKnownState();
+        }
+        return result;
     }
 
     private boolean disableOccupiedTurnout() {
@@ -2057,7 +2065,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
             //If the turnout is set for straight over, we need to deal with the straight over connecting blocks
-            if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
+            if (getTurnout().getKnownState() == Turnout.CLOSED) {
                 if ((block.getOccupancy() == LayoutBlock.OCCUPIED) && (blockB.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
                     return true;
@@ -2070,7 +2078,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         }
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER)) {
-            if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
+            if (getTurnout().getKnownState() == Turnout.THROWN) {
                 if ((blockB.getOccupancy() == LayoutBlock.OCCUPIED) && (blockD.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + blockBName + " & " + blockDName + " are Occupied");
                     return true;
@@ -2079,7 +2087,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER)) {
-            if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
+            if (getTurnout().getKnownState() == Turnout.THROWN) {
                 if ((block.getOccupancy() == LayoutBlock.OCCUPIED) && (blockC.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + block + " & " + blockCName + " are Occupied");
                     return true;
@@ -2244,26 +2252,48 @@ public class LayoutTurnout extends LayoutTrack {
             if (blockName.isEmpty()) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block.getDisplayName());
             }
             jmi.setEnabled(false);
 
             if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                 // check if extra blocks have been entered
                 if (blockB != null) {
-                    jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + blockB.getDisplayName());
                     jmi.setEnabled(false);
                 }
                 if (blockC != null) {
-                    jmi = popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 3)) + blockC.getDisplayName());
                     jmi.setEnabled(false);
                 }
                 if (blockD != null) {
-                    jmi = popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 4)) + blockD.getDisplayName());
                     jmi.setEnabled(false);
                 }
             }
 
+            // if there are any track connections
+            if ((connectA != null) || (connectB != null)
+                    || (connectC != null) || (connectD != null)) {
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+                if (connectA != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack)connectA).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectB != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack)connectB).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectC != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack)connectC).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectD != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack)connectD).getName());
+                    jmi.setEnabled(false);
+                }
+                popup.add(connectionsMenu);
+            }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));

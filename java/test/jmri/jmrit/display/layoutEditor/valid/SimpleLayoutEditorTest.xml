@@ -334,6 +334,13 @@
     <positionablepoint ident="A5" type="1" x="800.0" y="200.0" connect1name="T5" connect2name="T12" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="A6" type="1" x="800.0" y="210.0" connect1name="T7" connect2name="T13" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="A7" type="1" x="1000.0" y="200.0" connect1name="T8" connect2name="T14" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <layoutturntable ident="TUR1" radius="25.0" xcen="660.0" ycen="540.0" turnoutControlled="yes" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+      <raytrack angle="300.0" index="0" />
+      <raytrack angle="330.0" index="1" />
+      <raytrack angle="0.0" index="2" />
+      <raytrack angle="30.0" index="3" />
+      <raytrack angle="60.0" index="4" />
+    </layoutturntable>
   </LayoutEditor>
   <filehistory>
     <operation>

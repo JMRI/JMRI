@@ -13,7 +13,10 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.ConnectionNameFromSystemName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanSelectCreatePanel extends JPanel {
 
@@ -53,11 +56,13 @@ public class BeanSelectCreatePanel extends JPanel {
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
         existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+        LayoutEditor.setupComboBox(existingCombo, false, true);
         // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);
         }
         existingCombo.setFirstItemBlank(true);
+
         JPanel radio = new JPanel();
         radio.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         JPanel bean = new JPanel();
@@ -262,4 +267,6 @@ public class BeanSelectCreatePanel extends JPanel {
         existingCombo.dispose();
     }
 
+    //initialize logging
+    private final static Logger log = LoggerFactory.getLogger(BeanSelectCreatePanel.class.getName());
 }

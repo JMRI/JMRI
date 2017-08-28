@@ -831,10 +831,33 @@ public class LayoutSlip extends LayoutTurnout {
             if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block.getDisplayName());
                 blockAssigned = true;
             }
             jmi.setEnabled(false);
+
+            // if there are any track connections
+            if ((connectA != null) || (connectB != null)
+                    || (connectC != null) || (connectD != null)) {
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+                if (connectA != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack)connectA).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectB != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack)connectB).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectC != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack)connectC).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectD != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack)connectD).getName());
+                    jmi.setEnabled(false);
+                }
+                popup.add(connectionsMenu);
+            }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 

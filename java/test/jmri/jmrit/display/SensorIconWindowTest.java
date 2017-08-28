@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -8,6 +9,7 @@ import javax.swing.JDialog;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
+import jmri.util.MathUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -50,9 +52,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        java.awt.Point location = new java.awt.Point(
-                icon.getLocation().x + icon.getSize().width / 2,
-                icon.getLocation().y + icon.getSize().height / 2);
+        Point location = MathUtil.PointForPoint2D(MathUtil.center(icon.getBounds()));
 
         getHelper().enterClickAndLeave(
                 new MouseEventData(this,

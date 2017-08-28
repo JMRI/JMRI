@@ -1091,7 +1091,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + getLayoutBlockAC().getDisplayName());
                 blockACAssigned = true;
             }
             jmi.setEnabled(false);
@@ -1099,10 +1099,33 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + getLayoutBlockBD().getDisplayName());
                 blockBDAssigned = true;
             }
             jmi.setEnabled(false);
+
+            // if there are any track connections
+            if ((connectA != null) || (connectB != null)
+                    || (connectC != null) || (connectD != null)) {
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+                if (connectA != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack)connectA).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectB != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack)connectB).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectC != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack)connectC).getName());
+                    jmi.setEnabled(false);
+                }
+                if (connectD != null) {
+                    jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack)connectD).getName());
+                    jmi.setEnabled(false);
+                }
+                popup.add(connectionsMenu);
+            }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
