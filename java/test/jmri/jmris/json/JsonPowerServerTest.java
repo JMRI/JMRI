@@ -2,10 +2,10 @@
 package jmri.jmris.json;
 
 import jmri.jmris.JmriConnection;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmris.json.JsonPowerServer class
@@ -77,9 +77,7 @@ public class JsonPowerServerTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

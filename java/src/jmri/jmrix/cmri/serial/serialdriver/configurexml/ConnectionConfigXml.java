@@ -1,8 +1,8 @@
 package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.StringTokenizer;
 import java.util.List;
+import java.util.StringTokenizer;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -10,8 +10,6 @@ import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting the

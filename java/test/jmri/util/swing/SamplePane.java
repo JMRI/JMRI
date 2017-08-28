@@ -66,7 +66,7 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
 
     @Override
     public void dispose() {
-        disposed.add(Integer.valueOf(num));
+        disposed.add(num);
         super.dispose();
     }
 

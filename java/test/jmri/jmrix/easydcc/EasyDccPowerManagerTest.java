@@ -2,6 +2,7 @@ package jmri.jmrix.easydcc;
 
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -86,7 +87,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     // The minimal setup for log4J
     @After 
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

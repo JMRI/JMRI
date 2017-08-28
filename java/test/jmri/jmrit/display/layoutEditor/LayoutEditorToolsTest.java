@@ -33,7 +33,7 @@ public class LayoutEditorToolsTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+      jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         Assert.assertNotNull("ConfigXmlManager exists", cm);
 
@@ -153,15 +153,12 @@ public class LayoutEditorToolsTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     //initialize logging

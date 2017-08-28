@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;

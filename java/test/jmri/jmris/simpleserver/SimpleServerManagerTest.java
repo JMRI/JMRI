@@ -1,10 +1,10 @@
 //SimpleServerManagerTest.java
 package jmri.jmris.simpleserver;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerManager class 

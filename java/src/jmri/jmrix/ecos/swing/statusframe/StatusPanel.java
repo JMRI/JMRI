@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos.swing.statusframe;
 
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

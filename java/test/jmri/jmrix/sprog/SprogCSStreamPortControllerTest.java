@@ -4,12 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.util.JUnitUtil;
 
 
 /**
@@ -30,8 +29,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
@@ -48,8 +46,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

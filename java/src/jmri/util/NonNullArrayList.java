@@ -1,8 +1,7 @@
 package jmri.util;
-import javax.annotation.Nonnull;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.annotation.Nonnull;
 
 /**
  * An ArrayList that FindBugs understands will never contain null elements.

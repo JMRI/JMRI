@@ -1,17 +1,17 @@
 package jmri.jmrix.can.swing;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TestTrafficController;
+import jmri.jmrix.can.TrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -34,8 +34,7 @@ public class CanNamedPaneActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new TestTrafficController();
         m = new CanSystemConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -44,8 +43,7 @@ public class CanNamedPaneActionTest {
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(CanNamedPaneActionTest.class.getName());

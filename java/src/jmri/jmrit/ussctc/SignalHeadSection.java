@@ -1,9 +1,9 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-import java.util.*;
 import java.beans.*;
+import java.util.*;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.*;
 
 /**
  * Drive a signal section on a USS CTC panel.

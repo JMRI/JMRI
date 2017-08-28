@@ -1,14 +1,14 @@
 package jmri.jmrix.lenz.swing.stackmon;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import java.util.ResourceBundle;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonAction class
@@ -45,8 +45,7 @@ public class StackMonActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
 
@@ -54,8 +53,7 @@ public class StackMonActionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

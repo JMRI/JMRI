@@ -1,28 +1,24 @@
 package jmri.implementation;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.SwingUtilities;
-
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.TurnoutManager;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.SignalHead;
+import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -203,15 +199,12 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     //private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadTest.class.getName());
