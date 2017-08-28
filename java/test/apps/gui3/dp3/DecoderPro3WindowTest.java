@@ -1,6 +1,6 @@
 package apps.gui3.dp3;
 
-import jmri.util.SwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,15 +18,14 @@ public class DecoderPro3WindowTest {
     public void testCTor() {
         DecoderPro3Window t = new DecoderPro3Window();
         Assert.assertNotNull("exists", t);
-        SwingTestCase.disposeFrame("Decoder Pro Wizard", true, true);
-        t.dispose();
+        JUnitUtil.disposeFrame("Decoder Pro Wizard", true, true);
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConnectionConfigManager();
@@ -35,8 +34,7 @@ public class DecoderPro3WindowTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class.getName());

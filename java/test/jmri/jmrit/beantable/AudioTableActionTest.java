@@ -7,8 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -61,8 +59,7 @@ public class AudioTableActionTest extends AbstractTableActionBase {
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         InstanceManager.getDefault(AudioManager.class).init();
         a = new AudioTableAction();
@@ -71,10 +68,9 @@ public class AudioTableActionTest extends AbstractTableActionBase {
     @After
     @Override
     public void tearDown() {
-        InstanceManager.getDefault(AudioManager.class).cleanUp();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
         a = null;
+        InstanceManager.getDefault(AudioManager.class).cleanUp();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AudioTableActionTest.class.getName());

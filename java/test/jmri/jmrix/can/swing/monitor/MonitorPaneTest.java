@@ -4,6 +4,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,13 +67,12 @@ public class MonitorPaneTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

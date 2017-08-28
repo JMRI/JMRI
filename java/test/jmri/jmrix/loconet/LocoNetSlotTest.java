@@ -1,9 +1,10 @@
 package jmri.jmrix.loconet;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class LocoNetSlotTest extends TestCase {
 
@@ -49,7 +50,7 @@ public class LocoNetSlotTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

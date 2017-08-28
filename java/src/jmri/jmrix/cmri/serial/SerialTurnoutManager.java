@@ -3,10 +3,10 @@ package jmri.jmrix.cmri.serial;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Implement turnout manager for CMRI serial systems

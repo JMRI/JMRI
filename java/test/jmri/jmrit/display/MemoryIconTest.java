@@ -62,7 +62,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
-            jf.dispose();
+            JUnitUtil.dispose(jf);
         }
     }
 
@@ -97,7 +97,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
-            jf.dispose();
+            JUnitUtil.dispose(jf);
         }
 
     }
@@ -131,7 +131,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
-            jf.dispose();
+            JUnitUtil.dispose(jf);
         }
 
     }
@@ -191,9 +191,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
@@ -210,9 +208,8 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 

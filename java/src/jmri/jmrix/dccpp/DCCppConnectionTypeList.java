@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid lenz XPressNet Connection Types

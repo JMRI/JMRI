@@ -107,7 +107,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         assertPixel("F Bkg blue, label Bkg none color", Pixel.TRANSPARENT, color2); // no blue, looking at transparent label
         assertPixel("F Bkg none, label Bkg yellow color", Pixel.YELLOW, color3);
         assertPixel("F Bkg blue, label Bkg yellow color", Pixel.YELLOW, color4);
-        JUnitUtil.resetWindows(false); // dispose all editors and panels
+        JUnitUtil.resetWindows(false, false); // dispose all editors and panels
     }
 
     int getColor(String name) {
@@ -180,7 +180,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     public void testDisplayTransparent45degrees() {
@@ -231,7 +231,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.RED, Pixel.BLUE, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
@@ -316,7 +316,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
 
         // finally done
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
@@ -402,7 +402,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
                 Pixel.GREEN, Pixel.BLUE, Pixel.GREEN);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
@@ -453,7 +453,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.BLUE, Pixel.BLACK, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     public void testDisplayTextRotated90() {
@@ -500,7 +500,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.BLUE, Pixel.BLACK, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     public void testDisplayTextRotated45() {
@@ -545,7 +545,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.BLUE, Pixel.BLACK, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // from here down is testing infrastructure
@@ -568,9 +568,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
@@ -585,7 +583,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
             panel = null;
-            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
+            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         }
 
         apps.tests.Log4JFixture.tearDown();

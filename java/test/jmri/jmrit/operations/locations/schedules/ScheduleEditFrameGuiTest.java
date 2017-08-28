@@ -9,6 +9,7 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -77,7 +78,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test

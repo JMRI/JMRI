@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;

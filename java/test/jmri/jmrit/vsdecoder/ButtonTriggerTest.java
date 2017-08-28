@@ -103,9 +103,7 @@ public class ButtonTriggerTest {
                 Assert.fail("wrong callback called");
             }
         });
-        PropertyChangeEvent e = new PropertyChangeEvent(this, "test event",
-                Boolean.valueOf(false),
-                Boolean.valueOf(true));
+        PropertyChangeEvent e = new PropertyChangeEvent(this, "test event", false, true);
         uut.propertyChange(e);
     }
 

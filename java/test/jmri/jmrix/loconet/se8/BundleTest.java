@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.se8;
 
 import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 

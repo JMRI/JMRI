@@ -3,9 +3,9 @@ package jmri.jmrix.cmri.serial;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.

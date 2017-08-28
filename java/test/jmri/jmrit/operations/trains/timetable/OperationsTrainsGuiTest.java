@@ -10,9 +10,10 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.setVisible(true);
 
         Assert.assertNotNull("frame exists", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -55,7 +56,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

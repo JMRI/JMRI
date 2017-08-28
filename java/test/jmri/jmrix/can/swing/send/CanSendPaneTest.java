@@ -1,6 +1,5 @@
 package jmri.jmrix.can.swing.send;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -22,15 +21,11 @@ public class CanSendPaneTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 
 }

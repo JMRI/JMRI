@@ -1,6 +1,5 @@
 package jmri.jmrit.audio;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,15 +32,13 @@ public class JoalAudioBufferTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         factory = new JoalAudioFactory();
     }
 
     @After
     public void tearDown() {
         factory.cleanup();
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

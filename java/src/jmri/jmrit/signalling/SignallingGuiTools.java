@@ -1,6 +1,5 @@
 package jmri.jmrit.signalling;
 
-import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.SignalMast;

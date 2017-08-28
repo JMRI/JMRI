@@ -1,6 +1,5 @@
 package jmri.jmrit;
 
-import apps.tests.Log4JFixture;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -280,14 +279,12 @@ public class XmlFileTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     static protected Logger log = LoggerFactory.getLogger(XmlFileTest.class.getName());

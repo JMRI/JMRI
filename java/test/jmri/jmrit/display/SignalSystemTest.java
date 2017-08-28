@@ -173,8 +173,7 @@ public class SignalSystemTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         JUnitUtil.initInternalTurnoutManager();
@@ -185,8 +184,7 @@ public class SignalSystemTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     static Logger log = LoggerFactory.getLogger(SignalSystemTest.class.getName());

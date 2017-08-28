@@ -6,7 +6,6 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
-import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

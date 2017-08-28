@@ -1,14 +1,12 @@
 package jmri.jmrix.openlcb;
 
+import java.util.concurrent.Semaphore;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.TestTrafficController;
 import org.openlcb.Connection;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.can.CanInterface;
-
-import java.util.concurrent.Semaphore;
-
-import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.CanMessage;
 
 /**
  * Created by bracz on 11/7/16.

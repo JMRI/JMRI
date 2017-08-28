@@ -6,8 +6,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class provides a concrete implementation of the Abstract Editor 

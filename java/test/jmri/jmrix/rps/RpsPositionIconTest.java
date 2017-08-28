@@ -1,6 +1,5 @@
 package jmri.jmrix.rps;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.configurexml.ConfigXmlManager;
@@ -44,14 +43,10 @@ public class RpsPositionIconTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }
