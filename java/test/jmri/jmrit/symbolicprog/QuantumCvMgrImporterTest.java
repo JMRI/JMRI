@@ -36,7 +36,7 @@ public class QuantumCvMgrImporterTest {
     }
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws IOException {
         // create a file
         String s = "CV1=0\n"
                 + "CV2=1\n";

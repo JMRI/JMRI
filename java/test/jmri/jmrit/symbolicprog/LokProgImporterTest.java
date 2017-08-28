@@ -36,10 +36,10 @@ public class LokProgImporterTest {
     }
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws IOException {
         // create a file
         String s = "CV 1      0\n"
-                + "CV 2      1\n"+
+                + "CV 2      1\n"
                 + "Index: CV31=5,.(CV32=10).\n";
         File f = makeTempFile(s);
         CvTableModel tm = new CvTableModel(new JLabel(), null);
