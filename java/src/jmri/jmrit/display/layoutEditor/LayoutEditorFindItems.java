@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
- * <p>
  */
 public class LayoutEditorFindItems {
 
@@ -577,10 +576,8 @@ public class LayoutEditorFindItems {
     }
     
    /**
-     * return first unique LayoutTrack object name that starts with this prefix
-     *
      * @param inName
-     * @return
+     * @return the first unique LayoutTrack object name that starts with this prefix
      */
     public String uniqueName(String inPrefix, int inStartIndex) {
         String result;

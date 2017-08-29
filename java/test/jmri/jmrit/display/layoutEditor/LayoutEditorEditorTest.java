@@ -9,19 +9,26 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JPopupMenu;
+import javax.swing.JMenuBar;
+import javax.swing.MenuElement;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.ComponentFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -30,6 +37,28 @@ import org.slf4j.LoggerFactory;
  * @author	George Warner Copyright 2017
  */
 public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
+
+    protected void pressMenuItem(JMenuBar inMenuBar, String menuItemName) {
+        JMenuBarOperator mbo = new JMenuBarOperator(inMenuBar);
+        mbo.pushMenu(menuItemName);
+    }
+
+    protected void pressMenuItem1(JMenuBar inMenuBar, String menuItemName) {
+        JMenuBarOperator mbo = new JMenuBarOperator(inMenuBar);
+        NameComponentChooser ncc = new NameComponentChooser(menuItemName);
+        JMenuOperator pmo = new JMenuOperator(mbo, ncc);
+        // Click menu
+        pmo.pushMenu(menuItemName);
+    }
+
+    protected void pressPopupMenuItem(JmriJFrame f, String menuItemName) {
+        JFrameOperator jfo = new JFrameOperator(f);
+        JDialogOperator jdo = new JDialogOperator(jfo, 1); // wait for the first dialog.
+        NameComponentChooser ncc = new NameComponentChooser(menuItemName);
+        JPopupMenuOperator pmo = new JPopupMenuOperator(jdo, ncc);
+        // Click menu
+        pmo.pushMenu(menuItemName);
+    }
 
     @SuppressWarnings("unchecked")
     public void testShowAndClose() throws Exception {
@@ -167,11 +196,27 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
         ));
         sleep(100);
 
-        JPopupMenu pm = (JPopupMenu) new ComponentFinder(JPopupMenu.class).find(0);
-        Assert.assertNotNull("LayoutTurnout popup menu exists", pm);
+        dumpComponent(le);
 
-        dumpComponent(pm);
+        if (true) {
+            String editTitle = Bundle.getMessage("EditTitle") + "...";
+            pressMenuItem(le.getJMenuBar(), editTitle);
+        } else {
+            String setSignalHeadsTitle = Bundle.getMessage("SignalHeads");
+            pressPopupMenuItem(le, setSignalHeadsTitle);
+        }
 
+        //ComponentFinder pmf = new ComponentFinder(JPopupMenu.class);
+        //JMenuItemByLabelFinder pmf = new JMenuItemByLabelFinder(setSignalHeadsTitle);
+        //Assert.assertNotNull("new JPopupMenuFinder exists", pmf);
+        //NamedComponentFinder ncf = new NamedComponentFinder(JPopupMenu.class, setSignalHeadsTitle);
+        //List<JPopupMenu> pmList = ncf.findAll(le);
+        //JPopupMenuFinder pmf = new JPopupMenuFinder();
+        //List<JPopupMenu> pmList = pmf.findAll();
+        //Assert.assertNotNull("LayoutTurnout popup menu list exists", pmList);
+//        for (JPopupMenu pm : pmList) {
+//            dumpComponent(pm);
+//        }
         //TODO: comment out for production; 
         // only here so developer can see what's happening
         sleep(3000);
@@ -220,14 +265,34 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
         }
         String prefix = builder.toString();
 
-        String label = "";
+        String label = getComponentTitle(inComponent);
+        System.out.println(prefix + inComponent.getClass().getName() + ":" + label);
+
+        if (inComponent instanceof Container) {
+            Component[] cList = ((Container) inComponent).getComponents();
+            for (Component c : cList) {
+                dumpComponent(c, inDepth + 1);
+            }
+        }
+        if (false) {
+            if (inComponent instanceof JMenuBar) {
+                MenuElement[] mList = ((JMenuBar) inComponent).getSubElements();
+                for (MenuElement me : mList) {
+                    dumpComponent(me.getComponent(), inDepth + 1);
+                }
+            }
+        }
+    }
+
+    private String getComponentTitle(Component inComponent) {
+        String result = "";
         Method methodToFind = null;
         try {
             methodToFind = inComponent.getClass().getMethod("getLabel", (Class<?>[]) null);
             if (methodToFind != null) {
                 try {
                     // Method found. You can invoke the method like
-                    label = (String) methodToFind.invoke(inComponent, (Object[]) null);
+                    result = (String) methodToFind.invoke(inComponent, (Object[]) null);
                 } catch (IllegalAccessException ex) {
                     //log.error("invoke ", ex);
                 } catch (IllegalArgumentException ex) {
@@ -239,15 +304,7 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
         } catch (NoSuchMethodException | SecurityException ex) {
             //log.error("getMethod('getLabel') ", ex);
         }
-
-        System.out.println(prefix + inComponent.getClass().getName() + ":" + label);
-
-        if (inComponent instanceof Container) {
-            Component[] clist = ((Container) inComponent).getComponents();
-            for (Component c : clist) {
-                dumpComponent(c, inDepth + 1);
-            }
-        }
+        return result;
     }
 
     // from here down is testing infrastructure
