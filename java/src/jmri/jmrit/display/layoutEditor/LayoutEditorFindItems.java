@@ -576,8 +576,10 @@ public class LayoutEditorFindItems {
     }
     
    /**
-     * @param inName
-     * @return the first unique LayoutTrack object name that starts with this prefix
+     * Determine the first unused LayoutTrack object name...
+     * @param inPrefix ...with this prefix...
+     * @param inStartIndex ...and this starting index...
+     * @return the first unused LayoutTrack object name
      */
     public String uniqueName(String inPrefix, int inStartIndex) {
         String result;
