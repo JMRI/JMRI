@@ -2041,9 +2041,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     } //targetWindowClosingEvent
 
     /**
-     * setup editable JmriBeanComboBoxes
+     * Set up editable JmriBeanComboBoxes
      *
-     * @param inComboBox     the editable JmriBeanComboBoxes to setup
+     * @param inComboBox     the editable JmriBeanComboBoxes to set up
      * @param inValidateMode boolean: if true, valid text == green, invalid text
      *                       == red background; if false, valid text == green,
      *                       invalid text == yellow background
@@ -2255,10 +2255,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
     } //setupToolsMenu
 
+<<<<<<< HEAD
     //
     //setup option menu
     //
     protected JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
+=======
+    /**
+    /* Set up the Option menu.
+     */
+    protected JMenu setupOptionMenu(JMenuBar menuBar) {
+>>>>>>> JMRI/master
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
         optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
@@ -7824,9 +7831,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.setText("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
+<<<<<<< HEAD
 
         //}
     } //addLayoutTurnout
+=======
+    }   //addLayoutTurnout
+>>>>>>> JMRI/master
 
     /**
      * Validates that a physical turnout exists and is unique among Layout
