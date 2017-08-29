@@ -257,7 +257,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
         }
         if (intensity <= mMinIntensity) {
-            throw new IllegalArgumentException("Requested intensity " + intensity + " not less than minIntensity " + mMinIntensity);
+            throw new IllegalArgumentException("Requested intensity " + intensity + " must be higher than minIntensity " + mMinIntensity);
         }
 
         double oldValue = mMaxIntensity;
@@ -302,7 +302,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
         }
         if (intensity >= mMaxIntensity) {
-            throw new IllegalArgumentException("Requested intensity " + intensity + " not more than maxIntensity " + mMaxIntensity);
+            throw new IllegalArgumentException("Requested intensity " + intensity + " should be less than maxIntensity " + mMaxIntensity);
         }
 
         double oldValue = mMinIntensity;
