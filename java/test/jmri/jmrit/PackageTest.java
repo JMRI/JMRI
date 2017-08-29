@@ -55,7 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sendpacket.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sensorgroup.PackageTest.class));
         suite.addTest(jmri.jmrit.simpleclock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.symbolicprog.PackageTest.class));
         suite.addTest(jmri.jmrit.tracker.PackageTest.suite());
         suite.addTest(jmri.jmrit.ussctc.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));
