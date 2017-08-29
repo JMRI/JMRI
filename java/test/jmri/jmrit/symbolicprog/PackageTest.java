@@ -56,7 +56,8 @@ import org.junit.runners.Suite;
     QuantumCvMgrImporterTest.class,
     LokProgImporterTest.class,
     ComboOffRadioButtonTest.class,
-    ComboOnRadioButtonTest.class
+    ComboOnRadioButtonTest.class,
+    DccAddressVarHandlerTest.class
 })
 
 /**
