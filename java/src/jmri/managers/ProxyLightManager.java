@@ -2,7 +2,6 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
-import jmri.NamedBean;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple

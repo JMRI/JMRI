@@ -1,12 +1,8 @@
 package jmri.jmrit.ussctc;
 
+import jmri.util.JUnitUtil;
 import java.util.*;
 import jmri.*;
-import jmri.util.*;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Demo of classes in jmri.jmrit.ussctc
@@ -20,8 +16,7 @@ public class PackageDemo {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

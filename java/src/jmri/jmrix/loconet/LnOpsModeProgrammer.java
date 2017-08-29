@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;

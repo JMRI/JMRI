@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.locostats.swing;
 
-import jmri.jmrix.loconet.locostats.swing.LocoStatsPanel;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.jmrix.loconet.LnConstants;

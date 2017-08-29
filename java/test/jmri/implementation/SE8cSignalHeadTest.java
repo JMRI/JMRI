@@ -154,14 +154,12 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
     // The minimal setup for log4J/JUnit4
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

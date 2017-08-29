@@ -1,15 +1,16 @@
 package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialTrafficControlScaffold;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
+import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
-import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
-import jmri.jmrix.cmri.serial.SerialTrafficControlScaffold;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -53,15 +54,13 @@ public class ConnectionConfigXmlTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

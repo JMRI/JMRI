@@ -20,8 +20,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -122,7 +122,9 @@ public class SensorTableAction extends AbstractTableAction {
             };
             ActionListener cancelListener = new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
             };
             ActionListener rangeListener = new ActionListener() {
                 @Override
@@ -259,9 +261,12 @@ public class SensorTableAction extends AbstractTableAction {
             }
 
             // add first and last names to statusMessage user feedback string
-            if (x == 0 || x == numberOfSensors - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
-            if (x == numberOfSensors - 2)
+            if (x == 0 || x == numberOfSensors - 1) {
+                statusMessage = statusMessage + " " + sName + " (" + user + ")";
+            }
+            if (x == numberOfSensors - 2) {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            }
             // only mention first and last of range added
 
             // end of for loop creating range of Sensors
@@ -311,9 +316,9 @@ public class SensorTableAction extends AbstractTableAction {
             log.debug("SensorManager tip");
         }
         // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
-        hardwareAddressTextField.setToolTipText("<html>" +
-                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
-                "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setToolTipText("<html>"
+                + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
+                + "<br>" + addEntryToolTip + "</html>");
     }
 
     void handleCreateException(String hwAddress) {
@@ -398,10 +403,11 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     /**
-     * Insert a table specific Defaults menu.
-     * Account for the Window and Help menus, which are already added to the menu bar
-     * as part of the creation of the JFrame, by adding the Tools menu 2 places earlier
-     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * Insert a table specific Defaults menu. Account for the Window and Help
+     * menus, which are already added to the menu bar as part of the creation of
+     * the JFrame, by adding the Tools menu 2 places earlier unless the table is
+     * part of the ListedTableFrame, that adds the Help menu later on.
+     *
      * @param f the JFrame of this table
      */
     @Override
@@ -410,15 +416,15 @@ public class SensorTableAction extends AbstractTableAction {
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
         boolean menuAbsent = true;
-        for(int m = 0; m < menuBar.getMenuCount(); ++m) {
+        for (int m = 0; m < menuBar.getMenuCount(); ++m) {
             String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
-            if(name.equals(Bundle.getMessage("MenuDefaults"))) {
+            if (name.equals(Bundle.getMessage("MenuDefaults"))) {
                 // using first menu for check, should be identical to next JMenu Bundle
                 menuAbsent = false;
                 break;
             }
         }
-        if(menuAbsent) { // create it
+        if (menuAbsent) { // create it
             JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
             optionsMenu.add(item);
@@ -518,7 +524,8 @@ public class SensorTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
+     * @author E. Broerse 2017, based on
+     * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
 
@@ -556,7 +563,8 @@ public class SensorTableAction extends AbstractTableAction {
         /**
          * Validate the field information. Does not make any GUI changes.
          *
-         * @return 'true' if current field entry is valid according to the system manager; otherwise 'false'
+         * @return 'true' if current field entry is valid according to the
+         *         system manager; otherwise 'false'
          */
         @Override
         public boolean isValid() {
@@ -580,9 +588,9 @@ public class SensorTableAction extends AbstractTableAction {
         }
 
         /**
-         * Private class used in conjunction with CheckedTextField to
-         * provide the mechanisms required to validate the text field data upon loss
-         * of focus, and colorize the text field in case of validation failure.
+         * Private class used in conjunction with CheckedTextField to provide
+         * the mechanisms required to validate the text field data upon loss of
+         * focus, and colorize the text field in case of validation failure.
          */
         private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
 

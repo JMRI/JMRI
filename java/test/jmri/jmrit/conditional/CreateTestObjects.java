@@ -1,17 +1,13 @@
 package jmri.jmrit.conditional;
 
 import java.util.ArrayList;
-
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.LogixManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 

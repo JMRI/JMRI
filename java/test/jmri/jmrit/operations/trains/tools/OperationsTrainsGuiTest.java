@@ -13,9 +13,10 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,7 +50,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -61,7 +62,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.initComponents(train);
 
         Assert.assertNotNull("frame exists", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -71,7 +72,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.setVisible(true);
 
         Assert.assertNotNull("frame exists", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // test TrainIcon attributes

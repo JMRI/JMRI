@@ -1,6 +1,5 @@
 package jmri.jmrit.speedometer;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
@@ -52,21 +51,17 @@ public class SpeedometerActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SpeedometerFrame.class.getName(), frame.getClass().getName());
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
 
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

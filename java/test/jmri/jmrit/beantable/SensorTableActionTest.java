@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -90,9 +91,9 @@ public class SensorTableActionTest extends AbstractTableActionBase {
         // clean up
         JFrame f = a.getFrame();
         if (f != null) {
-            f.dispose();
+            JUnitUtil.dispose(f);
         }
-        af.dispose();
+        JUnitUtil.dispose(af);
         _sTable.dispose();
         _s1Table.dispose();
     }
@@ -101,8 +102,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initInternalSensorManager();
         a = new SensorTableAction();
     }
@@ -112,8 +112,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     public void tearDown() {
         a.dispose();
         a = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableActionTest.class.getName());

@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 
 /**
  * LinkingLabelTest.java
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen
@@ -56,8 +56,8 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
         panel.pack();
         panel.setVisible(true);
 
-        jf.dispose();
-        panel.dispose();
+        JUnitUtil.dispose(jf);
+        JUnitUtil.dispose(panel);
 
     }
 
@@ -81,9 +81,7 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override
@@ -97,10 +95,9 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
 
             panel = null;
-            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
-            JUnitUtil.resetInstanceManager();
+            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         }
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());

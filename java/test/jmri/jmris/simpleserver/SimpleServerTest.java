@@ -1,6 +1,7 @@
 //SimpleServerTest.java
 package jmri.jmris.simpleserver;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,13 +31,13 @@ public class SimpleServerTest {
 
     // The minimal setup for log4J
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

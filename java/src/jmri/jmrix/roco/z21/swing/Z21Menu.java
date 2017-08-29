@@ -1,8 +1,8 @@
 package jmri.jmrix.roco.z21.swing;
 
 import java.util.ResourceBundle;
-import javax.swing.JMenu;
 import javax.annotation.Nonnull;
+import javax.swing.JMenu;
 
 
 /**

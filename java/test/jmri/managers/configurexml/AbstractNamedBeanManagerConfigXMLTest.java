@@ -2,11 +2,12 @@ package jmri.managers.configurexml;
 
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Checks of basic NamedBean storage
@@ -292,12 +293,12 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private class NamedBeanManagerConfigXMLTest extends AbstractNamedBeanManagerConfigXML {
