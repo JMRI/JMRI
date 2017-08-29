@@ -6,6 +6,12 @@ import cucumber.api.Scenario;
 
 import jmri.web.server.WebServer;
 
+/**
+ * Cucumber helper to handle starting and stoping the web server
+ * during web tests.
+ *
+ * @author  Paul Bender Copyright (C) 2017
+ */
 public class WebServerScaffold {
    private WebServer server = null;
 

@@ -5,6 +5,11 @@ import cucumber.api.java8.En;
 import cucumber.api.PendingException;
 import org.junit.Assert;
 
+/**
+ * Cucumber step defintions for Home Servlet Acceptance tests.
+ *
+ * @author  Paul Bender Copyright (C) 2017
+ */
 public class HomeServletAcceptanceSteps implements En {
       
    public HomeServletAcceptanceSteps() {
