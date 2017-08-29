@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Options Help</title>
+  <title>JMRI: Dispatcher Options Help</title>
   <meta content="Dave Duchamp" name="Author">
   <meta name="keywords" content="JMRI help Dispatcher Options">
   <!-- Style -->
@@ -25,32 +25,32 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Dispatcher Options</h1>
+      <h1>Dispatcher: Dispatcher Options</h1>
 
       <h2>Introduction</h2>
 
-      <p>The <b>Options Window</b> provides for tailoring
-      <b><a href="Dispatcher.shtml">Dispatcher</a></b> options
-      according to user needs and preferences. The <b>Options
-      Menu</b> provides access to Dispatcher options and provides
-      for saving Dispatcher options on disk for later use. Both are
-      described below in detail. Available Dispatcher options are
-      described fully in the following section.</p>
+      <p>The <b>Dispatcher Options</b> pane provides for tailoring
+      <b><a href="Dispatcher.shtml">Dispatcher</a></b>
+      according to user needs and preferences. The <b>Options</b>
+      menu provides access to these options and to
+      another choice for saving Dispatcher Options to disk for later use.
+      Both are described below.</p>
 
-      <h2>Using the Options Window</h2><img src="OptionsWindow.jpg"
-      height="665" width="568" style="float:right;margin:2em;">
+      <h2>Using Dispatcher Options</h2>
+      <img src="images/OptionsWindow.png" height="649" width="606"
+           style="float:right;margin:2em;">
 
-      <p>Selecting <b>Options Window...</b> in the <b>Options</b>
-      menu of the Dispatcher window brings up the window shown at
+      <p>Selecting <b>Dispatcher Options...</b> in the <b>Options</b>
+      menu of the Dispatcher window brings up the pane shown at
       right.</p>
 
-      <p>This window shows options currently selected for
-      Dispatcher. To change Dispatcher options, change to the
+      <p>This window shows options currently set for
+      Dispatcher. To change Dispatcher Options, change to the
       desired option configuration, and click the <b>Apply</b>
-      button. All options are set to the selections in the Options
-      window, and the Options window disappears. To dismiss this
-      window without changing any options, click the <b>Cancel</b>
-      button. Each option is explained below:</p>
+      button. All options are set to the selections in the Dispatcher Options
+      pane, and the pane disappears. To close this pane without changing
+      any options, click <b>Cancel</b>.<br>
+      The available options are:</p>
 
       <ul>
         <li>
@@ -67,25 +67,21 @@
           correctly. This item must be checked if Dispatcher is to
           set turnouts when a Section is allocated (see below), and
           if trains are to be run automatically.</p>
-        </li>
-
-        <li>
-          <p>Select from the drop down the type of Signalling
-          control that is use on the panel</p>
+          <p>Select the type of Signalling control that is use on
+          the panel from the drop down:</p>
 
           <ul>
-            <li><b>SignalHeads/SSL</b> - Uses the traditional
+            <li><b>Signal Heads/SSL</b> - Uses (traditional)
             Signal Heads and Simple Signal Logic</li>
 
-            <li><b>SignalMasts</b> - Uses the more advanced Signal
-            Masts and associated SignalMast Logic</li>
+            <li><b>Signal Masts/SML</b> - Uses (more advanced) Signal
+            Masts and associated Signal Mast Logic</li>
           </ul>
         </li>
 
         <li>
-          <p>Select one of the three options for Dispatcher to
-          select trains from when creating Active Trains. The three
-          possibilities are:</p>
+          <p>Select one of these three options for Dispatcher to
+          select Trains from when creating Active Trains:</p>
         </li>
 
         <li style="list-style: none">
@@ -94,7 +90,7 @@
             all trains in the JMRI Roster that are not currently in
             Active Trains.</li>
 
-            <li><b>Trains from Trains</b> - Dispatcher will list
+            <li><b>Trains from Operations</b> - Dispatcher will list
             all trains available from Operations that are not in
             Active Trains.</li>
 
@@ -215,7 +211,7 @@
         <li>
           <p><b>Time to Fully Ramp</b> is used to calculate the
           Ramping values. Specifically, it is how long (in
-          milliseconds) it would take to go from 0% to 100%.
+          milliseconds) it would take to go from 0&#37; to 100&#37;.
           Increasing this value causes ramping operations to take
           longer.</p>
         </li>
@@ -230,7 +226,7 @@
       </ul>
 
       <p><b>Important Note: Remember to save your Options</b> (see
-      Below). If new Dispatcher Options are not saved, they revert
+      below). If new Dispatcher Options are not saved, they revert
       to the previous values the next time Dispatcher is run.</p>
 
       <h2>Using the Options Menu</h2>
@@ -272,9 +268,16 @@
 
         <li>
           <p><b>Save Options...</b> - Selecting this item saves
-          Dispatcher Options currently in effect into a small XML
-          file (<i>dispatcheroptions.xml</i>) in the user's
-          preferences directory. This is the same location where
+            Dispatcher Options to disk.</p></li>
+      </ul>
+
+      <a id="saveoptions" name="saveoptions"></a></a>
+      <h2>Saving Dispatcher Options</h2>
+
+          <p>To save the Dispatcher settings currently in effect into
+          a small XML file (<i>dispatcheroptions.xml</i>) in the user's
+          preferences directory, select <b>Save Options...</b> from the
+          <b>Options</b> menu.</b> This is the same location where
           JMRI preference files are saved. When Dispatcher is
           started, if a file named "<i>dispatcheroptions.xml</i>"
           is found in the user's preference directory, that file is
@@ -284,8 +287,9 @@
           saved automatically.</b> Saving Dispatcher Options is
           optional. Selecting this menu item is the only way to
           save Dispatcher Options.</p>
-        </li>
-      </ul><!--#include virtual="/Footer" -->
+
+      <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

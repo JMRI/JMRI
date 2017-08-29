@@ -496,7 +496,7 @@ public class ActivateTrainFrame {
         } else if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))) {
             delaySensor.setVisible(true);
         }
-        initiateFrame.pack(); // to fit extra hr:min in window
+        initiateFrame.pack(); // to fit extra hh:mm in window
     }
 
     private void handleResetWhenDoneClick(ActionEvent e) {
@@ -1153,17 +1153,24 @@ public class ActivateTrainFrame {
     /**
      * The following are for items that are only for automatic running of
      * ActiveTrains They are isolated here to simplify changing them in the
-     * future initializeAutoRunItems - initializes the display of auto run items
-     * in this window initializeAutoRunValues - initializes the values of auto
+     * future.
+     * <ul>
+     * <li>initializeAutoRunItems - initializes the display of auto run items
+     * in this window
+     * <li>initializeAutoRunValues - initializes the values of auto
      * run items from values in a saved train info file hideAutoRunItems - hides
      * all auto run items in this window showAutoRunItems - shows all auto run
-     * items in this window autoTrainInfoToDialog - gets auto run items from a
+     * items in this window
+     * <li>autoTrainInfoToDialog - gets auto run items from a
      * train info, puts values in items, and initializes auto run dialog items
-     * autoTrainItemsToTrainInfo - copies values of auto run items to train info
-     * for saving to a file readAutoRunItems - reads and checks values of all
+     * <li>autoTrainItemsToTrainInfo - copies values of auto run items to train info
+     * for saving to a file
+     * <li>readAutoRunItems - reads and checks values of all
      * auto run items. returns true if OK, sends appropriate messages and
-     * returns false if not OK setAutoRunItems - sets the user entered auto run
+     * returns false if not OK
+     * <li>setAutoRunItems - sets the user entered auto run
      * items in the new AutoActiveTrain
+     * </ul>
      */
     // auto run items in ActivateTrainFrame
     private JPanel pa1 = new JPanel();
@@ -1209,6 +1216,7 @@ public class ActivateTrainFrame {
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
+        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         pa1.add(maxSpeedSpinner);
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         initiatePane.add(pa1);

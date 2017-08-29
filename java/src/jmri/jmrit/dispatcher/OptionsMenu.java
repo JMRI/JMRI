@@ -33,16 +33,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Sets up and processes items in the Dispatcher Options menu.
- * <P>
- * This file is part of JMRI.
- * <P>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
@@ -75,7 +65,7 @@ public class OptionsMenu extends JMenu {
                 optionWindowRequested(event);
             }
         });
-        JMenuItem saveOptionsItem = new JMenuItem(Bundle.getMessage("SaveOptionsItem") + "...");
+        JMenuItem saveOptionsItem = new JMenuItem(Bundle.getMessage("SaveOptionsItem"));
         this.add(saveOptionsItem);
         saveOptionsItem.addActionListener(new ActionListener() {
             @Override
@@ -139,7 +129,7 @@ public class OptionsMenu extends JMenu {
 
     private void optionWindowRequested(ActionEvent e) {
         if (optionsFrame == null) {
-            optionsFrame = new JmriJFrame(Bundle.getMessage("MenuOptions"), false, true);
+            optionsFrame = new JmriJFrame(Bundle.getMessage("OptionWindowItem"), false, true);
             optionsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.Options", true);
             optionsPane = optionsFrame.getContentPane();
             optionsPane.setLayout(new BoxLayout(optionsFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -372,8 +362,13 @@ public class OptionsMenu extends JMenu {
         dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
         dispatcher.getLayoutEditor().setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
         optionsFrame.setVisible(false);
-        optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
+        optionsFrame.dispose(); // prevent this window from being listed in the Window menu.
         optionsFrame = null;
+        // save options reminder
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveOptions"),
+                        OptionsMenu.class.getName(),
+                        "remindSaveDispatcherOptions"); // NOI18N
         initializeMenu();
     }
 
@@ -386,10 +381,7 @@ public class OptionsMenu extends JMenu {
     private void saveRequested(ActionEvent e) {
         try {
             InstanceManager.getDefault(OptionsFile.class).writeDispatcherOptions(dispatcher);
-        } //catch (org.jdom2.JDOMException jde) {
-        // log.error("Exception writing Dispatcher options: "+jde);
-        //}
-        catch (java.io.IOException ioe) {
+        } catch (java.io.IOException ioe) {
             log.error("Exception writing Dispatcher options: " + ioe);
         }
     }
@@ -426,4 +418,5 @@ public class OptionsMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
+
 }

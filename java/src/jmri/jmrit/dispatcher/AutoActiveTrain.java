@@ -96,17 +96,17 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _forward = true;
     private float _targetSpeed = 0.0f;
     private int _savedStatus = ActiveTrain.RUNNING;
-    private int _currentRampRate = RAMP_NONE;     // current Ramp Rate
-    private boolean _pausingActive = false;  // true if train pausing thread is active
+    private int _currentRampRate = RAMP_NONE; // current Ramp Rate
+    private boolean _pausingActive = false;   // true if train pausing thread is active
 
     // persistent instance variables (saved with train info)
-    private int _rampRate = RAMP_NONE;     // default Ramp Rate
-    private float _speedFactor = 1.0f;  // default speed factor
-    private float _maxSpeed = 0.6f;   // default maximum train speed
-    private boolean _resistanceWheels = true;  // true if all train cars show occupancy
-    private boolean _runInReverse = false;  // true if the locomotive should run through Transit in reverse
-    private boolean _soundDecoder = false;  // true if locomotive has a sound decoder
-    private volatile float _maxTrainLength = 200.0f;  // default train length (scale feet/meters)
+    private int _rampRate = RAMP_NONE; // default Ramp Rate
+    private float _speedFactor = 1.0f; // default speed factor
+    private float _maxSpeed = 0.6f;    // default maximum train speed
+    private boolean _resistanceWheels = true; // true if all train cars show occupancy
+    private boolean _runInReverse = false;    // true if the locomotive should run through Transit in reverse
+    private boolean _soundDecoder = false;    // true if locomotive has a sound decoder
+    private volatile float _maxTrainLength = 200.0f; // default train length (scale feet/meters)
 
     // accessor functions
     public ActiveTrain getActiveTrain() {
@@ -1158,7 +1158,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    //pass in speed as shown on dialogs, and convert to decimal speed needed by throttle
+    /**
+     * Pass in speed as shown on dialogs, and convert to decimal speed needed by throttle.
+     */
     private synchronized void setTargetSpeedValue(float speed) {
         _autoEngineer.slowToStop(false);
         float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
@@ -1190,9 +1192,9 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Initiates running in manual mode with external throttle This method is
-     * triggered by an action in the Transit The throttle in use for automatic
-     * operation is dispatched
+     * Initiates running in manual mode with external throttle.
+     * <p>This method is triggered by an action in the Transit.
+     * The throttle in use for automatic operation is dispatched.
      */
     protected void initiateWorking() {
         if (_activeTrain.getStatus() != ActiveTrain.WORKING) {
@@ -1210,8 +1212,9 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Returns when train is stopped Note: Provides for _autoEngineer becoming
-     * null during wait Ties up the current autoActiveTrain thread
+     * Returns when train is stopped.
+     * <p>Note: Provides for _autoEngineer becoming
+     * null during wait Ties up the current autoActiveTrain thread.
      */
     protected void waitUntilStopped() {
         boolean doneWaiting = false;
@@ -1613,7 +1616,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         /**
-         * Flag from user to end run
+         * Flag from user to end run.
          */
         public void abort() {
             _abort = true;
@@ -1716,8 +1719,8 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * routine to convert ramp rate name, stored as a string into the constant
-     * value assigned
+     * Convert ramp rate name, stored as a string into the constant
+     * value assigned.
      *
      * @param rampRate - name of ramp rate, such as "RAMP_FAST"
      * @return integer representing a ramprate constant value
@@ -1736,4 +1739,5 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
+
 }
