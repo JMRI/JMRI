@@ -1227,40 +1227,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             firePropertyChange("turnouts", null, this.destination);
         }
 
-        /*void setTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
-         if(this.turnoutThroats!=null){
-         Enumeration<Turnout> keys = this.turnouts.keys();
-         while ( keys.hasMoreElements() )
-         {
-         Turnout key = keys.nextElement();
-         key.removePropertyChangeListener(propertyTurnoutListener);
-         }
-         }
-         destMastInit = false;
-         if(turnouts==null){
-         this.turnoutThroats = new Hashtable<Turnout, Boolean>(0);
-         } else {
-         this.turnoutThroats=turnouts;
-         }
-         firePropertyChange("turnouts", null, this.destination);
-         }*/
- /*void setAutoTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
-         if(this.turnoutThroats!=null){
-         Enumeration<Turnout> keys = this.turnouts.keys();
-         while ( keys.hasMoreElements() )
-         {
-         Turnout key = keys.nextElement();
-         key.removePropertyChangeListener(propertyTurnoutListener);
-         }
-         }
-         destMastInit = false;
-         if(turnouts==null){
-         this.autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
-         } else {
-         this.autoTurnoutThroats=turnouts;
-         }
-         firePropertyChange("turnouts", null, this.destination);
-         }*/
         void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts) {
             log.debug("{} called setAutoTurnouts with {}", destination.getDisplayName(), (turnouts != null ? "" + turnouts.size() + " turnouts in hash table" : "null hash table reference"));
             if (this.autoTurnouts != null) {
@@ -1747,8 +1713,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         /**
          * Check the details of this source-destination signal mast logic pair.
          * Steps through every sensor, turnout etc. before setting the SML
-         * Aspect on the source mast via
-         * {
+         * Aspect on the source mast via {
          *
          * @see #setSignalAppearance } and {
          * @see #setMastAppearance }
