@@ -1469,7 +1469,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _halted = true;
                 } else if (_slowToStop) {
                     if (useSpeedProfile) {
-                        re.getSpeedProfile().setExtraInitialDelay(10f);
+                        re.getSpeedProfile().setExtraInitialDelay(1500f);
                         re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
                     }else {
                         _currentSpeed = _throttle.getSpeedSetting();
