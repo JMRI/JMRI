@@ -396,7 +396,7 @@ public class TrackSegment extends LayoutTrack {
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
-            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
+            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
@@ -520,9 +520,15 @@ public class TrackSegment extends LayoutTrack {
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
-        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep1 = center, ep2 = center;
+        if (getConnect1() != null) {
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        }
+        if (getConnect2() != null) {
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        }
+        
         result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
-        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         result.add(ep2);
 
         return result;

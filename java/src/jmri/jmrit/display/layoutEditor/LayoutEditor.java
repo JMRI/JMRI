@@ -2219,7 +2219,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             //bring up signals at throat-to-throat turnouts tool dialog
-            tools.setSignalsAtTToTTurnouts(signalIconEditor, signalFrame);
+            tools.setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
         });
 
         //set signals at 3-way turnout
@@ -5067,6 +5067,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         x.addRay(90.0);
         x.addRay(180.0);
         x.addRay(270.0);
+        setDirty(true);
     } //addTurntable
 
     /**
@@ -9205,8 +9206,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 labelImage.add((PositionableLabel) l);
             }
         }
-
-        resizePanelBounds(false);
+        if (connectionsSetFlag) {
+            resizePanelBounds(false);
+        }
     } //putItem
 
     /**
@@ -9356,6 +9358,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //setup icon
         backgroundImage.add(super.setUpBackground(name));
+        setDirty(true);
     } //addBackground
 
     /**
@@ -10008,6 +10011,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     //final initialization routine for loading a LayoutEditor
+    private boolean connectionsSetFlag = false;
     public void setConnections() {
         //initialize TrackSegments if any
         for (TrackSegment ts : trackList) {
@@ -10040,6 +10044,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         auxTools.initializeBlockConnectivity();
         log.debug("Initializing Block Connectivity for {}", layoutName);
+
+        connectionsSetFlag = true;
 
         //reset the panel changed bit
         resetDirty();

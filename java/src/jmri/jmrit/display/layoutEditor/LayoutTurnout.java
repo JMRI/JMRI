@@ -2397,13 +2397,13 @@ public class LayoutTurnout extends LayoutTrack {
                             tools.setSignalsAtTurnoutFromMenu((LayoutTurnout) instance,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
-                            tools.setThroatToThroatFromMenu((LayoutTurnout) instance, linkedTurnoutName,
+                            tools.setSignalsAtThroatToThroatTurnoutsFromMenu((LayoutTurnout) instance, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
-                            tools.set3WayFromMenu(getTurnoutName(), linkedTurnoutName,
+                            tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == SECOND_3_WAY) {
-                            tools.set3WayFromMenu(linkedTurnoutName, getTurnoutName(),
+                            tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         }
                     }
