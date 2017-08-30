@@ -5,6 +5,8 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 
@@ -18,21 +20,27 @@ import jmri.NamedBean;
 public abstract class AbstractNamedBean implements NamedBean {
 
     /**
-     * simple constructor
+     * Simple constructor.
      *
-     * @param sys the system name for this bean
+     * @param sys the system name for this bean; must not be null
      */
-    protected AbstractNamedBean(String sys) {
+    protected AbstractNamedBean(@Nonnull String sys) {
         this(sys, null);
     }
 
     /**
-     * designated constructor
+     * Designated constructor.
      *
-     * @param sys  the system name for this bean
-     * @param user the user name for this bean
+     * @param sys  the system name for this bean; must not be null
+     * @param user the user name for this bean; can be null
+     * @throws jmri.NamedBean.BadUserNameException   if the user name cannot be
+     *                                               normalized
+     * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
+    protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException {
+        if (sys == null) {
+            throw new NamedBean.BadSystemNameException();
+        }
         mSystemName = sys;
         // normalize the user name or refuse construction if unable to
         AbstractNamedBean.this.setUserName(user);
@@ -274,26 +282,28 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     /**
-     * compare for equality
-     * @param o the object to compare us to
-     * @return true if we are equal to the object
+     * {@inheritDoc}
+     * <p>
+     * This implementation tests that the results of
+     * {@link jmri.NamedBean#getSystemName()} and
+     * {@link jmri.NamedBean#getUserName()} are equal for this and obj.
+     *
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj argument;
+     *         {@code false} otherwise.
      */
     @Override
-    public boolean equals(Object o) {
-        boolean result = super.equals(o);
-        if (!result && (o != null) && o instanceof AbstractNamedBean) {
-            AbstractNamedBean b = (AbstractNamedBean) o;
-            if (this == b) {
-                result = true;
-            } else {
-                String bSystemName = b.getSystemName();
-                if ((mSystemName != null) && (bSystemName != null)
-                        && mSystemName.equals(bSystemName)) {
-                    String bUserName = b.getUserName();
-                    if ((mUserName != null) && (bUserName != null)
-                            && mUserName.equals(bUserName)) {
-                        result = true;
-                    }
+    public boolean equals(Object obj) {
+        // test the obj == this
+        boolean result = super.equals(obj);
+
+        if (!result && (obj != null) && obj instanceof AbstractNamedBean) {
+            AbstractNamedBean b = (AbstractNamedBean) obj;
+            if (this.getSystemName().equals(b.getSystemName())) {
+                String bUserName = b.getUserName();
+                if ((mUserName != null) && (bUserName != null)
+                        && mUserName.equals(bUserName)) {
+                    result = true;
                 }
             }
         }
@@ -302,6 +312,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * calculate our hash code
+     *
      * @return our hash code
      */
     @Override
