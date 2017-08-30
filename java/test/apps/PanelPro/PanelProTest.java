@@ -10,6 +10,8 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -31,13 +33,16 @@ public class PanelProTest {
         Assert.assertNotNull("exists", t);
     }
 
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
     @Test
     public void testLaunch() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 
         try {
             // create a custom profile
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), new File("temp/LocoNet_Simulator"));
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), folder.newFolder());
             System.setProperty("org.jmri.profile", "temp/LocoNet_Simulator");
 
             // launch!
@@ -82,7 +87,7 @@ public class PanelProTest {
                 
         try {
             // create a custom profile
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), new File("temp/Prevent_Init_Loop"));
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), folder.newFolder());
             System.setProperty("org.jmri.profile", "temp/Prevent_Init_Loop");
 
             // launch!
