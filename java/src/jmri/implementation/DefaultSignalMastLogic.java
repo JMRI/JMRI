@@ -71,7 +71,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     }
 
     // Most of the following methods will inherit Javadoc from jmri.SignalMastLogic.java
-
     @Override
     public void setFacingBlock(LayoutBlock facing) {
         facingBlock = facing;
@@ -797,8 +796,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     }
 
     /**
-     * Evaluate the destination signal mast Aspect and set ours
-     * accordingly.
+     * Evaluate the destination signal mast Aspect and set ours accordingly.
      */
     void setMastAppearance() {
         synchronized (this) {
@@ -1032,7 +1030,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     }
 
     /**
-     * Class to store SML properties for a destination mast paired with this source mast.
+     * Class to store SML properties for a destination mast paired with this
+     * source mast.
      */
     private class DestinationMast {
 
@@ -1245,7 +1244,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
          }
          firePropertyChange("turnouts", null, this.destination);
          }*/
-        /*void setAutoTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
+ /*void setAutoTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
          if(this.turnoutThroats!=null){
          Enumeration<Turnout> keys = this.turnouts.keys();
          while ( keys.hasMoreElements() )
@@ -1262,7 +1261,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
          }
          firePropertyChange("turnouts", null, this.destination);
          }*/
-
         void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts) {
             log.debug("{} called setAutoTurnouts with {}", destination.getDisplayName(), (turnouts != null ? "" + turnouts.size() + " turnouts in hash table" : "null hash table reference"));
             if (this.autoTurnouts != null) {
@@ -1360,7 +1358,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         /**
          *
          * @param newAutoMasts Hashtable of signal masts and set to Aspects
-         * @param overwrite When true, replace an existing autoMasts list in the SML
+         * @param overwrite    When true, replace an existing autoMasts list in
+         *                     the SML
          */
         void setAutoMasts(Hashtable<SignalMast, String> newAutoMasts, boolean overwrite) {
             if (log.isDebugEnabled()) {
@@ -1695,7 +1694,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         // the following 2 methods are not supplied in the implementation
-
         boolean inWait = false;
 
         /*
@@ -1748,8 +1746,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
         /**
          * Check the details of this source-destination signal mast logic pair.
-         * Steps through every sensor, turnout etc. before setting the SML Aspect on the source mast via
-         * {@see #setSignalAppearance } and {@see #setMastAppearance }
+         * Steps through every sensor, turnout etc. before setting the SML
+         * Aspect on the source mast via
+         * {
+         *
+         * @see #setSignalAppearance } and {
+         * @see #setMastAppearance }
          */
         void checkStateDetails() {
             turnoutThrown = false;
@@ -1921,8 +1923,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         /**
-         * Set up this source-destination signal mast logic pair.
-         * Steps through every list defined on the source mast.
+         * Set up this source-destination signal mast logic pair. Steps through
+         * every list defined on the source mast.
          */
         void initialise() {
             if ((destMastInit) || (disposed)) {
@@ -2237,7 +2239,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         /**
-         * From a list of Layout Blocks search for included Turnouts and their set to state
+         * From a list of Layout Blocks search for included Turnouts and their
+         * set to state
          *
          * @param lblks List of Layout Blocks
          * @return a list of block - turnout state pairs
@@ -2328,11 +2331,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
         /**
          * Generate auto signalmast for a given SML. Looks through all the other
-         * logics to see if there are any blocks that are in common and thus will
-         * add the other signal mast protecting that block.
+         * logics to see if there are any blocks that are in common and thus
+         * will add the other signal mast protecting that block.
          *
-         * @param sml       The Signal Mast Logic for which to set up autoSignalMasts
-         * @param overwrite When true, replace an existing autoMasts list in the SML
+         * @param sml       The Signal Mast Logic for which to set up
+         *                  autoSignalMasts
+         * @param overwrite When true, replace an existing autoMasts list in the
+         *                  SML
          */
         void setupAutoSignalMast(jmri.SignalMastLogic sml, boolean overwrite) {
             if (!allowAutoSignalMastGeneration) {
@@ -2376,7 +2381,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         /**
-         * Add a certain Signal Mast to the list of AutoSignalMasts for this SML.
+         * Add a certain Signal Mast to the list of AutoSignalMasts for this
+         * SML.
          *
          * @param mast The Signal Mast to be added
          */
@@ -2397,7 +2403,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         /**
-         * Remove a certain Signal Mast from the list of AutoSignalMasts for this SML.
+         * Remove a certain Signal Mast from the list of AutoSignalMasts for
+         * this SML.
          *
          * @param mast The Signal Mast to be removed
          */
@@ -2435,8 +2442,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         /**
-         * Remove references from this Destination Mast and clear lists,
-         * so that it can eventually be garbage-collected.
+         * Remove references from this Destination Mast and clear lists, so that
+         * it can eventually be garbage-collected.
          */
         void dispose() {
             if (thr != null) {
@@ -2795,28 +2802,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
     };
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized int getNumPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners().length;
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-
     //@todo need to think how we deal with auto generated lists based upon the layout editor.
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
@@ -2924,8 +2909,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
      *
      * @return Always zero
      */
-    public int getState() { return 0; }
-    public void setState(int i) { }
+    public int getState() {
+        return 0;
+    }
+
+    public void setState(int i) {
+    }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());
 }
