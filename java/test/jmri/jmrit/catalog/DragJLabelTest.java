@@ -1,8 +1,10 @@
 package jmri.jmrit.catalog;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.datatransfer.DataFlavor;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,6 +19,7 @@ public class DragJLabelTest {
 
     @Test
     public void testCTor() throws java.lang.ClassNotFoundException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DragJLabel t = new DragJLabel(DataFlavor.stringFlavor);
         Assert.assertNotNull("exists",t);
     }
