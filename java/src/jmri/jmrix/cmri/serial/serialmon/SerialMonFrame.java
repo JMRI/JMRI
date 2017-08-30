@@ -1,10 +1,9 @@
 package jmri.jmrix.cmri.serial.serialmon;
 
-import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages

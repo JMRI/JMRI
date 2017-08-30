@@ -1,14 +1,10 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
-import javax.swing.Action;
-import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for classes in the jmri.jmrit.beantable package
@@ -45,16 +41,13 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new MemoryTableAction();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         a = null;
     }
 

@@ -1,8 +1,7 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
 import jmri.jmrix.powerline.SerialTrafficControlScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,15 +25,11 @@ public class SerialPacketGenPaneTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-        tc = null;
+    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }
 }

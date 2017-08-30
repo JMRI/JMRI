@@ -3,13 +3,14 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
+import jmri.util.JUnitUtil;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -115,7 +116,7 @@ public class QualifierCombinerTest {
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

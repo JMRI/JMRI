@@ -4,8 +4,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Rosters entries to a specific Roster Group.

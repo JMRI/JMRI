@@ -11,15 +11,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -100,7 +100,7 @@ public class ReporterTableAction extends AbstractTableAction {
 
             @Override
             public void clickOn(NamedBean t) {
-                // don't do anything on click; not used in this class, because 
+                // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
 
@@ -215,6 +215,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
+    String connectionChoice = "";
     jmri.UserPreferencesManager pref;
 
     @Override
@@ -231,7 +232,9 @@ public class ReporterTableAction extends AbstractTableAction {
             };
             ActionListener cancelListener = new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
             };
             ActionListener rangeListener = new ActionListener() {
                 @Override
@@ -354,8 +357,12 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             // add first and last names to statusMessage user feedback string
-            if (x == 0 || x == numberOfReporters - 1) statusMessage = statusMessage + " " + rName + " (" + user + ")";
-            if (x == numberOfReporters - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            if (x == 0 || x == numberOfReporters - 1) {
+                statusMessage = statusMessage + " " + rName + " (" + user + ")";
+            }
+            if (x == numberOfReporters - 2) {
+                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            }
             // only mention first and last of range added
 
             // end of for loop creating range of Reporters
@@ -377,7 +384,7 @@ public class ReporterTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
-        String connectionChoice = (String) prefixBox.getSelectedItem();
+        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
@@ -404,9 +411,9 @@ public class ReporterTableAction extends AbstractTableAction {
             log.debug("ReporterManager tip");
         }
         // show hwAddressTextField field tooltip in the Add Reporter pane that matches system connection selected from combobox
-        hardwareAddressTextField.setToolTipText("<html>" +
-                Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors")) +
-                "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setToolTipText("<html>"
+                + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
+                + "<br>" + addEntryToolTip + "</html>");
     }
 
     void handleCreateException(String sysName) {
@@ -419,11 +426,14 @@ public class ReporterTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on ValidatedTextField by B. Milhaupt
+     * @author E. Broerse 2017, based on
+     * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
 
         CheckedTextField fld;
+        boolean allow0Length = false; // for Add new bean item, a value that is zero-length is considered invalid.
+        private MyVerifier verifier; // internal mechanism used for verifying field data before focus is lost
 
         /**
          * Text entry field with an active key event checker.
@@ -433,22 +443,95 @@ public class ReporterTableAction extends AbstractTableAction {
         public CheckedTextField(int len) {
             super("", len);
             fld = this;
-            // set background color for invalid field data
-            fld.setBackground(Color.red);
 
-//            fld.addFocusListener(new FocusListener() {
-//                @Override
-//                public void focusGained(FocusEvent e) {
-//                    setEditable(true);
-//                    setEnabled(true);
-//                }
-//
-//                @Override
-//                public void focusLost(FocusEvent e) {
-//                    exitFieldColorizer();
-//                    setEditable(true);
-//                }
-//            });
+            // configure InputVerifier
+            verifier = new MyVerifier();
+            fld = this;
+            fld.setInputVerifier(verifier);
+
+            fld.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    setEditable(true);
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    setEditable(true);
+                }
+            });
+        }
+
+        /**
+         * Validate the field information. Does not make any GUI changes.
+         *
+         * @return 'true' if current field entry is valid according to the
+         *         system manager; otherwise 'false'
+         */
+        @Override
+        public boolean isValid() {
+            String value;
+            String prefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice); // connectionChoice is set by canAddRange()
+
+            if (fld == null) {
+                return false;
+            }
+            value = getText().trim();
+            if ((value.length() < 1) && (allow0Length == false)) {
+                return false;
+            } else if ((allow0Length == true) && (value.length() == 0)) {
+                return true;
+            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
+                // get prefixSelectedItem
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Private class used in conjunction with CheckedTextField to provide
+         * the mechanisms required to validate the text field data upon loss of
+         * focus, and colorize the text field in case of validation failure.
+         */
+        private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
+
+            // set default background color for invalid field data
+            Color mark = Color.orange;
+
+            @Override
+            public boolean shouldYieldFocus(javax.swing.JComponent input) {
+                if (input.getClass() == CheckedTextField.class) {
+
+                    boolean inputOK = verify(input);
+                    if (inputOK) {
+                        input.setBackground(Color.white);
+                        return true;
+                    } else {
+                        input.setBackground(mark);
+                        ((javax.swing.text.JTextComponent) input).selectAll();
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public boolean verify(javax.swing.JComponent input) {
+                if (input.getClass() == CheckedTextField.class) {
+                    return ((CheckedTextField) input).isValid();
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                JTextField source = (JTextField) e.getSource();
+                shouldYieldFocus(source); //ignore return value
+                source.selectAll();
+            }
         }
     }
 

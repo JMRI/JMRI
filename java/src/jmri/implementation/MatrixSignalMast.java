@@ -3,13 +3,12 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.

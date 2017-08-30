@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
@@ -231,6 +230,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
             }
         }
         throw new jmri.JmriException("Turnout Manager could not be found for System Prefix " + prefix);
+    }
+
+    /**
+     * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((TurnoutManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return false;
     }
 
     @Override

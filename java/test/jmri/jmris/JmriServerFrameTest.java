@@ -1,8 +1,8 @@
 //JmriServerFrameTest.java
 package jmri.jmris;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -21,18 +21,18 @@ public class JmriServerFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriServerFrame a = new JmriServerFrame();
         Assert.assertNotNull(a);
-        a.dispose();
+        JUnitUtil.dispose(a);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

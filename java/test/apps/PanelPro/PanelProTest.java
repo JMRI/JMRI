@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.*;
 
 import org.apache.commons.io.*;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -12,6 +11,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -123,13 +123,11 @@ public class PanelProTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager(); // an app should recreate this, but just in case
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

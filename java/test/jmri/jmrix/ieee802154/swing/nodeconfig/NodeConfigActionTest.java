@@ -1,16 +1,15 @@
 package jmri.jmrix.ieee802154.swing.nodeconfig;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
+import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
-import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of NodeConfigAction
@@ -79,13 +78,9 @@ public class NodeConfigActionTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

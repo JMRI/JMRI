@@ -53,6 +53,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    /**
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();
@@ -64,5 +73,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
-
-

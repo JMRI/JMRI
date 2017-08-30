@@ -1,10 +1,10 @@
 package jmri.jmrit.catalog;
 
 import jmri.NamedBean;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the CatalogTreeFS class

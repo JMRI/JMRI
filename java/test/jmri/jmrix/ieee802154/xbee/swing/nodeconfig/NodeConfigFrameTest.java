@@ -1,14 +1,13 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of NodeConfigFrame
@@ -28,8 +27,7 @@ public class NodeConfigFrameTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new XBeeTrafficController() {
             @Override
             public void setInstance() {
@@ -46,9 +44,6 @@ public class NodeConfigFrameTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-        tc = null;
+    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }
 }

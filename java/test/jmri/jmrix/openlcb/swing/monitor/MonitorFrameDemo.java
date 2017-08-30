@@ -1,18 +1,19 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
@@ -26,10 +27,10 @@ public class MonitorFrameDemo {
     private CanSystemConnectionMemo memo = null;
 
     class OurScaffold extends TrafficControllerScaffold {
+
         /*
          * Forward CanMessage to object under test
          */
-
         public void testMessage(CanMessage f) {
             for (jmri.jmrix.AbstractMRListener c : cmdListeners) {
                 ((CanListener) c).message(f);
@@ -140,20 +141,19 @@ public class MonitorFrameDemo {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new CanSystemConnectionMemo();
         tcs = new OurScaffold();
 
         memo.setTrafficController(tcs);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
     }
 
     @After
     public void tearDown() throws Exception {
-        memo.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.tearDown();
     }
 }

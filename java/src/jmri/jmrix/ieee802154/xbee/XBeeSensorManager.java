@@ -1,13 +1,13 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
-import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
+import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -16,12 +16,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the XBee specific Sensor implementation.
  *
- * System names are "ZSnnn", where nnn is the sensor number without padding. or
- * "ZSstring:pin", where string is a node address and pin is the io pin used.
+ * System names are "ZSnnn", where nnn is the sensor number without padding.
+ * Or "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
  * @author Paul Bender Copyright (C) 2003-2016
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
+
+    // ctor has to register for XBee events
+    public XBeeSensorManager(XBeeTrafficController controller, String prefix) {
+        tc = controller;
+        this.prefix = prefix;
+        tc.getXBee().addIOSampleListener(this);
+    }
 
     @Override
     public String getSystemPrefix() {
@@ -46,6 +53,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // XBee specific methods
+
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         XBeeNode curNode = null;
@@ -72,18 +80,41 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
-    // ctor has to register for XBee events
-    public XBeeSensorManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
-        tc.getXBee().addIOSampleListener(this);
+    /**
+     * Public method to validate system name format.
+     *
+     * @param systemName Xbee id format with pins to be checked
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
+                && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
+            try {
+                if (tc.getNodeFromAddress(Integer.parseInt(addressFromSystemName(systemName))) == null) {
+                    return false;
+                } else {
+                    return (pinFromSystemName(systemName) >= 0
+                            && pinFromSystemName(systemName) <= 7);
+                }
+            } catch (java.lang.NumberFormatException nfe) {
+                // if there was a number format exception, we couldn't find the node.
+                log.debug("Unable to convert {} into the XBee node and pin format of nn:xx", systemName);
+                return false;
+            }
+
+        } else {
+            return (pinFromSystemName(systemName) >= 0
+                    && pinFromSystemName(systemName) <= 7);
+        }
     }
 
     // IIOSampleReceiveListener methods
+
     @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
+            log.debug("received io sample {} from {}",ioSample,remoteDevice);
         }
 
         XBeeNode node = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
@@ -224,7 +255,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                 log.debug("Failed to removing sensor from pin " + pin);
             }
         }
-
     }
 
     /**

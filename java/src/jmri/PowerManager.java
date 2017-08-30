@@ -1,7 +1,6 @@
 package jmri;
 
 import java.beans.PropertyChangeListener;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;

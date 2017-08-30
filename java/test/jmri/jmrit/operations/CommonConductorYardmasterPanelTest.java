@@ -1,11 +1,10 @@
 package jmri.jmrit.operations;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the CommonConductorYardmasterPanel class
@@ -23,19 +22,14 @@ public class CommonConductorYardmasterPanelTest  {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        p = new CommonConductorYardmasterPanel(){
+        JUnitUtil.setUp();        p = new CommonConductorYardmasterPanel(){
             @Override
             protected void update(){
-            };
+            }
         };
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

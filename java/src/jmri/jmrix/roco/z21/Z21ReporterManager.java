@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.Reporter;
 import jmri.InstanceManager;
 import jmri.RailComManager;
+import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

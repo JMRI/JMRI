@@ -1,10 +1,11 @@
 package jmri.jmrix.can.cbus;
 
-import org.junit.After;
-import org.junit.Before;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * CbusReporterManagerTest.java
@@ -26,8 +27,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new TrafficControllerScaffold();
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
@@ -37,8 +37,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

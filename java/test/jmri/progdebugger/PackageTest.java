@@ -48,8 +48,6 @@ public class PackageTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 }

@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import org.slf4j.Logger;

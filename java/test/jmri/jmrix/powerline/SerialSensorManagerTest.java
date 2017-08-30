@@ -1,6 +1,7 @@
 package jmri.jmrix.powerline;
 
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +13,10 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+
     @Override
     public String getSystemName(int i) {
         return "PSP" + i;
@@ -62,7 +64,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public void testDefaultSystemName() {
         // create
         // powerline systems require a module letter(?) which
-        // isn't provided by makeSystemName();      
+        // isn't provided by makeSystemName();
         Sensor t = l.provideSensor("PSP" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
@@ -73,7 +75,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Test
     public void testUpperLower() {
         // powerline systems require a module letter(?) which
-        // isn't provided by makeSystemName();      
+        // isn't provided by makeSystemName();
         Sensor t = l.provideSensor("PSP" + getNumToTest1());
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
@@ -85,20 +87,18 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Sensor t2 = l.provideSensor("PSP" + getNumToTest2());
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
         Assert.assertTrue(null == t1.getUserName());
     }
 
-
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
         SerialTrafficController t = new jmri.jmrix.powerline.SerialTrafficController() {
             SerialTrafficController test() {
@@ -123,9 +123,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-
 
 }

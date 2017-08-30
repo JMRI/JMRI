@@ -1,11 +1,8 @@
 //EliteXNetSystemConnectionMemo.java
 package jmri.jmrix.lenz.hornbyelite;
 
-import jmri.ConsistManager;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * Lightweight class to denote that a system is active and provide general

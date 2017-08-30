@@ -21,15 +21,13 @@ public class FrameServletPreferencesPanelTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

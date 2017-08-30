@@ -1,7 +1,7 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -11,13 +11,13 @@ import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import javax.annotation.Nonnull;
 import javax.swing.DefaultCellEditor;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;

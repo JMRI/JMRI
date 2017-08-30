@@ -31,8 +31,7 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.tearDown(); 
     }
 
 }

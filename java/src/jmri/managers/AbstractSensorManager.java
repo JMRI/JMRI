@@ -187,17 +187,30 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return prefix + typeLetter() + curAddress;
     }
 
+    /**
+     * Validate system name format.
+     *
+     * @since 2.9.3
+     * @see jmri.jmrit.beantable.SensorTableAction.CheckedTextField
+     * @param systemName proposed complete system name incl. prefix
+     * @return always 'true' to let undocumented connection system managers pass entry validation.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
-        //be considered the next valid address.
+        // If the hardware address passed does not already exist then this can
+        // be considered the next valid address.
         String tmpSName = "";
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
             return null;
         }
         Sensor s = getBySystemName(tmpSName);
@@ -212,7 +225,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
             return null;
         }
 
@@ -280,7 +293,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      * Do the sensor objects provided by this manager support configuring
      * an internal pullup or pull down resistor?
      * <p>
-     * This default implementaiton always returns false.
+     * This default implementation always returns false.
      *
      * @return true if pull up/pull down configuration is supported.
      */
@@ -290,7 +303,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

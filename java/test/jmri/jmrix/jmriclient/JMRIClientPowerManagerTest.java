@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -67,7 +68,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 
