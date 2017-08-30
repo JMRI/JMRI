@@ -6565,7 +6565,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g.setStroke(stroke);
     } //highLightSelection
 
-    private void createSelectionGroups() {
+    protected void createSelectionGroups() {
         List<Positionable> contents = getContents();
         Rectangle2D selectionRect = getSelectionRect();
 
@@ -6659,7 +6659,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         repaint();
     } //createSelectionGroups
 
-    private void clearSelectionGroups() {
+    protected void clearSelectionGroups() {
         _pointSelection = null;
         _turntableSelection = null;
         _xingSelection = null;
@@ -10309,6 +10309,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Rectangle2D result = new Rectangle2D.Double(selX, selY,
                 Math.abs(selectionWidth), Math.abs(selectionHeight));
         return result;
+    }
+
+    public void setSelectionRect(Rectangle2D selectionRect) {
+        selectionX = selectionRect.getX();
+        selectionY = selectionRect.getY();
+        selectionWidth = selectionRect.getWidth();
+        selectionHeight = selectionRect.getHeight();
+
+        clearSelectionGroups();
+        createSelectionGroups();
     }
 
     private void drawSelectionRect(@Nonnull Graphics2D g2) {

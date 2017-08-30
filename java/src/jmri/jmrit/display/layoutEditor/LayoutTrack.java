@@ -279,9 +279,7 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected void showPopUp(MouseEvent e) {
-
-    }
+    protected abstract void showPopUp(MouseEvent e);
 
     /**
      * get the object connected to this track for the specified connection type
