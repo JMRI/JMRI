@@ -80,7 +80,7 @@ public class ActivateTrainFrame {
     private JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
     private JTextField trainNameField = new JTextField(10);
     private JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
-    private JTextField dccAddressField = new JTextField(6);
+    private JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
     private JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
     private JComboBox<String> startingBlockBox = new JComboBox<String>();
     private ArrayList<Block> startingBlockBoxList = new ArrayList<Block>();
@@ -233,8 +233,8 @@ public class ActivateTrainFrame {
             p1a.add(trainNameField);
             trainNameField.setToolTipText(Bundle.getMessage("TrainFieldHint"));
             p1a.add(dccAddressFieldLabel);
-            p1a.add(dccAddressField);
-            dccAddressField.setToolTipText(Bundle.getMessage("DccAddressFieldHint"));
+            p1a.add(dccAddressSpinner);
+            dccAddressSpinner.setToolTipText(Bundle.getMessage("DccAddressFieldHint"));
             initiatePane.add(p1a);
             JPanel p2 = new JPanel();
             p2.setLayout(new FlowLayout());
@@ -411,7 +411,7 @@ public class ActivateTrainFrame {
             trainFieldLabel.setVisible(false);
             trainNameField.setVisible(false);
             dccAddressFieldLabel.setVisible(false);
-            dccAddressField.setVisible(false);
+            dccAddressSpinner.setVisible(false);
         } else if (_TrainsFromUser) {
             trainNameField.setText("");
             trainBoxLabel.setVisible(false);
@@ -419,7 +419,7 @@ public class ActivateTrainFrame {
             trainFieldLabel.setVisible(true);
             trainNameField.setVisible(true);
             dccAddressFieldLabel.setVisible(true);
-            dccAddressField.setVisible(true);
+            dccAddressSpinner.setVisible(true);
         }
         setAutoRunDefaults();
         autoRunBox.setSelected(false);
@@ -589,22 +589,8 @@ public class ActivateTrainFrame {
         int delayedReStart = delayModeFromBox(delayedReStartBox);
         int departureTimeHours = 8;
         departureTimeHours = (Integer) departureHrSpinner.getValue();
-        if ((departureTimeHours < 0) || (departureTimeHours > 23)) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "BadEntry3", (Integer) departureHrSpinner.getValue()),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.warn("Range error in Departure Time Hours field");
-            return;
-        }
         int departureTimeMinutes = 8;
         departureTimeMinutes = (Integer) departureMinSpinner.getValue();
-        if ((departureTimeMinutes < 0) || (departureTimeMinutes > 59)) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "BadEntry3", (Integer) departureMinSpinner.getValue()),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.warn("Range error in Departure Time Minutes field");
-            return;
-        }
         int delayRestartMinutes = 0;
         delayRestartMinutes = (Integer) delayMinSpinner.getValue();
         if ((delayRestartMinutes < 0)) {
@@ -670,21 +656,9 @@ public class ActivateTrainFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            dccAddress = dccAddressField.getText();
             int address = -1;
-            try {
-                address = Integer.parseInt(dccAddress);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error23"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.error("Conversion exception in dccAddress field");
-                return;
-            }
-            if ((address < 1) || (address > 9999)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error23"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            address = (Integer) dccAddressSpinner.getValue(); // SpinnerNumberModel limits address to 1 - 9999 inclusive
+            dccAddress = String.valueOf(address);
             if (!isAddressFree(address)) {
                 // DCC address is already in use by an Active Train
                 JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
@@ -1040,7 +1014,7 @@ public class ActivateTrainFrame {
             }
         } else if (_TrainsFromUser) {
             trainNameField.setText(info.getTrainName());
-            dccAddressField.setText(info.getDCCAddress());
+            dccAddressSpinner.setValue(Integer.parseInt(info.getDCCAddress()));
         }
         inTransitBox.setSelected(info.getTrainInTransit());
         initializeStartingBlockCombo();
@@ -1075,7 +1049,7 @@ public class ActivateTrainFrame {
             info.setDCCAddress(" ");
         } else if (_TrainsFromUser) {
             info.setTrainName(trainNameField.getText());
-            info.setDCCAddress(dccAddressField.getText());
+            info.setDCCAddress((String) dccAddressSpinner.getValue());
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
@@ -1175,9 +1149,9 @@ public class ActivateTrainFrame {
     // auto run items in ActivateTrainFrame
     private JPanel pa1 = new JPanel();
     private JLabel speedFactorLabel = new JLabel(Bundle.getMessage("SpeedFactorLabel"));
-    private JSpinner speedFactorSpinner = new JSpinner(new SpinnerNumberModel(1.0f, 0.1f, 1.5f, 0.01f));
+    private JSpinner speedFactorSpinner = new JSpinner();
     private JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
-    private JSpinner maxSpeedSpinner = new JSpinner(new SpinnerNumberModel(1.0f, 0.1f, 1.5f, 0.01f));
+    private JSpinner maxSpeedSpinner = new JSpinner();
     private JPanel pa2 = new JPanel();
     private JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private JComboBox<String> rampRateBox = new JComboBox<String>();
@@ -1187,7 +1161,7 @@ public class ActivateTrainFrame {
     private JPanel pa4 = new JPanel();
     private JCheckBox resistanceWheelsBox = new JCheckBox(Bundle.getMessage("ResistanceWheels"));
     private JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
-    private JSpinner maxTrainLengthSpinner = new JSpinner(new SpinnerNumberModel(18.0f, 0.0f, 10000.0f, 1.0f));
+    private JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
     // auto run variables
     float _speedFactor = 1.0f;
     float _maxSpeed = 0.6f;
@@ -1211,11 +1185,13 @@ public class ActivateTrainFrame {
         initializeRampCombo();
         pa1.setLayout(new FlowLayout());
         pa1.add(speedFactorLabel);
+        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
         speedFactorSpinner.setEditor(new JSpinner.NumberEditor(speedFactorSpinner, "# %"));
         pa1.add(speedFactorSpinner);
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         pa1.add(maxSpeedSpinner);
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
@@ -1237,6 +1213,8 @@ public class ActivateTrainFrame {
         resistanceWheelsBox.setToolTipText(Bundle.getMessage("ResistanceWheelsBoxHint"));
         pa4.add(new JLabel("   "));
         pa4.add(trainLengthLabel);
+        maxTrainLengthSpinner.setModel(new SpinnerNumberModel(Float.valueOf(18.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.5f)));
+        maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
         pa4.add(maxTrainLengthSpinner);
         maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint"));
         initiatePane.add(pa4);
@@ -1251,7 +1229,8 @@ public class ActivateTrainFrame {
         resistanceWheelsBox.setSelected(_resistanceWheels);
         soundDecoderBox.setSelected(_soundDecoder);
         runInReverseBox.setSelected(_runInReverse);
-        maxTrainLengthSpinner.setValue(_maxTrainLength);
+
+        maxTrainLengthSpinner.setValue(Math.round(_maxTrainLength * 2)*0.5f); // set in spinner as 0.5 increments
     }
 
     private void hideAutoRunItems() {
@@ -1298,37 +1277,17 @@ public class ActivateTrainFrame {
         boolean success = true;
         float factor = 1.0f;
         factor = (float) speedFactorSpinner.getValue();
-        if ((factor < 0.1f) || (factor > 1.5f)) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error29", (float) speedFactorSpinner.getValue()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            speedFactorSpinner.setValue(1.0f);
-            return false;
-        }
         _speedFactor = factor;
         float max = 0.6f;
         max = (float) maxSpeedSpinner.getValue();
-        if ((max < 0.1f) || (max > 1.5f)) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error37", (float) maxSpeedSpinner.getValue()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            speedFactorSpinner.setValue(0.6f);
-            return false;
-        }
         _maxSpeed = max;
         _rampRate = rampRateBox.getSelectedIndex();
         _resistanceWheels = resistanceWheelsBox.isSelected();
         _runInReverse = runInReverseBox.isSelected();
         _soundDecoder = soundDecoderBox.isSelected();
-        factor = (float) maxTrainLengthSpinner.getValue();
-        if ((factor < 0.0f) || (factor > 10000.0f)) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error31", (float) maxTrainLengthSpinner.getValue()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            maxTrainLengthSpinner.setValue(18.0f);
-            return false;
-        }
-        _maxTrainLength = factor;
+        float length = 18.0f;
+        length = (Float) maxTrainLengthSpinner.getValue();
+        _maxTrainLength = length;
         return success;
     }
 

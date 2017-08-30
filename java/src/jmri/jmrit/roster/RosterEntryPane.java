@@ -70,7 +70,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
     public RosterEntryPane(RosterEntry r) {
 
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(1.00d, 0.00d, 1.00d, 0.01d));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Double.valueOf(1.00d), Double.valueOf(0.00d), Double.valueOf(1.00d), Double.valueOf(0.01d)));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         id.setText(r.getId());
 

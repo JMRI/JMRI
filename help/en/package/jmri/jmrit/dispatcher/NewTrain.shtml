@@ -155,10 +155,12 @@
         </li>
 
         <li>
-          <p>If the window shown below is displayed, select a train
-          name from the <b>Train:</b> list, and enter a numeric
-          address in the <b>DCC Address:</b> field.</p><img src=
-          "images/NewTrainAltWindow.jpg" height="666" width="520">
+          <a>If <a href="Options.shtml">Dispatcher Options</a> is
+          set to <b>Trains from User Entry</b>,
+          the following pane is displayed.<br>
+          Enter a train name in the <b>Train:</b> field, and set a numeric
+          address from 1 to 9999 as the <b>DCC Address</b>.</p><img src=
+          "images/NewTrainAltWindow.png" height="593" width="463">
           <p>
           Any short name that identifies the train may be used
           provided the name is not being used by another Active
