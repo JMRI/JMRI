@@ -42,10 +42,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
     boolean enabled = true;
     boolean activeEntryExit = false;
-    ArrayList<LayoutBlock> routeDetails = new ArrayList<LayoutBlock>();
+    ArrayList<LayoutBlock> routeDetails = new ArrayList<>();
     LayoutBlock destination;
     boolean disposed = false;
-    String uniqueId = null;
 
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
@@ -66,15 +65,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     transient Source src = null;
 
     DestinationPoints(PointDetails point, String id, Source src) {
-        super(id);
+        super(id != null ? id : UUID.randomUUID().toString());
         this.src = src;
         this.point = point;
-        if (id == null) {
-            uniqueId = UUID.randomUUID().toString();
-            mSystemName = uniqueId;
-        } else {
-            uniqueId = id;
-        }
         mUserName = (src.getPoint().getDisplayName() + " to " + this.point.getDisplayName());
 
         propertyBlockListener = new PropertyChangeListener() {
@@ -91,7 +84,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     }
 
     String getUniqueId() {
-        return uniqueId;
+        return getSystemName();
     }
 
     public PointDetails getDestPoint() {
@@ -167,7 +160,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
 
             if (now == Block.OCCUPIED) {
                 LayoutBlock lBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
-                //If the block was previously active or inactive then we will 
+                //If the block was previously active or inactive then we will
                 //reset the useExtraColor, but not if it was previously unknown or inconsistent.
                 lBlock.setUseExtraColor(false);
                 blk.removePropertyChangeListener(propertyBlockListener); //was this
@@ -941,7 +934,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                 for (LayoutBlock srcProLBlock : src.getSourceProtecting()) {
                     protectLBlock = srcProLBlock;
                     if (!reverseDirection) {
-                        //We have a problem, the destination point is already setup with a route, therefore we would need to 
+                        //We have a problem, the destination point is already setup with a route, therefore we would need to
                         //check some how that a route hasn't been set to it.
                         destinationLBlock = getFacing();
                         ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
