@@ -1350,8 +1350,8 @@ public class PositionablePoint extends LayoutTrack {
 
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
 
                     g2.draw(new Line2D.Double(p1, p2));
                     g2.draw(new Line2D.Double(p2, p3));
