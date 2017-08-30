@@ -1,7 +1,9 @@
-package jmri.jmrit.catalog;
+package jmri.jmrit.display.palette;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -12,12 +14,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CatalogTreeLeafTest {
+public class ItemDialogTest {
 
     @Test
     public void testCTor() {
-        CatalogTreeLeaf t = new CatalogTreeLeaf("testleaf","testpath",1);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ItemDialog t = new ItemDialog("Sensors","Sensors");
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
@@ -31,6 +35,6 @@ public class CatalogTreeLeafTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeLeafTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ItemDialogTest.class.getName());
 
 }
