@@ -68,6 +68,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
         suite.addTest(new JUnit4TestAdapter(AudioTablePanelTest.class));
         suite.addTest(new JUnit4TestAdapter(AudioTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewBeanPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewDevicePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewHardwareDevicePanelTest.class));
         return suite;
     }
 
