@@ -35,7 +35,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(ConnectivityUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.blockRoutingTable.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.layoutEditorTools.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutBlockConnectivityToolsTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutBlockManagerTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutBlockTest.class)); 
