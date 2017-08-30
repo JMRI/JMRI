@@ -65,7 +65,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     public static final String XML_NAMESPACE = "http://jmri.org/xml/schema/speedometer-3-9-3.xsd";
     JButton profileButton = new JButton(Bundle.getMessage("ButtonStart"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton testButton = new JButton(Bundle.getMessage("ButtonStart"));
+    JButton testButton = new JButton(Bundle.getMessage("ButtonTest"));
     JButton testCancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton clearNewDataButton = new JButton(Bundle.getMessage("ButtonClearNewData"));
     JButton viewNewButton = new JButton(Bundle.getMessage("ButtonViewNew"));
