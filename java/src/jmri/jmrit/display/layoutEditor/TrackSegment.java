@@ -527,7 +527,7 @@ public class TrackSegment extends LayoutTrack {
         if (getConnect2() != null) {
             ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
-        
+
         result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
         result.add(ep2);
 
@@ -615,7 +615,7 @@ public class TrackSegment extends LayoutTrack {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.removeTrackSegment((TrackSegment)instance);
+                layoutEditor.removeTrackSegment((TrackSegment) instance);
                 remove();
                 dispose();
             }
@@ -1311,7 +1311,24 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getCentre() {
-        return new Point2D.Double(centreX, centreY);
+        Point2D result = new Point2D.Double(centreX, centreY);
+
+        Point2D ep1 = result;
+        Object c1 = getConnect1();
+        if (c1 != null) {
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        }
+
+        Point2D ep2 = result;
+        Object c2 = getConnect2();
+        if (c2 != null) {
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        }
+        result = MathUtil.midPoint(ep1, ep2);
+        centreX = result.getX();
+        centreY = result.getY();
+
+        return result;
     }
 
     private double tmpangle;
@@ -1575,24 +1592,23 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else if (getBezier()) {
             g2.draw(layoutEditor.trackControlPointRectAt(ep1));
-            Point2D lastPt = ep1;
-            for (Point2D bcp : bezierControlPoints) {
-                if (showConstructionLinesLE()) { //draw track circles
+            //draw construction lines and control circles
+            if (showConstructionLinesLE()) {
+                Point2D lastPt = ep1;
+                for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
+                    g2.draw(layoutEditor.trackControlPointRectAt(bcp));
                 }
-                g2.draw(layoutEditor.trackControlPointRectAt(bcp));
-            }
-            if (showConstructionLinesLE()) { //draw track circles
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
             g2.draw(layoutEditor.trackControlPointRectAt(ep2));
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
-            if (showConstructionLinesLE()) { //draw track circles
+            if (showConstructionLinesLE()) { //draw control circles
                 g2.draw(new Line2D.Double(ep1, ep2));
+                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
             }
-            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         }
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.

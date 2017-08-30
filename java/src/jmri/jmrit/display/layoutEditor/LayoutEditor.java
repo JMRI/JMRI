@@ -2257,6 +2257,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     /**
      * Set up the Option menu.
+     *
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
@@ -4914,7 +4915,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 inColor == defaultTrackColor, a);
     } //addTrackColorMenuEntry
 
-    private void addTrackOccupiedColorMenuEntry(@Nonnull JMenu inMenu, @Nonnull  String inName, @Nonnull final Color inColor) {
+    private void addTrackOccupiedColorMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, @Nonnull final Color inColor) {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -4944,7 +4945,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 inColor == defaultAlternativeTrackColor, a);
     } //addTrackAlternativeColorMenuEntry
 
-    private void addTextColorMenuEntry(@Nonnull JMenu inMenu, @Nonnull  String inName, @Nonnull final Color inColor) {
+    private void addTextColorMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, @Nonnull final Color inColor) {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -4959,7 +4960,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 inColor == defaultTextColor, a);
     } //addTextColorMenuEntry
 
-    private void addTurnoutCircleColorMenuEntry(@Nonnull JMenu inMenu, @Nonnull  String inName, @Nonnull final Color inColor) {
+    private void addTurnoutCircleColorMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, @Nonnull final Color inColor) {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -4972,7 +4973,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 (inColor != null) && (inColor == turnoutCircleColor), a);
     } //addTurnoutCircleColorMenuEntry
 
-    private void addTurnoutCircleSizeMenuEntry(@Nonnull JMenu inMenu, @Nonnull  String inName, @Nonnull final int inSize) {
+    private void addTurnoutCircleSizeMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, @Nonnull final int inSize) {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -5402,7 +5403,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return hitPointCheckLayoutTracks(loc, false, null);
     }
 
-    private boolean hitPointCheckLayoutTracks(@Nonnull Point2D loc, 
+    private boolean hitPointCheckLayoutTracks(@Nonnull Point2D loc,
             boolean requireUnconnected, @Nullable Object avoid) {
         boolean result = false; // assume failure (pessimist!)
 
@@ -7838,7 +7839,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      *                      suppress dialogs)
      * @return true if valid
      */
-    public boolean validatePhysicalTurnout(@Nonnull String inTurnoutName, 
+    public boolean validatePhysicalTurnout(@Nonnull String inTurnoutName,
             @Nullable Component inOpenPane) {
         //check if turnout name was entered
         if (inTurnoutName.isEmpty()) {
@@ -7948,7 +7949,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Adds a link in the 'to' object to the 'from' object
      */
-    private void setLink(@Nonnull Object fromObject, int fromPointType, 
+    private void setLink(@Nonnull Object fromObject, int fromPointType,
             @Nonnull Object toObject, int toPointType) {
         switch (toPointType) {
             case LayoutTrack.POS_POINT: {
@@ -8100,8 +8101,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * and sets the block sensor name in the block. Else returns false, and does
      * nothing to the block.
      */
-    public boolean validateSensor(@Nonnull String sensorName, 
-            @Nonnull LayoutBlock blk, 
+    public boolean validateSensor(@Nonnull String sensorName,
+            @Nonnull LayoutBlock blk,
             @Nonnull Component openFrame) {
         boolean result = false; //assume failure (pessimist!)
 
@@ -8506,7 +8507,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return false;
     } //removeLayoutTurnout
 
-    private void substituteAnchor(@Nonnull Point2D loc, 
+    private void substituteAnchor(@Nonnull Point2D loc,
             @Nonnull Object o, @Nonnull TrackSegment t) {
         PositionablePoint p = addAnchor(loc);
 
@@ -10012,6 +10013,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //final initialization routine for loading a LayoutEditor
     private boolean connectionsSetFlag = false;
+
     public void setConnections() {
         //initialize TrackSegments if any
         for (TrackSegment ts : trackList) {
@@ -10099,6 +10101,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         drawSolidTrackSegments(g2, false); //non-mainline
         drawSolidTrackSegments(g2, true); //mainline
+        drawPoints(g2);
 
         drawTurnouts(g2);
         drawXings(g2);
@@ -10109,7 +10112,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // things that only get drawn in edit mode
         if (isEditable()) {
-            drawPoints(g2);
+            drawPointsEditControls(g2);
 
             drawTurnoutEditControls(g2);
             drawXingEditControls(g2);
@@ -10293,6 +10296,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             p.draw(g2);
         } // for (PositionablePoint p : pointList)
     } //drawPoints
+
+    private void drawPointsEditControls(@Nonnull Graphics2D g2) {
+        for (PositionablePoint p : pointList) {
+            p.drawControls(g2);
+        } // for (PositionablePoint p : pointList)
+    } //drawPointsEditControls
 
     private Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
@@ -10806,7 +10815,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 //    protected void rename(String inFrom, String inTo) {
 //        
 //    }
-
     @Override
     public void dispose() {
         if (sensorFrame != null) {

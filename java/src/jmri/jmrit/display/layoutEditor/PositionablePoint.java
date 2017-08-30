@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -888,6 +889,11 @@ public class PositionablePoint extends LayoutTrack {
             }
         }));
         jmi.setSelected(getType() == END_BUMPER);
+        if (getType() == ANCHOR) {
+            if (getConnect2() != null) {
+                jmi.setEnabled(false);
+            }
+        }
 
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EdgeConnector")) {
             @Override
@@ -897,6 +903,12 @@ public class PositionablePoint extends LayoutTrack {
             }
         }));
         jmi.setSelected(getType() == EDGE_CONNECTOR);
+        if (getType() == ANCHOR) {
+            if (getConnect2() != null) {
+                jmi.setEnabled(false);
+            }
+        }
+
         popup.add(lineType);
 
         if (blockBoundary) {
@@ -1310,7 +1322,61 @@ public class PositionablePoint extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     public void draw(Graphics2D g2) {
+        if (getType() != PositionablePoint.ANCHOR) {
+            Point2D pt = getCoordsCenter();
+            boolean mainline = false;
+            Point2D ep1 = pt, ep2 = pt;
+
+            if (getConnect1() != null) {
+                mainline = getConnect1().getMainline();
+                ep1 = getConnect1().getCentre();
+            }
+            if (getConnect2() != null) {
+                mainline |= getConnect2().getMainline();
+                ep2 = getConnect2().getCentre();
+            }
+
+            if (!ep1.equals(ep2)) {
+                float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
+                layoutEditor.setTrackStrokeWidth(g2, false);
+                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
+                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
+                if (mainline) {
+                    float quarterWidth = Math.max(1.F, trackWidth / 4.F);
+                    Point2D p1 = new Point2D.Double(-quarterWidth, -trackWidth);
+                    Point2D p2 = new Point2D.Double(-quarterWidth, +trackWidth);
+                    Point2D p3 = new Point2D.Double(+quarterWidth, +trackWidth);
+                    Point2D p4 = new Point2D.Double(+quarterWidth, -trackWidth);
+
+                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+
+                    g2.draw(new Line2D.Double(p1, p2));
+                    g2.draw(new Line2D.Double(p2, p3));
+                    g2.draw(new Line2D.Double(p3, p4));
+                    g2.draw(new Line2D.Double(p4, p1));
+                } else {
+                    Point2D end1 = new Point2D.Double(0.0, -trackWidth);
+                    Point2D end2 = new Point2D.Double(0.0, +trackWidth);
+
+                    end1 = MathUtil.add(MathUtil.rotateRAD(end1, angleRAD), pt);
+                    end2 = MathUtil.add(MathUtil.rotateRAD(end2, angleRAD), pt);
+                    g2.draw(new Line2D.Double(end1, end2));
+                }
+            }
+        }
+    }
+
+    /**
+     * draw this PositionablePoint's controls
+     *
+     * @param g2 the graphics port to draw to
+     */
+    public void drawControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
         switch (getType()) {
             case PositionablePoint.ANCHOR:
             case PositionablePoint.EDGE_CONNECTOR: {
@@ -1336,10 +1402,10 @@ public class PositionablePoint extends LayoutTrack {
                 break;
             }
         }   //switch
-        // drawHidden locater rectangle
+
         Point2D pt = getCoordsCenter();
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
-    }
+    }   // drawControls
 
     /*
         return the layout connectivity for this PositionablePoint

@@ -196,9 +196,11 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
         ));
         sleep(100);
 
-        dumpComponent(le);
+//        dumpComponent(le);
 
+        // WIP: TODO: Finish this!
         if (true) {
+        } else if (false) {
             String editTitle = Bundle.getMessage("EditTitle") + "...";
             pressMenuItem(le.getJMenuBar(), editTitle);
         } else {
