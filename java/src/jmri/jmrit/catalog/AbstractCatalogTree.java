@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import javax.annotation.CheckReturnValue;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -226,8 +227,8 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     @Override
     public void setUserName(String s) {
         String old = mUserName;
-        mUserName = s;
-        firePropertyChange("UserName", old, s);
+        mUserName = NamedBean.normalizeUserName(s);
+        firePropertyChange("UserName", old, mUserName);
     }
 
     protected void firePropertyChange(String p, Object old, Object n) {
@@ -249,9 +250,12 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     @CheckReturnValue
     public String describeState(int state) {
         switch (state) {
-            case UNKNOWN: return Bundle.getMessage("BeanStateUnknowng");
-            case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");
-            default: return Bundle.getMessage("BeanStateUnexpected", state);
+            case UNKNOWN:
+                return Bundle.getMessage("BeanStateUnknowng");
+            case INCONSISTENT:
+                return Bundle.getMessage("BeanStateInconsistent");
+            default:
+                return Bundle.getMessage("BeanStateUnexpected", state);
         }
     }
 
