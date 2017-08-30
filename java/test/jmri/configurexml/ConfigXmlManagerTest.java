@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import jmri.util.FileUtil;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,7 +26,7 @@ public class ConfigXmlManagerTest extends TestCase {
         super(s);
     }
 
-    boolean innerFlag;
+    private boolean innerFlag;
 
     public void testRegisterOK() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
@@ -70,9 +71,9 @@ public class ConfigXmlManagerTest extends TestCase {
                 innerFlag = true;
             }
         };
-        Object o1 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
-        Object o2 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
-        Object o3 = new jmri.implementation.TripleTurnoutSignalHead("", "", null, null, null);
+        Object o1 = new jmri.implementation.TripleTurnoutSignalHead("SH1", "", null, null, null);
+        Object o2 = new jmri.implementation.TripleTurnoutSignalHead("SH2", "", null, null, null);
+        Object o3 = new jmri.implementation.TripleTurnoutSignalHead("SH3", "", null, null, null);
         innerFlag = false;
         configxmlmanager.registerConfig(o1, jmri.Manager.SIGNALHEADS);
         Assert.assertTrue("find found it", configxmlmanager.findInstance(o1.getClass(), 0) == o1);
@@ -82,6 +83,9 @@ public class ConfigXmlManagerTest extends TestCase {
         configxmlmanager.registerConfig(o1, jmri.Manager.SIGNALHEADS);
         configxmlmanager.registerConfig(o2, jmri.Manager.SIGNALHEADS);
         configxmlmanager.registerConfig(o3, jmri.Manager.SIGNALHEADS);
+        Object ot = configxmlmanager.findInstance(o1.getClass(), 1);
+        Assert.assertNotNull("findInstance(class, 1) not null", ot);
+        Assert.assertEquals("findInstance(class, 1) equals o2",o2, ot);
         Assert.assertTrue("find found 2nd", configxmlmanager.findInstance(o1.getClass(), 1) == o2);
         Assert.assertTrue("find found subclass", configxmlmanager.findInstance(Class.forName("jmri.SignalHead"), 1) == o2);
 
@@ -122,12 +126,16 @@ public class ConfigXmlManagerTest extends TestCase {
         // make sure no test file exists in "layout"
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "layout");
         File f = new File(FileUtil.getUserFilesPath() + "layout" + File.separator + "testConfigXmlManagerTest.xml");
-        f.delete();  // remove it if its there
+        if (f.delete()) {  // remove it if its there
+            // nothing to do if delete failed
+        }
 
         // if file is at top level, remove that too
         f = new File("testConfigXmlManagerTest.xml");
         if (f.exists()) {
-            f.delete();
+            if (f.delete()) {
+                // nothing to do if delete failed
+            }
         }
 
         // check for not found if doesn't exist
@@ -170,12 +178,11 @@ public class ConfigXmlManagerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

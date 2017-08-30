@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -21,16 +22,14 @@ public class InternalReporterManagerTest extends AbstractReporterMgrTestBase {
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalReporterManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

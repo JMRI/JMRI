@@ -1,13 +1,13 @@
 package jmri.jmrix.ztc.ztc611;
 
+import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.LenzCommandStation;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * ZTC611XNetInitializationManagerTest.java

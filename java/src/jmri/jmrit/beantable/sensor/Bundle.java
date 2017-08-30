@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.beantable.Bundle {
 
     @Nullable
-    private static final String name = null;
+    private static final String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly

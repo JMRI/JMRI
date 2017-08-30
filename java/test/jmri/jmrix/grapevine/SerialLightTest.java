@@ -1,9 +1,9 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLightTestBase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.

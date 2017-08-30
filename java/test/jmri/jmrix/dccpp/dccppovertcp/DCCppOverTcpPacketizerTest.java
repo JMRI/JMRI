@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -30,8 +31,7 @@ public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizer
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tc = new DCCppOverTcpPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation());
     }
@@ -39,8 +39,7 @@ public class DCCppOverTcpPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizer
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

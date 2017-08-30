@@ -26,24 +26,17 @@ public class TrackNodeTest {
         TrackSegment s = new TrackSegment("test", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, le);
         TrackNode n = new TrackNode(t, LayoutTrack.TURNOUT_A, s, false, 0);
         Assert.assertNotNull("exists", n);
-    }
+        JUnitUtil.dispose(le); 
+   }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-
 }

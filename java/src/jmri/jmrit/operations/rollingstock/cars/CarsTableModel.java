@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    CarManager manager = CarManager.instance(); // There is only one manager
+    CarManager manager = InstanceManager.getDefault(CarManager.class); // There is only one manager
 
     // Defines the columns
     private static final int SELECT_COLUMN = 0;

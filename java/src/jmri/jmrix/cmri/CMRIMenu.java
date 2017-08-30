@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
@@ -30,14 +29,14 @@ public class CMRIMenu extends JMenu {
         }
         // Re-ordered c2
         add(new jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction(_memo));
-        add(new javax.swing.JSeparator());
-//        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerAction(rb.getString("MenuItemCMRInetManager")));  //c2
+//      add(new javax.swing.JSeparator());
+        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerAction(Bundle.getMessage("MenuItemCMRInetManager"),_memo));  //c2
 //        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsAction(rb.getString("MenuItemCMRInetMetrics")));  //c2
 //        add(new javax.swing.JSeparator());
 //        add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
 //        add(new javax.swing.JSeparator());
 //        add(new jmri.jmrix.cmri.serial.assignment.ListAction(rb.getString("MenuItemAssignments")));
-//        add(new javax.swing.JSeparator());
+        add(new javax.swing.JSeparator());
 
         add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"),_memo));
         add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"),_memo));

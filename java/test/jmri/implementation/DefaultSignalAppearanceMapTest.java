@@ -7,6 +7,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -127,9 +128,7 @@ public class DefaultSignalAppearanceMapTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        h1 = new DefaultSignalHead("h1", "head1") {
+        JUnitUtil.setUp();        h1 = new DefaultSignalHead("h1", "head1") {
             @Override
             protected void updateOutput() {
             }

@@ -4,28 +4,21 @@
  */
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import java.io.IOException;
-
-import java.util.ResourceBundle;
 import java.util.ArrayList;
-
-import javax.swing.border.Border;
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.*;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
+import jmri.util.davidflanagan.HardcopyWriter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -37,12 +30,9 @@ import org.slf4j.LoggerFactory;
  * @author	 Bob Jacobsen   Copyright (C) 2004
  * @author	 Dave Duchamp   Copyright (C) 2004
  * @author	 Chuck Catania  Copyright (C) 2013, 2014, 2015, 2016, 2017
- * @version	 $Revision: 17977 $
  */
 
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
-
-//    ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerBundle");
 
     ArrayList<SerialNode> cmriNode = new  ArrayList<>();  //c2
     public int numConfigNodes = 0;
@@ -61,9 +51,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     // node table pane items
     protected JPanel nodeTablePanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();
-//    protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-//                                                                    Bundle.getMessage("ConfiguredNodes"),
-//                                                                    TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
+
     protected NodeTableModel nodeTableModel = null;
     protected JTable nodeTable = null;
 
@@ -157,7 +145,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected JCheckBox cbx_cpnodeopt_BIT8 = new JCheckBox(Bundle.getMessage("cpnodeOpt8"));
     protected JCheckBox cbx_cpnodeopt_BIT15 = new JCheckBox(Bundle.getMessage("cpnodeOpt15"));
 
-     private CMRISystemConnectionMemo _memo = null;
+    private CMRISystemConnectionMemo _memo = null;
 
     /**
      * Constructor method
@@ -182,7 +170,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void initComponents() throws Exception
     {
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle")+" [Connection "+_memo.getUserName()+"]");
+        setTitle(Bundle.getMessage("WindowTitle"));
         setSize(500,150);
 
         Container contentPane = getContentPane();        
@@ -524,7 +512,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             cmriNode.clear();
         }
             
-//	SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
 	SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null)
@@ -738,7 +725,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             w.close();
         }
     
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
         // Only used occasionally, so inefficient String processing not really a problem
         // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) 
@@ -881,10 +868,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");       //c2 
         
-    //-------------------------------------------------------------
-    //  Hide the menu item until we are ready to release the cpMega    
-        nodeTypeBox.addItem("CPMEGA");    
-    //-------------------------------------------------------------                                
+    //---------------------------------------------------------------
+    //  Hide the menu item until MRCS are ready to release the cpMega    
+    //  nodeTypeBox.addItem("CPMEGA");    
+    //---------------------------------------------------------------                                
         
         /**
          *   Here add code for other types of nodes

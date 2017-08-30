@@ -17,7 +17,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -1073,6 +1072,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     @Override
     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     javax.swing.Timer replyTimer = null;

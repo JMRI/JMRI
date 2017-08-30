@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

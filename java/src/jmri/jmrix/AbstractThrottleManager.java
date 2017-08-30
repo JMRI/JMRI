@@ -346,6 +346,72 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     /**
+     * Steal a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param re desired Roster Entry
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    @Override
+    public void stealThrottleRequest(BasicRosterEntry re, ThrottleListener l,boolean steal){
+        stealThrottleRequest(re.getDccLocoAddress(), l,steal);
+    }
+
+    /**
+     * Steal a requested throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address desired decoder address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    @Override
+    public void stealThrottleRequest(int address, ThrottleListener l,boolean steal){
+        boolean isLong = true;
+        if (canBeShortAddress(address)) {
+            isLong = false;
+        }
+        stealThrottleRequest(address, isLong, l,steal);
+    }
+
+    /**
+     * Steal a requested throttle.
+     *
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    @Override
+    public void stealThrottleRequest(int address, boolean isLong, ThrottleListener l,boolean steal){
+        DccLocoAddress la = new DccLocoAddress(address, isLong);
+        stealThrottleRequest(la, l,steal);
+    }
+
+    /**
+     * Steal a requested throttle.
+     *
+     * @param address desired DccLocoAddress 
+     * @param l  ThrottleListener requesting the throttle steal occur.
+     * @param steal true if the request should continue, false otherwise.
+     * @since 4.9.2
+     */
+    @Override
+    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l,boolean steal){
+       // the default implementation does nothing.
+    }
+
+
+
+    /**
      * If the system-specific ThrottleManager has been unable to create the DCC
      * throttle then it needs to be removed from the throttleListeners,
      * otherwise any subsequent request for that address results in the address

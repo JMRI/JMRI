@@ -82,13 +82,11 @@ public class LayoutTurntable extends LayoutTrack {
     // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutTurntable instance = null;
-    private LayoutEditor layoutEditor = null;
 
     private boolean dccControlledTurnTable = false;
 
     // persistent instance variables (saved between sessions)
     private double radius = 25.0;
-    private Point2D center = new Point2D.Double(50.0, 50.0);
     private ArrayList<RayTrack> rayList = new ArrayList<RayTrack>(); // list of Ray Track objects.
     private int lastKnownIndex = -1;
 
@@ -111,9 +109,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public Point2D getCoordsCenter() {
-        return center;
-    }
 
     public double getRadius() {
         return radius;
@@ -410,14 +405,26 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-    public void setCoordsCenter(Point2D p) {
-        center = p;
+
+    /**
+     * scale this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to scale X coordinates
+     * @param yFactor the amount to scale Y coordinates
+     */
+    public void scaleCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
     }
 
-    public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
-                Math.round(center.getY() * yFactor));
-        center = pt;
+    /**
+     * translate this LayoutTrack's coordinates by the x and y factors
+     * @param xFactor the amount to translate X coordinates
+     * @param yFactor the amount to translate Y coordinates
+     */
+    @Override
+    public void translateCoords(float xFactor, float yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        center = MathUtil.add(center, factor);
     }
 
     /**
@@ -1078,6 +1085,14 @@ public class LayoutTurntable extends LayoutTrack {
                     pt.getX() - ((pt.getX() - center.getX()) * 0.2),
                     pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
         }
+    }
+
+    /**
+     * draw this turntable's controls
+     *
+     * @param g2 the graphics port to draw to
+     */
+    public void drawControls(Graphics2D g2) {
         if (isTurnoutControlled() && getPosition() != -1) {
             Point2D pt = getRayCoordsIndexed(getPosition());
             g2.draw(new Line2D.Double(new Point2D.Double(
@@ -1085,7 +1100,11 @@ public class LayoutTurntable extends LayoutTrack {
                     pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */)), pt));
         }
     }
-
+    /**
+     * draw this turntable's edit controls
+     *
+     * @param g2 the graphics port to draw to
+     */
     public void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
@@ -1103,8 +1122,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    public void reCheckBlockBoundary()
-    {
+    public void reCheckBlockBoundary() {
         // nothing to do here... move along...
     }
 

@@ -20,7 +20,6 @@ import jmri.jmrix.can.CanReply;
  * </dl>
  * If ddd &lt; 65536 then the CBUS address is taken to represent a short event.
  *
- * <P>
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Andrew Crosland Copyright (C) 2011
  */
@@ -126,14 +125,13 @@ public class CbusAddress {
     }
 
     /**
-     * Two addresses are equal if they result in the same numeric contents
+     * Two addresses are equal if they result in the same numeric contents.
      */
     @Override
     public boolean equals(Object r) {
         if (r == null) {
             return false;
         }
-//        if (! (r.getClass().equals(CbusAddress.class))) return false;
         if (!(r.getClass().equals(this.getClass()))) {
             return false;
         }

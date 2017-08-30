@@ -1,11 +1,11 @@
 package jmri.jmris.json;
 
-import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JsonException.ERROR;
-import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.JSON.THROTTLE;
 import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

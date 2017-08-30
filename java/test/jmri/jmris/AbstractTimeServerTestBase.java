@@ -1,9 +1,9 @@
 package jmri.jmris;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Common tests for classes derived from jmri.jmris.AbstractTimeServer class

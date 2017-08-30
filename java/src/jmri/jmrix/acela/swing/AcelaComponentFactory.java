@@ -1,7 +1,7 @@
 package jmri.jmrix.acela.swing;
 
-import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import jmri.jmrix.acela.AcelaMenu;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the Acela subsystem.
@@ -28,4 +28,5 @@ public class AcelaComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new AcelaMenu(memo);
     }
+
 }

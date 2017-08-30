@@ -19,7 +19,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
@@ -280,8 +279,9 @@ public class PositionableShape extends PositionableJComponent
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (super.getDisplayLevel() > Editor.BKG) {
-            popup.add(CoordinateEdit.getRotateEditAction(this));
-            return true;
+//             popup.add(CoordinateEdit.getRotateEditAction(this));
+//             return true;
+            return _editor.setShowRotationMenu(this, popup);
         }
         return false;
     }

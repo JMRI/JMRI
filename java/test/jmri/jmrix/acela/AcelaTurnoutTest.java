@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -133,7 +134,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutTest.class.getName());

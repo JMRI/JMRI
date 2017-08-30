@@ -1,19 +1,16 @@
 package jmri.jmrix.openlcb;
 
 import java.util.Timer;
-
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
-import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
@@ -140,12 +137,12 @@ public class OlcbSensor extends AbstractSensor {
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
         if (s == Sensor.ACTIVE) {
-            sensorListener.setFromOwner(true);
+            sensorListener.setFromOwnerWithForceNotify(true);
             if (addrInactive == null) {
                 setTimeout();
             }
         } else if (s == Sensor.INACTIVE) {
-            sensorListener.setFromOwner(false);
+            sensorListener.setFromOwnerWithForceNotify(false);
         }
     }
 

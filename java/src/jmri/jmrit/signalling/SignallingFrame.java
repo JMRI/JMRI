@@ -1,6 +1,5 @@
 package jmri.jmrit.signalling;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
@@ -10,8 +9,6 @@ import javax.swing.JButton;
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingFrame extends jmri.util.JmriJFrame {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingFrame() {
         super(false, true);
@@ -31,12 +28,12 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
         // the following code sets the frame's initial state
         sigPanel = new SignallingPanel(source, dest, this);
 
-        setTitle(rb.getString("SignallingPairs"));
+        setTitle(Bundle.getMessage("SignallingPairs"));  // NOI18N
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(sigPanel);
 
-        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);
+        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);  // NOI18N
 
         // pack for display
         pack();

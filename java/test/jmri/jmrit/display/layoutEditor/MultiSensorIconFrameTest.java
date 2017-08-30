@@ -21,25 +21,18 @@ public class MultiSensorIconFrameTest {
         LayoutEditor e = new LayoutEditor();
         MultiSensorIconFrame t = new MultiSensorIconFrame(e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

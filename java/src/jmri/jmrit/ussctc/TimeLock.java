@@ -1,8 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 import java.util.*;
+import jmri.*;
 
 /**
  * Lock if any of the SignalHeadSections controlling traffic are running time.

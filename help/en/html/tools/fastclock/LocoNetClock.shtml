@@ -27,14 +27,16 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI Fast Clock - LocoNet Capability</h1>A Digitrax
+      <h1>JMRI Fast Clock - LocoNet Capability</h1>
+      A Digitrax
       LocoNet can contain it's own fast clock timebase. This can be
       driven either by a DCS100/DCS200 command station, or by a
       separate fast clock module such as those made by Logic Rail
       Technologies. This page discusses how JMRI can either use or
       control the LocoNet fast clock.
 
-      <h2>Controlling the LocoNet clock</h2>The "Clock Monitor"
+      <h2>Controlling the LocoNet clock</h2>
+      The "Clock Monitor"
       tool in the "LocoNet" menu provides a convenient way to:
 
       <ul>
@@ -62,8 +64,8 @@
       Clock" option on the LocoNet clock monitor window. Note that
       you should do this <em>before</em> opening the clock windows
       so that when you open the clock windows they connect to the
-      correct timebase. Happy timekeeping! 
-      <!--#include virtual="/Footer" --></p>
+      correct timebase. Happy timekeeping!</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

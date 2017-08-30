@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.PackageTest");  // no tests in this class itself
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.locostats.swing.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.locostats.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.sdfeditor.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());

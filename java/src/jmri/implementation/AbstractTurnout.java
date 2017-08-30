@@ -1,10 +1,9 @@
 package jmri.implementation;
 
 import java.util.Arrays;
-import javax.annotation.CheckReturnValue;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.annotation.CheckReturnValue;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * corresponds to a particular physical turnout on the layout.
  * <p>
  * Turnout system names are always upper case.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -137,7 +135,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /** 
      * Define duration of delay for DELAYED feedback mode.
-     *<p>
+     * <p>
      * Defined as "public non-final"
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script
      */
@@ -376,8 +374,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected boolean _inverted = false;
 
     /**
-     * Determine if the turnouts can be inverted. If true inverted turnouts
-     * supported.
+     * Determine if the turnouts can be inverted. If true, inverted turnouts
+     * are supported.
      * @return invert supported
      */
     @Override
@@ -444,7 +442,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         } else {
             return false;
         }
-
     }
 
     protected boolean _cabLockout = false;
@@ -593,7 +590,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Find the TurnoutOperation class for this turnout, and get an instance of
-     * the corresponding operator Override this function if you want another way
+     * the corresponding operator. Override this function if you want another way
      * to choose the operation.
      *
      * @return newly-instantiated TurnoutOPerator, or null if nothing suitable
@@ -988,4 +985,5 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
+
 }

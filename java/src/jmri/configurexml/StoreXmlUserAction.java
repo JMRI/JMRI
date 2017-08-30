@@ -34,6 +34,8 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //TODO: Add code to set default save file name to name of currently loaded config/panel
+        // (need to setSelectedFile)
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave")); // is in jmri.NBBundle

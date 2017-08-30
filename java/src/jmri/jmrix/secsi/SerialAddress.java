@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * lights nnn is the node address of the input or output bit (0-127) xxxx is a
  * bit number of the input or output bit (1-2048) examples: VT0B2 (node address
  * 0, bit 2), VS1B3 (node address 1, bit 3), VL11B234 (node address 11, bit234)
- * <P>
+ *
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  */
@@ -25,8 +25,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the Serial Node
-     * Note: Returns 'NULL' if illegal systemName format or if the node is not
+     * Public static method to parse a system name and return the Serial Node.
+     *
+     * @return 'NULL' if illegal systemName format or if the node is not
      * found
      */
     public static SerialNode getNodeFromSystemName(String systemName) {
@@ -73,7 +74,9 @@ public class SerialAddress {
 
     /**
      * Public static method to parse a system name and return the bit number
-     * Notes: Bits are numbered from 1. If an error is found, 0 is returned.
+     * Notes: Bits are numbered from 1.
+     *
+     * @return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -120,10 +123,10 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format
+     * Public static method to validate system name format.
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
      * @param type Letter indicating device type expected
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type) {
         // validate the system Name leader characters
@@ -203,8 +206,9 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name for configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
+     * Public static method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
@@ -242,9 +246,10 @@ public class SerialAddress {
 
     /**
      * Public static method to convert one format system name for the alternate
-     * format. If the supplied system name does not have a valid format, or if
-     * there is no representation in the alternate naming scheme, an empty
-     * string is returned.
+     * format.
+     *
+     * @return an empty string if the supplied system name does not have a valid
+     * format, or if there is no representation in the alternate naming scheme.
      */
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
@@ -289,9 +294,9 @@ public class SerialAddress {
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
-     * <P>
-     * If the supplied system name does not have a valid format, an empty string
-     * is returned. Otherwise a normalized name is returned in the same format
+     *
+     * @return an empty string if the supplied system name does not have a valid
+     * format. Otherwise a normalized name is returned in the same format
      * as the input name.
      */
     public static String normalizeSystemName(String systemName) {
@@ -330,5 +335,3 @@ public class SerialAddress {
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
-
-

@@ -1,7 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
 import java.util.*;
+import jmri.*;
 /**
  * Drive the code line communications on a USS CTC panel.
  * <p>

@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -24,8 +25,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
            @Override
            public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
@@ -36,8 +36,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

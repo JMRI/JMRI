@@ -1,10 +1,10 @@
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.SerialMessage;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the cm11.SpecficMessage class.

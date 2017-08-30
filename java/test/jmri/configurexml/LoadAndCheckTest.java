@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -83,9 +82,7 @@ public class LoadAndCheckTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
+        JUnitUtil.setUp();        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -93,8 +90,5 @@ public class LoadAndCheckTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

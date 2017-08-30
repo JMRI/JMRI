@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager}
  * instead.
  */
-@net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
+@javax.annotation.concurrent.ThreadSafe // intended for access from Swing thread only
 @SuppressFBWarnings(
         value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Class is single-threaded, and uses statics extensively")
@@ -1490,7 +1490,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         File configFileName = new File(System.getProperty("org.jmri.Apps.configFilename"));
         String userprefsfilename;
         if (!configFileName.isAbsolute()) {
-            // must be relative, but we want it to 
+            // must be relative, but we want it to
             // be relative to the preferences directory
             userprefsfilename = "UserPrefs" + System.getProperty("org.jmri.Apps.configFilename");
             file = new File(FileUtil.getUserFilesPath() + userprefsfilename);

@@ -1,6 +1,5 @@
 package jmri.web.servlet;
 
-import apps.tests.Log4JFixture;
 import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -25,16 +24,12 @@ public class ServletUtilTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
     @Test
     public void testGetRailroadName() {

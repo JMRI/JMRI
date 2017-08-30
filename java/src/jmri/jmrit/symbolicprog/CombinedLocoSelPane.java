@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ListIterator;
+import javax.annotation.*;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -23,7 +25,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import javax.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +60,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     ProgModeSelector selector;
-    
+
     /**
      * Create the panel used to select the decoder
      *
@@ -69,7 +70,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
-        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        decoderBox = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
         decoderBox.insertItemAt("<from locomotive settings>", 0);
         decoderBox.setSelectedIndex(0);
         decoderBox.addActionListener(new ActionListener() {
@@ -390,7 +391,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // if productID present, try with that
         if (productID != -1) {
             String sz_productID = Integer.toString(productID);
-            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
             if (temp.isEmpty()) {
                 log.debug("selectDecoder found no items with product ID " + productID);
                 temp = null;
@@ -401,7 +402,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 
         // try without product ID if needed
         if (temp == null) {  // i.e. if no match previously
-            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             if (log.isDebugEnabled()) {
                 log.debug("selectDecoder without productID found " + temp.size() + " matches");
             }
@@ -449,7 +450,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (tempOriginalSize > 0 && temp.isEmpty()) {
             log.debug("Filtering removed all matches so reverting to coarse match with mfgID='{}' & modelID='{}'",
                     Integer.toString(mfgID), Integer.toString(modelID));
-            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             log.debug("selectDecoder without productID found {} matches", temp.size());
         }
 
@@ -457,7 +458,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = DecoderIndexFile.instance().mfgNameFromId(Integer.toString(mfgID));
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(Integer.toString(mfgID));
             if (mfg == null) {
                 updateForDecoderNotID(mfgID, modelID);
             } else {
@@ -489,7 +490,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.warn(msg);
         _statusLabel.setText(msg);
         // try to select all decoders from that MFG
-        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
+        JComboBox<String> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) {
             log.debug("mfg-only selectDecoder found " + temp.getItemCount() + " matches");
         }
@@ -500,7 +501,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             decoderBox.setSelectedIndex(1);
         } else {
             // if there are none from this mfg, go back to showing everything
-            temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
             decoderBox.setModel(temp.getModel());
             decoderBox.insertItemAt("<from locomotive settings>", 0);
             decoderBox.setSelectedIndex(1);
@@ -512,7 +513,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     void updateForDecoderNotID(int pMfgID, int pModelID) {
         log.warn("Found mfg " + pMfgID + " version " + pModelID + "; no such manufacterer defined");
-        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        JComboBox<String> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
         decoderBox.setModel(temp.getModel());
         decoderBox.insertItemAt("<from locomotive settings>", 0);
         decoderBox.setSelectedIndex(1);
@@ -567,7 +568,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     protected void openNewLoco() {
         // find the decoderFile object
-        DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+        DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         if (log.isDebugEnabled()) {
             log.debug("decoder file: " + decoderFile.getFilename());
         }
@@ -593,7 +594,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * @param progName    name of the programmer (Layout connection) being used
      */
     // TODO: Fix inheritance.  This is both a base class (where startProgrammer really isn't part of the contract_
-    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be 
+    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be
     //       made abstract:  CombinedLocoSelListPane and CombinedLocoSelTreePane have no need for it.
     protected void startProgrammer(@CheckForNull DecoderFile decoderFile, @Nonnull RosterEntry r, @Nonnull String progName) {
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");

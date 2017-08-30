@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.InstanceManager;
+
 /**
  * Represents a car load, includes pickup and drop comments.
  *
@@ -34,7 +36,7 @@ public class CarLoad {
 
     public void setName(String name) {
         _name = name;
-        if (name.equals(CarLoads.instance().getDefaultEmptyName())) {
+        if (name.equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName())) {
             setLoadType(LOAD_TYPE_EMPTY);
         }
     }

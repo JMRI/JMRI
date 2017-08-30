@@ -49,7 +49,7 @@ public class SwingTestCaseTest extends SwingTestCase {
         // test for selected
         Assert.assertTrue(testBox.isSelected());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     /**
@@ -91,6 +91,8 @@ public class SwingTestCaseTest extends SwingTestCase {
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE,
                 Pixel.GREEN, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE);
+
+        JUnitUtil.dispose(f);
     }
 
     /**
@@ -125,7 +127,7 @@ public class SwingTestCaseTest extends SwingTestCase {
                 Pixel.GREEN, Pixel.GREEN, Pixel.GREEN,
                 Pixel.GREEN, Pixel.GREEN, Pixel.GREEN);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
 
     }
 
@@ -163,7 +165,7 @@ public class SwingTestCaseTest extends SwingTestCase {
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     public void testGetDisplayedContentRedTransparentTransp() {
@@ -201,7 +203,7 @@ public class SwingTestCaseTest extends SwingTestCase {
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // from here down is testing infrastructure

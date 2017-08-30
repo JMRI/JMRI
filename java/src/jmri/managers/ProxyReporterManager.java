@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -122,6 +121,21 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
         return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
     }
 
+    /**
+     * Validate system name format. Locate a system specfic ReporterManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((ReporterManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return false;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         for (int i = 0; i < nMgrs(); i++) {
@@ -132,6 +146,15 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
             }
         }
         return null;
+    }
+
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
     }
 
     @Override

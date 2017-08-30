@@ -3,7 +3,6 @@ package jmri.jmrix.grapevine.nodetable;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,8 +17,6 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 
     /**
      * Constructor method
@@ -36,7 +33,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(rb.getString("WindowTitleRenumber"));
+        setTitle(Bundle.getMessage("WindowTitleRenumber"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -45,11 +42,11 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         contentPane.add(p);
 
-        p.add(new JLabel(rb.getString("LabelFrom")));
+        p.add(new JLabel(Bundle.getMessage("LabelFrom")));
         from = new JTextField(4);
         p.add(from);
 
-        p.add(new JLabel(rb.getString("LabelTo")));
+        p.add(new JLabel(Bundle.getMessage("LabelTo")));
         to = new JTextField(4);
         p.add(to);
 
@@ -57,7 +54,7 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         contentPane.add(p);
 
-        JButton b = new JButton(rb.getString("ButtonExec"));
+        JButton b = new JButton(Bundle.getMessage("ButtonExec"));
         p.add(b);
         b.addActionListener(new ActionListener() {
             @Override
@@ -89,4 +86,5 @@ public class RenumberFrame extends jmri.util.JmriJFrame {
         m.setParity();
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
+
 }

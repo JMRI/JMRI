@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     SerialMonActionTest.class,
     SerialMonFrameTest.class,
-    BundleTest.class
+    BundleTest.class,
+    SerialFilterFrameTest.class,
+    SerialFilterActionTest.class,
 })
 
 /**

@@ -3,15 +3,17 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,9 +21,9 @@ import org.junit.Test;
  * Tests for the Operations EngineEditFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * 
+ *
  */
-public class EngineEditFrameTest  extends OperationsSwingTestCase {
+public class EngineEditFrameTest extends OperationsSwingTestCase {
 
     List<String> tempEngines;
 
@@ -41,7 +43,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         f.commentTextField.setText("test Engine comment field");
         enterClickAndLeave(f.addButton);
 
-        EngineManager cManager = EngineManager.instance();
+        EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         // should have 6 Engines
         Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
 
@@ -59,13 +61,13 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         // should have 6 Engines now
         Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testEngineEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EngineManager cManager = EngineManager.instance();
+        EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = cManager.getByRoadAndNumber("NH", "1");
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
@@ -88,7 +90,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         // should have 5 Engines now
         Assert.assertEquals("number of Engines", 4, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Override
@@ -102,17 +104,17 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
     private void loadEngines() {
 
         // add Owner1 and Owner2
-        CarOwners co = CarOwners.instance();
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
         co.addName("Owner1");
         co.addName("Owner2");
         // add road names
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("NH");
         cr.addName("UP");
         cr.addName("AA");
         cr.addName("SP");
         // add locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location westford = lManager.newLocation("Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
@@ -128,7 +130,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Track boxfordHood = boxford.addTrack("Hood", Track.SPUR);
         boxfordHood.setLength(300);
 
-        EngineManager eManager = EngineManager.instance();
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         // add 5 Engines to table
         Engine e1 = eManager.newEngine("NH", "1");
         e1.setModel("RS1");

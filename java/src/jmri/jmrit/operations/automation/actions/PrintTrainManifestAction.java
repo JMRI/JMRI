@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -14,10 +15,11 @@ public class PrintTrainManifestAction extends Action {
 
     @Override
     public String getName() {
-        if (TrainManager.instance().isPrintPreviewEnabled())
+        if (InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled()) {
             return Bundle.getMessage("PreviewTrainManifest");
-        else
+        } else {
             return Bundle.getMessage("PrintTrainManifest");
+        }
     }
 
     @Override
@@ -26,7 +28,7 @@ public class PrintTrainManifestAction extends Action {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt()) {
                 setRunning(true);
-                finishAction(train.printManifest(TrainManager.instance().isPrintPreviewEnabled()));
+                finishAction(train.printManifest(InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled()));
             } else {
                 finishAction(false);
             }
@@ -35,7 +37,7 @@ public class PrintTrainManifestAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 
 }
