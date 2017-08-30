@@ -1446,6 +1446,11 @@ public class LlnmonTest extends TestCase {
         assertEquals("OpsModeProg test 3", "Byte Read on Main Track (Ops Mode): Decoder address 5155: CV18.\n",
                 f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xEf, 0x0E, 0x7c, 0x2F, 0, 0x7D, 0x01, 0x00, 0x02, 0x01, 0x7F, 0x7F, 0x7F, 0x4D}); //!!
+        assertEquals("Bit mode direct read test 16001",
+                "Programming Track Request: Read Byte in OP's Mode variable  CV2 of Loco 16001 value 255 (0xff, 11111111).\n",
+                f.displayMessage(l));
+
         l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7F, 0x5B});
         assertEquals("OpsModeProg test 4",
                 "LONG_ACK: Function not implemented, no reply will follow.\n",
