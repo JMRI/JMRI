@@ -1110,7 +1110,12 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setDisabled(boolean state) {
-        disabled = state;
+        if (disabled != state) {
+            disabled = state;
+            if (layoutEditor != null) {
+                layoutEditor.redrawPanel();
+            }
+        }
     }
 
     public boolean isDisabled() {
@@ -1118,7 +1123,12 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setDisableWhenOccupied(boolean state) {
+        if (disableWhenOccupied != state) {
         disableWhenOccupied = state;
+            if (layoutEditor != null) {
+                layoutEditor.redrawPanel();
+            }
+        }
     }
 
     public boolean isDisabledWhenOccupied() {
@@ -2021,23 +2031,21 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setState(int state) {
-        if ((getTurnout() != null) && (!disabled)) {
-            if (disableWhenOccupied) {
-                if (isOccupied()) {
-                    log.debug("Turnout not changed as Block is Occupied");
-                    return;
-                }
-            }
-            getTurnout().setCommandedState(state);
-            if (getSecondTurnout() != null) {
-                if (secondTurnoutInverted) {
-                    if (state == Turnout.CLOSED) {
-                        getSecondTurnout().setCommandedState(Turnout.THROWN);
+        if ((getTurnout() != null) && !disabled) {
+            if (disableWhenOccupied && isOccupied()) {
+                log.debug("Turnout not changed as Block is Occupied");
+            } else {
+                getTurnout().setCommandedState(state);
+                if (getSecondTurnout() != null) {
+                    if (secondTurnoutInverted) {
+                        if (state == Turnout.CLOSED) {
+                            getSecondTurnout().setCommandedState(Turnout.THROWN);
+                        } else {
+                            getSecondTurnout().setCommandedState(Turnout.CLOSED);
+                        }
                     } else {
-                        getSecondTurnout().setCommandedState(Turnout.CLOSED);
+                        getSecondTurnout().setCommandedState(state);
                     }
-                } else {
-                    getSecondTurnout().setCommandedState(state);
                 }
             }
         }
@@ -2053,6 +2061,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * is this turnout occupied?
+     *
      * @return true if occupied
      */
     private boolean isOccupied() {
@@ -2296,27 +2305,25 @@ public class LayoutTurnout extends LayoutTrack {
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setHidden(hiddenCheckBoxMenuItem.isSelected());
-                layoutEditor.redrawPanel();
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+                setHidden(o.isSelected());
             });
-            
-           JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+
+            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(disabled);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
-                disabled = o.isSelected();
-                layoutEditor.redrawPanel();
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
+                setDisabled(o.isSelected());
             });
 
             cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
-                disableWhenOccupied = o.isSelected();
-                layoutEditor.redrawPanel();
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
+                setDisableWhenOccupied(o.isSelected());
             });
 
             // Rotate if there are no track connections
@@ -2355,7 +2362,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 });
             }
- 
+
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {

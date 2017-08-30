@@ -2255,17 +2255,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
     } //setupToolsMenu
 
-<<<<<<< HEAD
-    //
-    //setup option menu
-    //
-    protected JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
-=======
     /**
-    /* Set up the Option menu.
+     * Set up the Option menu.
+     * @param menuBar to add the option menu to
+     * @return option menu that was added
      */
-    protected JMenu setupOptionMenu(JMenuBar menuBar) {
->>>>>>> JMRI/master
+    protected JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
         optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
@@ -7831,13 +7826,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.setText("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
-<<<<<<< HEAD
-
-        //}
     } //addLayoutTurnout
-=======
-    }   //addLayoutTurnout
->>>>>>> JMRI/master
 
     /**
      * Validates that a physical turnout exists and is unique among Layout

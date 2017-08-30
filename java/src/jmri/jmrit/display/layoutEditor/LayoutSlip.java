@@ -248,73 +248,75 @@ public class LayoutSlip extends LayoutTurnout {
      * disabled
      */
     public void toggleState(int selectedPointType) {
-        switch (selectedPointType) {
-            case SLIP_LEFT: {
-                switch (currentState) {
-                    case STATE_AC: {
-                        if (type == SINGLE_SLIP) {
+        if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            switch (selectedPointType) {
+                case SLIP_LEFT: {
+                    switch (currentState) {
+                        case STATE_AC: {
+                            if (type == SINGLE_SLIP) {
+                                currentState = STATE_BD;
+                            } else {
+                                currentState = STATE_BC;
+                            }
+                            break;
+                        }
+                        case STATE_AD: {
                             currentState = STATE_BD;
-                        } else {
-                            currentState = STATE_BC;
+                            break;
                         }
-                        break;
-                    }
-                    case STATE_AD: {
-                        currentState = STATE_BD;
-                        break;
-                    }
-                    case STATE_BC:
-                    default: {
-                        currentState = STATE_AC;
-                        break;
-                    }
-                    case STATE_BD: {
-                        currentState = STATE_AD;
-                        break;
-                    }
-                }
-                break;
-            }
-            case SLIP_RIGHT: {
-                switch (currentState) {
-                    case STATE_AC: {
-                        currentState = STATE_AD;
-                        break;
-                    }
-                    case STATE_AD: {
-                        currentState = STATE_AC;
-                        break;
-                    }
-                    case STATE_BC:
-                    default: {
-                        currentState = STATE_BD;
-                        break;
-                    }
-                    case STATE_BD: {
-                        if (type == SINGLE_SLIP) {
+                        case STATE_BC:
+                        default: {
                             currentState = STATE_AC;
-                        } else {
-                            currentState = STATE_BC;
+                            break;
                         }
-                        break;
+                        case STATE_BD: {
+                            currentState = STATE_AD;
+                            break;
+                        }
                     }
+                    break;
                 }
-                break;
-            }
-        }   // switch
-        setSlipState(turnoutStates.get(currentState));
+                case SLIP_RIGHT: {
+                    switch (currentState) {
+                        case STATE_AC: {
+                            currentState = STATE_AD;
+                            break;
+                        }
+                        case STATE_AD: {
+                            currentState = STATE_AC;
+                            break;
+                        }
+                        case STATE_BC:
+                        default: {
+                            currentState = STATE_BD;
+                            break;
+                        }
+                        case STATE_BD: {
+                            if (type == SINGLE_SLIP) {
+                                currentState = STATE_AC;
+                            } else {
+                                currentState = STATE_BC;
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }   // switch
+            setSlipState(turnoutStates.get(currentState));
+        }
     }
 
     private void setSlipState(TurnoutState ts) {
-        if (!disableWhenOccupied || !isOccupied()) {
+        if (disableWhenOccupied && isOccupied()) {
+            log.debug("Turnout not changed as Block is Occupied");
+        } else if (!disabled) {
             if (getTurnout() != null) {
                 getTurnout().setCommandedState(ts.getTurnoutAState());
             }
             if (getTurnoutB() != null) {
                 getTurnoutB().setCommandedState(ts.getTurnoutBState());
             }
-        } else {
-            log.debug("Turnout not changed as Block is Occupied");
         }
     }
 
@@ -895,26 +897,25 @@ public class LayoutSlip extends LayoutTurnout {
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setHidden(hiddenCheckBoxMenuItem.isSelected());
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+                setHidden(o.isSelected());
             });
 
             JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(disabled);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
-                disabled = o.isSelected();
-                layoutEditor.redrawPanel();
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
+                setDisabled(o.isSelected());
             });
 
             cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e.getSource();
-                disableWhenOccupied = o.isSelected();
-                layoutEditor.redrawPanel();
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
+                setDisableWhenOccupied(o.isSelected());
             });
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
