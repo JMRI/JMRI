@@ -45,7 +45,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LayoutEditorFindItemsTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorLoadAndStoreTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorTest.class));
-        suite.addTest(new JUnit4TestAdapter(LayoutEditorToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutSlipTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutTurntableTest.class));
