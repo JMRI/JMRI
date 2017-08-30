@@ -25,7 +25,6 @@ import jmri.util.JUnitUtil;
  */
 public class PanelProTest {
 
-    //@Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelPro t = new PanelPro();
