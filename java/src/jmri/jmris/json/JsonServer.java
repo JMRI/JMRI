@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriServer;
 import jmri.server.json.JsonClientHandler;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2016
  */
-public class JsonServer extends JmriServer {
+public class JsonServer extends JmriServer implements InstanceManagerAutoDefault {
 
     private static final Logger log = LoggerFactory.getLogger(JsonServer.class);
     private ObjectMapper mapper;
@@ -39,19 +40,20 @@ public class JsonServer extends JmriServer {
     /**
      * Get the default JsonServer, creating it if needed.
      *
-     * @return the default JsonServer instance.
+     * @return the default JsonServer instance
+     * @deprecated since 4.9.4; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static JsonServer getDefault() {
-        return InstanceManager.getOptionalDefault(JsonServer.class).orElseGet(() -> {
-            return InstanceManager.setDefault(JsonServer.class, new JsonServer());
-        });
+        return InstanceManager.getDefault(JsonServer.class);
     }
 
     /**
      * Create a new server using the default port.
      */
     public JsonServer() {
-        this(JsonServerPreferences.getDefault().getPort(), JsonServerPreferences.getDefault().getHeartbeatInterval());
+        this(InstanceManager.getDefault(JsonServerPreferences.class).getPort(), InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval());
     }
 
     /**
@@ -69,7 +71,7 @@ public class JsonServer extends JmriServer {
                 try {
                     JsonServer.this.stop();
                 } catch (Exception ex) {
-                    log.warn("ERROR shutting down JSON Server: {}" + ex.getMessage());
+                    log.warn("ERROR shutting down JSON Server: \\{}{}", ex.getMessage());
                     log.debug("Details follow: ", ex);
                 }
                 return true;
@@ -79,7 +81,7 @@ public class JsonServer extends JmriServer {
 
     @Override
     public void start() {
-        log.info("Starting JSON Server on port " + this.portNo);
+        log.info("Starting JSON Server on port {}", this.portNo);
         super.start();
     }
 
