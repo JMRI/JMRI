@@ -59,6 +59,15 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertTrue("2nd addressed programmer manager is default", InstanceManager.getDefault(AddressedProgrammerManager.class) == m2);
     }
 
+    // the following test was moved from jmri.jmrit.symbolicprog.PackageTet when    // it was converted to JUnit4 format.  It seemed out of place there.
+    // check configuring the programmer
+    public void testConfigProgrammer() {
+        // initialize the system
+        Programmer p = new jmri.progdebugger.ProgDebugger();
+        InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
+        assertTrue(InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() == p);
+    }
+
     // Testing new load store
     public void testGenericStoreAndGet() {
         PowerManager m1 = new PowerManagerScaffold();

@@ -142,6 +142,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
 
     @Override
     public String getSelectedItem() {
-        return super.getSelectedItem().toString();
+        Object item = super.getSelectedItem();
+        return item != null ? item.toString() : null;
     }
 }
