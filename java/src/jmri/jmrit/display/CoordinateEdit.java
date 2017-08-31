@@ -683,13 +683,13 @@ public class CoordinateEdit extends JmriJFrame {
 
     public void initLink() {
         LinkingObject pLabel = (LinkingObject) pl;
-        oldStr = pLabel.getUrl();
+        oldStr = pLabel.getURL();
         textX = new javax.swing.JLabel();
         textX.setText(Bundle.getMessage("LinkEqual"));
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
-        xTextField.setText(pLabel.getUrl());
+        xTextField.setText(pLabel.getURL());
         xTextField.setToolTipText(Bundle.getMessage("EnterLink"));
 
         getContentPane().setLayout(new GridBagLayout());
@@ -703,7 +703,7 @@ public class CoordinateEdit extends JmriJFrame {
                 String t = xTextField.getText();
                 boolean hasText = (t != null && t.length() > 0);
                 if (hasText || oldX > 0) {
-                    pp.setUrl(t);
+                    pp.setULRL(t);
                     pp.updateSize();
                     dispose();
                 } else {
@@ -717,7 +717,7 @@ public class CoordinateEdit extends JmriJFrame {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 LinkingObject pp = (LinkingObject) pl;
-                pp.setUrl(oldStr);
+                pp.setULRL(oldStr);
                 pp.updateSize();
                 dispose();
             }

@@ -276,9 +276,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
      *
      * @author Egbert Broerse Copyright: (c) 2017
      */
-    public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
+    public static class BeanSwitchXml extends AbstractXmlAdapter {
 
-        public SwitchboardEditor$BeanSwitchXml() {
+        public BeanSwitchXml() {
         }
 
         /**

@@ -147,7 +147,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
-        Boolean AddToFrameRan = false;
+        boolean addToFrameRan = false;
         Manager manager;
 
         int bottomBoxIndex; // index to insert extra stuff
@@ -239,11 +239,11 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
 
         public boolean getAdditionsToFrameDone() {
-            return AddToFrameRan;
+            return addToFrameRan;
         }
 
         public void setAddToFrameRan() {
-            AddToFrameRan = true;
+            addToFrameRan = true;
         }
 
         public JTable getDataTable() {

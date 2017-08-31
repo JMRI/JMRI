@@ -302,7 +302,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
                         if (rcTag.getExpectedCv() != -1) {
                             rcTag.setCvValue(chbyte);
                         } else {
-                            rcTag.setCv(rc.getCvNumber(), chbyte);
+                            rcTag.setCV(rc.getCvNumber(), chbyte);
                         }
                     }
                     break;
@@ -445,7 +445,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             rcTag.setActualSpeed(actual_speed);
         }
         for (Integer cv : cvValues.keySet()) {
-            rcTag.setCv(cv, cvValues.get(cv));
+            rcTag.setCV(cv, cvValues.get(cv));
             if (cvvalue != -1) {
                 rcTag.setCvValue(cvvalue);
             }

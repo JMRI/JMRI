@@ -3394,7 +3394,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // convert from image coordinates to newZoom (scaled) coordinates
             Point2D newViewPos2D = MathUtil.multiply(iNewViewPos2D, newZoom);
             // set new view position
-            viewPort.setViewPosition(MathUtil.Point2DToPoint(newViewPos2D));
+            viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPos2D));
         } else {
             JScrollPane scrollPane = getPanelScrollPane();
             if (scrollPane.getVerticalScrollBar().isVisible()) {
@@ -3622,7 +3622,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
 
         // and scroll to it
-        scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
+        scrollPane.scrollRectToVisible(MathUtil.rectangleForRectangle2D(scrollBounds));
 
         return result;
     }   //zoomToFit
@@ -6853,7 +6853,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!getFlag(OPTION_POSITION, comp.isPositionable())) {
                     continue;
                 }
-                Point2D p = MathUtil.PointToPoint2D(comp.getLocation());
+                Point2D p = MathUtil.pointToPoint2D(comp.getLocation());
                 minPoint = MathUtil.min(minPoint, p);
                 maxPoint = MathUtil.max(maxPoint, p);
                 sumPoint = MathUtil.add(sumPoint, p);
@@ -6988,7 +6988,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                     newPoint = MathUtil.add(newPoint, delta);
                     newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
-                    c.setLocation(MathUtil.PointForPoint2D(newPoint));
+                    c.setLocation(MathUtil.pointForPoint2D(newPoint));
                 }
             }
 
