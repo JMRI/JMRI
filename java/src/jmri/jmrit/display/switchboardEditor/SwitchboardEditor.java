@@ -774,7 +774,7 @@ public class SwitchboardEditor extends Editor {
          *
          * @return switch tooltip text
          */
-        public String getTooltip() {
+        public String getToolTip() {
             return switchTooltip;
         }
 
