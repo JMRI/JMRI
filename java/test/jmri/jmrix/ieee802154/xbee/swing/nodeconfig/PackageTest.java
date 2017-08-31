@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    NodeConfigActionTest.class,
-    NodeConfigFrameTest.class,
-    AddNodeFrameTest.class,
-    EditNodeFrameTest.class,
+    XBeeNodeConfigActionTest.class,
+    XBeeNodeConfigFrameTest.class,
+    XBeeAddNodeFrameTest.class,
+    XBeeEditNodeFrameTest.class,
     AssignmentTableModelTest.class
 })
 
