@@ -581,6 +581,22 @@ public final class JSON {
      */
     public static final String LIT = "lit"; // NOI18N
 
+    /* Shared JSON consist, roster, and throttle tokens */
+    /**
+     * {@value #ADDRESS}
+     */
+    public static final String ADDRESS = "address"; // NOI18N
+    /**
+     * {@value #FORWARD}
+     */
+    public static final String FORWARD = "forward"; // NOI18N
+    /**
+     * Prefix for the throttle function keys (F0-F28).
+     * <p>
+     * {@value #F}
+     */
+    public static final String F = "F"; // NOI18N
+
     /* JSON Sensor and Turnout Tokens */
     /**
      * {@value #INVERTED}
