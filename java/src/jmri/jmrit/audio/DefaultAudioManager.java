@@ -1,48 +1,44 @@
 package jmri.jmrit.audio;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import jmri.Audio;
 import jmri.AudioException;
+import jmri.AudioManager;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.QuietShutDownTask;
 import jmri.managers.AbstractAudioManager;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provide the concrete implementation for the Internal Audio Manager.
- *
+ * <p>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
-    private static int countListeners = 0;
-    private static int countSources = 0;
-    private static int countBuffers = 0;
-
-    /**
-     * Reference to the currently active AudioFactory
-     */
-    private static AudioFactory activeAudioFactory = null;
-
-    private static boolean initialised = false;
-
-    ShutDownTask audioShutDownTask;
+    private int countListeners = 0;
+    private int countSources = 0;
+    private int countBuffers = 0;
+    private boolean initialised = false;
+    private ShutDownTask audioShutDownTask;
 
     @Override
     public int getXMLOrder() {
@@ -57,7 +53,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     protected synchronized Audio createNewAudio(String systemName, String userName) throws AudioException {
 
-        if (activeAudioFactory == null) {
+        if (this.getActiveAudioFactory() == null) {
             log.debug("Initialise in createNewAudio");
             init();
         }
@@ -77,7 +73,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     throw new AudioException("Maximum number of buffers reached (" + countBuffers + ") " + MAX_BUFFERS);
                 }
                 countBuffers++;
-                a = activeAudioFactory.createNewBuffer(systemName, userName);
+                a = getActiveAudioFactory().createNewBuffer(systemName, userName);
                 break;
             }
             case Audio.LISTENER: {
@@ -86,7 +82,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     throw new AudioException("Maximum number of Listeners reached (" + countListeners + ") " + MAX_LISTENERS);
                 }
                 countListeners++;
-                a = activeAudioFactory.createNewListener(systemName, userName);
+                a = getActiveAudioFactory().createNewListener(systemName, userName);
                 break;
             }
             case Audio.SOURCE: {
@@ -95,7 +91,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     throw new AudioException("Maximum number of Sources reached (" + countSources + ") " + MAX_SOURCES);
                 }
                 countSources++;
-                a = activeAudioFactory.createNewSource(systemName, userName);
+                a = getActiveAudioFactory().createNewSource(systemName, userName);
                 break;
             }
             default:
@@ -119,36 +115,39 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Method used to initialise the manager
+     * Initialise the manager. Creates the default instance of
+     * {@link AudioFactory} if one has not already been defined in the
+     * {@link jmri.InstanceManager}.
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
         if (!initialised) {
+            AudioFactory activeAudioFactory = this.getActiveAudioFactory();
+            if (activeAudioFactory == null) {
 //            // First try to initialise LWJGL
 //            activeAudioFactory = new LWJGLAudioFactory();
 //            log.debug("Try to initialise LWJGLAudioFactory");
 //
 //            // If LWJGL fails, fall-back to JOAL
 //            if (!activeAudioFactory.init()) {
-            activeAudioFactory = new JoalAudioFactory();
-            log.debug("Try to initialise JoalAudioFactory");
+                activeAudioFactory = new JoalAudioFactory();
+                log.debug("Try to initialise JoalAudioFactory");
 
-            // If JOAL fails, fall-back to JavaSound
-            if (!activeAudioFactory.init()) {
-                activeAudioFactory = new JavaSoundAudioFactory();
-                log.debug("Try to initialise JavaSoundAudioFactory");
-
-                // Finally, if JavaSound fails, fall-back to a Null sound system
+                // If JOAL fails, fall-back to JavaSound
                 if (!activeAudioFactory.init()) {
-                    activeAudioFactory = new NullAudioFactory();
-                    log.debug("Try to initialise NullAudioFactory");
-                    activeAudioFactory.init();
-                }
-            }
-//            }
+                    activeAudioFactory = new JavaSoundAudioFactory();
+                    log.debug("Try to initialise JavaSoundAudioFactory");
 
+                    // Finally, if JavaSound fails, fall-back to a Null sound system
+                    if (!activeAudioFactory.init()) {
+                        activeAudioFactory = new NullAudioFactory();
+                        log.debug("Try to initialise NullAudioFactory");
+                        activeAudioFactory.init();
+                    }
+                }
+//            }
+                InstanceManager.setDefault(AudioFactory.class, activeAudioFactory);
+            }
             // Create default Listener and save in map
             try {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");
@@ -162,25 +161,21 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.getDefault(jmri.AudioManager.class).cleanUp();
+                        InstanceManager.getDefault(AudioManager.class).dispose();
                         return true;
                     }
                 };
             }
-            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
-            }
+            InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((manager) -> {
+                manager.register(audioShutDownTask);
+            });
 
             initialised = true;
-            if (log.isDebugEnabled()) {
-                log.debug("Initialised AudioFactory type: " + activeAudioFactory.getClass().getSimpleName());
-            }
+            log.debug("Initialised AudioFactory type: {}", getActiveAudioFactory().getClass().getSimpleName());
         }
     }
 
     @Override
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(Audio s) {
         super.deregister(s);
         if (s instanceof Audio) {
@@ -207,15 +202,24 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    public void cleanUp() {
+    public void dispose() {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
-        activeAudioFactory.cleanup();
+        if (getActiveAudioFactory() != null) {
+            getActiveAudioFactory().cleanup();
+            InstanceManager.deregister(this.getActiveAudioFactory(), AudioFactory.class);
+        }
+        super.dispose();
     }
 
+    /**
+     * Get the default AudioFactory instance from the InstanceManager.
+     *
+     * @return the default AudioFactory instance
+     */
     @Override
     public AudioFactory getActiveAudioFactory() {
-        return activeAudioFactory;
+        return InstanceManager.getNullableDefault(AudioFactory.class);
     }
 
     /**
@@ -224,16 +228,34 @@ public class DefaultAudioManager extends AbstractAudioManager {
      * If not existing, create a new instance.
      *
      * @return reference to currently active AudioManager
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
+     * argument {@code AudioManager.class} instead
      */
-    public static DefaultAudioManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultAudioManager();
-        }
-        return _instance;
+    @Deprecated
+    public static AudioManager instance() {
+        return InstanceManager.getDefault(AudioManager.class);
     }
-
-    private volatile static DefaultAudioManager _instance;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
 
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) {
+            if (type == AudioManager.class) {
+                return new DefaultAudioManager();
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(AudioManager.class);
+            return set;
+        }
+
+    }
 }

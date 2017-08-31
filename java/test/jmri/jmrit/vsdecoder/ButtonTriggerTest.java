@@ -3,7 +3,6 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -46,7 +45,6 @@ public class ButtonTriggerTest {
     }
 
     @Test
-    @Ignore("Causes NPE")
     public void TestSetGet() {
         VSDSound target;
         ButtonTrigger uut = new ButtonTrigger("unitUnderTest");
@@ -63,7 +61,7 @@ public class ButtonTriggerTest {
         Assert.assertEquals("set target action", Trigger.TargetAction.PLAY,
                 uut.getTargetAction());
         uut.setTriggerType(Trigger.TriggerType.BOOLEAN);
-        Assert.assertEquals("set trigger type", Trigger.TriggerType.BUTTON,
+        Assert.assertEquals("set trigger type", Trigger.TriggerType.BOOLEAN,
                 uut.getTriggerType());
         TriggerListener tl = new TriggerListener() {
             @Override
@@ -105,9 +103,7 @@ public class ButtonTriggerTest {
                 Assert.fail("wrong callback called");
             }
         });
-        PropertyChangeEvent e = new PropertyChangeEvent(this, "test event",
-                Boolean.valueOf(false),
-                Boolean.valueOf(true));
+        PropertyChangeEvent e = new PropertyChangeEvent(this, "test event", false, true);
         uut.propertyChange(e);
     }
 
@@ -115,15 +111,14 @@ public class ButtonTriggerTest {
         Element e = new Element("Trigger");
         e.setAttribute("name", "test_trigger");
         e.setAttribute("type", "BUTTON");
-        e.addContent(new Element("event_name").addContent("test_event"));
-        e.addContent(new Element("target_name").addContent("test_target"));
+        e.addContent(new Element("event-name").addContent("test_event"));
+        e.addContent(new Element("target-name").addContent("test_target"));
         e.addContent(new Element("match").addContent("TRUE"));
         e.addContent(new Element("action").addContent("PLAY"));
         return (e);
     }
 
     @Test
-    @Ignore("Causes NPE")
     public void testSetXML() {
         ButtonTrigger uut = new ButtonTrigger("fred"); // intentionally use wrong name
         Element e = buildTestXML();

@@ -3,8 +3,8 @@ package jmri.jmrit.audio;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,25 +14,31 @@ import org.junit.Test;
  */
 public class JoalAudioBufferTest {
 
+    private JoalAudioFactory factory;
+
     @Test
-    @Ignore("Causes NPE when run, needs additional setup")
     public void testCtor() {
-        JoalAudioBuffer l = new JoalAudioBuffer("test");
+        Assume.assumeTrue("Unable to initialize JoalAudioFactory", factory.init());
+        JoalAudioBuffer l = new JoalAudioBuffer("test", factory.getAL());
         Assert.assertNotNull("exists", l);
     }
 
     @Test
-    @Ignore("Causes NPE when run, needs additional setup")
     public void testC2Stringtor() {
-        JoalAudioBuffer l = new JoalAudioBuffer("testsysname","testusername");
+        Assume.assumeTrue("Unable to initialize JoalAudioFactory", factory.init());
+        JoalAudioBuffer l = new JoalAudioBuffer("testsysname", "testusername", factory.getAL());
         Assert.assertNotNull("exists", l);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        factory = new JoalAudioFactory();
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        factory.cleanup();
+        JUnitUtil.tearDown();
+    }
 }

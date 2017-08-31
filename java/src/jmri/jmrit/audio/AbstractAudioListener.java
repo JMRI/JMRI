@@ -2,6 +2,7 @@ package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
 import jmri.Audio;
+import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractAudio;
 import org.slf4j.Logger;
@@ -38,8 +39,6 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     private float gain = 1.0f;
     private float metersPerUnit = 1.0f;
     private long timeOfLastPositionCheck = 0;
-
-    private static final AudioFactory activeAudioFactory = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
 
     /**
      * Abstract constructor for new AudioListener with system name
@@ -135,8 +134,11 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public void resetCurrentPosition() {
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**

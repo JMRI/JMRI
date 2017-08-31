@@ -1,21 +1,26 @@
 package jmri.jmrit.vsdecoder;
 
+import jmri.AudioManager;
+import jmri.InstanceManager;
+import jmri.jmrit.audio.JoalAudioFactory;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class VSDecoderManagerThreadTest {
 
     @Test
     public void testInstance() {
+        Assume.assumeTrue("Requires Joal Audio", InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory() instanceof JoalAudioFactory);
         VSDecoderManagerThread t = VSDecoderManagerThread.instance();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
         // the instance method starts a thread, make sure it goes away.
         t.kill();
     }
@@ -24,10 +29,12 @@ public class VSDecoderManagerThreadTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        InstanceManager.getDefault(AudioManager.class).init();
     }
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(AudioManager.class).cleanUp();
         JUnitUtil.tearDown();
     }
 

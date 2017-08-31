@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
@@ -19,17 +18,16 @@ import jmri.NamedBean;
 public abstract class AbstractNamedBean implements NamedBean {
 
     /**
-     * simple constructor
+     * Simple constructor.
      *
      * @param sys the system name for this bean
      */
     protected AbstractNamedBean(String sys) {
         mSystemName = sys;
-        ///mUserName = null; // <== default value
     }
 
     /**
-     * designated constructor
+     * Designated constructor.
      *
      * @param sys  the system name for this bean
      * @param user the user name for this bean
@@ -136,12 +134,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
-        for (Map.Entry<PropertyChangeListener, String> entry : register.entrySet()) {
-            PropertyChangeListener l = entry.getKey();
-            if (register.get(l).equals(name)) {
-                list.add(l);
-            }
-        }
+        register.keySet().stream().filter((l) -> (register.get(l).equals(name))).forEachOrdered((l) -> {
+            list.add(l);
+        });
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
@@ -152,12 +147,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<>();
-        for (Map.Entry<PropertyChangeListener, String> entry : listenerRefs.entrySet()) {
-            PropertyChangeListener l = entry.getKey();
-            list.add(listenerRefs.get(l));
-        }
-        return list;
+        return new ArrayList<>(listenerRefs.values());
     }
 
     @Override
@@ -201,7 +191,11 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public void setUserName(String s) throws NamedBean.BadUserNameException {
         String old = mUserName;
-        mUserName = NamedBean.normalizeUserName(s);
+        if (s != null) {
+            mUserName = NamedBean.normalizeUserName(s);
+        } else {
+            mUserName = null;
+        }
         firePropertyChange("UserName", old, mUserName);
     }
 
@@ -283,6 +277,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * compare for equality
+     *
      * @param o the object to compare us to
      * @return true if we are equal to the object
      */
@@ -310,6 +305,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * calculate our hash code
+     *
      * @return our hash code
      */
     @Override

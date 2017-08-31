@@ -20,36 +20,33 @@ import org.slf4j.LoggerFactory;
  * Copyright (c) 2003-2006 Sun Microsystems, Inc. All Rights Reserved.
  * <br>
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
+ * modification, are permitted provided that the following conditions are met:
  * <br>
- * - Redistribution of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
+ * - Redistribution of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
  * <br>
- * - Redistribution in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
+ * - Redistribution in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
  * <br>
- * Neither the name of Sun Microsystems, Inc. or the names of
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
+ * Neither the name of Sun Microsystems, Inc. or the names of contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
  * <br>
  * This software is provided "AS IS," without a warranty of any kind. ALL
- * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES,
- * INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A
- * PARTICULAR PURPOSE OR NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN
- * MICROSYSTEMS, INC. ("SUN") AND ITS LICENSORS SHALL NOT BE LIABLE FOR
- * ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR
- * DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES. IN NO EVENT WILL SUN OR
- * ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT OR DATA, OR FOR
- * DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR PUNITIVE
- * DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY,
- * ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF
- * SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+ * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING ANY
+ * IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
+ * NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN MICROSYSTEMS, INC. ("SUN") AND ITS
+ * LICENSORS SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A
+ * RESULT OF USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
+ * IN NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT
+ * OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR
+ * PUNITIVE DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY,
+ * ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF SUN HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
  * <br>
- * You acknowledge that this software is not designed or intended for use
- * in the design, construction, operation or maintenance of any nuclear
- * facility.
+ * You acknowledge that this software is not designed or intended for use in the
+ * design, construction, operation or maintenance of any nuclear facility.
  * <br><br><br></i>
  * <hr>
  * This file is part of JMRI.
@@ -67,7 +64,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JoalAudioSource extends AbstractAudioSource {
 
-    private static AL al = JoalAudioFactory.getAL();
+    private final AL al;
 
     private boolean _initialised = false;
 
@@ -79,12 +76,12 @@ public class JoalAudioSource extends AbstractAudioSource {
      * Constructor for new JoalAudioSource with system name
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
+     * @param al the audio library to use
      */
-    public JoalAudioSource(String systemName) {
+    public JoalAudioSource(String systemName, AL al) {
         super(systemName);
-        if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioSource: " + systemName);
-        }
+        this.al = al;
+        log.debug("New JoalAudioSource: {}", systemName);
         _initialised = init();
     }
 
@@ -93,12 +90,12 @@ public class JoalAudioSource extends AbstractAudioSource {
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
      * @param userName   AudioSource object user name
+     * @param al the audio library to use
      */
-    public JoalAudioSource(String systemName, String userName) {
+    public JoalAudioSource(String systemName, String userName, AL al) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioSource: " + userName + " (" + systemName + ")");
-        }
+        this.al = al;
+        log.debug("New JoalAudioSource: {} ({})", userName, systemName);
         _initialised = init();
     }
 
@@ -110,7 +107,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     private boolean init() {
         // Generate the AudioSource
         al.alGenSources(1, _source, 0);
-        if (JoalAudioFactory.checkALError()) {
+        if (JoalAudioFactory.checkALError(al)) {
             log.warn("Error creating JoalSource (" + this.getSystemName() + ")");
             _source = null;
             return false;
@@ -124,6 +121,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      *
      * (called from DefaultAudioFactory command queue)
      *
+     * @param audioBuffer the buffer to queue
      * @return True if successfully queued.
      */
     @Override
@@ -145,7 +143,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
             // Bind this AudioSource to the specified AudioBuffer
             al.alSourceQueueBuffers(_source[0], 1, bids, 0);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffer.getDisplayName() + ")");
                 return false;
             }
@@ -166,6 +164,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      *
      * (called from DefaultAudioFactory command queue)
      *
+     * @param audioBuffers the buffers to queue
      * @return True if successfully queued.
      */
     @Override
@@ -191,7 +190,7 @@ public class JoalAudioSource extends AbstractAudioSource {
                 log.debug("Queueing Buffer [" + i + "] " + b.getSystemName());
             }
             i++;
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + b.getDisplayName() + ") etc.");
                 return false;
             }
@@ -219,7 +218,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
         // How many processed buffers are there?
         al.alGetSourcei(_source[0], AL.AL_BUFFERS_PROCESSED, num_processed, 0);
-        if (JoalAudioFactory.checkALError()) {
+        if (JoalAudioFactory.checkALError(al)) {
             log.warn("Error getting # processed buffers from  JoalSource (" + this.getSystemName() + ")");
             return false;
         }
@@ -228,7 +227,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         if (num_processed[0] > 0) {
             int[] bids = new int[num_processed[0]];
             al.alSourceUnqueueBuffers(_source[0], num_processed[0], bids, 0);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error removing " + num_processed[0] + " buffers from  JoalSource (" + this.getSystemName() + ")");
                 return false;
             }
@@ -236,11 +235,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Removed " + num_processed[0] + " buffers from JoalAudioSource (" + this.getSystemName() + ")");
         }
-        if (numQueuedBuffers() == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return numQueuedBuffers() != 0;
     }
 
     @Override
@@ -249,7 +244,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
         // How many processed buffers are there?
         al.alGetSourcei(_source[0], AL.AL_BUFFERS_PROCESSED, num_processed, 0);
-        if (JoalAudioFactory.checkALError()) {
+        if (JoalAudioFactory.checkALError(al)) {
             log.warn("Error getting # processed buffers from  JoalSource (" + this.getSystemName() + ")");
             return 0;
         }
@@ -272,7 +267,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         int[] num_processed = new int[1];
         // How many processed buffers are there?
         al.alGetSourcei(_source[0], AL.AL_BUFFERS_QUEUED, num_processed, 0);
-        if (JoalAudioFactory.checkALError()) {
+        if (JoalAudioFactory.checkALError(al)) {
             log.warn("Error getting # queued buffers from  JoalSource (" + this.getSystemName() + ")");
             return (0);
         }
@@ -292,7 +287,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
         // Bind this AudioSource to the specified AudioBuffer
         al.alSourcei(_source[0], AL.AL_BUFFER, ((JoalAudioBuffer) audioBuffer).getDataStorageBuffer()[0]);
-        if (JoalAudioFactory.checkALError()) {
+        if (JoalAudioFactory.checkALError(al)) {
             log.warn("Error binding JoalSource (" + this.getSystemName() + ") to AudioBuffer (" + this.getAssignedBufferName() + ")");
             return false;
         }
@@ -308,7 +303,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating position of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -319,7 +314,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setPositionRelative(relative);
         if (_initialised) {
             al.alSourcei(_source[0], AL.AL_SOURCE_RELATIVE, relative ? AL.AL_TRUE : AL.AL_FALSE);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating relative position property of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -330,7 +325,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setVelocity(vel);
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_VELOCITY, vel.x, vel.y, vel.z);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating velocity of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -349,7 +344,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setPitch(pitch);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_PITCH, pitch);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating pitch of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -360,7 +355,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setReferenceDistance(referenceDistance);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_REFERENCE_DISTANCE, referenceDistance);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating reference distance of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -371,9 +366,9 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setOffset(offset);
         if (_initialised) {
             al.alSourcei(_source[0], AL.AL_SAMPLE_OFFSET, (int) getOffset());
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating Sample Offset of JoalAudioSource (" + this.getSystemName() + ")");
-             }
+            }
         }
     }
 
@@ -382,7 +377,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setMaximumDistance(maximumDistance);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_MAX_DISTANCE, maximumDistance);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating maximum distance of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -393,7 +388,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setRollOffFactor(rollOffFactor);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_ROLLOFF_FACTOR, rollOffFactor);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating roll-off factor of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -422,7 +417,7 @@ public class JoalAudioSource extends AbstractAudioSource {
             al.alSource3f(_source[0], AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
             al.alSource3f(_source[0], AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
             al.alSourcei(_source[0], AL.AL_LOOPING, this.isLooped() ? AL.AL_TRUE : AL.AL_FALSE);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating JoalAudioSource (" + this.getSystemName() + ")");
             }
         } else {
@@ -490,7 +485,7 @@ public class JoalAudioSource extends AbstractAudioSource {
                 if (log.isDebugEnabled()) {
                     log.debug("Create LoopThread for JoalAudioSource " + this.getSystemName());
                 }
-                AudioSourceLoopThread aslt = new AudioSourceLoopThread(this, numLoops);
+                AudioSourceLoopThread aslt = new AudioSourceLoopThread(this, numLoops, al);
                 aslt.start();
             }
         }
@@ -554,7 +549,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         // If playing, update the gain
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_GAIN, currentGain);
-            if (JoalAudioFactory.checkALError()) {
+            if (JoalAudioFactory.checkALError(al)) {
                 log.warn("Error updating gain setting of JoalAudioSource (" + this.getSystemName() + ")");
             }
             if (log.isDebugEnabled()) {
@@ -584,12 +579,13 @@ public class JoalAudioSource extends AbstractAudioSource {
         /**
          * Number of times to loop this source
          */
-        private int numLoops;
+        private final int numLoops;
 
         /**
          * Reference to the OpenAL source buffer
          */
         private int[] sourceBuffer;
+        private final AL al;
 
         /**
          * Constructor that takes handle to looping AudioSource to monitor
@@ -597,11 +593,12 @@ public class JoalAudioSource extends AbstractAudioSource {
          * @param audioSource looping AudioSource to monitor
          * @param numLoops    number of loops for this AudioSource to make
          */
-        AudioSourceLoopThread(JoalAudioSource audioSource, int numLoops) {
+        AudioSourceLoopThread(JoalAudioSource audioSource, int numLoops, AL al) {
             super();
             this.setName("loopsrc-" + super.getName());
             this.sourceBuffer = audioSource.getSourceBuffer();
             this.numLoops = numLoops;
+            this.al = al;
             if (log.isDebugEnabled()) {
                 log.debug("Created AudioSourceLoopThread for AudioSource " + audioSource.getSystemName()
                         + " loopcount " + this.numLoops);
@@ -624,12 +621,12 @@ public class JoalAudioSource extends AbstractAudioSource {
             float[] newPos = new float[1];
 
             // Turn on looping
-            JoalAudioSource.al.alSourcei(sourceBuffer[0], AL.AL_LOOPING, AL.AL_TRUE);
+            al.alSourcei(sourceBuffer[0], AL.AL_LOOPING, AL.AL_TRUE);
 
             while (!dying()) {
 
                 // Determine current position
-                JoalAudioSource.al.alGetSourcef(sourceBuffer[0], AL.AL_SEC_OFFSET, newPos, 0);
+                al.alGetSourcef(sourceBuffer[0], AL.AL_SEC_OFFSET, newPos, 0);
 
                 // Check if it is smaller than the previous position
                 // If so, we've looped so increment the loop counter
@@ -649,7 +646,7 @@ public class JoalAudioSource extends AbstractAudioSource {
             }
 
             // Turn off looping
-            JoalAudioSource.al.alSourcei(sourceBuffer[0], AL.AL_LOOPING, AL.AL_FALSE);
+            al.alSourcei(sourceBuffer[0], AL.AL_LOOPING, AL.AL_FALSE);
 
             // Finish up
             if (log.isDebugEnabled()) {

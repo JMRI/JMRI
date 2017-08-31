@@ -1,7 +1,6 @@
 package jmri.managers;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.CheckForNull;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of an AudioManager.
- *
+ * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -80,33 +79,20 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return (rv);
     }
 
-    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
-    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-        }
-    }
-
     @Override
-    public Audio newAudio(String systemName, String userName) throws AudioException {
-        if (log.isDebugEnabled()) {
-            log.debug("new Audio:"
-                    + ((systemName == null) ? "null" : systemName) // NOI18N
-                    + ";" + ((userName == null) ? "null" : userName)); // NOI18N
-        }
-        checkSystemName(systemName, userName);
+    public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException {
+        Objects.requireNonNull(systemName, "SystemName cannot be null.");
+        log.debug("new Audio:{};{}", systemName, userName);
 
         // is system name in correct format?
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.SOURCE))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.LISTENER))) {
-            log.error("Invalid system name for Audio: " + systemName
-                    + " needed either " + getSystemPrefix() + typeLetter() + Audio.BUFFER // NOI18N
-                    + " or " + getSystemPrefix() + typeLetter() + Audio.SOURCE // NOI18N
-                    + " or " + getSystemPrefix() + typeLetter() + Audio.LISTENER);        // NOI18N
+            log.error("Invalid system name for Audio: {} needed either {}{}{} or {}{}{} or {}{}{}",
+                    systemName,
+                    getSystemPrefix(), typeLetter(), Audio.BUFFER,
+                    getSystemPrefix(), typeLetter(), Audio.SOURCE,
+                    getSystemPrefix(), typeLetter(), Audio.LISTENER);
             throw new AudioException("Invalid system name for Audio: " + systemName
                     + " needed either " + getSystemPrefix() + typeLetter() + Audio.BUFFER
                     + " or " + getSystemPrefix() + typeLetter() + Audio.SOURCE
@@ -117,23 +103,22 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         Audio s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
             }
-            log.debug("Found existing Audio (" + s.getSystemName() + "). Returning existing (1).");
+            log.debug("Found existing Audio ({}). Returning existing (1).", s.getSystemName());
             return s;
         }
         if ((s = getBySystemName(systemName)) != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found audio via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")"); // NOI18N
+                log.warn("Found audio via system name ({}) with non-null user name ({})", systemName, userName);
             }
-            log.debug("Found existing Audio (" + s.getSystemName() + "). Returning existing (2).");
+            log.debug("Found existing Audio ({}). Returning existing (2).", s.getSystemName());
             return s;
         }
 
-        log.debug("Existing audio not found. Creating new. (" + systemName + ")");
+        log.debug("Existing audio not found. Creating new. ({})", systemName);
         // doesn't exist, make a new one
         s = createNewAudio(systemName, userName);
 
@@ -142,7 +127,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
             register(s);
         } else {
             // must have failed to create
-            throw new IllegalArgumentException("can't create audio with System Name \""+systemName+"\"");
+            throw new IllegalArgumentException("can't create audio with System Name \"" + systemName + "\"");
         }
 
         return s;
@@ -162,6 +147,11 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameAudio");
+    }
+
+    @Override
+    public final void cleanUp() {
+        this.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class.getName());

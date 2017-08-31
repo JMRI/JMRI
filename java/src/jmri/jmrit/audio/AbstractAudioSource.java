@@ -61,10 +61,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //    private AudioSourceDelayThread asdt = null;
     private LinkedList<AudioBuffer> pendingBufferQueue = new LinkedList<>();
 
-    private static final AudioFactory activeAudioFactory = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
-
-    private static float metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
-
     /**
      * Abstract constructor for new AudioSource with system name
      *
@@ -94,16 +90,19 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         // Note: Cannot queue buffers to a Source that has a bound buffer.
         if (!bound) {
             this.pendingBufferQueue = new LinkedList<>(audioBuffers);
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
-            activeAudioFactory.getCommandThread().interrupt();
-            if (log.isDebugEnabled()) {
-                log.debug("Queued Buffer " + audioBuffers.peek().getSystemName() + " to Source " + this.getSystemName());
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
+                activeAudioFactory.getCommandThread().interrupt();
+                log.debug("Queued Buffer {} to Source {}", audioBuffers.peek().getSystemName(), this.getSystemName());
+                return true;
+            } else {
+                log.error("No audio factory available.");
             }
-            return true;
         } else {
-            log.error("Attempted to queue buffers " + audioBuffers.peek().getSystemName() + " (etc) to Bound Source " + this.getSystemName());
-            return false;
+            log.error("Attempted to queue buffers {} (etc) to Bound Source {}", audioBuffers.peek().getSystemName(), this.getSystemName());
         }
+        return false;
     }
 
     @Override
@@ -111,34 +110,40 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         if (!bound) {
             //this.pendingBufferQueue.clear();
             this.pendingBufferQueue.add(audioBuffer);
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
-            activeAudioFactory.getCommandThread().interrupt();
-            if (log.isDebugEnabled()) {
-                log.debug("Queued Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
+                activeAudioFactory.getCommandThread().interrupt();
+                log.debug("Queued Buffer {} to Source {}", audioBuffer.getSystemName(), this.getSystemName());
+                return true;
+            } else {
+                log.error("No audio factory available.");
             }
-            return true;
         } else {
             log.error("Attempted to queue buffer " + audioBuffer.getSystemName() + " to Bound Source " + this.getSystemName());
-            return false;
         }
+        return false;
     }
 
     @Override
     public boolean unqueueBuffers() {
         if (bound) {
-            log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
+            log.error("Attempted to unqueue buffers on Bound Source {}", this.getSystemName());
             return false;
         } else if (queued) {
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_UNQUEUE_BUFFERS));
-            activeAudioFactory.getCommandThread().interrupt();
-            if (log.isDebugEnabled()) {
-                log.debug("Unqueued Processed Buffers on Source " + this.getSystemName());
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_UNQUEUE_BUFFERS));
+                activeAudioFactory.getCommandThread().interrupt();
+                log.debug("Unqueued Processed Buffers on Source {}", this.getSystemName());
+                return true;
+            } else {
+                log.error("No audio factory available.");
             }
-            return true;
         } else {
-            log.debug("Source neither queued nor bound. Not an error. " + this.getSystemName());
-            return false;
+            log.debug("Source neither queued nor bound. Not an error. {}", this.getSystemName());
         }
+        return false;
     }
 
     public Queue<AudioBuffer> getQueuedBuffers() {
@@ -151,22 +156,25 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this.buffer = audioBuffer;
             // Ensure that the source is stopped
             this.stop(false);
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
-            activeAudioFactory.getCommandThread().interrupt();
-            if (log.isDebugEnabled()) {
-                log.debug("Assigned Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
+                activeAudioFactory.getCommandThread().interrupt();
+                log.debug("Assigned Buffer {} to Source {}", audioBuffer.getSystemName(), this.getSystemName());
+            } else {
+                log.error("No audio factory available.");
             }
         } else {
-            log.error("Attempted to assign buffer " + audioBuffer.getSystemName() + " to Queued Source " + this.getSystemName());
+            log.error("Attempted to assign buffer {} to Queued Source {}", audioBuffer.getSystemName(), this.getSystemName());
         }
     }
 
     @Override
     public void setAssignedBuffer(String bufferSystemName) {
         if (!queued) {
-            AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
+            AudioManager am = InstanceManager.getDefault(AudioManager.class);
             Audio a = am.getBySystemName(bufferSystemName);
-            if (a.getSubType() == Audio.BUFFER) {
+            if (a != null && a.getSubType() == Audio.BUFFER) {
                 setAssignedBuffer((AudioBuffer) a);
             } else {
                 log.warn("Attempt to assign incorrect object type to buffer - AudioBuffer expected.");
@@ -174,7 +182,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 this.bound = false;
             }
         } else {
-            log.error("Attempted to assign buffer " + bufferSystemName + " to Queued Source " + this.getSystemName());
+            log.error("Attempted to assign buffer {} to Queued Source {}", bufferSystemName, this.getSystemName());
         }
     }
 
@@ -193,9 +201,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         this.position = pos;
         this.currentPosition = pos;
         changePosition(pos);
-        if (log.isDebugEnabled()) {
-            log.debug("Set position of Source " + this.getSystemName() + " to " + pos);
-        }
+        log.debug("Set position of Source {} to {}", this.getSystemName(), pos);
     }
 
     @Override
@@ -231,9 +237,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void setVelocity(Vector3f vel) {
         this.velocity = vel;
-        if (log.isDebugEnabled()) {
-            log.debug("Set velocity of Source " + this.getSystemName() + " to " + vel);
-        }
+        log.debug("Set velocity of Source {} to {}", this.getSystemName(), vel);
     }
 
     @Override
@@ -250,26 +254,28 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         long currentTime = System.currentTimeMillis();
         float timePassed = (currentTime - this.timeOfLastPositionCheck);
         this.timeOfLastPositionCheck = currentTime;
-
-        log.debug("timePassed = " + timePassed
-                + " metersPerUnit = " + metersPerUnit
-                + " source = " + this.getSystemName()
-                + " state = " + this.getState());
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        float metersPerUnit = 1;
+        if (activeAudioFactory != null) {
+            metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
+        }
+        log.debug("timePassed = {} metersPerUnit = {} source = {} state = {}", timePassed, metersPerUnit, this.getSystemName(), this.getState());
         if (this.velocity.length() != 0) {
             this.currentPosition.scaleAdd((timePassed / 1000) * metersPerUnit,
                     this.velocity,
                     this.currentPosition);
             changePosition(this.currentPosition);
-            if (log.isDebugEnabled()) {
-                log.debug("Set current position of Source " + this.getSystemName() + " to " + this.currentPosition);
-            }
+            log.debug("Set current position of Source {} to {}", this.getSystemName(), this.currentPosition);
         }
     }
 
     @Override
     public void resetCurrentPosition() {
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -289,9 +295,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void setGain(float gain) {
         this.gain = gain;
-        if (log.isDebugEnabled()) {
-            log.debug("Set gain of Source " + this.getSystemName() + " to " + gain);
-        }
+        log.debug("Set gain of Source {} to {}", this.getSystemName(), gain);
     }
 
     @Override
@@ -314,9 +318,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             pitch = 2.0f;
         }
         this.pitch = pitch;
-        if (log.isDebugEnabled()) {
-            log.debug("Set pitch of Source " + this.getSystemName() + " to " + pitch);
-        }
+        log.debug("Set pitch of Source {} to {}", this.getSystemName(), pitch);
     }
 
     @Override
@@ -330,9 +332,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             referenceDistance = 0.0f;
         }
         this.referenceDistance = referenceDistance;
-        if (log.isDebugEnabled()) {
-            log.debug("Set reference distance of Source " + this.getSystemName() + " to " + referenceDistance);
-        }
+        log.debug("Set reference distance of Source {} to {}", this.getSystemName(), referenceDistance);
     }
 
     @Override
@@ -349,9 +349,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             offset = this.buffer.getLength();
         }
         this.offset = offset;
-        if (log.isDebugEnabled()) {
-            log.debug("Set byte offset of Source " + this.getSystemName() + "to " + offset);
-        }
+        log.debug("Set byte offset of Source {} to {}", this.getSystemName(), offset);
     }
 
     @Override
@@ -365,9 +363,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             maximumDistance = 0.0f;
         }
         this.maximumDistance = maximumDistance;
-        if (log.isDebugEnabled()) {
-            log.debug("Set maximum distance of Source " + this.getSystemName() + " to " + maximumDistance);
-        }
+        log.debug("Set maximum distance of Source {} to {}", this.getSystemName(), maximumDistance);
     }
 
     @Override
@@ -378,9 +374,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void setRollOffFactor(float rollOffFactor) {
         this.rollOffFactor = rollOffFactor;
-        if (log.isDebugEnabled()) {
-            log.debug("Set roll-off factor of Source " + this.getSystemName() + " to " + rollOffFactor);
-        }
+        log.debug("Set roll-off factor of Source {} to {}", this.getSystemName(), rollOffFactor);
     }
 
     @Override
@@ -560,10 +554,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                     // If so, we're done fading
                     this.fading = Audio.FADE_NONE;
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Set fade out gain of AudioSource "
-                            + this.getSystemName() + " to " + this.fadeGain);
-                }
+                log.debug("Set fade out gain of AudioSource {} to {}", this.getSystemName(), this.fadeGain);
                 break;
             case Audio.FADE_IN:
                 // Calculate fade-in gain
@@ -576,10 +567,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                     // If so, we're done fading
                     this.fading = Audio.FADE_NONE;
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Set fade in gain of AudioSource "
-                            + this.getSystemName() + " to " + this.fadeGain);
-                }
+                log.debug("Set fade in gain of AudioSource {} to {}", this.getSystemName(), this.fadeGain);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -690,8 +678,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //        }
         if (this.getState() != STATE_PLAYING) {
             this.setState(STATE_PLAYING);
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
-            activeAudioFactory.getCommandThread().interrupt();
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
+                activeAudioFactory.getCommandThread().interrupt();
+            }
         }
     }
 
@@ -708,9 +699,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private void stop(boolean interruptThread) {
         this.fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_STOP));
-        if (interruptThread) {
-            activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_STOP));
+            if (interruptThread) {
+                activeAudioFactory.getCommandThread().interrupt();
+            }
         }
     }
 
@@ -722,8 +716,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void togglePlay() {
         this.fading = Audio.FADE_NONE;
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY_TOGGLE));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY_TOGGLE));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -742,8 +739,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void pause() {
         this.fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -755,8 +755,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void resume() {
         this.fading = Audio.FADE_NONE;
         this.setState(STATE_PLAYING);
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESUME));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESUME));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -767,8 +770,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void togglePause() {
         this.fading = Audio.FADE_NONE;
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE_TOGGLE));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE_TOGGLE));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -787,8 +793,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void rewind() {
         this.fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_REWIND));
-        activeAudioFactory.getCommandThread().interrupt();
+        AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+        if (activeAudioFactory != null) {
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_REWIND));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -803,8 +812,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this.fadeGain = 0.0f;
             this.timeOfLastFadeCheck = System.currentTimeMillis();
             this.setState(STATE_PLAYING);
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
-            activeAudioFactory.getCommandThread().interrupt();
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
+                activeAudioFactory.getCommandThread().interrupt();
+            }
         }
     }
 
@@ -820,8 +832,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this.fadeGain = 1.0f;
             this.timeOfLastFadeCheck = System.currentTimeMillis();
             this.setState(STATE_PLAYING);
-            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
-            activeAudioFactory.getCommandThread().interrupt();
+            AudioFactory activeAudioFactory = InstanceManager.getDefault(AudioManager.class).getActiveAudioFactory();
+            if (activeAudioFactory != null) {
+                activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
+                activeAudioFactory.getCommandThread().interrupt();
+            }
         }
     }
 
@@ -845,8 +860,8 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 + ", bound to: " + this.getAssignedBufferName()
                 + ", loops: "
                 + ((this.getMinLoops() == LOOP_CONTINUOUS) ? "infinite"
-                        : ((!this.isLooped()) ? "none"
-                                : "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
+                : ((!this.isLooped()) ? "none"
+                : "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class.getName());
@@ -868,7 +883,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         /**
          * Internal variable to hold the fade direction
          */
-        private int fadeDirection;
+        private final int fadeDirection;
 
         /**
          * Constructor that takes handle to looping AudioSource to monitor
@@ -880,9 +895,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this.setName("fadesrc-" + super.getName());
             this.audioSource = audioSource;
             this.fadeDirection = audioSource.getFading();
-            if (log.isDebugEnabled()) {
-                log.debug("Created AudioSourceFadeThread for AudioSource " + audioSource.getSystemName());
-            }
+            log.debug("Created AudioSourceFadeThread for AudioSource {}", audioSource.getSystemName());
         }
 
         /**
@@ -920,9 +933,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             }
 
             // Finish up
-            if (log.isDebugEnabled()) {
-                log.debug("Clean up thread " + this.getName());
-            }
+            log.debug("Clean up thread {}", this.getName());
             cleanup();
         }
 
@@ -962,9 +973,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             super();
             this.setName("movesrc-" + super.getName());
             this.audioSource = audioSource;
-            if (log.isDebugEnabled()) {
-                log.debug("Created AudioSourceMoveThread for AudioSource " + audioSource.getSystemName());
-            }
+            log.debug("Created AudioSourceMoveThread for AudioSource {}", audioSource.getSystemName());
         }
 
         /**
@@ -990,9 +999,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //            // Reset the current position
 //            audioSource.resetCurrentPosition();
             // Finish up
-            if (log.isDebugEnabled()) {
-                log.debug("Clean up thread " + this.getName());
-            }
+            log.debug("Clean up thread {}", this.getName());
             cleanup();
         }
 
@@ -1032,7 +1039,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //            super();
 //            this.setName("delaysrc-"+super.getName());
 //            this.audioSource = audioSource;
-//            if (log.isDebugEnabled()) log.debug("Created AudioSourceDelayThread for AudioSource " + audioSource.getSystemName());
+//            log.debug("Created AudioSourceDelayThread for AudioSource {}", audioSource.getSystemName());
 //        }
 //
 //        /**
@@ -1050,7 +1057,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //            this.audioSource.play();
 //
 //            // Finish up
-//            if (log.isDebugEnabled()) log.debug("Clean up thread " + this.getName());
+//            log.debug("Clean up thread {}", this.getName());
 //            cleanup();
 //        }
 //

@@ -38,9 +38,7 @@ public class NullAudioSource extends AbstractAudioSource {
      */
     public NullAudioSource(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) {
-            log.debug("New NullAudioSource: " + systemName);
-        }
+        log.debug("New NullAudioSource: {}", systemName);
         initialised = init();
     }
 
@@ -52,19 +50,14 @@ public class NullAudioSource extends AbstractAudioSource {
      */
     public NullAudioSource(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) {
-            log.debug("New NullAudioSource: " + userName + " (" + systemName + ")");
-        }
+        log.debug("New NullAudioSource: {} ({})", userName, systemName);
         initialised = init();
     }
 
     @Override
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // Don't actually need to do anything specific here
-        if (log.isDebugEnabled()) {
-            log.debug("Bind NullAudioSource (" + this.getSystemName()
-                    + ") to NullAudioBuffer (" + audioBuffer.getSystemName() + ")");
-        }
+        log.debug("Bind NullAudioSource ({}) to NullAudioBuffer ({})", this.getSystemName(), audioBuffer.getSystemName());
         return true;
     }
 
@@ -84,9 +77,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doPlay() {
-        if (log.isDebugEnabled()) {
-            log.debug("Play NullAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Play NullAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             doRewind();
             doResume();
@@ -95,9 +86,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doStop() {
-        if (log.isDebugEnabled()) {
-            log.debug("Stop NullAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Stop NullAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             // do nothing
             doRewind();
@@ -106,9 +95,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doPause() {
-        if (log.isDebugEnabled()) {
-            log.debug("Pause NullAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Pause NullAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             // do nothing
         }
@@ -117,9 +104,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doResume() {
-        if (log.isDebugEnabled()) {
-            log.debug("Resume NullAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Resume NullAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             // do nothing
         }
@@ -128,9 +113,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doRewind() {
-        if (log.isDebugEnabled()) {
-            log.debug("Rewind NullAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Rewind NullAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             // do nothing
         }
@@ -139,9 +122,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doFadeIn() {
-        if (log.isDebugEnabled()) {
-            log.debug("Fade-in JoalAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Fade-in JoalAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             doPlay();
         }
@@ -149,9 +130,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doFadeOut() {
-        if (log.isDebugEnabled()) {
-            log.debug("Fade-out JoalAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Fade-out JoalAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             doStop();
         }
@@ -159,9 +138,7 @@ public class NullAudioSource extends AbstractAudioSource {
 
     @Override
     protected void cleanUp() {
-        if (log.isDebugEnabled()) {
-            log.debug("Cleanup NullAudioSource (" + this.getSystemName() + ")");
-        }
+        log.debug("Cleanup NullAudioSource ({})", this.getSystemName());
         this.dispose();
     }
 

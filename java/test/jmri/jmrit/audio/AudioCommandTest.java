@@ -8,14 +8,14 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioCommandTest {
 
     @Test
     public void testCTor() {
-        AudioCommand t = new AudioCommand(new NullAudioSource("test"),1);
-        Assert.assertNotNull("exists",t);
+        AudioCommand t = new AudioCommand(new NullAudioSource("test"), 1);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
