@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -16,8 +17,7 @@ public class RfidTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new RfidTrafficController(){
            @Override
            public void sendInitString(){
@@ -29,8 +29,7 @@ public class RfidTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -10,9 +10,9 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  *

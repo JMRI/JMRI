@@ -1,7 +1,6 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
-import java.util.*;
 
 /**
  * Drive a single Track Circuit section on a USS CTC panel.

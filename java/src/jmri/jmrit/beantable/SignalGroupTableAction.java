@@ -830,7 +830,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String uName = _userName.getText();
         if (sName.length() == 0) {
             JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("RouteAddStatusEnter"),
+                    Bundle.getMessage("AddBeanStatusEnter"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.WARNING_MESSAGE);
             // Reuse a key with general wording

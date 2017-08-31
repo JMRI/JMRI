@@ -2,13 +2,11 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListener;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.util.*;
-
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.beans.*;
+import org.junit.Assert;
 
 public class SlotManagerTest extends TestCase {
 
@@ -761,7 +759,7 @@ public class SlotManagerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class.getName());

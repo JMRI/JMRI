@@ -1,8 +1,9 @@
 package jmri.jmrix.can;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.can.CanMessage class
@@ -152,6 +153,6 @@ public class CanMessageTest extends CanMRCommonTestBase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

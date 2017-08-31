@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +64,7 @@ public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

@@ -1,16 +1,10 @@
 package jmri.jmrit.picker;
 
-import jmri.*;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.*;
 
 /**
  * Container with a single PickList table

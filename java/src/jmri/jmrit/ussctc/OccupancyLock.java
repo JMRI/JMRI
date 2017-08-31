@@ -1,8 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 import java.util.*;
+import jmri.*;
 
 /**
  * Lock if any of a list of sensors isn't INACTIVE.

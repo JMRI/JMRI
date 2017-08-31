@@ -233,8 +233,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initShutDownManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -242,7 +241,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

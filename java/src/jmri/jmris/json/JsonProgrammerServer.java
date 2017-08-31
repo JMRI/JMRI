@@ -1,9 +1,6 @@
 package jmri.jmris.json;
 
-import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JsonException.ERROR;
-import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.JSON.MODE;
 import static jmri.server.json.JSON.NODE_CV;
 import static jmri.server.json.JSON.OP;
@@ -13,6 +10,9 @@ import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.JSON.WRITE;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -2,15 +2,14 @@ package jmri.jmrix.loconet.bdl16;
 
 import java.util.Collections;
 import javax.swing.BoxLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Panel displaying and programming a BDL16x configuration.

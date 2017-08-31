@@ -17,24 +17,19 @@ public class LayoutBlockConnectivityToolsTest {
 
     @Test
     public void testCtor() {
-        LayoutBlockConnectivityTools  t = new LayoutBlockConnectivityTools();
-        Assert.assertNotNull("exists", t );
+        LayoutBlockConnectivityTools t = new LayoutBlockConnectivityTools();
+        Assert.assertNotNull("exists", t);
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockConnectivityToolsTest.class.getName());
 }

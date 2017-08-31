@@ -1,8 +1,7 @@
 package jmri.jmrix.nce;
 
-import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.Turnout;
-
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -67,21 +68,21 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
         suite.addTest(new JUnit4TestAdapter(AudioTablePanelTest.class));
         suite.addTest(new JUnit4TestAdapter(AudioTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewBeanPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewDevicePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewHardwareDevicePanelTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @Override
     protected void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

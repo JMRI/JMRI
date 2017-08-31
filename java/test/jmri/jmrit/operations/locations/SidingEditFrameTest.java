@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
@@ -58,7 +59,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
         // kill all frames
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -90,7 +91,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
 
         // kill all frames
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -115,8 +116,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull(sef);
 
         // kill all frames
-        f.dispose();
-        sef.dispose();
+        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(sef);
     }
 
     @Test
@@ -157,8 +158,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull(sef);
 
         // kill all frames
-        f.dispose();
-        sef.dispose();
+        JUnitUtil.dispose(f);
+        JUnitUtil.dispose(sef);
 
         // now reload
         Location l2 = lManager.getLocationByName("Test Loc C");
@@ -173,7 +174,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of sidings", 3, fl.spurModel.getRowCount());
         Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
 
-        fl.dispose();
+        JUnitUtil.dispose(fl);
     }
 
     private void loadLocations() {

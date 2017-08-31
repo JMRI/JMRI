@@ -3,9 +3,9 @@ package jmri.jmrix.sprog.update;
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Frame for SPROG v4 firmware update utility.

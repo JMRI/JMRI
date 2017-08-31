@@ -1,30 +1,26 @@
 package jmri.jmrit.operations.setup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JComboBox;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
-import javax.swing.JComboBox;
+import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.JRadioButtonOperator;
 
 /**
  * Tests for OperationsSetupFrame
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OperationsSetupFrameTest extends OperationsSwingTestCase {
 
@@ -70,7 +66,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         Assert.assertTrue("East selected", eastCheckBoxOperator.isSelected());
 
         // done
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -115,7 +111,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,"No");
         // done*/
-        f.dispose();
+        JUnitUtil.dispose(f);
         jfo.dispose();
 
         // it may be possible to make this a headless test by only initializing the panel, not the frame
@@ -158,7 +154,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("terminate color", LocoIcon.GRAY, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconTerminate")).getLabelFor())).getSelectedItem());
         Assert.assertEquals("local color", LocoIcon.YELLOW, ((JComboBox)(new JLabelOperator(jfo2,Bundle.getMessage("IconLocal")).getLabelFor())).getSelectedItem());
         // done
-        frameRead.dispose();
+        JUnitUtil.dispose(frameRead);
     }
 
     // The minimal setup for log4J

@@ -1,7 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
 import java.util.*;
+import jmri.*;
 
 /**
  * Drive a single Turnout section on a USS CTC panel.
