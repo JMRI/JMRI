@@ -1,16 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.GraphicsEnvironment;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
-import javax.swing.MenuElement;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -110,10 +105,6 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
                 location
         ));
 
-        //TODO: comment out for production; 
-        // only here so developer can see what's happening
-        sleep(250);
-
         // find last anchor
         PositionablePoint ppA7 = leFinder.findPositionablePointByName("A7");
         Assert.assertNotNull("Anchor A7 exists", leFinder);
@@ -129,10 +120,6 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
                 EventDataConstants.CUSTOM, // position
                 location
         ));
-
-        //TODO: comment out for production; 
-        // only here so developer can see what's happening
-        sleep(250);
 
         // find LayoutTurnout TO1
         LayoutTurnout ltTO1 = leFinder.findLayoutTurnoutByName("TO1");
@@ -163,10 +150,6 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
 
         Assert.assertTrue("LayoutTurnout TO1 closed after one click", ltTO1.getState() == Turnout.CLOSED);
 
-        //TODO: comment out for production; 
-        // only here so developer can see what's happening
-        sleep(250);
-
         getHelper().enterClickAndLeave(new MouseEventData(this,
                 leTargetPanel, // component
                 1, // number clicks
@@ -181,10 +164,6 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
             return ltTO1.getState() == Turnout.THROWN;
         }, "LayoutTurnout TO1 thrown after two clicks");
 
-        //TODO: comment out for production; 
-        // only here so developer can see what's happening
-        sleep(250);
-
         getHelper().enterClickAndLeave(new MouseEventData(this,
                 leTargetPanel, // component
                 1, // number clicks
@@ -194,40 +173,7 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
                 EventDataConstants.CUSTOM, // position
                 location
         ));
-        sleep(100);
 
-//        dumpComponent(le);
-
-        // WIP: TODO: Finish this!
-        if (true) {
-        } else if (false) {
-            String editTitle = Bundle.getMessage("EditTitle") + "...";
-            pressMenuItem(le.getJMenuBar(), editTitle);
-        } else {
-            String setSignalHeadsTitle = Bundle.getMessage("SignalHeads");
-            pressPopupMenuItem(le, setSignalHeadsTitle);
-        }
-
-        //ComponentFinder pmf = new ComponentFinder(JPopupMenu.class);
-        //JMenuItemByLabelFinder pmf = new JMenuItemByLabelFinder(setSignalHeadsTitle);
-        //Assert.assertNotNull("new JPopupMenuFinder exists", pmf);
-        //NamedComponentFinder ncf = new NamedComponentFinder(JPopupMenu.class, setSignalHeadsTitle);
-        //List<JPopupMenu> pmList = ncf.findAll(le);
-        //JPopupMenuFinder pmf = new JPopupMenuFinder();
-        //List<JPopupMenu> pmList = pmf.findAll();
-        //Assert.assertNotNull("LayoutTurnout popup menu list exists", pmList);
-//        for (JPopupMenu pm : pmList) {
-//            dumpComponent(pm);
-//        }
-        //TODO: comment out for production; 
-        // only here so developer can see what's happening
-        sleep(3000);
-
-        //
-        //
-        //
-        //
-        //
         // Ask to close window
         TestHelper.disposeWindow(le, this);
 
@@ -253,60 +199,6 @@ public class LayoutEditorEditorTest extends jmri.util.SwingTestCase {
         // Click to say yes, I really mean it.
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
         le.dispose();
-    }
-
-    // routine to dump component hierarchy
-    private void dumpComponent(Component inComponent) {
-        dumpComponent(inComponent, 0);
-    }
-
-    private void dumpComponent(Component inComponent, int inDepth) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < inDepth; i++) {
-            builder.append("|   ");
-        }
-        String prefix = builder.toString();
-
-        String label = getComponentTitle(inComponent);
-        System.out.println(prefix + inComponent.getClass().getName() + ":" + label);
-
-        if (inComponent instanceof Container) {
-            Component[] cList = ((Container) inComponent).getComponents();
-            for (Component c : cList) {
-                dumpComponent(c, inDepth + 1);
-            }
-        }
-        if (false) {
-            if (inComponent instanceof JMenuBar) {
-                MenuElement[] mList = ((JMenuBar) inComponent).getSubElements();
-                for (MenuElement me : mList) {
-                    dumpComponent(me.getComponent(), inDepth + 1);
-                }
-            }
-        }
-    }
-
-    private String getComponentTitle(Component inComponent) {
-        String result = "";
-        Method methodToFind = null;
-        try {
-            methodToFind = inComponent.getClass().getMethod("getLabel", (Class<?>[]) null);
-            if (methodToFind != null) {
-                try {
-                    // Method found. You can invoke the method like
-                    result = (String) methodToFind.invoke(inComponent, (Object[]) null);
-                } catch (IllegalAccessException ex) {
-                    //log.error("invoke ", ex);
-                } catch (IllegalArgumentException ex) {
-                    //log.error("invoke ", ex);
-                } catch (InvocationTargetException ex) {
-                    //log.error("invoke ", ex);
-                }
-            }
-        } catch (NoSuchMethodException | SecurityException ex) {
-            //log.error("getMethod('getLabel') ", ex);
-        }
-        return result;
     }
 
     // from here down is testing infrastructure

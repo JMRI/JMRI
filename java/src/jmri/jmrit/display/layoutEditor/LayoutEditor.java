@@ -10319,13 +10319,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         clearSelectionGroups();
         createSelectionGroups();
+        selectionActive = true;
+        repaint();
     }
 
     private void drawSelectionRect(@Nonnull Graphics2D g2) {
         if (selectionActive && (selectionWidth != 0.0) && (selectionHeight != 0.0)) {
-            g2.setColor(defaultTrackColor);
+            java.awt.Stroke stroke = g2.getStroke();
+            Color color = g2.getColor();
+
+            g2.setColor(new Color(204, 207, 88));
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+
             g2.draw(getSelectionRect());
+
+            g2.setColor(color);
+            g2.setStroke(stroke);
         }
     } //drawSelectionRect
 
