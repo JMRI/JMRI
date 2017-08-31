@@ -1,6 +1,8 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import java.util.HashMap;
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
@@ -10,6 +12,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +21,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TableItemPanelTest {
+public class IconDialogTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EditorScaffold es = new EditorScaffold();
         PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
-        JmriJFrame jf = new JmriJFrame("Table Item Panel Test");
+        JmriJFrame jf = new JmriJFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
-        TableItemPanel t = new TableItemPanel(jf,"IS01","",tableModel,editor);
+        TableItemPanel tip = new TableItemPanel(jf,"IS01","",tableModel,editor);
+        IconDialog t = new IconDialog("Tables","Tables",tip,new HashMap<String,NamedIcon>());
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }
@@ -42,6 +47,6 @@ public class TableItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableItemPanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconDialogTest.class.getName());
 
 }

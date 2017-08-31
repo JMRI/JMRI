@@ -59,6 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SCWarrantTest.class));
         suite.addTest(new JUnit4TestAdapter(EngineerTest.class));
         suite.addTest(new JUnit4TestAdapter(SpeedUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(FunctionPanelTest.class));
         return suite;
     }
 
