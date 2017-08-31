@@ -2513,7 +2513,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(controlCheckBoxMenuItem);
         controlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             setAllControlling(controlCheckBoxMenuItem.isSelected());
-            repaint();
+            redrawPanel();
         });
         controlCheckBoxMenuItem.setSelected(allControlling());
 
@@ -2558,7 +2558,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             drawGrid = showGridCheckBoxMenuItem.isSelected();
-            repaint();
+            redrawPanel();
         });
         showGridCheckBoxMenuItem.setSelected(drawGrid);
 
@@ -2572,7 +2572,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
-            repaint();
+            redrawPanel();
         });
         snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
 
@@ -2586,7 +2586,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
-            repaint();
+            redrawPanel();
         });
         snapToGridOnMoveCheckBoxMenuItem.setSelected(snapToGridOnMove);
 
@@ -2612,7 +2612,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollBoth.addActionListener((ActionEvent event) -> {
             _scrollState = Editor.SCROLL_BOTH;
             setScroll(_scrollState);
-            repaint();
+            redrawPanel();
         });
         scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
         scrollGroup.add(scrollNone);
@@ -2621,7 +2621,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollNone.addActionListener((ActionEvent event) -> {
             _scrollState = Editor.SCROLL_NONE;
             setScroll(_scrollState);
-            repaint();
+            redrawPanel();
         });
         scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
         scrollGroup.add(scrollHorizontal);
@@ -2630,7 +2630,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollHorizontal.addActionListener((ActionEvent event) -> {
             _scrollState = Editor.SCROLL_HORIZONTAL;
             setScroll(_scrollState);
-            repaint();
+            redrawPanel();
         });
         scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
         scrollGroup.add(scrollVertical);
@@ -2639,7 +2639,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollVertical.addActionListener((ActionEvent event) -> {
             _scrollState = Editor.SCROLL_VERTICAL;
             setScroll(_scrollState);
-            repaint();
+            redrawPanel();
         });
 
         //
@@ -2692,7 +2692,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(antialiasingOnCheckBoxMenuItem);
         antialiasingOnCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             antialiasingOn = antialiasingOnCheckBoxMenuItem.isSelected();
-            repaint();
+            redrawPanel();
         });
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
 
@@ -2728,7 +2728,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         setTitle(newName);
                         layoutName = newName;
                         InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(thisPanel);
-                        setDirty(true);
+                        setDirty();
 
                         if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
                             // Rebuild the toolbox after a name change.
@@ -2747,8 +2747,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(backgroundItem);
         backgroundItem.addActionListener((ActionEvent event) -> {
             addBackground();
-            setDirty(true);
-            repaint();
+            //note: panel resized in addBackground
+            setDirty();
+            redrawPanel();
         });
 
         //
@@ -2777,9 +2778,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
         optionMenu.add(clockItem);
         clockItem.addActionListener((ActionEvent event) -> {
-            addClock();
-            setDirty(true);
-            repaint();
+            AnalogClock2Display c = addClock();
+            unionToPanelBounds(c.getBounds());
+            setDirty();
+            redrawPanel();
         });
 
         //
@@ -2789,8 +2791,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(turntableItem);
         turntableItem.addActionListener((ActionEvent event) -> {
             addTurntable(windowCenter());
-            setDirty(true);
-            repaint();
+            //note: panel resized in addTurntable
+            setDirty();
+            redrawPanel();
         });
 
         //
@@ -2801,8 +2804,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         reporterItem.addActionListener((ActionEvent event) -> {
             Point2D pt = windowCenter();
             enterReporter((int) pt.getX(), (int) pt.getY());
-            setDirty(true);
-            repaint();
+            //note: panel resized in enterReporter
+            setDirty();
+            redrawPanel();
         });
 
         //
@@ -2913,7 +2917,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutOptionsMenu.add(turnoutCirclesOnCheckBoxMenuItem);
         turnoutCirclesOnCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             turnoutCirclesWithoutEditMode = turnoutCirclesOnCheckBoxMenuItem.isSelected();
-            repaint();
+            redrawPanel();
         });
         turnoutCirclesOnCheckBoxMenuItem.setSelected(turnoutCirclesWithoutEditMode);
 
@@ -2958,7 +2962,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutOptionsMenu.add(turnoutDrawUnselectedLegCheckBoxMenuItem);
         turnoutDrawUnselectedLegCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             turnoutDrawUnselectedLeg = turnoutDrawUnselectedLegCheckBoxMenuItem.isSelected();
-            repaint();
+            redrawPanel();
         });
         turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
 
@@ -2985,7 +2989,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (TrackSegment ts : trackList) {
                 ts.hideConstructionLines(show);
             }
-            repaint();
+            redrawPanel();
         });
         hideTrackSegmentConstructionLinesCheckBoxMenuItem.setSelected(autoAssignBlocks);
 
@@ -3574,24 +3578,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             panelWidth = upperLeftX + (int) layoutBounds.getWidth();
             panelHeight = upperLeftY + (int) layoutBounds.getHeight();
-
-            setTargetPanelSize(panelWidth, panelHeight);
         } else {
             // move upper left X and Y if necessary
             upperLeftX = Math.max(Math.min(upperLeftX, (int) layoutBounds.getX()), 0);
             upperLeftY = Math.max(Math.min(upperLeftY, (int) layoutBounds.getY()), 0);
 
             // expand panelWidth and panelHeight if necessary
-            int newWidth = upperLeftX + (int) layoutBounds.getWidth();
-            int newHeight = upperLeftX + (int) layoutBounds.getHeight();
-            if ((panelWidth < newWidth) || (panelHeight < newHeight)) {
-                panelWidth = newWidth;
-                panelHeight = newHeight;
-                setTargetPanelSize(panelWidth, panelHeight);
-            }
-            layoutBounds = new Rectangle2D.Double(upperLeftX, upperLeftY, panelWidth, panelHeight);
+            panelWidth = upperLeftX + (int) layoutBounds.getWidth();
+            panelHeight = upperLeftX + (int) layoutBounds.getHeight();
         }
-        return layoutBounds;
+        setTargetPanelSize(panelWidth, panelHeight);
+        return getPanelBounds();
     } // resizePanelBounds
 
     //
@@ -3723,11 +3720,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 markerImage.remove(i - 1);
                 il.remove();
                 il.dispose();
-                setDirty(true);
+                setDirty();
             }
         }
         super.removeMarkers();
-        repaint();
+        redrawPanel();
     } //removeMarkers
 
     /*======================================*\
@@ -3878,8 +3875,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             enterTrackWidthFrame = null;
 
             if (trackWidthChange) {
-                repaint();
-                setDirty(true);
+                redrawPanel();
+                setDirty();
             }
         }
     } //trackWidthDonePressed
@@ -3891,8 +3888,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterTrackWidthFrame = null;
 
         if (trackWidthChange) {
-            repaint();
-            setDirty(true);
+            redrawPanel();
+            setDirty();
         }
     } //trackWidthCancelPressed
 
@@ -4047,8 +4044,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             enterGridSizesFrame = null;
 
             if (gridSizesChange) {
-                repaint();
-                setDirty(true);
+                redrawPanel();
+                setDirty();
             }
         }
     } //gridSizesDonePressed
@@ -4060,8 +4057,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterGridSizesFrame = null;
 
         if (gridSizesChange) {
-            repaint();
-            setDirty(true);
+            redrawPanel();
+            setDirty();
         }
     } //gridSizesCancelPressed
 
@@ -4243,7 +4240,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addReporter(rName, xx, yy);
 
         //success - repaint the panel
-        repaint();
+        redrawPanel();
         enterReporterFrame.setVisible(true);
     } //reporterDonePressed
 
@@ -4252,7 +4249,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         enterReporterFrame.setVisible(false);
         enterReporterFrame.dispose();
         enterReporterFrame = null;
-        repaint();
+        redrawPanel();
     } //reporterCancelPressed
 
     /*===============================*\
@@ -4467,8 +4464,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scaleTrackDiagramFrame = null;
 
         if (scaleChange) {
-            repaint();
-            setDirty(true);
+            redrawPanel();
+            setDirty();
         }
     } //scaleTrackDiagramDonePressed
 
@@ -4731,9 +4728,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             coord.getY() + yTranslation));
                 }
             }
-
-            repaint();
-            setDirty(true);
+            resizePanelBounds(false);
+            setDirty();
+            redrawPanel();
         }
 
         //success - hide dialog
@@ -4808,8 +4805,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             coord.getY() + undoDeltaY));
                 }
             }
-
-            repaint();
+            resizePanelBounds(false);
+            redrawPanel();
             canUndoMoveSelection = false;
         }
     } //undoMoveSelection
@@ -4862,7 +4859,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
 
         log.debug("setCurrentPositionAndSize Position - {},{} WindowSize - {},{} PanelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
-        setDirty(true);
+        setDirty();
     } //setCurrentPositionAndSize()
 
     private JRadioButtonMenuItem addButtonGroupMenuEntry(@Nonnull JMenu inMenu,
@@ -4890,8 +4887,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!defaultBackgroundColor.equals(inColor)) {
                     defaultBackgroundColor = inColor;
                     setBackgroundColor(inColor);
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             }
         };
@@ -4906,8 +4903,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!defaultTrackColor.equals(inColor)) {
                     LayoutTrack.setDefaultTrackColor(inColor);
                     defaultTrackColor = inColor;
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             } //actionPerformed
         };
@@ -4921,8 +4918,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             public void actionPerformed(ActionEvent e) {
                 if (!defaultOccupiedTrackColor.equals(inColor)) {
                     defaultOccupiedTrackColor = inColor;
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             } //actionPerformed
         };
@@ -4936,8 +4933,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             public void actionPerformed(ActionEvent e) {
                 if (!defaultAlternativeTrackColor.equals(inColor)) {
                     defaultAlternativeTrackColor = inColor;
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             } //actionPerformed
         };
@@ -4951,8 +4948,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             public void actionPerformed(ActionEvent e) {
                 if (!defaultTextColor.equals(inColor)) {
                     defaultTextColor = inColor;
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             } //actionPerformed
         };
@@ -4965,8 +4962,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             @Override
             public void actionPerformed(ActionEvent e) {
                 setTurnoutCircleColor(ColorUtil.colorToString(inColor));
-                setDirty(true);
-                repaint();
+                setDirty();
+                redrawPanel();
             } //actionPerformed
         };
         addButtonGroupMenuEntry(inMenu, turnoutCircleColorButtonGroup, inName,
@@ -4979,8 +4976,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             public void actionPerformed(ActionEvent e) {
                 if (getTurnoutCircleSize() != inSize) {
                     setTurnoutCircleSize(inSize);
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             } //actionPerformed
         };
@@ -5059,16 +5056,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void addTurntable(@Nonnull Point2D pt) {
         //get unique name
         String name = finder.uniqueName("TUR", numLayoutTurntables++);
-        LayoutTurntable x = new LayoutTurntable(name, pt, this);
+        LayoutTurntable lt = new LayoutTurntable(name, pt, this);
 
-        turntableList.add(x);
-        setDirty(true);
+        turntableList.add(lt);
 
-        x.addRay(0.0);
-        x.addRay(90.0);
-        x.addRay(180.0);
-        x.addRay(270.0);
-        setDirty(true);
+        lt.addRay(0.0);
+        lt.addRay(90.0);
+        lt.addRay(180.0);
+        lt.addRay(270.0);
+        setDirty();
+
+        unionToPanelBounds(lt.getBounds());
     } //addTurntable
 
     /**
@@ -5173,7 +5171,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yLabel.setText(Integer.toString(yLoc));
 
             if (event.isPopupTrigger()) {
-                if (event.isMetaDown()) {
+                if (event.isMetaDown() || event.isAltDown()) {
                     //if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
                 } else {
@@ -5183,7 +5181,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
 
-            if (event.isMetaDown()) {
+            if (event.isMetaDown() || event.isAltDown()) {
                 layoutEditorMode = LayoutEditorMode.EDIT_DRAG;
                 //if dragging an item, identify the item for mouseDragging
                 selectedObject = null;
@@ -5290,7 +5288,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             if (prevSelectionActive) {
-                repaint();
+                redrawPanel();
             }
         } else if (allControlling() && (!event.isMetaDown()) && (!event.isPopupTrigger())
                 && (!event.isAltDown()) && (!event.isShiftDown()) && (!event.isControlDown())) {
@@ -5299,7 +5297,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (checkControls(true)) {
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             }
-        } else if ((event.isMetaDown())
+        } else if ((event.isMetaDown() || event.isAltDown())
                 && (!event.isShiftDown()) && (!event.isControlDown())) {
             //not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
@@ -5682,9 +5680,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else {
                     log.warn("No item selected in panel edit mode");
                 }
-                resizePanelBounds(false);
+                //resizePanelBounds(false);
                 selectedObject = null;
-                repaint();
+                redrawPanel();
             } else if ((event.isPopupTrigger() || delayedPopupTrigger) && !isDragging) {
                 layoutEditorMode = LayoutEditorMode.SHOW_POPUP;
                 selectedObject = null;
@@ -5692,7 +5690,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 whenReleased = event.getWhen();
                 showEditPopUps(event);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
-                    && allControlling() && (!event.isMetaDown()) && (!event.isPopupTrigger())
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && (!event.isPopupTrigger())
                     && (!event.isShiftDown()) && (!event.isControlDown())) {
                 //controlling turnouts, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
@@ -5700,14 +5698,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 t.toggleTurnout();
             } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
                     || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                    && allControlling() && (!event.isMetaDown()) && (!event.isPopupTrigger())
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && (!event.isPopupTrigger())
                     && (!event.isShiftDown()) && (!event.isControlDown())) {
                 //controlling slips, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedPointType);
             } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
-                    && allControlling() && (!event.isMetaDown()) && (!event.isPopupTrigger())
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && (!event.isPopupTrigger())
                     && (!event.isShiftDown()) && (!event.isControlDown())) {
                 //controlling turntable, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
@@ -5717,13 +5715,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || (selectedPointType == LayoutTrack.SLIP_CENTER)
                     || (selectedPointType == LayoutTrack.SLIP_LEFT)
                     || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                    && allControlling() && (event.isMetaDown())
+                    && allControlling() && (event.isMetaDown() && !event.isAltDown())
                     && (!event.isShiftDown()) && (!event.isControlDown()) && isDragging) {
                 // We just dropped a turnout (or slip)... see if it will connect to anything
                 layoutEditorMode = LayoutEditorMode.DROPPED_TURNOUT;
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.POS_POINT)
-                    && allControlling() && (event.isMetaDown())
+                    && allControlling() && (event.isMetaDown() && !event.isAltDown())
                     && (!event.isShiftDown()) && (!event.isControlDown()) && isDragging) {
                 // We just dropped a PositionablePoint... see if it will connect to anything
                 layoutEditorMode = LayoutEditorMode.DROPPED_POSITIONABLE_POINT;
@@ -5739,7 +5737,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 setCursor(Cursor.getDefaultCursor());
                 beginObject = null;
                 foundObject = null;
-                repaint();
+                redrawPanel();
             }
             createSelectionGroups();
         } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
@@ -6247,7 +6245,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
             } //switch
-            repaint();
+            redrawPanel();
 
             if (t.getLayoutBlock() != null) {
                 auxTools.setBlockConnectivityChanged();
@@ -6656,7 +6654,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         }
-        repaint();
+        redrawPanel();
     } //createSelectionGroups
 
     protected void clearSelectionGroups() {
@@ -6748,7 +6746,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         selectionActive = false;
         clearSelectionGroups();
-        repaint();
+        redrawPanel();
     } //deleteSelectedItems
 
     private void amendSelectionGroup(@Nonnull Positionable p) {
@@ -6772,7 +6770,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_positionableSelection.size() == 0) {
             _positionableSelection = null;
         }
-        repaint();
+        redrawPanel();
     } //amendSelectionGroup
 
     private void amendSelectionGroup(@Nonnull LayoutTurnout p, @Nonnull Point2D dLoc) {
@@ -6795,7 +6793,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_turnoutSelection.isEmpty()) {
             _turnoutSelection = null;
         }
-        repaint();
+        redrawPanel();
     } //amendSelectionGroup
 
     private void amendSelectionGroup(@Nonnull PositionablePoint p) {
@@ -6819,7 +6817,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_pointSelection.size() == 0) {
             _pointSelection = null;
         }
-        repaint();
+        redrawPanel();
     } //amendSelectionGroup
 
     private void amendSelectionGroup(@Nonnull LevelXing p) {
@@ -6843,7 +6841,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_xingSelection.size() == 0) {
             _xingSelection = null;
         }
-        repaint();
+        redrawPanel();
     } //amendSelectionGroup
 
     private void amendSelectionGroup(@Nonnull LayoutSlip p) {
@@ -6867,7 +6865,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_slipSelection.size() == 0) {
             _slipSelection = null;
         }
-        repaint();
+        redrawPanel();
     } //amendSelectionGroup
 
     private void amendSelectionGroup(@Nonnull LayoutTurntable p) {
@@ -6891,7 +6889,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (_turntableSelection.size() == 0) {
             _turntableSelection = null;
         }
-        repaint();
+        redrawPanel();
     } //amendSelectionGroup
 
     public void alignSelection(boolean alignX) {
@@ -6973,7 +6971,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        repaint();
+        redrawPanel();
     } //alignSelection
 
     protected boolean showAlignPopup() {
@@ -7074,7 +7072,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
 
-            repaint();
+            redrawPanel();
         }
     } //keyPressed
 
@@ -7160,7 +7158,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         if (numSel != _prevNumSel) {
-            repaint();
+            redrawPanel();
             _prevNumSel = numSel;
         }
     } //mouseMoved
@@ -7188,7 +7186,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         currentPoint = new Point2D.Double(dLoc.getX() + startDelta.getX(),
                 dLoc.getY() + startDelta.getY());
 
-        if ((selectedObject != null) && (event.isMetaDown()) && (selectedPointType == LayoutTrack.MARKER)) {
+        if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown() || event.isAltDown()) && (selectedPointType == LayoutTrack.MARKER)) {
             //marker moves regardless of editMode or positionable
             PositionableLabel pl = (PositionableLabel) selectedObject;
             //don't allow negative placement, object could become unreachable
@@ -7196,7 +7194,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int yNew = (int) Math.max(currentPoint.getY(), 0);
             pl.setLocation(xNew, yNew);
             isDragging = true;
-            repaint();
+            redrawPanel();
 
             return;
         }
@@ -7432,7 +7430,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             }
                     } //switch
                 }
-                repaint();
+                redrawPanel();
             } else if ((beginObject != null) && event.isShiftDown() && trackButton.isSelected()) {
                 //dragging from first end of Track Segment
                 currentLocation.setLocation(xLoc, yLoc);
@@ -7444,11 +7442,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else if (needResetCursor) {
                     setCursor(Cursor.getDefaultCursor());
                 }
-                repaint();
-            } else if (selectionActive && (!event.isShiftDown()) && (!event.isMetaDown())) {
+                redrawPanel();
+            } else if (selectionActive && !event.isShiftDown() && !event.isAltDown() && !event.isMetaDown()) {
                 selectionWidth = xLoc - selectionX;
                 selectionHeight = yLoc - selectionY;
-                repaint();
+                redrawPanel();
             }
         } else {
             Rectangle r = new Rectangle(event.getX(), event.getY(), 1, 1);
@@ -7530,7 +7528,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             pointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
         } //switch
-        setDirty(true);
+        setDirty();
     } //updateLocation
 
     /*
@@ -7564,7 +7562,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //if (o!=null) {
         pointList.add(o);
-        setDirty(true);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
 
         //}
         return o;
@@ -7583,7 +7582,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //if (o!=null) {
         pointList.add(o);
-        setDirty(true);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
 
         //}
     } //addEndBumper
@@ -7601,7 +7601,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //if (o!=null) {
         pointList.add(o);
-        setDirty(true);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
 
         //}
     } //addEdgeConnector
@@ -7619,7 +7620,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 mainlineTrack.isSelected(), this);
 
         trackList.add(newTrack);
-        setDirty(true);
+        unionToPanelBounds(newTrack.getBounds());
+        setDirty();
 
         //link to connected objects
         setLink(newTrack, LayoutTrack.TRACK, beginObject, beginPointType);
@@ -7659,7 +7661,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //if (o!=null) {
         xingList.add(o);
-        setDirty(true);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
 
         //check on layout block
         String newName = blockIDComboBox.getDisplayName();
@@ -7710,7 +7713,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //create object
         LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
         slipList.add(o);
-        setDirty(true);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
 
         //check on layout block
         String newName = blockIDComboBox.getDisplayName();
@@ -7789,7 +7793,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //create object
         LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
         turnoutList.add(o);
-        setDirty(true);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
 
         //check on layout block
         String newName = blockIDComboBox.getDisplayName();
@@ -8090,7 +8095,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //set both new and previously existing block
             result.addLayoutEditor(this);
             result.incrementUse();
-            setDirty(true);
+            setDirty();
         }
         return result;
     } //provideLayoutBlock
@@ -8194,8 +8199,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.removeFromContents((Positionable) s);
 
         if (found) {
-            setDirty(true);
-            repaint();
+            setDirty();
+            redrawPanel();
         }
         return found;
     } //remove
@@ -8403,8 +8408,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (p == o) {
                 //found object
                 pointList.remove(i);
-                setDirty(true);
-                repaint();
+                setDirty();
+                redrawPanel();
 
                 return true;
             }
@@ -8500,8 +8505,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //delete from array
         if (turnoutList.contains(o)) {
             turnoutList.remove(o);
-            setDirty(true);
-            repaint();
+            setDirty();
+            redrawPanel();
             return true;
         }
         return false;
@@ -8594,8 +8599,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (xingList.contains(o)) {
             xingList.remove(o);
             o.remove();
-            setDirty(true);
-            repaint();
+            setDirty();
+            redrawPanel();
             return true;
         }
         return false;
@@ -8670,8 +8675,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (slipList.contains(o)) {
             slipList.remove(o);
             o.remove();
-            setDirty(true);
-            repaint();
+            setDirty();
+            redrawPanel();
             return true;
         }
         return false;
@@ -8725,8 +8730,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (turntableList.contains(o)) {
             turntableList.remove(o);
             o.remove();
-            setDirty(true);
-            repaint();
+            setDirty();
+            redrawPanel();
             return true;
         }
         return false;
@@ -8806,8 +8811,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //
-        setDirty(true);
-        repaint();
+        setDirty();
+        redrawPanel();
     } //removeTrackSegment
 
     private void disconnect(@Nonnull Object o, int type) {
@@ -8986,16 +8991,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //...because this is called regardless of the code above
         sensorComboBox.setText(l.getNamedSensor().getName());
-
         setNextLocation(l);
-        setDirty(true);
-        putItem(l);
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //addSensor
 
     public void putSensor(@Nonnull SensorIcon l) {
-        putItem(l);
         l.updateSize();
         l.setDisplayLevel(Editor.SENSORS);
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //putSensor
 
     /**
@@ -9039,15 +9042,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setIcon(rbean.getString("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
         l.setIcon(rbean.getString("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
         l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
+        unionToPanelBounds(l.getBounds());
         setNextLocation(l);
-        setDirty(true);
+        setDirty();
         putSignal(l);
     } //addSignalHead
 
     public void putSignal(@Nonnull SignalHeadIcon l) {
-        putItem(l);
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //putSignal
 
     SignalHead getSignalHead(@Nonnull String name) {
@@ -9094,8 +9098,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 h.remove();
                 h.dispose();
             }
-            setDirty(true);
-            repaint();
+            setDirty();
+            redrawPanel();
         }
     } //removeSignalHead
 
@@ -9123,16 +9127,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //create and set up signal icon
         SignalMastIcon l = new SignalMastIcon(this);
         l.setSignalMast(newName);
+        unionToPanelBounds(l.getBounds());
         setNextLocation(l);
-        setDirty(true);
+        setDirty();
         putSignalMast(l);
     } //addSignalMast
 
     public void putSignalMast(@Nonnull SignalMastIcon l) {
-        putItem(l);
         l.updateSize();
         l.setDisplayLevel(Editor.SIGNALS);
-
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //putSignalMast
 
     SignalMast getSignalMast(@Nonnull String name) {
@@ -9172,7 +9176,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             return;
         }
         PositionableLabel l = super.addLabel(labelText);
-        setDirty(true);
+        unionToPanelBounds(l.getBounds());
+        setDirty();
         l.setForeground(defaultTextColor);
     } //addLabel
 
@@ -9207,9 +9212,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 labelImage.add((PositionableLabel) l);
             }
         }
-        if (connectionsSetFlag) {
-            resizePanelBounds(false);
-        }
+        unionToPanelBounds(l.getBounds(new Rectangle()));
+        setDirty();
     } //putItem
 
     /**
@@ -9238,8 +9242,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
-        setDirty(true);
-        putItem(l);
+        unionToPanelBounds(l.getBounds());
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //addMemory
 
     void addBlockContents() {
@@ -9265,8 +9269,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
         l.setForeground(defaultTextColor);
-        setDirty(true);
-        putItem(l);
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //addBlockContents
 
     /**
@@ -9278,8 +9281,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setLocation(xx, yy);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
-        setDirty(true);
-        putItem(l);
+        unionToPanelBounds(l.getBounds());
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //addReporter
 
     /**
@@ -9289,9 +9292,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0), this);
         setNextLocation(l);
         l.setDisplayLevel(Editor.ICONS);
-        setDirty(true);
-        putItem(l);
+        unionToPanelBounds(l.getBounds());
         l.updateSize();
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
     } //addIcon
 
     /**
@@ -9304,6 +9307,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setLocation((int) pt.getX(), (int) pt.getY());
         putLocoIcon(l, name);
         l.setPositionable(true);
+        unionToPanelBounds(l.getBounds());
         return l;
     } //addLocoIcon
 
@@ -9311,6 +9315,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void putLocoIcon(@Nonnull LocoIcon l, @Nonnull String name) {
         super.putLocoIcon(l, name);
         markerImage.add(l);
+        unionToPanelBounds(l.getBounds());
     }
 
     JFileChooser inputFileChooser;
@@ -9358,8 +9363,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         name = jmri.util.FileUtil.getPortableFilename(name);
 
         //setup icon
-        backgroundImage.add(super.setUpBackground(name));
-        setDirty(true);
+        PositionableLabel o = super.setUpBackground(name);
+        backgroundImage.add(o);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
     } //addBackground
 
     /**
@@ -9368,7 +9375,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     protected void removeBackground(@Nonnull PositionableLabel b) {
         if (backgroundImage.contains(b)) {
             backgroundImage.remove(b);
-            setDirty(true);
+            setDirty();
             return;
         }
     } //removeBackground
@@ -9395,8 +9402,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //Invoked when window has new multi-sensor ready
     public void addMultiSensor(@Nonnull MultiSensorIcon l) {
         l.setLocation(multiLocX, multiLocY);
-        setDirty(true);
-        putItem(l);
+        putItem(l); // note: this calls unionToPanelBounds & setDirty()
         multiSensorFrame.dispose();
         multiSensorFrame = null;
     } //addMultiSensor
@@ -9486,7 +9492,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         awaitingIconChange = false;
         editModeCheckBoxMenuItem.setSelected(editable);
-        repaint();
+        redrawPanel();
     }
 
     /**
@@ -9519,7 +9525,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (animatingLayout != state) {
             animatingLayout = state;
-            repaint();
+            redrawPanel();
         }
     } //setTurnoutAnimation
 
@@ -9667,35 +9673,46 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return autoAssignBlocks;
     }
 
-    public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH) {
-        setLayoutDimensions(windowW, windowH, x, y, panelW, panelH, false);
+    public void setLayoutDimensions(int windowWidth, int windowHeight, int x, int y, int panelW, int panelH) {
+        setLayoutDimensions(windowWidth, windowHeight, x, y, panelW, panelH, false);
     }
 
-    public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH, boolean merge) {
-        windowWidth = windowW;
-        windowHeight = windowH;
+    public void setLayoutDimensions(int windowWidth, int windowHeight, int panelX, int panelY, int panelWidth, int panelHeight, boolean merge) {
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
         setSize(windowWidth, windowHeight);
 
+        Rectangle2D passBounds = new Rectangle2D.Double(panelX, panelY, panelWidth, panelHeight);
+
         if (merge) {
-            Rectangle2D panelBounds = calculateMinimumLayoutBounds();
-
-            upperLeftX = Math.min(x, (int) panelBounds.getX());
-            upperLeftY = Math.min(y, (int) panelBounds.getY());
-
-            panelWidth = Math.max(panelW, (int) panelBounds.getWidth());
-            panelHeight = Math.max(panelH, (int) panelBounds.getHeight());
-        } else {
-            upperLeftX = x;
-            upperLeftY = y;
-
-            panelWidth = panelW;
-            panelHeight = panelH;
+            passBounds.add(calculateMinimumLayoutBounds());
         }
+        setPanelBounds(passBounds);
+    } //setLayoutDimensions
+
+    public Rectangle2D getPanelBounds() {
+        return new Rectangle2D.Double(upperLeftX, upperLeftY, panelWidth, panelHeight);
+    }
+
+    public void setPanelBounds(Rectangle2D newRectangle) {
+        upperLeftX = (int) newRectangle.getX();
+        upperLeftY = (int) newRectangle.getY();
         setLocation(upperLeftX, upperLeftY);
+
+        panelWidth = (int) newRectangle.getWidth();
+        panelHeight = (int) newRectangle.getHeight();
         setTargetPanelSize(panelWidth, panelHeight);
 
         log.debug("setLayoutDimensions Position - {},{} windowSize - {},{} panelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
-    } //setLayoutDimensions
+    }
+
+    // this will grow the panel bounds based on items added to the layout
+    public Rectangle2D unionToPanelBounds(Rectangle2D bounds) {
+        Rectangle2D result = getPanelBounds();
+        result.add(bounds);
+        setPanelBounds(result);
+        return result;
+    }
 
     public void setMainlineTrackWidth(int w) {
         mainlineTrackWidth = w;
@@ -9939,7 +9956,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //accessor routines for turnout size parameters
     public void setTurnoutBX(double bx) {
         turnoutBX = bx;
-        setDirty(true);
+        setDirty();
     }
 
     public double getTurnoutBX() {
@@ -9948,7 +9965,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public void setTurnoutCX(double cx) {
         turnoutCX = cx;
-        setDirty(true);
+        setDirty();
     }
 
     public double getTurnoutCX() {
@@ -9957,7 +9974,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public void setTurnoutWid(double wid) {
         turnoutWid = wid;
-        setDirty(true);
+        setDirty();
     }
 
     public double getTurnoutWid() {
@@ -9966,7 +9983,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public void setXOverLong(double lg) {
         xOverLong = lg;
-        setDirty(true);
+        setDirty();
     }
 
     public double getXOverLong() {
@@ -9975,7 +9992,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public void setXOverHWid(double hwid) {
         xOverHWid = hwid;
-        setDirty(true);
+        setDirty();
     }
 
     public double getXOverHWid() {
@@ -9984,7 +10001,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     public void setXOverShort(double sh) {
         xOverShort = sh;
-        setDirty(true);
+        setDirty();
     }
 
     public double getXOverShort() {
@@ -9999,7 +10016,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xOverLong = LayoutTurnout.xOverLongDefault;
         xOverHWid = LayoutTurnout.xOverHWidDefault;
         xOverShort = LayoutTurnout.xOverShortDefault;
-        setDirty(true);
+        setDirty();
     } //resetTurnoutSize
 
     public void setDirectTurnoutControl(boolean boo) {
@@ -10012,8 +10029,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     //final initialization routine for loading a LayoutEditor
-    private boolean connectionsSetFlag = false;
-
     public void setConnections() {
         //initialize TrackSegments if any
         for (TrackSegment ts : trackList) {
@@ -10046,8 +10061,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         auxTools.initializeBlockConnectivity();
         log.debug("Initializing Block Connectivity for {}", layoutName);
-
-        connectionsSetFlag = true;
 
         //reset the panel changed bit
         resetDirty();
@@ -10320,7 +10333,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         clearSelectionGroups();
         createSelectionGroups();
         selectionActive = true;
-        repaint();
+        redrawPanel();
     }
 
     private void drawSelectionRect(@Nonnull Graphics2D g2) {
@@ -10795,8 +10808,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             super.removeFromContents(i);
                         }
                     }
-                    setDirty(true);
-                    repaint();
+                    setDirty();
+                    redrawPanel();
                 }
             }
 
@@ -10812,8 +10825,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         super.removeFromContents(i);
                     }
                 }
-                setDirty(true);
-                repaint();
+                setDirty();
+                redrawPanel();
             }
 
             if (nb instanceof Memory) {
