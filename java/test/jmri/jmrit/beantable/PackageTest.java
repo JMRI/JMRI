@@ -41,7 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.signalmast.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.oblock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.beanedit.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.usermessagepreferences.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(MemoryTableActionTest.class));
         suite.addTest(new JUnit4TestAdapter(AudioTableActionTest.class));
