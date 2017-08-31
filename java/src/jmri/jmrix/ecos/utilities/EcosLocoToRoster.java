@@ -907,14 +907,14 @@ public class EcosLocoToRoster implements EcosListener {
             return;
         }
         log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                + " " + df.getFilename());
+                + " " + df.getFileName());
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (org.jdom2.JDOMException e) {
-            log.error("JDOM Exception while loading decoder XML file: " + df.getFilename());
+            log.error("JDOM Exception while loading decoder XML file: " + df.getFileName());
         } catch (java.io.IOException e) {
-            log.error("IO Exception while loading decoder XML file: " + df.getFilename());
+            log.error("IO Exception while loading decoder XML file: " + df.getFileName());
         }
         // load variables from decoder tree
         df.getProductID();
