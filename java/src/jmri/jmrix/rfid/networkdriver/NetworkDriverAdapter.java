@@ -115,6 +115,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                         log.info("set protocol for Olimex MOD-RFID125");
                         protocol = new OlimexRfidProtocol();
                     }
+                    break;
                 case "Parallax":
                     log.info("set protocol to Parallax");
                     protocol = new ParallaxRfidProtocol();
