@@ -39,7 +39,9 @@
       <ul>
         <li>CORE-ID / ID-Innovations - since version 2.11.4</li>
 
-        <li>Olimex - since v 3.9.2</li>
+        <li>Olimex MOD-RFID125 - since v 3.9.2</li>
+
+        <li>Olimex MOD-RFID1356MIFARE - since v 4.7.5</li>
 
         <li>Parallax - since v 3.9.2</li>
       </ul>
@@ -63,7 +65,7 @@
         <li>Direct serial connections have been supported since
         JMRI 2.11.4</li>
 
-        <li>Network connections are targeted for the JMRI 4.1
+        <li>Network connections are targeted for the JMRI 4.1.2
         release series.</li>
       </ul>
 
@@ -75,7 +77,15 @@
       JMRI's Preferences.<br>
       It appears as "RFID" in the System Manufacturer drop-down
       list.</p>
+      <p>The "Baud rate" advanced connection setting is typically not critical 
+      for USB-connected RFID connections so it may be "greyed out" to indicate 
+      that it is not selectable.</p>
 
+      <h3>Reader Configuration</h3>
+      <h4>Olimex readers</h4>
+      <p>Olimex MOD-RFID125 and MOD-RFID1356MIFARE readers must be operating in "CDC" 
+          mode.  This mode is typically configured using a pushbutton on the reader.</p>
+      
       <h3>Naming</h3>
 
       <p>The <a href="../../doc/Technical/Names.shtml">system

@@ -42,11 +42,23 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
             public void actionPerformed(ActionEvent e) {
                 enableOpt2(options.get(adapter.getOption1Name()).getItem());
                 enableOpt3(options.get(adapter.getOption1Name()).getItem());
+                enableOpt4(options.get(adapter.getOption3Name()).getItem());
             }
         });
 
+        //Add a listener to the combo box
+        ((JComboBox<Option>) options.get(adapter.getOption3Name()).getComponent()).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enableOpt2(options.get(adapter.getOption1Name()).getItem());
+                enableOpt3(options.get(adapter.getOption1Name()).getItem());
+                enableOpt4(options.get(adapter.getOption3Name()).getItem());
+            }
+        });
+        
         enableOpt2(options.get(adapter.getOption1Name()).getItem());
         enableOpt3(options.get(adapter.getOption1Name()).getItem());
+        enableOpt4(options.get(adapter.getOption3Name()).getItem());
 
     }
 
@@ -70,6 +82,20 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
                 : "Protocol setting not applicable for selected RFID reader type");
         if (!enable) {
             ((JComboBox<Option>) options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void enableOpt4(Object o) {
+        boolean enable = o.equals("Olimex");
+        options.get(adapter.getOption4Name()).getLabel().setEnabled(enable);
+        options.get(adapter.getOption4Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption4Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption4Name()).getComponent().setToolTipText(enable
+                ? "Choose RFID Reader model"
+                : "RFID Reader Model setting not applicable for selected RFID reader protocol");
+        if (!enable) {
+            ((JComboBox<Option>) options.get(adapter.getOption4Name()).getComponent()).setSelectedIndex(0);
         }
     }
 
