@@ -261,6 +261,8 @@
         <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
         <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
         <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
+        <!-- Selenium and it's dependencies -->
+        <pathelement location="${libdir}/"/>
     </path>
 
     <!-- path to run regular executables -->
