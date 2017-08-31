@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,7 +24,7 @@ import javax.swing.JTextField;
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
     public AddNewBeanPanel(JTextField sys, JTextField userName, JSpinner endRange, JCheckBox addRange, JCheckBox autoSystem,
-            String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener, JLabel statusBar) {
         sysName = sys;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
@@ -69,6 +70,14 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
+
+        // add status bar above buttons
+        JPanel panelStatus = new JPanel();
+        panelStatus.setLayout(new FlowLayout());
+        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * sysNameLabel.getFont().getSize())); // a bit smaller
+        statusBar.setForeground(Color.gray);
+        panelStatus.add(statusBar);
+        add(panelStatus);
 
         // cancel + add buttons at bottom of window
         JPanel panelBottom = new JPanel();
