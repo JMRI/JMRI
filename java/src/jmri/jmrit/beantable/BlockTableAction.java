@@ -168,7 +168,7 @@ public class BlockTableAction extends AbstractTableAction {
 
             @Override
             public void clickOn(NamedBean t) {
-                // don't do anything on click; not used in this class, because 
+                // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
 
@@ -320,7 +320,7 @@ public class BlockTableAction extends AbstractTableAction {
                     b.setSensor(strSensor);
                     return;
                 } else if (col == CURRENTREPCOL) {
-                    boolean boo = ((Boolean) value).booleanValue();
+                    boolean boo = ((Boolean) value);
                     b.setReportingCurrent(boo);
                     fireTableRowsUpdated(row, row);
                 } else if (col == EDITCOL) {
@@ -1004,8 +1004,7 @@ public class BlockTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the blockManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
-        String errorMessage = new String();
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        String errorMessage = null;
         StringBuilder b;
 
         for (int x = 0; x < NumberOfBlocks; x++) {
@@ -1035,7 +1034,7 @@ public class BlockTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 errorMessage = "An error has occurred";
                 statusBar.setForeground(Color.red);
-                return; // without creating       
+                return; // without creating
             }
             if (blk != null) {
                 if (lengthField.getText().length() != 0) {
@@ -1069,7 +1068,7 @@ public class BlockTableAction extends AbstractTableAction {
         } // end of for loop creating range of Blocks
 
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
