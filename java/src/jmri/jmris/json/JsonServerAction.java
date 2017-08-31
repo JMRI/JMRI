@@ -2,6 +2,7 @@ package jmri.jmris.json;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 
 public class JsonServerAction extends AbstractAction {
 
@@ -15,6 +16,6 @@ public class JsonServerAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JsonServer.getDefault().start();
+        InstanceManager.getDefault(JsonServer.class).start();
     }
 }
