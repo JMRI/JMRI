@@ -108,7 +108,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                     protocol = new CoreIdRfidProtocol();
                     break;
                 case "Olimex":
-                    if (opt4 == "MOD-RFID1356MIFARE") {
+                    if (opt4.equals("MOD-RFID1356MIFARE")) {
                         log.info("set protocol for Olimex MOD-RFID1356MIFARE");
                         protocol = new OlimexRfid1356mifareProtocol();
                     } else {
