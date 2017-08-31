@@ -74,7 +74,27 @@ public final class InstanceManager {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
+    private final HashMap<Class<?>, InitializationState> initState = new HashMap<>();
 
+    enum InitializationState {
+        NOTSET, // synonymous with no value for this stored
+        NOTSTARTED,
+        STARTED,
+        FAILED,
+        DONE
+    }
+    
+    private void setInitializationState(Class<?> type, InitializationState state) {
+        log.trace("set state {} for {}", type, state);
+        initState.put(type, state);
+    }
+    
+    private InitializationState getInitializationState(Class<?> type) {
+        InitializationState state = initState.get(type);
+        if (state == null) return InitializationState.NOTSET;
+        return state;
+    }
+    
     /* properties */
     /**
      *
@@ -158,6 +178,8 @@ public final class InstanceManager {
             }
             getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
+        // if removing last, will have to initialize laster
+        if (l.isEmpty()) getDefault().setInitializationState(type, InitializationState.NOTSET);
     }
 
     /**
@@ -218,6 +240,16 @@ public final class InstanceManager {
         log.trace("getOptionalDefault of type {}", type.getName());
         List<T> l = (ArrayList<T>) getList(type);
         if (l.isEmpty()) {
+            // check whether already working on this type
+            InitializationState working = getDefault().getInitializationState(type);
+            getDefault().setInitializationState(type, InitializationState.STARTED);
+            
+            if (working == InitializationState.STARTED) {
+                log.error ("Proceeding to initialize {} while already in initialization", type, new Exception("traceback"));
+            } else if (working == InitializationState.DONE) {
+                log.error ("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("traceback"));
+            }
+  
             // see if can autocreate
             log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
@@ -231,8 +263,10 @@ public final class InstanceManager {
                     log.debug("      auto-created default of {}", type.getName());
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
+                    getDefault().setInitializationState(type, InitializationState.FAILED);
                     return null;
                 }
+                getDefault().setInitializationState(type, InitializationState.DONE);
                 return l.get(l.size() - 1);
             }
             // see if initializer can handle
@@ -247,6 +281,7 @@ public final class InstanceManager {
                     if (obj instanceof InstanceManagerAutoInitialize) {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
+                    getDefault().setInitializationState(type, InitializationState.DONE);
                     return l.get(l.size() - 1);
                 } catch (IllegalArgumentException ex) {
                     log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
@@ -256,6 +291,7 @@ public final class InstanceManager {
             }
 
             // don't have, can't make
+            getDefault().setInitializationState(type, InitializationState.FAILED);
             return null;
         }
         return l.get(l.size() - 1);
@@ -811,6 +847,7 @@ public final class InstanceManager {
                 dispose((Disposable) o);
             });
             // Should this be sending notifications of removed instances to listeners?
+            setInitializationState(type, InitializationState.NOTSET); // initialization will have to be redone
             managerLists.put(type, new ArrayList<>());
         });
     }
