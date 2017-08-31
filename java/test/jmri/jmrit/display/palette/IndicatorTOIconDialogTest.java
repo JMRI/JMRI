@@ -30,7 +30,9 @@ public class IndicatorTOIconDialogTest {
         JmriJFrame jf = new JmriJFrame("Indicator TO Icon Dialog Test");
         Editor editor = new EditorScaffold();
         IndicatorTOItemPanel itp = new IndicatorTOItemPanel(jf,"IT01","",tableModel,editor);
-        IndicatorTOIconDialog t = new IndicatorTOIconDialog("TOIcon","TOIcon",itp,"",new HashMap<String,NamedIcon>());
+        HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
+        h.put("entry",null);
+        IndicatorTOIconDialog t = new IndicatorTOIconDialog("TOIcon","TOIcon",itp,"",h);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }

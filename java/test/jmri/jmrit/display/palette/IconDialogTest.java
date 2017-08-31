@@ -31,7 +31,9 @@ public class IconDialogTest {
         JmriJFrame jf = new JmriJFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
         TableItemPanel tip = new TableItemPanel(jf,"IS01","",tableModel,editor);
-        IconDialog t = new IconDialog("Tables","Tables",tip,new HashMap<String,NamedIcon>());
+        HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
+        h.put("entry",null);
+        IconDialog t = new IconDialog("Tables","Tables",tip,h);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }

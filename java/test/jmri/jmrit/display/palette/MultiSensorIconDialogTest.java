@@ -30,7 +30,9 @@ public class MultiSensorIconDialogTest {
         JmriJFrame jf = new JmriJFrame("Indicator TO Icon Dialog Test");
         Editor editor = new EditorScaffold();
         MultiSensorItemPanel mip = new MultiSensorItemPanel(jf,"IS01","",tableModel,editor);
-        MultiSensorIconDialog t = new MultiSensorIconDialog("MSIcon","MSIcon",mip,new HashMap<String,NamedIcon>());
+        HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
+        h.put("entry",null);
+        MultiSensorIconDialog t = new MultiSensorIconDialog("MSIcon","MSIcon",mip,h);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }
