@@ -103,7 +103,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
             // Unsuported state
-            log.warn("Unsupported state {} requested for light {}", newState, mSystemName);
+            log.warn("Unsupported state {} requested for light {}", newState, getSystemName());
             return;
         }
 

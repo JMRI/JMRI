@@ -19,6 +19,12 @@ import jmri.NamedBean;
  */
 public abstract class AbstractNamedBean implements NamedBean {
 
+    // force changes through setUserName() to ensure rules are applied
+    // as a side effect require reads through getUserName()
+    private String mUserName;
+    // final so does not need to be private to protect against changes
+    protected final String mSystemName;
+
     /**
      * Simple constructor.
      *
@@ -43,6 +49,8 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
         mSystemName = sys;
         // normalize the user name or refuse construction if unable to
+        // use this form to prevent subclass from overriding setUserName
+        // during construction
         AbstractNamedBean.this.setUserName(user);
     }
 
@@ -206,9 +214,6 @@ public abstract class AbstractNamedBean implements NamedBean {
         mUserName = NamedBean.normalizeUserName(s);
         firePropertyChange("UserName", old, mUserName);
     }
-
-    protected String mUserName = null;
-    protected String mSystemName = null;
 
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {

@@ -3,8 +3,7 @@ package jmri.jmrit.catalog;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import javax.annotation.CheckReturnValue;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
@@ -21,13 +20,18 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
+    // force changes through setUserName() to ensure rules are applied
+    // as a side effect require reads through getUserName()
     private String mUserName;
-    private String mSystemName;
+    // final so does not need to be private to protect against changes
+    protected final String mSystemName;
 
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
-        mUserName = username;
         mSystemName = sysname.toUpperCase();
+        // use this form to prevent subclass from overriding setUserName
+        // during construction
+        AbstractCatalogTree.this.setUserName(username);
     }
 
     public AbstractCatalogTree(String sysname) {
@@ -60,17 +64,17 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
      */
     @Override
     public void insertNodes(String pathToRoot) {
-        CatalogTreeNode root = getRoot();
-        if (log.isDebugEnabled()) {
-            log.debug("insertNodes: rootName= " + root.getUserObject()
-                    + ", pathToRoot= " + pathToRoot);
-        }
-        insertNodes((String) root.getUserObject(), pathToRoot, root);
+        // root is a field in the super class, so use r for root
+        CatalogTreeNode r = getRoot();
+        log.debug("insertNodes: rootName= {}, pathToRoot= {}", r.getUserObject(), pathToRoot);
+        insertNodes((String) r.getUserObject(), pathToRoot, r);
     }
 
     /**
-     * Get the root element of the tree as a jmri.CatalogTreeNode object.
-     * (Instead of Object, as parent swing.TreeModel provides)
+     * Get the root element of the tree as a jmri.CatalogTreeNode object
+     * (Instead of Object, as parent swing.TreeModel provides).
+     *
+     * @return the root element
      */
     @CheckReturnValue
     @Override
@@ -158,8 +162,8 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         return pcs.getPropertyChangeListeners().length;
     }
 
-    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<>();
-    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<>();
+    HashMap<PropertyChangeListener, String> register = new HashMap<>();
+    HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
 
     @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
@@ -176,13 +180,9 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
-        Enumeration<PropertyChangeListener> en = register.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            if (register.get(l).equals(name)) {
-                list.add(l);
-            }
-        }
+        register.keySet().stream().filter((l) -> (register.get(l).equals(name))).forEachOrdered((l) -> {
+            list.add(l);
+        });
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
@@ -190,13 +190,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     @CheckReturnValue
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<>();
-        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            list.add(listenerRefs.get(l));
-        }
-        return list;
+        return new ArrayList<>(listenerRefs.values());
     }
 
     @Override
