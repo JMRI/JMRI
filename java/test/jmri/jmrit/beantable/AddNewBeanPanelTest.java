@@ -31,7 +31,7 @@ public class AddNewBeanPanelTest {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
-        AddNewBeanPanel t = new AddNewBeanPanel(new JTextField(), new JTextField(), new JSpinner(), new JCheckBox(), new JCheckBox(), "ButtonOK", oklistener, cancellistener);    
+        AddNewBeanPanel t = new AddNewBeanPanel(new JTextField(), new JTextField(), new JSpinner(), new JCheckBox(), new JCheckBox(), "ButtonOK", oklistener, cancellistener, new JLabel());
         Assert.assertNotNull("exists",t);
     }
 

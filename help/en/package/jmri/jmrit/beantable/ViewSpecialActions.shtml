@@ -34,7 +34,7 @@
       <b>Actions</b> may be specified for each occurrence of the
       Section. <b>Actions</b> only apply to trains run
       automatically under <b><a href=
-      "../dispatcher/DispatcherFrame.shtml">Dispatcher</a></b> by a
+      "../dispatcher/Dispatcher.shtml">Dispatcher</a></b> by a
       <i>virtual engineer</i>. If running trains in automatic mode
       is of interest read on. If your trains will only be run
       manually with a human engineer, <b>Actions</b> aren't
