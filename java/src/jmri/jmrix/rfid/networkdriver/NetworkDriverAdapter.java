@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2015
+ * @author      B. Milhaupt  Copyright (C) 2017
  */
 public class NetworkDriverAdapter extends RfidNetworkPortController {
 
@@ -52,17 +53,17 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
         // set up the system connection first
         String opt1 = getOptionState(option1Name);
         switch (opt1) {
-            case "Generic Stand-alone":
+            case "Generic Stand-alone": // NOI18N
                 // create a Generic Stand-alone port controller
-                log.debug("Create Generic Standalone SpecificTrafficController");
+                log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
                 this.getSystemConnectionMemo().configureManagers(
                         new StandaloneSensorManager(control, this.getSystemPrefix()),
                         new StandaloneReporterManager(control, this.getSystemPrefix()));
                 break;
-            case "MERG Concentrator":
+            case "MERG Concentrator": // NOI18N
                 // create a MERG Concentrator port controller
-                log.debug("Create MERG Concentrator SpecificTrafficController");
+                log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
                 this.getSystemConnectionMemo().configureManagers(
                         new ConcentratorSensorManager(control, this.getSystemPrefix()),
@@ -70,7 +71,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 break;
             default:
                 // no connection at all - warn
-                log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone");
+                log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone"); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
                 this.getSystemConnectionMemo().configureManagers(
@@ -82,51 +83,51 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
         // Now do the protocol
         String opt3 = getOptionState(option3Name);
         String opt4 = getOptionState(option4Name);
-        if (opt1.equals("MERG Concentrator")) {
+        if (opt1.equals("MERG Concentrator")) { // NOI18N
             // MERG Concentrator only supports CORE-ID
-            log.info("set protocol to CORE-ID");
+            log.info("set protocol to CORE-ID"); // NOI18N
             String opt2 = getOptionState(option2Name);
             switch (opt2) {
                 case "A-H" :
-                    log.info("set concentrator range to 'A-H' at position 1");
+                    log.info("set concentrator range to 'A-H' at position 1"); // NOI18N
                     protocol = new CoreIdRfidProtocol('A', 'H', 1);
                     break;
                 case "I-P" :
-                    log.info("set concentrator range to 'I-P' at position 1");
+                    log.info("set concentrator range to 'I-P' at position 1"); // NOI18N
                     protocol = new CoreIdRfidProtocol('I', 'P', 1);
                     break;
                 default :
                     // unrecognised concentrator range - warn
-                    log.warn("concentrator range '{}' not supported - default to no concentrator", opt2);
+                    log.warn("concentrator range '{}' not supported - default to no concentrator", opt2); // NOI18N
                     protocol = new CoreIdRfidProtocol();
                     break;
             }
         } else {
             switch (opt3) {
-                case "CORE-ID":
-                    log.info("set protocol to CORE-ID");
+                case "CORE-ID": // NOI18N
+                    log.info("set protocol to CORE-ID"); // NOI18N
                     protocol = new CoreIdRfidProtocol();
                     break;
-                case "Olimex":
-                    if (opt4.equals("MOD-RFID1356MIFARE")) {
-                        log.info("set protocol for Olimex MOD-RFID1356MIFARE");
+                case "Olimex": // NOI18N
+                    if (opt4.equals("MOD-RFID1356MIFARE")) { // NOI18N
+                        log.info("set protocol for Olimex MOD-RFID1356MIFARE"); // NOI18N
                         protocol = new OlimexRfid1356mifareProtocol();
                     } else {
-                        log.info("set protocol for Olimex MOD-RFID125");
+                        log.info("set protocol for Olimex MOD-RFID125"); // NOI18N
                         protocol = new OlimexRfidProtocol();
                     }
                     break;
-                case "Parallax":
-                    log.info("set protocol to Parallax");
+                case "Parallax": // NOI18N
+                    log.info("set protocol to Parallax"); // NOI18N
                     protocol = new ParallaxRfidProtocol();
                     break;
-                case "SeeedStudio":
-                    log.info("set protocol to SeeedStudio");
+                case "SeeedStudio": // NOI18N
+                    log.info("set protocol to SeeedStudio"); // NOI18N
                     protocol = new SeeedStudioRfidProtocol();
                     break;
                 default:
                     // no protocol at all - warn
-                    log.warn("protocol option " + opt3 + " defaults to CORE-ID");
+                    log.warn("protocol option " + opt3 + " defaults to CORE-ID"); // NOI18N
                     // create a coreid protocol
                     protocol = new CoreIdRfidProtocol();
                     break;
