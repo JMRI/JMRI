@@ -6,8 +6,8 @@ import jmri.configurexml.ClassMigration;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Default class migrations for the {@link jmri.configurexml.ConfigXmlManager}
- * to use.
+ * Raspberry Pi class migrations for the
+ * {@link jmri.configurexml.ConfigXmlManager} to use.
  *
  * @author Randall Wood Copyright 2017
  */
@@ -17,7 +17,7 @@ public class RaspberryPiClassMigration implements ClassMigration {
     @Override
     public Map<String, String> getMigrations() {
         Map<String, String> migrations = new HashMap<>();
-        migrations.put("jmri.jmrix.pi.ConnectionConfigXML", "jmri.jmrix.pi.RaspberryPiConnectionConfigXML");
+        migrations.put("jmri.jmrix.pi.configurexml.ConnectionConfigXml", "jmri.jmrix.pi.configurexml.RaspberryPiConnectionConfigXml");
         return migrations;
     }
 
