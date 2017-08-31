@@ -7,8 +7,10 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the OlimexRfid1356mifareProtocol class
+ * based on tests for the OlimexProtocol class
  *
  * @author Matthew Harris
+ * @author B. Milhaupt Copyright (C) 2017
  */
 public class OlimexRfid1356mifareProtocolTest extends TestCase {
 

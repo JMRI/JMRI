@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common routines to extract the Tag information and validate checksum for
- * implementations that use the Olimex protocol.
+ * implementations that use the Olimex MOD-RFID1356MIFARE protocol.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -21,12 +21,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @since 3.9.2
+ * @author B. Milhaupt    Copyright (C) 2017
+ * @since 4.7.5
  */
 public class OlimexRfid1356mifareProtocol extends RfidProtocol {
 
     public static final int SPECIFICMAXSIZE = 13;
-    public final String initialize = "mt100\r\ne0\r\n";
+    public final String initialize = "mt100\r\ne0\r\n"; //NOI18N
 
     public static final int getMaxSize() {
         return SPECIFICMAXSIZE;
@@ -57,7 +58,7 @@ public class OlimexRfid1356mifareProtocol extends RfidProtocol {
     @Override
     public boolean isValid(AbstractMRReply msg) {
         /* Typical message of "tag receive":
-            \r\n-C4178b55\r\n        
+            \r\n-C4178b55\r\n
         */
         return ((!isConcentrator && msg.getElement(2) == 0x2D)
                 || (isConcentrator
@@ -109,7 +110,7 @@ public class OlimexRfid1356mifareProtocol extends RfidProtocol {
             if (msg.getElement(i+11) != 'K') return false;
 
             if (log.isDebugEnabled()) {
-                log.debug("Not a correctly formed message");
+                log.debug("Not a correctly formed message"); // NOI18N
             }
             return true;
         }

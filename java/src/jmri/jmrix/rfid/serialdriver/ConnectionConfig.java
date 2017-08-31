@@ -10,6 +10,7 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
+ * @author B. Milhaupt    Copyright (C) 2017
  * @since 2.11.4
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
