@@ -1,11 +1,12 @@
 package jmri.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 
@@ -18,25 +19,39 @@ import jmri.NamedBean;
  */
 public abstract class AbstractNamedBean implements NamedBean {
 
+    // force changes through setUserName() to ensure rules are applied
+    // as a side effect require reads through getUserName()
+    private String mUserName;
+    // final so does not need to be private to protect against changes
+    protected final String mSystemName;
+
     /**
-     * simple constructor
+     * Simple constructor.
      *
-     * @param sys the system name for this bean
+     * @param sys the system name for this bean; must not be null
      */
-    protected AbstractNamedBean(String sys) {
-        mSystemName = sys;
-        ///mUserName = null; // <== default value
+    protected AbstractNamedBean(@Nonnull String sys) {
+        this(sys, null);
     }
 
     /**
-     * designated constructor
+     * Designated constructor.
      *
-     * @param sys  the system name for this bean
-     * @param user the user name for this bean
+     * @param sys  the system name for this bean; must not be null
+     * @param user the user name for this bean; can be null
+     * @throws jmri.NamedBean.BadUserNameException   if the user name cannot be
+     *                                               normalized
+     * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
-        this(sys);
-        mUserName = user;
+    protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+        if (sys == null) {
+            throw new NamedBean.BadSystemNameException();
+        }
+        mSystemName = sys;
+        // normalize the user name or refuse construction if unable to
+        // use this form to prevent subclass from overriding setUserName
+        // during construction
+        AbstractNamedBean.this.setUserName(user);
     }
 
     /**
@@ -101,9 +116,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     // _once_ if anything has changed state
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
-    final java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    final HashMap<PropertyChangeListener, String> register = new HashMap<>();
-    final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    protected final HashMap<PropertyChangeListener, String> register = new HashMap<>();
+    protected final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
 
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -136,12 +151,12 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
-        for (Map.Entry<PropertyChangeListener, String> entry : register.entrySet()) {
+        register.entrySet().forEach((entry) -> {
             PropertyChangeListener l = entry.getKey();
-            if (register.get(l).equals(name)) {
+            if (entry.getValue().equals(name)) {
                 list.add(l);
             }
-        }
+        });
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
@@ -152,12 +167,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<>();
-        for (Map.Entry<PropertyChangeListener, String> entry : listenerRefs.entrySet()) {
-            PropertyChangeListener l = entry.getKey();
-            list.add(listenerRefs.get(l));
-        }
-        return list;
+        return new ArrayList<>(listenerRefs.values());
     }
 
     @Override
@@ -204,11 +214,6 @@ public abstract class AbstractNamedBean implements NamedBean {
         mUserName = NamedBean.normalizeUserName(s);
         firePropertyChange("UserName", old, mUserName);
     }
-
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
-            justification = "Sync of mUserName protected by ctor invocation")
-    protected String mUserName = null;
-    protected String mSystemName = null;
 
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
@@ -282,26 +287,28 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     /**
-     * compare for equality
-     * @param o the object to compare us to
-     * @return true if we are equal to the object
+     * {@inheritDoc}
+     * <p>
+     * This implementation tests that the results of
+     * {@link jmri.NamedBean#getSystemName()} and
+     * {@link jmri.NamedBean#getUserName()} are equal for this and obj.
+     *
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj argument;
+     *         {@code false} otherwise.
      */
     @Override
-    public boolean equals(Object o) {
-        boolean result = super.equals(o);
-        if (!result && (o != null) && o instanceof AbstractNamedBean) {
-            AbstractNamedBean b = (AbstractNamedBean) o;
-            if (this == b) {
-                result = true;
-            } else {
-                String bSystemName = b.getSystemName();
-                if ((mSystemName != null) && (bSystemName != null)
-                        && mSystemName.equals(bSystemName)) {
-                    String bUserName = b.getUserName();
-                    if ((mUserName != null) && (bUserName != null)
-                            && mUserName.equals(bUserName)) {
-                        result = true;
-                    }
+    public boolean equals(Object obj) {
+        // test the obj == this
+        boolean result = super.equals(obj);
+
+        if (!result && (obj != null) && obj instanceof AbstractNamedBean) {
+            AbstractNamedBean b = (AbstractNamedBean) obj;
+            if (this.getSystemName().equals(b.getSystemName())) {
+                String bUserName = b.getUserName();
+                if ((mUserName != null) && (bUserName != null)
+                        && mUserName.equals(bUserName)) {
+                    result = true;
                 }
             }
         }
@@ -310,6 +317,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * calculate our hash code
+     *
      * @return our hash code
      */
     @Override
