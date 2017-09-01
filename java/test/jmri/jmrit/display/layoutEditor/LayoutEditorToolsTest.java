@@ -28,18 +28,10 @@ public class LayoutEditorToolsTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
     }
-
 }
