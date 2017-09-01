@@ -66,7 +66,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * uses (subclasses) of PositionableLabel flip back and forth between icon
      * and text, and want to remember their formatting.
      *
-     * @param p the icon to store
+     * @param p       the icon to store
      * @param element the XML representation of the icon
      */
     protected void storeTextInfo(Positionable p, Element element) {
@@ -77,7 +77,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         String defaultFontName = manager.getDefaultFont().getFontName();
 
         String fontName = util.getFont().getFontName();
-        if (fontName != defaultFontName) {
+        if (!fontName.equals(defaultFontName)) {
             element.setAttribute("fontname", "" + util.getFont().getFontName());
         }
 
@@ -147,7 +147,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     /**
      * Default implementation for storing the common contents of an Icon
      *
-     * @param p the icon to store
+     * @param p       the icon to store
      * @param element the XML representation of the icon
      */
     public void storeCommonAttributes(Positionable p, Element element) {
@@ -216,14 +216,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 if (icon == null) {
                     icon = editor.loadFailed("PositionableLabel", name);
                     if (icon == null) {
-                        log.info("PositionableLabel icon removed for url= " + name);
+                        log.info("PositionableLabel icon removed for url= {}", name);
                         return;
                     }
                 }
             }
             // abort if name != yes and have null icon
             if (icon == null && !name.equals("yes")) {
-                log.info("PositionableLabel icon removed for url= " + name);
+                log.info("PositionableLabel icon removed for url= {}", name);
                 return;
             }
             l = new PositionableLabel(icon, editor);
@@ -241,7 +241,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 if (nIcon != null) {
                     l.updateIcon(nIcon);
                 } else {
-                    log.info("PositionableLabel icon removed for url= " + name);
+                    log.info("PositionableLabel icon removed for url= {}", name);
                     return;
                 }
             } else {
@@ -285,7 +285,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
         jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
         if (util == null) {
-            log.warn("PositionablePopupUtil is null! " + element.toString());
+            log.warn("PositionablePopupUtil is null! {}", element);
             return;
         }
 
@@ -552,11 +552,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             if (icon == null) {
                 icon = ed.loadFailed(name, iconName);
                 if (icon == null) {
-                    log.info(name + " removed for url= " + iconName);
+                    log.info("{} removed for url= {}", name, iconName);
                 }
             }
         } else {
-            log.debug("getNamedIcon: child element \"" + childName + "\" not found in element " + element.getName());
+            log.debug("getNamedIcon: child element \"{}\" not found in element {}", childName, element.getName());
         }
         return icon;
     }
