@@ -1,7 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import java.util.HashMap;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
@@ -30,9 +29,7 @@ public class MultiSensorIconDialogTest {
         JmriJFrame jf = new JmriJFrame("Indicator TO Icon Dialog Test");
         Editor editor = new EditorScaffold();
         MultiSensorItemPanel mip = new MultiSensorItemPanel(jf,"IS01","",tableModel,editor);
-        HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
-        h.put("entry",null);
-        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,h);
+        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }

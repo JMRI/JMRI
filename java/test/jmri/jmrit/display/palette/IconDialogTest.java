@@ -1,7 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import java.util.HashMap;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
@@ -31,9 +30,7 @@ public class IconDialogTest {
         JmriJFrame jf = new JmriJFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
         TableItemPanel tip = new TableItemPanel(jf,"IS01","",tableModel,editor);
-        HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
-        h.put("entry",null);
-        IconDialog t = new IconDialog("Icon","Icon",tip,h);
+        IconDialog t = new IconDialog("Icon","Icon",tip,null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }
