@@ -2,26 +2,17 @@
 
 package jmri.jmrix.cmri.serial.nodeiolist;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-//import jmri.jmrix.cmri.serial.SerialAddress;
-
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import java.util.ResourceBundle;
-
-import javax.swing.border.Border;
-import javax.swing.*;
-import javax.swing.table.*;
-
-import java.lang.Integer;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.*;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Frame for running CMRI assignment list.
@@ -533,7 +524,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
         // Only used occasionally, so inefficient String processing not really a problem
         // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) 

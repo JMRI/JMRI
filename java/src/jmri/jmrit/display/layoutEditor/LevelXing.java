@@ -15,6 +15,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -46,6 +47,14 @@ import org.slf4j.LoggerFactory;
  * A LevelXing has four connection points, designated A, B, C, and D. At the
  * crossing, A-C and B-D are straight segments. A train proceeds through the
  * crossing on either of these segments.
+ * <P>
+ * {@literal
+ *    A   D
+ *    \\ //
+ *      X
+ *    // \\
+ *    B   C
+ * literal}
  * <P>
  * Each straight segment carries Block information. A-C and B-D may be in the
  * same or different Layout Blocks.
@@ -216,7 +225,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalAName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalAHeadNamed = null;
             return;
         }
@@ -237,7 +246,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalBName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalBHeadNamed = null;
             return;
         }
@@ -258,7 +267,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalCName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalCHeadNamed = null;
             return;
         }
@@ -279,7 +288,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalDName(String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalDHeadNamed = null;
             return;
         }
@@ -367,7 +376,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalAMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalAMastNamed = null;
             return;
         }
@@ -395,7 +404,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalBMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalBMastNamed = null;
             return;
         }
@@ -423,7 +432,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalCMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalCMastNamed = null;
             return;
         }
@@ -451,7 +460,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSignalDMast(String signalMast) {
-        if (signalMast == null || signalMast.equals("")) {
+        if (signalMast == null || signalMast.isEmpty()) {
             signalDMastNamed = null;
             return;
         }
@@ -479,7 +488,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorAName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorANamed = null;
             return;
         }
@@ -507,7 +516,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorBName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorBNamed = null;
             return;
         }
@@ -535,7 +544,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorCName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorCNamed = null;
             return;
         }
@@ -563,7 +572,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public void setSensorDName(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             sensorDNamed = null;
             return;
         }
@@ -678,7 +687,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockAC() {
-        if ((blockAC == null) && (blockNameAC.length() > 0)) {
+        if ((blockAC == null) && !blockNameAC.isEmpty()) {
             blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
             if ((blockAC != null) && (blockAC == blockBD)) {
                 blockAC.decrementUse();
@@ -688,7 +697,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockBD() {
-        if ((blockBD == null) && (blockNameBD.length() > 0)) {
+        if ((blockBD == null) && !blockNameBD.isEmpty()) {
             blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
             if ((blockBD != null) && (blockAC == blockBD)) {
                 blockBD.decrementUse();
@@ -1031,7 +1040,7 @@ public class LevelXing extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (tBlockNameAC.length() > 0) {
+        if (!tBlockNameAC.isEmpty()) {
             blockAC = p.getLayoutBlock(tBlockNameAC);
             if (blockAC != null) {
                 blockNameAC = tBlockNameAC;
@@ -1042,7 +1051,7 @@ public class LevelXing extends LayoutTrack {
                 log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + ident);
             }
         }
-        if (tBlockNameBD.length() > 0) {
+        if (!tBlockNameBD.isEmpty()) {
             blockBD = p.getLayoutBlock(tBlockNameBD);
             if (blockBD != null) {
                 blockNameBD = tBlockNameBD;
@@ -1079,7 +1088,7 @@ public class LevelXing extends LayoutTrack {
 
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
-            if ((blockNameAC == null) || (blockNameAC.equals(""))) {
+            if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
                 jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
@@ -1087,7 +1096,7 @@ public class LevelXing extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if ((blockNameBD == null) || (blockNameBD.equals(""))) {
+            if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
                 jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
@@ -1095,14 +1104,15 @@ public class LevelXing extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if (hidden) {
-                jmi = popup.add(rb.getString("Hidden"));
-            } else {
-                jmi = popup.add(rb.getString("NotHidden"));
-            }
-            jmi.setEnabled(false);
-
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+            hiddenCheckBoxMenuItem.setSelected(hidden);
+            popup.add(hiddenCheckBoxMenuItem);
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                setHidden(hiddenCheckBoxMenuItem.isSelected());
+            });
+
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1220,7 +1230,7 @@ public class LevelXing extends LayoutTrack {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockNameAC != null) && (!blockNameAC.equals("")) && (blockAC != null)) {
+        if ((blockNameAC != null) && (!blockNameAC.isEmpty()) && (blockAC != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != blockAC)) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + blockAC.getDisplayName());
@@ -1238,7 +1248,7 @@ public class LevelXing extends LayoutTrack {
                 }
             }
         }
-        if ((blockNameBD != null) && (!blockNameBD.equals("")) && (blockBD != null)) {
+        if ((blockNameBD != null) && (!blockNameBD.isEmpty()) && (blockBD != null)) {
             if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != blockBD)) {
                 try {
                     boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + blockBD.getDisplayName());
@@ -1303,7 +1313,7 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            layoutEditor.setupComboBox(block1NameComboBox, false, true);
+            LayoutEditor.setupComboBox(block1NameComboBox, false, true);
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
 
@@ -1313,7 +1323,7 @@ public class LevelXing extends LayoutTrack {
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            layoutEditor.setupComboBox(block2NameComboBox, false, true);
+            LayoutEditor.setupComboBox(block2NameComboBox, false, true);
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
 
@@ -1385,7 +1395,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameAC = newName;
-            if (blockNameAC.length() > 0) {
+            if (!blockNameAC.isEmpty()) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1431,7 +1441,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameBD = newName;
-            if (blockNameBD.length() > 0) {
+            if (!blockNameBD.isEmpty()) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
@@ -1472,7 +1482,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameAC = newName;
-            if (blockNameAC.length() > 0) {
+            if (!blockNameAC.isEmpty()) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1500,7 +1510,7 @@ public class LevelXing extends LayoutTrack {
             }
             // get new block, or null if block has been removed
             blockNameBD = newName;
-            if (blockNameBD.length() > 0) {
+            if (!blockNameBD.isEmpty()) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted

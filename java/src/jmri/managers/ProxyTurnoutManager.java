@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
@@ -233,6 +232,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         throw new jmri.JmriException("Turnout Manager could not be found for System Prefix " + prefix);
     }
 
+    /**
+     * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((TurnoutManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return false;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
@@ -289,14 +303,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection system agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
     }
 
     @Override

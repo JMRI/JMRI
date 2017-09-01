@@ -13,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
     DS64BundleTest.class,
     Ds64TabbedPanelTest.class,
     SimpleTurnoutStateEntryTest.class,
-    SimpleTurnoutTest.class
+    SimpleTurnoutTest.class,
+    BundleTest.class,
 })
 public class PackageTest {
 }

@@ -279,7 +279,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && (!blockName.equals(""))) {
+        if ((block == null) && (blockName != null) && (!blockName.isEmpty())) {
             block = layoutEditor.provideLayoutBlock(blockName);
         }
         return block;
@@ -353,7 +353,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     public void scaleCoords(float xFactor, float yFactor) {
-        // Nothing to do here… move along…
+        // Nothing to do here, move along
     }
 
     /**
@@ -363,7 +363,7 @@ public class TrackSegment extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     public void translateCoords(float xFactor, float yFactor) {
-        // Nothing to do here… move along…
+        // Nothing to do here, move along
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
@@ -380,7 +380,7 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
     public void setObjects(LayoutEditor p) {
-        if (tBlockName.length() > 0) {
+        if (!tBlockName.isEmpty()) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
@@ -562,7 +562,7 @@ public class TrackSegment extends LayoutTrack {
         jmi = popup.add(ident);
         jmi.setEnabled(false);
 
-        if (blockName.equals("")) {
+        if (blockName.isEmpty()) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
             jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
@@ -606,36 +606,43 @@ public class TrackSegment extends LayoutTrack {
             }
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
-        lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
 
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
+        }));
+        jmi.setSelected(!getArc() && !getBezier());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Circle")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(1);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
+        }));
+        jmi.setSelected(getArc() && getCircle());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Ellipse")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(2);
             }
-        });
-        lineType.add(new AbstractAction(Bundle.getMessage("Bezier")) {
+        }));
+        jmi.setSelected(getArc() && !getCircle());
+
+        jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Bezier")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeType(3);
             }
-        });
+        }));
+        jmi.setSelected(!getArc() && getBezier());
+
         popup.add(lineType);
 
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     flipAngle();
@@ -659,7 +666,7 @@ public class TrackSegment extends LayoutTrack {
                 });
             }
         }
-        if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
+        if ((!blockName.isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
             popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -889,13 +896,13 @@ public class TrackSegment extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 
             contentPane.add(panel2);
 
-            if (getArc() && circle) {
+            if (getArc() && getCircle()) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -1308,7 +1315,7 @@ public class TrackSegment extends LayoutTrack {
      * @return the center coordinates
      */
     public Point2D getCoordsCenterCircle() {
-        return new Point2D.Double(centreX, centreY);
+        return getCentre();
     }
 
     /**
@@ -1567,17 +1574,15 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlPointRectAt(ep2));
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
-            if (getArc()) {
+            if (showConstructionLinesLE()) { //draw track circles
                 g2.draw(new Line2D.Double(ep1, ep2));
             }
-            if (showConstructionLinesLE()) { //draw track circles
-                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
-            }
+            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         }
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.
         g2.setColor(Color.black);
-        if (circle && showConstructionLinesLE()) {
+        if (getCircle() && showConstructionLinesLE()) {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)

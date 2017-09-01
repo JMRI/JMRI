@@ -2,34 +2,17 @@
 
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-import java.io.IOException;
-import javax.activation.DataHandler;
-
-import java.util.ResourceBundle;
-
-import javax.swing.border.Border;
-import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.datatransfer.*;
-import java.lang.Integer;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.*;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame;
-import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 import jmri.jmrix.cmri.serial.serialmon.*;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 /**
  * Frame for a table view to manage a CMRInet network.

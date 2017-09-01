@@ -1,15 +1,16 @@
 //SimpleServerFrameTest.java
 package jmri.jmris.simpleserver;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class 
+ * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class
  *
  * @author Paul Bender
  */
@@ -20,17 +21,18 @@ public class SimpleServerFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleServerFrame a = new SimpleServerFrame();
         Assert.assertNotNull(a);
+        JUnitUtil.dispose(a);
     }
 
     // The minimal setup for log4J
     @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

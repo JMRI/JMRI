@@ -291,7 +291,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _activeTrain.setStatus(ActiveTrain.RUNNING);
             setEngineDirection();
             setSpeedBySignal();
-        } else if (DispatcherFrame.instance().getAutoAllocate()) {
+        } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
             // starting for the first time with automatic allocation of Sections
             setSpeedBySignal();
         }
@@ -529,7 +529,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _needSetSpeed = true;
         }
         // request next allocation if appropriate--Dispatcher must decide whether to allocate it and when
-        if ((!DispatcherFrame.instance().getAutoAllocate()) && ((_lastAllocatedSection == null)
+        if ((!InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) && ((_lastAllocatedSection == null)
                 || (_lastAllocatedSection.getNextSection() == as.getSection()))) {
             // if AutoAllocate, this is now done in DispatcherFrame.java for all trains
             _lastAllocatedSection = as;
@@ -537,7 +537,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 Section nSection = as.getNextSection();
                 int nextSeq = as.getNextSectionSequence();
                 int nextDir = _activeTrain.getAllocationDirectionFromSectionAndSeq(nSection, nextSeq);
-                DispatcherFrame.instance().requestAllocation(_activeTrain, nSection, nextDir, nextSeq, true, null);
+                InstanceManager.getDefault(DispatcherFrame.class).requestAllocation(_activeTrain, nSection, nextDir, nextSeq, true, null);
             }
         }
     }
@@ -594,7 +594,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     protected synchronized void setupNewCurrentSignal(AllocatedSection as) {
         removeCurrentSignal();
-        if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD) {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
             if (sh != null) {
                 _controllingSignal = sh;
@@ -723,15 +723,15 @@ public class AutoActiveTrain implements ThrottleListener {
     protected synchronized void setSpeedBySignal() {
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
                 && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null)
-                && DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD)
-                || (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null
+                && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD)
+                || (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null
                 || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
                 || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
             // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal, 
             //   don't set speed based on controlling signal
             return;
         }
-        if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD) {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             //set speed using signalHeads
             switch (_controllingSignal.getAppearance()) {
                 case SignalHead.DARK:
@@ -1052,7 +1052,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 AllocatedSection aSec = _activeTrain.reverseAllAllocatedSections();
                 setEngineDirection();
                 if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                    DispatcherFrame.instance().forceScanOfAllocation();
+                    InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                     break;
                 }
                 setupNewCurrentSignal(aSec);
@@ -1071,7 +1071,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.resetAllAllocatedSections();
                         setEngineDirection();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                            DispatcherFrame.instance().forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                             break;
                         }
                         setupNewCurrentSignal(null);
@@ -1083,7 +1083,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         setEngineDirection();
                         _activeTrain.setRestart();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                            DispatcherFrame.instance().forceScanOfAllocation();
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                             break;
                         }
                         setupNewCurrentSignal(null);
@@ -1182,8 +1182,8 @@ public class AutoActiveTrain implements ThrottleListener {
         if (b == null) {
             return (0);
         }
-        float fLength = b.getLengthMm() / (float) (jmri.Scale.getScaleFactor(DispatcherFrame.instance().getScale()));
-        if (DispatcherFrame.instance().getUseScaleMeters()) {
+        float fLength = b.getLengthMm() / (float) (jmri.Scale.getScaleFactor(InstanceManager.getDefault(DispatcherFrame.class).getScale()));
+        if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
             return (int) (fLength * 0.001f);
         }
         return (int) (fLength * 0.00328084f);
@@ -1441,7 +1441,7 @@ public class AutoActiveTrain implements ThrottleListener {
             slowToStop(false);
 
             //calculate speed increment to use in each minInterval time
-            _speedIncrement = (100.0f / (DispatcherFrame.instance().getFullRampTime() / DispatcherFrame.instance().getMinThrottleInterval())
+            _speedIncrement = (100.0f / (InstanceManager.getDefault(DispatcherFrame.class).getFullRampTime() / InstanceManager.getDefault(DispatcherFrame.class).getMinThrottleInterval())
                     / _currentRampRate) / 100.0f;
             log.debug("{}: _speedIncrement={}", _activeTrain.getTrainName(), _speedIncrement);
 
@@ -1451,7 +1451,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
             // Give command station a chance to handle direction command
             try {
-                Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval() * 2);
+                Thread.sleep(InstanceManager.getDefault(DispatcherFrame.class).getMinThrottleInterval() * 2);
             } catch (Exception ex) {
             }
 
@@ -1489,7 +1489,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
                         // Give command station a chance to handle reversing.
                         try {
-                            Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval() * 2);
+                            Thread.sleep(InstanceManager.getDefault(DispatcherFrame.class).getMinThrottleInterval() * 2);
                         } catch (Exception ex) {
                         }
                     }
@@ -1549,7 +1549,7 @@ public class AutoActiveTrain implements ThrottleListener {
 //                }
                 // Give other threads a chance to work
                 try {
-                    Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval());
+                    Thread.sleep(InstanceManager.getDefault(DispatcherFrame.class).getMinThrottleInterval());
                 } catch (Exception ex) {
                 }
 

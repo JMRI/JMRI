@@ -1,10 +1,10 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the NamedBeanHandleManager class
@@ -106,17 +106,14 @@ public class NamedBeanHandleManagerTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
+        JUnitUtil.setUp();
         super.setUp();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     }
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

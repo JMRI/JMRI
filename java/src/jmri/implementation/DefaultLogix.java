@@ -2,9 +2,7 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import jmri.Conditional;
-import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.JmriException;

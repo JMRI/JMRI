@@ -1340,7 +1340,7 @@
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
         <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="yes" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -1621,7 +1621,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2250"/><!-- change from default 100 warnings -->
+            <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1688,7 +1688,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2250"/><!-- change from default 100 warnings -->
+            <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1989,9 +1989,26 @@
     <property name="dist.scripts" value="${dist}/scripts"/>
     <property name="dist.apps"    value="${dist}/apps"/>
 
+    <target name="launchjmri.exe"
+            description="recreate the LaunchJMRI.exe used by the Windows release package">
+        <exec executable="${nsis.home}makensis"
+              dir="scripts/WinInstallFiles/"
+              failonerror="true">
+            <arg line="-V2 LaunchJMRI.nsi"/>
+        </exec>
+    </target>
+
+    <uptodate property="launchjmri.uptodate" targetfile="scripts/WinInstallFiles/LaunchJMRI.nsi" >
+        <srcfiles dir= "scripts/WinInstallFiles/" includes="LaunchJMRI.exe"/>
+    </uptodate>
+
+    <target name="check-launchjmri" if="launchjmri.uptodate">
+        <echo message="LaunchJMRI.exe is out of date, rebuild with 'ant launchjmri.exe' and commit"/>
+    </target>
+
     <target name="package-windows"
             description="create a Windows release package"
-            depends="get-version-string, jar">
+            depends="check-launchjmri, get-version-string, jar">
         <delete dir="${dist.windows}"/>
         <mkdir dir="${dist.windows}/JMRI"/>
         <copy todir="${dist.windows}/JMRI">
@@ -2023,6 +2040,11 @@
             <fileset dir="${libdir}/windows"/>
         </copy>
         <mkdir dir="${dist.release}"/>
+        <exec executable="${nsis.home}makensis"
+              dir="${dist.windows}/JMRI"
+              failonerror="true">
+            <arg line="-V2 LaunchJMRI.nsi"/>
+        </exec>
         <exec executable="${nsis.home}makensis"
               dir="${dist.windows}/JMRI"
               failonerror="true">
@@ -2327,4 +2349,25 @@
             <antcall target="ci-test-appveyor-coveragecheck" />
         </parallel>
     </target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: lockMetaFiles
+         - - - - - - - - - - - - - - - - - -->
+    <target name="lockMetaFiles" description="Lock META-INT files">
+    	<echo>locking META-INT files</echo>
+    	<chmod perm="ugo+rx">
+    		<fileset dir="${target/classes/META-INF}"/>
+    	</chmod>
+    </target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: unlockMetaFiles
+         - - - - - - - - - - - - - - - - - -->
+    <target name="unlockMetaFiles" description="Unlock META-INT files">
+    	<echo>unlocking META-INT files</echo>
+    	<chmod perm="ugo+rx+w">
+    		<fileset dir="${target/classes/META-INF}"/>
+    	</chmod>
+    </target>
+
 </project>

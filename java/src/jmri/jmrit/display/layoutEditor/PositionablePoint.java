@@ -32,6 +32,7 @@ import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
 import jmri.util.swing.JCBHandle;
@@ -84,7 +85,7 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
     /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
-     this is so that we can keep up with moves and changes of userNames */
+                     this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
@@ -306,7 +307,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setEastBoundSignalName(@CheckForNull String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalEastHeadNamed = null;
             return;
         }
@@ -375,7 +376,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     private void setWestBoundSignalName(@CheckForNull String signalHead) {
-        if (signalHead == null || signalHead.equals("")) {
+        if (signalHead == null || signalHead.isEmpty()) {
             signalWestHeadNamed = null;
             return;
         }
@@ -406,7 +407,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setEastBoundSensor(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             eastBoundSensorNamed = null;
             return;
         }
@@ -437,7 +438,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setWestBoundSensor(String sensorName) {
-        if (sensorName == null || sensorName.equals("")) {
+        if (sensorName == null || sensorName.isEmpty()) {
             westBoundSensorNamed = null;
             return;
         }
@@ -484,7 +485,7 @@ public class PositionablePoint extends LayoutTrack {
 
     public void setEastBoundSignalMast(String signalMast) {
         SignalMast mast = null;
-        if (signalMast != null && !signalMast.equals("")) {
+        if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
@@ -548,7 +549,7 @@ public class PositionablePoint extends LayoutTrack {
 
     public void setWestBoundSignalMast(String signalMast) {
         SignalMast mast = null;
-        if (signalMast != null && !signalMast.equals("")) {
+        if (signalMast != null && !signalMast.isEmpty()) {
             mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
@@ -1061,7 +1062,7 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
-        ArrayList<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> panels = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         editorCombo.addItem(new JCBHandle<LayoutEditor>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);
@@ -1132,12 +1133,12 @@ public class PositionablePoint extends LayoutTrack {
                     getLinkedPoint().setWestBoundSignal("");
                 }
                 // removelocal and removeremote have been set here.
-                if (!removeremote.equals("")) {
+                if (!removeremote.isEmpty()) {
                     jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removeremote);
                     getLinkedEditor().removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
                 }
-                if (!removelocal.equals("")) {
+                if (!removelocal.isEmpty()) {
                     jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removelocal);
                     layoutEditor.removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);
@@ -1292,7 +1293,6 @@ public class PositionablePoint extends LayoutTrack {
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
         ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
         LayoutConnectivity lc = null;
-
         LayoutBlock blk1 = null, blk2 = null;
         TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
         Point2D p1, p2;

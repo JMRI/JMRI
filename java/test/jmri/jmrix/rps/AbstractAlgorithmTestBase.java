@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -203,12 +204,12 @@ abstract public class AbstractAlgorithmTestBase {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

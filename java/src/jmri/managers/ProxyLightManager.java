@@ -2,7 +2,6 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
-import jmri.NamedBean;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
@@ -112,9 +111,11 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     /**
-     * Validate system name format Locate a system specfic LightManager based on
-     * a system name. Returns false if no manager exists. If a manager is found,
-     * return its determination of validity of system name format
+     * Validate system name format. Locate a system specfic LightManager based on
+     * a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
@@ -127,9 +128,11 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
 
     /**
      * Validate system name against the hardware configuration Locate a system
-     * specfic LightManager based on a system name. Returns false if no manager
-     * exists. If a manager is found, return its determination of validity of
-     * system name relative to the hardware configuration
+     * specfic LightManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name formatrelative to the hardware configuration.
+     * Return false if no manager exists.
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -214,14 +217,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection system agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
     }
 
     @Override

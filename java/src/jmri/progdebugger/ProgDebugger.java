@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
-
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;

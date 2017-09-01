@@ -1,7 +1,6 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
-import java.util.*;
 
 /**
  * Drive a single Maintainer Call section on a USS CTC panel.

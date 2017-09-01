@@ -1,29 +1,23 @@
 package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
-import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor; // for iconLabel
+import javax.swing.AbstractCellEditor;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -36,11 +30,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
@@ -832,7 +826,7 @@ public class BlockTableAction extends AbstractTableAction {
         }
         Object retval = pane.getValue();
         log.debug("Retval = {}", retval.toString());
-        // only 2 buttons to choose from, OK = button 2
+        // only 2 buttons to choose from, Create = button 2
         if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
             return;
         }
@@ -877,6 +871,7 @@ public class BlockTableAction extends AbstractTableAction {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+    JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager pref;
 
     @Override
@@ -896,9 +891,13 @@ public class BlockTableAction extends AbstractTableAction {
                 @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonCreate", oklistener, cancellistener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
         }
+        sysName.setBackground(Color.white);
+        // reset statusBar text
+        statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
+        statusBar.setForeground(Color.gray);
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
         }
@@ -988,23 +987,37 @@ public class BlockTableAction extends AbstractTableAction {
                 return;
             }
         }
-        String user = userName.getText();
+        String user = userName.getText().trim(); // N11N
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
+        String sName = sysName.getText().trim().toUpperCase(); // N11N
+        // initial check for empty entry
+        if (sName.length() < 1 && !_autoSystemName.isSelected()) {
+            statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
+            statusBar.setForeground(Color.red);
+            sysName.setBackground(Color.red);
+            return;
+        } else {
+            sysName.setBackground(Color.white);
+        }
+
+        // Add some entry pattern checking, before assembling sName and handing it to the blockManager
+        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
+        String errorMessage = new String();
+        String lastSuccessfulAddress = Bundle.getMessage("NONE");
         StringBuilder b;
 
         for (int x = 0; x < NumberOfBlocks; x++) {
             if (x != 0) {
                 if (user != null) {
-                    b = new StringBuilder(userName.getText());
+                    b = new StringBuilder(userName.getText().trim()); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     user = b.toString();
                 }
                 if (!_autoSystemName.isSelected()) {
-                    b = new StringBuilder(sysName.getText());
+                    b = new StringBuilder(sysName.getText().trim()); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
@@ -1020,6 +1033,8 @@ public class BlockTableAction extends AbstractTableAction {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
+                errorMessage = "An error has occurred";
+                statusBar.setForeground(Color.red);
                 return; // without creating       
             }
             if (blk != null) {
@@ -1047,7 +1062,21 @@ public class BlockTableAction extends AbstractTableAction {
                     blk.setCurvature(Block.SEVERE);
                 }
             }
+            // add first and last names to statusMessage user feedback string
+            if (x == 0 || x == NumberOfBlocks - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
+            if (x == NumberOfBlocks - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            // only mention first and last of range added
+        } // end of for loop creating range of Blocks
+
+        // provide feedback to user
+        if (errorMessage.equals("")) {
+            statusBar.setText(statusMessage);
+            statusBar.setForeground(Color.gray);
+        } else {
+            statusBar.setText(errorMessage);
+            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate in urgency
         }
+
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
     }

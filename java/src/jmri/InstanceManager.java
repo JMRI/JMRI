@@ -32,20 +32,26 @@ import org.slf4j.LoggerFactory;
  * {@link InstanceManager#getNullableDefault} method instead.
  * <p>
  * Multiple items can be held, and are retrieved as a list with
- * {@link    InstanceManager#getList}.
+ * {@link InstanceManager#getList}.
  * <p>
  * If a specific item is needed, e.g. one that has been constructed via a
  * complex process during startup, it should be installed with
  * {@link InstanceManager#store}.
  * <p>
- * If it's OK for the InstanceManager to create an object on first request, have
- * that object's class implement the {@link InstanceManagerAutoDefault} flag
- * interface. The InstanceManager will then construct a default object via the
- * no-argument constructor when one is first requested.
+ * If it is desirable for the InstanceManager to create an object on first
+ * request, have that object's class implement the
+ * {@link InstanceManagerAutoDefault} flag interface. The InstanceManager will
+ * then construct a default object via the no-argument constructor when one is
+ * first requested.
  * <p>
  * For initialization of more complex default objects, see the
  * {@link InstanceInitializer} mechanism and its default implementation in
  * {@link jmri.managers.DefaultInstanceInitializer}.
+ * <p>
+ * Implement the {@link InstanceManagerAutoInitialize} interface when default
+ * objects need to be initialized after the default instance has been
+ * constructed and registered with the InstanceManager. This will allow
+ * references to the default instance during initialization to work as expected.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -133,21 +139,25 @@ public final class InstanceManager {
 
     /**
      * Remove an object of a particular type that had earlier been registered
-     * with {@link #store}.
+     * with {@link #store}. If item was previously registered, this will remove
+     * item and fire an indexed property change event for the property matching
+     * the output of {@link #getListPropertyName(java.lang.Class)} for type.
      *
      * @param <T>  The type of the class
      * @param item The object of type T to be deregistered
-     * @param type The class Object for the item's type.
+     * @param type The class Object for the item's type
      */
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         List<T> l = (ArrayList<T>) getList(type);
         int index = l.indexOf(item);
-        l.remove(item);
-        if (item instanceof Disposable) {
-            getDefault().dispose((Disposable) item);
+        if (index != -1) { // -1 means items was not in list, and therefor, not registered
+            l.remove(item);
+            if (item instanceof Disposable) {
+                getDefault().dispose((Disposable) item);
+            }
+            getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
-        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
     }
 
     /**
@@ -214,6 +224,7 @@ public final class InstanceManager {
                 try {
                     T obj = (T) type.getConstructor((Class[]) null).newInstance((Object[]) null);
                     l.add(obj);
+                    // obj has been added, now initialize it if needed
                     if (obj instanceof InstanceManagerAutoInitialize) {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
@@ -232,6 +243,7 @@ public final class InstanceManager {
                     T obj = (T) getDefault().initializers.get(type).getDefault(type);
                     log.debug("      initializer created default of {}", type.getName());
                     l.add(obj);
+                    // obj has been added, now initialize it if needed
                     if (obj instanceof InstanceManagerAutoInitialize) {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
@@ -290,15 +302,14 @@ public final class InstanceManager {
      * @return The default for type (normally this is the item passed in)
      */
     @Nonnull
-    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item
-    ) {
+    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
             log.error("Should not set default of type {} to null value", type.getName());
             throw npe;
         }
-        Object oldDefault = getNullableDefault(type);
+        Object oldDefault = containsDefault(type) ? getNullableDefault(type) : null;
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);
@@ -306,6 +317,19 @@ public final class InstanceManager {
             notifyPropertyChangeListener(getDefaultsPropertyName(type), oldDefault, item);
         }
         return getDefault(type);
+    }
+
+    /**
+     * Check if a default has been set for the given type.
+     *
+     * @param <T>  The type of the class
+     * @param type The class type
+     * @return true if an item is available as a default for the given type;
+     *         false otherwise
+     */
+    static public <T> boolean containsDefault(@Nonnull Class<T> type) {
+        List<T> l = getList(type);
+        return !l.isEmpty();
     }
 
     /**
@@ -757,17 +781,16 @@ public final class InstanceManager {
     /**
      * Clear all managed instances from this InstanceManager.
      * <p>
-     * Realistically, JMRI can't ensure that all objects
-     * and combination of objects
-     * held by the InstanceManager are threadsafe.  This call
-     * therefore defers to the GUI thread to become atomic and reduce risk.
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. This call therefore
+     * defers to the GUI thread to become atomic and reduce risk.
      */
     public void clearAll() {
-        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             log.debug("Clearing InstanceManager");
             managerLists.keySet().forEach((type) -> {
                 clear(type);
-             } );
+            });
         });
     }
 
@@ -775,15 +798,14 @@ public final class InstanceManager {
      * Clear all managed instances of a particular type from this
      * InstanceManager.
      * <p>
-     * Realistically, JMRI can't ensure that all objects 
-     * and combination of objects
-     * held by the InstanceManager are threadsafe.  This call
-     * therefore defers to the GUI thread to become atomic and reduce risk.
+     * Realistically, JMRI can't ensure that all objects and combination of
+     * objects held by the InstanceManager are threadsafe. This call therefore
+     * defers to the GUI thread to become atomic and reduce risk.
      *
      * @param type the type to clear
      */
     public void clear(@Nonnull Class<?> type) {
-        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
             log.trace("Clearing managers of {}", type.getName());
             getInstances(type).stream().filter((o) -> (o instanceof Disposable)).forEachOrdered((o) -> {
                 dispose((Disposable) o);

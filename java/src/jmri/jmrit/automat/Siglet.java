@@ -1,10 +1,10 @@
 package jmri.jmrit.automat;
 
-import java.util.Arrays;
 import java.beans.PropertyChangeEvent;
-
+import java.util.Arrays;
 import jmri.NamedBean;
-import jmri.util.*;
+import jmri.util.PropertyChangeEventQueue;
+import jmri.util.ThreadingUtil;
 
 /**
  * A Siglet is a "an embedded signal automation", like an "applet" an embedded
@@ -12,10 +12,11 @@ import jmri.util.*;
  * <P>
  * Subclasses must load the inputs and outputs arrays during the defineIO
  * method. When any of these change, the Siglet must then recompute and apply
- * the output signal settings via their implementation of the {@link #setOutput} method.
+ * the output signal settings via their implementation of the {@link #setOutput}
+ * method.
  * <P>
- * Siglets may not run in their own thread; they should not use
- * wait() in any of it's various forms.
+ * Siglets may not run in their own thread; they should not use wait() in any of
+ * it's various forms.
  * <P>
  * Siglet was separated from AbstractAutomaton in JMRI 4.9.2
  * <P>
@@ -52,68 +53,74 @@ abstract public class Siglet {
         return name;
     }
     private String name;
+
     final public void setName(String name) {
         this.name = name;
     }
-    
+
     public void start() {
         Thread previousThread = thread;
         try {
-            if (previousThread !=null ) previousThread.join();
+            if (previousThread != null) {
+                previousThread.join();
+            }
         } catch (InterruptedException e) {
             log.warn("Aborted start() due to interrupt");
         }
-        if (thread != null) log.error("Found thread != null, which is an internal synchronization error for {}", name);
-        
+        if (thread != null) {
+            log.error("Found thread != null, which is an internal synchronization error for {}", name);
+        }
+
         defineIO(); // user method that will load inputs
-        if (inputs.length <= 0) {
-            log.error("Siglet start invoked, but defined no inputs");
+        if (inputs == null || inputs.length <= 0) {
+            log.error("Siglet start invoked {}, but no inputs provided", ((name!=null && !name.isEmpty()) ? "for \""+name+"\"" : "(without a name)") );
             return;
         }
 
         pq = new PropertyChangeEventQueue(inputs);
         setOutput();
-        
+
         // run one cycle at start
-               
-        thread = new Thread(
-            new Runnable() {
-                public void run() {
-                    while (true) {
-                        try {
-                            PropertyChangeEvent pe = pq.take();
-                            // _any_ event drives output
-                            log.trace("driving setOutput from {}", pe);
-                            ThreadingUtil.runOnLayout( ()->{ setOutput(); } );
-                        } catch (InterruptedException e) {
-                            // done
-                            log.trace("Siglet {} cleaning up due to interrupt", name);
-                            pq.dispose();
-                            thread = null; // flag that this won't execute again
-                            return;
-                        }
-                    }
+        thread = new Thread(() -> {
+            while (true) {
+                try {
+                    PropertyChangeEvent pe = pq.take();
+                    // _any_ event drives output
+                    log.trace("driving setOutput from {}", pe);
+                    ThreadingUtil.runOnLayout(() -> {
+                        setOutput();
+                    });
+                } catch (InterruptedException e) {
+                    // done
+                    log.trace("Siglet {} cleaning up due to interrupt", name);
+                    pq.dispose();
+                    thread = null; // flag that this won't execute again
+                    return;
                 }
             }
-        );
+        });
         thread.setDaemon(true);
         thread.setName(getName());
         thread.start();
     }
-    
+
     /**
      * Stop execution of the logic.
-     * <p>Note: completion not guaranteed when this returns, as the 
-     * internal operation may proceed for a short time.  It's safe
-     * to call "start" again without worrying about that.
+     * <p>
+     * Note: completion not guaranteed when this returns, as the internal
+     * operation may proceed for a short time. It's safe to call "start" again
+     * without worrying about that.
      */
-
     public void stop() {
-        if (thread != null) thread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
+        }
     }
 
     /**
-     * Convenience method to copy in an array of NamedBeans
+     * Set inputs to the items in in.
+     *
+     * @param in the inputs to set
      */
     public void setInputs(NamedBean[] in) {
         inputs = Arrays.copyOf(in, in.length);

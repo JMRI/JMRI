@@ -152,21 +152,25 @@ public interface SensorManager extends Manager<Sensor> {
     public void setDefaultSensorDebounceGoingInActive(long timer);
 
     /**
-     * Do the sensor objects provided by this manager support configuring 
+     * Do the sensor objects provided by this manager support configuring
      * an internal pullup or pull down resistor?
-     * 
+     *
      * @return true if pull up/pull down configuration is supported.
      */
     public boolean isPullResistanceConfigurable();
 
     /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @param systemName the system name
+     * @return true if formatted correctly; false otherwise
+     */
+    @CheckReturnValue
+    public boolean validSystemNameFormat(@Nonnull String systemName);
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     public String getEntryToolTip();
-
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    public String getEntryRegex();
 
 }

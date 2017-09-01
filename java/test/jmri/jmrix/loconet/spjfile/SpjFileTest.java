@@ -1,10 +1,10 @@
 package jmri.jmrix.loconet.spjfile;
 
 import jmri.jmrit.Sound;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package

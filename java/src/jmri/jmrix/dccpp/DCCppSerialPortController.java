@@ -1,10 +1,10 @@
 package jmri.jmrix.dccpp;
 
-import purejavacomm.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
 
 /**
  * Abstract base for classes representing a DCC++ communications port

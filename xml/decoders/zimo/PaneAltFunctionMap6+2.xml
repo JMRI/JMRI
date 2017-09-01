@@ -31,7 +31,7 @@
     <row>
       <column>
         <label>
-          <text>                                               1</text>
+          <text>                                1</text>
         </label>
         <label>
           <text>                                           Front  </text>
@@ -299,7 +299,7 @@
       </column>
       <column>
         <label>
-          <text>     5 </text>
+          <text>    5 </text>
         </label>
         <label>
           <text> FO 3 </text>
@@ -407,7 +407,7 @@
       </column>
       <column>
         <label>
-          <text>     7</text>
+          <text>    7</text>
         </label>
         <label>
           <text>  FO 5</text>
@@ -461,7 +461,7 @@
       </column>
       <column>
         <label>
-          <text>      8</text>
+          <text>    8</text>
         </label>
         <label>
           <text>  FO 6</text>

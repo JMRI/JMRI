@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid IEEE 802.15.4 Connection Types

@@ -2,32 +2,24 @@
 
 package jmri.jmrix.cmri.serial.serialmon;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.serial.SerialNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import java.util.ResourceBundle;
-
-import javax.swing.border.Border;
-import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
  * Frame for a message filter for CMRInet network packets.
  * @author	 Chuck Catania   Copyright (C) 2016
  */
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.serialmon.SerialFilterBundle");
 
     ArrayList<SerialNode> monitorNode = new  ArrayList<SerialNode>();  
         

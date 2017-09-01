@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.ConfigureManager;
+import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
@@ -34,14 +38,14 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-
         EntryExitPairs p = (EntryExitPairs) o;
-        Element element = new Element("entryexitpairs");  // NOI18N 
+        Element element = new Element("entryexitpairs");  // NOI18N
         setStoreElementClass(element);
         ArrayList<LayoutEditor> editors = p.getSourcePanelList();
-        if (editors.size() == 0) {
-            return element;
+        if (editors.isEmpty()) {
+            return null;    //return element;   // <== don't store empty (unused) element
         }
+
         element.addContent(new Element("cleardown").addContent("" + p.getClearDownOption()));  // NOI18N
         if (p.getDispatcherIntegration()) {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
@@ -145,13 +149,14 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * Load, starting with the layoutBlock element, then all the value-icon
      * pairs.
      *
-     * @param shared Top level Element to unpack
+     * @param shared  Top level Element to unpack
      * @param perNode ignored in this application
+     * @return true if loaded without errors; false otherwise
      */
     @Override
     public boolean load(Element shared, Element perNode) {
         // create the objects
-        EntryExitPairs eep = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+        EntryExitPairs eep = InstanceManager.getDefault(EntryExitPairs.class);
 
         try {
             String clearoption = shared.getChild("cleardown").getText();  // NOI18N
@@ -160,13 +165,13 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             //Considered normal if it doesn't exist
         }
         // get attributes
-        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         ArrayList<Object> loadedPanel;
         if (cm != null) {
             loadedPanel = cm.getInstanceList(LayoutEditor.class);
         } else {
             log.error("Failed getting optional default config manager");  // NOI18N
-            loadedPanel = new ArrayList<Object>();
+            loadedPanel = new ArrayList<>();
         }
         if (shared.getChild("dispatcherintegration") != null && shared.getChild("dispatcherintegration").getText().equals("yes")) {  // NOI18N
             eep.setDispatcherIntegration(true);
@@ -176,8 +181,8 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             int settingTimer = 2000;
             try {
                 settingTimer = Integer.parseInt(shared.getChild("settingTimer").getText());  // NOI18N
-            } catch (Exception e) {
-                log.error("Error in converting timer to int " + shared.getChild("settingTimer"));  // NOI18N
+            } catch (NumberFormatException e) {
+                log.error("Error in converting timer to int {}", shared.getChild("settingTimer"));  // NOI18N
             }
             eep.setSettingTimer(settingTimer);
         }
@@ -198,12 +203,18 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     String sourceType = sourceList.get(i).getAttribute("type").getValue();  // NOI18N
                     String sourceItem = sourceList.get(i).getAttribute("item").getValue();  // NOI18N
                     NamedBean source = null;
-                    if (sourceType.equals("signalMast")) {  // NOI18N
-                        source = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(sourceItem);
-                    } else if (sourceType.equals("sensor")) {  // NOI18N
-                        source = jmri.InstanceManager.sensorManagerInstance().getSensor(sourceItem);
-                    } else if (sourceType.equals("signalHead")) {  // NOI18N
-                        source = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(sourceItem);
+                    switch (sourceType) {
+                        case "signalMast": // NOI18N
+                            source = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sourceItem);
+                            break;
+                        case "sensor": // NOI18N
+                            source = InstanceManager.getDefault(SensorManager.class).getSensor(sourceItem);
+                            break;
+                        case "signalHead": // NOI18N
+                            source = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sourceItem);
+                            break;
+                        default:
+                            break;
                     }
 
                     //These two could be subbed off.
@@ -219,12 +230,18 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         String destType = destinationList.get(j).getAttribute("type").getValue();  // NOI18N
                         String destItem = destinationList.get(j).getAttribute("item").getValue();  // NOI18N
                         NamedBean dest = null;
-                        if (destType.equals("signalMast")) {  // NOI18N
-                            dest = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(destItem);
-                        } else if (destType.equals("sensor")) {  // NOI18N
-                            dest = jmri.InstanceManager.sensorManagerInstance().getSensor(destItem);
-                        } else if (destType.equals("signalHead")) {  // NOI18N
-                            dest = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(destItem);
+                        switch (destType) {
+                            case "signalMast": // NOI18N
+                                dest = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(destItem);
+                                break;
+                            case "sensor": // NOI18N
+                                dest = InstanceManager.getDefault(SensorManager.class).getSensor(destItem);
+                                break;
+                            case "signalHead": // NOI18N
+                                dest = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(destItem);
+                                break;
+                            default:
+                                break;
                         }
                         try {
                             eep.addNXDestination(source, dest, panel, id);
@@ -239,12 +256,18 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         }
                         if (destinationList.get(j).getAttribute("nxType") != null) {  // NOI18N
                             String nxType = destinationList.get(j).getAttribute("nxType").getValue();  // NOI18N
-                            if (nxType.equals("turnoutsetting")) {  // NOI18N
-                                eep.setEntryExitType(source, panel, dest, 0x00);
-                            } else if (nxType.equals("signalmastlogic")) {  // NOI18N
-                                eep.setEntryExitType(source, panel, dest, 0x01);
-                            } else if (nxType.equals("fullinterlocking")) {  // NOI18N
-                                eep.setEntryExitType(source, panel, dest, 0x02);
+                            switch (nxType) {
+                                case "turnoutsetting": // NOI18N
+                                    eep.setEntryExitType(source, panel, dest, 0x00);
+                                    break;
+                                case "signalmastlogic": // NOI18N
+                                    eep.setEntryExitType(source, panel, dest, 0x01);
+                                    break;
+                                case "fullinterlocking": // NOI18N
+                                    eep.setEntryExitType(source, panel, dest, 0x02);
+                                    break;
+                                default:
+                                    break;
                             }
 
                         }
@@ -304,45 +327,45 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * @return integer representing a screen color
      */
     public static Color stringToColor(String string) {
-        if (string.equals("black")) {  // NOI18N
-            return Color.black;
-        } else if (string.equals("darkGray")) {  // NOI18N
-            return Color.darkGray;
-        } else if (string.equals("gray")) {  // NOI18N
-            return Color.gray;
-        } else if (string.equals("lightGray")) {  // NOI18N
-            return Color.lightGray;
-        } else if (string.equals("white")) {  // NOI18N
-            return Color.white;
-        } else if (string.equals("red")) {  // NOI18N
-            return Color.red;
-        } else if (string.equals("pink")) {  // NOI18N
-            return Color.pink;
-        } else if (string.equals("orange")) {  // NOI18N
-            return Color.orange;
-        } else if (string.equals("yellow")) {  // NOI18N
-            return Color.yellow;
-        } else if (string.equals("green")) {  // NOI18N
-            return Color.green;
-        } else if (string.equals("blue")) {  // NOI18N
-            return Color.blue;
-        } else if (string.equals("magenta")) {  // NOI18N
-            return Color.magenta;
-        } else if (string.equals("cyan")) {  // NOI18N
-            return Color.cyan;
-        } else if (string.equals("None")) {  // NOI18N
-            return null;
+        switch (string) {
+            case "black": // NOI18N
+                return Color.black;
+            case "darkGray": // NOI18N
+                return Color.darkGray;
+            case "gray": // NOI18N
+                return Color.gray;
+            case "lightGray": // NOI18N
+                return Color.lightGray;
+            case "white": // NOI18N
+                return Color.white;
+            case "red": // NOI18N
+                return Color.red;
+            case "pink": // NOI18N
+                return Color.pink;
+            case "orange": // NOI18N
+                return Color.orange;
+            case "yellow": // NOI18N
+                return Color.yellow;
+            case "green": // NOI18N
+                return Color.green;
+            case "blue": // NOI18N
+                return Color.blue;
+            case "magenta": // NOI18N
+                return Color.magenta;
+            case "cyan": // NOI18N
+                return Color.cyan;
+            case "None": // NOI18N
+                return null;
+            default:
+                break;
         }
-        log.error("unknown color text '" + string + "' sent to stringToColor");  // NOI18N
+        log.error("unknown color text '{}' sent to stringToColor", string);  // NOI18N
         return Color.black;
     }
 
     @Override
     public int loadOrder() {
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
-            jmri.InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
-        }
-        return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();
+        return InstanceManager.getDefault(EntryExitPairs.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class.getName());

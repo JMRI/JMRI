@@ -24,7 +24,7 @@ public class AbstractThrottleTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.setThrottleManager(new AbstractThrottleManager() {
@@ -53,7 +53,7 @@ public class AbstractThrottleTest extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        apps.tests.Log4JFixture.tearDown();
     }
 
     /**
@@ -1529,7 +1529,7 @@ public class AbstractThrottleTest extends TestCase {
         assertEquals("Emergency", 1, instance.intSpeed(-0.001F, maxStepLo));
         assertEquals("Full Speed", maxStepHi, instance.intSpeed(1.0F, maxStepHi));
         assertEquals("Full Speed", maxStepLo, instance.intSpeed(1.0F, maxStepLo));
-        while (speed < 1.1F) { // loop ~ 1100 times 
+        while (speed < 1.1F) { // loop ~ 1100 times
             int result = instance.intSpeed(speed, maxStepHi);
             assertNotSame(speed + "(" + maxStepHi + " steps) should not idle", 0, result);
             assertNotSame(speed + "(" + maxStepHi + " steps) should not eStop", 1, result);

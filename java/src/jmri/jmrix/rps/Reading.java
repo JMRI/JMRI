@@ -17,7 +17,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
   */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class Reading {
 
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design

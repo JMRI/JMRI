@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -33,14 +34,14 @@ public class PackageTest extends TestCase {
         suite.addTest(MemoryIconTest.suite());
         suite.addTest(MemorySpinnerIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
-        suite.addTest(ReporterIconTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ReporterIconTest.class));
         suite.addTest(RpsPositionIconTest.suite());
         suite.addTest(SensorIconWindowTest.suite());
         suite.addTest(SignalMastIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(SignalSystemTest.class));
         suite.addTest(TurnoutIconWindowTest.suite());
         suite.addTest(TurnoutIconTest.suite());
-        suite.addTest(IndicatorTurnoutIconTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IndicatorTurnoutIconTest.class));
         suite.addTest(IconEditorWindowTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.configurexml.PackageTest.class));
         suite.addTest(jmri.jmrit.display.switchboardEditor.PackageTest.suite());
@@ -75,17 +76,19 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PositionableJPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(ToolTipTest.class));
         suite.addTest(new JUnit4TestAdapter(PanelMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionablePopupUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionablePropertiesUtilTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }
