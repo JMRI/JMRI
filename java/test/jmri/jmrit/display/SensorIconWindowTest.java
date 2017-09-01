@@ -131,9 +131,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        java.awt.Point location = new java.awt.Point(
-                icon.getLocation().x + icon.getSize().width / 2,
-                icon.getLocation().y + icon.getSize().height / 2);
+        Point location = MathUtil.PointForPoint2D(MathUtil.midPoint(icon.getBounds()));
 
         getHelper().enterClickAndLeave(
                 new MouseEventData(this,
@@ -152,7 +150,6 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.waitFor(() -> {
             return sn.getState() != Sensor.UNKNOWN;
         }, "state not still unknown after one click");
-
 
         Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
 
