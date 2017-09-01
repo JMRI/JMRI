@@ -2101,7 +2101,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
         void setupLayoutEditorDetails() throws jmri.JmriException {
             if (log.isDebugEnabled()) {
-                log.debug(useLayoutEditor + " " + disposed);
+                log.debug("setupLayoutEditorDetails: useLayoutEditor={} disposed={}", useLayoutEditor, disposed);
             }
             if ((!useLayoutEditor) || (disposed)) {
                 return;
