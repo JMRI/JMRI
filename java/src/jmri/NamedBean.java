@@ -83,6 +83,13 @@ public interface NamedBean {
     @CheckForNull
     public String getUserName();
 
+    /**
+     * Set the user name, normalizing it if needed.
+     *
+     * @param s the new user name
+     * @throws jmri.NamedBean.BadUserNameException if the user name can not be
+     *                                             normalized
+     */
     public void setUserName(@CheckForNull String s) throws BadUserNameException;
 
     /**
@@ -320,7 +327,8 @@ public interface NamedBean {
      * @param inputName User name to be normalized
      * @throws BadUserNameException If the inputName can't be converted to
      *                              normalized form
-     * @return A user name in standard normalized form
+     * @return A user name in standard normalized form or null if inputName was
+     *         null
      */
     @CheckReturnValue
     @CheckForNull

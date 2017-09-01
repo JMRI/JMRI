@@ -59,7 +59,8 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
 
     @Override
     public String toString() {
-        return (mUserName == null || mUserName.length() == 0) ? getTagID() : mUserName;
+        String userName = getUserName();
+        return (userName == null || userName.isEmpty()) ? getTagID() : userName;
     }
 
     @Override
