@@ -9785,7 +9785,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setShowHelpBar(boolean state) {
-        java.lang.Thread.dumpStack();
         if (showHelpBar != state) {
             showHelpBar = state;
 
