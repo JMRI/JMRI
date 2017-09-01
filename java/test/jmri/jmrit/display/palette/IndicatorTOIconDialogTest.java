@@ -32,7 +32,7 @@ public class IndicatorTOIconDialogTest {
         IndicatorTOItemPanel itp = new IndicatorTOItemPanel(jf,"IT01","",tableModel,editor);
         HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
         h.put("entry",null);
-        IndicatorTOIconDialog t = new IndicatorTOIconDialog("TOIcon","TOIcon",itp,"",h);
+        IndicatorTOIconDialog t = new IndicatorTOIconDialog("Turnout","Turnout",itp,"",h);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }

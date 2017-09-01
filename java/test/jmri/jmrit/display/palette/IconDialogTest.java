@@ -33,7 +33,7 @@ public class IconDialogTest {
         TableItemPanel tip = new TableItemPanel(jf,"IS01","",tableModel,editor);
         HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
         h.put("entry",null);
-        IconDialog t = new IconDialog("Tables","Tables",tip,h);
+        IconDialog t = new IconDialog("Icon","Icon",tip,h);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }

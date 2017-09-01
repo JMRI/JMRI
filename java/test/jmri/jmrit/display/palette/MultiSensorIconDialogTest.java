@@ -32,7 +32,7 @@ public class MultiSensorIconDialogTest {
         MultiSensorItemPanel mip = new MultiSensorItemPanel(jf,"IS01","",tableModel,editor);
         HashMap<String,NamedIcon> h = new HashMap<String,NamedIcon>();
         h.put("entry",null);
-        MultiSensorIconDialog t = new MultiSensorIconDialog("MSIcon","MSIcon",mip,h);
+        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,h);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }
