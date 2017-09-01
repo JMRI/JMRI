@@ -1,9 +1,8 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
+import jmri.util.JUnitUtil;
 import jmri.*;
-import jmri.util.*;
+import org.junit.*;
 
 /**
  * Tests for TurnoutSection class in the jmri.jmrit.ussctc package
@@ -195,8 +194,7 @@ public class TurnoutSectionTest {
     // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -224,8 +222,7 @@ public class TurnoutSectionTest {
 
     @org.junit.After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

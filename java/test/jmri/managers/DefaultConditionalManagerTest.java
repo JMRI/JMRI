@@ -1,15 +1,13 @@
 package jmri.managers;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.framework.Assert;
-
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.LogixManager;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
@@ -71,9 +69,7 @@ public class DefaultConditionalManagerTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // Main entry point

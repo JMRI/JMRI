@@ -28,7 +28,7 @@ public class SwitchboardEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor("Test Layout");
         Assert.assertNotNull("exists", e);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class SwitchboardEditorTest {
         // numbers, but setSize expects integer parameters.
         Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
         Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
 //    @Test
@@ -59,7 +59,7 @@ public class SwitchboardEditorTest {
         SwitchboardEditor e = new SwitchboardEditor();
         // defaults to false.
         Assert.assertFalse("isDirty", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class SwitchboardEditorTest {
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
         Assert.assertTrue("isDirty after set", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SwitchboardEditorTest {
         // defaults to false, so set it to true.
         e.setDirty(true);
         Assert.assertTrue("isDirty after set", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class SwitchboardEditorTest {
         // then call resetDirty, which sets it back to false.
         e.resetDirty();
         Assert.assertFalse("isDirty after reset", e.isDirty());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SwitchboardEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SwitchboardEditor e = new SwitchboardEditor();
         Assert.assertEquals("Default Text Color", "black", e.getDefaultTextColor());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class SwitchboardEditorTest {
         SwitchboardEditor e = new SwitchboardEditor();
         e.setDefaultTextColor("pink");
         Assert.assertEquals("Default Text Color after Set", "pink", e.getDefaultTextColor());
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
 //    @Test
@@ -131,14 +131,12 @@ public class SwitchboardEditorTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

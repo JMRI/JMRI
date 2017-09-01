@@ -1,17 +1,16 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
-import jmri.util.JUnitUtil;
-import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import jmri.jmrix.ieee802154.xbee.XBeeNode;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
+import jmri.jmrix.ieee802154.xbee.XBeeNode;
+import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-
 import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
 import org.powermock.core.classloader.annotations.MockPolicy;
 @MockPolicy(Slf4jMockPolicy.class)

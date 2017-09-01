@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractMRMessage;
  * @author Randall Wood 2014
  *
  * @see jmri.jmris.json.JsonServer
- * @see jmri.jmris.json.JSON
+ * @see jmri.server.json.JSON
  */
 /*
  * This class may turn out to be a simple carrier for a JsonNode, but leave it

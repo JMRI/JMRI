@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.swing.hub;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,8 +26,7 @@ public class HubPaneTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         Assert.assertNotNull("Connection memo object non-null", memo);
@@ -39,7 +39,6 @@ public class HubPaneTest {
     @After
     public void tearDown() {
         hub.stopHubThread();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

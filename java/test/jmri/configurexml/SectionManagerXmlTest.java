@@ -11,10 +11,10 @@ import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for SectionManagerXml.
@@ -551,12 +551,12 @@ public class SectionManagerXmlTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

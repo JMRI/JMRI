@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Mark Riddoch Copyright (C) 2015
  */
@@ -73,6 +72,30 @@ public class CbusReporterManager extends AbstractReporterManager implements
         return t;
     }
 
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.debug("Warning: illegal character in number field of system name: " + systemName);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddReporterEntryToolTip");
+        return entryToolTip;
+    }
+
     /* (non-Javadoc)
      * @see jmri.jmrix.can.CanListener#message(jmri.jmrix.can.CanMessage)
      */
@@ -110,4 +133,5 @@ public class CbusReporterManager extends AbstractReporterManager implements
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class.getName());
+
 }

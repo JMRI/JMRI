@@ -1,10 +1,10 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of WiThrottlePrefsPanel
@@ -21,8 +21,7 @@ public class WiThrottlePrefsPanelTest {
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -32,7 +31,6 @@ public class WiThrottlePrefsPanelTest {
     
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

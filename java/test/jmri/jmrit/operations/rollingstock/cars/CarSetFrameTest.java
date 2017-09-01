@@ -29,7 +29,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         Car c3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadCar(c3);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadCars() {

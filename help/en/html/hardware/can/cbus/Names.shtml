@@ -51,8 +51,8 @@
 
       <h3>JMRI Help</h3>
 
-      <p>Back to the <a href="index.shtml">Main CBUS Help page</a>.
-      <!--#include virtual="/Footer" --></p>
+      <p>Back to the <a href="index.shtml">Main CBUS Help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

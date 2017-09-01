@@ -4,7 +4,6 @@ import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nonnull;
-import jmri.Programmer;
 
 
 /**

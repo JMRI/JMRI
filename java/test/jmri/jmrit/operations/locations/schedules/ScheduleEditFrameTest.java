@@ -1,13 +1,14 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
 
 /**
  *
@@ -22,20 +23,17 @@ public class ScheduleEditFrameTest {
         Track trk = new Track("Test id", "Test Name", "Test Type", l);
         ScheduleEditFrame t = new ScheduleEditFrame(new Schedule("Test id", "Test Name"), trk);
         Assert.assertNotNull("exists", t);
-        t.dispose();
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-    }
+        JUnitUtil.setUp();    }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ScheduleEditFrameTest.class.getName());

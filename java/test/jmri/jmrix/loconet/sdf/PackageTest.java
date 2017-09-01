@@ -1,9 +1,9 @@
 package jmri.jmrix.loconet.sdf;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.JUnit4TestAdapter;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf package.

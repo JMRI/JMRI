@@ -68,7 +68,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("RpsPositionIcon Test");
         Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     String id = "20";
@@ -104,9 +104,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
             panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
@@ -122,10 +120,9 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-            JUnitUtil.resetWindows(false);  // don't log here.  should be from this class.
+            JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         }
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class.getName());

@@ -1,11 +1,12 @@
 package jmri.web.servlet.operations;
 
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  *
@@ -23,16 +24,14 @@ public class HtmlConductorTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(HtmlConductorTest.class.getName());

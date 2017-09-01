@@ -25,8 +25,8 @@
 
       <p>After clicking <strong>Add...</strong> below the Route
       table, the following panel appears:</p><a href=
-      "RouteAddEdit.png"><img src="RouteAddEdit.png" width="515"
-      height="395"></a>
+      "images/RouteAddEdit.png"><img src="images/RouteAddEdit.png" width="518"
+      height="394"></a>
 
       <p>The first thing you must do when creating a route is name
       it. In the box labeled "System Name" enter a unique name for
@@ -93,13 +93,13 @@
       "#Turnout%20lock%20feature">Locked</a>.</p>
 
       <p>Once you are satisfied with your Route, use the "Add"
-      button to create the new Route. To save your Route you must
-      still use the "Store Panel" command which can be found under
+      button to create the new Route. To save your Route in your configuration, you must
+      then use the "Store Panel" command which can be found under
       the "Panels" main menu. If you decide that you need to change
       your Route, use the "Edit" and "Update Route" buttons to
       modify it.</p>
 
-      <h2><a name="Turnout lock feature">Turnout Lock
+      <h2><a name="Turnout Lock feature">Turnout Lock
       feature</a></h2>
 
       <p>The Turnout Lock feature allows you to selectively disable
@@ -126,11 +126,12 @@
 
       <p>For more information on how to set Turnouts to be
       lockable, see the <a href=
-      "TurnoutTable.shtml#Turnout%20lock%20feature">Turnouts Table
+      "TurnoutTable.shtml#Turnout%20lock%20feature">Turnout Table
       page</a>.</p>
 
       <p>Back to the <a href="RouteTable.shtml">Route Table help
-      page</a>.</p><!--#include virtual="/Footer" -->
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

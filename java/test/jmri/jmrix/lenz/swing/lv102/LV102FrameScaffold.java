@@ -1,11 +1,11 @@
 package jmri.jmrix.lenz.swing.lv102;
 
+import javax.swing.JComboBox;
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import javax.swing.JComboBox;
 
 /*
  *  Helper class for operating the LV102Frame and the  LV102InternalFrame

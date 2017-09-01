@@ -141,6 +141,9 @@
       each Light is not saved in the configuration file. When
       Lights are loaded from a configuration file, they are all
       enabled.</p>
+
+      <p>Back to the
+        <a href="../../../../html/tools/Lights.shtml">Lights help intro</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

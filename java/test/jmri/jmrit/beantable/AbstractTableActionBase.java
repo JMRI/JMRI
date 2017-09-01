@@ -1,13 +1,14 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import javax.swing.JFrame;
-import java.awt.GraphicsEnvironment;
 
 /**
  * This is an abstract base class for testing bean table action objects derived
@@ -31,7 +32,7 @@ public abstract class AbstractTableActionBase {
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
         Assert.assertNotNull("failed to find frame", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     /**

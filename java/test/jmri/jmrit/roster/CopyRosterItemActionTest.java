@@ -2,6 +2,7 @@ package jmri.jmrit.roster;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -39,12 +40,12 @@ public class CopyRosterItemActionTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -2,12 +2,10 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.Light;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -18,8 +16,8 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for the light table.
- * Do not convert to JUnit4 (no support for enterClickAndLeave() etc.)
+ * Swing jfcUnit tests for the light table. Do not convert to JUnit4 (no support
+ * for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010, 2017
  */
@@ -30,7 +28,7 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
             return; // can't Assume in TestCase
         }
 
-       // ask for the window to open
+        // ask for the window to open
         LightTableAction a = new LightTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
@@ -56,11 +54,10 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        
         // The following line works on the CI servers, but not in some standalone cases
         //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
         hwAddressField.setText("1"); // workaround
-        
+
         flushAWT();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
@@ -82,12 +79,11 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(fa, this);
 
         // don't test edit pane, identical to create pane
-
         // Ask to close turnout table window
         TestHelper.disposeWindow(ft, this);
 
         flushAWT();
-        
+
         // check that light was created
         Assert.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
     }
@@ -113,8 +109,7 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
@@ -122,7 +117,7 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
+        JUnitUtil.tearDown();
     }
 }

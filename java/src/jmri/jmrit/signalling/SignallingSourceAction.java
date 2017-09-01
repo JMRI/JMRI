@@ -1,7 +1,6 @@
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

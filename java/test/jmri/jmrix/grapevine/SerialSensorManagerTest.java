@@ -1,20 +1,20 @@
 package jmri.jmrix.grapevine;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    private SerialNode n1 = null; 
+    private SerialNode n1 = null;
     private SerialNode n2 = null;
     private SerialNode n3 = null;
 
@@ -60,8 +60,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
         SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {
@@ -83,12 +82,11 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override
-        /**
+    /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
@@ -100,6 +98,5 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     protected int getNumToTest2() {
         return 1007;
     }
-
 
 }

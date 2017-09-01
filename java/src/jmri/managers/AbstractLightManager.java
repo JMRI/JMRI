@@ -147,7 +147,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
@@ -191,6 +191,19 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                 }
             }
         }
+    }
+
+    /**
+     * Validate system name format.
+     *
+     * @since 2.9.3
+     * @see jmri.jmrit.beantable.LightTableAction.CheckedTextField
+     * @param systemName proposed complete system name incl. prefix
+     * @return always 'true' to let undocumented connection system managers pass entry validation.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
     }
 
     /**
@@ -251,7 +264,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

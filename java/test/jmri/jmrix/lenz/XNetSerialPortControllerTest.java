@@ -15,8 +15,7 @@ public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortC
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
        XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
        apc = new XNetSerialPortController(){
@@ -59,8 +58,7 @@ public class XNetSerialPortControllerTest extends jmri.jmrix.AbstractSerialPortC
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

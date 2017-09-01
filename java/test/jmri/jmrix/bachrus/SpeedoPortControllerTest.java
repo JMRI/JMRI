@@ -15,8 +15,7 @@ public class SpeedoPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        SpeedoSystemConnectionMemo memo = new SpeedoSystemConnectionMemo();
        apc = new SpeedoPortController(memo){
             @Override
@@ -58,8 +57,7 @@ public class SpeedoPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }
