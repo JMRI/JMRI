@@ -19,7 +19,7 @@ public class ClockItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame jf = new JmriJFrame();
+        JmriJFrame jf = new JmriJFrame("Clock item Panel Test");
         EditorScaffold es = new EditorScaffold();
         ClockItemPanel t = new ClockItemPanel(jf,"test",es);
         Assert.assertNotNull("exists",t);
