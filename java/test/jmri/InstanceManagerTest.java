@@ -165,6 +165,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         avoidLoopAutoCreateCycle = true;
         InstanceManager.getDefault(AutoCreateCycle.class);
         JUnitAppender.assertErrorMessage("Proceeding to initialize class jmri.InstanceManagerTest$AutoCreateCycle while already in initialization");
+        JUnitAppender.assertErrorMessage("    Prior initialization:");
     }
     
     public static class OkToDispose implements Disposable {

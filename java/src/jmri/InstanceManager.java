@@ -74,7 +74,7 @@ public final class InstanceManager {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final HashMap<Class<?>, List<Object>> managerLists = new HashMap<>();
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
-    private final HashMap<Class<?>, InitializationState> initState = new HashMap<>();
+    private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
     enum InitializationState {
         NOTSET, // synonymous with no value for this stored
@@ -84,15 +84,34 @@ public final class InstanceManager {
         DONE
     }
     
+    static final class StateHolder {
+        InitializationState state;
+        Exception exception;
+        StateHolder(InitializationState state, Exception exception) {
+            this.state = state;
+            this.exception = exception;
+        }
+    }
+
     private void setInitializationState(Class<?> type, InitializationState state) {
         log.trace("set state {} for {}", type, state);
-        initState.put(type, state);
+        if (state == InitializationState.STARTED) {
+            initState.put(type, new StateHolder(state, new Exception("traceback")));
+        } else {
+            initState.put(type, new StateHolder(state, null));
+        }
     }
     
     private InitializationState getInitializationState(Class<?> type) {
-        InitializationState state = initState.get(type);
-        if (state == null) return InitializationState.NOTSET;
-        return state;
+        StateHolder holder = initState.get(type);
+        if (holder == null) return InitializationState.NOTSET;
+        return holder.state;
+    }
+    
+    private Exception getInitializationException(Class<?> type) {
+        StateHolder holder = initState.get(type);
+        if (holder == null) return null;
+        return holder.exception;
     }
     
     /* properties */
@@ -245,9 +264,10 @@ public final class InstanceManager {
             getDefault().setInitializationState(type, InitializationState.STARTED);
             
             if (working == InitializationState.STARTED) {
-                log.error ("Proceeding to initialize {} while already in initialization", type, new Exception("traceback"));
+                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("traceback"));
+                log.error("    Prior initialization:", getDefault().getInitializationException(type));
             } else if (working == InitializationState.DONE) {
-                log.error ("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("traceback"));
+                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("traceback"));
             }
   
             // see if can autocreate
