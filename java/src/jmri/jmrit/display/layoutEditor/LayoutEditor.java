@@ -2067,11 +2067,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
         }
 
+        int itemsPerScreen = inComboBox.getItemCount();
         // calculate the number of items that will fit on the screen
-        // note: this line returns the maximum available size, accounting all
-        // taskbars etc. no matter where they are aligned:
-        Rectangle maxWindowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-        int itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
+        if (!GraphicsEnvironment.isHeadless()) {
+            // note: this line returns the maximum available size, accounting all
+            // taskbars etc. no matter where they are aligned:
+            Rectangle maxWindowBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+            itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
+        }
 
         // calculate an even division of the number of items (min 8)
         // that will fit on the screen

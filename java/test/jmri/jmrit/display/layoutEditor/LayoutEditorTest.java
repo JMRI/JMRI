@@ -701,9 +701,7 @@ public class LayoutEditorTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             le = new LayoutEditor("Test Layout");
         }
