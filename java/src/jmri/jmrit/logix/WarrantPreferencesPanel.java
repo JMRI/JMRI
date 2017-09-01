@@ -26,9 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Pete Cressman Copyright (C) 2015

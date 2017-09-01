@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21.swing;
 
 import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 

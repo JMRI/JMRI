@@ -147,7 +147,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());

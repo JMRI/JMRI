@@ -1,11 +1,11 @@
 package jmri.jmrit.simpleclock;
 
-import java.util.Date;
 import java.time.Instant;
-import org.junit.Assert;
+import java.util.Date;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the SimpleTimebase class

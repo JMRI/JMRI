@@ -29,7 +29,7 @@ public class LayoutEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor(); // create layout editor
         Assert.assertNotNull("exists", e);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -601,6 +601,7 @@ public class LayoutEditorTest {
         le.setXOverLong(2.0);
         le.setXOverHWid(2.0);
         le.setXOverShort(2.0);
+
         // reset - uses reflection to get a private method.
         java.lang.reflect.Method resetTurnoutSize = null;
         try {
@@ -649,9 +650,7 @@ public class LayoutEditorTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            le = new LayoutEditor("Test Layout");
         }
@@ -660,10 +659,9 @@ public class LayoutEditorTest {
     @After
     public void tearDown() throws Exception {
         if (le != null) {
-            le.dispose();
+            JUnitUtil.dispose(le);
             le = null;
         }
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

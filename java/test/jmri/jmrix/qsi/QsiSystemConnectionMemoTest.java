@@ -23,16 +23,14 @@ public class QsiSystemConnectionMemoTest {
 
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        QsiTrafficController tc = new QsiTrafficControlScaffold();
        memo = new QsiSystemConnectionMemo();
     }
 
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

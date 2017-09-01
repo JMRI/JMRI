@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for loconet systems
+ * Implement light manager for LocoNet systems
  * <P>
  * System names are "LLnnnnn", where nnnnn is the bit number without padding.
  * <P>
@@ -62,7 +62,7 @@ public class LnLightManager extends AbstractLightManager {
             log.error("illegal character in header field of loconet light system name: " + systemName);
             return (0);
         }
-        // name must be in the LLnnnnn format
+        // name must be in the LLnnnnn format (first L (system prefix) is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(

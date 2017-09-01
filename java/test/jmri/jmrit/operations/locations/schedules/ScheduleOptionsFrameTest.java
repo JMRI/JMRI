@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,21 +24,18 @@ public class ScheduleOptionsFrameTest {
         ScheduleEditFrame t = new ScheduleEditFrame(new Schedule("Test id", "Test Name"), trk);
         ScheduleOptionsFrame a = new ScheduleOptionsFrame(t);
         Assert.assertNotNull("exists", a);
-        t.dispose();
-        a.dispose();
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(a);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-    }
+        JUnitUtil.setUp();    }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrameTest.class.getName());

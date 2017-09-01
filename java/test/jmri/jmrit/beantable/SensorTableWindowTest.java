@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -15,8 +16,8 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for the sensor table.
- * Do not convert to JUnit4 (no support for enterClickAndLeave() etc.)
+ * Swing jfcUnit tests for the sensor table. Do not convert to JUnit4 (no
+ * support for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
  */
@@ -26,7 +27,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        
+
         // ask for the window to open
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
@@ -53,14 +54,13 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        
         // The following line works on the CI servers, but not in some standalone cases
         //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
         hwAddressField.setText("1"); // workaround
-        
+
         flushAWT();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
-        
+
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
         JComboBox<?> prefixBox = (JComboBox<?>) ncfinder.find(fa, 0);
@@ -70,7 +70,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
 
         // Find the Create button
-        abfinder = new AbstractButtonFinder("Create new");
+        abfinder = new AbstractButtonFinder("Create");
         button = (JButton) abfinder.find(fa, 0);
         Assert.assertNotNull(button);
 
@@ -84,7 +84,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(ft, this);
 
         flushAWT();
-        
+
         // check for existing sensor
         Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
     }
@@ -110,8 +110,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
@@ -119,7 +118,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

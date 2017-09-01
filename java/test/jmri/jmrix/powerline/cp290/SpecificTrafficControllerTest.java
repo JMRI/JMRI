@@ -1,5 +1,6 @@
 package jmri.jmrix.powerline.cp290;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -15,9 +16,9 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
    @Override
    @Before
-   public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+   public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new SpecificSystemConnectionMemo();
         tc = new SpecificTrafficController(memo);
@@ -26,8 +27,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
    @Override
    @After
    public void tearDown(){
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         memo = null;
    }
 

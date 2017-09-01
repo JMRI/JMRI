@@ -1,9 +1,8 @@
 package jmri.jmrix.can;
 
+import jmri.jmrix.openlcb.OlcbSensorTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.jmrix.openlcb.OlcbSensorTest;
 
 /**
  * Test scaffold to replace the TrafficController

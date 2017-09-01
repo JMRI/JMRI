@@ -2,20 +2,19 @@ package jmri.web.servlet.panel;
 
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
-import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.servlet.http.HttpServlet;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  *

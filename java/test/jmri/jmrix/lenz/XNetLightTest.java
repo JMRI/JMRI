@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
 
 /**
@@ -48,7 +49,7 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

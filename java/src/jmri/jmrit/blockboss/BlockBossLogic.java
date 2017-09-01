@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;

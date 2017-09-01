@@ -15,8 +15,7 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        apc = new PortController(){
             @Override
             public boolean status(){
@@ -57,8 +56,7 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }
