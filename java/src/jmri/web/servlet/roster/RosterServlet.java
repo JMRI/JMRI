@@ -345,7 +345,7 @@ public class RosterServlet extends HttpServlet {
                 switch (filter) {
                     case GROUP:
                         String group = URLDecoder.decode(request.getParameter(filter), UTF8);
-                        if (!group.equals(Roster.AllEntries(request.getLocale()))) {
+                        if (!group.equals(Roster.allEntries(request.getLocale()))) {
                             data.put(GROUP, group);
                         }
                         break;
@@ -496,7 +496,7 @@ public class RosterServlet extends HttpServlet {
                 }
                 StringBuilder builder = new StringBuilder();
                 response.setContentType(UTF8_TEXT_HTML); // NOI18N
-                if (Roster.AllEntries(request.getLocale()).equals(group)) {
+                if (Roster.allEntries(request.getLocale()).equals(group)) {
                     group = null;
                 }
                 List<RosterEntry> entries = Roster.getDefault().getEntriesMatchingCriteria(
@@ -539,7 +539,7 @@ public class RosterServlet extends HttpServlet {
                 break;
             default:
                 if (group == null) {
-                    group = Roster.AllEntries(request.getLocale());
+                    group = Roster.allEntries(request.getLocale());
                 }
                 response.setContentType(UTF8_TEXT_HTML); // NOI18N
                 response.getWriter().print(String.format(request.getLocale(),
