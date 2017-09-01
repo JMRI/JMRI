@@ -273,7 +273,7 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
 
     }
 

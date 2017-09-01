@@ -158,9 +158,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("forcecontroloff", !p.isControlling() ? "true" : "false");
         element.setAttribute("hidden", p.isHidden() ? "yes" : "no");
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
-        element.setAttribute("showtooltip", p.showTooltip() ? "true" : "false");
+        element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
-        ToolTip tip = p.getTooltip();
+        ToolTip tip = p.getToolTip();
         String txt = tip.getText();
         if (txt != null) {
             Element elem = new Element("tooltip").addContent(txt); // was written as "toolTip" 3.5.1 and before
@@ -466,9 +466,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
 
         a = element.getAttribute("showtooltip");
         if ((a != null) && a.getValue().equals("true")) {
-            l.setShowTooltip(true);
+            l.setShowToolTip(true);
         } else {
-            l.setShowTooltip(false);
+            l.setShowToolTip(false);
         }
 
         a = element.getAttribute("editable");
@@ -492,7 +492,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             elem = element.getChild("toolTip"); // pre JMRI 3.5.2
         }
         if (elem != null) {
-            ToolTip tip = l.getTooltip();
+            ToolTip tip = l.getToolTip();
             if (tip != null) {
                 tip.setText(elem.getText());
             }

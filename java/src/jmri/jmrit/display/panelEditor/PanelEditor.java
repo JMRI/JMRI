@@ -359,10 +359,10 @@ public class PanelEditor extends Editor implements ItemListener {
             showTooltipBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setAllShowTooltip(showTooltipBox.isSelected());
+                    setAllShowToolTip(showTooltipBox.isSelected());
                 }
             });
-            showTooltipBox.setSelected(showTooltip());
+            showTooltipBox.setSelected(showToolTip());
 
             contentPane.add(menuBox);
             menuBox.addActionListener(new ActionListener() {
@@ -459,7 +459,7 @@ public class PanelEditor extends Editor implements ItemListener {
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
         hiddenBox.setSelected(showHidden());
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
     }
@@ -930,7 +930,7 @@ public class PanelEditor extends Editor implements ItemListener {
             _highlightcomponent = null;
             _targetPanel.repaint();
         }
-        if (selection != null && selection.getDisplayLevel() > BKG && selection.showTooltip()) {
+        if (selection != null && selection.getDisplayLevel() > BKG && selection.showToolTip()) {
             showToolTip(selection, event);
             //selection.highlightlabel(true);
             _targetPanel.repaint();

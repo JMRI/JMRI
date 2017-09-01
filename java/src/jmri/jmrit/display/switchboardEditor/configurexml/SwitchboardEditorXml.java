@@ -51,7 +51,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
-        panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
+        panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
@@ -144,7 +144,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        panel.setAllShowTooltip(value);
+        panel.setAllShowToolTip(value);
 
         value = true;
         if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {

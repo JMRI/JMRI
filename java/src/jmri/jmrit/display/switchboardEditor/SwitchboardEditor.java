@@ -562,7 +562,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = true;
                     beanIcon.setLabel(switchLabel);
                     beanIcon.positionLabel(17, 45); // provide x, y offset, depending on image size and free space
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanIcon.setToolTipText(switchTooltip);
                     }
                     beanIcon.setBackground(defaultBackgroundColor);
@@ -589,7 +589,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = true;
                     beanKey.setLabel(switchLabel);
                     beanKey.positionLabel(14, 60); // provide x, y offset, depending on image size and free space
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanKey.setToolTipText(switchTooltip);
                     }
                     beanKey.setBackground(defaultBackgroundColor);
@@ -616,7 +616,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = true;
                     beanSymbol.setLabel(switchLabel);
                     beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanSymbol.setToolTipText(switchTooltip);
                     }
                     beanSymbol.setBackground(defaultBackgroundColor);
@@ -644,7 +644,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = false;
                     beanButton.setBackground(defaultBackgroundColor);
                     beanButton.setOpaque(false);
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanButton.setToolTipText(switchTooltip);
                     }
                     this.add(beanButton);
@@ -885,7 +885,7 @@ public class SwitchboardEditor extends Editor {
             if (e.getPropertyName().equals("UserName")) {
                 // update tooltip
                 String newUserName = "unconnected";
-                if (showTooltip()) {
+                if (showToolTip()) {
                     newUserName = ((String) e.getNewValue());
                     if (newUserName == null || newUserName.equals("")) {
                         newUserName = Bundle.getMessage("NoUserName");
@@ -1382,10 +1382,10 @@ public class SwitchboardEditor extends Editor {
         showTooltipBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setAllShowTooltip(showTooltipBox.isSelected());
+                setAllShowToolTip(showTooltipBox.isSelected());
             }
         });
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -1926,7 +1926,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     public void initView() {
         controllingBox.setSelected(allControlling());
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
         switch (_scrollState) {
             case SCROLL_NONE:
                 scrollNone.setSelected(true);

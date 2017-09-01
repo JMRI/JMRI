@@ -1990,9 +1990,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         controlCheckBoxMenuItem.setSelected(allControlling());
 
         if (isEditable()) {
-            setAllShowTooltip(tooltipsInEditMode);
+            setAllShowToolTip(tooltipsInEditMode);
         } else {
-            setAllShowTooltip(tooltipsWithoutEditMode);
+            setAllShowToolTip(tooltipsWithoutEditMode);
         }
 
         switch (_scrollState) {
@@ -2281,7 +2281,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             if (isEditable()) {
-                setAllShowTooltip(tooltipsInEditMode);
+                setAllShowToolTip(tooltipsInEditMode);
 
                 //redo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -2290,7 +2290,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                 }
             } else {
-                setAllShowTooltip(tooltipsWithoutEditMode);
+                setAllShowToolTip(tooltipsWithoutEditMode);
 
                 //undo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -2651,7 +2651,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipNone.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = false;
             tooltipsWithoutEditMode = false;
-            setAllShowTooltip(false);
+            setAllShowToolTip(false);
         });
         tooltipAlways = new JRadioButtonMenuItem(Bundle.getMessage("TooltipAlways"));
         tooltipGroup.add(tooltipAlways);
@@ -2660,7 +2660,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipAlways.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = true;
             tooltipsWithoutEditMode = true;
-            setAllShowTooltip(true);
+            setAllShowToolTip(true);
         });
         tooltipInEdit = new JRadioButtonMenuItem(Bundle.getMessage("TooltipEdit"));
         tooltipGroup.add(tooltipInEdit);
@@ -2669,7 +2669,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipInEdit.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = true;
             tooltipsWithoutEditMode = false;
-            setAllShowTooltip(isEditable());
+            setAllShowToolTip(isEditable());
         });
         tooltipNotInEdit = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNotEdit"));
         tooltipGroup.add(tooltipNotInEdit);
@@ -2678,7 +2678,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         tooltipNotInEdit.addActionListener((ActionEvent event) -> {
             tooltipsInEditMode = false;
             tooltipsWithoutEditMode = true;
-            setAllShowTooltip(!isEditable());
+            setAllShowToolTip(!isEditable());
         });
 
         //
@@ -5756,19 +5756,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 LayoutTurnout t = (LayoutTurnout) foundObject;
                                 t.setState(jmri.Turnout.THROWN);
                             } else {
-                                ((LayoutTurnout) foundObject).showPopUp(event);
+                                ((LayoutTurnout) foundObject).showPopup(event);
                             }
                             break;
                         }
 
                         case LayoutTrack.LEVEL_XING_CENTER: {
-                            ((LevelXing) foundObject).showPopUp(event);
+                            ((LevelXing) foundObject).showPopup(event);
                             break;
                         }
 
                         case LayoutTrack.SLIP_RIGHT:
                         case LayoutTrack.SLIP_LEFT: {
-                            ((LayoutSlip) foundObject).showPopUp(event);
+                            ((LayoutSlip) foundObject).showPopup(event);
                             break;
                         }
 
@@ -5825,28 +5825,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (checkSelects(dLoc)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
-                    ((PositionablePoint) foundObject).showPopUp(event);
+                    ((PositionablePoint) foundObject).showPopup(event);
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_CENTER: {
-                    ((LayoutTurnout) foundObject).showPopUp(event);
+                    ((LayoutTurnout) foundObject).showPopup(event);
                     break;
                 }
 
                 case LayoutTrack.LEVEL_XING_CENTER: {
-                    ((LevelXing) foundObject).showPopUp(event);
+                    ((LevelXing) foundObject).showPopup(event);
                     break;
                 }
 
                 case LayoutTrack.SLIP_LEFT:
                 case LayoutTrack.SLIP_RIGHT: {
-                    ((LayoutSlip) foundObject).showPopUp(event);
+                    ((LayoutSlip) foundObject).showPopup(event);
                     break;
                 }
 
                 case LayoutTrack.TURNTABLE_CENTER: {
-                    ((LayoutTurntable) foundObject).showPopUp(event);
+                    ((LayoutTurntable) foundObject).showPopup(event);
                     break;
                 }
             }   //switch
@@ -5864,7 +5864,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             do {
                 TrackSegment ts = checkTrackSegmentPopUps(dLoc);
                 if (ts != null) {
-                    ts.showPopUp(event);
+                    ts.showPopup(event);
                     break;
                 }
 
@@ -5992,7 +5992,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 //for Positionables with unique settings
                 p.showPopUp(popup);
-                setShowTooltipMenu(p, popup);
+                setShowToolTipMenu(p, popup);
 
                 setRemoveMenu(p, popup);
 
@@ -7101,7 +7101,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             selection = selections.get(0);
         }
 
-        if ((selection != null) && (selection.getDisplayLevel() > BKG) && selection.showTooltip()) {
+        if ((selection != null) && (selection.getDisplayLevel() > BKG) && selection.showToolTip()) {
             showToolTip(selection, event);
         } else {
             super.setToolTip(null);
@@ -10378,7 +10378,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void showToolTip(Positionable selection, MouseEvent event) {
-        ToolTip tip = selection.getTooltip();
+        ToolTip tip = selection.getToolTip();
 
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         tip.setText(selection.getNameString());
