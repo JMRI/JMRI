@@ -1,11 +1,9 @@
 package jmri.jmrit.beantable.signalmast;
 
-import java.awt.GraphicsEnvironment;
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,8 +14,6 @@ public class AddSignalMastPanelTest {
 
     @Test
     public void testDefaultSystems() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         AddSignalMastPanel a = new AddSignalMastPanel();
 
         // check that "Basic Model Signals" (basic directory) system is present
@@ -32,7 +28,6 @@ public class AddSignalMastPanelTest {
 
     @Test
     public void testSearch() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
 
@@ -46,6 +41,8 @@ public class AddSignalMastPanelTest {
                 }
             }
             Assert.assertTrue("did not find JUnit Test Signals", found);
+        } catch (Exception e) {
+            Assert.fail("testSearch exception thrown: " + e.getCause().getMessage());
         } finally {
             SignalSystemTestUtil.deleteMockSystem();
         }
