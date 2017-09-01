@@ -1106,72 +1106,74 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //establish link to LayoutEditorAuxTools
         auxTools = new LayoutEditorAuxTools(thisPanel);
 
-        //initialize preferences
-        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-            String windowFrameRef = getWindowFrameRef();
+        SwingUtilities.invokeLater(() -> {
+            //initialize preferences
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = getWindowFrameRef();
 
-            Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
-            //log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-            if (prefsProp != null) {
-                eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
-                setToolBarSide(newToolBarSide);
-            }
-
-            //Note: since prefs default to false and we want wide to be the default
-            //we invert it and save it as thin
-            boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
-            log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
-            setToolBarWide(prefsToolBarIsWide);
-
-            boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
-            //log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
-            setShowHelpBar(prefsShowHelpBar);
-
-            boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
-            //log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
-            setAntialiasingOn(prefsAntialiasingOn);
-
-            boolean prefsHighlightSelectedBlockFlag
-                    = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
-            //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
-            setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
-
-            prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
-            //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
-            if (null != prefsProp) {
-                float toolBarFontSize = Float.parseFloat(prefsProp.toString());
-                //setupToolBarFontSizes(toolBarFontSize);
-            }
-            updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
-
-            //this doesn't work as expected (1st one called messes up 2nd?)
-            Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-            Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-            log.debug("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-            log.debug("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
-
-            //Point prefsWindowLocation = null;
-            //Dimension prefsWindowSize = null;
-            //use this instead?
-            if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
-                prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
-
-                if (null != prefsProp) {
-                    Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
-                    prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
-                    prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
+                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
+                //log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+                if (prefsProp != null) {
+                    eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
+                    setToolBarSide(newToolBarSide);
                 }
-            }
 
-            if ((prefsWindowLocation != null) && (prefsWindowSize != null)
-                    && (prefsWindowSize.width >= 640) && (prefsWindowSize.height >= 480)) {
-                //note: panel width & height comes from the saved (xml) panel (file) on disk
-                setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
-                        prefsWindowLocation.x, prefsWindowLocation.y,
-                        panelWidth, panelHeight, true);
-            }
-        }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
+                //Note: since prefs default to false and we want wide to be the default
+                //we invert it and save it as thin
+                boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
+                log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
+                setToolBarWide(prefsToolBarIsWide);
+
+                boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
+                //log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+                setShowHelpBar(prefsShowHelpBar);
+
+                boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
+                //log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+                setAntialiasingOn(prefsAntialiasingOn);
+
+                boolean prefsHighlightSelectedBlockFlag
+                        = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
+                //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+                setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
+
+                prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+                //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
+                if (null != prefsProp) {
+                    float toolBarFontSize = Float.parseFloat(prefsProp.toString());
+                    //setupToolBarFontSizes(toolBarFontSize);
+                }
+                updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
+
+                //this doesn't work as expected (1st one called messes up 2nd?)
+                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                log.debug("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
+                log.debug("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
+
+                //Point prefsWindowLocation = null;
+                //Dimension prefsWindowSize = null;
+                //use this instead?
+                if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
+                    prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+                    log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
+
+                    if (null != prefsProp) {
+                        Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
+                        prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
+                        prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
+                    }
+                }
+
+                if ((prefsWindowLocation != null) && (prefsWindowSize != null)
+                        && (prefsWindowSize.width >= 640) && (prefsWindowSize.height >= 480)) {
+                    //note: panel width & height comes from the saved (xml) panel (file) on disk
+                    setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
+                            prefsWindowLocation.x, prefsWindowLocation.y,
+                            panelWidth, panelHeight, true);
+                }
+            }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
+        });
     } //LayoutEditor (constructor)
 
     private void createFloatingEditToolBox() {
@@ -9783,6 +9785,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setShowHelpBar(boolean state) {
+        java.lang.Thread.dumpStack();
         if (showHelpBar != state) {
             showHelpBar = state;
 
