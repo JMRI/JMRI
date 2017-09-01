@@ -97,7 +97,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Transit objects
+     * of Transit objects.
      */
     @Override
     protected void createModel() {
@@ -223,10 +223,10 @@ public class TransitTableAction extends AbstractTableAction {
             @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
-                    return "";   // no namne on Edit column
+                    return ""; // no name on Edit column
                 }
                 if (col == DUPLICATECOL) {
-                    return "";   // no namne on Duplicate column
+                    return ""; // no name on Duplicate column
                 }
                 return super.getColumnName(col);
             }
@@ -234,7 +234,7 @@ public class TransitTableAction extends AbstractTableAction {
             @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
-                    return String.class;  // not a button
+                    return String.class; // not a button
                 }
                 if (col == EDITCOL) {
                     return JButton.class;
@@ -286,7 +286,7 @@ public class TransitTableAction extends AbstractTableAction {
 
             @Override
             public void configValueColumn(JTable table) {
-                // value column isn't button, so config is null
+                // value column isn't a button, so config is null
             }
 
             @Override
@@ -361,7 +361,7 @@ public class TransitTableAction extends AbstractTableAction {
     JButton insertAtBeginning = null;
     JComboBox<String> insertAtBeginningBox = new JComboBox<>();
     JLabel seqNumLabel = new JLabel(rbx.getString("LabelSeqNum"));
-    JTextField seqNum = new JTextField(5);
+    JSpinner seqNum = new JSpinner(new SpinnerNumberModel(1, 1, 1, 1));
     JButton replacePrimaryForSequence = null;
     JButton deleteAlternateForSequence = null;
     JButton addAlternateForSequence = null;
@@ -647,6 +647,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
         initializeSectionCombos();
+        updateSeqNum();
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -708,6 +709,7 @@ public class TransitTableAction extends AbstractTableAction {
         prevSectionDirection = 0;
         curSequenceNum = 0;
         initializeSectionCombos();
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -748,6 +750,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
             initializeSectionCombos();
         }
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -770,6 +773,7 @@ public class TransitTableAction extends AbstractTableAction {
             sectionList.remove(j);
             initializeSectionCombos();
         }
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -807,6 +811,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
             initializeSectionCombos();
         }
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -830,6 +835,7 @@ public class TransitTableAction extends AbstractTableAction {
             curSequenceNum--;
             initializeSectionCombos();
         }
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -984,19 +990,33 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     int getSeqNum() {
-        int n = 0;
-        try {
-            n = Integer.parseInt(seqNum.getText());
-        } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + seqNum.getText() + " to a number");
-        }
-        if ((n < 1) || (n > curSequenceNum)) {
+        int n = (Integer) seqNum.getValue(); // JSpinner int from 1 - sectionList.size()
+        if (n > curSequenceNum) {
             JOptionPane.showMessageDialog(null, rbx
                     .getString("Message34"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return 0;
         }
         return n;
+    }
+
+    /**
+     * Update Order Num spinner on pane.
+     * Limit spinner to highest order index in section table (column 0).
+     */
+    void updateSeqNum() {
+        int seqMax = 0;
+        for (int i = 0; i < sectionList.size(); i++) {
+            if (sequence[i] > seqMax) {
+                seqMax = i + 1;
+            }
+        }
+        seqNum.setModel(new SpinnerNumberModel(
+                seqMax, // initial value set
+                Math.min(seqMax, 1), // minimum value, either 0 (empty list) or 1
+                seqMax, // maximum order number
+                1));
+        return;
     }
 
     void deleteAlternateForSeqPressed(ActionEvent e) {
@@ -1020,6 +1040,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
             initializeSectionCombos();
         }
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -1169,7 +1190,7 @@ public class TransitTableAction extends AbstractTableAction {
         alternate[index] = true;
         action[index] = new ArrayList<>();
         initializeSectionCombos();
-
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -1197,6 +1218,7 @@ public class TransitTableAction extends AbstractTableAction {
             alternate[j] = true;
             initializeSectionCombos();
         }
+        updateSeqNum();
         sectionTableModel.fireTableDataChanged();
     }
 
@@ -1269,8 +1291,6 @@ public class TransitTableAction extends AbstractTableAction {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-// djd debugging - need to add code to check Transit Information
-// add code here as needed
         return true;
     }
 
@@ -1492,7 +1512,7 @@ public class TransitTableAction extends AbstractTableAction {
         }
     }
 
-    // variables for view actions window
+    // variables for View Actions window
     private int activeRow = 0;
     private SpecialActionTableModel actionTableModel = null;
     private JmriJFrame actionTableFrame = null;
@@ -1560,7 +1580,7 @@ public class TransitTableAction extends AbstractTableAction {
             pct.add(actionTableScrollPane, BorderLayout.CENTER);
             contentPane.add(pct);
             pct.setVisible(true);
-            // add view action panel buttons
+            // add View Action panel buttons
             JPanel but = new JPanel();
             but.setLayout(new BoxLayout(but, BoxLayout.Y_AXIS));
             JPanel panel4 = new JPanel();
@@ -1624,7 +1644,7 @@ public class TransitTableAction extends AbstractTableAction {
         addEditActionWindow();
     }
 
-    // variables for add/edit action window
+    // variables for Add/Edit Action window
     private boolean editActionMode = false;
     private JmriJFrame addEditActionFrame = null;
     private TransitSectionAction curTSA = null;
@@ -1632,7 +1652,7 @@ public class TransitTableAction extends AbstractTableAction {
     private JmriBeanComboBox whenSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JSpinner whenDataSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65500, 1));
     private JComboBox<String> whatBox = new JComboBox<>();
-    private JSpinner whenPercentSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1 ));
+    private JSpinner whenPercentSpinner = new JSpinner();
     private JSpinner whenMinuteSpinner1 = new JSpinner(new SpinnerNumberModel(1, 1, 65500, 1));
     private JSpinner whenMinuteSpinner2 = new JSpinner(new SpinnerNumberModel(100, 100, 65500, 1));
     private JSpinner locoFunctionSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 28, 1));
@@ -1645,9 +1665,7 @@ public class TransitTableAction extends AbstractTableAction {
     private JRadioButton onButton = new JRadioButton(rbx.getString("On"));
     private JRadioButton offButton = new JRadioButton(rbx.getString("Off"));
     private JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
-    private JLabel mastLabel = new JLabel(rbx.getString("MastLabel"));
-    private JLabel headLabel = new JLabel(rbx.getString("HeadLabel"));
-    private JPanel signalPanel = new JPanel();
+    private JPanel signalPanel;
     private JmriBeanComboBox doneSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -1721,8 +1739,9 @@ public class TransitTableAction extends AbstractTableAction {
             panel21.add(locoFunctionSpinner);
             // signal comboboxes
             TitledBorder border = BorderFactory.createTitledBorder(rbx.getString("SelectASignal"));
+            signalPanel = new JPanel();
             signalPanel.setBorder(border);
-            signalPanel.add(new JLabel(rbx.getString("MastLabel")));
+            signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
             signalPanel.add(signalMastComboBox);
             signalMastComboBox.setFirstItemBlank(true);
             signalMastComboBox.addActionListener(new ActionListener() {
@@ -1733,7 +1752,7 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                 }
             });
-            signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
+            signalPanel.add(new JLabel(rbx.getString("MastLabel")));
             signalPanel.add(signalHeadComboBox);
             signalHeadComboBox.setFirstItemBlank(true);
             signalHeadComboBox.addActionListener(new ActionListener() {
@@ -1811,7 +1830,7 @@ public class TransitTableAction extends AbstractTableAction {
             addEditActionFrame.setTitle(rbx.getString("TitleAddAction"));
             whenDataSpinner.setValue(0);
             whenSensorComboBox.setSelectedItem(0);
-            whenPercentSpinner.setValue(Float.valueOf(0.0f));
+            whenPercentSpinner.setValue(Float.valueOf(1.0f));
             whenMinuteSpinner1.setValue(100);
             whenMinuteSpinner2.setValue(100);
             locoFunctionSpinner.setValue(0);
@@ -2015,7 +2034,7 @@ public class TransitTableAction extends AbstractTableAction {
     private String tWhatString = "";
 
     /**
-     * Handle button presses in add/edit action window.
+     * Handle button presses in Add/Edit Transit Action window.
      *
      * @param e the event seen
      */
@@ -2062,7 +2081,9 @@ public class TransitTableAction extends AbstractTableAction {
         tWhenData = (Integer) whenDataSpinner.getValue(); // always int within range from JSpinner
         tWhenString = "";
         if ((tWhen == TransitSectionAction.SENSORACTIVE) || (tWhen == TransitSectionAction.SENSORINACTIVE)) {
-            tWhenString = whenSensorComboBox.getSelectedDisplayName();
+            if (whenSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0
+                tWhenString = whenSensorComboBox.getSelectedSystemName();
+            }
             if (!validateSensor(tWhenString, true)) {
                 return false;
             }
@@ -2141,7 +2162,9 @@ public class TransitTableAction extends AbstractTableAction {
                 tWhatData1 = (Integer) Math.round(100 * (float) whenPercentSpinner.getValue());
                 break;
             case TransitSectionAction.TOMANUALMODE:
-                tWhatString = doneSensorComboBox.getSelectedDisplayName(); // sensor system name
+                if (doneSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0
+                    tWhatString = doneSensorComboBox.getSelectedSystemName(); // sensor system name
+                }
                 if (tWhatString.length() >= 1) {
                     if (!validateSensor(tWhatString, false)) {
                         tWhatString = "";
@@ -2190,7 +2213,9 @@ public class TransitTableAction extends AbstractTableAction {
                 break;
             case TransitSectionAction.SETSENSORACTIVE:
             case TransitSectionAction.SETSENSORINACTIVE:
-                tWhatString = doneSensorComboBox.getSelectedSystemName();
+                if (doneSensorComboBox.getSelectedIndex() != 0) {
+                    tWhatString = doneSensorComboBox.getSelectedSystemName();
+                }
                 if (!validateSensor(tWhatString, false)) {
                     return false;
                 }
@@ -2400,9 +2425,12 @@ public class TransitTableAction extends AbstractTableAction {
         return "WHEN";
     }
 
-    /*
-     * Notes: For the following, r = row in the Special Actions table.
-     *        A TransitSectionAction must be available for this row.
+    /**
+     * Build display string for Actions table.
+     *
+     * @param r row in the Special Actions table.
+     *          A TransitSectionAction must be available for this row.
+     * @return display string including entered values
      */
     private String getWhatText(int r) {
         TransitSectionAction tsa = action[activeRow].get(r);
@@ -2470,7 +2498,7 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for Sections in Create/Edit Transit window
+     * Table model for Sections in Create/Edit Transit window.
      */
     public class SectionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
@@ -2597,7 +2625,8 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for Actions in Special Actions window
+     * Table model for Actions in Special Actions window.
+     * Currently shows max. 5 rows
      */
     public class SpecialActionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
@@ -2694,7 +2723,7 @@ public class TransitTableAction extends AbstractTableAction {
         @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
-            if (rx > sectionList.size()) {
+            if (rx > action[activeRow].size()) {
                 return null;
             }
             switch (c) {
@@ -2735,4 +2764,5 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class.getName());
+
 }

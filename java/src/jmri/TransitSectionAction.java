@@ -13,21 +13,10 @@ package jmri;
  * be initiated. Optionally, each "when" may be delayed by a specified time (in
  * milliseconds). 2. The "What" part specified what action is to occur.
  * <P>
- * TransitSectionActions are created and editted in the Transit Table, when
+ * TransitSectionActions are created and edited in the Transit Table, when
  * Transits are defined.
  * <P>
  * This class provides support for SENSORACTIVE and SENSORINACTIVE "when"'s.
- * <P>
- * This file is part of JMRI.
- * <P>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Dave Duchamp Copyright (C) 2009, 2010
  */
@@ -180,7 +169,7 @@ public class TransitSectionAction {
     }
 
     /*
-     * operational instance variables - flags and data for executing the action
+     * Operational instance variables - flags and data for executing the action
      * (see jmri.jmrit.dispatcher.AutoActiveTrain.java)
      */
     private Thread _waitingThread = null;
@@ -192,7 +181,7 @@ public class TransitSectionAction {
     private java.beans.PropertyChangeListener _sensorListener = null;
 
     /**
-     * initialize all operational instance variables (not saved between runs)
+     * Initialize all operational instance variables (not saved between runs).
      */
     public void initialize() {
         _waitingThread = null;
@@ -275,4 +264,5 @@ public class TransitSectionAction {
     public void dispose() {
         disposeSensorListener();
     }
+
 }
