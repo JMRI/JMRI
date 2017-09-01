@@ -21,21 +21,21 @@ public class LayoutEditorToolsTest {
         LayoutEditor e = new LayoutEditor();
         LayoutEditorTools t = new LayoutEditorTools(e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
+        JUnitUtil.setUp();
         apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
