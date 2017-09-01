@@ -489,14 +489,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     //persistent instance variables - saved to disk with Save Panel
+    private int upperLeftX = 0; // Note: These are _WINDOW_ upper left x & y
+    private int upperLeftY = 0; // (not panel)
+
     private int windowWidth = 0;
     private int windowHeight = 0;
 
     private int panelWidth = 0;
     private int panelHeight = 0;
-
-    private int upperLeftX = 0;
-    private int upperLeftY = 0;
 
     private float mainlineTrackWidth = 4.0F;
     private float sideTrackWidth = 2.0F;
@@ -539,7 +539,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean savedPositionable = true;
     private boolean savedControlLayout = true;
     private boolean savedAnimatingLayout = true;
-    private boolean savedShowHelpBar = false;
+    private boolean savedShowHelpBar = true;
 
     //zoom
     private double maxZoom = 6.0;
@@ -1106,80 +1106,72 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //establish link to LayoutEditorAuxTools
         auxTools = new LayoutEditorAuxTools(thisPanel);
 
-        //Note: We have to invoke this later because everything's not really setup yet
-        SwingUtilities.invokeLater(() -> {
-            //initialize preferences
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                String windowFrameRef = getWindowFrameRef();
+        //initialize preferences
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+            String windowFrameRef = getWindowFrameRef();
 
-                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
+            Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
+            //log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+            if (prefsProp != null) {
+                eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
+                setToolBarSide(newToolBarSide);
+            }
 
-                //log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-                if (prefsProp != null) {
-                    eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
-                    setToolBarSide(newToolBarSide);
-                }
+            //Note: since prefs default to false and we want wide to be the default
+            //we invert it and save it as thin
+            boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
+            log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
+            setToolBarWide(prefsToolBarIsWide);
 
-                //Note: since prefs default to false and we want wide to be the default
-                //we invert it and save it as thin
-                boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
-                log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
-                setToolBarWide(prefsToolBarIsWide);
+            boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
+            //log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+            setShowHelpBar(prefsShowHelpBar);
 
-                boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
+            boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
+            //log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+            setAntialiasingOn(prefsAntialiasingOn);
 
-                //log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
-                setShowHelpBar(prefsShowHelpBar);
+            boolean prefsHighlightSelectedBlockFlag
+                    = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
+            //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+            setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
-                boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
+            prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+            //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
+            if (null != prefsProp) {
+                float toolBarFontSize = Float.parseFloat(prefsProp.toString());
+                //setupToolBarFontSizes(toolBarFontSize);
+            }
+            updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
 
-                //log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
-                setAntialiasingOn(prefsAntialiasingOn);
+            //this doesn't work as expected (1st one called messes up 2nd?)
+            Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+            Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+            log.debug("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
+            log.debug("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
 
-                boolean prefsHighlightSelectedBlockFlag
-                        = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
+            //Point prefsWindowLocation = null;
+            //Dimension prefsWindowSize = null;
+            //use this instead?
+            if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
+                prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+                log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
 
-                //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
-                setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
-
-                prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
-
-                //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
                 if (null != prefsProp) {
-                    float toolBarFontSize = Float.parseFloat(prefsProp.toString());
-                    //setupToolBarFontSizes(toolBarFontSize);
+                    Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
+                    prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
+                    prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
                 }
-                updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
+            }
 
-                //this doesn't work as expected (1st one called messes up 2nd?)
-                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                log.debug("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-                log.debug("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
-
-                //Point prefsWindowLocation = null;
-                //Dimension prefsWindowSize = null;
-                //use this instead?
-                if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
-                    prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                    log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
-
-                    if (null != prefsProp) {
-                        Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
-                        prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
-                        prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
-                    }
-                }
-
-                if ((prefsWindowLocation != null) && (prefsWindowSize != null)
-                        && (prefsWindowSize.width >= 640) && (prefsWindowSize.height >= 480)) {
-                    //note: panel width & height comes from the saved (xml) panel (file) on disk
-                    setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
-                            prefsWindowLocation.x, prefsWindowLocation.y,
-                            panelWidth, panelHeight, true);
-                }
-            }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
-        }); //SwingUtilities.invokeLater
+            if ((prefsWindowLocation != null) && (prefsWindowSize != null)
+                    && (prefsWindowSize.width >= 640) && (prefsWindowSize.height >= 480)) {
+                //note: panel width & height comes from the saved (xml) panel (file) on disk
+                setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
+                        prefsWindowLocation.x, prefsWindowLocation.y,
+                        panelWidth, panelHeight, true);
+            }
+        }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
     } //LayoutEditor (constructor)
 
     private void createFloatingEditToolBox() {
@@ -1370,25 +1362,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatingEditContent.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         floatingEditContent.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        SwingUtilities.invokeLater(() -> {
-            //Deferred action -- Force the help panel width to the same as the tabs section
-            int tabSectionWidth = floatEditTabsPanel.getWidth();
+        // Force the help panel width to the same as the tabs section
+        int tabSectionWidth = floatEditTabsPanel.getWidth();
 
-            //Change the textarea settings
-            for (Component c : helpBar.getComponents()) {
-                if (c instanceof JTextArea) {
-                    JTextArea j = (JTextArea) c;
-                    j.setSize(new Dimension(tabSectionWidth, j.getSize().height));
-                    j.setLineWrap(true);
-                    j.setWrapStyleWord(true);
-                }
+        //Change the textarea settings
+        for (Component c : helpBar.getComponents()) {
+            if (c instanceof JTextArea) {
+                JTextArea j = (JTextArea) c;
+                j.setSize(new Dimension(tabSectionWidth, j.getSize().height));
+                j.setLineWrap(true);
+                j.setWrapStyleWord(true);
             }
+        }
 
-            //Change the width of the help panel section
-            floatEditHelpPanel.setMaximumSize(new Dimension(tabSectionWidth, Integer.MAX_VALUE));
-            floatEditHelpPanel.add(helpBar);
-            floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
-        });
+        //Change the width of the help panel section
+        floatEditHelpPanel.setMaximumSize(new Dimension(tabSectionWidth, Integer.MAX_VALUE));
+        floatEditHelpPanel.add(helpBar);
+        floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
 
         floatEditTabsPane.addChangeListener((e) -> {
             //Move the block group between the turnouts and track tabs
@@ -1898,48 +1888,45 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else {
             contentPane.add(helpBarPanel);
         }
-        helpBarPanel.setVisible(isEditable() && showHelpBar);
+        helpBarPanel.setVisible(isEditable() && getShowHelpBar());
         editToolBarContainer.setVisible(isEditable());
 
-        //Note: We have to invoke this later because everything's not really setup yet
-        SwingUtilities.invokeLater(() -> {
-            if (false) {
-                //use the GuiLafPreferencesManager value
-                ///doing this for now (since window prefs seem to be whacked)
-                GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-                setupToolBarFontSizes(manager.getFontSize());
-            } else {
-                //see if the user preferences for the panel have a setting for it
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                    //if it's been set as a preference for this panel use that
-                    //calculate the largest font size that will fill the current window
-                    //(without scrollbars)
-                    //font size 13 ==> min windowWidth width = 1592 pixels
-                    //font size 8 ==> min windowWidth width = 1132 pixels
-                    //(1592 - 1132) / (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
-                    //1592 - (13 * 92) ==> 396 pixels
-                    //therefore:
-                    float newToolBarFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
-                    newToolBarFontSize = (float) MathUtil.pin(newToolBarFontSize, 9.0, 12.0); //keep it between 9 & 12
+        if (false) {
+            //use the GuiLafPreferencesManager value
+            ///doing this for now (since window prefs seem to be whacked)
+            GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+            setupToolBarFontSizes(manager.getFontSize());
+        } else {
+            //see if the user preferences for the panel have a setting for it
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                //if it's been set as a preference for this panel use that
+                //calculate the largest font size that will fill the current window
+                //(without scrollbars)
+                //font size 13 ==> min windowWidth width = 1592 pixels
+                //font size 8 ==> min windowWidth width = 1132 pixels
+                //(1592 - 1132) / (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
+                //1592 - (13 * 92) ==> 396 pixels
+                //therefore:
+                float newToolBarFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
+                newToolBarFontSize = (float) MathUtil.pin(newToolBarFontSize, 9.0, 12.0); //keep it between 9 & 12
 
-                    String windowFrameRef = getWindowFrameRef();
-                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+                String windowFrameRef = getWindowFrameRef();
+                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
 
-                    //log.debug("{} prefsProp is {}", windowFrameRef, prefsProp);
-                    if (prefsProp != null) { //(yes)
-                        newToolBarFontSize = Float.parseFloat(prefsProp.toString());
-                    } else { //(no)
-                        //use the GuiLafPreferencesManager value
-                        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-                        newToolBarFontSize = manager.getFontSize();
+                //log.debug("{} prefsProp is {}", windowFrameRef, prefsProp);
+                if (prefsProp != null) { //(yes)
+                    newToolBarFontSize = Float.parseFloat(prefsProp.toString());
+                } else { //(no)
+                    //use the GuiLafPreferencesManager value
+                    GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+                    newToolBarFontSize = manager.getFontSize();
 
-                        //save it in user preferences for the panel
-                        prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", newToolBarFontSize);
-                    }
-                    setupToolBarFontSizes(newToolBarFontSize);
-                });
-            }
-        }); //SwingUtilities.invokeLater
+                    //save it in user preferences for the panel
+                    prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", newToolBarFontSize);
+                }
+                setupToolBarFontSizes(newToolBarFontSize);
+            });
+        }
     } //setupToolBar()
 
     //
@@ -2034,8 +2021,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         boolean save = (isDirty() || (savedEditMode != isEditable())
                 || (savedPositionable != allPositionable())
                 || (savedControlLayout != allControlling())
-                || (savedAnimatingLayout != animatingLayout)
-                || (savedShowHelpBar != showHelpBar));
+                || (savedAnimatingLayout != isAnimating())
+                || (savedShowHelpBar != getShowHelpBar()));
 
         targetWindowClosing(save);
     } //targetWindowClosingEvent
@@ -2282,9 +2269,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             //show/hide the help bar
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-                floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
+                floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
             } else {
-                helpBarPanel.setVisible(isEditable() && showHelpBar);
+                helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
 
             if (isEditable()) {
@@ -2550,7 +2537,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             boolean newShowHelpBar = showHelpCheckBoxMenuItem.isSelected();
             setShowHelpBar(newShowHelpBar);
         });
-        showHelpCheckBoxMenuItem.setSelected(showHelpBar);
+        showHelpCheckBoxMenuItem.setSelected(getShowHelpBar());
 
         //
         //show grid item
@@ -2563,7 +2550,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             drawGrid = showGridCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
-        showGridCheckBoxMenuItem.setSelected(drawGrid);
+        showGridCheckBoxMenuItem.setSelected(getDrawGrid());
 
         //
         //snap to grid on add item
@@ -3144,16 +3131,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             toolBarSideFloatButton.setSelected(toolBarSide.equals(eToolBarSide.eFLOAT));
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-                floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
-            } else if (showHelpBar) {
+                floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+            } else if (getShowHelpBar()) {
                 //not sure why... but this is the only way I could
                 //get everything to layout correctly
                 //when the helpbar is visible...
-                boolean editMode = editModeCheckBoxMenuItem.isSelected();
+                boolean editMode = isEditable();
                 setAllEditable(!editMode);
                 setAllEditable(editMode);
             } else {
-                helpBarPanel.setVisible(isEditable() && showHelpBar);
+                helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
         }
     } //setToolBarSide
@@ -3176,15 +3163,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             setupToolBar(); //re-layout all the toolbar items
 
-            if (showHelpBar) {
+            if (getShowHelpBar()) {
                 //not sure why, but this is the only way I could
                 //get everything to layout correctly
                 //when the helpbar is visible...
-                boolean editMode = editModeCheckBoxMenuItem.isSelected();
+                boolean editMode = isEditable();
                 setAllEditable(!editMode);
                 setAllEditable(editMode);
             } else {
-                helpBarPanel.setVisible(isEditable() && showHelpBar);
+                helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
         }
     } //setToolBarWide
@@ -3299,7 +3286,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //menu item then.
         noZoomItem.setSelected(true);
 
-        //Note: We have to invoke this stuff later because everything's not setup yet
+        //Note: We have to invoke this stuff later because _targetPanel is not setup yet
         SwingUtilities.invokeLater(() -> {
             //get the window specific saved zoom user preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
@@ -3574,24 +3561,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * @return the new (?) panel bounds
      */
     private Rectangle2D resizePanelBounds(boolean forceFlag) {
+        Rectangle2D panelBounds = getPanelBounds();
         Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
         if (forceFlag) {
-            upperLeftX = (int) Math.max(layoutBounds.getX(), 0.0);
-            upperLeftY = (int) Math.max(layoutBounds.getY(), 0.0);
-
-            panelWidth = upperLeftX + (int) layoutBounds.getWidth();
-            panelHeight = upperLeftY + (int) layoutBounds.getHeight();
+            panelBounds = layoutBounds;
         } else {
-            // move upper left X and Y if necessary
-            upperLeftX = Math.max(Math.min(upperLeftX, (int) layoutBounds.getX()), 0);
-            upperLeftY = Math.max(Math.min(upperLeftY, (int) layoutBounds.getY()), 0);
-
-            // expand panelWidth and panelHeight if necessary
-            panelWidth = upperLeftX + (int) layoutBounds.getWidth();
-            panelHeight = upperLeftX + (int) layoutBounds.getHeight();
+            panelBounds.add(layoutBounds);
         }
+        panelBounds = MathUtil.offset(panelBounds, -panelBounds.getX(), -panelBounds.getY());
+
+        panelWidth = (int) panelBounds.getWidth();
+        panelHeight = (int) panelBounds.getHeight();
         setTargetPanelSize(panelWidth, panelHeight);
-        return getPanelBounds();
+        return panelBounds;
     } // resizePanelBounds
 
     //
@@ -5098,8 +5080,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         savedEditMode = isEditable();
         savedPositionable = allPositionable();
         savedControlLayout = allControlling();
-        savedAnimatingLayout = animatingLayout;
-        savedShowHelpBar = showHelpBar;
+        savedAnimatingLayout = isAnimating();
+        savedShowHelpBar = getShowHelpBar();
     } //resetDirty
 
     /**
@@ -9488,9 +9470,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //these may not be set up yet...
         if (helpBarPanel != null) {
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-                floatEditHelpPanel.setVisible(editable && showHelpBar);
+                floatEditHelpPanel.setVisible(editable && getShowHelpBar());
             } else {
-                helpBarPanel.setVisible(editable && showHelpBar);
+                helpBarPanel.setVisible(editable && getShowHelpBar());
             }
         }
         awaitingIconChange = false;
@@ -9676,37 +9658,49 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return autoAssignBlocks;
     }
 
-    public void setLayoutDimensions(int windowWidth, int windowHeight, int x, int y, int panelW, int panelH) {
-        setLayoutDimensions(windowWidth, windowHeight, x, y, panelW, panelH, false);
+    public void setLayoutDimensions(int windowWidth, int windowHeight, int windowX, int windowY, int panelWidth, int panelHeight) {
+        setLayoutDimensions(windowWidth, windowHeight, windowX, windowY, panelWidth, panelHeight, false);
     }
 
-    public void setLayoutDimensions(int windowWidth, int windowHeight, int panelX, int panelY, int panelWidth, int panelHeight, boolean merge) {
+    public void setLayoutDimensions(int windowWidth, int windowHeight, int windowX, int windowY, int panelWidth, int panelHeight, boolean merge) {
+        upperLeftX = windowX;
+        upperLeftY = windowY;
+        setLocation(upperLeftX, upperLeftY);
+
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         setSize(windowWidth, windowHeight);
 
-        Rectangle2D passBounds = new Rectangle2D.Double(panelX, panelY, panelWidth, panelHeight);
+        Rectangle2D panelBounds = new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
 
         if (merge) {
-            passBounds.add(calculateMinimumLayoutBounds());
+            panelBounds.add(calculateMinimumLayoutBounds());
         }
-        setPanelBounds(passBounds);
+        setPanelBounds(panelBounds);
     } //setLayoutDimensions
 
     public Rectangle2D getPanelBounds() {
-        return new Rectangle2D.Double(upperLeftX, upperLeftY, panelWidth, panelHeight);
+        return new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
     }
 
-    public void setPanelBounds(Rectangle2D newRectangle) {
-        upperLeftX = (int) newRectangle.getX();
-        upperLeftY = (int) newRectangle.getY();
-        setLocation(upperLeftX, upperLeftY);
+    public void setPanelBounds(Rectangle2D newBounds) {
+        //TODO: dead-code strip this
+        // note: upperLeft (X&Y) are WINDOW locations
+//        upperLeftX = (int) newRectangle.getX();
+//        upperLeftY = (int) newRectangle.getY();
+//        setLocation(upperLeftX, upperLeftY);
+//        if (upperLeftX < 0 || upperLeftY < 0) {
+//            log.error("negative upperLeft X or Y");
+//        }
 
-        panelWidth = (int) newRectangle.getWidth();
-        panelHeight = (int) newRectangle.getHeight();
+        // make sure the origin is at {0, 0}
+        newBounds = MathUtil.offset(newBounds, -newBounds.getX(), -newBounds.getY());
+
+        panelWidth = (int) newBounds.getWidth();
+        panelHeight = (int) newBounds.getHeight();
         setTargetPanelSize(panelWidth, panelHeight);
 
-        log.debug("setLayoutDimensions Position - {},{} windowSize - {},{} panelSize - {},{}", upperLeftX, upperLeftY, windowWidth, windowHeight, panelWidth, panelHeight);
+        log.debug("setPanelBounds(({})", newBounds);
     }
 
     // this will grow the panel bounds based on items added to the layout
@@ -10106,7 +10100,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         if (isEditable()) {
-            if (drawGrid) {
+            if (getDrawGrid()) {
                 drawPanelGrid(g2);
             }
             drawHiddenTrackSegments(g2);
