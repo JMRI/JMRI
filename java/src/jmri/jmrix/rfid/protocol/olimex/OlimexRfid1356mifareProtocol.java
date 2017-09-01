@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2014
  * @author B. Milhaupt    Copyright (C) 2017
- * @since 4.7.5
+ * @since 4.9.4
  */
 public class OlimexRfid1356mifareProtocol extends RfidProtocol {
 
