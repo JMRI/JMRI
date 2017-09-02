@@ -28,12 +28,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SRCP interface between the JMRI service mode programmer and a network
- * connection
+ * JMRI interface between the JMRI service mode programmer and a network
+ * connection.
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Randall Wood Copyright (C) 2014
- * 
+ *
  */
 public class JsonProgrammerServer extends AbstractProgrammerServer {
 

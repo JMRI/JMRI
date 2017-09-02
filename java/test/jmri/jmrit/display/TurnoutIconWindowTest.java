@@ -78,7 +78,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
                 location)
         );
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
