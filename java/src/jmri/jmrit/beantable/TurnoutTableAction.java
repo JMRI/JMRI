@@ -1605,7 +1605,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
-        String errorMessage = new String();
+        String errorMessage = null;
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
         int iType = 0;
         int iNum = 1;
@@ -1652,6 +1652,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (selectedValue == 1) {
                         // Show error message in statusBar
                         errorMessage = Bundle.getMessage("WarningOverlappingAddress", sName);
+                        statusBar.setText(errorMessage);
                         statusBar.setForeground(Color.gray);
                         return;   // return without creating if "No" response
                     }
@@ -1681,6 +1682,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 // User specified more bits, but bits are not available - return without creating
                 // Display message in statusBar
                 errorMessage = Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress);
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
                 return;
             } else {
@@ -1694,6 +1696,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     handleCreateException(ex, sName); // displays message dialog to the user
                     // add to statusBar as well
                     errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                    statusBar.setText(errorMessage);
                     statusBar.setForeground(Color.red);
                     return; // without creating
                 }
@@ -1739,7 +1742,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             // end of for loop creating range of Turnouts
         }
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {

@@ -740,7 +740,6 @@ public class SwitchboardEditor extends Editor {
 
         /**
          * Get text to display on this switch in Web Server panel when attached object is Inactive.
-         * used in jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor$BeanSwitchXml#store(Object)
          *
          * @return text to show on inactive state (used on all types of objects)
          */
@@ -756,7 +755,6 @@ public class SwitchboardEditor extends Editor {
 
         /**
          * Get text to display on this switch in Web Server panel when attached object is Unknown (initial state displayed).
-         * used in jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor$BeanSwitchXml#store(Object)
          *
          * @return text to show on unknown state (used on all types of objects)
          */
@@ -774,7 +772,7 @@ public class SwitchboardEditor extends Editor {
          *
          * @return switch tooltip text
          */
-        public String getTooltip() {
+        public String getToolTip() {
             return switchTooltip;
         }
 

@@ -2828,7 +2828,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //                    where = new Point2D.Double(x, y);
                 }
             }
-            Rectangle2D rect2D = MathUtil.scale(MathUtil.RectangleToRectangle2D(rect), _paintScale);
+            Rectangle2D rect2D = MathUtil.scale(MathUtil.rectangleToRectangle2D(rect), _paintScale);
             int level = p.getDisplayLevel();
             if (rect2D.contains(where) && (level > BKG || event.isControlDown())) {
                 boolean added = false;
