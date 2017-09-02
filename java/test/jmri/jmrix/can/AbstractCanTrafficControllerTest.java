@@ -1,11 +1,11 @@
 package jmri.jmrix.can;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for AbstractCanTrafficController.
@@ -20,7 +20,7 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
         JUnitUtil.resetInstanceManager();
         tc = new AbstractCanTrafficController(){
            @Override
-           protected void setInstance() {};
+           protected void setInstance() {}
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
@@ -59,8 +59,7 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.tearDown(); 
     }
 
 }

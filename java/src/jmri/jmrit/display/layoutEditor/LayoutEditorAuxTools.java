@@ -239,40 +239,25 @@ public class LayoutEditorAuxTools {
             }
         }
 
-        // Check for duplicate connectivity
-        // This occurs for the first layout editor panel when there are multiple panels
-        // connected by edge connectors.
-        boolean noDuplicate = true;
-        String connString = c.toString();
-        if (connString != null && connString.length() > 0) {
-            for (LayoutConnectivity dup : cList) {
-                if (connString.equals(dup.toString())) {
-                    noDuplicate = false;
-                }
-            }
-        }
-
-        if (noDuplicate) {
-            cList.add(c);
-        } else {
+        // Check to see if this connectivity is already in the list
+        // This occurs for the first layout editor panel when there 
+        // are multiple panels connected by edge connectors.
+        if (cList.contains(c)) {
             log.debug("checkConnectivity: Duplicate connection: '{}'", c);
+        } else {
+            cList.add(c);
         }
     }   // checkConnectivity
 
     // compute direction of vector from p1 to p2
     static protected int computeDirection(Point2D p1, Point2D p2) {
-        double dh = p2.getX() - p1.getX();
-        double dv = p2.getY() - p1.getY();
-        int dir = Path.NORTH;
-
-        // convert the delta h & v into octants
-        double angleRAD = Math.atan2(dh, dv);
-        double angleDEG = Math.toDegrees(angleRAD);
+        double angleDEG = MathUtil.computeAngleDEG(p2, p1);
         angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
 
+        // convert the angleDEG into octants
         // note: because we use round here, the octants are offset by half (+/-22.5 deg)
         // so SOUTH isn't from 0-45 deg; it's from -22.5 deg to +22.5 deg; etc. for other octants.
-        // (this is what we want!)
+        // (and this is what we want!)
         int octant = (int) Math.round(angleDEG / 45.0);
 
         // use the octant to lookup its direction

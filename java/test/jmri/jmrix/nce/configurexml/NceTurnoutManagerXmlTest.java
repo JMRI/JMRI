@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.configurexml;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,15 +20,22 @@ public class NceTurnoutManagerXmlTest {
       Assert.assertNotNull("NceTurnoutManagerXml constructor",new NceTurnoutManagerXml());
     }
 
+    @Test
+    public void testInvalidLoad(){
+       NceTurnoutManagerXml ntmx = new NceTurnoutManagerXml();
+       ntmx.load(new org.jdom2.Element("test"),ntmx);
+       jmri.util.JUnitAppender.assertErrorMessage("Invalid method called");
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

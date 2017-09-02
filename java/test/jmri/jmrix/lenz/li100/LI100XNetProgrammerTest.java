@@ -5,10 +5,10 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.managers.DefaultProgrammerManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * LI100XNetProgrammerTest.java
@@ -64,8 +64,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x48);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -78,9 +78,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
@@ -125,8 +124,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x7A);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -139,9 +138,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
 
@@ -184,8 +182,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x48);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -198,9 +196,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
 
@@ -245,8 +242,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x54);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         //Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -259,16 +256,15 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
     }
 
     // this test is the same as the testWriteCvSequence test, but
     // it checks the sequence for CVs greater than 255, which use
-    // different XPressNet commands.
+    // different XpressNet commands.
     public void testWriteHighCvSequence() throws JmriException {
         // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -304,8 +300,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x78);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -318,16 +314,15 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
     // this test is the same as the testReadCvSequence test, but
     // it checks the sequence for CVs greater than 256, which use
-    // different XPressNet commands.
+    // different XpressNet commands.
     public void testReadHighCvSequence() throws JmriException {
         // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -365,8 +360,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr2.setElement(4, 0x78);
         t.sendTestMessage(mr2);
 
-        // At this point, the LI100 XPressNet programmer
-        // deviates from the standard XPressNet programmer.  
+        // At this point, the LI100 XpressNet programmer
+        // deviates from the standard XpressNet programmer.
         // the LI100 version requests an exit from service 
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
@@ -379,9 +374,8 @@ public class LI100XNetProgrammerTest extends TestCase {
         mr3.setElement(2, 0x60);
         t.sendTestMessage(mr3);
 
-        jmri.util.JUnitUtil.releaseThread(this);
-
         //failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;},"Receive Called not set");
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
 

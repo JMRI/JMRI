@@ -22,7 +22,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter
+     * Returns the system letter.
      */
     @Override
     public String getSystemPrefix() {
@@ -30,10 +30,12 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format or if the system name does not
-     * correspond to a configured digital output bit Assumes calling method has
-     * checked that a Light with this system name does not already exist
+     * Method to create a new Light based on the system name.
+     * Assumes calling method has
+     * checked that a Light with this system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format or if the
+     * system name does not correspond to a configured digital output bit
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -81,8 +83,8 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
@@ -100,7 +102,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name
+     * Public method to normalize a system name.
      * <P>
      * Returns a normalized system name if system name has a valid format, else
      * returns "".
@@ -111,7 +113,16 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to SerialLightManager
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Allow access to SerialLightManager.
      */
     static public SerialLightManager instance() {
         if (_instance == null) {

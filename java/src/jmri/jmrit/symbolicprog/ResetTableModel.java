@@ -27,9 +27,7 @@ import org.slf4j.LoggerFactory;
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private String headers[] = {"Label", "Name",
-        "PI", "PIvalue",
-        "SI", "SIvalue",
-        "CV", "Value",
+        "Value",
         "Write", "State"};
 
     private List<CvValue> rowVector = new ArrayList<>(); // vector of Reset items
@@ -99,16 +97,6 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 return "" + labelVector.get(row);
             case "Name":
                 return "" + cv.cvName();
-            case "PI":
-                return "" + cv.piCv();
-            case "PIvalue":
-                return "" + cv.piVal();
-            case "SI":
-                return "" + cv.siCv();
-            case "SIvalue":
-                return "" + cv.siVal();
-            case "CV":
-                return "" + cv.iCv();
             case "Value":
                 return "" + cv.getValue();
             case "Write":
@@ -134,17 +122,6 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         }
     }
 
-    private String _piCv;
-    private String _siCv;
-
-    public void setPiCv(String piCv) {
-        _piCv = piCv;
-    }
-
-    public void setSiCv(String siCv) {
-        _siCv = siCv;
-    }
-
     public void setRow(int row, Element e, Element p, String model) {
         decoderModel = model; // Save for use elsewhere
         String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
@@ -167,37 +144,6 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         rowVector.add(resetCV);
         labelVector.add(label);
         modeVector.add(getResetModeList(e, p));
-    }
-
-    public void setIndxRow(int row, Element e, Element p, String model) {
-        decoderModel = model; // Save for use elsewhere
-        if (!_piCv.equals("") && !_siCv.equals("")) {
-            // get the values for the VariableValue ctor
-            String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
-            if (log.isDebugEnabled()) {
-                log.debug("Starting to setIndxRow \""
-                        + label + "\"");
-            }
-            String cvName = e.getAttributeValue("CVname");
-            int piVal = Integer.valueOf(e.getAttribute("PI").getValue());
-            int siVal = (e.getAttribute("SI") != null
-                    ? Integer.valueOf(e.getAttribute("SI").getValue())
-                    : -1);
-            String iCv = e.getAttribute("CV").getValue();
-            int icvVal = Integer.valueOf(e.getAttribute("default").getValue());
-
-            CvValue resetCV = new CvValue("" + row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
-            resetCV.addPropertyChangeListener(this);
-
-            JButton bw = new JButton("Write");
-            _writeButtons.add(bw);
-            resetCV.setValue(icvVal);
-            resetCV.setWriteOnly(true);
-            resetCV.setState(VariableValue.STORED);
-            rowVector.add(resetCV);
-            labelVector.add(label);
-            modeVector.add(getResetModeList(e, p));
-        }
     }
 
     protected List<String> getResetModeList(Element e, Element p) {
@@ -303,15 +249,10 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         }
         CvValue cv = rowVector.get(row);
         if (log.isDebugEnabled()) {
-            log.debug("performReset: " + cv + " with piCv \"" + cv.piCv() + "\"");
+            log.debug("performReset: " + cv);
         }
-        if (cv.piCv() != null && !cv.piCv().equals("") && cv.iCv() != null && !cv.iCv().equals("")) {
-            _iCv = cv;
-            indexedWrite();
-        } else {
-            _progState = WRITING_CV;
-            cv.write(_status);
-        }
+        _progState = WRITING_CV;
+        cv.write(_status);
     }
 
     @Override
@@ -332,26 +273,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     private int _progState = 0;
     private static final int IDLE = 0;
-    private static final int WRITING_PI = 1;
-    private static final int WRITING_SI = 2;
     private static final int WRITING_CV = 3;
-
-    public void indexedWrite() {
-        if (_progState != IDLE) {
-            log.warn("Programming state " + _progState + ", not IDLE, in write()");
-        }
-        // lets skip the SI step if SI is not used
-        if (_iCv.siVal() > 0) {
-            _progState = WRITING_PI;
-        } else {
-            _progState = WRITING_SI;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("invoke PI write for CV write");
-        }
-        // to write any indexed CV we must write the PI
-        _iCv.writePI(_status);
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
@@ -368,23 +290,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                         log.error("Busy goes false with state IDLE");
                     }
                     return;
-                case WRITING_PI:   // have written the PI, now write SI if needed
-                    if (log.isDebugEnabled()) {
-                        log.debug("Busy goes false with state WRITING_PI");
-                    }
-                    _progState = WRITING_SI;
-                    _iCv.writeSI(_status);
-                    return;
-                case WRITING_SI:  // have written the SI if needed, now write CV
-                    if (log.isDebugEnabled()) {
-                        log.debug("Busy goes false with state WRITING_SI");
-                    }
-                    _progState = WRITING_CV;
-                    _iCv.writeIcV(_status);
-                    return;
                 case WRITING_CV:  // now done with the write request
                     if (log.isDebugEnabled()) {
-                        log.debug("Finished writing the Indexed CV");
+                        log.debug("Finished writing the CV");
                     }
                     mProgrammer.setMode(savedMode);
                     _progState = IDLE;

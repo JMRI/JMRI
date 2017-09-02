@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -55,18 +56,24 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(BlockOrderTest.class));
         suite.addTest(new JUnit4TestAdapter(ControlPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(OpSessionLogTest.class));
+        suite.addTest(new JUnit4TestAdapter(SCWarrantTest.class));
+        suite.addTest(new JUnit4TestAdapter(EngineerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SpeedUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(FunctionPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantShutdownTaskTest.class));
+        suite.addTest(new JUnit4TestAdapter(SpeedProfilePanelTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

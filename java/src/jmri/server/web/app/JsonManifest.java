@@ -15,6 +15,7 @@ import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
 import jmri.server.web.spi.WebMenuItem;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
+@ServiceProvider(service = WebManifest.class)
 public class JsonManifest implements WebManifest {
 
     private boolean initialized = false;

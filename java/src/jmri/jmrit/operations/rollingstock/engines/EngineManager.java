@@ -5,6 +5,9 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.Control;
@@ -20,9 +23,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManager extends RollingStockManager {
+public class EngineManager extends RollingStockManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
-    protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>(); // stores Consists by number
+    protected Hashtable<String, Consist> _consistHashTable = new Hashtable<>(); // stores Consists by number
 
     public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
@@ -30,24 +33,15 @@ public class EngineManager extends RollingStockManager {
     }
 
     /**
-     * record the single instance
-     * @return instance
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static synchronized EngineManager instance() {
-        EngineManager instance = jmri.InstanceManager.getNullableDefault(EngineManager.class);
-        if (instance == null) {
-            log.debug("EngineManager creating instance");
-            // create and load
-            instance = new EngineManager();
-            jmri.InstanceManager.setDefault(EngineManager.class,instance);
-            OperationsSetupXml.instance(); // load setup
-            // create manager to load engines and their attributes
-            EngineManagerXml.instance();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("EngineManager returns instance {}", instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(EngineManager.class);
     }
 
     /**
@@ -67,7 +61,8 @@ public class EngineManager extends RollingStockManager {
     /**
      * Finds an existing engine or creates a new engine if needed requires
      * engine's road and number
-     * @param engineRoad The engine's road initials
+     *
+     * @param engineRoad   The engine's road initials
      * @param engineNumber The engine's road number
      *
      * @return new engine or existing engine
@@ -219,6 +214,7 @@ public class EngineManager extends RollingStockManager {
     /**
      * return a list available engines (no assigned train) engines are ordered
      * least recently moved to most recently moved.
+     *
      * @param train The Train requesting this list.
      *
      * @return Ordered list of engines not assigned to a train
@@ -239,6 +235,7 @@ public class EngineManager extends RollingStockManager {
     /**
      * Returns a list of locos sorted by blocking number for a train. This
      * returns a list of consisted locos in the order that they were entered in.
+     *
      * @param train The Train requesting this list.
      * @return A list of sorted locos.
      */
@@ -256,6 +253,7 @@ public class EngineManager extends RollingStockManager {
 
     /**
      * Get a list of engine road names.
+     *
      * @param model The string model name, can be NONE.
      *
      * @return List of engine road names.
@@ -318,6 +316,7 @@ public class EngineManager extends RollingStockManager {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-engines.dtd.
+     *
      * @param root The common Element for operations-engines.dtd.
      *
      */
@@ -347,14 +346,23 @@ public class EngineManager extends RollingStockManager {
         for (RollingStock rs : getByRoadNameList()) {
             Engine eng = (Engine) rs;
             values.addContent(eng.store());
+
         }
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        EngineManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(EngineManagerXml.class
+        ).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineManager.class);
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        // create manager to load engines and their attributes
+        InstanceManager.getDefault(EngineManagerXml.class);
+    }
 }

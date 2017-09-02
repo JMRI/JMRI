@@ -1,18 +1,19 @@
 package jmri.jmrix.loconet.pr2;
 
-import jmri.jmrix.AbstractPowerManagerTestBase;
-import org.junit.Before;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Ignore;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnPr2ThrottleManager;
-import jmri.jmrix.loconet.SlotManager;
-import jmri.PowerManager;
 import jmri.JmriException;
+import jmri.PowerManager;
+import jmri.jmrix.AbstractPowerManagerTestBase;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnPowerManager;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.SlotManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * tests for the Jmri package LnPr2PowerManager
@@ -21,7 +22,7 @@ import jmri.JmriException;
  */
 public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
 
-    private SlotManager slotmanager = null; 
+    private SlotManager slotmanager = null;
 
     /**
      * service routines to simulate receiving on, off from interface
@@ -124,20 +125,27 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     public void testStateOff() throws JmriException {
     }
 
-
     // setup a default interface
     @Before
     @Override
     public void setUp() {
+        JUnitUtil.setUp();
         controller = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(controller);
         PR2SystemConnectionMemo memo = new PR2SystemConnectionMemo(controller,slotmanager);
         memo.configureManagers();
         jmri.InstanceManager.setThrottleManager(memo.getPr2ThrottleManager());
         memo.getPr2ThrottleManager().requestThrottleSetup(new jmri.DccLocoAddress(3,false),true);
-        p = new LnPr2PowerManager(memo);
+        p = pwr = memo.get(jmri.PowerManager.class);
+    }
+
+    @After
+    public void tearDown() {
+        pwr.dispose();
+        JUnitUtil.tearDown();
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing
+    LnPowerManager pwr;
 
 }

@@ -1,25 +1,24 @@
 package jmri.jmrix.roco.z21.simulator;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import jmri.jmrix.roco.z21.Z21Reply;
+import jmri.util.JUnitUtil;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.net.DatagramSocket;
-import java.net.DatagramPacket;
-
-import jmri.jmrix.roco.z21.Z21Reply;
-
 /**
  * Z21SimulatorAdapterTest.java
- * 
+ *
  * Description:	tests for the jmri.jmrix.roco.z21.simulator.z21SimulatorAdapter
  * class
  *
  * @author	Paul Bender Copyright (C) 2016
  */
 public class Z21SimulatorAdapterTest {
-        
+
     private static java.net.InetAddress host;
     private static int port = 21105; // default port for Z21 connections.
     private static Z21SimulatorAdapter a  = null;
@@ -29,9 +28,9 @@ public class Z21SimulatorAdapterTest {
         Assert.assertNotNull(a);
     }
 
-    /* 
+    /*
      * Test that the Z21 simulator correctly sets up the network connection.
-     */ 
+     */
     @Test
     public void testConnection() {
         // connect the port
@@ -52,7 +51,7 @@ public class Z21SimulatorAdapterTest {
             byte data[] = {0x04,0x00,0x10,0x00};
             DatagramPacket sendPacket = new DatagramPacket(data,4,host, port);
             // and send it.
-           
+
             try {
                a.getSocket().send(sendPacket);
             } catch(java.io.IOException ioe) {
@@ -66,11 +65,11 @@ public class Z21SimulatorAdapterTest {
                try {
                  a.getSocket().setSoTimeout(30000); // 30 second timeout.
                } catch( java.net.SocketException timeoutse) {
-                   // this is not a fatal error for this test, just 
+                   // this is not a fatal error for this test, just
                    // an optimization in case something went wrong.
                }
                a.getSocket().receive(p);
-               Assert.assertTrue("received data from simulator",0!=p.getLength()); 
+               Assert.assertTrue("received data from simulator",0!=p.getLength());
             } catch(java.net.SocketTimeoutException ste) {
               Assert.fail("Socket Timeout Exception reading from network port");
             } catch(java.io.IOException ioe) {
@@ -110,23 +109,23 @@ public class Z21SimulatorAdapterTest {
     // The minimal setup for log4J
     @BeforeClass
     static public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
         try {
            host = java.net.InetAddress.getLocalHost();
         } catch(java.net.UnknownHostException uhe){
             Assert.fail("Unable to create host localhost");
-        } 
+        }
         // create a new simulator.
         a = new Z21SimulatorAdapter();
     }
 
     @AfterClass
     static public void tearDown() {
+        a.getSystemConnectionMemo().getTrafficController().terminateThreads();
         a.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        a.terminateThread();
+        JUnitUtil.tearDown();
     }
 
 }

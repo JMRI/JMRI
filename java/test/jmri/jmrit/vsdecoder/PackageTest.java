@@ -37,7 +37,20 @@ import org.junit.runners.Suite;
     VSDecoderManagerThreadTest.class,
     VSDecoderTest.class,
     VSDManagerEventTest.class,
-    VSDecoderEventTest.class
+    VSDecoderEventTest.class,
+    VSDecoderCreationStartupActionFactoryTest.class,
+    ConfigurableSoundTest.class,
+    DieselSoundTest.class,
+    Diesel2SoundTest.class,
+    Diesel3SoundTest.class,
+    EngineSoundTest.class,
+    SteamSoundTest.class,
+    Steam1SoundTest.class,
+    ThrottleTriggerTest.class,
+    NotchSoundTest.class,
+    NotchTransitionTest.class,
+    VSDFileTest.class,
+    VSDecoderPaneTest.class,
 })
 
 /**

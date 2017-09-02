@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -22,9 +24,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Default implementation of a SignalMastLogicManager.
@@ -199,7 +198,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             try {
                 sml.useLayoutEditor(false, mast);
             } catch (jmri.JmriException e) {
-                log.error("Error occured while trying to disable layout editor use " + e);
+                log.error("Error occurred while trying to disable layout editor use " + e);
             }
         }
     }
@@ -238,17 +237,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
+    public SignalMastLogic getBeanBySystemName(String systemName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public NamedBean getBeanByUserName(String userName) {
+    public SignalMastLogic getBeanByUserName(String userName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public NamedBean getNamedBean(String name) {
+    public SignalMastLogic getNamedBean(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -292,7 +291,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public List<NamedBean> getNamedBeanList() {
+    public List<SignalMastLogic> getNamedBeanList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -325,17 +324,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(SignalMastLogic bean, String property) throws java.beans.PropertyVetoException {
 
     }
 
     @Override
-    public void register(NamedBean n) {
+    public void register(SignalMastLogic n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(SignalMastLogic n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -486,8 +485,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      */
     public void generateSection() {
         SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
-        for (NamedBean nb : sm.getNamedBeanList()) {
-            if (((Section) nb).getSectionType() == Section.SIGNALMASTLOGIC) {
+        for (Section nb : sm.getNamedBeanList()) {
+            if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
                 nb.removeProperty("intermediateSection");
             }
             nb.removeProperty("forwardMast");

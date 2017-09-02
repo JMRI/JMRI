@@ -3,9 +3,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class CarLoadEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.addButton);
         // new load should appear at start of list
         Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(0));
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

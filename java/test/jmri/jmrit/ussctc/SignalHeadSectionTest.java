@@ -1,11 +1,10 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
-import jmri.util.*;
-import jmri.*;
-
+import java.beans.*;
 import java.util.*;
+import jmri.*;
+import jmri.util.*;
+import org.junit.*;
 
 /**
  * Tests for SignalHeadSection class in the jmri.jmrit.ussctc package
@@ -38,6 +37,44 @@ public class SignalHeadSectionTest {
                          "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
                         station);
         Assert.assertEquals("SignalHeadSection [\"IH1\", \"IH2\"],[\"IH3\"]", s.toString());
+    }
+
+    boolean listened;
+    
+    @Test
+    public void testListener() {
+        final SignalHeadSection s = new SignalHeadSection(new ArrayList<String>(), new ArrayList<String>(),   // empty
+                        "Sec 1 Sign 1 L", "Sec 1 Sign 1 C", "Sec 1 Sign 1 R", 
+                         "Sec 1 Sign 1 L", "Sec 1 Sign 1 R",
+                        station);
+                        
+        s.setLastIndication(CodeGroupThreeBits.Triple001);
+
+        listened = false;
+        PropertyChangeListener p = new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent e) {
+                listened = true;
+                Assert.assertEquals("LastIndication", e.getPropertyName());
+                Assert.assertEquals(CodeGroupThreeBits.Triple001, e.getOldValue());
+                Assert.assertEquals(CodeGroupThreeBits.Triple100, e.getNewValue());
+                Assert.assertEquals(s, e.getSource());
+            }
+        };
+        s.addPropertyChangeListener(p);
+        Assert.assertTrue(! listened);
+        
+        s.setLastIndication(CodeGroupThreeBits.Triple100);
+        
+        Assert.assertTrue(listened);
+
+        listened = false;
+        s.removePropertyChangeListener(p);
+
+        s.setLastIndication(CodeGroupThreeBits.Triple100);
+        
+        Assert.assertTrue(!listened);
+        
+        
     }
 
     @Test
@@ -135,8 +172,7 @@ public class SignalHeadSectionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -162,8 +198,7 @@ public class SignalHeadSectionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

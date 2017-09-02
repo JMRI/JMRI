@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxySensorManager extends AbstractProxyManager
+public class ProxySensorManager extends AbstractProxyManager<Sensor>
         implements SensorManager {
 
     public ProxySensorManager() {
@@ -144,6 +144,31 @@ public class ProxySensorManager extends AbstractProxyManager
         return null;
     }
 
+    /**
+     * Validate system name format. Locate a system specfic SensorManager based on
+     * a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((SensorManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return false;
+    }
+
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
     @Override
     public long getDefaultSensorDebounceGoingActive() {
         return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingActive();
@@ -191,7 +216,7 @@ public class ProxySensorManager extends AbstractProxyManager
        return false;
     }
 
-
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
+
 }

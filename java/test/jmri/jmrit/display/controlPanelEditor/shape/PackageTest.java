@@ -16,6 +16,11 @@ import org.junit.runners.Suite;
     PositionableRoundRectTest.class,
     PositionableShapeTest.class,
     ShapeDrawerTest.class,
+    DrawCircleTest.class,
+    DrawEllipseTest.class,
+    DrawPolygonTest.class,
+    DrawRectangleTest.class,
+    DrawRoundRectTest.class,
 })
 
 /**

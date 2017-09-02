@@ -1,5 +1,8 @@
 package jmri.server.json.throttle;
 
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.F;
+import static jmri.server.json.JSON.FORWARD;
 import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.IS_LONG_ADDRESS;
 import static jmri.server.json.JSON.STATUS;
@@ -29,18 +32,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     /**
      * Token for type for throttle status messages.
-     *
+     * <p>
      * {@value #THROTTLE}
      */
     public static final String THROTTLE = "throttle"; // NOI18N
-    /**
-     * {@value #ADDRESS}
-     */
-    public static final String ADDRESS = "address"; // NOI18N
-    /**
-     * {@value #FORWARD}
-     */
-    public static final String FORWARD = "forward"; // NOI18N
     /**
      * {@value #RELEASE}
      */
@@ -62,12 +57,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String SPEED_STEPS = "speedSteps"; // NOI18N
     /**
-     * Prefix for the throttle function keys (F0-F28).
-     * <p>
-     * {@value #F}
-     */
-    public static final String F = "F"; // NOI18N
-    /**
      * Used to notify clients of the number of clients controlling the same
      * throttle.
      * <p>
@@ -86,7 +75,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     /**
      * Creates a new JsonThrottle or returns an existing one if the request is
      * for an existing throttle.
-     *
+     * <p>
      * data can contain either a string {@link jmri.server.json.JSON#ID} node
      * containing the ID of a {@link jmri.jmrit.roster.RosterEntry} or an
      * integer {@link jmri.server.json.JSON#ADDRESS} node. If data contains an
@@ -101,7 +90,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      *                   client
      * @return The throttle
      * @throws jmri.server.json.JsonException if unable to get the requested
-     *                                        {@link jmri.Throttle} 
+     *                                        {@link jmri.Throttle}
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException {
         DccLocoAddress address = null;
@@ -369,6 +358,12 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             this.sendErrorMessage(new JsonException(512, Bundle.getMessage(server.getConnection().getLocale(), "ErrorThrottleRequestFailed", address, reason)), server);
             server.release(this);
         }
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address) {
+        // this is an automatically stealing impelementation.
+        jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     private void sendErrorMessage(JsonException message, JsonThrottleSocketService server) {

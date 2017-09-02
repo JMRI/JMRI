@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * lights nnn is the node address of the input or output bit (0-127) xxxx is a
  * bit number of the input or output bit (1-2048) examples: CT0B2 (node address
  * 0, bit 2), CS1B3 (node address 1, bit 3), CL11B234 (node address 11, bit234)
- * <P>
+ *
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006
  */
@@ -126,11 +126,11 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format returns 'true' if
-     * system name has a valid format, else returns 'false'
+     * Public static method to validate system name format.
+     *
      * @param systemName name to test
-     * @param type S, L, T sensor, light, turnout
-     * @return true if valid name
+     * @param type S, L, T for either sensor, light, turnout
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type) {
         // validate the system Name leader characters
@@ -152,7 +152,7 @@ public class SerialAddress {
             }
         }
         if (noB) {
-            // This is a CLnnnxxx address
+            // This is a TTnnnxxx address
             int num;
             try {
                 num = Integer.valueOf(systemName.substring(2)).intValue();
@@ -162,17 +162,17 @@ public class SerialAddress {
                 return (false);
             }
             if ((num < 1) || (num >= 128000)) {
-                log.error("number field out of range in system name: "
+                log.warn("number field out of range in system name: "
                         + systemName);
                 return (false);
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.error("bit number not in range 1 - 999 in system name: "
+                log.warn("bit number not in range 1 - 999 in system name: "
                         + systemName);
                 return (false);
             }
         } else {
-            // This is a CLnnnBxxxx address - validate the node address field
+            // This is a TTnnnBxxxx address - validate the node address field
             if (s.length() == 0) {
                 log.error("no node address before 'B' in system name: "
                         + systemName);
@@ -182,12 +182,12 @@ public class SerialAddress {
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.error("illegal character in node address field of system name: "
+                log.warn("illegal character in node address field of system name: "
                         + systemName);
                 return (false);
             }
             if ((num < 0) || (num >= 128)) {
-                log.error("node address field out of range in system name: "
+                log.warn("node address field out of range in system name: "
                         + systemName);
                 return (false);
             }
@@ -195,17 +195,16 @@ public class SerialAddress {
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field of system name: "
+                log.warn("illegal character in bit number field of system name: "
                         + systemName);
                 return (false);
             }
             if ((num < 1) || (num > 2048)) {
-                log.error("bit number field out of range in system name: "
+                log.warn("bit number field out of range in system name: "
                         + systemName);
                 return (false);
             }
         }
-
         return true;
     }
 

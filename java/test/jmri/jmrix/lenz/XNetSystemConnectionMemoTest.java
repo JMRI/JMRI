@@ -1,9 +1,10 @@
 package jmri.jmrix.lenz;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * XNetSystemConnectionMemoTest.java
@@ -48,7 +49,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
           @Override
           public int getCommandStationType(){
               return(0x10); // MultiMaus
-          };
+          }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
@@ -63,7 +64,7 @@ public class XNetSystemConnectionMemoTest extends TestCase {
           @Override
           public int getCommandStationType(){
               return(0x00); // LZV100
-          };
+          }
         });
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
@@ -92,12 +93,12 @@ public class XNetSystemConnectionMemoTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

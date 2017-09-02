@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     LI101AdapterTest.class,
     ConnectionConfigTest.class,
-    jmri.jmrix.lenz.li101.configurexml.PackageTest.class
+    jmri.jmrix.lenz.li101.configurexml.PackageTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

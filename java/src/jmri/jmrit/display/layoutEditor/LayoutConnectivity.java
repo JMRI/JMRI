@@ -199,6 +199,61 @@ public class LayoutConnectivity {
         return anchor;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false; // assume failure (pessimist!)
+        if ((o != null) && o instanceof LayoutConnectivity) {
+            LayoutConnectivity lc = (LayoutConnectivity) o;
+            do {    // poor mans throw block
+                if (((block1 == null) != (lc.getBlock1() == null))
+                        || ((block1 != null) && !block1.equals(lc.getBlock1()))) {
+                    break;
+                }
+                if (((block2 == null) != (lc.getBlock2() == null))
+                        || ((block2 != null) && !block2.equals(lc.getBlock2()))) {
+                    break;
+                }
+                if (direction != lc.getDirection()) {
+                    break;
+                }
+                if (((track1 == null) != (lc.getTrackSegment() == null))
+                        || ((track1 != null) && !track1.equals(lc.getTrackSegment()))) {
+                    break;
+                }
+                if (((connect2 == null) != (lc.getConnectedObject() == null))
+                        || ((connect2 != null) && !connect2.equals(lc.getConnectedObject()))) {
+                    break;
+                }
+                if (typeConnect2 != lc.getConnectedType()) {
+                    break;
+                }
+                if (((xover == null) != (lc.getXover() == null))
+                        || ((xover != null) && !xover.equals(lc.getXover()))) {
+                    break;
+                }
+                if (((anchor == null) != (lc.getAnchor() == null))
+                        || ((anchor != null) && !anchor.equals(lc.getAnchor()))) {
+                    break;
+                }
+                result = true;
+            } while (false);
+        }
+        return result;
+    }
 
-}
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + (this.block1 != null ? this.block1.hashCode() : 0);
+        hash = 37 * hash + (this.block2 != null ? this.block2.hashCode() : 0);
+        hash = 37 * hash + direction;
+        hash = 37 * hash + (this.track1 != null ? this.track1.hashCode() : 0);
+        hash = 37 * hash + (this.connect2 != null ? this.connect2.hashCode() : 0);
+        hash = 37 * hash + typeConnect2;
+        hash = 37 * hash + (this.xover != null ? this.xover.hashCode() : 0);
+        hash = 37 * hash + (this.anchor != null ? this.anchor.hashCode() : 0);
+        return hash;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+}   // class LayoutConnectivity

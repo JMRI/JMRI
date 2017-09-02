@@ -324,7 +324,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     protected int[] validSpeedValues = new int[]{19200, 57600};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     // private control members
     private boolean opened = false;

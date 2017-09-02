@@ -1,12 +1,16 @@
 package jmri.jmrix.qsi;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
  * Returns a list of valid lenz XpressNet Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class QSIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String QSI = "QSI Solutions";

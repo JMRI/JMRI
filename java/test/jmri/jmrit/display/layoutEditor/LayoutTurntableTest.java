@@ -16,29 +16,45 @@ import org.junit.Test;
  */
 public class LayoutTurntableTest {
 
+    LayoutEditor layoutEditor = null;
+    LayoutTurntable lt = null;
+
     @Test
-    public void testCtor() {
+    public void testNew() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTurntable t = new LayoutTurntable("test", new Point2D.Double(0.0, 0.0), new LayoutEditor());
-        Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("exists", lt);
+    }
+
+    @Test
+    public void testToString() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        String ltString = lt.toString();
+        Assert.assertNotNull("ltString not null", ltString);
+        Assert.assertEquals("LayoutTurntable My Turntable", ltString);
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
+        if(!GraphicsEnvironment.isHeadless()){
+
+            layoutEditor = new LayoutEditor();
+            Assert.assertNotNull("LayoutEditor not null", layoutEditor);
+
+            lt = new LayoutTurntable("My Turntable", new Point2D.Double(50.0, 100.0), layoutEditor);
+        }
     }
 
     @After
     public void tearDown() throws Exception {
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        if(layoutEditor!=null){
+           JUnitUtil.dispose(layoutEditor);
+        }
+        lt = null;
+        layoutEditor = null;
+        JUnitUtil.tearDown();
     }
-
 }

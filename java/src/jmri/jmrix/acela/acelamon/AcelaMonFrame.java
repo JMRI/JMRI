@@ -22,7 +22,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 
     @Override
     protected String title() {
-        return "Acela Command Monitor";
+        return Bundle.getMessage("AcelaMonitorTitle");
     }
 
     @Override
@@ -47,4 +47,5 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
         l.setBinary(true);
         nextLine("rep: \"" + l.toString() + "\"\n", "");
     }
+
 }

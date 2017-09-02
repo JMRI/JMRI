@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -211,7 +212,7 @@ public class LenzCommandStationTest extends TestCase {
   
     public void testGetUserName() {
         LenzCommandStation c = new LenzCommandStation();
-        Assert.assertEquals("XPressnet",c.getUserName()); // default.
+        Assert.assertEquals("XpressNet",c.getUserName()); // default.
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(new XNetInterfaceScaffold(c));
         c.setSystemConnectionMemo(memo);
         memo.setUserName("ABC");
@@ -262,12 +263,12 @@ jmri.util.JUnitAppender.assertErrorMessage("Send Packet Called without setting t
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

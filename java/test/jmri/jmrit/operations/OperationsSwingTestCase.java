@@ -84,7 +84,6 @@ public class OperationsSwingTestCase {
     public void tearDown() throws Exception {
         // restore locale
         Locale.setDefault(Locale.getDefault());
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

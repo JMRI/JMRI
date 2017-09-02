@@ -1,8 +1,10 @@
 package jmri.jmrix.nce;
 
+import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class
@@ -25,6 +27,41 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     public int numListeners() {
         return tcis.numListeners();
+    }
+
+    @Test
+    public void testLockCoding() {
+        Assert.assertTrue(Turnout.CABLOCKOUT != Turnout.PUSHBUTTONLOCKOUT);
+        // test for proper bit coding, needed because CABLOCKOUT | PUSHBUTTONLOCKOUT is used for "both"
+        Assert.assertTrue( (Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT) == 0);
+    }
+
+    @Test
+    public void testCanLockModes() {
+        // prepare an interface
+        tcis = new NceTrafficControlScaffold() {
+            public int getUsbSystem() { return NceTrafficController.USB_SYSTEM_NONE; }
+        };
+
+        Turnout t1 = new NceTurnout(tcis, "NT", 4);
+        
+        // by default, none
+        Assert.assertTrue( ! t1.canLock(Turnout.PUSHBUTTONLOCKOUT));
+        Assert.assertTrue( ! t1.canLock(Turnout.CABLOCKOUT));
+        Assert.assertTrue( ! t1.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT));
+        
+        t1.setFeedbackMode(Turnout.MONITORING);
+
+        // with MONITORING, just CABLOCKOUT
+        Assert.assertTrue( ! t1.canLock(Turnout.PUSHBUTTONLOCKOUT));
+        Assert.assertTrue( t1.canLock(Turnout.CABLOCKOUT));
+        Assert.assertTrue( t1.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT));
+        
+        // add a decoder
+        t1.setDecoderName(t1.getValidDecoderNames()[1]);  // [0] is the "unknown" NONE entry
+        Assert.assertTrue( t1.canLock(Turnout.PUSHBUTTONLOCKOUT));
+        Assert.assertTrue( t1.canLock(Turnout.CABLOCKOUT));
+        Assert.assertTrue( t1.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT));
     }
 
     @Override

@@ -8,6 +8,7 @@
 package jmri;
 
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -132,7 +133,7 @@ public class NmraPacketTest {
         // expect this to throw exception
         boolean threw = false;
         try {
-            byte[] ba = NmraPacket.accDecoderPkt(addr, 0, 0);
+            NmraPacket.accDecoderPkt(addr, 0, 0);
             Assert.fail("Expected IllegalArgumentException not thrown");
         } catch (IllegalArgumentException ex) {
             threw = true;
@@ -1462,7 +1463,7 @@ public class NmraPacketTest {
     public void testToStringNoPacket() {
         boolean thrown = false;
         try {
-            String display = NmraPacket.toString(new byte[]{});
+            NmraPacket.toString(new byte[]{});
         } catch (IllegalArgumentException e) {
             thrown = true;
         }
@@ -1491,12 +1492,12 @@ public class NmraPacketTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private static int decAddr(int accyAddr) {

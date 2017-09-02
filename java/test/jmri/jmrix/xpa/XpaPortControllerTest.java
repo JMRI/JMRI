@@ -15,8 +15,7 @@ public class XpaPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
        XpaTrafficController tc = new XpaTrafficController();
        apc = new XpaPortController(memo){
@@ -59,8 +58,7 @@ public class XpaPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

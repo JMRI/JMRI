@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainSwitchLists extends TrainCommon {
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     private static final char FORM_FEED = '\f';
     private static final boolean IS_PRINT_HEADER = true;
 
@@ -79,7 +80,7 @@ public class TrainSwitchLists extends TrainCommon {
         log.debug("Append: {} for location ({})", append, location.getName());
 
         // create switch list file
-        File file = TrainManagerXml.instance().createSwitchListFile(location.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createSwitchListFile(location.getName());
 
         PrintWriter fileOut = null;
         try {
@@ -104,7 +105,7 @@ public class TrainSwitchLists extends TrainCommon {
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
             if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
                         trainManager.getTrainScheduleActiveId());
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
@@ -399,19 +400,19 @@ public class TrainSwitchLists extends TrainCommon {
                                 newLine(fileOut, MessageFormat.format(
                                         messageFormatText = TrainSwitchListText.getStringHoldCar(),
                                         new Object[]{padAndTruncateString(car.getRoadName(),
-                                                CarRoads.instance().getMaxNameLength()),
+                                                InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
                                                 padAndTruncateString(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
                                                 padAndTruncateString(car.getTypeName().split("-")[0],
-                                                        CarTypes.instance().getMaxNameLength()),
+                                                        InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
                                                 padAndTruncateString(car.getLength() + LENGTHABV,
                                                         Control.max_len_string_length_name),
                                                 padAndTruncateString(car.getLoadName(),
-                                                        CarLoads.instance().getMaxNameLength()),
+                                                        InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
                                                 padAndTruncateString(trackName,
                                                         locationManager.getMaxTrackNameLength()),
                                                 padAndTruncateString(car.getColor(),
-                                                        CarColors.instance().getMaxNameLength())}));
+                                                        InstanceManager.getDefault(CarColors.class).getMaxNameLength())}));
                             }
                         }
                         // now do set outs at this location
@@ -455,7 +456,7 @@ public class TrainSwitchLists extends TrainCommon {
     }
 
     public void printSwitchList(Location location, boolean isPreview) {
-        File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
+        File buildFile = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(location.getName());
         if (!buildFile.exists()) {
             log.warn("Switch list file missing for location ({})", location.getName());
             return;

@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -20,18 +21,20 @@ public class EditorPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SdfBuffer buff = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
         Assert.assertNotNull(buff);
-        new EditorFrame(buff).setVisible(true);
+        EditorFrame f = new EditorFrame(buff);
+        f.setVisible(true);
+        f.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

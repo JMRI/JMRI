@@ -30,12 +30,14 @@ import jmri.profile.ProfileUtils;
 import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
 import jmri.server.web.spi.WebMenuItem;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 import org.eclipse.jetty.util.component.LifeCycle;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class WebAppManager extends AbstractPreferencesManager {
 
     private final HashMap<Profile, WatchService> watcher = new HashMap<>();

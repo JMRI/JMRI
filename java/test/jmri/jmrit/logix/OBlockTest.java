@@ -4,6 +4,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,6 +24,16 @@ public class OBlockTest {
         // the following match is required by the Javadoc
         Assert.assertTrue("Block.UNKNOWN == OBlock.DARK", Block.UNKNOWN == OBlock.DARK);
     }*/
+
+    @Test
+    public void testCTor(){
+       Assert.assertNotNull("OBlock Creation",new OBlock("OB01"));
+    }
+ 
+   @Test
+    public void testCTor2Param(){
+       Assert.assertNotNull("OBlock Creation",new OBlock("OB01","test OBlock"));
+    }
 
     @Test
     public void testSeparateCoding() {
@@ -154,7 +165,7 @@ public class OBlockTest {
     @Test
     public void testAddPortal() {
         OBlock b = blkMgr.createNewOBlock("OB0", "");
-        PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);;
+        PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal p = portalMgr.providePortal("foop");
         b.addPortal(p);
         Assert.assertEquals("No portals", 0, b.getPortals().size());
@@ -228,14 +239,12 @@ public class OBlockTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        blkMgr = new OBlockManager();
+        JUnitUtil.setUp();        blkMgr = new OBlockManager();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

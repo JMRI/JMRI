@@ -30,19 +30,17 @@ public class FollowerActionTest {
         new FollowerAction("test").actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(FollowerPanel.rb.getString("TitleFollower"), true, true);
         Assert.assertNotNull(f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initRouteManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

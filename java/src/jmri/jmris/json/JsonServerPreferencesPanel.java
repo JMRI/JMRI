@@ -10,12 +10,15 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Randall Wood Copyright (C) 2012, 2015
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     public static final int MAX_HEARTBEAT_INTERVAL = 3600;
@@ -29,7 +32,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
-        this.preferences.apply(JsonServerPreferences.getDefault());
+        this.preferences.apply(InstanceManager.getDefault(JsonServerPreferences.class));
         initGUI();
         setGUI();
     }
@@ -157,8 +160,8 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            JsonServerPreferences.getDefault().apply(this.preferences);
-            JsonServerPreferences.getDefault().save();
+            InstanceManager.getDefault(JsonServerPreferences.class).apply(this.preferences);
+            InstanceManager.getDefault(JsonServerPreferences.class).save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -167,13 +170,13 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(JsonServerPreferences.getDefault())
-                || JsonServerPreferences.getDefault().isDirty();
+        return this.preferences.compareValuesDifferent(InstanceManager.getDefault(JsonServerPreferences.class))
+                || InstanceManager.getDefault(JsonServerPreferences.class).isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return JsonServerPreferences.getDefault().isRestartRequired();
+        return InstanceManager.getDefault(JsonServerPreferences.class).isRestartRequired();
     }
 
     @Override

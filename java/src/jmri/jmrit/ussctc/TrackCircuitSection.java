@@ -1,7 +1,6 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
-import java.util.*;
 
 /**
  * Drive a single Track Circuit section on a USS CTC panel.
@@ -38,6 +37,10 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
         this.station = station;
         this.bell = bell;
 
+        // align at start
+        indicationComplete(indicationStart());
+        
+        // attach listeners for future changes
         sm.provideSensor(inputSensor).addPropertyChangeListener((java.beans.PropertyChangeEvent e) -> {layoutTurnoutChanged(e);});
     }
 
@@ -60,7 +63,9 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
     Bell bell;
 
     Station station;
- 
+    public Station getStation() { return station; }
+    public String getName() { return "TC for "+hInputSensor.getBean().getDisplayName(); }
+
      /**
      * Start of sending code operation.
      * @return code line value to transmit

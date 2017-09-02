@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -14,8 +14,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -26,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an edit panel for a block object
+ * Provides an edit panel for a Block object
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
@@ -40,8 +43,6 @@ public class BlockEditAction extends BeanEditAction {
     static final java.util.Vector<String> speedList = new java.util.Vector<String>();
     private final static Logger log = LoggerFactory.getLogger(BlockEditAction.class);
 
-    private DecimalFormat twoDigit = new DecimalFormat("0.00");
-
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockEdit";
@@ -52,7 +53,7 @@ public class BlockEditAction extends BeanEditAction {
         super.initPanels();
         sensor();
         reporterDetails();
-        physcialDetails();
+        physicalDetails();
     }
 
     @Override
@@ -120,7 +121,7 @@ public class BlockEditAction extends BeanEditAction {
         return reporter;
     }
 
-    JTextField lengthField = new JTextField(20);
+    JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
     JComboBox<String> curvatureField = new JComboBox<String>(curveOptions);
     JCheckBox permissiveField = new JCheckBox();
     JComboBox<String> speedField;
@@ -130,7 +131,7 @@ public class BlockEditAction extends BeanEditAction {
 
     String defaultBlockSpeedText;
 
-    BeanItemPanel physcialDetails() {
+    BeanItemPanel physicalDetails() {
 
         defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
@@ -144,30 +145,12 @@ public class BlockEditAction extends BeanEditAction {
         basic.setName(Bundle.getMessage("BlockPhysicalProperties"));
 
         basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("BlockPropertiesText")));
-        basic.addItem(new BeanEditItem(lengthField, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText")));
-
-        lengthField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent keyEvent) {
-                String text = lengthField.getText();
-
-                // ensure data valid
-                try {
-                    jmri.util.IntlUtilities.floatValue(text);
-                } catch (java.text.ParseException e) {
-                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[]{Bundle.getMessage("BlockLengthColName")});
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "length", false, false);
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent keyEvent) {
-            }
-        });
+        lengthSpinner.setModel(
+                            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
+        lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
+        lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
+        lengthSpinner.setValue(Float.valueOf(0f)); // reset from possible previous use
+        basic.addItem(new BeanEditItem(lengthSpinner, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText")));
 
         ButtonGroup rg = new ButtonGroup();
         rg.add(inch);
@@ -227,11 +210,7 @@ public class BlockEditAction extends BeanEditAction {
                     speedList.add(speed);
                 }
                 float len = 0.0f;
-                try {
-                    len = jmri.util.IntlUtilities.floatValue(lengthField.getText());
-                } catch (java.text.ParseException ex2) {
-                    log.error("Error parsing length value of \"{}\"", lengthField.getText());
-                }
+                len = (Float) lengthSpinner.getValue();
                 if (inch.isSelected()) {
                     blk.setLength(len * 25.4f);
                 } else {
@@ -244,7 +223,7 @@ public class BlockEditAction extends BeanEditAction {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
-                lengthField.setText(twoDigit.format(((Block) bean).getLengthMm()));
+                lengthSpinner.setValue(((Block) bean).getLengthMm());
 
                 if (blk.getCurvature() == Block.NONE) {
                     curvatureField.setSelectedItem(0);
@@ -263,13 +242,13 @@ public class BlockEditAction extends BeanEditAction {
 
                 speedField.setEditable(true);
                 speedField.setSelectedItem(speed);
-                double len = 0.0;
+                float len = 0.0f;
                 if (inch.isSelected()) {
                     len = blk.getLengthIn();
                 } else {
                     len = blk.getLengthCm();
                 }
-                lengthField.setText(twoDigit.format(len));
+                lengthSpinner.setValue(len);
                 permissiveField.setSelected(((Block) bean).getPermissiveWorking());
             }
         });
@@ -278,14 +257,14 @@ public class BlockEditAction extends BeanEditAction {
     }
 
     private void updateLength() {
-        double len = 0.0;
+        float len = 0.0f;
         Block blk = (Block) bean;
         if (inch.isSelected()) {
             len = blk.getLengthIn();
         } else {
             len = blk.getLengthCm();
         }
-        lengthField.setText(twoDigit.format(len));
+        lengthSpinner.setValue(len);
     }
 
     JmriBeanComboBox sensorComboBox;
@@ -316,7 +295,7 @@ public class BlockEditAction extends BeanEditAction {
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 jmri.jmrit.display.layoutEditor.LayoutBlock lBlk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
-                //If the block is related to a layoutblock then set the sensor details there and allow that to propergate the changes down.
+                //If the block is related to a layoutblock then set the sensor details there and allow that to propagate the changes down.
                 if (lBlk != null) {
                     lBlk.validateSensor(sensorComboBox.getSelectedDisplayName(), null);
                 } else {

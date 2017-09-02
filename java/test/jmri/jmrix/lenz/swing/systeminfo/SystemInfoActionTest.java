@@ -1,12 +1,13 @@
 package jmri.jmrix.lenz.swing.systeminfo;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
 import org.junit.Before;
-import org.junit.After;
-import javax.swing.JFrame;
+import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -35,13 +36,13 @@ public class SystemInfoActionTest {
     @Test
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SystemInfoAction action = new SystemInfoAction("Xpressnet System Information",memo);
+        SystemInfoAction action = new SystemInfoAction("XpressNet System Information", memo);
         action.actionPerformed(null);
-        // wait for frame with the value of "XPressNet System Information 
+        // wait for frame with the value of "XpressNet System Information
         // in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
-        JFrame frame = JFrameOperator.waitJFrame("XPressNet System Information", false, false);
+        JFrame frame = JFrameOperator.waitJFrame("XpressNet System Information", false, false);
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SystemInfoFrame.class.getName(), frame.getClass().getName());
@@ -49,17 +50,16 @@ public class SystemInfoActionTest {
     }
 
     @Before
-    public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
     }
 
     @After
-    public void tearDown(){
-       jmri.util.JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,13 +1,15 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,25 +27,24 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         Assert.assertNotNull(f);
 
         // TODO improve test
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testScheduleOptionsFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Track track = lManager.getLocationByName("Test Loc E").getTrackByName("Test Track", null);
-        ScheduleManager sManager = ScheduleManager.instance();
+        ScheduleManager sManager = InstanceManager.getDefault(ScheduleManager.class);
         Schedule schedule = sManager.newSchedule("test schedule");
         ScheduleEditFrame f = new ScheduleEditFrame(schedule, track);
         Assert.assertNotNull(f);
 
         // TODO improve test
-
         ScheduleOptionsFrame sf = new ScheduleOptionsFrame(f);
         Assert.assertNotNull(sf);
-        sf.dispose();
-        f.dispose();
+        JUnitUtil.dispose(sf);
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         Assert.assertNotNull(f);
 
         // TODO improve test
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -63,12 +64,12 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         Assert.assertNotNull(f);
 
         // TODO improve test
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.addTrack("Test Track", Track.SPUR);
         Location l2 = lManager.newLocation("Test Loc D");

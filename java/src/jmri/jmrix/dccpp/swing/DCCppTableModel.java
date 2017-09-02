@@ -6,8 +6,8 @@
 package jmri.jmrix.dccpp.swing;
 
 import java.util.Iterator;
-import javax.swing.table.AbstractTableModel;
 import java.util.Vector;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -46,7 +46,7 @@ public abstract class DCCppTableModel extends AbstractTableModel {
             }
         }
         return(false);
-    };
+    }
     
     public boolean isNewRow(int row) {
         //return((boolean) isNew.elementAt(row));

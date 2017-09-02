@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Randall Wood Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2012, 2017
  */
 public class WebServerPreferences extends PreferencesBean {
 
@@ -150,10 +150,17 @@ public class WebServerPreferences extends PreferencesBean {
         this.readPreferences(sharedPreferences);
     }
 
+    /**
+     * Get the current default WebServerPreferences object.
+     *
+     * @return the default WebServerPrefeences instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with an argument
+     * of {@code WebServerPreferences.class} instead
+     */
+    @Deprecated
     public static WebServerPreferences getDefault() {
-        return InstanceManager.getOptionalDefault(WebServerPreferences.class).orElseGet(() -> {
-            return InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
-        });
+        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     private void readPreferences(Preferences sharedPreferences) {

@@ -3,6 +3,7 @@ package jmri.jmrit.symbolicprog;
 import java.util.List;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -20,8 +21,7 @@ public class FnMapPanelTest extends TestCase {
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
@@ -34,8 +34,7 @@ public class FnMapPanelTest extends TestCase {
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
@@ -64,12 +63,12 @@ public class FnMapPanelTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

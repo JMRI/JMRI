@@ -28,25 +28,24 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
-
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
-        suite.addTest(LayoutBlockTest.suite());
-        suite.addTest(LayoutBlockManagerTest.suite());
-        suite.addTest(BlockValueFileTest.suite());
-        suite.addTest(LayoutBlockConnectivityToolsTest.suite());
-        suite.addTest(LayoutTurnoutTest.suite());
-        suite.addTest(LayoutConnectivityTest.suite());
-
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockManagerTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(BlockValueFileTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutBlockConnectivityToolsTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutConnectivityTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorLoadAndStoreTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.blockRoutingTable.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
-        suite.addTest(LayoutEditorActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorActionTest.class)); 
         suite.addTest(new JUnit4TestAdapter(LayoutEditorTest.class));
+        suite.addTest(new JUnit4TestAdapter(LayoutTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutEditorAuxToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(ConnectivityUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(BlockContentsIconTest.class));
-        suite.addTest(MultiIconEditorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MultiIconEditorTest.class));
         suite.addTest(new JUnit4TestAdapter(MultiSensorIconFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(LayoutTurntableTest.class));
         suite.addTest(new JUnit4TestAdapter(LevelXingTest.class));
@@ -57,7 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TrackSegmentTest.class));
         suite.addTest(new JUnit4TestAdapter(TransitCreationToolTest.class));
         suite.addTest(LayoutEditorWindowTest.suite());
-        suite.addTest(LEConnectivityTest.suite());
+        suite.addTest(LayoutEditorConnectivityTest.suite());
         suite.addTest(new JUnit4TestAdapter(LayoutEditorFindItemsTest.class));
         return suite;
     }

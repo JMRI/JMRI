@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -130,7 +131,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     /**
      * Add icons to panel.
-     * 
+     *
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
@@ -166,7 +167,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         _iconPanel.addMouseListener(this);
     }
 
-    /* 
+    /*
      *  for plain icons and backgrounds, families panel is the icon panel of the one family
      */
     protected void removeIconFamiliesPanel() {
@@ -377,7 +378,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             level = zLevel;
 
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");            
+            //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
         }
 
         @Override
@@ -484,7 +485,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
             _iconMap.put(label.getName(), newIcon);
             if (!_update) {  // only prompt for save from palette
-                ImageIndexEditor.indexChanged(true);
+                InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
             }
             removeIconFamiliesPanel();
             addIconsToPanel(_iconMap);

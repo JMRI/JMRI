@@ -1,8 +1,7 @@
 package jmri.jmrit.ussctc;
 
+import jmri.util.JUnitUtil;
 import org.junit.*;
-
-import jmri.util.*;
 
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
@@ -28,6 +27,9 @@ public class StationTest {
             public void codeValueDelivered(CodeGroupTwoBits value) { }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         
         countCodeSend = 0;
@@ -48,6 +50,9 @@ public class StationTest {
             }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
             public CodeGroupTwoBits codeSendStart() { countCodeSend2++; return CodeGroupTwoBits.Double01; }
@@ -57,6 +62,9 @@ public class StationTest {
             }
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
             public void indicationComplete(CodeGroupTwoBits value) {}
+            
+            public Station getStation() { return null; }
+            public String getName() { return ""; }
         });
         
         countCodeSend = 0;
@@ -82,8 +90,7 @@ public class StationTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -95,8 +102,7 @@ public class StationTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -2,8 +2,8 @@ package jmri.jmrix.cmri.serial.networkdriver;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
  * Definition of objects to handle configuring a layout connection via a
@@ -35,7 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return NAME;
     }
 
-    JButton b = new JButton("Configure C/MRI nodes");
+    JButton b = new JButton(Bundle.getMessage("ConfigureNodesTitle")); // = Configure C/MRI
 
     @Override
     public void loadDetails(JPanel details) {

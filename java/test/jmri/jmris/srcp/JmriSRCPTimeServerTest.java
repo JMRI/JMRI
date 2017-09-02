@@ -1,17 +1,19 @@
 package jmri.jmris.srcp;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTimeServer class
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */
-public class JmriSRCPTimeServerTest {
+public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBase {
 
-    @Test
-    public void testCtor() {
+    @Before
+    @Override
+    public void setUp(){
+        jmri.util.JUnitUtil.resetInstanceManager();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -20,8 +22,14 @@ public class JmriSRCPTimeServerTest {
                     public void write(int b) throws java.io.IOException {
                     }
                 });
-        JmriSRCPTimeServer a = new JmriSRCPTimeServer(output);
-        Assert.assertNotNull(a);
+        a = new JmriSRCPTimeServer(output);
+    }
+
+    @After
+    @Override
+    public void tearDown(){
+       a = null;
+       jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

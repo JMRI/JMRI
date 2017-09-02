@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -9,12 +10,14 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
@@ -30,9 +33,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014
+ * 2014
  */
-public class TrainManager implements java.beans.PropertyChangeListener {
+public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     private static final String NONE = "";
 
@@ -72,20 +75,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     private int _id = 0; // train ids
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized TrainManager instance() {
-        TrainManager instance = jmri.InstanceManager.getNullableDefault(TrainManager.class);
-        if (instance == null) {
-            log.debug("TrainManager creating instance");
-            // create and load
-            instance = new TrainManager();
-            jmri.InstanceManager.setDefault(TrainManager.class,instance);
-            OperationsSetupXml.instance(); // load setup
-            TrainManagerXml.instance(); // load trains
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManager returns instance " + instance);
-        }
-        return instance;
+        return InstanceManager.getDefault(TrainManager.class);
     }
 
     /**
@@ -282,7 +281,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * @return requested Train object or null if none exists
      */
     public Train getTrainByName(String name) {
-        if (!TrainManagerXml.instance().isTrainFileLoaded()) {
+        if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getTrainByName called before trains completely loaded!");
         }
         Train train;
@@ -299,7 +298,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     public Train getTrainById(String id) {
-        if (!TrainManagerXml.instance().isTrainFileLoaded()) {
+        if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getTrainById called before trains completely loaded!");
         }
         return _trainHashTable.get(id);
@@ -308,6 +307,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing train or creates a new train if needed requires train's
      * name creates a unique id for this train
+     *
      * @param name The train's name.
      *
      *
@@ -328,6 +328,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param train The Train to be added.
      */
     public void register(Train train) {
@@ -345,6 +346,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
      * @param train The Train to delete.
      */
     public void deregister(Train train) {
@@ -409,7 +411,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param car The car looking for a train.
+     * @param car         The car looking for a train.
      * @param buildReport The build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
@@ -420,7 +422,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param car The car looking for a train.
+     * @param car          The car looking for a train.
      * @param excludeTrain The only train not to try.
      * @param buildReport  The build report for logging.
      * @return Train that can service car from its current location to the its
@@ -434,7 +436,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
                     .getMessage("trainFindForCar"), new Object[]{car.toString(), car.getLocationName(),
-                            car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
+                car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
         }
         for (Train train : getTrainsByIdList()) {
             if (train == excludeTrain) {
@@ -591,7 +593,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     private List<Train> getList() {
-        if (!TrainManagerXml.instance().isTrainFileLoaded()) {
+        if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }
         List<Train> out = new ArrayList<Train>();
@@ -713,7 +715,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Makes a copy of an existing train. Only the train's description isn't
      * copied.
      *
-     * @param train the train to copy
+     * @param train     the train to copy
      * @param trainName the name of the new train
      * @return a copy of train
      */
@@ -863,6 +865,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Sets the switch list status for all built trains. Used for switch lists
      * in consolidated mode.
+     *
      * @param status Train.PRINTED, Train.UNKNOWN
      */
     public void setTrainsSwitchListStatus(String status) {
@@ -913,11 +916,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                 if (isBuildMessagesEnabled()) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                             .getMessage("NeedToBuildBeforePrinting"), new Object[]{train.getName(),
-                                    (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                            : Bundle.getMessage("print"))}),
+                        (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                        : Bundle.getMessage("print"))}),
                             MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
                                     new Object[]{isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print")}),
+                                                .getMessage("print")}),
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -935,8 +938,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                     status = false;
                     int response = JOptionPane.showConfirmDialog(null, Bundle
                             .getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
-                                    .getMessage("TerminateTrain"),
-                                    new Object[]{train.getName(), train.getDescription()}),
+                            .getMessage("TerminateTrain"),
+                            new Object[]{train.getName(), train.getDescription()}),
                             JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION) {
                         train.terminate();
@@ -954,8 +957,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void load(Element root) {
         if (root.getChild(Xml.OPTIONS) != null) {
             Element options = root.getChild(Xml.OPTIONS);
-            TrainCustomManifest.instance().load(options);
-            TrainCustomSwitchList.instance().load(options);
+            InstanceManager.getDefault(TrainCustomManifest.class).load(options);
+            InstanceManager.getDefault(TrainCustomSwitchList.class).load(options);
             Element e = options.getChild(Xml.TRAIN_OPTIONS);
             Attribute a;
             if (e != null) {
@@ -975,12 +978,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                     _runFile = a.getValue().equals(Xml.TRUE);
                 }
                 // verify that the Trains Window action is valid
-                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null &&
-                        (a.getValue().equals(TrainsTableFrame.MOVE) ||
-                                a.getValue().equals(TrainsTableFrame.RESET) ||
-                                a.getValue().equals(TrainsTableFrame.TERMINATE) ||
-                                a.getValue().equals(
-                                        TrainsTableFrame.CONDUCTOR))) {
+                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null
+                        && (a.getValue().equals(TrainsTableFrame.MOVE)
+                        || a.getValue().equals(TrainsTableFrame.RESET)
+                        || a.getValue().equals(TrainsTableFrame.TERMINATE)
+                        || a.getValue().equals(
+                                TrainsTableFrame.CONDUCTOR))) {
                     _trainAction = a.getValue();
                 }
             }
@@ -1042,6 +1045,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     *
      * @param root common Element for operations-trains.dtd.
      *
      */
@@ -1087,8 +1091,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             options.addContent(es);
         }
 
-        TrainCustomManifest.instance().store(options); // save custom manifest elements
-        TrainCustomSwitchList.instance().store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomManifest.class).store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom manifest elements
 
         root.addContent(options);
 
@@ -1103,16 +1107,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     /**
      * Check for car type and road name replacements. Also check for engine type
      * replacement.
-     *
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("TrainManager sees property change: " +
-                e.getPropertyName() +
-                " old: " +
-                e.getOldValue() +
-                " new " +
-                e.getNewValue()); // NOI18N
+        log.debug("TrainManager sees property change: "
+                + e.getPropertyName()
+                + " old: "
+                + e.getOldValue()
+                + " new "
+                + e.getNewValue()); // NOI18N
         // TODO use listener to determine if load name has changed
         // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
         // replaceLoad((String)e.getOldValue(), (String)e.getNewValue());
@@ -1130,13 +1133,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManager.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManager.class);
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
+    }
 
 }
-
-

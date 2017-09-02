@@ -2,8 +2,10 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("all directions", ALL, t.getTrainDirections());
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -62,7 +64,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
         Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
-        Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
+        Assert.assertEquals("Direction All before change", ALL, t.getTrainDirections());
 
         // deselect east and south check boxes
         enterClickAndLeave(f.eastCheckBox);
@@ -72,7 +74,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -103,7 +105,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
         Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -131,7 +133,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(f.saveTrackButton);
 
-        f.dispose();
+        JUnitUtil.dispose(f);
 
         // now reload
         Location l2 = lManager.getLocationByName("Test Loc C");
@@ -146,12 +148,12 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of interchanges", 2, fl.interchangeModel.getRowCount());
         Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
 
-        fl.dispose();
+        JUnitUtil.dispose(fl);
     }
 
     private void loadLocations() {
         // create 5 locations
-        LocationManager lManager = LocationManager.instance();
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.newLocation("Test Loc E");
         l1.setLength(1001);
         Location l2 = lManager.newLocation("Test Loc D");
@@ -174,10 +176,10 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         loadLocations();
 
         // add UP road name
-        CarRoads cr = CarRoads.instance();
+        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("UP");
 
-        lManager = LocationManager.instance();
+        lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
     }
 

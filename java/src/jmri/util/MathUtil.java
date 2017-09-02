@@ -1,5 +1,7 @@
 package jmri.util;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -17,11 +19,21 @@ import javax.annotation.CheckReturnValue;
 @CheckReturnValue
 public final class MathUtil {
 
+    public static Point2D zeroPoint2D = new Point2D.Double(0, 0);
+    public static Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
+    
     /**
      * @return the point {0, 0}
      */
     public static Point2D zeroPoint2D() {
-        return new Point2D.Double(0, 0);
+        return zeroPoint2D;
+    }
+
+    /**
+     * @return the point {POSITIVE_INFINITY, POSITIVE_INFINITY}
+     */
+    public static Point2D infinityPoint2D() {
+        return infinityPoint2D;
     }
 
     /**
@@ -58,6 +70,37 @@ public final class MathUtil {
      */
     public static Point Point2DToPoint(Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * return the minimum coordinates of two points
+     * @param pA the first point
+     * @param pB the second point
+     * @return the minimum coordinates
+     */
+    public static Point2D min(Point2D pA, Point2D pB) {
+        return new Point2D.Double(Math.min(pA.getX(), pB.getX()), Math.min(pA.getY(), pB.getY()));
+    }
+
+    /**
+     * return the maximum coordinates of two points
+     * @param pA the first point
+     * @param pB the second point
+     * @return the maximum coordinates
+     */
+    public static Point2D max(Point2D pA, Point2D pB) {
+        return new Point2D.Double(Math.max(pA.getX(), pB.getX()), Math.max(pA.getY(), pB.getY()));
+    }
+
+    /**
+     * return the coordinates of a point pinned between two other points
+     * @param pA the first point
+     * @param pB the second point
+     * @param pC the third point
+     * @return the coordinated of pA pined between pB and pC
+     */
+    public static Point2D pin(Point2D pA, Point2D pB, Point2D pC) {
+        return min(max(pA, min(pB, pC)), max(pB, pC));
     }
 
     /**
@@ -102,6 +145,16 @@ public final class MathUtil {
     }
 
     /**
+     * multiply a point times a point
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the first point multiplied by the second
+     */
+    public static Point2D multiply(Point2D p1, Point2D p2) {
+        return new Point2D.Double(p1.getX() * p2.getX(), p1.getY() * p2.getY());
+    }
+
+    /**
      * divide a point times a scalar
      * @param p the point
      * @param s the scalar
@@ -109,6 +162,61 @@ public final class MathUtil {
      */
     public static Point2D divide(Point2D p, double s) {
         return new Point2D.Double(p.getX() / s, p.getY() / s);
+    }
+
+    /**
+     * offset a point by two scalars
+     * @param p the point
+     * @param x the x scalar
+     * @param y the y scalar
+     * @return the point offset by the scalars
+     */
+    public static Point2D offset(Point2D p, double x, double y) {
+        return new Point2D.Double(p.getX() + x, p.getY() + y);
+    }
+
+    /**
+     * rotate x and y coordinates (by radians)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateRAD(double x, double y, double a) {
+        double cosA = Math.cos(a), sinA = Math.sin(a);
+        return new Point2D.Double(cosA * x - sinA * y, sinA * x + cosA * y);
+    }
+
+    /**
+     * rotate x and y coordinates (by degrees)
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateDEG(double x, double y, double a) {
+        return rotateRAD(x, y, Math.toRadians(a));
+    }
+
+    /**
+
+     * rotate a point (by radians)
+     * @param p the point
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateRAD(Point2D p, double a) {
+        return rotateRAD(p.getX(), p.getY(), a);
+    }
+
+    /**
+     * rotate a point (by degrees)
+     * @param p the point
+     * @param a the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    public static Point2D rotateDEG(Point2D p, double a) {
+        return rotateRAD(p, Math.toRadians(a));
     }
 
     /**
@@ -163,6 +271,27 @@ public final class MathUtil {
             result = divide(p, length);
         }
         return result;
+    }
+
+    /**
+     * compute the angle (direction in radians) from point 1 to point 2
+     * @param p1 the first Point2D
+     * @param p2 the second Point2D
+     * @return the angle in radians
+     */
+    public static double computeAngleRAD(Point2D p1, Point2D p2) {
+        Point2D delta = subtract(p1, p2);
+        return Math.atan2(delta.getX(), delta.getY());
+    }
+
+    /**
+     * compute the angle (direction in degrees) from point 1 to point 2
+     * @param p1 the first Point2D
+     * @param p2 the second Point2D
+     * @return the angle in degrees
+     */
+    public static double computeAngleDEG(Point2D p1, Point2D p2) {
+        return Math.toDegrees(computeAngleRAD(p1, p2));
     }
 
     /**
@@ -282,6 +411,20 @@ public final class MathUtil {
     }
 
     /**
+     * Wrap an int between two values (for example +/- 180 or 0-360 degrees)
+     * @param inValue the value
+     * @param inMin the lowest value
+     * @param inMax the highest value
+     * @return the value wrapped between the lowest and highest values
+     * Note: THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN AND MAX
+     * (And yes, this works correctly with negative numbers)
+     */
+    public static int wrap(int inValue, int inMin, int inMax) {
+        int valueRange = inMax - inMin;
+        return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
+    }
+
+    /**
      * Wrap a double between two values (for example +/- 180 or 0-360 degrees)
      * @param inValue the value
      * @param inMin the lowest value
@@ -327,8 +470,18 @@ public final class MathUtil {
      * @param a the angle
      * @return the angle wrapped between 0 and 360
      */
-    public static double normalizeAngle(double a) {
+    public static double normalizeAngleDEG(double a) {
         return wrap360(a);
+    }
+
+    /**
+     * calculate the relative difference (+/-180) between two angles
+     * @param a the first angle
+     * @param b the second angle
+     * @return the relative difference between the two angles
+     */
+    public static double diffAngleDEG(double a, double b) {
+        return wrapPM180(a - b);
     }
 
     /**
@@ -337,8 +490,8 @@ public final class MathUtil {
      * @param b the second angle
      * @return the absolute difference between the two angles
      */
-    public static double diffAngle(double a, double b) {
-        return Math.abs(wrapPM180(a - b));
+    public static double absDiffAngleDEG(double a, double b) {
+        return Math.abs(diffAngleDEG(a, b));
     }
 
     /**
@@ -389,6 +542,24 @@ public final class MathUtil {
     }
 
     /**
+     * returns the origin (top left) of the rectangle
+     * @param r the rectangle
+     * @return the origin of the rectangle
+     */
+    public static Point2D origin(Rectangle2D r) {
+        return new Point2D.Double(r.getX(), r.getY());
+    }
+
+    /**
+     * returns the size of the rectangle
+     * @param r the rectangle
+     * @return the size of the rectangle
+     */
+    public static Point2D size(Rectangle2D r) {
+        return new Point2D.Double(r.getWidth(), r.getHeight());
+    }
+
+    /**
      * calculate the center of the rectangle
      * @param r the rectangle
      * @return the center of the rectangle
@@ -400,11 +571,22 @@ public final class MathUtil {
     /**
      * offset a rectangle
      * @param r the rectangle
+     * @param x the horzontial offset
+     * @param y the vertical offset
+     * @return the offset rectangle
+     */
+    public static Rectangle2D offset(Rectangle2D r, double x, double y) {
+        return new Rectangle2D.Double(r.getX() + x, r.getY() + y, r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * offset a rectangle
+     * @param r the rectangle
      * @param o the offset
      * @return the offset rectangle
      */
     public static Rectangle2D offset(Rectangle2D r, Point2D o) {
-        return new Rectangle2D.Double(r.getX() + o.getX(), r.getY() + o.getY(), r.getWidth(), r.getHeight());
+        return offset(r, o.getX(), o.getY());
     }
 
     /**
@@ -423,10 +605,9 @@ public final class MathUtil {
      * @param s the scale
      * @return the scaled rectangle
      */
+     //TODO: add test case
     public static Rectangle2D scale(Rectangle2D r, double s) {
-        Point2D c = center(r);
-        double w = r.getWidth() * s, h = r.getHeight() * s;
-        return new Rectangle2D.Double(c.getX() - (w / 2), c.getY() - (h / 2), w, h);
+        return new Rectangle2D.Double(r.getX() * s, r.getY() * s, r.getWidth() * s, r.getHeight() * s);
     }
 
     /**

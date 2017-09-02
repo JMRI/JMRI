@@ -41,14 +41,26 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         }
         NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
+        JUnitUtil.dispose(nxFrame);
     }
 
-    public void testGetInstance() {
+    public void testRoutePanel() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
+
+        nxFrame.setVisible(true);
+        pressButton(nxFrame, Bundle.getMessage("Calculate"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SetEndPoint", Bundle.getMessage("OriginBlock")), "OK");
+
+        nxFrame._origin.blockBox.setText("NowhereBlock");
+        pressButton(nxFrame, Bundle.getMessage("Calculate"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BlockNotFound", "NowhereBlock"), "OK");
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SetEndPoint", Bundle.getMessage("OriginBlock")), "OK");
+
+        TestHelper.disposeWindow(nxFrame, this);
     }
 
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
@@ -64,33 +76,10 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
         NXFrame nxFrame = NXFrame.getDefault();
-        nxFrame.init();
         nxFrame.setVisible(true);
-        nxFrame.setThrottleIncrement(0.075f);
-        nxFrame.setTimeInterval(1000);
-        nxFrame.setThrottleFactor(0.75f);
-        flushAWT();
-        pressButton(nxFrame, Bundle.getMessage("ButtonCancel"));
-
-        // wait to calm down after cancel
-        flushAWT();
-        flushAWT();
-
-        // after cancel, try again
-        nxFrame = NXFrame.getDefault();
-        nxFrame.init();
-        nxFrame.setVisible(true);
-        nxFrame._maxSpeedBox.setText("0.30");
-
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");
-
-        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
-        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("NoLoco"), "OK");
-        nxFrame.setAddress("666");
-        nxFrame.setTrainName("Nick");
-        flushAWT();
-        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
+        pressButton(nxFrame, Bundle.getMessage("Calculate"));
 
         DialogFinder finder = new DialogFinder(Bundle.getMessage("DialogTitle"));
         java.awt.Container pickDia = (java.awt.Container) finder.find();
@@ -110,7 +99,21 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         pressButton(pickDia, Bundle.getMessage("ButtonSelect"));
         flushAWT();     //pause for NXFrame to make commands
 
-        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+        nxFrame.setMaxSpeed(2);
+        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
+        flushAWT();
+        
+        nxFrame.setMaxSpeed(0.6f);
+        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
+        confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
+        flushAWT();
+
+        nxFrame.setTrainInfo("666");
+        nxFrame.setTrainName("Nick");
+        pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
+
+       WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
         WarrantTableModel model = tableFrame.getModel();
         Assert.assertNotNull("tableFrame model", model);
@@ -149,8 +152,11 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
-        Assert.assertEquals("Start Block Active", (OBlock.ALLOCATED | OBlock.OCCUPIED | OBlock.RUNNING), block.getState());
+
+        final OBlock testblock = block;
+        JUnitUtil.waitFor(() -> {
+            return testblock.getState() == (OBlock.ALLOCATED | OBlock.OCCUPIED | OBlock.RUNNING);
+        }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
             return Bundle.getMessage("Halted", name, "0").equals(warrant.getRunningMessage());
@@ -186,14 +192,6 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-//        TestHelper.disposeWindow(panel, this);
-
-        // Dialog has popped up, so handle that. First, locate it.
-//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-//       TestHelper.disposeWindow(dialogList.get(0), this);
-
-        // confirm one message logged
-        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
@@ -215,7 +213,6 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             List<JOptionPane> list = finder.findAll(frame);
             Assert.assertNotNull(title + " JOptionPane not found", list);
             Assert.assertTrue(title + " JOptionPane not found", list.size() == 1);
-//          java.util.Iterator iter = list.iterator();
             pane = list.get(0);
         }
         if (message != null) {
@@ -253,7 +250,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                         state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
-            jmri.util.JUnitUtil.releaseThread(this);
+            jmri.util.JUnitUtil.releaseThread(this, 100);
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -267,7 +264,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                         Assert.fail("Unexpected Exception: " + e);
                     }
                 });
-                jmri.util.JUnitUtil.releaseThread(this);
+                jmri.util.JUnitUtil.releaseThread(this, 100);
                 jmri.util.ThreadingUtil.runOnLayout(() -> {
                     try {
                         nextSensor.setState(Sensor.ACTIVE);
@@ -276,7 +273,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                     }
                 });
                 flushAWT();
-                jmri.util.JUnitUtil.releaseThread(this);
+                jmri.util.JUnitUtil.releaseThread(this, 100);
             } else {
                 nextSensor = null;
             }
@@ -337,9 +334,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

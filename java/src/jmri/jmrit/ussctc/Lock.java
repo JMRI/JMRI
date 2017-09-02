@@ -1,7 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 /**
  * A Lock is the base interface for implementations that check layout conditions.
  * <p>
@@ -26,4 +24,5 @@ public interface Lock {
      */
     public boolean isLockClear();  
     
+    static String logMemoryName = "IMUSS CTC:LOCK:1:LOG";
 }

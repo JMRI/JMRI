@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
-public class SE8cSignalHeadTest {
+public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
 
     @Test
     public void testCtor1() {
@@ -140,17 +140,26 @@ public class SE8cSignalHeadTest {
 
     // from here down is testing infrastructure
 
+    @Override
+    public SignalHead getHeadToTest() {
+        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
+        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
+        return new SE8cSignalHead(
+                new NamedBeanHandle<Turnout>("11", it11),
+                new NamedBeanHandle<Turnout>("12", it12),
+                "user name"
+        );
+    }
+
     // The minimal setup for log4J/JUnit4
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

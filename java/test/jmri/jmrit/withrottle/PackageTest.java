@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -39,8 +40,8 @@ public class PackageTest extends TestCase {
         suite.addTest(TrackPowerControllerTest.suite());
         suite.addTest(TurnoutControllerTest.suite());
         suite.addTest(WiFiConsistFileTest.suite());
-        suite.addTest(WiFiConsistTest.suite());
-        suite.addTest(WiFiConsistManagerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(WiFiConsistTest.class));
+        suite.addTest(new JUnit4TestAdapter(WiFiConsistManagerTest.class));
         suite.addTest(WiThrottleManagerTest.suite());
         suite.addTest(WiThrottlePreferencesTest.suite());
         suite.addTest(WiThrottlesListModelTest.suite());
@@ -56,11 +57,11 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

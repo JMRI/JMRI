@@ -4,10 +4,11 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the ProxySensorManager
@@ -69,7 +70,7 @@ public class ProxySensorManagerTest extends TestCase {
             correct = true;
         }
         Assert.assertTrue("Exception thrown properly", correct);
-        
+
     }
     public void testSingleObject() {
         // test that you always get the same representation
@@ -97,7 +98,7 @@ public class ProxySensorManagerTest extends TestCase {
     }
 
     public void testRename() {
-        // get 
+        // get
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
@@ -207,7 +208,7 @@ public class ProxySensorManagerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

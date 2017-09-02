@@ -458,7 +458,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _shape.drawHandles();
         _shape.updateSize();
         _shape.getEditor().getTargetPanel().repaint();
-;
     }
 
     // these 2 methods update the JTextfields when mouse moves handles

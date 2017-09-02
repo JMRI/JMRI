@@ -106,14 +106,14 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
             if (!protocoltypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocoltypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
-                List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, r.getDecoderFamily(), null, null, null, r.getDecoderModel());
+                List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, r.getDecoderFamily(), null, null, null, r.getDecoderModel());
                 if (log.isDebugEnabled()) {
                     log.debug("found " + l.size() + " matches");
                 }
                 if (l.size() == 0) {
                     log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
                     // fall back to use just the decoder name, not family
-                    l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, r.getDecoderModel());
+                    l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, r.getDecoderModel());
                     if (log.isDebugEnabled()) {
                         log.debug("found " + l.size() + " matches without family key");
                     }

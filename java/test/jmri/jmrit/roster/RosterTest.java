@@ -382,8 +382,8 @@ public class RosterTest {
         rp.setSpeed(1000, 500, 5000);
         rp.setSpeed(500, 250, 2500);
         Assert.assertEquals(1.0,rp.getThrottleSetting(500,true),0.0);
-        Assert.assertEquals(0.5,rp.getThrottleSetting(250,true),0.0);;
-        Assert.assertEquals(0.25,rp.getThrottleSetting(125,true),0.0);;
+        Assert.assertEquals(0.5,rp.getThrottleSetting(250,true),0.0);
+        Assert.assertEquals(0.25,rp.getThrottleSetting(125,true),0.0);
     }
 
    @Test
@@ -393,8 +393,8 @@ public class RosterTest {
         rp.setSpeed(1000, 500, 5000);
         rp.setSpeed(500, 250, 2500);
         Assert.assertEquals(1.0,rp.getThrottleSetting(5000,false),0.0);
-        Assert.assertEquals(0.5,rp.getThrottleSetting(2500,false),0.0);;
-        Assert.assertEquals(0.25,rp.getThrottleSetting(1250,false),0.0);;
+        Assert.assertEquals(0.5,rp.getThrottleSetting(2500,false),0.0);
+        Assert.assertEquals(0.25,rp.getThrottleSetting(1250,false),0.0);
     }
 
     public Roster createTestRoster() throws IOException, FileNotFoundException {
@@ -449,14 +449,12 @@ public class RosterTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

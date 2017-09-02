@@ -116,6 +116,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
     public void load(Element element, Object o) {
         jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
     }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(JmrixConfigPaneXml.class.getName());
 

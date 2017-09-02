@@ -1,11 +1,13 @@
 package apps.startup;
 
 import apps.PerformActionModel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class PerformActionModelFactory extends AbstractActionModelFactory {
 
     public PerformActionModelFactory() {

@@ -1,6 +1,5 @@
 package jmri.jmrix.ztc.ztc611;
 
-import org.junit.After;
 import org.junit.Before;
 
 
@@ -23,13 +22,6 @@ public class ZTC611XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }

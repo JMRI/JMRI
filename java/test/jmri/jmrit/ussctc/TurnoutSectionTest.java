@@ -1,9 +1,8 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
+import jmri.util.JUnitUtil;
 import jmri.*;
-import jmri.util.*;
+import org.junit.*;
 
 /**
  * Tests for TurnoutSection class in the jmri.jmrit.ussctc package
@@ -64,7 +63,7 @@ public class TurnoutSectionTest {
 
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_NORMAL;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_NORMAL;
         normIndicator.setCommandedState(Turnout.THROWN);
         revIndicator.setCommandedState(Turnout.CLOSED);
         Assert.assertEquals(CodeGroupTwoBits.Double10, t.codeSendStart());
@@ -73,7 +72,7 @@ public class TurnoutSectionTest {
         
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_REVERSED;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_REVERSED;
         normIndicator.setCommandedState(Turnout.CLOSED);
         revIndicator.setCommandedState(Turnout.THROWN);
         Assert.assertEquals(CodeGroupTwoBits.Double01, t.codeSendStart());
@@ -90,7 +89,7 @@ public class TurnoutSectionTest {
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normSensor.setState(Sensor.ACTIVE);
         revSensor.setState(Sensor.INACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_REVERSED;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_REVERSED;
         normIndicator.setCommandedState(Turnout.CLOSED);
         revIndicator.setCommandedState(Turnout.THROWN);
         
@@ -108,7 +107,7 @@ public class TurnoutSectionTest {
         TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.ACTIVE);
-        t.central.state = TurnoutSection.State.SHOWING_NORMAL;
+        t.central.state = TurnoutSection.TurnoutCentralSection.State.SHOWING_NORMAL;
         normIndicator.setCommandedState(Turnout.THROWN);
         revIndicator.setCommandedState(Turnout.CLOSED);
         
@@ -195,8 +194,7 @@ public class TurnoutSectionTest {
     // The minimal setup for log4J
     @org.junit.Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -224,8 +222,7 @@ public class TurnoutSectionTest {
 
     @org.junit.After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

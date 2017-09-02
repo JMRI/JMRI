@@ -1,7 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 /**
  * A Section is the base type for the pieces that make up and are referenced by a {@link jmri.jmrit.ussctc.Station}.
  * It combines a {@link jmri.jmrit.ussctc.CentralSection} and a {@link jmri.jmrit.ussctc.FieldSection}
@@ -12,5 +10,13 @@ import jmri.*;
  */
 public interface Section<To extends Enum<To>, From extends Enum<From>>
                  extends CentralSection<To, From>, FieldSection<To, From> {
+                 
     
+    /**
+     * Name of this Section.  Does not include name of associated Station
+    */ 
+    public String getName();
+    
+    public Station getStation();
+        
 }

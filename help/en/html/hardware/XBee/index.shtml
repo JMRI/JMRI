@@ -43,8 +43,9 @@
       XBee Modules</a> are family of wireless communication devices
       that have their own microcontroller and IO pins that make
       them useful for many distributed control networks, including
-      on model railroads.</p><a name="hardware" id="hardware"></a>
+      on model railroads.</p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Command Station</h3>
@@ -80,7 +81,7 @@
       <p>JMRI can communicate with XBee Series 1 and XBee Series 2
       modules.</p>
 
-      <p>In JMRI versions Prior to 4.5.5, Underlying support for 
+      <p>In JMRI versions Prior to 4.5.5, Underlying support for
       communication is provided by 
       <a href="https://github.com/andrewrapp/xbee-api">Andrew Rapp's
       xbee-api library for Java</a>.</p>
@@ -187,6 +188,50 @@
       Node Identifier or the 16 bit MY Address are used for the
       ModuleAddress, the 64 bit GUID will be used for the
       ModuleAddress.</p>
+
+      <h3>Adding an item to the table</h3>
+      <p>When you add an item to one of the tables, many times you only
+        have to fill in the numbers to have JMRI construct
+        the complete system name.<br>
+        Here's a summary, split up for
+        outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 71 (?)</td>
+        </tr>
+        <tr>
+          <td>o</td>
+          <td>4:3:4</td>
+          <td>ModuleAddress:Pin1:Pin2</td>
+          <td>ZT4:3:4</td>
+          <td>int : int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 71 (?)</td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
 
       <h3>Software settings</h3>
 
