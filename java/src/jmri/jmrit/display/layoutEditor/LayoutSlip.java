@@ -831,7 +831,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
+                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getId());
                 blockAssigned = true;
             }
             jmi.setEnabled(false);

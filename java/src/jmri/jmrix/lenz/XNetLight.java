@@ -82,7 +82,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     static final int OFFSENT = 1;
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
-    private int InternalState = IDLE;
+    private int internalState = IDLE;
 
     /**
      * Return the current state of this Light
@@ -109,7 +109,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
                 newState == ON,
                 newState == OFF,
                 true);
-        InternalState = COMMANDSENT;
+        internalState = COMMANDSENT;
         tc.sendXNetMessage(msg, this);
 
         if (newState != mState) {
@@ -131,7 +131,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("received message: " + l);
         }
-        if (InternalState == OFFSENT) {
+        if (internalState == OFFSENT) {
             // If an OFF was sent, we want to check for Communications
             // errors before we try to do anything else.
             if (l.isCommErrorMessage()) {
@@ -149,10 +149,10 @@ public class XNetLight extends AbstractLight implements XNetListener {
                 /* the command was successfully received */
                 synchronized (this) {
                     //mOldState=mState;
-                    InternalState = IDLE;
+                    internalState = IDLE;
                 }
                 return;
-            } else if (InternalState == COMMANDSENT) {
+            } else if (internalState == COMMANDSENT) {
                 // If command was sent,, we want to check for Communications
                 // errors before we try to do anything else.
                 if (l.isCommErrorMessage()) {
@@ -207,7 +207,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
         // Set the known state to the commanded state.
         synchronized (this) {
             //mOldState=mState; 
-            InternalState = OFFSENT;
+            internalState = OFFSENT;
         }
     }
 

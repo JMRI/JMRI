@@ -885,7 +885,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
             setRoute(false);
         } else {
             if (isRouteToPointSet()) {
-                log.debug(mUserName + "  route to this point is set therefore can not set another to it " /*+ destPoint.src.getPoint().getID()*/);  // NOI18N
+                log.debug(mUserName + "  route to this point is set therefore can not set another to it " /*+ destPoint.src.getPoint().getId()*/);  // NOI18N
                 if (showMessage && !manager.isRouteStacked(this, false)) {
                     handleNoCurrentRoute(reverseDirection, "Route already set to the destination point");  // NOI18N
                 }

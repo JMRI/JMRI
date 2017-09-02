@@ -15,7 +15,7 @@ public class ReadingTest extends TestCase {
     public void testCtorAndID() {
         double[] v = new double[]{0., 1., 2.};
         Reading r = new Reading("21", v);
-        Assert.assertEquals("ID ok", "21", r.getID());
+        Assert.assertEquals("ID ok", "21", r.getId());
     }
 
     public void testValues() {
@@ -38,7 +38,7 @@ public class ReadingTest extends TestCase {
     public void testCopyCtorID() {
         Reading r1 = new Reading("21", new double[]{0., 1., 2.});
         Reading r2 = new Reading(r1);
-        Assert.assertEquals("ID ok", "21", r2.getID());
+        Assert.assertEquals("ID ok", "21", r2.getId());
     }
 
     public void testCopyCtorData() {

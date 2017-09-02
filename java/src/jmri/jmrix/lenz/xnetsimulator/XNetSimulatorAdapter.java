@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable {
 
     private boolean outputBufferEmpty = true;
-    private boolean CheckBuffer = true;
+    private boolean checkBuffer = true;
 
     private int csStatus;
     // status flags from the XpressNet Documentation.
@@ -101,7 +101,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      */
     @Override
     public boolean okToSend() {
-        if (CheckBuffer) {
+        if (checkBuffer) {
             log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty && super.okToSend());
         } else {

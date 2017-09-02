@@ -77,7 +77,7 @@ public abstract class LayoutTrack {
     /**
      * accessor methods
      */
-    public String getID() {
+    public String getId() {
         return ident;
     }
 

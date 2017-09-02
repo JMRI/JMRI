@@ -21,7 +21,7 @@ public class DispatcherTrainInfoFileTest extends TestCase {
         // test input information
         Assert.assertEquals("Transit Name", ti.getTransitName(), "IZ5( Red Main Loop CW )");
         Assert.assertEquals("Train Name", ti.getTrainName(), "GTW 6418");
-        Assert.assertEquals("DCC Address", ti.getDCCAddress(), " ");
+        Assert.assertEquals("DCC Address", ti.getDccAddress(), " ");
         Assert.assertTrue("Train In Transit", ti.getTrainInTransit());
         Assert.assertEquals("Start Block Name", ti.getStartBlockName(), "IB1( Red Siding )-1");
         Assert.assertEquals("Destination Block Name", ti.getDestinationBlockName(), "IB1( Red Siding )-7");

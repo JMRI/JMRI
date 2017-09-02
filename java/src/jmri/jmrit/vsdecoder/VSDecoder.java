@@ -23,28 +23,26 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Virtual Sound Decoder
- *
+ * <p>
  * Implements a software "decoder" that responds to throttle inputs and
  * generates sounds in responds to them.
- *
+ * <p>
  * Each VSDecoder implements exactly one Sound Profile (describes a particular
  * type of locomtive, say, an EMD GP7).
- *
+ * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -74,7 +72,7 @@ public class VSDecoder implements PropertyChangeListener {
 
         config = new VSDConfig();
         config.setProfileName(name);
-        config.setID(id);
+        config.setId(id);
 
         sound_list = new HashMap<String, VSDSound>();
         trigger_list = new HashMap<String, Trigger>();
@@ -145,7 +143,7 @@ public class VSDecoder implements PropertyChangeListener {
 
         config = new VSDConfig();
         config.setProfileName(name);
-        config.setID(id);
+        config.setId(id);
 
         sound_list = new HashMap<String, VSDSound>();
         trigger_list = new HashMap<String, Trigger>();
@@ -185,8 +183,8 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * @return (String) system name of this VSDecoder
      */
-    public String getID() {
-        return (config.getID());
+    public String getId() {
+        return (config.getId());
     }
 
     /**
@@ -261,7 +259,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Shut down this VSDecoder and all of its associated sounds.
-     *
+     * <p>
      */
     public void shutdown() {
         log.debug("Shutting down sounds...");
@@ -335,13 +333,13 @@ public class VSDecoder implements PropertyChangeListener {
         // DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
         jmri.InstanceManager.throttleManagerInstance().attachListener(config.getDccAddress(),
                 new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent event) {
-                        log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue()
-                                + " new " + event.getNewValue());
-                        throttlePropertyChange(event);
-                    }
-                });
+            @Override
+            public void propertyChange(PropertyChangeEvent event) {
+                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue()
+                        + " new " + event.getNewValue());
+                throttlePropertyChange(event);
+            }
+        });
         log.debug("VSDecoder: Address set to " + config.getLocoAddress().toString());
     }
 
@@ -456,7 +454,7 @@ public class VSDecoder implements PropertyChangeListener {
         String property = evt.getPropertyName();
         // Respond to events from the new GUI.
         if (evt.getSource() instanceof VSDControl) {
-            if (property.equals(VSDControl.PCIDMap.get(VSDControl.PropertyChangeID.OPTION_CHANGE))) {
+            if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.OPTION_CHANGE))) {
                 Train selected_train = TrainManager.instance().getTrainByName((String) evt.getNewValue());
                 if (selected_train != null) {
                     selected_train.addPropertyChangeListener(this);
@@ -552,7 +550,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Turn the bell sound on/off
-     *
+     * <p>
      */
     public void toggleBell() {
         VSDSound snd = sound_list.get("BELL");
@@ -565,7 +563,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Turn the horn sound on/off
-     *
+     * <p>
      */
     public void toggleHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -578,7 +576,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Turn the horn sound on
-     *
+     * <p>
      */
     public void playHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -587,7 +585,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Turn the horn sound on (Short burst)
-     *
+     * <p>
      */
     public void shortHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -596,7 +594,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Turn the horn sound off
-     *
+     * <p>
      */
     public void stopHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -624,7 +622,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Enable this VSDecoder
-     *
+     * <p>
      */
     public void enable() {
         enabled = true;
@@ -632,7 +630,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Disable this VSDecoder
-     *
+     * <p>
      */
     public void disable() {
         enabled = false;
@@ -702,9 +700,9 @@ public class VSDecoder implements PropertyChangeListener {
 
     /*
      * @Deprecated public void setXml(Element e) { this.setXml(e, null); }
-     * 
+     *
      * @Deprecated public void setXml(Element e, VSDFile vf) { this.setXml(vf); }
-     * 
+     *
      * @Deprecated public void setXml(VSDFile vf) { }
      */
     /**
@@ -774,8 +772,8 @@ public class VSDecoder implements PropertyChangeListener {
         // --- DEBUG
 
         // First, the sounds.
-        String prefix = "" + this.getID() + ":";
-        log.debug("VSDecoder " + this.getID() + " prefix = " + prefix);
+        String prefix = "" + this.getId() + ":";
+        log.debug("VSDecoder " + this.getId() + " prefix = " + prefix);
         itr = (e.getChildren("sound")).iterator();
         while (itr.hasNext()) {
             el = (Element) itr.next();

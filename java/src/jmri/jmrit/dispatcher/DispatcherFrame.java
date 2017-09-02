@@ -136,7 +136,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     
                     ActiveTrain at = createActiveTrain(info.getTransitName().split("\\(")[0], info.getTrainName(), tSource,
                             startBlock.split("\\(")[0], startBlockSeq, destinationBlock.split("\\(")[0], destinationBlockSeq,
-                            info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
+                            info.getAutoRun(), info.getDccAddress(), info.getPriority(),
                             info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
@@ -147,7 +147,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
                         at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
-                        at.setDelayedReStart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+                        at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
                         at.setDelaySensor(info.getDelaySensor());
                         if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY)

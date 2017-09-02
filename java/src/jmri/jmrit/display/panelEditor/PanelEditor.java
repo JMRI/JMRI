@@ -467,7 +467,7 @@ public class PanelEditor extends Editor implements ItemListener {
     static class ComboBoxItem {
 
         private String name;
-        private String BundleName;
+        private String bundleName;
 
         protected ComboBoxItem(String n) {
             name = n;
@@ -482,21 +482,21 @@ public class PanelEditor extends Editor implements ItemListener {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
             if ("Sensor".equals(name)) {
-                BundleName = "BeanNameSensor";
+                bundleName = "BeanNameSensor";
             } else if ("SignalHead".equals(name)) {
-                BundleName = "BeanNameSignalHead";
+                bundleName = "BeanNameSignalHead";
             } else if ("SignalMast".equals(name)) {
-                BundleName = "BeanNameSignalMast";
+                bundleName = "BeanNameSignalMast";
             } else if ("Memory".equals(name)) {
-                BundleName = "BeanNameMemory";
+                bundleName = "BeanNameMemory";
             } else if ("Reporter".equals(name)) {
-                BundleName = "BeanNameReporter";
+                bundleName = "BeanNameReporter";
             } else if ("Light".equals(name)) {
-                BundleName = "BeanNameLight";
+                bundleName = "BeanNameLight";
             } else {
-                BundleName = name;
+                bundleName = name;
             }
-            return Bundle.getMessage(BundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            return Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
 

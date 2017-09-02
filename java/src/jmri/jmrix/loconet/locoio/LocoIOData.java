@@ -453,7 +453,7 @@ public class LocoIOData
                                     log.debug("Could not find mode!"); // NOI18N
                                 } else {
                                     setMode(channel, lim.getFullMode());
-                                    setAddr(channel, validmodes.valuesToAddress(lim.getOpcode(), getSV(channel), getV1(channel), getV2(channel)));
+                                    setAddr(channel, validmodes.valuesToAddress(lim.getOpCode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
                                 log.debug("... decoded address (" // NOI18N
                                         + "cv=" + Integer.toHexString(getSV(channel)) + " " // NOI18N

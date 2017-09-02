@@ -335,7 +335,7 @@ public class TrackSegment extends LayoutTrack {
     public void setLayoutBlock(LayoutBlock b) {
         block = b;
         if (b != null) {
-            blockName = b.getID();
+            blockName = b.getId();
         }
     }
 
@@ -565,7 +565,7 @@ public class TrackSegment extends LayoutTrack {
         if (blockName.isEmpty()) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
-            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getId());
         }
         jmi.setEnabled(false);
         popup.add(new JSeparator(JSeparator.HORIZONTAL));

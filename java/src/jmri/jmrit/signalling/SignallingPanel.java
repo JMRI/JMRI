@@ -76,7 +76,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JCheckBox useLayoutEditorBlock = new JCheckBox(Bundle.getMessage("UseBlockDetails"));  // NOI18N
     JCheckBox allowAutoMastGeneration = new JCheckBox(Bundle.getMessage("AllowAutomaticSignalMast"));  // NOI18N
     JCheckBox lockTurnouts = new JCheckBox(Bundle.getMessage("LockTurnouts"));  // NOI18N
-    JButton Sizer = new JButton("Sizer");  // NOI18N
+    JButton sizer = new JButton("Sizer");  // NOI18N
 
     // fields to store the items currently being configured
     SignalMast sourceMast;
@@ -427,7 +427,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JTable manualBlockTable = new JTable(_blockModel);
         TableRowSorter<BlockModel> manualBlockSorter = new TableRowSorter<>(_blockModel);
         // configure row height for comboBox
-        manualBlockTable.setRowHeight(Sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
+        manualBlockTable.setRowHeight(sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
         manualBlockSorter.setComparator(BlockModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualBlockSorter, BlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
         _blockModel.configStateColumn(manualBlockTable); // create static comboBox in State column
@@ -559,7 +559,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JTable manualTurnoutTable = new JTable(_turnoutModel);
         TableRowSorter<TurnoutModel> manualTurnoutSorter = new TableRowSorter<>(_turnoutModel);
         // configure row height for comboBox
-        manualTurnoutTable.setRowHeight(Sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
+        manualTurnoutTable.setRowHeight(sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
         manualTurnoutSorter.setComparator(TurnoutModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualTurnoutSorter, TurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
         _turnoutModel.configStateColumn(manualTurnoutTable); // create static comboBox in State column
@@ -680,7 +680,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JTable manualSensorTable = new JTable(_sensorModel);
         TableRowSorter<SensorModel> manualSensorSorter = new TableRowSorter<>(_sensorModel);
         // configure row height for comboBox
-        manualSensorTable.setRowHeight(Sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
+        manualSensorTable.setRowHeight(sizer.getPreferredSize().height - 2); // row height has to be greater than for plain tables
         manualSensorSorter.setComparator(SensorModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualSensorSorter, SensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
         _sensorModel.configStateColumn(manualSensorTable); // create static comboBox in State column
@@ -756,7 +756,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         TableRowSorter<SignalMastModel> sorter = new TableRowSorter<>(_signalMastModel);
         JTable manualSignalMastTable = new JTable(_signalMastModel); // don't use makeTable() since 4.7.1
         // configure (extra) row height for comboBox
-        manualSignalMastTable.setRowHeight(Sizer.getPreferredSize().height - 2);
+        manualSignalMastTable.setRowHeight(sizer.getPreferredSize().height - 2);
         // row height has to be greater than plain tables to properly show comboBox shape, but tightened a bit over preferred
         _signalMastModel.configStateColumn(manualSignalMastTable); // create mast (row) specific comboBox in Aspect column
         manualSignalMastTable.setRowSorter(sorter);

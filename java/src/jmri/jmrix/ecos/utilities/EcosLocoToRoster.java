@@ -252,7 +252,7 @@ public class EcosLocoToRoster implements EcosListener {
         List<DecoderFile> decoder = decoderind.matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
         if (decoder.size() == 1) {
             pDecoderFile = decoder.get(0);
-            SelectedDecoder(pDecoderFile);
+            selectedDecoder(pDecoderFile);
 
         } else {
 
@@ -532,11 +532,11 @@ public class EcosLocoToRoster implements EcosListener {
 
     private void okayButton() {
         pDecoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
-        SelectedDecoder(pDecoderFile);
+        selectedDecoder(pDecoderFile);
         frame.dispose();
     }
 
-    private void SelectedDecoder(DecoderFile pDecoderFile) {
+    private void selectedDecoder(DecoderFile pDecoderFile) {
         //pDecoderFile=InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());
