@@ -91,7 +91,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
             addItem(g);
         });
         if (allEntriesEnabled) {
-            insertItemAt(Roster.AllEntries(Locale.getDefault()), 0);
+            insertItemAt(Roster.allEntries(Locale.getDefault()), 0);
             if (selection == null) {
                 selection = Roster.ALLENTRIES;
             }
@@ -118,7 +118,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
         if (getSelectedItem() == null) {
             return null;
         } else if (getSelectedItem().equals(Roster.ALLENTRIES)
-                || getSelectedItem().equals(Roster.AllEntries(Locale.getDefault()))) {
+                || getSelectedItem().equals(Roster.allEntries(Locale.getDefault()))) {
             return null;
         } else {
             return getSelectedItem();

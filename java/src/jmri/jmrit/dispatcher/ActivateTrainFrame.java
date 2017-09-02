@@ -743,7 +743,7 @@ public class ActivateTrainFrame {
             at.setRosterEntry(trainBoxList.get(trainSelectBox.getSelectedIndex()));
         }
         at.setDelayedStart(delayedStart);
-        at.setDelayedReStart(delayedReStart);
+        at.setDelayedRestart(delayedReStart);
         at.setDepartureTimeHr(departureTimeHours);
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
@@ -1069,7 +1069,7 @@ public class ActivateTrainFrame {
             }
         } else if (_TrainsFromUser) {
             trainNameField.setText(info.getTrainName());
-            dccAddressField.setText(info.getDCCAddress());
+            dccAddressField.setText(info.getDccAddress());
         }
         inTransitBox.setSelected(info.getTrainInTransit());
         initializeStartingBlockCombo();
@@ -1102,10 +1102,10 @@ public class ActivateTrainFrame {
         info.setTransitId(selectedTransit.getSystemName());
         if (_TrainsFromRoster || _TrainsFromTrains) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
-            info.setDCCAddress(" ");
+            info.setDccAddress(" ");
         } else if (_TrainsFromUser) {
             info.setTrainName(trainNameField.getText());
-            info.setDCCAddress(dccAddressField.getText());
+            info.setDccAddress(dccAddressField.getText());
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());

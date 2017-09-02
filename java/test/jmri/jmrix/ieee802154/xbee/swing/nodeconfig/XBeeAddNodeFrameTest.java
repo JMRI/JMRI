@@ -1,6 +1,7 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,18 +11,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of NodeConfigFrame
+ * Test simple functioning of XBeeAddNodeFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NodeConfigFrameTest {
+public class XBeeAddNodeFrameTest {
 
 
     private XBeeTrafficController tc = null;
+    private XBeeConnectionMemo m = null;
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        NodeConfigFrame action = new NodeConfigFrame(tc);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        XBeeNodeConfigFrame frame = new XBeeNodeConfigFrame(tc);
+        XBeeAddNodeFrame action = new XBeeAddNodeFrame(tc,frame);
         Assert.assertNotNull("exists", action);
     }
 
@@ -41,6 +44,9 @@ public class NodeConfigFrameTest {
                 return null;
             }
         };
+        m = new XBeeConnectionMemo();
+        m.setSystemPrefix("ABC");
+        tc.setAdapterMemo(m);
     }
 
     @After

@@ -30,6 +30,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
+import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class WebAppServlet extends HttpServlet {
         FileUtil.createDirectory(cache);
         File index = new File(cache, "index.html"); // NOI18N
         if (!index.exists()) {
-            String inComments = "-->\n%s<!--"; // NOI18N
+            String inComments = "-->%n%s<!--"; // NOI18N
             WebAppManager manager = getWebAppManager();
             // Format elements for index.html
             // 1 = railroad name
@@ -116,13 +117,15 @@ public class WebAppServlet extends HttpServlet {
         ObjectNode about = mapper.createObjectNode();
         about.put("additionalInfo", Bundle.getMessage(request.getLocale(), "AdditionalInfo", Application.getApplicationName())); // NOI18N
         about.put("copyright", Version.getCopyright()); // NOI18N
-        about.put("title", ServletUtil.getDefault().getRailroadName(false)); // NOI18N
+        about.put("title", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName()); // NOI18N
         about.put("imgAlt", Application.getApplicationName()); // NOI18N
         // assuming Application.getLogo() is relative to program:
         about.put("imgSrc", "/" + Application.getLogo()); // NOI18N
         ArrayNode productInfo = about.putArray("productInfo"); // NOI18N
         productInfo.add(mapper.createObjectNode().put(NAME, Application.getApplicationName()).put(VALUE, Version.name()));
-        productInfo.add(mapper.createObjectNode().put(NAME, Bundle.getMessage(request.getLocale(), "ActiveProfile")).put(VALUE, profile.getName())); // NOI18N
+        if (profile != null) {
+            productInfo.add(mapper.createObjectNode().put(NAME, Bundle.getMessage(request.getLocale(), "ActiveProfile")).put(VALUE, profile.getName())); // NOI18N
+        }
         productInfo.add(mapper.createObjectNode()
                 .put(NAME, "Java") // NOI18N
                 .put(VALUE, Bundle.getMessage(request.getLocale(), "JavaVersion",
@@ -159,9 +162,9 @@ public class WebAppServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL("web/app/app/script.js")), // NOI18N
                     manager.getAngularDependencies(profile, request.getLocale()),
                     manager.getAngularRoutes(profile, request.getLocale()),
-                    String.format("\n    $scope.navigationItems = %s;\n", manager.getNavigation(profile, request.getLocale())), // NOI18N
+                    String.format("%n    $scope.navigationItems = %s;%n", manager.getNavigation(profile, request.getLocale())), // NOI18N
                     manager.getAngularSources(profile, request.getLocale()),
-                    ServletUtil.getDefault().getRailroadName(false)
+                    InstanceManager.getDefault(WebServerPreferences.class).getRailroadName()
             ));
         }
         response.getWriter().print(FileUtil.readFile(script));

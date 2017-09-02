@@ -237,7 +237,7 @@ public class WebServerPreferences extends PreferencesBean {
         }
         a = child.getAttribute(RAILROAD_NAME);
         if (a != null) {
-            setRailRoadName(a.getValue());
+            setRailroadName(a.getValue());
         }
         Element df = child.getChild(DISALLOWED_FRAMES);
         if (df != null) {
@@ -311,7 +311,7 @@ public class WebServerPreferences extends PreferencesBean {
         sharedPreferences.putBoolean(SIMPLE, this.isSimple());
         sharedPreferences.putBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig());
         sharedPreferences.putBoolean(READONLY_POWER, this.isReadonlyPower());
-        sharedPreferences.put(RAILROAD_NAME, getRailRoadName());
+        sharedPreferences.put(RAILROAD_NAME, getRailroadName());
         sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
@@ -452,7 +452,7 @@ public class WebServerPreferences extends PreferencesBean {
     /**
      * Set the railroad name.
      *
-     * @param railroadName the new railroad name
+     * @param railroadName the railroadName to set
      */
     public void setRailroadName(String railroadName) {
         String old = this.railroadName;
@@ -482,7 +482,7 @@ public class WebServerPreferences extends PreferencesBean {
      * @return true if user has not set the railroad name.
      */
     public boolean isDefaultRailroadName() {
-        return this.getRailRoadName().equals(Bundle.getMessage("DefaultRailroadName"));
+        return this.getRailroadName().equals(Bundle.getMessage("DefaultRailroadName"));
     }
 
     /**

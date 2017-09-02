@@ -37,7 +37,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     @Override
     public void notify(Measurement r) {
         Point3d p = new Point3d(r.getX(), r.getY(), r.getZ());
-        Integer id = Integer.valueOf(r.getReading().getID());
+        Integer id = Integer.valueOf(r.getReading().getId());
 
         // ignore if code not OK
         if (!r.isOkPoint()) {

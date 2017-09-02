@@ -47,7 +47,7 @@ public class LinkingLabelXml extends PositionableLabelXml {
             element.addContent(storeIcon("icon", (NamedIcon) p.getIcon()));
         }
 
-        element.addContent(new Element("url").addContent(p.getUrl()));
+        element.addContent(new Element("url").addContent(p.getURL()));
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LinkingLabelXml");
         return element;

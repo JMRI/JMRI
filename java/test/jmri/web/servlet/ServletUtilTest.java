@@ -35,7 +35,7 @@ public class ServletUtilTest {
     public void testGetRailroadName() {
         ServletUtil instance = new ServletUtil();
         String name = "TEST_RAILROAD";
-        InstanceManager.getDefault(WebServerPreferences.class).setRailRoadName(name);
+        InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
         Assert.assertEquals("-->" + name + "<!--", instance.getRailroadName(true));
         Assert.assertEquals(name, instance.getRailroadName(false));
     }
@@ -58,7 +58,7 @@ public class ServletUtilTest {
         String title = "TITLE";
         String name = "TEST_RAILROAD";
         Locale locale = Locale.ENGLISH;
-        InstanceManager.getDefault(WebServerPreferences.class).setRailRoadName(name);
+        InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
         Assert.assertEquals(Bundle.getMessage(locale, "HtmlTitle", name, title), instance.getTitle(locale, title));
     }
 

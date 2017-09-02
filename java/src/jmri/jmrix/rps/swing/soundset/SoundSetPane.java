@@ -139,7 +139,7 @@ public class SoundSetPane extends JPanel
     public void notify(Reading r) {
         try {
             // right ID?
-            if (!r.getID().equals(id.getText())) {
+            if (!r.getId().equals(id.getText())) {
                 return;
             }
 
