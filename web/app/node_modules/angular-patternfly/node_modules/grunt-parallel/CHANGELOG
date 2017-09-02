@@ -1,0 +1,9 @@
+v0.4.1
+	date: 2014-01-29
+	changes:
+		- unbreak grunt tasks
+
+v0.4
+	date: 2014-01-29
+	changes:
+		- flags passed to grunt tasks
