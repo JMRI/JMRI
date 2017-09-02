@@ -801,12 +801,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
      * accordingly.
      */
     void setMastAppearance() {
-        synchronized (this) {
-            if (inWait) {
-                log.error("setMastAppearance() called while still in wait, returning");
-                return;
-            }
-        }
         log.debug("Set Signal Mast Aspect");
         if (getSourceMast().getHeld()) {
             log.debug("Signal is at a Held state so will set to the aspect defined for Held or Danger");
