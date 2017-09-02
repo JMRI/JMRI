@@ -76,71 +76,7 @@ public final class InstanceManager {
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
     private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
-    enum InitializationState {
-        NOTSET, // synonymous with no value for this stored
-        NOTSTARTED,
-        STARTED,
-        FAILED,
-        DONE
-    }
-    
-    private static final boolean traceFileActive = true;
-    private static final boolean traceFileAppend = false;
-    private static int traceFileIndent = 1;
-    private static final String traceFileName = "instanceManagerSequence.txt";
-    private static java.io.PrintWriter traceFileWriter;
-    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
-    static {
-        java.io.PrintWriter tempWriter = null;
-        try {
-            tempWriter = (traceFileActive ? 
-                    new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(traceFileName, traceFileAppend))) 
-                    : null);
-        } catch (java.io.IOException e) {
-            log.error("failed to open log file", e);
-        } finally {
-            traceFileWriter = tempWriter;
-        }
-    }
-    
-    static private void traceFilePrint(String msg) {
-        String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent);
-        String threadName = "["+Thread.currentThread().getName()+"]";
-        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25-threadName.length(), 0));
-        traceFileWriter.println(threadName+threadNamePad+pad+msg);
-        traceFileWriter.flush();
-    }
-
-    static final class StateHolder {
-        InitializationState state;
-        Exception exception;
-        StateHolder(InitializationState state, Exception exception) {
-            this.state = state;
-            this.exception = exception;
-        }
-    }
-
-    private void setInitializationState(Class<?> type, InitializationState state) {
-        log.trace("set state {} for {}", type, state);
-        if (state == InitializationState.STARTED) {
-            initState.put(type, new StateHolder(state, new Exception("Thread "+Thread.currentThread().getName())));
-        } else {
-            initState.put(type, new StateHolder(state, null));
-        }
-    }
-    
-    private InitializationState getInitializationState(Class<?> type) {
-        StateHolder holder = initState.get(type);
-        if (holder == null) return InitializationState.NOTSET;
-        return holder.state;
-    }
-    
-    private Exception getInitializationException(Class<?> type) {
-        StateHolder holder = initState.get(type);
-        if (holder == null) return null;
-        return holder.exception;
-    }
-    
+        
     /* properties */
     /**
      *
@@ -286,20 +222,24 @@ public final class InstanceManager {
         log.trace("getOptionalDefault of type {}", type.getName());
         List<T> l = (ArrayList<T>) getList(type);
         if (l.isEmpty()) {
+
+            // example of tracing where something is being initialized
+            //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
+
             if (traceFileActive) { traceFilePrint("Start initialization: "+type.toString()); traceFileIndent++; }
+
             // check whether already working on this type
             InitializationState working = getDefault().getInitializationState(type);
             Exception except = getDefault().getInitializationException(type);
             getDefault().setInitializationState(type, InitializationState.STARTED);
-            
             if (working == InitializationState.STARTED) {
-                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread "+Thread.currentThread().getName()));
+                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \""+Thread.currentThread().getName()+"\""));
                 log.error("    Prior initialization:", except);
                 if (traceFileActive) { 
                     traceFilePrint("*** Already in process ***");
                 }
             } else if (working == InitializationState.DONE) {
-                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread "+Thread.currentThread().getName()));
+                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \""+Thread.currentThread().getName()+"\""));
             }
   
             // see if can autocreate
@@ -884,8 +824,10 @@ public final class InstanceManager {
                 clear(type);
             });
         });
-        traceFileWriter.println(""); // marks new InstanceManager
-        traceFileWriter.flush();
+        if (traceFileActive) {
+            traceFileWriter.println(""); // marks new InstanceManager
+            traceFileWriter.flush();
+        }
     }
 
     /**
@@ -924,4 +866,69 @@ public final class InstanceManager {
         }
         return defaultInstanceManager;
     }
+
+
+    // support checking for overlapping intialization
+    private enum InitializationState {
+        NOTSET, // synonymous with no value for this stored
+        NOTSTARTED,
+        STARTED,
+        FAILED,
+        DONE
+    }
+    static private final class StateHolder {
+        InitializationState state;
+        Exception exception;
+        StateHolder(InitializationState state, Exception exception) {
+            this.state = state;
+            this.exception = exception;
+        }
+    }
+    private void setInitializationState(Class<?> type, InitializationState state) {
+        log.trace("set state {} for {}", type, state);
+        if (state == InitializationState.STARTED) {
+            initState.put(type, new StateHolder(state, new Exception("Thread "+Thread.currentThread().getName())));
+        } else {
+            initState.put(type, new StateHolder(state, null));
+        }
+    }    
+    private InitializationState getInitializationState(Class<?> type) {
+        StateHolder holder = initState.get(type);
+        if (holder == null) return InitializationState.NOTSET;
+        return holder.state;
+    }    
+    private Exception getInitializationException(Class<?> type) {
+        StateHolder holder = initState.get(type);
+        if (holder == null) return null;
+        return holder.exception;
+    }
+    
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+
+    // support creating a file with initialization summary information
+    private static final boolean traceFileActive = true; // log.isTraceEnabled(); // or manually force true
+    private static final boolean traceFileAppend = false; // append from run to run
+    private static int traceFileIndent = 1; // used to track overlap, but note that threads are parallel
+    private static final String traceFileName = "instanceManagerSequence.txt";  // use a standalone name
+    private static java.io.PrintWriter traceFileWriter;
+    static {
+        java.io.PrintWriter tempWriter = null;
+        try {
+            tempWriter = (traceFileActive ? 
+                    new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(traceFileName, traceFileAppend))) 
+                    : null);
+        } catch (java.io.IOException e) {
+            log.error("failed to open log file", e);
+        } finally {
+            traceFileWriter = tempWriter;
+        }
+    }
+    static private void traceFilePrint(String msg) {
+        String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent*2);
+        String threadName = "["+Thread.currentThread().getName()+"]";
+        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25-threadName.length(), 0));
+        traceFileWriter.println(threadName+threadNamePad+"|"+pad+msg);
+        traceFileWriter.flush();
+    }
+
 }
