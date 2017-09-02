@@ -85,8 +85,8 @@
       TOC access)</a> .</p>
 
       <p><a id="prefs" name="prefs">(This is the
-      jmri.jmrit.throttle.ThrottleFrame help page) 
-      <!--#include virtual="/Footer" --></a></p>
+      jmri.jmrit.throttle.ThrottleFrame help page)</a></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

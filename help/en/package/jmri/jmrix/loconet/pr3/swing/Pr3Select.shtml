@@ -41,7 +41,8 @@
 
       <p>For more information on the PR3, please see its <a href=
       "../../../../../../html/hardware/loconet/PR3.shtml">JMRI
-      reference page</a>. <!--#include virtual="/Footer" --></p>
+      reference page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

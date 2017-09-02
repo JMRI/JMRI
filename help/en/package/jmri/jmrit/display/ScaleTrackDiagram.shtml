@@ -55,27 +55,30 @@
 
       <p><b>Notes:</b></p>
 
-      <p>1. Translation is performed before scaling, so enter
-      translation units appropriately.</p>
+        <ol>
+        <li>Translation is performed before scaling, so enter
+        translation units appropriately.</li>
 
-      <p>2. Scaling is not perfect. You may need to adjust the
-      alignment of some items after scaling your track diagram.</p>
+        <li>Scaling is not perfect. You may need to adjust the
+        alignment of some items after scaling your track diagram.</li>
 
-      <p>3. Scaling is not easily reversed, so consider saving your
-      panel prior to scaling to allow easy return to the previous
-      size if you don't like the scaled panel.</p>
+        <li>Scaling is not easily reversed, so consider saving your
+        panel prior to scaling to allow easy return to the previous
+        size if you don't like the scaled panel.</li>
 
-      <p>4. Layout Editor keeps track of scale factors that you
-      have applied. When you add a new turnout after scaling, that
-      turnout will be created at the new scale.</p>
+        <li>Layout Editor keeps track of scale factors that you
+        have applied. When you add a new turnout after scaling, that
+        turnout will be created at the new scale.</li>
 
-      <p>5. The positions of icons and labels are not translated or
-      scaled. Only the track diagram drawing is scaled and
-      translated.</p>
+        <li>The positions of icons and labels are not translated or
+        scaled. Only the track diagram drawing is scaled and
+        translated.</li>
+        </ol>
 
       <p><b>To retain your changes, please remember to save your
-      panel!</b></p><b><!--#include virtual="/Footer" --></b>
-    </div><b><!-- closes #mainContent--></b>
+      panel!</b></p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>

@@ -388,7 +388,8 @@ aspect".
 </pre>
 
       <p>Back to the <a href="index.shtml">Signaling main help
-      page</a>. <!--#include virtual="/Footer" --></p>
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

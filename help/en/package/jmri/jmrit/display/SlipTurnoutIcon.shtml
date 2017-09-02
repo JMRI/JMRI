@@ -127,8 +127,8 @@
 
       <p>When four turnouts are used, you need to place the four
       turnouts from the turnout table to the corresponding
-      locations in the panel. 
-      <!--#include virtual="/Footer" --></p>
+      locations in the panel.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

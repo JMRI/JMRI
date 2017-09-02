@@ -201,7 +201,7 @@ public class ActivateTrainFrame {
                 }
             });
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
-            p0.add(deleteButton = new JButton(Bundle.getMessage("ButtonDelete")));
+            p0.add(deleteButton = new JButton(Bundle.getMessage("DeleteButton")));
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

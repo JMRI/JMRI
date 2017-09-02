@@ -121,8 +121,8 @@
       <h3>JMRI Help</h3>
 
       <p>For technical information on Raildriver, please see the
-      <a href="details.shtml">Details Help page</a>. 
-      <!--#include virtual="/Footer" --></p>
+      <a href="details.shtml">Details Help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

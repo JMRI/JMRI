@@ -1008,7 +1008,7 @@ public class TransitTableAction extends AbstractTableAction {
         int seqMax = 0;
         for (int i = 0; i < sectionList.size(); i++) {
             if (sequence[i] > seqMax) {
-                seqMax = i + 1;
+                seqMax = sequence[i];
             }
         }
         seqNum.setModel(new SpinnerNumberModel(
@@ -1781,6 +1781,14 @@ public class TransitTableAction extends AbstractTableAction {
             // add buttons
             JPanel but = new JPanel();
             but.setLayout(new FlowLayout());
+            but.add(cancelAddEditActionButton = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancelAddEditActionButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    cancelAddEditActionPressed(e);
+                }
+            });
+            cancelAddEditActionButton.setToolTipText(rbx.getString("CancelButtonHint"));
             createActionButton = new JButton(rbx.getString("CreateActionButton"));
             but.add(createActionButton);
             createActionButton.addActionListener(new ActionListener() {
@@ -1799,14 +1807,6 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             });
             updateActionButton.setToolTipText(rbx.getString("UpdateActionButtonHint"));
-            but.add(cancelAddEditActionButton = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancelAddEditActionButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelAddEditActionPressed(e);
-                }
-            });
-            cancelAddEditActionButton.setToolTipText(rbx.getString("CancelButtonHint"));
             contentPane.add(but);
         }
         if (editActionMode) {
@@ -1897,7 +1897,7 @@ public class TransitTableAction extends AbstractTableAction {
      */
     private void setWhat(int code) {
         whatBox.setSelectedIndex(code - 1);
-        //hide all input boxes, to set those needed visible in switch case
+        //hide all input boxes, and then set those needed visible via switch case
         whatStringField.setVisible(false);
         whenPercentSpinner.setVisible(false);
         whenMinuteSpinner1.setVisible(false);
@@ -1915,7 +1915,7 @@ public class TransitTableAction extends AbstractTableAction {
                 }
                 whenMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
                 whenMinuteSpinner1.setVisible(true);
-                whenPercentSpinner.setToolTipText(rbx.getString("HintPauseData"));
+                whenMinuteSpinner1.setToolTipText(rbx.getString("HintPauseData"));
                 break;
             case TransitSectionAction.SETMAXSPEED:
                 if (editActionMode) {
@@ -2359,9 +2359,12 @@ public class TransitTableAction extends AbstractTableAction {
         actionTableModel.fireTableDataChanged();
     }
 
-    /*
-     * Notes: For the following, r = row in the Special Actions table.
-     *        A TransitSectionAction must be available for this row.
+    /**
+     * Build display When string for Actions table.
+     *
+     * @param r row in the Special Actions table.
+     *          A TransitSectionAction must be available for this row.
+     * @return display string including entered values
      */
     private String getWhenText(int r) {
         TransitSectionAction tsa = action[activeRow].get(r);
@@ -2426,7 +2429,7 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     /**
-     * Build display string for Actions table.
+     * Build display What string for Actions table.
      *
      * @param r row in the Special Actions table.
      *          A TransitSectionAction must be available for this row.
