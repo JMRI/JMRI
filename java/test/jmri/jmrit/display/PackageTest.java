@@ -36,7 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
         suite.addTest(new JUnit4TestAdapter(ReporterIconTest.class));
         suite.addTest(RpsPositionIconTest.suite());
-        suite.addTest(SensorIconWindowTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SensorIconWindowTest.class));
         suite.addTest(SignalMastIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(SignalSystemTest.class));
         suite.addTest(TurnoutIconWindowTest.suite());
