@@ -113,14 +113,13 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return root;
     }
 
-
     /**
      * Sets the properties in the data parameter for the train with the given
      * id.
-     *
+     * <p>
      * Currently only moves the train to the location given with the key
-     * {@value jmri.jmris.json.JSON#LOCATION}. If the move cannot be completed,
-     * throws error code 428.
+     * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
+     * cannot be completed, throws error code 428.
      *
      * @param locale The locale to throw exceptions in.
      * @param id     The id of the train.

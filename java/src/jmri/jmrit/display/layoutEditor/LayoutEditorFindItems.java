@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
- * <p>
  */
 public class LayoutEditorFindItems {
 

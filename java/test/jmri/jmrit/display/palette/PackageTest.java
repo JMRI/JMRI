@@ -29,6 +29,10 @@ import org.junit.runners.Suite;
     TableItemPanelTest.class,
     ReporterItemPanelTest.class,
     DropJLabelTest.class,
+    ItemDialogTest.class,
+    IconDialogTest.class,
+    IndicatorTOIconDialogTest.class,
+    MultiSensorIconDialogTest.class,
 })
 public class PackageTest {
 }
