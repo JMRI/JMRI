@@ -261,11 +261,12 @@ public final class InstanceManager {
         if (l.isEmpty()) {
             // check whether already working on this type
             InitializationState working = getDefault().getInitializationState(type);
+            Exception except = getDefault().getInitializationException(type);
             getDefault().setInitializationState(type, InitializationState.STARTED);
             
             if (working == InitializationState.STARTED) {
                 log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread "+Thread.currentThread().getName()));
-                log.error("    Prior initialization:", getDefault().getInitializationException(type));
+                log.error("    Prior initialization:", except);
             } else if (working == InitializationState.DONE) {
                 log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread "+Thread.currentThread().getName()));
             }
