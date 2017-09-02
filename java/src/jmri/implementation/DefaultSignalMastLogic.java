@@ -772,12 +772,21 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             return;
         }
         inWait = true;
+        
+        // The next line forces a single initialization of jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+        // before launching parallel threads
+        jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
+        // The next line forces a single initialization of InstanceManager.getDefault(jmri.SignalMastLogicManager.class)
+        // before launching parallel threads
+        long tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay();
+        
         Runnable r = new Runnable() {
+            final long delayTime = tempDelay;
             @Override
             public void run() {
                 try {
-                    Thread.sleep((InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay() / 2));
+                    Thread.sleep(delayTime / 2);
                     setMastAppearance();
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
