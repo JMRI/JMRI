@@ -1014,7 +1014,7 @@ public class ActivateTrainFrame {
             }
         } else if (_TrainsFromUser) {
             trainNameField.setText(info.getTrainName());
-            dccAddressSpinner.setValue(Integer.parseInt(info.getDCCAddress()));
+            dccAddressSpinner.setValue(Integer.parseInt(info.getDccAddress()));
         }
         inTransitBox.setSelected(info.getTrainInTransit());
         initializeStartingBlockCombo();
@@ -1050,7 +1050,7 @@ public class ActivateTrainFrame {
             info.setDccAddress(" ");
         } else if (_TrainsFromUser) {
             info.setTrainName(trainNameField.getText());
-            info.setDCCAddress((String) dccAddressSpinner.getValue());
+            info.setDccAddress((String) dccAddressSpinner.getValue());
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
