@@ -22,9 +22,9 @@ package jmri;
  */
 public class TransitSectionAction {
 
-    /*
+    /**
      * Constants representing the "when" (when the action is to be initiated) of
-     * the Action
+     * the Action.
      * 
      * TODO: Convert to ENUM
      */
@@ -38,8 +38,9 @@ public class TransitSectionAction {
     public static final int SENSORACTIVE = 7; // When specified Sensor changes to Active
     public static final int SENSORINACTIVE = 8; // When specified Sensor changtes to Inactive
     // other action 'whens" may be defined here
-    /*
-     * Constants designating the "what" (the action to be taken) of the Action
+
+    /**
+     * Constants designating the "what" (the action to be taken) of the Action.
      * 
      * TODO: Convert to ENUM
      */

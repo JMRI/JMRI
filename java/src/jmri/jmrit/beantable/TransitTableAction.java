@@ -1670,7 +1670,6 @@ public class TransitTableAction extends AbstractTableAction {
     private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-
     private void addEditActionWindow() {
         if (addEditActionFrame == null) {
             // set up add/edit action window
@@ -1822,6 +1821,8 @@ public class TransitTableAction extends AbstractTableAction {
             if (curTSA.getStringWhat().equals("Off")) {
                 offButton.setSelected(true);
             }
+            log.debug("setWhen called for edit of action, editmode = {}", editActionMode);
+            whenBox.setSelectedIndex(curTSA.getWhenCode() - 1);
             setWhen(curTSA.getWhenCode());
             setWhat(curTSA.getWhatCode());
             setBlockBox();
@@ -1840,6 +1841,8 @@ public class TransitTableAction extends AbstractTableAction {
 
             whatStringField.setText("");
             onButton.setSelected(true);
+            log.debug("setWhen called for new action, editmode = {}", editActionMode);
+            whenBox.setSelectedIndex(0);
             setWhen(1);
             setWhat(1);
             updateActionButton.setVisible(false);
@@ -1851,6 +1854,8 @@ public class TransitTableAction extends AbstractTableAction {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (addEditActionFrame != null) {
                     addEditActionFrame.setVisible(false);
+                    addEditActionFrame.dispose();
+                    addEditActionFrame = null;
                 }
             }
         });
@@ -1864,9 +1869,10 @@ public class TransitTableAction extends AbstractTableAction {
      * @param code selected item in getWhenBox
      */
     private void setWhen(int code) {
-        whenBox.setSelectedIndex(code - 1);
+        // setting the whenBox here causes recursion
         whenSensorComboBox.setVisible(false);
         blockBox.setVisible(false);
+        log.debug("setWhen code = {}", code);
         switch (code) {
             case TransitSectionAction.ENTRY:
             case TransitSectionAction.EXIT:
@@ -1884,7 +1890,7 @@ public class TransitTableAction extends AbstractTableAction {
                 whenSensorComboBox.setToolTipText(rbx.getString("HintSensorEntry"));
                 break;
             default:
-                log.warn("Unhandled transit action code: {}", code);
+            log.debug("Unhandled transit action code: {}", code); // causes too much noise, no harm done
         }
         addEditActionFrame.pack();
         addEditActionFrame.setVisible(true);
@@ -1908,6 +1914,7 @@ public class TransitTableAction extends AbstractTableAction {
         offButton.setVisible(false);
         doneSensorLabel.setVisible(false);
         doneSensorComboBox.setVisible(false);
+        log.debug("setWhat code = {}", code);
         switch (code) {
             case TransitSectionAction.PAUSE:
                 if (editActionMode) {
@@ -2017,7 +2024,7 @@ public class TransitTableAction extends AbstractTableAction {
                 signalPanel.setVisible(true);
                 break;
             default:
-                log.warn("Unhandled transit section action: {}", code);
+                log.debug("Unhandled transit section action: {}", code); // causes too much noise, no harm done
                 break;
         }
         addEditActionFrame.pack();
@@ -2072,7 +2079,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     private void cancelAddEditActionPressed(ActionEvent e) {
         addEditActionFrame.setVisible(false);
-        addEditActionFrame.dispose();  // remove from Window menu
+        addEditActionFrame.dispose();
         addEditActionFrame = null;
     }
 

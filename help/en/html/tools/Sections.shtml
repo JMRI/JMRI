@@ -30,7 +30,7 @@
       given direction. Sections were created to solve the direction
       problem that can occur when using Blocks directly. A Section
       has only two directions, "forward" or "reverse". Sections can
-      be traversed by a train in either direction. Section
+      be traversed by a Train in either direction. Section
       direction is independent of the direction set for the
       locomotive by a throttle. In addition to solving the
       direction problem, Sections offer the user other useful

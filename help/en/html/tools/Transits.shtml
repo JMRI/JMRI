@@ -27,7 +27,7 @@
 
       <p>A <b>Transit</b> is a group of two or more connected
       <b><a href="Sections.shtml">Sections</a></b> that
-      describes a route around the layout of a train traveling in a
+      describes a route around the layout of a Train traveling in a
       given direction. A Section may be in multiple Transits, and
       may be in a given Transit multiple times. Sections are kept
       in order--the first Section is connected to the second, the
