@@ -199,7 +199,11 @@ public class RosterServlet extends HttpServlet {
                             log.error("Unable to delete {}", fileTemp);
                         }
                     } else {
-                        fileNew.delete(); //delete the old file
+                        if (!fileNew.delete()) { //delete the old file
+                            String m = String.format(rl, Bundle.getMessage(rl, "ErrorDeletingFile"), fileNew.getName());
+                            log.debug(m);
+                            msgList.add(m);
+                        }
                         if (fileTemp.renameTo(fileNew)) {
                             String m = String.format(rl, Bundle.getMessage(rl, "FileReplaced"), fm.getFileName());
                             log.debug(m);
