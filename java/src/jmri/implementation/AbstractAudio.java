@@ -70,7 +70,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * Abstract method that concrete classes will implement to perform necessary
      * cleanup routines.
      */
-    abstract protected void cleanUp();
+    abstract protected void cleanup();
 
     /**
      * Static method to round a float value to the specified number of decimal

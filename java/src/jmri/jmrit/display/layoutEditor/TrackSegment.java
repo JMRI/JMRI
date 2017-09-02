@@ -332,7 +332,7 @@ public class TrackSegment extends LayoutTrack {
     public void setLayoutBlock(LayoutBlock b) {
         block = b;
         if (b != null) {
-            blockName = b.getID();
+            blockName = b.getId();
         }
     }
 
@@ -539,7 +539,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Display popup menu for information and editing.
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {

@@ -1,10 +1,5 @@
 <FindBugsFilter>
     <!-- items to eventually restore, in rough order -->
-    
-     <Match>
-       <!-- Cleanup of class, method names for clarity, as good examples -->
-       <Bug code="Nm" />
-     </Match>
 
      <Match>
        <!-- Design issue -->
@@ -18,8 +13,8 @@
 
      <Match>
        <!-- This is marked as high priority, but is
-            really just a minor efficiency issue. 
-            Suppressed for now to focus attention on 
+            really just a minor efficiency issue.
+            Suppressed for now to focus attention on
             other high-priority items.  -->
        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
      </Match>
@@ -45,7 +40,7 @@
        <!-- Most of these are non-I18N, JMRI-specific file operations.
             We should find the I18N ones, but it seems excessive
             to track down and annotate all the others first thing.
-            Suppressed for now to focus attention on 
+            Suppressed for now to focus attention on
             other high-priority items.  -->
        <Bug pattern="DM_DEFAULT_ENCODING" />
      </Match>
@@ -58,13 +53,13 @@
 
      <Match>
        <!-- JMRI code is often written to trust weird from other classes,
-            so the question of "malicious" is complicated. The rules in 
+            so the question of "malicious" is complicated. The rules in
             this category should be restored in small batches  -->
        <Bug category="MALICIOUS_CODE" />
      </Match>
 
     <!-- items we're unlikely to restore -->
-    
+
      <Match>
        <!-- JMRI does not use serialization, permanently ignore -->
        <Bug code="Se,SnVI" />

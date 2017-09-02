@@ -123,7 +123,7 @@ public class MakePacket {
     private static final int BITS_11111 = 0x55; /* 11111  _-_-_-_-_- (0x55) */
 
 
-    private static class node {
+    private static class Node {
 
         int bitPattern;
         int patternLength;
@@ -204,7 +204,7 @@ public class MakePacket {
      * <P>
      * Basically this is a depth first, prune largest tree search, always going down the subtree
      * that uses the most bits for the next byte. If we get an error, backtrack up
-     * the tree until we reach a node that we have not completely traversed all the
+     * the tree until we reach a Node that we have not completely traversed all the
      * subtrees for and try going down the subtree that uses the second most bits.
      * Keep going until we finish converting the packet or run out of things to try.
      * <P>
@@ -217,11 +217,11 @@ public class MakePacket {
         int currentBufferIndex;
         int treeIndex = -1;
         int serialStream[] = new int[inputBitStream.length];
-        node tree[] = new node[150];
+        Node tree[] = new Node[150];
 
         for (currentBufferIndex = 0; currentBufferIndex < tree.length;
                 currentBufferIndex++) {
-            tree[currentBufferIndex] = new node();
+            tree[currentBufferIndex] = new Node();
             tree[currentBufferIndex].bitPattern = 0;
             tree[currentBufferIndex].patternLength = 0;
         }
@@ -234,7 +234,7 @@ public class MakePacket {
                     inputBitStream.length - currentBufferIndex,
                     tree[treeIndex])) {
                 /* Success, there is a Child at this level in the tree to read */
-                /* Move down the tree to next node */
+                /* Move down the tree to next Node */
                 serialStream[treeIndex] = tree[treeIndex].bitPattern;
                 currentBufferIndex += tree[treeIndex++].patternLength;
             } /* Allow outer loop control to take us down next level; */ else {
@@ -245,7 +245,7 @@ public class MakePacket {
                     currentBufferIndex = inputBitStream.length;
                 } else {
                     while (treeIndex > 0) {
-                        /* Inner loop to check all childs at this node */
+                        /* Inner loop to check all childs at this Node */
                         /* If no more childs then need to bracktrack */
                         treeIndex--;
                         currentBufferIndex -= tree[treeIndex].patternLength;
@@ -269,14 +269,14 @@ public class MakePacket {
     /* ReadNextChild
      *
      * This routine find the next largest (ie longest lenght) child
-     * at this node.
+     * at this Node.
      * ThisNode - (INPUT/OUTPUT) determine if there is another child
-     *                if so update node with ie the Bit
+     *                if so update Node with ie the Bit
      *                pattern and its associated lenght.
      *
      * Return false if one doesnt exist otherwise returns true.
      */
-    static boolean readNextChild(node thisNode) {
+    static boolean readNextChild(Node thisNode) {
 
         switch (thisNode.bitPattern) {
             /* Success - there is another child */
@@ -332,7 +332,7 @@ public class MakePacket {
     /* ReadFirstChild
      *
      * This routine find the first largest (ie longest length) child
-     * at this node          
+     * at this Node          
      *
      * BS  - (INPUT) Bit stream array
      * offset       - Offset in to buffer
@@ -344,7 +344,7 @@ public class MakePacket {
      */
     @SuppressWarnings("fallthrough")
     static boolean readFirstChild(int bs[], int offset, int validBits,
-            node thisNode) {
+            Node thisNode) {
         boolean b0 = false;
         boolean b1 = false;
         boolean b2 = false;

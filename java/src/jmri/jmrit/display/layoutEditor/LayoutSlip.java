@@ -823,7 +823,7 @@ public class LayoutSlip extends LayoutTurnout {
      * Display popup menu for information and editing
      */
     @Override
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {

@@ -365,7 +365,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JoalAudioSource: " + audioName);
                 }
                 // Cast to JoalAudioSource and cleanup
-                ((JoalAudioSource) audio).cleanUp();
+                ((JoalAudioSource) audio).cleanup();
             }
         }
 
@@ -378,7 +378,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JoalAudioBuffer: " + audioName);
                 }
                 // Cast to JoalAudioBuffer and cleanup
-                ((JoalAudioBuffer) audio).cleanUp();
+                ((JoalAudioBuffer) audio).cleanup();
             }
         }
 
@@ -391,7 +391,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JoalAudioListener: " + audioName);
                 }
                 // Cast to JoalAudioListener and cleanup
-                ((JoalAudioListener) audio).cleanUp();
+                ((JoalAudioListener) audio).cleanup();
             }
         }
 

@@ -35,7 +35,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
         Element element = new Element("levelxing");
 
         // include attributes
-        element.setAttribute("ident", p.getID());
+        element.setAttribute("ident", p.getId());
         if (!p.getBlockNameAC().isEmpty()) {
             element.setAttribute("blocknameac", p.getBlockNameAC());
         }
@@ -43,16 +43,16 @@ public class LevelXingXml extends AbstractXmlAdapter {
             element.setAttribute("blocknamebd", p.getBlockNameBD());
         }
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
+            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getID());
+            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getID());
+            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
+            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
         }
         if (!p.getSignalAName().isEmpty()) {
             element.setAttribute("signalaname", p.getSignalAName());

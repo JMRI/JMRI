@@ -2,7 +2,7 @@ package jmri.jmrix.ieee802154.xbee;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction;
+import jmri.jmrix.ieee802154.xbee.swing.nodeconfig.XBeeNodeConfigAction;
 
 /**
  * Definition of objects to handle configuring a layout connection
@@ -31,7 +31,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public void loadDetails(JPanel details) {
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new XBeeNodeConfigAction());
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }

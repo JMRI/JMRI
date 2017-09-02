@@ -43,7 +43,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     private JPanel rrNamePanel() {
         JPanel panel = new JPanel();
-        railroadName = new JTextField(preferences.getRailRoadName());
+        railroadName = new JTextField(preferences.getRailroadName());
         railroadName.setToolTipText(Bundle.getMessage("ToolTipRailRoadName"));
         railroadName.setColumns(30);
         panel.add(new JLabel(Bundle.getMessage("LabelRailRoadName")));
@@ -88,7 +88,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        this.preferences.setRailRoadName(railroadName.getText());
+        this.preferences.setRailroadName(railroadName.getText());
         this.preferences.save();
     }
 

@@ -266,7 +266,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public int numGroupEntries(String group) {
         if (group != null
                 && !group.equals(Roster.ALLENTRIES)
-                && !group.equals(Roster.AllEntries(Locale.getDefault()))) {
+                && !group.equals(Roster.allEntries(Locale.getDefault()))) {
             return (this.rosterGroups.get(group) != null) ? this.rosterGroups.get(group).getEntries().size() : 0;
         } else {
             return this.numEntries();
@@ -1284,7 +1284,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param locale - The desired locale
      * @return "All Entries" in the specified locale
      */
-    public static String AllEntries(Locale locale) {
+    public static String allEntries(Locale locale) {
         return Bundle.getMessage(locale, "ALLENTRIES"); // NOI18N
     }
 

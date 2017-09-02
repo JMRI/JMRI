@@ -15,43 +15,43 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
+import jmri.util.swing.TextFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Restores NCE Macros from a text file defined by NCE.
- *
+ * <p>
  * NCE "Backup macros" dumps the macros into a text file. Each line contains the
  * contents of one macro. The first macro, 0 starts at address xC800. The last
  * macro 255 is at address xDBEC.
- *
+ * <p>
  * NCE file format:
- *
+ * <p>
  * :C800 (macro 0: 20 hex chars representing 10 accessories) :C814 (macro 1: 20
  * hex chars representing 10 accessories) :C828 (macro 2: 20 hex chars
  * representing 10 accessories) . . :DBEC (macro 255: 20 hex chars representing
  * 10 accessories) :0000
- *
- *
+ * <p>
  * Macro data byte:
- *
+ * <p>
  * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D
  * D D addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout T
- *
+ * <p>
  * By convention, MSB address bits 10 - 8 are one's complement. NCE macros
  * always set the C bit to 1. The LSB "D" (0) determines if the accessory is to
  * be thrown (0) or closed (1). The next two bits "D D" are the LSBs of the
  * accessory address. Note that NCE display addresses are 1 greater than NMRA
  * DCC. Note that address bit 2 isn't supposed to be inverted, but it is the way
  * NCE implemented their macros.
- *
+ * <p>
  * Examples:
- *
+ * <p>
  * 81F8 = accessory 1 thrown 9FFC = accessory 123 thrown B5FD = accessory 211
  * close BF8F = accessory 2044 close
- *
+ * <p>
  * FF10 = link macro 16
- *
+ * <p>
  * The restore routine checks that each line of the file begins with the
  * appropriate macro address.
  *
@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory 
+    private static final int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory
     private static final int MACRO_LNTH = 20;  // 20 bytes per macro
     private static final int REPLY_1 = 1;   // reply length of 1 byte expected
     private int replyLen = 0;    // expected byte length
@@ -81,7 +81,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
         // Get file to read from
         JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-        fc.addChoosableFileFilter(new textFilter());
+        fc.addChoosableFileFilter(new TextFilter());
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return; // Canceled
@@ -117,7 +117,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         int macroNum = 0;     // for user status messages
         int curMacro = CS_MACRO_MEM;  // load the start address of the NCE macro memory
         byte[] macroAccy = new byte[20];  // NCE Macro data
-        String line = " ";
+        String line;
 
         while (true) {
             try {
@@ -147,8 +147,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
             if (!macroAddr.equalsIgnoreCase(macroLine[0])) {
                 log.error("Restore file selected is not a vaild backup file");
-                log.error("Macro addr in restore file should be " + macroAddr
-                        + " Macro addr read " + macroLine[0]);
+                log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]);
                 break;
             }
 
@@ -234,7 +233,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 bl[j] = b[i + 16];
             }
 
-            // write 16 bytes 
+            // write 16 bytes
         } else {
             bl = NceBinaryCommand.accMemoryWriteN(curMacro, 16);
             int j = bl.length - 16;
@@ -281,27 +280,5 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         }
     }
 
-    private static class textFilter extends javax.swing.filechooser.FileFilter {
-
-        @Override
-        public boolean accept(File f) {
-            if (f.isDirectory()) {
-                return true;
-            }
-            String name = f.getName();
-            if (name.matches(".*\\.txt")) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public String getDescription() {
-            return "Text Documents (*.txt)";
-        }
-    }
-
-    private final static Logger log = LoggerFactory
-            .getLogger(NceMacroRestore.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMacroRestore.class);
 }

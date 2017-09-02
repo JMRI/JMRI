@@ -82,7 +82,7 @@ public abstract class LayoutTrack {
     /**
      * accessor methods
      */
-    public String getID() {
+    public String getId() {
         return ident;
     }
 
@@ -281,7 +281,7 @@ public abstract class LayoutTrack {
 
     protected abstract void showPopUp(MouseEvent e);
 
-    /**
+  /**
      * get the object connected to this track for the specified connection type
      *
      * @param connectionType the specified connection type

@@ -2,7 +2,6 @@ package jmri.jmris.json;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,8 +24,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     public static final int MIN_HEARTBEAT_INTERVAL = 1;
     private JSpinner heartbeatIntervalSpinner;
     private JSpinner port;
-    private JButton btnSave;
-    private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
 
@@ -54,14 +51,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private void setGUI() {
         heartbeatIntervalSpinner.setValue(preferences.getHeartbeatInterval() / 1000); // convert from milliseconds to seconds
         port.setValue(preferences.getPort());
-    }
-
-    /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        btnSave.setVisible(true);
-        btnCancel.setVisible(true);
     }
 
     /**

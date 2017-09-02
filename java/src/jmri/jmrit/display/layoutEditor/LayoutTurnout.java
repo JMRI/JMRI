@@ -1479,7 +1479,7 @@ public class LayoutTurnout extends LayoutTrack {
     public void setLayoutBlock(LayoutBlock b) {
         block = b;
         if (b != null) {
-            blockName = b.getID();
+            blockName = b.getId();
         } else {
             blockName = "";
         }
@@ -1489,7 +1489,7 @@ public class LayoutTurnout extends LayoutTrack {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             blockB = b;
             if (b != null) {
-                blockBName = b.getID();
+                blockBName = b.getId();
             } else {
                 blockBName = "";
             }
@@ -1502,7 +1502,7 @@ public class LayoutTurnout extends LayoutTrack {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             blockC = b;
             if (b != null) {
-                blockCName = b.getID();
+                blockCName = b.getId();
             } else {
                 blockCName = "";
             }
@@ -1515,7 +1515,7 @@ public class LayoutTurnout extends LayoutTrack {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             blockD = b;
             if (b != null) {
-                blockDName = b.getID();
+                blockDName = b.getId();
             } else {
                 blockDName = "";
             }
@@ -2203,7 +2203,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {

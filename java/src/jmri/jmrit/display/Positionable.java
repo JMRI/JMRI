@@ -41,13 +41,13 @@ public interface Positionable extends Cloneable {
 
     public boolean isEditable();
 
-    public void setShowTooltip(boolean set);
+    public void setShowToolTip(boolean set);
 
-    public boolean showTooltip();
+    public boolean showToolTip();
 
-    public void setTooltip(ToolTip tip);
+    public void setToolTip(ToolTip tip);
 
-    public ToolTip getTooltip();
+    public ToolTip getToolTip();
 
     public void setViewCoordinates(boolean enabled);
 

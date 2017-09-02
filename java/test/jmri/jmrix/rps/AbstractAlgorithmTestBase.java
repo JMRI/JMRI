@@ -178,7 +178,7 @@ abstract public class AbstractAlgorithmTestBase {
 
         Measurement m = c.convert(r, result);
 
-        Assert.assertEquals(label + " ID ok", "21", m.getID());
+        Assert.assertEquals(label + " ID ok", "21", m.getId());
 
         if (!(Math.abs(m.x - result.x) < tolerance)) {
             System.err.println(label + " x not close " + m.x + " " + result.x);

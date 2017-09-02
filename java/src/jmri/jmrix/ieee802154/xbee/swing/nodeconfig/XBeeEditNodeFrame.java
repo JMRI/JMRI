@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2013,2016
  */
-public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
+public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
 
     private XBeeTrafficController xtc = null;
     private javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
-    private NodeConfigFrame parent = null;
+    private XBeeNodeConfigFrame parent = null;
 
 
     /**
@@ -34,9 +34,9 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
      *
      * @param tc the XBeeTrafficController associated with this connection.
      * @param node Xbee node details
-     * @param source the NodeConfigFrame that started this add.
+     * @param source the XBeeNodeConfigFrame that started this add.
      */
-    public EditNodeFrame(XBeeTrafficController tc,XBeeNode node,NodeConfigFrame source) {
+    public XBeeEditNodeFrame(XBeeTrafficController tc,XBeeNode node,XBeeNodeConfigFrame source) {
         super(tc,node);
         xtc = tc;
         parent = source;
@@ -178,6 +178,6 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
     }
 
     @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class.getName());
 
 }

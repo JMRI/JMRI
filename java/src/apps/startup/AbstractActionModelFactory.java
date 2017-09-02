@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract StartupModelFactory with common methods for factories
- * that manipulate models that extend {@link apps.AbstractActionModel}.
+ * that manipulate models that extend {@link apps.startup.AbstractActionModel}.
  *
  * @author Randall Wood
  */

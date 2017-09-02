@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = WebServerConfiguration.class)
-public class DefaultWebServerConfiguration extends AbstractWebServerConfiguration {
+public final class DefaultWebServerConfiguration extends AbstractWebServerConfiguration {
 
     private final HashMap<String, String> redirections = new HashMap<>();
     private final HashMap<String, String> files = new HashMap<>();
