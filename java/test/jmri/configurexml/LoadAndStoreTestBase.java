@@ -118,8 +118,8 @@ public class LoadAndStoreTestBase {
             lineNumber1++;
             lineNumber2++;
 
-            // where the (empty) entryexitpairs line ends up seems to be non-deterministic…
-            // so if we see it in ether file we just skip it
+            // where the (empty) entryexitpairs line ends up seems to be non-deterministic
+            // so if we see it in either file we just skip it
             String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
             if (line1.contains(entryexitpairs)) {
                 line1 = next1;
