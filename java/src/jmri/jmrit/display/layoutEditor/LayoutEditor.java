@@ -2270,7 +2270,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setAllEditable(editModeCheckBoxMenuItem.isSelected());
 
             //show/hide the help bar
-            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+            if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
                 floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
             } else {
                 helpBarPanel.setVisible(isEditable() && getShowHelpBar());
@@ -3132,7 +3132,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             toolBarSideRightButton.setSelected(toolBarSide.equals(ToolBarSide.eRIGHT));
             toolBarSideFloatButton.setSelected(toolBarSide.equals(ToolBarSide.eFLOAT));
 
-            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+            if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
                 floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
             } else if (getShowHelpBar()) {
                 //not sure why... but this is the only way I could
@@ -3621,7 +3621,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private Point2D windowCenter() {
         //Returns window's center coordinates converted to layout space
         //Used for initial setup of turntables and reporters
-        return MathUtil.Point2DToPoint(MathUtil.divide(MathUtil.center(getBounds()), getPaintScale()));
+        return MathUtil.point2DToPoint(MathUtil.divide(MathUtil.center(getBounds()), getPaintScale()));
     } //windowCenter
 
     //
@@ -7138,7 +7138,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             selection = selections.get(0);
         }
 
-        if ((selection != null) && (selection.getDisplayLevel() > Editor.BKG) && selection.showTooltip()) {
+        if ((selection != null) && (selection.getDisplayLevel() > Editor.BKG) && selection.showToolTip()) {
             showToolTip(selection, event);
         } else {
             super.setToolTip(null);
@@ -9471,7 +9471,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //these may not be set up yet...
         if (helpBarPanel != null) {
-            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+            if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
                 floatEditHelpPanel.setVisible(editable && getShowHelpBar());
             } else {
                 helpBarPanel.setVisible(editable && getShowHelpBar());
@@ -10427,7 +10427,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void showToolTip(@Nonnull Positionable selection, @Nonnull MouseEvent event) {
-        ToolTip tip = selection.getTooltip();
+        ToolTip tip = selection.getToolTip();
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         tip.setText(selection.getNameString());
         setToolTip(tip);
