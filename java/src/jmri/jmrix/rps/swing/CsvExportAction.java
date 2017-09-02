@@ -97,7 +97,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
         if (!logging || str == null) {
             return;
         }
-        str.print(r.getID() + ",");
+        str.print(r.getId() + ",");
         for (int i = 0; i < r.getNValues() - 1; i++) {
             str.print(r.getValue(i) + ",");
         }

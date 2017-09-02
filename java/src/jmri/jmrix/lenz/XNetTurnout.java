@@ -624,7 +624,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // messages, add a short delay before sending the
             // first off message.
             if (internalState != OFFSENT) {
-                new java.util.Timer().schedule(new offTask(this), 30);
+                new java.util.Timer().schedule(new OffTask(this), 30);
                 newKnownState(getCommandedState());
                 internalState = OFFSENT;
                 return;
@@ -646,11 +646,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 false) );
     }
 
-    class offTask extends java.util.TimerTask {
+    class OffTask extends java.util.TimerTask {
 
         XNetTurnout t;
 
-        public offTask(XNetTurnout turnout) {
+        public OffTask(XNetTurnout turnout) {
             super();
             t = turnout;
         }

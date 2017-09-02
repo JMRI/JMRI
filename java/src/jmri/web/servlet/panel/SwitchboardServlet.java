@@ -48,7 +48,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
             // add more properties
-            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
 
             panel.setAttribute("hideunconnected", (editor.hideUnconnected()) ? "yes" : "no");

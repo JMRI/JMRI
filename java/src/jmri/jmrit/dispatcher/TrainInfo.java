@@ -24,11 +24,16 @@ public class TrainInfo {
 
     // instance variables for both manual and automatic operation
     private String transitName = "";
+    private String transitId = "";
     private String trainName = "";
     private String dccAddress = "";
     private boolean trainInTransit = false;
     private String startBlockName = "";
+    private String startBlockId = "";
+    private int startBlockSeq = -1;
     private String destinationBlockName = "";
+    private String destinationBlockId = "";
+    private int destinationBlockSeq = -1;
     private boolean trainFromRoster = true;
     private boolean trainFromTrains = false;
     private boolean trainFromUser = false;
@@ -68,6 +73,14 @@ public class TrainInfo {
         return transitName;
     }
 
+    protected void setTransitId(String s) {
+        transitId = s;
+    }
+
+    protected String getTransitId() {
+        return transitId;
+    }
+
     protected void setTrainName(String s) {
         trainName = s;
     }
@@ -76,11 +89,11 @@ public class TrainInfo {
         return trainName;
     }
 
-    protected void setDCCAddress(String s) {
+    protected void setDccAddress(String s) {
         dccAddress = s;
     }
 
-    protected String getDCCAddress() {
+    protected String getDccAddress() {
         return dccAddress;
     }
 
@@ -100,12 +113,44 @@ public class TrainInfo {
         return startBlockName;
     }
 
+    protected void setStartBlockId(String s) {
+        startBlockId = s;
+    }
+
+    protected String getStartBlockId() {
+        return startBlockId;
+    }
+
+    protected void setStartBlockSeq(int i) {
+        startBlockSeq = i;
+    }
+
+    protected int getStartBlockSeq() {
+        return startBlockSeq;
+    }
+
     protected void setDestinationBlockName(String s) {
         destinationBlockName = s;
     }
 
     protected String getDestinationBlockName() {
         return destinationBlockName;
+    }
+
+    protected void setDestinationBlockId(String s) {
+        destinationBlockId = s;
+    }
+
+    protected String getDestinationBlockId() {
+        return destinationBlockId;
+    }
+
+    protected void setDestinationBlockSeq(int i) {
+        destinationBlockSeq = i;
+    }
+
+    protected int getDestinationBlockSeq() {
+        return destinationBlockSeq;
     }
 
     protected void setTrainFromRoster(boolean b) {

@@ -40,7 +40,7 @@ public class TrainIcon extends LocoIcon {
 
     // train icon tool tips are always enabled
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = true;
     }
 

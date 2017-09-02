@@ -314,7 +314,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         if (initialised && isBound()) {
             this.clip.stop();
             this.clip.close();

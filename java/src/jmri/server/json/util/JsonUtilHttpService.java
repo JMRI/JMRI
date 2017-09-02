@@ -127,7 +127,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.JMRI, jmri.Version.name());
         data.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailRoadName());
+        data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailroadName());
         data.put(JSON.NODE, NodeIdentity.identity());
         data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
         return root;
@@ -308,7 +308,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, JSON.RAILROAD);
         ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailRoadName());
+        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailroadName());
         return root;
     }
 

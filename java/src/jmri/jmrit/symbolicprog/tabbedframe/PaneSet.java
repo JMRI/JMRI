@@ -109,13 +109,13 @@ public class PaneSet {
         }
         if (log.isDebugEnabled()) {
             log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFilename());
+                    + " " + df.getFileName());
         }
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (Exception e) {
-            log.error("Exception while loading decoder XML file: " + df.getFilename(), e);
+            log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
         }
         // load variables from decoder tree
         df.getProductID();

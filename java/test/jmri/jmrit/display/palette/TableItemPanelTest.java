@@ -28,6 +28,7 @@ public class TableItemPanelTest {
         Editor editor = new EditorScaffold();
         TableItemPanel t = new TableItemPanel(jf,"IS01","",tableModel,editor);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(jf);
     }
 
     // The minimal setup for log4J

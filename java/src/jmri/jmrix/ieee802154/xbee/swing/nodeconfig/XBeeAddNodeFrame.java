@@ -25,20 +25,20 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2013,2016
  */
-public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNodeFrame {
+public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNodeFrame {
 
     private XBeeTrafficController xtc = null;
-    private javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
-    private NodeConfigFrame parent = null;
+    private final javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
+    private XBeeNodeConfigFrame parent = null;
 
 
     /**
      * Constructor method
      *
      * @param tc the XBeeTrafficController associated with this connection.
-     * @param source the NodeConfigFrame that started this add.
+     * @param source the XBeeNodeConfigFrame that started this add.
      */
-    public AddNodeFrame(XBeeTrafficController tc,NodeConfigFrame source) {
+    public XBeeAddNodeFrame(XBeeTrafficController tc,XBeeNodeConfigFrame source) {
         super(tc);
         xtc = tc;
         parent = source;
@@ -93,11 +93,8 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addButtonActionPerformed();
-            }
+        addButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            addButtonActionPerformed();
         });
         panel4.add(addButton);
         panel4.add(cancelButton);
@@ -105,11 +102,8 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelButtonActionPerformed();
-            }
+        cancelButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            cancelButtonActionPerformed();
         });
         contentPane.add(panel4);
 
@@ -182,7 +176,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
      */
     @Override
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         curNode = null;
         // Switch buttons
         addButton.setVisible(true);
@@ -198,6 +192,6 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         nodeIdentifierField.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class.getName());
 
 }
