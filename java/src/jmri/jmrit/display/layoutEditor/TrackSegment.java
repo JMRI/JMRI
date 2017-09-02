@@ -440,7 +440,7 @@ public class TrackSegment extends LayoutTrack {
         }
         if (type == POS_POINT) {
             PositionablePoint p = (PositionablePoint) connect;
-            if (p.getConnect1() != instance) {
+            if (p.getConnect1() != this) {
                 if (p.getConnect1() != null) {
                     return (p.getConnect1().getLayoutBlock());
                 } else {
@@ -627,7 +627,7 @@ public class TrackSegment extends LayoutTrack {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.removeTrackSegment((TrackSegment) instance);
+                layoutEditor.removeTrackSegment(TrackSegment.this);
                 remove();
                 dispose();
             }

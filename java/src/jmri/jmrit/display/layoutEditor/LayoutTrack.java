@@ -55,7 +55,6 @@ public abstract class LayoutTrack {
 
     // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
-    protected LayoutTrack instance = null;
     protected String ident = "";
     protected Point2D center = new Point2D.Double(50.0, 50.0);
 
@@ -73,7 +72,6 @@ public abstract class LayoutTrack {
      * constructor method
      */
     public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-        this.instance = this;
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;

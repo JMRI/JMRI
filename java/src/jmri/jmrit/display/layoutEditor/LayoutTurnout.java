@@ -2402,7 +2402,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutTurnout((LayoutTurnout) instance)) {
+                    if (layoutEditor.removeLayoutTurnout(LayoutTurnout.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -2415,13 +2415,13 @@ public class LayoutTurnout extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER) || (getTurnoutType() == LH_XOVER)) {
-                            tools.setSignalsAtXoverTurnoutFromMenu((LayoutTurnout) instance,
+                            tools.setSignalsAtXoverTurnoutFromMenu(LayoutTurnout.this,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == NO_LINK) {
-                            tools.setSignalsAtTurnoutFromMenu((LayoutTurnout) instance,
+                            tools.setSignalsAtTurnoutFromMenu(LayoutTurnout.this,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
-                            tools.setSignalsAtThroatToThroatTurnoutsFromMenu((LayoutTurnout) instance, linkedTurnoutName,
+                            tools.setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout.this, linkedTurnoutName,
                                     layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
@@ -2505,7 +2505,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            tools.setSignalMastsAtTurnoutFromMenu((LayoutTurnout) instance,
+                            tools.setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
                                     boundaryBetween);
                         }
                     });
@@ -2513,7 +2513,7 @@ public class LayoutTurnout extends LayoutTrack {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             tools.setSensorsAtTurnoutFromMenu(
-                                    (LayoutTurnout) instance,
+                                    LayoutTurnout.this,
                                     boundaryBetween,
                                     layoutEditor.sensorIconEditor,
                                     layoutEditor.sensorFrame);

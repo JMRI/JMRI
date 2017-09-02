@@ -494,13 +494,13 @@ public class LayoutTurntable extends LayoutTrack {
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editTurntable((LayoutTurntable)instance);
+                editTurntable(LayoutTurntable.this);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (layoutEditor.removeTurntable((LayoutTurntable)instance)) {
+                if (layoutEditor.removeTurntable(LayoutTurntable.this)) {
                     // Returned true if user did not cancel
                     remove();
                     dispose();

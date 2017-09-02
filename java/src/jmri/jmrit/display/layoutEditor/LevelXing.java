@@ -1156,13 +1156,13 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLevelXing((LevelXing)instance);
+                    editLevelXing(LevelXing.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLevelXing((LevelXing)instance)) {
+                    if (layoutEditor.removeLevelXing(LevelXing.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -1177,12 +1177,12 @@ public class LevelXing extends LayoutTrack {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
                         // bring up signals at level crossing tool dialog
-                        tools.setSignalsAtLevelXingFromMenu((LevelXing)instance,
+                        tools.setSignalsAtLevelXingFromMenu(LevelXing.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLevelXingSignalHeadInfoToMenu((LevelXing)instance, jm)) {
+                if (tools.addLevelXingSignalHeadInfoToMenu(LevelXing.this, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -1244,7 +1244,7 @@ public class LevelXing extends LayoutTrack {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
 
-                        tools.setSignalMastsAtLevelXingFromMenu((LevelXing)instance, boundaryBetween, layoutEditor.signalFrame);
+                        tools.setSignalMastsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
@@ -1254,7 +1254,7 @@ public class LevelXing extends LayoutTrack {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
 
-                        tools.setSensorsAtLevelXingFromMenu((LevelXing)instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                        tools.setSensorsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
             }
