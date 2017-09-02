@@ -11,15 +11,10 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SwitchboardEditorXmlTest {
+public class BeanSwitchXmlTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("SwitchboardEditorXml constructor", new SwitchboardEditorXml());
-    }
-
-    @Test
-    public void testBeanSwitchXmlCtor() {
         BeanSwitchXml t = new BeanSwitchXml();
         Assert.assertNotNull("exists", t);
     }
