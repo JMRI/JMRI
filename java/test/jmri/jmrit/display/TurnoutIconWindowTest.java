@@ -66,7 +66,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("initial state", Turnout.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        java.awt.Point location = MathUtil.PointForPoint2D(MathUtil.center(icon.getBounds()));
+        java.awt.Point location = MathUtil.pointForPoint2D(MathUtil.center(icon.getBounds()));
         
         getHelper().enterClickAndLeave(new MouseEventData(
                 this,
@@ -155,7 +155,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("initial state", Turnout.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        java.awt.Point location = MathUtil.PointForPoint2D(MathUtil.center(icon.getBounds()));
+        java.awt.Point location = MathUtil.pointForPoint2D(MathUtil.center(icon.getBounds()));
         //System.out.println("location: " + location);
         
         getHelper().enterClickAndLeave(new MouseEventData(

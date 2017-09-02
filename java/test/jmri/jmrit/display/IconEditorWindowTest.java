@@ -58,7 +58,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sensor.getState());
 
-        java.awt.Point location = MathUtil.PointForPoint2D(MathUtil.center(icon.getBounds()));
+        java.awt.Point location = MathUtil.pointForPoint2D(MathUtil.center(icon.getBounds()));
 
         getHelper().enterClickAndLeave(new MouseEventData(
                 this,

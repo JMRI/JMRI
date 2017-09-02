@@ -52,7 +52,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        Point location = MathUtil.PointForPoint2D(MathUtil.center(icon.getBounds()));
+        Point location = MathUtil.pointForPoint2D(MathUtil.center(icon.getBounds()));
 
         getHelper().enterClickAndLeave(
                 new MouseEventData(this,
@@ -131,7 +131,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
 
         // Click icon change state to Active
-        Point location = MathUtil.PointForPoint2D(MathUtil.midPoint(icon.getBounds()));
+        Point location = MathUtil.pointForPoint2D(MathUtil.midPoint(icon.getBounds()));
 
         getHelper().enterClickAndLeave(
                 new MouseEventData(this,
