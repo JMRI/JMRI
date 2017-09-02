@@ -454,7 +454,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
         @Override
         public boolean execute() {
-            new Thread(() -> {
+            Thread t = new Thread(() -> {
                 try {
                     server.stop();
                 } catch (Exception ex) {
@@ -464,7 +464,9 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
                     log.debug("Details follow: ", ex);
                 }
                 this.isComplete = true;
-            }).start();
+            });
+            t.setName("ServerShutDownTask");
+            t.start();
             return true;
         }
 
