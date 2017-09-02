@@ -106,7 +106,7 @@ public final class InstanceManager {
     static private void traceFilePrint(String msg) {
         String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent);
         String threadName = "["+Thread.currentThread().getName()+"]";
-        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', 20-threadName.length());
+        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25-threadName.length(), 0));
         traceFileWriter.println(threadName+threadNamePad+pad+msg);
         traceFileWriter.flush();
     }
