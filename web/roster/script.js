@@ -117,7 +117,7 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
     } else if (filter.id === 'road') {
       match = item.road.match(re) !== null;
     } else if (filter.id === 'number') {
-      match = item.number === parseInt(filter.value);
+      match = item.number.match(re) !== null;
     } else if (filter.id === 'address') {
       match = item.address === parseInt(filter.value);
     } else if (filter.id === 'owner') {
