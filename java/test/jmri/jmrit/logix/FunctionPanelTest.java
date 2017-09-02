@@ -1,15 +1,13 @@
-package jmri.jmrit.display.palette;
+package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorScaffold;
-import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +16,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TableItemPanelTest {
+public class FunctionPanelTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
-        JmriJFrame jf = new JmriJFrame("Table Item Panel Test");
-        Editor editor = new EditorScaffold();
-        TableItemPanel t = new TableItemPanel(jf,"IS01","",tableModel,editor);
+        LearnThrottleFrame ltf = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        RosterEntry re = new RosterEntry("file here");
+        FunctionPanel t = new FunctionPanel(re,ltf);
         Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(jf);
+        JUnitUtil.dispose(ltf);
     }
 
     // The minimal setup for log4J
@@ -42,6 +39,6 @@ public class TableItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableItemPanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionPanelTest.class.getName());
 
 }

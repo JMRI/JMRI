@@ -146,7 +146,9 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
                         location
                 ));
 
-        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
+        JUnitUtil.waitFor(() -> {
+            return sn.getState() == Sensor.INACTIVE;
+        }, "state after one click");
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave(new MouseEventData(this, icon));

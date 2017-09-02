@@ -1099,6 +1099,7 @@ public class ActivateTrainFrame {
     private TrainInfo dialogToTrainInfo() {
         TrainInfo info = new TrainInfo();
         info.setTransitName((String) transitSelectBox.getSelectedItem());
+        info.setTransitId(selectedTransit.getSystemName());
         if (_TrainsFromRoster || _TrainsFromTrains) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
             info.setDccAddress(" ");
@@ -1108,7 +1109,21 @@ public class ActivateTrainFrame {
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
+        int index = startingBlockBox.getSelectedIndex();
+        if (index < 0) {
+            log.error("No Starting Block.");
+        } else {
+            info.setStartBlockId(startingBlockBoxList.get(index).getSystemName());
+            info.setStartBlockSeq(startingBlockSeqList.get(index).intValue());
+        }
         info.setDestinationBlockName((String) destinationBlockBox.getSelectedItem());
+        index = destinationBlockBox.getSelectedIndex();
+        if (index < 0) {
+            log.error("No Destination Block.");
+        } else {
+            info.setDestinationBlockId(destinationBlockBoxList.get(index).getSystemName());
+            info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
+        }
         info.setTrainFromRoster(_TrainsFromRoster);
         info.setTrainFromTrains(_TrainsFromTrains);
         info.setTrainFromUser(_TrainsFromUser);

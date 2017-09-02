@@ -3131,12 +3131,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         if (l == this) {
-            if (enableAddRouteLogging) {
-                log.info("adding ourselves as a listener for some strange reason! Skipping");
-            }
+            log.debug("adding ourselves as a listener for some strange reason! Skipping");
             return;
         }
-
         super.addPropertyChangeListener(l);
     }
 
