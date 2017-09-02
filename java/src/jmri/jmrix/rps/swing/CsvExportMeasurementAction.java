@@ -99,7 +99,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
             return;
         }
         // first measurement info
-        str.print("" + m.getID() + "," + m.getX() + "," + m.getY() + "," + m.getZ() + "," + m.getCode() + ",");
+        str.print("" + m.getId() + "," + m.getX() + "," + m.getY() + "," + m.getZ() + "," + m.getCode() + ",");
         // then reading info
         Reading r = m.getReading();
         for (int i = 0; i < r.getNValues() - 1; i++) {

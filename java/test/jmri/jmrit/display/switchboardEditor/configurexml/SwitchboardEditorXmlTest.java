@@ -14,8 +14,14 @@ import org.junit.Test;
 public class SwitchboardEditorXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("SwitchboardEditorXml constructor",new SwitchboardEditorXml());
+    public void testCtor() {
+        Assert.assertNotNull("SwitchboardEditorXml constructor", new SwitchboardEditorXml());
+    }
+
+    @Test
+    public void testBeanSwitchXmlCtor() {
+        BeanSwitchXml t = new BeanSwitchXml();
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -30,4 +36,3 @@ public class SwitchboardEditorXmlTest {
     }
 
 }
-

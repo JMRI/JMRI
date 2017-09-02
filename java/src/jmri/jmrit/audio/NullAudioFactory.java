@@ -71,7 +71,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing NullAudioSource: " + audioName);
                 }
                 // Cast to NullAudioSource and cleanup
-                ((NullAudioSource) audio).cleanUp();
+                ((NullAudioSource) audio).cleanup();
             }
         }
 
@@ -84,7 +84,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing NullAudioBuffer: " + audioName);
                 }
                 // Cast to NullAudioBuffer and cleanup
-                ((NullAudioBuffer) audio).cleanUp();
+                ((NullAudioBuffer) audio).cleanup();
             }
         }
 
@@ -97,7 +97,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing NullAudioListener: " + audioName);
                 }
                 // Cast to NullAudioListener and cleanup
-                ((NullAudioListener) audio).cleanUp();
+                ((NullAudioListener) audio).cleanup();
             }
         }
 

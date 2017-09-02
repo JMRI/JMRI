@@ -99,7 +99,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     
     protected JPanel packetTypes  = new JPanel();
     
-    HandlerClass PacketTypeCkBoxHandler = new HandlerClass();
+    HandlerClass packetTypeCkBoxHandler = new HandlerClass();
     private CMRISystemConnectionMemo _memo = null;
 
     SerialFilterFrame curFrame;   
@@ -189,7 +189,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         {
             JCheckBox ckbox = new JCheckBox(packetChkBoxLabels[i]);
             packetChkBoxes.add(ckbox);
-            packetChkBoxes.get(i).addItemListener(PacketTypeCkBoxHandler);
+            packetChkBoxes.get(i).addItemListener(packetTypeCkBoxHandler);
 
             packetChkBoxes.get(i).setVisible(false);
             packetChkBoxes.get(i).setEnabled(false);

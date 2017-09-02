@@ -82,7 +82,7 @@ public abstract class LayoutTrack {
     /**
      * accessor methods
      */
-    public String getID() {
+    public String getId() {
         return ident;
     }
 
@@ -279,7 +279,8 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected abstract void showPopUp(MouseEvent e);
+    protected void showPopup(MouseEvent e) {
+    }
 
     /**
      * get the object connected to this track for the specified connection type

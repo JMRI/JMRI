@@ -1,5 +1,6 @@
 package jmri.util.exceptionhandler;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
+    @SuppressFBWarnings(value="DM_EXIT", justification="Errors should terminate the application")
     public void uncaughtException(Thread t, Throwable e) {
 
         // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html

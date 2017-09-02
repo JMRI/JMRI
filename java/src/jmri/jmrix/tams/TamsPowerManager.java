@@ -43,7 +43,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     }
 
     TamsTrafficController tc;
-    Thread TamsPowerMonitorThread;
+    Thread tamsPowerMonitorThread;
 
     @Override
     public String getUserName() {

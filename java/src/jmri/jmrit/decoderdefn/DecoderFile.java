@@ -209,7 +209,7 @@ public class DecoderFile extends XmlFile {
         return _replacementFamily;
     }
 
-    public String getFilename() {
+    public String getFileName() {
         return _filename;
     }
 

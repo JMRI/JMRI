@@ -768,14 +768,14 @@ public class LevelXing extends LayoutTrack {
     public void setLayoutBlockAC(LayoutBlock b) {
         blockAC = b;
         if (b != null) {
-            blockNameAC = b.getID();
+            blockNameAC = b.getId();
         }
     }
 
     public void setLayoutBlockBD(LayoutBlock b) {
         blockBD = b;
         if (b != null) {
-            blockNameBD = b.getID();
+            blockNameBD = b.getId();
         }
     }
 
@@ -1066,7 +1066,7 @@ public class LevelXing extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {

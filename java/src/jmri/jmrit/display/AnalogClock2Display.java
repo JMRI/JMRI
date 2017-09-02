@@ -477,12 +477,12 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     }
 
     @Override
-    public String getUrl() {
+    public String getURL() {
         return _url;
     }
 
     @Override
-    public void setUrl(String u) {
+    public void setULRL(String u) {
         _url = u;
     }
 

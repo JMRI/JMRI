@@ -213,7 +213,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         // find the decoderFile object
         DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle((String) decoderBox.getSelectedItem());
         if (log.isDebugEnabled()) {
-            log.debug("decoder file: " + decoderFile.getFilename());
+            log.debug("decoder file: " + decoderFile.getFileName());
         }
 
         // create a dummy RosterEntry with the decoder info
