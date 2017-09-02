@@ -84,6 +84,33 @@ public final class InstanceManager {
         DONE
     }
     
+    private static final boolean traceFileActive = true;
+    private static final boolean traceFileAppend = false;
+    private static int traceFileIndent = 1;
+    private static final String traceFileName = "instanceManagerSequence.txt";
+    private static java.io.PrintWriter traceFileWriter;
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+    static {
+        java.io.PrintWriter tempWriter = null;
+        try {
+            tempWriter = (traceFileActive ? 
+                    new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(traceFileName, traceFileAppend))) 
+                    : null);
+        } catch (java.io.IOException e) {
+            log.error("failed to open log file", e);
+        } finally {
+            traceFileWriter = tempWriter;
+        }
+    }
+    
+    static private void traceFilePrint(String msg) {
+        String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent);
+        String threadName = "["+Thread.currentThread().getName()+"]";
+        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', 20-threadName.length());
+        traceFileWriter.println(threadName+threadNamePad+pad+msg);
+        traceFileWriter.flush();
+    }
+
     static final class StateHolder {
         InitializationState state;
         Exception exception;
@@ -259,6 +286,7 @@ public final class InstanceManager {
         log.trace("getOptionalDefault of type {}", type.getName());
         List<T> l = (ArrayList<T>) getList(type);
         if (l.isEmpty()) {
+            if (traceFileActive) { traceFilePrint("Start initialization: "+type.toString()); traceFileIndent++; }
             // check whether already working on this type
             InitializationState working = getDefault().getInitializationState(type);
             Exception except = getDefault().getInitializationException(type);
@@ -267,6 +295,9 @@ public final class InstanceManager {
             if (working == InitializationState.STARTED) {
                 log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread "+Thread.currentThread().getName()));
                 log.error("    Prior initialization:", except);
+                if (traceFileActive) { 
+                    traceFilePrint("*** Already in process ***");
+                }
             } else if (working == InitializationState.DONE) {
                 log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread "+Thread.currentThread().getName()));
             }
@@ -285,9 +316,11 @@ public final class InstanceManager {
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
                     getDefault().setInitializationState(type, InitializationState.FAILED);
+                    if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization (no object) A: "+type.toString());}
                     return null;
                 }
                 getDefault().setInitializationState(type, InitializationState.DONE);
+                if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization A: "+type.toString());}
                 return l.get(l.size() - 1);
             }
             // see if initializer can handle
@@ -303,6 +336,7 @@ public final class InstanceManager {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
                     getDefault().setInitializationState(type, InitializationState.DONE);
+                    if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization I: "+type.toString());}
                     return l.get(l.size() - 1);
                 } catch (IllegalArgumentException ex) {
                     log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
@@ -313,6 +347,7 @@ public final class InstanceManager {
 
             // don't have, can't make
             getDefault().setInitializationState(type, InitializationState.FAILED);
+            if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization (no object) E: "+type.toString());}
             return null;
         }
         return l.get(l.size() - 1);
@@ -849,6 +884,8 @@ public final class InstanceManager {
                 clear(type);
             });
         });
+        traceFileWriter.println(""); // marks new InstanceManager
+        traceFileWriter.flush();
     }
 
     /**
@@ -887,5 +924,4 @@ public final class InstanceManager {
         }
         return defaultInstanceManager;
     }
-    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
