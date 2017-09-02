@@ -22,13 +22,88 @@
     <div id="mainContent">
       <h1>Conditional List Editor</h1>
 
-      <p>The Edit Conditional pane is where logical expressions
+      <h2>Edit Logix</h2>
+      <p>When <strong>Edit</strong> is selected for a Logix, the Edit Logix
+      window is displayed.</p>
+      <div style="margin-left: 2em">
+      <a href="images/ListEditLogix.png">
+      <img src="images/ListEditLogix.png"
+      alt="Edit Logix Window" height="413" width="493">
+      </a>
+      </div>
+
+      <p>The Edit Logix window allows Conditionals to be created
+      and edited. The system name and user name of the Logix are
+      displayed at the top. The user name may be changed by
+      entering/modifying the text in the User Name field. Next is a
+      table of Conditionals belonging to the Logix. To add a new
+      Conditional, click the <strong>New Conditional</strong> button under
+      the Conditional Table. This will create a new
+      Conditional (a new row in the Conditional Table), and open
+      the Edit Conditional pane allowing the logical expression
+      and actions of the new Conditional to be defined. An existing
+      Conditional may be edited by clicking the <strong>Edit</strong> button
+      of that Conditional in the table. The user name of the
+      Conditional may be changed in the table. Conditional user
+      names may be any useful text, provided the new user name is
+      not used by another Conditional belonging to this Logix. It
+      may be the same as the user name of another Logix's
+      Conditional. <em>When editing the user name (or any item in    
+      any JMRI table) please remember to move to another cell in
+      the table so that the program is notified that you have
+      finished your entry, otherwise the entry may not take
+      effect.</em></p>
+
+      <p>Clicking <strong>Calculate</strong> under the Conditional Table
+      causes all Conditionals of the Logix to be calculated.
+      Resulting states are displayed in the State column of the
+      table. Since the Logix is "inactive" while being edited, no
+      Conditional actions are taken when the <strong>Calculate</strong>
+      button is pressed.</p>
+
+      <p>The order of Conditionals in the Conditional Table may be
+      changed by clicking <strong>Reorder</strong> (below the Conditional
+      Table). Clicking <strong>Reorder</strong> changes all edit buttons in
+      the last Column of the table to <strong>First</strong>. Select the
+      Conditional that is to be first, and it is immediately moved
+      to the top of the table. All remaining buttons change to
+      <strong>Next</strong>. Select remaining Conditionals in desired order,
+      until all buttons change back to <strong>Edit</strong>. Note that the
+      order that Conditionals are listed in the Logix does not
+      determine the order in which they're evaluated, nor does it
+      force evaluation of one Conditional when an earlier or later
+      one is evaluated. For more on this, see the discussion on the
+      <a href="../../../../html/tools/Logix.shtml">Logix main
+      page</a>.</p>
+
+      <p>When <strong>Done</strong> is clicked at the bottom of the Edit
+      Logix window, any change in the Logix user name is checked
+      and made. A check is made for inconsistencies in specifying
+      that an entity (sensor, turnout, etc.) referenced in multiple
+      state variables is not monitored as a trigger for calculation
+      of the Logix, and a warning message appears if any
+      inconsistencies are found. Then the Logix is activated, the
+      Edit Logix window is dismissed, and the user is returned to
+      the Logix Table. Immediately before the Logix is activated,
+      the state of all its Conditionals is set to UNKNOWN.
+      Immediately after activation, all Conditionals are
+      calculated.</p>
+
+      <h2>Edit Conditional</h2>
+
+      <p>The Edit Conditional window is where logical expressions
       are set up and where actions are specified. The Edit
-      Conditional pane is displayed when a Conditional is
+      Conditional window is displayed when a Conditional is
       created, or when the <strong>Edit</strong> button of a Conditional is
-      pressed in the <a href="LogixAddEdit.shtml">Edit Logix
-      pane</a>. The Edit Conditional pane at the top displays the
-      system name and user name of the Conditional. The system
+      pressed in the Edit Logix window.</p>
+      <div style="margin-left: 2em">
+      <a href="images/ListEditConditional.png">
+      <img src="images/ListEditConditional.png"
+      alt="Edit Conditional Window" height="413" width="493">
+      </a>
+      </div>
+      <p>The Edit Conditional window at the top
+      displays the system name and user name of the Conditional. The system
       name is automatically set by the program and cannot be
       changed. The user name may be edited by entering/modifying
       the text in the User Name field. The user name may not be the
@@ -40,10 +115,11 @@
       expression and one for set up of actions. Conditionals are
       statements of the form:</p>
 
-      <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
+      <div style="margin-left: 2em;"><p><code>if (logical expression) then
+      (action)</code></p></div>
       
       <p>A Conditional has two distinct parts: its "logical
-      expression" and its "action". The pane has separate
+      expression" and its "action". The window has separate
       sections for the set up of each.</p>
 
       <h2>Logical Expression</h2>
@@ -94,6 +170,10 @@
       entry. Otherwise your entry may not take effect, and an error
       may be reported unnecessarily.</em></p>
 
+      <p>The <strong>Reorder</strong> button is used to changed the order of the
+      conditional variables.  This button is disabled if the Logic Operator is set
+      to <strong>Mixed</strong>.<span class="since">since 4.9.2</span></p>
+      
       <p>The default <strong>Logic Operator</strong> is "AND". In this case
       the Conditional will test if all variable tests are true,
       after taking the "NOT" negations into account. Using the
@@ -114,35 +194,44 @@
       (R2 and R3) or (R3 and R1)
       </code></p></div>
 
-      <h3>Adding a New State Variable</h3>
+      <h3>Add/Edit State Variables</h3>
 
-      <p>Press the <strong>Add State Variable</strong> to add a state
-      variable (a row in the state variable table). This brings up
-      a pane with a choice box for the user to select a state
-      variable type. Available state variables are documented
-      <a href="#variable">below</a>. When a type is chosen, the
-      Edit Variable pane displays a text field for the name of
-      the entity to be used for the state variable. When a name
+      <p>Press the <strong>Add State Variable</strong> to add a new state
+      variable (a row in the state variable table) or click on an <strong>Edit</strong>
+      button to edit an existing State Variable.
+      .</p>
+      <div style="margin-left: 2em">
+      <a href="images/ListEditVariable.png">
+      <img src="images/ListEditVariable.png"
+      alt="Edit Variable Window" height="182" width="592">
+      </a>
+      </div>
+      <p>If a new Variable is being created, only the Variable Type will be
+      displayed. Once a choice has been made, other fields will be displayed
+      based on the selected type. Available state variable types are documented
+      at <a href="StateVariableActionList.shtml#variable">State Variables</a>.</p>
+
+      <p>When a type is chosen, the Edit Variable window displays a text field
+      for the name of the entity to be used for the state variable. When a name
       (either system name or user name) is entered, it must
       correspond to an existing entity (sensor, turnout, light,
-      etc.). It is useful to open the Sensor Table when entering
-      sensor names, or the Turnout Table to show available
-      turnouts, etc. The actual format for entering names
+      etc.). The actual method for entering names
       will depend on the conditional name selection method setting.
-      See <a href="LogixTable.shtml#selectMethod">
+      See <a href="../beantable/LogixTable.shtml#logixOptions">
       Conditional Name Selection Method</a>.</p>
-      
-      <p>For Conditional Variables, the text input field is replaced
+
+      <p>For Conditional References, the text input field is replaced
       by two drop down combo boxes.  The first box is used to
       select the Logix, the second box is used to select a
       Conditional that belongs to the selected Logix.
-      <span class="since">since 4.7.4</span>
+      <span class="since">since 4.7.4</span></p>
+      <div style="margin-left: 2em">
       <a href="images/SelectConditionalReference.png">
       <img src="images/SelectConditionalReference.png"
       alt="Logix/Conditional Combo Boxes" height="148" width="558">
       </a>
-      </p>
-      
+      </div>
+
       <p>After the name is entered, select the required state from the
       <strong>Variable State</strong> drop down box.  Depending on the selected
       variable type and state, additional fields may be displayed.
@@ -173,24 +262,34 @@
       window. The right-most buttons by the actions will then let
       you select the first one, next one, etc.</p>
 
-      <h3>Adding a New Action</h3>
+      <h3>Add/Edit Actions</h3>
+      <p>Press the <strong>Add Action</strong> button to add a new action or
+      click on an <strong>Edit</strong> button to edit an existing Action.
+      .</p>
+      <div style="margin-left: 2em">
+      <a href="images/ListEditAction.png">
+      <img src="images/ListEditAction.png"
+      alt="Edit Action Window" height="182" width="900">
+      </a>
+      </div>
+      <p>If a new Action is being created, only the Action Group will be
+      displayed. Once a choice has been made, other fields will be displayed
+      based on the selected type. Available Acton types are documented at
+      <a href="StateVariableActionList.shtml#action">Actions</a>.</p>
 
-      <p>To add a new action, press the "Add Action" button. A new
-      "Edit Action" pane will appear. Select an action type in
-      the type box. The data items needed to completely specify the
+      <p>When a type is chosen, the Edit Action window displays a text field for
+      the name of the entity to be used for the state variable. When a name
+      (either system name or user name) is entered, it must
+      correspond to an existing entity (sensor, turnout, light,
+      etc.). The actual method for entering names
+      will depend on the conditional name selection method setting.
+      See <a href="../beantable/LogixTable.shtml#logixOptions">
+      Conditional Name Selection Method</a>.</p>
+      
+      <p>The data items needed to completely specify the
       action will appear to the right of the type box. If you don't
       know what needs to be entered in a data field, hover your
-      cursor over it, and a hint message will appear. When a name
-      must be entered, the name must correspond to the system name
-      or the user name of an existing entity (sensor, turnout,
-      signal head, etc.) of the proper type. Opening the Sensor
-      Table when entering sensor names, or the Turnout Table to see
-      available turnouts, etc., may be useful. Available action
-      types are described in detail <a href=
-      "#action">below</a>. The actual method for entering names
-      will depend on the conditional name selection method setting.
-      See <a href="LogixTable.shtml#selectMethod">
-      Conditional Name Selection Method</a></p>
+      cursor over it, and a hint message will appear.</p>
 
       <p>For each action, three options are available for when to
       trigger the action:</p>
@@ -199,6 +298,15 @@
         <li>On Change to False</li>
         <li>On Change</li>
       </ul>
+
+      <p>If the <strong>Execute Actions</strong> option has been changed to
+      <strong>Execute Action whenever triggered</strong>, then the options are:</p>
+      <ul>
+        <li>When Triggered True</li>
+        <li>When Triggered False</li>
+        <li>Whenever Triggered</li>
+      </ul>
+
       <p>These refer to the calculated state
       of the Conditional, which is equal to the value of the
       logical expression as specified in the state variable table.
@@ -229,10 +337,8 @@
       <strong>Delete Conditional</strong> to delete the Conditional being
       edited and return to the Edit Logix window.</p>
 
-      <p>Available state variables and actions are listed below. For
-      more information, consult the <a href=
-      "../../../../html/tools/Logix.shtml">main Logix
-      documentation</a>.</p>
+      <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">
+      main Logix documentation</a>.</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
