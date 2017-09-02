@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * representing 10 accessories) . . :DBEC (macro 255: 20 hex chars representing
  * 10 accessories) :0000
  * <p>
- * <p>
  * Macro data byte:
  * <p>
  * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D

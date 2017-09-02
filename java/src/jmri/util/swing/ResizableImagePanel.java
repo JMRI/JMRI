@@ -45,7 +45,6 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     /**
      * Default constructor.
-     * <p>
      */
     public ResizableImagePanel() {
         super();

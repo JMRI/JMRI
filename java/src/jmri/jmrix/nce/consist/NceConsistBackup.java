@@ -1,6 +1,5 @@
 package jmri.jmrix.nce.consist;
 
-import jmri.util.swing.TextFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,6 +17,7 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
+import jmri.util.swing.TextFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,11 +32,9 @@ import org.slf4j.LoggerFactory;
  * :F500 (16 bytes per line, grouped as 8 words with space delimiters) :F510 . .
  * :FAF0 :0000
  * <p>
- * <p>
  * Consist data byte:
  * <p>
  * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
- * <p>
  * <p>
  * This backup routine uses the same consist data format as NCE.
  *

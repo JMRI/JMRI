@@ -2140,11 +2140,10 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Handle close of editor window.
-     * <P>
+     * <p>
      * Overload/override method in JmriJFrame parent, which by default is
      * permanently closing the window. Here, we just want to make it invisible,
      * so we don't dispose it (yet).
-     * <p>
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {

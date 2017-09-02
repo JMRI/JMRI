@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Each VSDecoder implements exactly one Sound Profile (describes a particular
  * type of locomtive, say, an EMD GP7).
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -259,7 +258,6 @@ public class VSDecoder implements PropertyChangeListener {
 
     /**
      * Shut down this VSDecoder and all of its associated sounds.
-     * <p>
      */
     public void shutdown() {
         log.debug("Shutting down sounds...");
@@ -549,8 +547,7 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
-     * Turn the bell sound on/off
-     * <p>
+     * Turn the bell sound on/off.
      */
     public void toggleBell() {
         VSDSound snd = sound_list.get("BELL");
@@ -562,8 +559,7 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
-     * Turn the horn sound on/off
-     * <p>
+     * Turn the horn sound on/off.
      */
     public void toggleHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -575,8 +571,7 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
-     * Turn the horn sound on
-     * <p>
+     * Turn the horn sound on.
      */
     public void playHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -584,8 +579,7 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
-     * Turn the horn sound on (Short burst)
-     * <p>
+     * Turn the horn sound on (Short burst).
      */
     public void shortHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -593,8 +587,7 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
-     * Turn the horn sound off
-     * <p>
+     * Turn the horn sound off.
      */
     public void stopHorn() {
         VSDSound snd = sound_list.get("HORN");
@@ -621,16 +614,14 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     /**
-     * Enable this VSDecoder
-     * <p>
+     * Enable this VSDecoder.
      */
     public void enable() {
         enabled = true;
     }
 
     /**
-     * Disable this VSDecoder
-     * <p>
+     * Disable this VSDecoder.
      */
     public void disable() {
         enabled = false;

@@ -567,7 +567,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * <li> dispose of sub windows.
      * <li> notify my manager of my demise.
      * </ol>
-     * <p>
      */
     public void dispose() {
         log.debug("Disposing {}", getTitle());

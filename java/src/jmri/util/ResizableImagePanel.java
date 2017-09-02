@@ -51,7 +51,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
 
     /**
      * Default constructor.
-     * <p>
      */
     public ResizableImagePanel() {
         super();
