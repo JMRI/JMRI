@@ -381,7 +381,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             log.info("addButtonActionPerformed Exception-C2: "+ex.toString());
             }
         f.nodeTableModel = nodeTableModel;
-        f.InitNodeVariables();
+        f.initNodeVariables();
         f.buttonSet_ADD();
         f.setLocation(100,100);
         f.setVisible(true);
@@ -814,7 +814,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
  *----------------------------------------------------------
  */
 
-    public void InitNodeVariables() {
+    public void initNodeVariables() {
 //    	super();
         // Clear information arrays
         for (int i = 0; i<64 ; i++) {

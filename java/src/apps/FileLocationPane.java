@@ -30,7 +30,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Kevin Dickerson Copyright (C) 2010
  */
 @ServiceProvider(service = PreferencesPanel.class)
-public class FileLocationPane extends JPanel implements PreferencesPanel {
+public final class FileLocationPane extends JPanel implements PreferencesPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean restartRequired = false;
@@ -40,8 +40,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
     public FileLocationPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(PrefLocation());
-        add(ScriptsLocation());
+        add(prefLocation());
+        add(scriptsLocation());
 
         /*p = new JPanel();
          JLabel throttle = new JLabel("Default Throttle Location");
@@ -52,7 +52,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
          add(p);*/
     }
 
-    private JPanel ScriptsLocation() {
+    private JPanel scriptsLocation() {
         JButton bScript = new JButton(rb.getString("ButtonSetDots"));
         final JFileChooser fcScript;
         fcScript = new JFileChooser(FileUtil.getScriptsPath());
@@ -72,7 +72,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         return p;
     }
 
-    private JPanel PrefLocation() {
+    private JPanel prefLocation() {
         JPanel p = new JPanel();
         JLabel users = new JLabel(rb.getString("PrefDir"));
         p.add(users);
@@ -155,7 +155,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
     }
-    
+
     private class OpenAction extends AbstractAction {
         JFileChooser chooser;
         JTextField field;

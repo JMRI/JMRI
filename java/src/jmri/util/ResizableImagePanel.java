@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -17,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * A class extending JPanels to have a image display in a panel, supports: +
  * drag'n drop of image file + can resize container + can scale content to size
  * + respect aspect ratio by default (when resizing content)
- *
+ * <p>
  * (overrides paintComponent for performances)
  *
  * @author Lionel Jeanson - Copyright 2009
@@ -43,20 +43,19 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     private BufferedImage scaledImage = null;
     private boolean _resizeContainer = false;
     private boolean _respectAspectRatio = true;
-    static private Color BackGroundColor = Color.BLACK;
+    static private Color backgroundColor = Color.BLACK;
     private MyMouseAdapter myMouseAdapter = null;
     boolean toResize = false;
     private String dropFolder;
-    final static Dimension smallDim = new Dimension(10, 10);
+    final private static Dimension SMALL_DIM = new Dimension(10, 10);
 
     /**
      * Default constructor.
-     *
      */
     public ResizableImagePanel() {
         super();
         setDnd(false);
-        super.setBackground(BackGroundColor);
+        super.setBackground(backgroundColor);
         setVisible(false);
     }
 
@@ -69,7 +68,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
      */
     public ResizableImagePanel(String imagePath) {
         super();
-        super.setBackground(BackGroundColor);
+        super.setBackground(backgroundColor);
         setImagePath(imagePath);
         setDnd(false);
     }
@@ -85,7 +84,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         super();
         setPreferredSize(new Dimension(w, h));
         setSize(w, h);
-        super.setBackground(BackGroundColor);
+        super.setBackground(backgroundColor);
         setImagePath(imagePath);
         setDnd(false);
     }
@@ -122,25 +121,22 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     // For contextual menu remove
     class MyMouseAdapter implements MouseListener {
 
-        private JPopupMenu popUpMenu;
+        private final JPopupMenu popupMenu;
         private JMenuItem removeMenuItem;
         private ResizableImagePanel rip;
 
         public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
             rip = resizableImagePanel;
-            popUpMenu = new JPopupMenu();
+            popupMenu = new JPopupMenu();
             removeMenuItem = new JMenuItem("Remove");
-            removeMenuItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    rip.setImagePath(null);
-                    removeMenuItem.setEnabled(false);
-                }
+            removeMenuItem.addActionListener((ActionEvent e) -> {
+                rip.setImagePath(null);
+                removeMenuItem.setEnabled(false);
             });
             if (rip.image == null) {
                 removeMenuItem.setEnabled(false);
             }
-            popUpMenu.add(removeMenuItem);
+            popupMenu.add(removeMenuItem);
         }
 
         void setRemoveMenuItemEnable(boolean b) {
@@ -172,7 +168,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
 
         private void maybeShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
-                popUpMenu.show(e.getComponent(), e.getX(), e.getY());
+                popupMenu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
@@ -244,7 +240,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             if (myMouseAdapter != null) {
                 myMouseAdapter.removeMenuItem.setEnabled(true);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.debug("{} is not a valid image file, exception: ", _imagePath, ex);
             image = null;
             scaledImage = null;
@@ -301,7 +297,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     public void componentHidden(ComponentEvent e) {
         log.debug("Component hidden");
         if (isResizingContainer()) {
-            resizeContainer(smallDim);
+            resizeContainer(SMALL_DIM);
         }
     }
 
@@ -383,22 +379,16 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         {
             log.error("failed to make directories to copy file");
         }
-        FileInputStream fis = new FileInputStream(in);
-        try {
-            FileOutputStream fos = new FileOutputStream(out);
-            try {
+        try (FileInputStream fis = new FileInputStream(in)) {
+            try (FileOutputStream fos = new FileOutputStream(out)) {
                 byte[] buf = new byte[1024];
-                int i = 0;
+                int i;
                 while ((i = fis.read(buf)) != -1) {
                     fos.write(buf, 0, i);
                 }
             } catch (Exception e) {
                 throw e;
-            } finally {
-                fos.close();
             }
-        } finally {
-            fis.close();
         }
     }
 

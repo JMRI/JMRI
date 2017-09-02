@@ -62,7 +62,7 @@ public class PositionableShape extends PositionableJComponent
     public PositionableShape(Editor editor) {
         super(editor);
         setName("Graphic");
-        setShowTooltip(false);
+        setShowToolTip(false);
         setDisplayLevel(ControlPanelEditor.LABELS);
     }
 

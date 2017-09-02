@@ -342,7 +342,7 @@ public class ActiveTrain {
         return mDelayedRestart;
     }
 
-    public void setDelayedReStart(int delay) {
+    public void setDelayedRestart(int delay) {
         mDelayedRestart = delay;
     }
 

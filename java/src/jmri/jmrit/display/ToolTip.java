@@ -80,12 +80,11 @@ public class ToolTip {
         _ty = y;
     }
 
-    public void setLocation(Positionable pos) {
-        _tx = pos.getX() + pos.getWidth() / 2;
-        _ty = pos.getY() + pos.getHeight() / 2;
+    public final void setLocation(Positionable pos) {
+        setLocation(pos.getX() + pos.getWidth() / 2, pos.getY() + pos.getHeight() / 2);
     }
 
-    public final void setfontSize(int size) {
+    public final void setFontSize(int size) {
         _tFont = _tFont.deriveFont(size);
     }
 

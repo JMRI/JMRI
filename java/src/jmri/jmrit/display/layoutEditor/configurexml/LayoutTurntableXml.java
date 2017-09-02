@@ -37,7 +37,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         Element element = new Element("layoutturntable");
         boolean turnoutControl = p.isTurnoutControlled();
         // include attributes
-        element.setAttribute("ident", p.getID());
+        element.setAttribute("ident", p.getId());
         element.setAttribute("radius", "" + p.getRadius());
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
@@ -50,7 +50,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
             rElem.setAttribute("angle", "" + p.getRayAngle(i));
             TrackSegment t = p.getRayConnectOrdered(i);
             if (t != null) {
-                rElem.setAttribute("connectname", t.getID());
+                rElem.setAttribute("connectname", t.getId());
             }
             rElem.setAttribute("index", "" + p.getRayIndex(i));
             if (turnoutControl && p.getRayTurnoutName(i) != null) {

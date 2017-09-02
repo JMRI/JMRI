@@ -396,7 +396,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JavaSoundAudioBuffer (" + this.getSystemName() + ")");
         }

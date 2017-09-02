@@ -317,7 +317,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // replaced with some notification system
         // to reduce the work used.
 
-        id.setText("" + r.getID());
+        id.setText("" + r.getId());
         timep.notify(r);
     }
 
