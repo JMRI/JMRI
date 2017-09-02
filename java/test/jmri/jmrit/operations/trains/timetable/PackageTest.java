@@ -34,6 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScheduleTest.class));
         return suite;
     }
 
