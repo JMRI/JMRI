@@ -787,8 +787,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             }
         };
 
-        thr = new Thread(r, getSourceMast().getDisplayName());
-
+        thr = new Thread(r);
+        thr.setName("DSML.setSignalApp \""+getSourceMast().getDisplayName()+"\"");
         try {
             thr.start();
         } catch (java.lang.IllegalThreadStateException ex) {
