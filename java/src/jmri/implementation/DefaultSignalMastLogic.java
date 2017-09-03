@@ -1721,12 +1721,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             log.debug("check Signal Dest State called");
             inWait = true;
 
+            // The next line forces a single initialization of InstanceManager.getDefault(jmri.SignalMastLogicManager.class)
+            // before launching parallel threads
+            long tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay();
+
             Runnable r = new Runnable() {
+                long delay = tempDelay;
                 @Override
                 public void run() {
                     try {
                         //log.debug("wait started");
-                        Thread.sleep(InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay());
+                        Thread.sleep(delay);
                         // log.debug("wait is over");
                         inWait = false;
                         checkStateDetails();
