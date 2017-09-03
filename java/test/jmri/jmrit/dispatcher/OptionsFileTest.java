@@ -36,7 +36,7 @@ public class OptionsFileTest {
         Assert.assertTrue("File AutoTurnouts", d.getAutoTurnouts());
         Assert.assertTrue("File HasOccupancyDetection", d.getHasOccupancyDetection());
         // Find the window by name and close it.
-        (new org.netbeans.jemmy.operators.JFrameOperator("Dispatcher")).requestClose();
+        (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
         JUnitUtil.dispose(d);
 
     }

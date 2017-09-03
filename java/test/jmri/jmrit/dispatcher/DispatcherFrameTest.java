@@ -12,12 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
 
 /**
  * Swing tests for dispatcher options
@@ -34,10 +29,10 @@ public class DispatcherFrameTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
         // Find new table window by name
-        JFrameOperator dw = new JFrameOperator("Dispatcher");
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
         // Ask to close Dispatcher window
         dw.requestClose();
-
+        // we still have a reference to the window, so make sure that clears
         JUnitUtil.dispose(d);
     }
 
@@ -92,9 +87,84 @@ public class DispatcherFrameTest {
         Assert.assertEquals("New Scale", Scale.N, d.getScale());
 
         // Find the window by name and close it.
-        (new org.netbeans.jemmy.operators.JFrameOperator("Dispatcher")).requestClose();
+        (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
         JUnitUtil.dispose(d);
     }
+
+    @Test
+    public void testAddTrainButton() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+
+        // Find new table window by name
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+       
+        // find the add train Button
+        JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("InitiateTrain") + "...");
+
+        bo.push();
+
+        // pushing the button should bring up the Add Train frame
+        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("AddTrainTitle")); 
+        // now close the add train frame.
+        atf.requestClose();
+
+        // Ask to close Dispatcher window
+        dw.requestClose();
+        // we still have a reference to the window, so make sure that clears
+        JUnitUtil.dispose(d);
+    }
+
+    @Test
+    public void testAllocateExtraSectionButton() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+
+        // Find new table window by name
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+       
+        // find the Allocate Extra SectionsButton
+        JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("AllocateExtra") + "...");
+
+        bo.push();
+
+        // pushing the button should bring up the Extra Sections frame
+        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("ExtraTitle")); 
+        // now close the add train frame.
+        atf.requestClose();
+
+        // Ask to close Dispatcher window
+        dw.requestClose();
+        // we still have a reference to the window, so make sure that clears
+        JUnitUtil.dispose(d);
+    }
+
+    @Test
+    public void testCancelRestartButton() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+
+        // Find new table window by name
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+       
+        // find the Cancel Restart Button
+        JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("CancelRestart") + "...");
+
+        bo.push();
+
+        // we don't have an active train, so this shouldn't result in any 
+        // new windows or other results.  This part of the test just verifies 
+        // we don't have any exceptions.
+
+        // Ask to close Dispatcher window
+        dw.requestClose();
+        // we still have a reference to the window, so make sure that clears
+        JUnitUtil.dispose(d);
+    }
+
 
     @Before
     public void setUp() throws Exception {
