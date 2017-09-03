@@ -62,6 +62,7 @@ public class NXFrame extends WarrantRoute {
     private JButton _destUnits;
     private JRadioButton _forward = new JRadioButton();
     private JRadioButton _reverse = new JRadioButton();
+    private JRadioButton _noRamp = new JRadioButton();
     private JCheckBox _stageEStop = new JCheckBox();
     private JCheckBox _shareRouteBox = new JCheckBox();
     private JCheckBox _haltStartBox = new JCheckBox();
@@ -102,7 +103,7 @@ public class NXFrame extends WarrantRoute {
         });
         if (!instance.isVisible()) {
             instance.updatePreferences();
-            instance.setTrainInfo(null);
+//            instance.setTrainInfo(null); todo: make route panel a singleton frame & not entire NXFrame
             instance.clearRoute();
             instance.setRoutePanel();
             instance.pack();
@@ -401,13 +402,21 @@ public class NXFrame extends WarrantRoute {
         p1.add(makeTextBoxPanel(false, _forward, "forward", null));
         p1.add(makeTextBoxPanel(false, _reverse, "reverse", null));
         p1.add(Box.createHorizontalGlue());
+        
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));      
+        p2.add(Box.createHorizontalGlue());
+        p2.add(makeTextBoxPanel(_noRamp, "NoRamping", "ToolTipNoRamping"));
+
         pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
         pp.add(Box.createHorizontalGlue());
 //        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(p1);
         pp.add(Box.createHorizontalGlue());
+        pp.add(p2);
 //        pp.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
+        pp.add(Box.createHorizontalGlue());
         autoRunPanel.add(pp);
 
         JPanel ppp = new JPanel();
@@ -499,8 +508,9 @@ public class NXFrame extends WarrantRoute {
         warrant.setBlockOrders(_orders);
         warrant.setSpeedUtil(_speedUtil);
         warrant.setTrainName(getTrainName());
+        warrant.setNoRamp(_noRamp.isSelected());
+        _speedUtil.setDistanceTravelled(_startDist);
         if (log.isDebugEnabled()) log.debug("Warrant {). Route and loco set.", warrant.getDisplayName());
-//        _speedUtil.makeSpeedTree();
         int mode;
         if (!_runManual.isSelected()) {
             mode = Warrant.MODE_RUN;
