@@ -208,5 +208,5 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class);
 }

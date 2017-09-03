@@ -399,6 +399,6 @@ public class SimulatorAdapter extends MrcPortController implements
 //  return reply;
 // }
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

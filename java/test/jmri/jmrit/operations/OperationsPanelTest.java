@@ -28,6 +28,6 @@ public class OperationsPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OperationsPanelTest.class);
 
 }

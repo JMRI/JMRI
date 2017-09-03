@@ -31,32 +31,35 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
      * @return tc
      */
     public SerialTrafficController getTrafficController() {
-        return SerialTrafficController;
+        return serialTrafficController;
     }
-    private SerialTrafficController SerialTrafficController;
+    private SerialTrafficController serialTrafficController;
 
     public void setTrafficController(SerialTrafficController tc) {
-        SerialTrafficController = tc;
+        serialTrafficController = tc;
     }
 
     /**
-     * Provide access to a SerialAddress for this particular connection
-     * @return SerialAddress
+     * Provide access to a serialAddress for this particular connection
+     *
+     * @return serialAddress
      */
     public SerialAddress getSerialAddress() {
-        return SerialAddress;
+        return serialAddress;
     }
-    private SerialAddress SerialAddress;
+    private SerialAddress serialAddress;
 
     public void setSerialAddress(SerialAddress sa) {
-        SerialAddress = sa;
+        serialAddress = sa;
     }
 
     /**
      * Always null as powerline doesn't have a programmer
+     *
      * @return null
      */
     @SuppressWarnings("deprecation")
@@ -154,7 +157,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     @Override
     public void dispose() {
-        SerialTrafficController = null;
+        serialTrafficController = null;
         InstanceManager.deregister(this, SerialSystemConnectionMemo.class);
         if (turnoutManager != null) {
             InstanceManager.deregister(turnoutManager, jmri.jmrix.powerline.SerialTurnoutManager.class);
@@ -169,6 +172,3 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     }
 
 }
-
-
-

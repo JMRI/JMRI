@@ -34,6 +34,6 @@ public class TrackDestinationEditActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditActionTest.class);
 
 }

@@ -30,7 +30,7 @@ public class InitialAlgorithmTest {
         Calculator c = new InitialAlgorithm(s1, s2, s3, s4, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 0.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 0.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
@@ -47,7 +47,7 @@ public class InitialAlgorithmTest {
         Calculator c = new InitialAlgorithm(s1, s2, s3, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 0.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 0.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
@@ -64,7 +64,7 @@ public class InitialAlgorithmTest {
         Calculator c = new InitialAlgorithm(s2, s3, s4, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 0.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 0.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
@@ -81,7 +81,7 @@ public class InitialAlgorithmTest {
         Calculator c = new InitialAlgorithm(s1, s3, s4, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 0.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 0.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);
@@ -98,7 +98,7 @@ public class InitialAlgorithmTest {
         Calculator c = new InitialAlgorithm(s1, s2, s4, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 0.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 0.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 12.) < 0.001);

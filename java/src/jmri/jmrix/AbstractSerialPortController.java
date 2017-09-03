@@ -215,7 +215,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         if (opened && !allowConnectionRecovery) {
             return;
         }
-        reconnectwait thread = new reconnectwait();
+        ReconnectWait thread = new ReconnectWait();
         thread.start();
         try {
             thread.join();
@@ -230,7 +230,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
 
-    class reconnectwait extends Thread {
+    class ReconnectWait extends Thread {
 
         public final static int THREADPASS = 0;
         public final static int THREADFAIL = 1;
@@ -240,7 +240,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return _status;
         }
 
-        public reconnectwait() {
+        public ReconnectWait() {
             _status = THREADFAIL;
         }
 
@@ -291,6 +291,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
 
 }

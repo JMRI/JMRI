@@ -164,7 +164,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     log.debug("openNewLoco");
                     // find the decoderFile object
                     DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
-                    log.debug("decoder file: {}", decoderFile.getFilename()); // NOI18N
+                    log.debug("decoder file: {}", decoderFile.getFileName()); // NOI18N
                     if (rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))) { // NOI18N
                         re = new RosterEntry();
                         re.setDecoderFamily(decoderFile.getFamily());
@@ -446,9 +446,9 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         if (decoderFile != null) {
             Element decoderRoot = null;
             try {
-                decoderRoot = decoderFile.rootFromName(DecoderFile.fileLocation + decoderFile.getFilename());
+                decoderRoot = decoderFile.rootFromName(DecoderFile.fileLocation + decoderFile.getFileName());
             } catch (JDOMException | IOException e) {
-                log.error("Exception while loading decoder XML file: " + decoderFile.getFilename(), e);
+                log.error("Exception while loading decoder XML file: " + decoderFile.getFileName(), e);
                 return;
             } // NOI18N
             modelElem = decoderFile.getModelElement();
@@ -748,6 +748,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgDp3Action.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgDp3Action.class);
 
 }

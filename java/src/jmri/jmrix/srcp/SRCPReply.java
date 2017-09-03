@@ -116,7 +116,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPReply.class);
 
 }
 

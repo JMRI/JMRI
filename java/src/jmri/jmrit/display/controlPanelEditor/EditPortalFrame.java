@@ -125,7 +125,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         setVisible(true);
     }
 
-    private JPanel MakeButtonPanel() {
+    private JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
@@ -242,7 +242,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             portalPanel.add(makeDndIconPanel());
             portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         }
-        portalPanel.add(MakeButtonPanel());
+        portalPanel.add(makeButtonPanel());
         return portalPanel;
     }
 
@@ -648,5 +648,5 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class);
 }

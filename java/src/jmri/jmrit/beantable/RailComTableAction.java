@@ -323,5 +323,5 @@ public class RailComTableAction extends AbstractTableAction {
     protected String getClassName() {
         return RailComTableAction.class.getName();
     }
-    private static final Logger log = LoggerFactory.getLogger(RailComTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RailComTableAction.class);
 }

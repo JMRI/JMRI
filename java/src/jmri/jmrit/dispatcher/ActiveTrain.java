@@ -342,7 +342,7 @@ public class ActiveTrain {
         return mDelayedRestart;
     }
 
-    public void setDelayedReStart(int delay) {
+    public void setDelayedRestart(int delay) {
         mDelayedRestart = delay;
     }
 
@@ -1088,6 +1088,6 @@ public class ActiveTrain {
         pcs.removePropertyChangeListener(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class);
 
 }

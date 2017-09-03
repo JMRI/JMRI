@@ -328,5 +328,5 @@ public class ThrottlesPreferences {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
 }

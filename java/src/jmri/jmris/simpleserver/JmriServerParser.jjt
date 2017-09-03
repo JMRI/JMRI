@@ -1,4 +1,4 @@
-/* This is a parser grammar for the JMRI simple interconnection 
+/* This is a parser grammar for the JMRI simple interconnection
 protocol written for code generation with javacc */
 
 options {
@@ -14,19 +14,19 @@ package jmri.jmris.simpleserver.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* 
+/*
  * This file defines a JavaTree/JavaCC parser implementation for
  * the JMRI simple interconnection protocol.
- * 
+ *
  * @author Paul Bender Copyright (C) 2015
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","NM_CONFUSING","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
 
 public class JmriServerParser {
-  
-   static Logger log = LoggerFactory.getLogger(JmriServerParser.class.getName());
+
+   private final static Logger log = LoggerFactory.getLogger(JmriServerParser.class);
 
   }
 
@@ -95,7 +95,7 @@ MORE: {
 }
 
 <VALUE,DEFAULT>
-TOKEN: {  
+TOKEN: {
   < COMMA: ",">:DEFAULT
 }
 
@@ -111,11 +111,11 @@ TOKEN :
 | < THROTTLE: <T><H><R><O><T><T><L><E>>
 | < OPERATIONS: <O><P><E><R><A><T><I><O><N><S>>
 | < ONOFF: (<ON>|<OFF>) >
-| < #ON: <O><N>> 
+| < #ON: <O><N>>
 | < #OFF: <O>(<F>){2} >
 // turnout states
 | < THROWNCLOSED: (<THROWN>|<CLOSED>) >
-| < #THROWN: <T><H><R><O><W><N> > 
+| < #THROWN: <T><H><R><O><W><N> >
 | < #CLOSED: <C><L><O><S><E><D> >
 // dates and times
 | < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
@@ -144,7 +144,7 @@ TOKEN :
 
 SimpleNode command():{}
 {
-  // This is a simple list of the possible commands.  
+  // This is a simple list of the possible commands.
   // They are broken down further below.
   ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() | operationscmd()) <EOL>
   {
@@ -167,12 +167,12 @@ SimpleNode powercmd():{}
 {
    power() (onoff())?
    {
-     return jjtThis; 
+     return jjtThis;
    }
 }
 SimpleNode power():{Token t;}
 {
-  t=<POWER>   
+  t=<POWER>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -194,13 +194,13 @@ SimpleNode turnoutcmd():{}
    // need to add system name.
    turnout() turnoutdevice() (thrownclosed())?
    {
-     return jjtThis; 
+     return jjtThis;
    }
 }
 
 SimpleNode turnout():{Token t;}
 {
-  t=<TURNOUT>   
+  t=<TURNOUT>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -232,12 +232,12 @@ SimpleNode lightcmd():{}
    // need to add system name.
    light() lightdevice() (onoff())?
    {
-     return jjtThis; 
+     return jjtThis;
    }
 }
 SimpleNode light():{Token t;}
 {
-  t=<LIGHT>   
+  t=<LIGHT>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -259,13 +259,13 @@ SimpleNode reportercmd():{}
    // need to add system name.
    reporter() reporterdevice()
    {
-     return jjtThis; 
+     return jjtThis;
    }
 }
 
 SimpleNode reporter():{Token t;}
 {
-  t=<REPORTER>   
+  t=<REPORTER>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -286,13 +286,13 @@ SimpleNode sensorcmd():{}
 {
    sensor() sensordevice()
    {
-     return jjtThis; 
+     return jjtThis;
    }
 }
 
 SimpleNode sensor():{Token t;}
 {
-  t=<SENSOR>   
+  t=<SENSOR>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -311,9 +311,9 @@ SimpleNode sensordevice():{Token t;}
 
 SimpleNode operationscmd():{}
 {
-   operations() (trains() | locations() | terminate() | traincmd() ) 
+   operations() (trains() | locations() | terminate() | traincmd() )
    {
-     return jjtThis; 
+     return jjtThis;
    }
 }
 
@@ -359,7 +359,7 @@ SimpleNode traincmd():{SimpleNode s;}
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     return jjtThis;
-  } 
+  }
 }
 
 SimpleNode attributelist():{Token t;}

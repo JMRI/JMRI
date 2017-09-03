@@ -180,6 +180,6 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class);
 
 }

@@ -558,6 +558,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class);
 
 }

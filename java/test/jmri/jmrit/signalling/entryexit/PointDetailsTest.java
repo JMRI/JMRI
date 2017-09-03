@@ -38,6 +38,6 @@ public class PointDetailsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PointDetailsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PointDetailsTest.class);
 
 }

@@ -32,6 +32,6 @@ public class NodeConfigFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NodeConfigFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NodeConfigFrameTest.class);
 
 }

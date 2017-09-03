@@ -34,6 +34,6 @@ public class ChangeDepartureTimesFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrameTest.class);
 
 }

@@ -79,6 +79,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class);
 
 }

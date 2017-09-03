@@ -82,6 +82,6 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
         return gpio;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class);
 
 }

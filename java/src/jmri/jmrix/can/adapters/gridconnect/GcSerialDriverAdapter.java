@@ -179,6 +179,6 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class);
 
 }

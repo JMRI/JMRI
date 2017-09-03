@@ -34,6 +34,6 @@ public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurn
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerXml.class);
 
 }

@@ -29,6 +29,6 @@ public class InitiateSoundEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InitiateSoundEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InitiateSoundEditorTest.class);
 
 }

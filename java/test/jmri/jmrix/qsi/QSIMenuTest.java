@@ -31,6 +31,6 @@ public class QSIMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(QSIMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(QSIMenuTest.class);
 
 }

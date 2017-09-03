@@ -600,5 +600,5 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableModel.class);
 }

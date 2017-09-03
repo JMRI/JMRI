@@ -3079,6 +3079,5 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             index = i;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class.getName()); // NOI18N
+    private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
 }

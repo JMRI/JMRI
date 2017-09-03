@@ -29,6 +29,6 @@ public class InternalSystemConnectionMemoTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InternalSystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InternalSystemConnectionMemoTest.class);
 
 }

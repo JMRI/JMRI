@@ -28,6 +28,6 @@ public class BareBonesBrowserLaunchTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BareBonesBrowserLaunchTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BareBonesBrowserLaunchTest.class);
 
 }

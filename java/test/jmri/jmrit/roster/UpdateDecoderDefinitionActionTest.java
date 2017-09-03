@@ -36,6 +36,6 @@ public class UpdateDecoderDefinitionActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionActionTest.class);
 
 }

@@ -212,5 +212,5 @@ public class WarrantManager extends AbstractManager
         return _sessionProfiles;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class);
 }

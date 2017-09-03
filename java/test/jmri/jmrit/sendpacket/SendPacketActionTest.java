@@ -29,6 +29,6 @@ public class SendPacketActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SendPacketActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SendPacketActionTest.class);
 
 }

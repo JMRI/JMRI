@@ -162,6 +162,6 @@ public class SerialMonFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class);
 
 }

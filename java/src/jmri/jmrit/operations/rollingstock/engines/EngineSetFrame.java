@@ -79,5 +79,5 @@ public class EngineSetFrame extends RollingStockSetFrame implements
         return true;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class);
 }

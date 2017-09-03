@@ -29,6 +29,6 @@ public class TamsConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TamsConnectionTypeListTest.class);
 
 }

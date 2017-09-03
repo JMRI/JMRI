@@ -29,6 +29,6 @@ public class XmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XmlTest.class);
 
 }

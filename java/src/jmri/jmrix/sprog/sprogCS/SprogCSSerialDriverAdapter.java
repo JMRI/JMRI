@@ -33,6 +33,6 @@ public class SprogCSSerialDriverAdapter
         return null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
 
 }

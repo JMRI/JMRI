@@ -213,7 +213,7 @@ public class SensorTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
-        String errorMessage = new String();
+        String errorMessage = null;
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -245,6 +245,7 @@ public class SensorTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 // Show error message in statusBar
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.gray);
                 return;   // return without creating
             }
@@ -273,7 +274,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
 
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
@@ -643,6 +644,6 @@ public class SensorTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleSensorTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class);
 
 }

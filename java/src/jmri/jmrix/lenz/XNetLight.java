@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light Object for XpressNet.
+ * <p>
  * NOTE: This is a simplification of the XNetTurnout class.
  * <p>
  * Based in part on SerialLight.java
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2008-2010
  */
 public class XNetLight extends AbstractLight implements XNetListener {
+
     private XNetTrafficController tc = null;
     private XNetLightManager lm = null;
 
@@ -20,6 +22,10 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in LnLightManager
+     *
+     * @param tc         the traffic controller for the connection
+     * @param lm         the managing LightManager for this Light
+     * @param systemName the system name for this Light
      */
     public XNetLight(XNetTrafficController tc, XNetLightManager lm, String systemName) {
         super(systemName);
@@ -33,6 +39,11 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * Create a Light object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in XNetLightManager
+     *
+     * @param tc         the traffic controller for the connection
+     * @param lm         the managing LightManager for this Light
+     * @param systemName the system name for this Light
+     * @param userName   the user name for this Light
      */
     public XNetLight(XNetTrafficController tc, XNetLightManager lm, String systemName, String userName) {
         super(systemName, userName);
@@ -55,8 +66,6 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * Initilize the light object's parameters.
      */
     private synchronized void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
         // Extract the Bit from the name
         mAddress = lm.getBitFromSystemName(systemName);
         // Set initial state
@@ -70,37 +79,28 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * instance variables to default values.
      * Note: most instance variables are in AbstractLight.java
      */
-
     /**
      * System dependent instance variables
      */
     int mAddress = 0;            // accessory output address
 
     /**
-     *  Internal State Machine states.
+     * Internal State Machine states.
      */
     static final int OFFSENT = 1;
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
-    private int InternalState = IDLE;
+    private int internalState = IDLE;
 
     /**
-     * Return the current state of this Light
-     */
-    @Override
-    synchronized public int getState() {
-        return mState;
-    }
-
-    /**
-     * Set the current state of this Light.
-     * This routine requests the hardware to change.
+     * Set the current state of this Light. This routine requests the hardware
+     * to change.
      */
     @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
             // Unsuported state
-            log.warn("Unsupported state " + newState + " requested for light " + mSystemName);
+            log.warn("Unsupported state {} requested for light {}", newState, mSystemName);
             return;
         }
 
@@ -109,74 +109,68 @@ public class XNetLight extends AbstractLight implements XNetListener {
                 newState == ON,
                 newState == OFF,
                 true);
-        InternalState = COMMANDSENT;
+        internalState = COMMANDSENT;
         tc.sendXNetMessage(msg, this);
 
         if (newState != mState) {
             int oldState = mState;
             mState = newState;
             // notify listeners, if any
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
+            firePropertyChange("KnownState", oldState, newState);
         }
         sendOffMessage();
     }
 
     /**
-     * Handle an incoming message from the XpressNet.
-     * NOTE: We aren't registered as a listener, so This is only triggered
-     * when we send out a message
+     * Handle an incoming message from the XpressNet. NOTE: We aren't registered
+     * as a listener, so this is only triggered when we send out a message.
+     *
+     * @param l the message to handle
      */
     @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("received message: {}", l);
         }
-        if (InternalState == OFFSENT) {
+        if (internalState == OFFSENT) {
             // If an OFF was sent, we want to check for Communications
             // errors before we try to do anything else.
             if (l.isCommErrorMessage()) {
                 /* this is a communications error */
-                log.error("Communications error occurred - message received was: "
-                        + l);
+                log.error("Communications error occurred - message received was: {}", l);
                 sendOffMessage();
-                return;
             } else if (l.isCSBusyMessage()) {
                 /* this is a communications error */
-                log.error("Command station busy - message received was: " + l);
+                log.error("Command station busy - message received was: {}", l);
                 sendOffMessage();
-                return;
             } else if (l.isOkMessage()) {
                 /* the command was successfully received */
-                synchronized (this) {
-                    //mOldState=mState;
-                    InternalState = IDLE;
-                }
-                return;
-            } else if (InternalState == COMMANDSENT) {
+                internalState = IDLE;
+            } else if (internalState == COMMANDSENT) {
                 // If command was sent,, we want to check for Communications
                 // errors before we try to do anything else.
                 if (l.isCommErrorMessage()) {
                     /* this is a communications error */
-                    log.error("Communications error occurred - message received was: "
-                            + l);
+                    log.error("Communications error occurred - message received was: {}", l);
                     setState(mState);
                     return;
                 } else if (l.isCSBusyMessage()) {
                     /* this is a communications error */
-                    log.error("Command station busy - message received was: " + l);
+                    log.error("Command station busy - message received was: {}", l);
                     setState(mState);
                     return;
                 } else if (l.isOkMessage()) {
                     /* the command was successfully received */
                     sendOffMessage();
                 }
-                return;
             }
         }
     }
 
     /**
      * Listen for the messages to the LI100/LI101.
+     *
+     * @param l the expected message
      */
     @Override
     public void message(XNetMessage l) {
@@ -205,11 +199,8 @@ public class XNetLight extends AbstractLight implements XNetListener {
         tc.sendXNetMessage(msg, this);
 
         // Set the known state to the commanded state.
-        synchronized (this) {
-            //mOldState=mState; 
-            InternalState = OFFSENT;
-        }
+        internalState = OFFSENT;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetLight.class);
 }

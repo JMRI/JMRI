@@ -29,6 +29,6 @@ public class LnSensorManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnSensorManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnSensorManagerXmlTest.class);
 
 }

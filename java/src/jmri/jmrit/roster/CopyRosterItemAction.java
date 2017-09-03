@@ -90,7 +90,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class);
 
     // never invoked, because we overrode actionPerformed above
     @Override

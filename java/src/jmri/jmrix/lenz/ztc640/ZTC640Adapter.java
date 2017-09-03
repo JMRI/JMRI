@@ -281,6 +281,6 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC640Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class);
 
 }

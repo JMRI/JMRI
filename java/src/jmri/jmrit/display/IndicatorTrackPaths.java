@@ -171,5 +171,5 @@ class IndicatorTrackPaths {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class);
 }

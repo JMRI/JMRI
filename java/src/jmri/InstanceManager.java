@@ -829,5 +829,5 @@ public final class InstanceManager {
         }
         return defaultInstanceManager;
     }
-    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class);
 }

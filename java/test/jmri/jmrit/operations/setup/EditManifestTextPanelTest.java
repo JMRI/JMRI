@@ -29,6 +29,6 @@ public class EditManifestTextPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditManifestTextPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditManifestTextPanelTest.class);
 
 }

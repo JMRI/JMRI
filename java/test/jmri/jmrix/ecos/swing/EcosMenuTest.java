@@ -33,6 +33,6 @@ public class EcosMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosMenuTest.class);
 
 }

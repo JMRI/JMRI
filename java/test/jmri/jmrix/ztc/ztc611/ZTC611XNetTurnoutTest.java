@@ -103,6 +103,6 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class);
 
 }

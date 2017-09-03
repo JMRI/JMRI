@@ -29,6 +29,6 @@ public class SignallingFrameActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignallingFrameActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignallingFrameActionTest.class);
 
 }

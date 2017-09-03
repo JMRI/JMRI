@@ -29,6 +29,6 @@ public class AcelaConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AcelaConnectionTypeListTest.class);
 
 }
