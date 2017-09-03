@@ -1823,8 +1823,8 @@ public class TransitTableAction extends AbstractTableAction {
             }
             log.debug("setWhen called for edit of action, editmode = {}", editActionMode);
             whenBox.setSelectedIndex(curTSA.getWhenCode() - 1);
-            setWhen(curTSA.getWhenCode());
-            setWhat(curTSA.getWhatCode());
+            // setWhen(curTSA.getWhenCode()) and setWhat(idem) are set via whenBox and whatBox
+            whatBox.setSelectedIndex(curTSA.getWhatCode() - 1);
             setBlockBox();
         } else {
             // initialize for add new action
@@ -1838,13 +1838,12 @@ public class TransitTableAction extends AbstractTableAction {
             signalMastComboBox.setSelectedItem(0);
             signalHeadComboBox.setSelectedItem(0);
             doneSensorComboBox.setSelectedItem(0);
-
             whatStringField.setText("");
             onButton.setSelected(true);
             log.debug("setWhen called for new action, editmode = {}", editActionMode);
             whenBox.setSelectedIndex(0);
-            setWhen(1);
-            setWhat(1);
+            // setWhen(1) and setWhat(1) are set via whenBox and whatBox
+            whatBox.setSelectedIndex(0);
             updateActionButton.setVisible(false);
             createActionButton.setVisible(true);
             setBlockBox();
@@ -1902,8 +1901,8 @@ public class TransitTableAction extends AbstractTableAction {
      * @param code selected item in getWhatBox
      */
     private void setWhat(int code) {
-        whatBox.setSelectedIndex(code - 1);
-        //hide all input boxes, and then set those needed visible via switch case
+        // setting the whatBox here causes recursion
+        // hide all input boxes, set those needed visible via switch case
         whatStringField.setVisible(false);
         whenPercentSpinner.setVisible(false);
         whenMinuteSpinner1.setVisible(false);
