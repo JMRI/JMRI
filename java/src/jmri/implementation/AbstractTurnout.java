@@ -702,8 +702,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
         // if need be, set listener
         temp = getSecondSensor();  // might have changed
-        if (temp() != null) {
-            temp().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
+        if (temp != null) {
+            temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
     }
 
