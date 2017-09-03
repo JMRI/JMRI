@@ -184,5 +184,5 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
         this.disabled = disable;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfig.class);
 }

@@ -1,6 +1,5 @@
 package jmri.jmrix.pi.configurexml;
 
-import java.util.logging.Level;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.RaspberryPiAdapter;
@@ -38,7 +37,7 @@ public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml 
                 try {
                     this.creationErrorEncountered("Not running on Raspberry PI.", adapter.getSystemPrefix(), adapter.getUserName(), null);
                 } catch (JmriConfigureXmlException ex) {
-                    java.util.logging.Logger.getLogger(RaspberryPiConnectionConfigXml.class.getName()).log(Level.SEVERE, null, ex);
+                    log.error("Not running on Raspberry PI.", ex);
                 }
             }
         }
@@ -82,6 +81,6 @@ public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml 
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfigXml.class);
 
 }
