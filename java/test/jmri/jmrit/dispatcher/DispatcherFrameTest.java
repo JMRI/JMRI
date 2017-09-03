@@ -5,19 +5,30 @@ import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.TestHelper;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.Assert;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JComponentOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.WindowOperator;
 
 /**
  * Swing jfcUnit tests for dispatcher options
  *
  * @author	Dave Duchamp
  */
-public class DispatcherFrameTest extends jmri.util.SwingTestCase {
+public class DispatcherFrameTest {
 
+    @Test
     public void testShowAndClose() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
@@ -25,8 +36,7 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-        // Find new table window by name
-        JmriJFrame dw = JmriJFrame.getFrame("Dispatcher");
+
         // test some options from file
         Assert.assertTrue("File AutoTurnouts", d.getAutoTurnouts());
         Assert.assertTrue("File HasOccupancyDetection", d.getHasOccupancyDetection());
@@ -70,37 +80,19 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
         d.setScale(Scale.N);
         Assert.assertEquals("New Scale", Scale.N, d.getScale());
 
+        // Find new table window by name
+        JFrameOperator dw = new JFrameOperator("Dispatcher");
         // Ask to close Dispatcher window
-        TestHelper.disposeWindow(dw, this);
+        dw.requestClose();
     }
 
-    // from here down is testing infrastructure
-    public DispatcherFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DispatcherFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DispatcherFrameTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 }
