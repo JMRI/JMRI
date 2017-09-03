@@ -260,9 +260,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         try {
             InstanceManager.getDefault(OptionsFile.class).readDispatcherOptions(this);
         } catch (org.jdom2.JDOMException jde) {
-            log.error("JDOM Exception when retreiving dispatcher options " + jde);
+            log.error("JDOM Exception when retrieving dispatcher options " + jde);
         } catch (java.io.IOException ioe) {
-            log.error("I/O Exception when retreiving dispatcher options " + ioe);
+            log.error("I/O Exception when retrieving dispatcher options " + ioe);
         }
     }
 
