@@ -119,7 +119,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
 
     //
     // For contextual menu remove
-    class MyMouseAdapter implements MouseListener {
+    static class MyMouseAdapter implements MouseListener {
 
         private final JPopupMenu popupMenu;
         private JMenuItem removeMenuItem;
