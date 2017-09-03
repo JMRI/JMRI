@@ -2881,5 +2881,5 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     public void setState(int i) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class);
 }

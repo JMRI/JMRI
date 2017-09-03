@@ -199,6 +199,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21SystemConnectionMemo.class);
 
 }

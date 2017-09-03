@@ -274,5 +274,5 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
 }

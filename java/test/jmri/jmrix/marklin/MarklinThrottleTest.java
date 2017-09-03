@@ -40,6 +40,6 @@ public class MarklinThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleTest.class);
 
 }

@@ -96,5 +96,5 @@ public class JynstrumentFactory {
         return className;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class);
 }

@@ -103,6 +103,6 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class);
 
 }

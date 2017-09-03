@@ -2365,6 +2365,6 @@ public class LightTableAction extends AbstractTableAction {
         return LightTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightTableAction.class);
 
 }

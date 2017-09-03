@@ -143,6 +143,6 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

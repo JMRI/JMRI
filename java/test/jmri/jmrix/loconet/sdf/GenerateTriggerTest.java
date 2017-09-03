@@ -29,6 +29,6 @@ public class GenerateTriggerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GenerateTriggerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GenerateTriggerTest.class);
 
 }

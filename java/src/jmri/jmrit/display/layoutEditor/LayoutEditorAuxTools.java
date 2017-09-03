@@ -882,5 +882,5 @@ public class LayoutEditorAuxTools {
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
 }

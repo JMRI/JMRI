@@ -727,7 +727,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 || (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null
                 || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
                 || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
-            // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal, 
+            // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal,
             //   don't set speed based on controlling signal
             return;
         }
@@ -737,7 +737,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 case SignalHead.DARK:
                 case SignalHead.RED:
                 case SignalHead.FLASHRED:
-                    // May get here from signal changing before Block knows it is occupied, so must 
+                    // May get here from signal changing before Block knows it is occupied, so must
                     //      check Block occupancy sensor, which must change before signal.
                     if (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
                         // Train has just passed this signal - ignore this signal
@@ -766,7 +766,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
             }
         } else {
-            //Set speed using SignalMasts;           
+            //Set speed using SignalMasts;
             String displayedAspect = _controllingSignalMast.getAspect();
             if (log.isTraceEnabled()) {
                 log.trace("{}: Controlling mast {} ({})", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(), displayedAspect);
@@ -795,7 +795,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _activeTrain.setStatus(ActiveTrain.RUNNING);
             } else {
 
-                //if using signalmasts, set speed to lesser of aspect speed and signalmastlogic speed 
+                //if using signalmasts, set speed to lesser of aspect speed and signalmastlogic speed
                 //  (minimum speed on the path to next signal, using turnout and block speeds)
                 String aspectSpeedStr = (String) _controllingSignalMast.getSignalSystem().getProperty(displayedAspect, "speed");
                 log.trace("{}: Signal {} speed {} for aspect {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(), aspectSpeedStr, displayedAspect);
@@ -1044,7 +1044,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         switch (task) {
             case END_REVERSAL:
-                /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  
+                /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails
                 to stop the loco in the correct block
                  if the first block we come to has a stopped or held signal */
                 _previousBlock = _currentBlock;
@@ -1061,7 +1061,7 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 if (_activeTrain.getResetWhenDone()) {
                     if (_activeTrain.getReverseAtEnd()) {
-                        /* Reset _previousBlock to be the _currentBlock if we do a continious 
+                        /* Reset _previousBlock to be the _currentBlock if we do a continious
                         reverse otherwise the stop in block method fails  to stop the loco in the correct block
                          if the first block we come to has a stopped or held signal */
                         _previousBlock = _currentBlock;
@@ -1321,7 +1321,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
                 executeStopTasks(_task);
             } catch (InterruptedException e) {
-                // interrupting will cause termination without executing the task      
+                // interrupting will cause termination without executing the task
             }
         }
         private int _delay = 91;
@@ -1738,6 +1738,5 @@ public class AutoActiveTrain implements ThrottleListener {
         return RAMP_NONE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
-
+    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class);
 }

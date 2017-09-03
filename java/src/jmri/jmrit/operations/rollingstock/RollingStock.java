@@ -1505,6 +1505,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStock.class);
 
 }

@@ -21,7 +21,7 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class RestoreFilesAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);
 
     public RestoreFilesAction(String s) {
         super(s);

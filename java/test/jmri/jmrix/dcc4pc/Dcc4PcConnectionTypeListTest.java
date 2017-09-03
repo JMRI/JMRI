@@ -29,6 +29,6 @@ public class Dcc4PcConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcConnectionTypeListTest.class);
 
 }

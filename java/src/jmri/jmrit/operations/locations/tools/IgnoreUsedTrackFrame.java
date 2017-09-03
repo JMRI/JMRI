@@ -127,5 +127,5 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrame.class);
 }

@@ -1809,5 +1809,5 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClockMonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClockMonPanel.class);
 }

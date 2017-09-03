@@ -37,6 +37,6 @@ public class ClockItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ClockItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ClockItemPanelTest.class);
 
 }

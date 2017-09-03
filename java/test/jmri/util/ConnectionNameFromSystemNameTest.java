@@ -28,6 +28,6 @@ public class ConnectionNameFromSystemNameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConnectionNameFromSystemNameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConnectionNameFromSystemNameTest.class);
 
 }

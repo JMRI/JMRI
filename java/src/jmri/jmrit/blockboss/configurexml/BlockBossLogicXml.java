@@ -381,6 +381,6 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
         return jmri.Manager.BLOCKBOSS;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogicXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockBossLogicXml.class);
 
 }

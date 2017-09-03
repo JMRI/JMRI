@@ -37,5 +37,5 @@ public class TrackEditCommentsFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsFrameTest.class);
 }

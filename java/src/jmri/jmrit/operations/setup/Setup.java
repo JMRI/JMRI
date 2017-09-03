@@ -2931,7 +2931,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return InstanceManager.getDefault(Setup.class);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Setup.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Setup.class);
 
     @Override
     public void dispose() {

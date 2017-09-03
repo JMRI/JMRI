@@ -526,6 +526,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignallingSourcePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignallingSourcePanel.class);
 
 }

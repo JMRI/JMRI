@@ -122,6 +122,6 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NullAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioBuffer.class);
 
 }

@@ -29,6 +29,6 @@ public class RouterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RouterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RouterTest.class);
 
 }

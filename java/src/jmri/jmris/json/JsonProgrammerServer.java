@@ -39,7 +39,7 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(JsonProgrammerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonProgrammerServer.class);
 
     public JsonProgrammerServer(JmriConnection connection) {
         super();

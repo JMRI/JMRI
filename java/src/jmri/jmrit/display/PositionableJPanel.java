@@ -483,5 +483,5 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class);
 }

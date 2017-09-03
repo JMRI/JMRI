@@ -51,6 +51,6 @@ public class TripleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHeadTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHeadTest.class);
 
 }

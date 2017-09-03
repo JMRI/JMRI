@@ -171,6 +171,6 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);
 
 }

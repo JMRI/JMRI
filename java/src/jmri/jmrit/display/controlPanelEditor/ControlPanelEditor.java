@@ -1929,5 +1929,5 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class);
 }

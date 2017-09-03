@@ -399,6 +399,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

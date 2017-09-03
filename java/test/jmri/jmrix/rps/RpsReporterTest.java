@@ -30,6 +30,6 @@ public class RpsReporterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsReporterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RpsReporterTest.class);
 
 }

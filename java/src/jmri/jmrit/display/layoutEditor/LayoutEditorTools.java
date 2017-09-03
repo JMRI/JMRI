@@ -13406,5 +13406,5 @@ public class LayoutEditorTools {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class);
 }

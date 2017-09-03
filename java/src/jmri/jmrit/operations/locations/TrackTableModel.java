@@ -462,5 +462,5 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         fireTableDataChanged();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackTableModel.class);
 }

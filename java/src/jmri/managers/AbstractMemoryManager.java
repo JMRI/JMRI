@@ -145,5 +145,5 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return Bundle.getMessage("BeanNameMemory");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class);
 }

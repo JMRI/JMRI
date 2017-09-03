@@ -234,6 +234,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private volatile static DefaultAudioManager _instance;
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 
 }

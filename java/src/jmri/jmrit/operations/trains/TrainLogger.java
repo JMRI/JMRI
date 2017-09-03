@@ -257,5 +257,5 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainLogger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainLogger.class);
 }

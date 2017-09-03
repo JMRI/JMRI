@@ -540,5 +540,5 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class);
 }

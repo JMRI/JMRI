@@ -29,6 +29,6 @@ public class DirectorySearcherTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DirectorySearcherTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DirectorySearcherTest.class);
 
 }

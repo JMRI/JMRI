@@ -122,5 +122,5 @@ public class XBeeLight extends AbstractLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeLight.class);
 }

@@ -104,6 +104,6 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetMonPane.class);
 
 }

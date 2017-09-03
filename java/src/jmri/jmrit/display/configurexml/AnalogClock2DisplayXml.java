@@ -102,5 +102,5 @@ public class AnalogClock2DisplayXml
         ed.putItem(l);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class);
 }

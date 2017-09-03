@@ -33,6 +33,6 @@ public class AcelaMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AcelaMenuTest.class);
 
 }

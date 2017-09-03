@@ -71,5 +71,5 @@ public class NmraConsist extends DccConsist implements Consist {
         InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
-    private final static Logger log = LoggerFactory.getLogger(NmraConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NmraConsist.class);
 }

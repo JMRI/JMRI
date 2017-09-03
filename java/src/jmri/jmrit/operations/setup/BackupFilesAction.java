@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BackupFilesAction extends AbstractAction {
 
-    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class);
 
     public BackupFilesAction(String s) {
         super(s);

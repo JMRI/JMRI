@@ -29,6 +29,6 @@ public class ScaleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScaleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ScaleTest.class);
 
 }
