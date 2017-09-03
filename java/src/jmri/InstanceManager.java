@@ -906,7 +906,7 @@ public final class InstanceManager {
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 
     // support creating a file with initialization summary information
-    private static final boolean traceFileActive = true; // log.isTraceEnabled(); // or manually force true
+    private static final boolean traceFileActive = log.isTraceEnabled(); // or manually force true
     private static final boolean traceFileAppend = false; // append from run to run
     private static int traceFileIndent = 1; // used to track overlap, but note that threads are parallel
     private static final String traceFileName = "instanceManagerSequence.txt";  // use a standalone name
@@ -927,8 +927,10 @@ public final class InstanceManager {
         String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent*2);
         String threadName = "["+Thread.currentThread().getName()+"]";
         String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25-threadName.length(), 0));
-        traceFileWriter.println(threadName+threadNamePad+"|"+pad+msg);
+        String text = threadName+threadNamePad+"|"+pad+msg;
+        traceFileWriter.println(text);
         traceFileWriter.flush();
+        log.trace(text);
     }
 
 }
