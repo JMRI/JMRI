@@ -267,8 +267,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                     throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-            //Do nothing at this stage
         }
     }
 

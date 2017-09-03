@@ -1014,9 +1014,6 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-            //Do nothing at this stage
-
         }
     }
 
