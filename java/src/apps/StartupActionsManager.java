@@ -58,7 +58,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Loads the startup action preferences and, if all required managers have
      * initialized without exceptions, performs those actions. Startup actions
      * are only performed if {@link apps.startup.StartupModel#isValid()} is true
@@ -187,9 +187,9 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Insert a {@link apps.StartupModel} at the given position. Triggers an
-     * {@link java.beans.IndexedPropertyChangeEvent} where the old value is null
-     * and the new value is the inserted model.
+     * Insert a {@link apps.startup.StartupModel} at the given position.
+     * Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the old
+     * value is null and the new value is the inserted model.
      *
      * @param index The position where the model will be inserted
      * @param model The model to be inserted
@@ -209,9 +209,10 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Move a {@link apps.StartupModel} from position start to position end.
-     * Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the index
-     * is end, the old value is start and the new value is the moved model.
+     * Move a {@link apps.startup.StartupModel} from position start to position
+     * end. Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the
+     * index is end, the old value is start and the new value is the moved
+     * model.
      *
      * @param start the original position
      * @param end   the new position
@@ -228,7 +229,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Remove a {@link apps.StartupModel}. Triggers an
+     * Remove a {@link apps.startup.StartupModel}. Triggers an
      * {@link java.beans.IndexedPropertyChangeEvent} where the index is the
      * position of the removed model, the old value is the model, and the new
      * value is null.

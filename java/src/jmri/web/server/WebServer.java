@@ -62,7 +62,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     private WebServerPreferences preferences = null;
     private ShutDownTask shutDownTask = null;
     private final HashMap<String, Registration> registeredUrls = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class);
 
     /**
      * Create a WebServer instance with the default preferences.

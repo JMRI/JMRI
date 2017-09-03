@@ -29,6 +29,6 @@ public class RevisionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RevisionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RevisionTest.class);
 
 }

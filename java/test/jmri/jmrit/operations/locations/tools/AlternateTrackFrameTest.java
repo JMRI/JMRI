@@ -36,5 +36,5 @@ public class AlternateTrackFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrameTest.class);
 }

@@ -34,5 +34,5 @@ public class ExportCarsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
 }

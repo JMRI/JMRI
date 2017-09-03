@@ -2,7 +2,7 @@ package jmri.jmrit.vsdecoder.swing;
 
 /**
  * class VSDControl
- *
+ * <p>
  * New GUI pane for a Virtual Sound Decoder (VSDecoder).
  */
 
@@ -10,19 +10,19 @@ package jmri.jmrit.vsdecoder.swing;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
- * 
+ *
  */
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -58,32 +58,32 @@ import org.slf4j.LoggerFactory;
  * the LocoMon tool by Bob Jacobsen
  *
  * @author Mark Underwood Copyright (C) 2011
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class VSDControl extends JPanel {
 
-    public static enum PropertyChangeID {
+    public static enum PropertyChangeId {
 
         ADDRESS_CHANGE, CONFIG_CHANGE, OPTION_CHANGE, PROFILE_SELECT, HORN, BELL, NOTCH, COUPLER, BRAKE, ESTART, DELETE
     }
 
-    public static final Map<PropertyChangeID, String> PCIDMap;
+    public static final Map<PropertyChangeId, String> PCIdMap;
 
     static {
-        Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-        aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange"); // NOI18N
-        aMap.put(PropertyChangeID.CONFIG_CHANGE, "ConfigChange"); // NOI18N
-        aMap.put(PropertyChangeID.OPTION_CHANGE, "OptionChange"); // NOI18N
-        aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect"); // NOI18N
-        aMap.put(PropertyChangeID.HORN, "HornSound"); // NOI18N
-        aMap.put(PropertyChangeID.BELL, "BellSound"); // NOI18N
-        aMap.put(PropertyChangeID.NOTCH, "EngineNotch"); // NOI18N
-        aMap.put(PropertyChangeID.COUPLER, "CouplerSound"); // NOI18N
-        aMap.put(PropertyChangeID.BRAKE, "BrakeSound"); // NOI18N
-        aMap.put(PropertyChangeID.ESTART, "EngineStart"); // NOI18N
-        aMap.put(PropertyChangeID.DELETE, "DeleteDecoder"); // NOI18N
-        PCIDMap = Collections.unmodifiableMap(aMap);
+        Map<PropertyChangeId, String> aMap = new HashMap<>();
+        aMap.put(PropertyChangeId.ADDRESS_CHANGE, "AddressChange"); // NOI18N
+        aMap.put(PropertyChangeId.CONFIG_CHANGE, "ConfigChange"); // NOI18N
+        aMap.put(PropertyChangeId.OPTION_CHANGE, "OptionChange"); // NOI18N
+        aMap.put(PropertyChangeId.PROFILE_SELECT, "ProfileSelect"); // NOI18N
+        aMap.put(PropertyChangeId.HORN, "HornSound"); // NOI18N
+        aMap.put(PropertyChangeId.BELL, "BellSound"); // NOI18N
+        aMap.put(PropertyChangeId.NOTCH, "EngineNotch"); // NOI18N
+        aMap.put(PropertyChangeId.COUPLER, "CouplerSound"); // NOI18N
+        aMap.put(PropertyChangeId.BRAKE, "BrakeSound"); // NOI18N
+        aMap.put(PropertyChangeId.ESTART, "EngineStart"); // NOI18N
+        aMap.put(PropertyChangeId.DELETE, "DeleteDecoder"); // NOI18N
+        PCIdMap = Collections.unmodifiableMap(aMap);
     }
 
     String address;
@@ -145,6 +145,7 @@ public class VSDControl extends JPanel {
     private GridBagConstraints setConstraints(int x, int y) {
         return (setConstraints(x, y, GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), GridBagConstraints.LINE_START));
     }
+
     /*
      private GridBagConstraints setConstraints(int x, int y, int fill) {
      return(setConstraints(x, y, fill, new Insets(2,2,2,2), GridBagConstraints.LINE_START));
@@ -296,7 +297,7 @@ public class VSDControl extends JPanel {
      */
     protected void deleteButtonPressed(ActionEvent e) {
         log.debug("(" + address + ") Delete Button Pressed");
-        firePropertyChange(PropertyChangeID.DELETE, address, address);
+        firePropertyChange(PropertyChangeId.DELETE, address, address);
     }
 
     /**
@@ -304,7 +305,7 @@ public class VSDControl extends JPanel {
      */
     protected void configDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
-        firePropertyChange(PropertyChangeID.CONFIG_CHANGE, event.getOldValue(), event.getNewValue());
+        firePropertyChange(PropertyChangeId.CONFIG_CHANGE, event.getOldValue(), event.getNewValue());
     }
 
     /**
@@ -312,7 +313,7 @@ public class VSDControl extends JPanel {
      */
     protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal options dialog handler");
-        firePropertyChange(PropertyChangeID.OPTION_CHANGE, event.getOldValue(), event.getNewValue());
+        firePropertyChange(PropertyChangeId.OPTION_CHANGE, event.getOldValue(), event.getNewValue());
     }
 
     // VSDecoderManager Events
@@ -339,11 +340,11 @@ public class VSDControl extends JPanel {
      * Fire a property change from this object
      */
     // NOTE: should this be public???
-    public void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
+    public void firePropertyChange(PropertyChangeId id, Object oldProp, Object newProp) {
         String pcname;
 
         // map the property change ID
-        pcname = PCIDMap.get(id);
+        pcname = PCIdMap.get(id);
         // Fire the actual PropertyChangeEvent
         firePropertyChange(new PropertyChangeEvent(this, pcname, oldProp, newProp));
     }
@@ -359,5 +360,5 @@ public class VSDControl extends JPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDControl.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDControl.class);
 }

@@ -26,7 +26,9 @@
       <p>A <b>Transit</b> is a group of two or more connected
       <b><a href="SectionTable.shtml">Sections</a></b> that
       describes a route around the layout of a train traveling in a
-      given direction. A Section may be in multiple Transits, and
+      given direction using <a href=
+      "../dispatcher/Dispatcher.shtml">Dispatcher</a>.
+      A Section may be in multiple Transits, and
       may be in a given Transit multiple times. Sections are kept
       in order--the first Section is connected to the second, the
       second is connected to the third, etc. That means a Section
@@ -173,7 +175,8 @@
       time, the Duplicate option (see above) may save time when
       creating multiple copies of the same Transit.</p>
 
-      <h3>Using the Layout Editor to Set Up Transits</h3>If you are
+      <h3>Using the Layout Editor to Set Up Transits</h3>
+      If you are
       using the Layout Editor to define and generate the Logic for
       Signal Masts and Sections, it is possible to create a basic
       transit from the Layout Editor. To do this, bring up the
@@ -232,6 +235,9 @@
       (recommended), select <b>File</b> -&gt; <b>Store &gt; Store
       Configuration and Panels To File...</b> or select <b>Panels
       &gt; Store panels...</b> in the main JMRI window.</p>
+
+      <p>Back to the
+      <a href="../../../../html/tools/Transits.shtml">Transits help intro</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -32,6 +32,6 @@ public class PositionableJComponentTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PositionableJComponentTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PositionableJComponentTest.class);
 
 }

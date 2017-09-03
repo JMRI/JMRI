@@ -249,18 +249,12 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = 0; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
-        activeSerialPort.setFlowControlMode(flow);
-        /* if (getOptionState(option2Name).equals(validOption2[0]))
-         setCheckBuffer(true);*/
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -286,6 +280,6 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC611Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class);
 
 }

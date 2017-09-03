@@ -413,5 +413,5 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SchedulesTableModel.class);
 }

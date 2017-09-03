@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = InstanceInitializer.class)
 public class WebServerPreferencesInstanceInitializer extends AbstractInstanceInitializer {
 
-    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class);
 
     @Override
     public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {

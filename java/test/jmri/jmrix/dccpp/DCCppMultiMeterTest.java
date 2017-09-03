@@ -34,6 +34,6 @@ public class DCCppMultiMeterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 
 }

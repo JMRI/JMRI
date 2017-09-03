@@ -29,6 +29,6 @@ public class JmriNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriNamedPaneActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriNamedPaneActionTest.class);
 
 }

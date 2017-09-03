@@ -147,5 +147,5 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleCopyFrame.class);
 }

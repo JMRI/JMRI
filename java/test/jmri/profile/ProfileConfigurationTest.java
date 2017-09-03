@@ -40,6 +40,6 @@ public class ProfileConfigurationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfileConfigurationTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProfileConfigurationTest.class);
 
 }

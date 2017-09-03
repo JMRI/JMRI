@@ -29,6 +29,6 @@ public class NodeTableActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NodeTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NodeTableActionTest.class);
 
 }

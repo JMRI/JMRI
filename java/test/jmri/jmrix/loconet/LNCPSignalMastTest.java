@@ -33,6 +33,6 @@ public class LNCPSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LNCPSignalMastTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LNCPSignalMastTest.class);
 
 }

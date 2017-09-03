@@ -2011,8 +2011,8 @@ public class LayoutEditorTools {
         boundaryFromMenu = true;
         boundary = p;
 
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
-        block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
+        block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
 
         setSignalsAtBlockBoundary(theEditor, theFrame);
         return;
@@ -2036,7 +2036,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
@@ -2051,7 +2051,7 @@ public class LayoutEditorTools {
             if (boundaryFromMenu) {
                 if (boundary.getConnect2() != null) {
                     JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                            + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                            + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                     panel12.add(block2NameLabel);
                 }
             } else {
@@ -2520,10 +2520,10 @@ public class LayoutEditorTools {
             } else {
                 showEast = false;
             }
-            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         } else {
-            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
         boundaryFromMenu = true;
 
@@ -7013,11 +7013,11 @@ public class LayoutEditorTools {
             JFrame theFrame) {
         boundaryFromMenu = true;
         boundary = p;
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         if (boundary.getType() != PositionablePoint.ANCHOR) {
-            block2IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+            block2IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         } else {
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
         setSensorsAtBlockBoundary(theEditor, theFrame);
         return;
@@ -7047,7 +7047,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
@@ -7061,7 +7061,7 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel(new FlowLayout());
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                 panel12.add(block2NameLabel);
             } else if (boundary.getType() == PositionablePoint.ANCHOR) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
@@ -7554,9 +7554,9 @@ public class LayoutEditorTools {
     public void setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint p) {
         boundaryFromMenu = true;
         boundary = p;
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         if (boundary.getType() == PositionablePoint.ANCHOR) {
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
         setSignalMastsAtBlockBoundary();
         return;
@@ -7583,7 +7583,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
@@ -7597,7 +7597,7 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel(new FlowLayout());
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                 panel12.add(block2NameLabel);
             } else if (boundary.getType() == PositionablePoint.ANCHOR) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
@@ -11752,7 +11752,7 @@ public class LayoutEditorTools {
 
     static class BeanDetails {
 
-        String BundleName;
+        String bundleName;
         String beanString;
         JLabel textLabel;
 
@@ -11778,14 +11778,14 @@ public class LayoutEditorTools {
             // I18N translate from type (Sensor) to BeanNameSensor
             // to use NamedBeanBundle property
             if ("Sensor".equals(beanType)) {
-                BundleName = "BeanNameSensor";
+                bundleName = "BeanNameSensor";
             } else if ("SignalMast".equals(beanType)) {
-                BundleName = "BeanNameSignalMast";
+                bundleName = "BeanNameSignalMast";
             } else {
                 log.error("Unexpected value for BeanDetails");
-                BundleName = beanType;
+                bundleName = beanType;
             }
-            beanString = Bundle.getMessage(BundleName);
+            beanString = Bundle.getMessage(bundleName);
             textLabel = new JLabel(beanString);
             this.manager = manager;
             //this.beanType = beanType;
@@ -13406,5 +13406,5 @@ public class LayoutEditorTools {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class);
 }

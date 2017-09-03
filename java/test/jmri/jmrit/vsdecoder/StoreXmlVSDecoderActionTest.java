@@ -29,6 +29,6 @@ public class StoreXmlVSDecoderActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderActionTest.class);
 
 }

@@ -47,7 +47,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     static final int MAX_PENDING_PACKETS = 15; // Allow a buffer of up to 128 bytes to be sent before waiting for acknowledgment
 
     private Vector<String> hostNameVector = null;  // Contains the list of interfaces found on the LAN
-    private Vector<HostAddress> HostAddressVector = null; // Contains their IP and port numbers
+    private Vector<HostAddress> hostAddressVector = null; // Contains their IP and port numbers
     private InputStream inTcpStream = null;
     private OutputTcpStream outTcpStream = null;
     private int pendingPackets = 0;   // Number of packets sent and not yet acknowledged
@@ -118,8 +118,8 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                 throw (new IOException("XpressNet/TCP interface " + outName + " not found"));
             }
             // Interface card found. Get the relevantIP number and port
-            m_HostName = HostAddressVector.get(ind).ipNumber;
-            m_port = HostAddressVector.get(ind).portNumber;
+            m_HostName = hostAddressVector.get(ind).ipNumber;
+            m_port = hostAddressVector.get(ind).portNumber;
         }
         try {
             // Connect!
@@ -163,17 +163,17 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
     /**
      * Retrieve all XnTcp interfaces available on the network
-     * by broadcasting a UDP request on port 61234, listening
-     * to all possible replies, storing in hostNameVector
-     * the NETBIOS names of interfaces found and their IP
-     * and port numbers in HostAddressVector.
+ by broadcasting a UDP request on port 61234, listening
+ to all possible replies, storing in hostNameVector
+ the NETBIOS names of interfaces found and their IP
+ and port numbers in hostAddressVector.
      */
     private void findInterfaces() {
 
         DatagramSocket udpSocket = null;
 
         hostNameVector = new Vector<String>(10, 1);
-        HostAddressVector = new Vector<HostAddress>(10, 1);
+        hostAddressVector = new Vector<HostAddress>(10, 1);
 
         try {
             byte[] udpBuffer = new byte[UDP_LENGTH];
@@ -196,11 +196,11 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                     // Retrieve the NETBIOS name of the interface
                     hostNameVector.addElement((new String(udpBuffer, 0, 16, "US-ASCII")).trim());
                     // Retrieve the IP and port numbers of the interface
-                    HostAddressVector.addElement(new HostAddress(cleanIP((udpPacket.getAddress()).getHostAddress()),
+                    hostAddressVector.addElement(new HostAddress(cleanIP((udpPacket.getAddress()).getHostAddress()),
                             ((udpBuffer[16]) & 0xff) * 256 + ((udpBuffer[17]) & 0xff)));
                 }
             }
-        } // When timeout or any error occurs, simply exit the loop
+        } // When timeout or any error occurs, simply exit the loop // When timeout or any error occurs, simply exit the loop
         catch (SocketTimeoutException e) {
         } catch (SocketException e) {
         } catch (IOException e) {
@@ -382,6 +382,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XnTcpAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XnTcpAdapter.class);
 
 }

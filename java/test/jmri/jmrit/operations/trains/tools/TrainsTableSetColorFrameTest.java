@@ -35,6 +35,6 @@ public class TrainsTableSetColorFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrameTest.class);
 
 }

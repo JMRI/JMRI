@@ -231,5 +231,5 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             log.warn("dispose() interrupted");
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
 }

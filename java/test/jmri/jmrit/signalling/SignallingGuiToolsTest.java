@@ -31,6 +31,6 @@ public class SignallingGuiToolsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignallingGuiToolsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignallingGuiToolsTest.class);
 
 }

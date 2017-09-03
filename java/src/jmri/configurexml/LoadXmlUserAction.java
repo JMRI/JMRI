@@ -72,6 +72,6 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadXmlUserAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadXmlUserAction.class);
 
 }

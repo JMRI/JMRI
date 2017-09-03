@@ -29,6 +29,6 @@ public class DefaultLogixManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXmlTest.class);
 
 }

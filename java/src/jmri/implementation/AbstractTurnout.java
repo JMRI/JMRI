@@ -984,6 +984,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);
 
 }

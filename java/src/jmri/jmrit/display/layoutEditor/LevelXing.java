@@ -772,14 +772,14 @@ public class LevelXing extends LayoutTrack {
     public void setLayoutBlockAC(LayoutBlock b) {
         blockAC = b;
         if (b != null) {
-            blockNameAC = b.getID();
+            blockNameAC = b.getId();
         }
     }
 
     public void setLayoutBlockBD(LayoutBlock b) {
         blockBD = b;
         if (b != null) {
-            blockNameBD = b.getID();
+            blockNameBD = b.getId();
         }
     }
 
@@ -1070,7 +1070,7 @@ public class LevelXing extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -1091,7 +1091,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getId());
                 blockACAssigned = true;
             }
             jmi.setEnabled(false);
@@ -1099,7 +1099,7 @@ public class LevelXing extends LayoutTrack {
             if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getId());
                 blockBDAssigned = true;
             }
             jmi.setEnabled(false);
@@ -1735,5 +1735,5 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
-    private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
 }

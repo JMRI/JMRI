@@ -191,22 +191,22 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = set;
     }
 
     @Override
-    public boolean showTooltip() {
+    public boolean showToolTip() {
         return _showTooltip;
     }
 
     @Override
-    public void setTooltip(ToolTip tip) {
+    public void setToolTip(ToolTip tip) {
         _tooltip = tip;
     }
 
     @Override
-    public ToolTip getTooltip() {
+    public ToolTip getToolTip() {
         return _tooltip;
     }
 
@@ -259,7 +259,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         pos._hidden = _hidden;
         pos._positionable = _positionable;
         pos._showTooltip = _showTooltip;
-        pos.setTooltip(getTooltip());
+        pos.setToolTip(getToolTip());
         pos._editable = _editable;
         if (getPopupUtility() == null) {
             pos.setPopupUtility(null);
@@ -1107,5 +1107,5 @@ public class PositionableLabel extends JLabel implements Positionable {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);
 }

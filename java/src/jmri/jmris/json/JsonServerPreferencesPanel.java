@@ -2,7 +2,6 @@ package jmri.jmris.json;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import org.openide.util.lookup.ServiceProvider;
@@ -24,14 +24,12 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     public static final int MIN_HEARTBEAT_INTERVAL = 1;
     private JSpinner heartbeatIntervalSpinner;
     private JSpinner port;
-    private JButton btnSave;
-    private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
 
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
-        this.preferences.apply(JsonServerPreferences.getDefault());
+        this.preferences.apply(InstanceManager.getDefault(JsonServerPreferences.class));
         initGUI();
         setGUI();
     }
@@ -53,14 +51,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private void setGUI() {
         heartbeatIntervalSpinner.setValue(preferences.getHeartbeatInterval() / 1000); // convert from milliseconds to seconds
         port.setValue(preferences.getPort());
-    }
-
-    /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        btnSave.setVisible(true);
-        btnCancel.setVisible(true);
     }
 
     /**
@@ -159,8 +149,8 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            JsonServerPreferences.getDefault().apply(this.preferences);
-            JsonServerPreferences.getDefault().save();
+            InstanceManager.getDefault(JsonServerPreferences.class).apply(this.preferences);
+            InstanceManager.getDefault(JsonServerPreferences.class).save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -169,13 +159,13 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(JsonServerPreferences.getDefault())
-                || JsonServerPreferences.getDefault().isDirty();
+        return this.preferences.compareValuesDifferent(InstanceManager.getDefault(JsonServerPreferences.class))
+                || InstanceManager.getDefault(JsonServerPreferences.class).isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return JsonServerPreferences.getDefault().isRestartRequired();
+        return InstanceManager.getDefault(JsonServerPreferences.class).isRestartRequired();
     }
 
     @Override

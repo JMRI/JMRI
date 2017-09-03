@@ -34,6 +34,6 @@ public class SpurEditFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpurEditFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpurEditFrameTest.class);
 
 }

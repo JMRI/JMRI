@@ -513,5 +513,5 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class);
 }

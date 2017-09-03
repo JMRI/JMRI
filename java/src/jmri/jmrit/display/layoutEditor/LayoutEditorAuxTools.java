@@ -189,7 +189,7 @@ public class LayoutEditorAuxTools {
             if (!found[i]) {
                 // djd debugging - message to list connectivity being removed
                 //    LayoutConnectivity xx = (LayoutConnectivity)cList.get(i);
-                //    log.error("  Deleting Layout Connectivity - " + xx.getBlock1().getID() + ", " + xx.getBlock2().getID());
+                //    log.error("  Deleting Layout Connectivity - " + xx.getBlock1().getId() + ", " + xx.getBlock2().getId());
                 // end debugging
                 cList.remove(i);
             }
@@ -882,5 +882,5 @@ public class LayoutEditorAuxTools {
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
 }

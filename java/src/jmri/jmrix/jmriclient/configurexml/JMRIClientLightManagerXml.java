@@ -36,5 +36,5 @@ public class JMRIClientLightManagerXml extends jmri.managers.configurexml.Abstra
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientLightManagerXml.class);
 }

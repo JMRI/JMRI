@@ -38,7 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.automat.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
         suite.addTest(jmri.jmrit.blockboss.PackageTest.suite());
-        suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.catalog.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.conditional.PackageTest.class));
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.PackageTest.suite());

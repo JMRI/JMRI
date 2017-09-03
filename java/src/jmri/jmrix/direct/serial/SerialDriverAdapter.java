@@ -80,12 +80,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                 }
             }
 
-            // set RTS high, DTR low in case power is needed
-            activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // activeSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
@@ -197,6 +193,6 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     @Deprecated
     static SerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -93,7 +93,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * <P>
      * At instantiation, the object will automatically assume BoardID 1 and will
      * not pre-read the basic board configuration information.
-     * <p>
      */
     public Ds64TabbedPanel() {
         // this is a constructor which is in-place to support legacy applications.
@@ -3080,6 +3079,5 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             index = i;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class.getName()); // NOI18N
+    private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
 }

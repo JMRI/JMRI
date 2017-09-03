@@ -1274,5 +1274,5 @@ public class AutoAllocate {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class);
 }

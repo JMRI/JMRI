@@ -77,7 +77,7 @@ public abstract class LayoutTrack {
     /**
      * accessor methods
      */
-    public String getID() {
+    public String getId() {
         return ident;
     }
 
@@ -273,7 +273,7 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
 
     }
 
@@ -415,5 +415,5 @@ public abstract class LayoutTrack {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

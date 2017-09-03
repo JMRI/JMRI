@@ -29,6 +29,6 @@ public class DefaultRouteManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXmlTest.class);
 
 }

@@ -29,6 +29,6 @@ public class PrintOptionActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintOptionActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintOptionActionTest.class);
 
 }

@@ -75,6 +75,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

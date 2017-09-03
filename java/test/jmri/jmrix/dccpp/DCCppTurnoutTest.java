@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutTest.class);
 
     @Override
     public int numListeners() {

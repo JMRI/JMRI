@@ -53,5 +53,5 @@ public class XmlConfig extends XmlFile {
     }
 
   // initialize logging
-    //private final static Logger log = LoggerFactory.getLogger(XmlConfig.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(XmlConfig.class);
 }

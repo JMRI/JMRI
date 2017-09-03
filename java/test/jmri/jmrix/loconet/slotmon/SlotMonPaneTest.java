@@ -29,6 +29,6 @@ public class SlotMonPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SlotMonPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SlotMonPaneTest.class);
 
 }

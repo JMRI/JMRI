@@ -29,6 +29,6 @@ public class SprogTypeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogTypeTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogTypeTest.class);
 
 }

@@ -29,6 +29,6 @@ public class SdlVersionEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SdlVersionEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SdlVersionEditorTest.class);
 
 }

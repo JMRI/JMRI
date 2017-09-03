@@ -29,6 +29,6 @@ public class OpenLcbComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OpenLcbComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OpenLcbComponentFactoryTest.class);
 
 }

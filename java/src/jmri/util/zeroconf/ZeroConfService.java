@@ -80,7 +80,7 @@ public class ZeroConfService {
     private static final HashMap<String, ZeroConfService> services = new HashMap<>();
     private static final HashMap<InetAddress, JmDNS> netServices = new HashMap<>();
     private final List<ZeroConfServiceListener> listeners = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class);
     private static final NetworkListener networkListener = new NetworkListener();
     private static final ShutDownTask shutDownTask = new ShutDownTask("Stop ZeroConfServices");
 
@@ -107,7 +107,7 @@ public class ZeroConfService {
      * method calls
      * {@link #create(java.lang.String, java.lang.String, int, int, int, java.util.HashMap)}
      * with the default weight and priority, and with the result of
-     * {@link jmri.web.server.WebServerPreferences#getRailRoadName()}
+     * {@link jmri.web.server.WebServerPreferences#getRailroadName()}
      * reformatted to replace dots and dashes with spaces.
      *
      * @param type       The service protocol
@@ -117,7 +117,7 @@ public class ZeroConfService {
      * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
-        return create(type, WebServerPreferences.getDefault().getRailRoadName(), port, 0, 0, properties);
+        return create(type, WebServerPreferences.getDefault().getRailroadName(), port, 0, 0, properties);
     }
 
     /**

@@ -29,6 +29,6 @@ public class BlockEditActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockEditActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockEditActionTest.class);
 
 }

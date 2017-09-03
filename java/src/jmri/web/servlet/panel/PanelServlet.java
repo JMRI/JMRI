@@ -56,7 +56,7 @@ public class PanelServlet extends AbstractPanelServlet {
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
 
-            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
             if (editor.getBackgroundColor() != null) {
                 Element color = new Element("backgroundColor");
@@ -125,7 +125,7 @@ public class PanelServlet extends AbstractPanelServlet {
             panel.put("panelheight", frame.getContentPane().getHeight());
             panel.put("panelwidth", frame.getContentPane().getWidth());
 
-            panel.put("showtooltips", editor.showTooltip());
+            panel.put("showtooltips", editor.showToolTip());
             panel.put("controlling", editor.allControlling());
             if (editor.getBackgroundColor() != null) {
                 ObjectNode color = panel.putObject("backgroundColor");

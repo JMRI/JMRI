@@ -867,7 +867,6 @@ public final class InstanceManager {
         return defaultInstanceManager;
     }
 
-
     // support checking for overlapping intialization
     private enum InitializationState {
         NOTSET, // synonymous with no value for this stored
@@ -903,7 +902,7 @@ public final class InstanceManager {
         return holder.exception;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class);
 
     // support creating a file with initialization summary information
     private static final boolean traceFileActive = log.isTraceEnabled(); // or manually force true
@@ -932,5 +931,4 @@ public final class InstanceManager {
         traceFileWriter.flush();
         log.trace(text);
     }
-
 }
