@@ -60,12 +60,15 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # is left justified, at least 5 and no more than 10 characters wide
 
 log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
+# always limit output to WARN; if you want more, add R to the rootCategory above
+log4j.appender.A1.Threshold=WARN
 
 # R is set to output to a log file, but then not used in normal testing
 log4j.appender.R=org.apache.log4j.FileAppender
-log4j.appender.R.File=example.log
+log4j.appender.R.File=tests.log
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
+log4j.appender.R.Threshold=TRACE
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
