@@ -78,5 +78,5 @@ public class SerialLight extends AbstractLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLight.class);
 }

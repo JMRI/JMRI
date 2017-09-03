@@ -214,6 +214,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

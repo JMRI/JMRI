@@ -29,6 +29,6 @@ public class Dcc4PcSensorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorTest.class);
 
 }

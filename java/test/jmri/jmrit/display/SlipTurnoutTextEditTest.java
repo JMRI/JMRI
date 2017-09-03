@@ -45,6 +45,8 @@ public class SlipTurnoutTextEditTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

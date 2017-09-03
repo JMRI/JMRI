@@ -29,6 +29,6 @@ public class JsonSensorServiceFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonSensorServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonSensorServiceFactoryTest.class);
 
 }

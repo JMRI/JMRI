@@ -1092,10 +1092,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     }
 
     void handleNoCurrentRoute(boolean reverse, String message) {
-        Object[] options = {Bundle.getMessage("ButtonYes"),  // NOI18N
-                Bundle.getMessage("ButtonNo")};  // NOI18N
+        Object[] options = {Bundle.getMessage("ButtonYes"), // NOI18N
+            Bundle.getMessage("ButtonNo")};  // NOI18N
         int n = JOptionPane.showOptionDialog(null,
-                message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"),  // NOI18N
+                message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"), // NOI18N
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -1147,6 +1147,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class);
 
 }

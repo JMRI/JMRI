@@ -169,5 +169,5 @@ public class DCCppPacketizer extends DCCppTrafficController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
 }

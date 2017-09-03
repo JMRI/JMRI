@@ -78,5 +78,5 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
 
     HashMap<String, Object> parameters = null;
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeIndex.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeIndex.class);
 }

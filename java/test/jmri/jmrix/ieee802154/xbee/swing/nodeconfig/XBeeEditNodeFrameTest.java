@@ -20,7 +20,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class EditNodeFrameTest {
+public class XBeeEditNodeFrameTest {
 
 
     private XBeeTrafficController tc = null;
@@ -28,8 +28,8 @@ public class EditNodeFrameTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        NodeConfigFrame frame = new NodeConfigFrame(tc);
-        EditNodeFrame action = new EditNodeFrame(tc,(XBeeNode)(tc.getNodeFromAddress("00 02")),frame);
+        XBeeNodeConfigFrame frame = new XBeeNodeConfigFrame(tc);
+        XBeeEditNodeFrame action = new XBeeEditNodeFrame(tc,(XBeeNode)(tc.getNodeFromAddress("00 02")),frame);
         Assert.assertNotNull("exists", action);
     }
 

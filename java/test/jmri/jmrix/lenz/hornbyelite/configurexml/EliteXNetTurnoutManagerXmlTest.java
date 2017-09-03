@@ -29,6 +29,6 @@ public class EliteXNetTurnoutManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXmlTest.class);
 
 }

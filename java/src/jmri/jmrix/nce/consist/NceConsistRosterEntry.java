@@ -679,6 +679,6 @@ public class NceConsistRosterEntry {
     protected String _comment = "";
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterEntry.class);
 
 }

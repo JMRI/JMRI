@@ -751,5 +751,5 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class);
 }

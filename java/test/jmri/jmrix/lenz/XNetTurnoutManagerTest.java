@@ -119,6 +119,6 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerTest.class);
 
 }

@@ -20,7 +20,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
 
     protected SerialPort activeSerialPort = null;
 
-    private boolean OutputBufferEmpty = true;
+    private boolean outputBufferEmpty = true;
 
     public DCCppSerialPortController() {
         super(new DCCppSystemConnectionMemo());
@@ -55,16 +55,16 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     public boolean okToSend() {
         if ((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
             if (checkBuffer) {
-                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                return (activeSerialPort.isCTS() && OutputBufferEmpty);
+                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + outputBufferEmpty);
+                return (activeSerialPort.isCTS() && outputBufferEmpty);
             } else {
                 log.debug("CTS: " + activeSerialPort.isCTS());
                 return (activeSerialPort.isCTS());
             }
         } else {
             if (checkBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
-                return (OutputBufferEmpty);
+                log.debug("Buffer Empty: " + outputBufferEmpty);
+                return (outputBufferEmpty);
             } else {
                 log.debug("No Flow Control or Buffer Check");
                 return (true);
@@ -79,7 +79,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
-        OutputBufferEmpty = s;
+        outputBufferEmpty = s;
     }
     
     
@@ -105,7 +105,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSerialPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSerialPortController.class);
 
 }
 

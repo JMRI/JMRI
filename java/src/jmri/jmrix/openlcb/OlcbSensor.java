@@ -179,6 +179,6 @@ public class OlcbSensor extends AbstractSensor {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);
 
 }

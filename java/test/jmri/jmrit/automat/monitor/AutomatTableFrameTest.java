@@ -33,6 +33,6 @@ public class AutomatTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutomatTableFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutomatTableFrameTest.class);
 
 }

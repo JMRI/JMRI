@@ -89,11 +89,11 @@ public class TrainInfo {
         return trainName;
     }
 
-    protected void setDCCAddress(String s) {
+    protected void setDccAddress(String s) {
         dccAddress = s;
     }
 
-    protected String getDCCAddress() {
+    protected String getDccAddress() {
         return dccAddress;
     }
 

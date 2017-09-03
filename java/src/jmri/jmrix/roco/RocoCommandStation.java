@@ -12,6 +12,6 @@ public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation imple
     /*
      * We need to register for logging
      */
-    // private final static Logger log = LoggerFactory.getLogger(RocoCommandStation.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RocoCommandStation.class);
 
 }

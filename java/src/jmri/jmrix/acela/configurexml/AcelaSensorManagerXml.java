@@ -37,6 +37,6 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class);
 
 }

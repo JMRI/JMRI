@@ -334,6 +334,6 @@ public class IdTagTableAction extends AbstractTableAction {
     protected String getClassName() {
         return IdTagTableAction.class.getName();
     }
-    private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class);
 
 }

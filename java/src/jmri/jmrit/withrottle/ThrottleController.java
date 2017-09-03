@@ -823,6 +823,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);
 
 }

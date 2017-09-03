@@ -1721,5 +1721,5 @@ public class WarrantFrame extends WarrantRoute {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class);
 }

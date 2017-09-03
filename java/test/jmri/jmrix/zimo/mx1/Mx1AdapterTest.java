@@ -29,6 +29,6 @@ public class Mx1AdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1AdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1AdapterTest.class);
 
 }

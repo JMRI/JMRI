@@ -28,6 +28,6 @@ public class NoActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NoActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NoActionTest.class);
 
 }

@@ -36,6 +36,6 @@ public class DeleteRosterGroupActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DeleteRosterGroupActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DeleteRosterGroupActionTest.class);
 
 }

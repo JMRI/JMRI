@@ -29,6 +29,6 @@ public class PerformScriptModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PerformScriptModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PerformScriptModelTest.class);
 
 }

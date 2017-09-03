@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2013
  */
-public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame implements IDiscoveryListener {
+public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame implements IDiscoveryListener {
 
     private XBeeTrafficController xtc = null;
     protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
@@ -39,7 +39,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * Constructor method
      * @param tc traffic controller for node
      */
-    public NodeConfigFrame(XBeeTrafficController tc) {
+    public XBeeNodeConfigFrame(XBeeTrafficController tc) {
         super(tc);
         xtc = tc;
     }
@@ -200,7 +200,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     @Override
     public void addButtonActionPerformed() {
         // create a new Add Frame and display it.
-        jmri.util.JmriJFrame addFrame = new AddNodeFrame(xtc,this);
+        jmri.util.JmriJFrame addFrame = new XBeeAddNodeFrame(xtc,this);
         try {
            addFrame.initComponents();
         } catch(Exception ex) {
@@ -254,7 +254,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
        }
 
         // create a new Edit Frame and display it.
-        jmri.util.JmriJFrame editFrame = new EditNodeFrame(xtc,(XBeeNode)curNode,this);
+        jmri.util.JmriJFrame editFrame = new XBeeEditNodeFrame(xtc,(XBeeNode)curNode,this);
         try {
            editFrame.initComponents();
         } catch(Exception ex) {
@@ -530,6 +530,6 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
 
 
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigFrame.class);
 
 }

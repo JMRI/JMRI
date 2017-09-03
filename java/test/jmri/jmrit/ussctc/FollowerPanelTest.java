@@ -29,6 +29,6 @@ public class FollowerPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FollowerPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FollowerPanelTest.class);
 
 }

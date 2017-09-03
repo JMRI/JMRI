@@ -93,7 +93,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         log.error("Train name missing when reading TrainInfoFile " + name);
                     }
                     if (traininfo.getAttribute("dccaddress") != null) {
-                        tInfo.setDCCAddress(traininfo.getAttribute("dccaddress").getValue());
+                        tInfo.setDccAddress(traininfo.getAttribute("dccaddress").getValue());
                     } else {
                         log.error("DCC Address missing when reading TrainInfoFile " + name);
                     }
@@ -357,7 +357,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());
-        traininfo.setAttribute("dccaddress", tf.getDCCAddress());
+        traininfo.setAttribute("dccaddress", tf.getDccAddress());
         traininfo.setAttribute("trainintransit", "" + (tf.getTrainInTransit() ? "yes" : "no"));
         traininfo.setAttribute("startblockname", tf.getStartBlockName());
         traininfo.setAttribute("startblockid", tf.getStartBlockId());
@@ -470,5 +470,5 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class);
 }

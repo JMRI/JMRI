@@ -1,8 +1,6 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.exceptions.TimeoutException;
-import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import java.awt.Container;
@@ -17,31 +15,32 @@ import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * Frame for Adding new Nodes
+ * Frame for Editing Nodes
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2013,2016
  */
-public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNodeFrame {
+public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
 
     private XBeeTrafficController xtc = null;
     private javax.swing.JTextField nodeIdentifierField = new javax.swing.JTextField();
-    private NodeConfigFrame parent = null;
+    private XBeeNodeConfigFrame parent = null;
 
 
     /**
      * Constructor method
      *
      * @param tc the XBeeTrafficController associated with this connection.
-     * @param source the NodeConfigFrame that started this add.
+     * @param node Xbee node details
+     * @param source the XBeeNodeConfigFrame that started this add.
      */
-    public AddNodeFrame(XBeeTrafficController tc,NodeConfigFrame source) {
-        super(tc);
+    public XBeeEditNodeFrame(XBeeTrafficController tc,XBeeNode node,XBeeNodeConfigFrame source) {
+        super(tc,node);
         xtc = tc;
         parent = source;
+        curNode = node;
     }
 
     /**
@@ -49,7 +48,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
      */
     @Override
     public void initComponents() {
-        setTitle(Bundle.getMessage("AddNodeWindowTitle"));
+        setTitle(Bundle.getMessage("EditNodeWindowTitle"));
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -58,48 +57,30 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
         panel.add(nodeAddrField);
-        /*nodeAddrField.addActionListener(new java.awt.event.ActionListener() {
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-            }
-        });*/
         nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         panel.add(new JLabel(Bundle.getMessage("LabelNodeAddress64") + " "));
         panel.add(nodeAddr64Field);
         nodeAddr64Field.setToolTipText(Bundle.getMessage("TipNodeAddress64"));
-        /*nodeAddr64Field.addActionListener(new java.awt.event.ActionListener() {
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-            }
-        });*/
         panel.add(new JLabel(Bundle.getMessage("LabelNodeIdentifier") + " "));
         panel.add(nodeIdentifierField);
         nodeIdentifierField.setToolTipText(Bundle.getMessage("TipNodeIdentifier"));
 
-        /*nodeIdentifierField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeAddrField.setSelectedIndex(nodeIdentifierField.getSelectedIndex());
-            }
-        });*/
         initAddressBoxes();
         contentPane.add(panel);
 
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        addButton.setText(Bundle.getMessage("ButtonAdd"));
-        addButton.setVisible(true);
-        addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        editButton.setText(Bundle.getMessage("ButtonEdit"));
+        editButton.setVisible(true);
+        editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
+        editButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                addButtonActionPerformed();
+                editButtonActionPerformed();
             }
         });
-        panel4.add(addButton);
+        panel4.add(editButton);
         panel4.add(cancelButton);
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
@@ -118,15 +99,20 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     }
 
     /**
-     * Method to handle add button
+     * Method to handle edit button
      */
     @Override
-    public void addButtonActionPerformed() {
+    public void editButtonActionPerformed() {
         if(nodeAddr64Field.getText().equals("") &&
            nodeAddrField.getText().equals("")) {
            // no address, just return.
            return;
         }
+
+        // to update the node's associated XBee Device, we have to 
+        // create a new one, as the library provides no way to update 
+        // the RemoteXBeeDevice object.
+
         // Check that a node with this address does not exist
         // if the 64 bit address field is blank, use the "Unknown" address".
         XBee64BitAddress guid;
@@ -149,30 +135,23 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
               guid,address,Identifier);
         // get a XBeeNode corresponding to this node address if one exists
-        curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
-        if (curNode != null) {
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error1",remoteDevice),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
+        XBeeNode existingNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
+        if (existingNode != null) {
+            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error1",remoteDevice),Bundle.getMessage("EditNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
             return;
         }
-        try {
-            // and then add it to the network
-            xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);
-            // create node (they register themselves)
-            XBeeNode node = new XBeeNode(remoteDevice);
+        // save the old remote device
+        RemoteXBeeDevice oldDevice = ((XBeeNode)curNode).getXBee();
+        // and then add the new device to the network
+        xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);
 
-            xtc.registerNode(node);
-            parent.nodeListChanged();
-        } catch (TimeoutException toe) {
-            log.error("Timeout adding node {}.",remoteDevice);
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
-            log.error("Error creating XBee Node, constructor returned null");
-            return;
-        } catch (XBeeException xbe) {
-            log.error("Exception adding node {}.",remoteDevice);
-            javax.swing.JOptionPane.showMessageDialog(this,Bundle.getMessage("Error3"),Bundle.getMessage("AddNodeErrorTitle"),JOptionPane.ERROR_MESSAGE);
-            log.error("Error creating XBee Node, constructor returned null");
-            return;
-        }
+        // remove the old one from the network
+        xtc.getXBee().getNetwork().removeRemoteDevice(oldDevice);
+
+        //and update the current node.
+        ((XBeeNode)curNode).setXBee(remoteDevice);
+
+        parent.nodeListChanged();
 
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
@@ -185,19 +164,20 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         // Reset 
         curNode = null;
         // Switch buttons
-        addButton.setVisible(true);
+        editButton.setVisible(true);
         cancelButton.setVisible(false);
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
-    // Initilize the text boxes for the addresses.
+    // Initialize the text boxes for the addresses.
     @Override
     protected void initAddressBoxes() {
-        nodeAddrField.setText("");
-        nodeAddr64Field.setText("");
-        nodeIdentifierField.setText("");
+        nodeAddrField.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getUserAddress()));
+        nodeAddr64Field.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getGlobalAddress()));
+        nodeIdentifierField.setText(((XBeeNode)curNode).getIdentifier());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    @SuppressWarnings("unused")
+    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class);
 
 }

@@ -29,6 +29,6 @@ public class NceUSBTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceUSBTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceUSBTest.class);
 
 }

@@ -12,23 +12,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of NodeConfigAction
+ * Test simple functioning of XBeeNodeConfigAction
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NodeConfigActionTest {
+public class XBeeNodeConfigActionTest {
 
     @Test
     public void testStringMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigAction action = new NodeConfigAction("IEEE 802.15.4 test Action", new XBeeConnectionMemo());
+        XBeeNodeConfigAction action = new XBeeNodeConfigAction("IEEE 802.15.4 test Action", new XBeeConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigAction action = new NodeConfigAction( new XBeeConnectionMemo());
+        XBeeNodeConfigAction action = new XBeeNodeConfigAction( new XBeeConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
@@ -50,7 +50,7 @@ public class NodeConfigActionTest {
             }
         };
         InstanceManager.setDefault(XBeeConnectionMemo.class, memo);
-        NodeConfigAction action = new NodeConfigAction("IEEE 802.15.4 test Action");
+        XBeeNodeConfigAction action = new XBeeNodeConfigAction("IEEE 802.15.4 test Action");
         Assert.assertNotNull("exists", action);
     }
 
@@ -72,7 +72,7 @@ public class NodeConfigActionTest {
             }
         };
         InstanceManager.setDefault(XBeeConnectionMemo.class, memo);
-        NodeConfigAction action = new NodeConfigAction();
+        XBeeNodeConfigAction action = new XBeeNodeConfigAction();
         Assert.assertNotNull("exists", action);
     }
 

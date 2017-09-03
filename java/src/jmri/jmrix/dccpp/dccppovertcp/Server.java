@@ -263,7 +263,7 @@ public class Server {
             return clients.size();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(Server.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Server.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

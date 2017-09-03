@@ -570,7 +570,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // find the decoderFile object
         DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         if (log.isDebugEnabled()) {
-            log.debug("decoder file: " + decoderFile.getFilename());
+            log.debug("decoder file: " + decoderFile.getFileName());
         }
 
         // create a dummy RosterEntry with the decoder info
@@ -600,6 +600,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class);
 
 }

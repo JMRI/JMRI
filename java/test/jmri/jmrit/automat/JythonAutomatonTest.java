@@ -29,6 +29,6 @@ public class JythonAutomatonTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JythonAutomatonTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JythonAutomatonTest.class);
 
 }

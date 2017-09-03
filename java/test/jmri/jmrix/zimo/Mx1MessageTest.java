@@ -29,6 +29,6 @@ public class Mx1MessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1MessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1MessageTest.class);
 
 }

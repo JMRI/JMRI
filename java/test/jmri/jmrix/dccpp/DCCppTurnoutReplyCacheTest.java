@@ -34,6 +34,6 @@ public class DCCppTurnoutReplyCacheTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCacheTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCacheTest.class);
 
 }

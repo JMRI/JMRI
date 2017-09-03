@@ -88,7 +88,7 @@ public class NceAIUChecker implements NceListener {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(NceAIUChecker.class.getName());
+            .getLogger(NceAIUChecker.class);
 
 }
 

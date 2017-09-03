@@ -5,15 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a NodeConfigFrame object
+ * Swing action to create and register a XBeeNodeConfigFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2001
   */
-public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigAction {
+public class XBeeNodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigAction {
 
     private jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo xcm = null;
 
-    public NodeConfigAction(String s, jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) {
+    public XBeeNodeConfigAction(String s, jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) {
         super(s, cm);
         if (cm == null) {
             // find the first registered memo.
@@ -30,21 +30,21 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
         }
     }
 
-    public NodeConfigAction() {
+    public XBeeNodeConfigAction() {
         this(Bundle.getMessage("ConfigureXbeeTitle"), null);
     }
 
-    public NodeConfigAction(String s) {
+    public XBeeNodeConfigAction(String s) {
         this(s, null);
     }
 
-    public NodeConfigAction(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) {
+    public XBeeNodeConfigAction(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo cm) {
         this(Bundle.getMessage("ConfigureXbeeTitle"), cm);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame((jmri.jmrix.ieee802154.xbee.XBeeTrafficController) xcm.getTrafficController());
+        XBeeNodeConfigFrame f = new XBeeNodeConfigFrame((jmri.jmrix.ieee802154.xbee.XBeeTrafficController) xcm.getTrafficController());
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -54,6 +54,6 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigAction.class);
 
 }

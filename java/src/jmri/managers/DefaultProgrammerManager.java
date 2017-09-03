@@ -214,6 +214,6 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }
 

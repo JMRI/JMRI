@@ -29,6 +29,6 @@ public class BranchToEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BranchToEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BranchToEditorTest.class);
 
 }

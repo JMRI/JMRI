@@ -306,7 +306,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractOperationsServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractOperationsServer.class);
 
     /*
      * This isn't currently used for operations

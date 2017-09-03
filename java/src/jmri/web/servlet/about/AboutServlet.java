@@ -13,6 +13,7 @@ import jmri.Application;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
@@ -31,11 +32,11 @@ public class AboutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //retrieve the list of JMRI connections as a string
-        String connList = "";
+        StringBuilder connList = new StringBuilder("");
         String comma = "";
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
             if (!conn.getDisabled()) {
-                connList += comma + Bundle.getMessage(request.getLocale(), "ConnectionSucceeded", conn.getConnectionName(), conn.name(), conn.getInfo());
+                connList.append(comma).append(Bundle.getMessage(request.getLocale(), "ConnectionSucceeded", conn.getConnectionName(), conn.name(), conn.getInfo()));
                 comma = ", ";
             }
         }
@@ -43,6 +44,8 @@ public class AboutServlet extends HttpServlet {
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         response.setContentType(UTF8_TEXT_HTML);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        String profileName = profile != null ? profile.getName() : null;
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "About.html"))),
                 Bundle.getMessage(request.getLocale(), "AboutTitle"),                                   // page title is parm 1
@@ -54,7 +57,7 @@ public class AboutServlet extends HttpServlet {
                 jmri.Version.getCopyright(),                                                            // Copyright is parm 7
                 System.getProperty("java.version", "<unknown>"),                                        // Java version is parm 8
                 Locale.getDefault().toString(),                                                         // locale is parm 9
-                ProfileManager.getDefault().getActiveProfile().getName()                                // active profile name is 10
+                profileName                                                                             // active profile name is 10
         ));
     }
 

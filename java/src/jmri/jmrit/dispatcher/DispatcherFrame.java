@@ -128,10 +128,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
                     }
-
                     ActiveTrain at = createActiveTrain(info.getTransitId(), info.getTrainName(), tSource,
                             info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(), info.getDestinationBlockSeq(),
-                            info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
+                            info.getAutoRun(), info.getDccAddress(), info.getPriority(),
                             info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
@@ -142,7 +141,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
                         at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
-                        at.setDelayedReStart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+                        at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
                         at.setDelaySensor(info.getDelaySensor());
                         if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY)
@@ -261,9 +260,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         try {
             InstanceManager.getDefault(OptionsFile.class).readDispatcherOptions(this);
         } catch (org.jdom2.JDOMException jde) {
-            log.error("JDOM Exception when retreiving dispatcher options " + jde);
+            log.error("JDOM Exception when retrieving dispatcher options " + jde);
         } catch (java.io.IOException ioe) {
-            log.error("I/O Exception when retreiving dispatcher options " + ioe);
+            log.error("I/O Exception when retrieving dispatcher options " + ioe);
         }
     }
 
@@ -2850,6 +2849,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class);
 
 }

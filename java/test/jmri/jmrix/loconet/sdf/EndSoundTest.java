@@ -29,6 +29,6 @@ public class EndSoundTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EndSoundTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EndSoundTest.class);
 
 }

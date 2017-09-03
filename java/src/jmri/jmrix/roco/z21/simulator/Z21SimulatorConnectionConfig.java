@@ -14,20 +14,20 @@ import javax.swing.JPanel;
  *
  * @see Z21SimulatorAdapter
  */
-public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
+public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
+    public Z21SimulatorConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
     }
 
     /**
      * Ctor for a functional Swing object with no prexisting adapter.
      */
-    public ConnectionConfig() {
+    public Z21SimulatorConnectionConfig() {
         super();
     }
 

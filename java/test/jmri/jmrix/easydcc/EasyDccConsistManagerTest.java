@@ -112,6 +112,6 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
         cm = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class);
 
 }

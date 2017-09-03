@@ -29,6 +29,6 @@ public class AutomatTableDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutomatTableDataModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutomatTableDataModelTest.class);
 
 }

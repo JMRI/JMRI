@@ -35,6 +35,6 @@ public class AddEntryExitPairActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairActionTest.class);
 
 }

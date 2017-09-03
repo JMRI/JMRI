@@ -204,7 +204,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     /**
      * Accessor methods
      */
-    public String getID() {
+    public String getId() {
         return getUserName();
     }
 
@@ -357,7 +357,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 occupancyNamedSensor = savedNamedSensor;
                 JOptionPane.showMessageDialog(openFrame,
                         java.text.MessageFormat.format(rb.getString("Error6"),
-                                new Object[]{sensorName, b.getID()}),
+                                new Object[]{sensorName, b.getId()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return null;
             } else {
@@ -4660,5 +4660,5 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return Bundle.getMessage("BeanNameLayoutBlock");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class);
 }

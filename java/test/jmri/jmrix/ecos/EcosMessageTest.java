@@ -29,6 +29,6 @@ public class EcosMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosMessageTest.class);
 
 }

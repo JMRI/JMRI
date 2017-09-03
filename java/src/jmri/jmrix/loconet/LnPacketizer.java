@@ -574,5 +574,5 @@ public class LnPacketizer extends LnTrafficController {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 }

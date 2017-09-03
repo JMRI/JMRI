@@ -241,6 +241,6 @@ public class MultiThrottleController extends ThrottleController {
         InstanceManager.throttleManagerInstance().stealThrottleRequest(addr, isLong, this, true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);
 
 }

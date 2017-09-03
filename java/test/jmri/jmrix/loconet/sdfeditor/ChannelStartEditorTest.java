@@ -29,6 +29,6 @@ public class ChannelStartEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ChannelStartEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ChannelStartEditorTest.class);
 
 }

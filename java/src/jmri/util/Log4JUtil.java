@@ -41,7 +41,7 @@ public class Log4JUtil {
 
     private static boolean log4JSetUp = false;
     private static final String jmriLog = "****** JMRI log *******";
-    private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class);
 
     /**
      * Initialize logging from a default control file.

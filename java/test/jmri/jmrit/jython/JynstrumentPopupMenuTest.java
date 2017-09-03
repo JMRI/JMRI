@@ -42,6 +42,6 @@ public class JynstrumentPopupMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenuTest.class);
 
 }
