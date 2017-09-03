@@ -29,6 +29,6 @@ public class AlgorithmsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AlgorithmsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AlgorithmsTest.class);
 
 }

@@ -102,5 +102,5 @@ public class SetupExcelProgramFrame extends OperationsFrame {
         return null;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class);
 }

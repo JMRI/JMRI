@@ -249,5 +249,5 @@ public class GuiUtilBase {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GuiUtilBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GuiUtilBase.class);
 }

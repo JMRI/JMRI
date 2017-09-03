@@ -993,6 +993,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         return NO;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Router.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Router.class);
 
 }

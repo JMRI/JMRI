@@ -1374,5 +1374,5 @@ public class PanelEditor extends Editor implements ItemListener {
      * ***************************************************
      */
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
 }

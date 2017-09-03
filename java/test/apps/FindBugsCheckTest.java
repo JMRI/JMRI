@@ -29,6 +29,6 @@ public class FindBugsCheckTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FindBugsCheckTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FindBugsCheckTest.class);
 
 }

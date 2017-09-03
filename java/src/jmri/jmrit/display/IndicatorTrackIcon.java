@@ -432,5 +432,5 @@ public class IndicatorTrackIcon extends PositionableIcon
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class);
 }

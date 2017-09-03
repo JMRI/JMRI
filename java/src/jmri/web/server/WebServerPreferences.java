@@ -107,7 +107,7 @@ public class WebServerPreferences extends PreferencesBean {
     private int port = 12080;
     private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
-    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
 
     public WebServerPreferences(String fileName) {
         super(ProfileManager.getDefault().getActiveProfile());

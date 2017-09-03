@@ -173,6 +173,6 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         return mixer;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class);
 
 }

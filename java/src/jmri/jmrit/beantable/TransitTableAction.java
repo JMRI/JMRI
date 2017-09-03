@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.border.TitledBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -21,10 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTable;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a TransitTable GUI.
- *
+ * <p>
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -1001,8 +1001,8 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     /**
-     * Update Order Num spinner on pane.
-     * Limit spinner to highest order index in section table (column 0).
+     * Update Order Num spinner on pane. Limit spinner to highest order index in
+     * section table (column 0).
      */
     void updateSeqNum() {
         int seqMax = 0;
@@ -1889,7 +1889,7 @@ public class TransitTableAction extends AbstractTableAction {
                 whenSensorComboBox.setToolTipText(rbx.getString("HintSensorEntry"));
                 break;
             default:
-            log.debug("Unhandled transit action code: {}", code); // causes too much noise, no harm done
+                log.debug("Unhandled transit action code: {}", code); // causes too much noise, no harm done
         }
         addEditActionFrame.pack();
         addEditActionFrame.setVisible(true);
@@ -2151,8 +2151,8 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     /**
-     * Validate entered data for selected Action.
-     * Converted to use JSpinners where applicable, 2017.
+     * Validate entered data for selected Action. Converted to use JSpinners
+     * where applicable, 2017.
      *
      * @return
      */
@@ -2368,8 +2368,8 @@ public class TransitTableAction extends AbstractTableAction {
     /**
      * Build display When string for Actions table.
      *
-     * @param r row in the Special Actions table.
-     *          A TransitSectionAction must be available for this row.
+     * @param r row in the Special Actions table. A TransitSectionAction must be
+     *          available for this row.
      * @return display string including entered values
      */
     private String getWhenText(int r) {
@@ -2437,8 +2437,8 @@ public class TransitTableAction extends AbstractTableAction {
     /**
      * Build display What string for Actions table.
      *
-     * @param r row in the Special Actions table.
-     *          A TransitSectionAction must be available for this row.
+     * @param r row in the Special Actions table. A TransitSectionAction must be
+     *          available for this row.
      * @return display string including entered values
      */
     private String getWhatText(int r) {
@@ -2634,8 +2634,8 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for Actions in Special Actions window.
-     * Currently shows max. 5 rows
+     * Table model for Actions in Special Actions window. Currently shows max. 5
+     * rows
      */
     public class SpecialActionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
@@ -2772,6 +2772,5 @@ public class TransitTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleTransitTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class.getName());
-
+    private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class);
 }

@@ -29,6 +29,6 @@ public class ResetActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResetActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ResetActionTest.class);
 
 }

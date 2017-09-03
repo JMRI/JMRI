@@ -226,15 +226,15 @@ public class SwingTestCaseTest extends SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        //apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         super.setUp();
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        //apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    //static Logger log = LoggerFactory.getLogger(SwingTestCaseTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SwingTestCaseTest.class);
 }

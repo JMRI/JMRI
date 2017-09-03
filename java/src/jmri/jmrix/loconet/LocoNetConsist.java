@@ -480,6 +480,6 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         throttleManager.stealThrottleRequest(address, this, true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class);
 
 }

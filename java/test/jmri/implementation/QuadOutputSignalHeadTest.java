@@ -55,6 +55,6 @@ public class QuadOutputSignalHeadTest extends AbstractSignalHeadTestBase {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(QuadOutputSignalHeadTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(QuadOutputSignalHeadTest.class);
 
 }

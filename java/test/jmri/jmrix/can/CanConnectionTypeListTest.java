@@ -29,6 +29,6 @@ public class CanConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CanConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CanConnectionTypeListTest.class);
 
 }

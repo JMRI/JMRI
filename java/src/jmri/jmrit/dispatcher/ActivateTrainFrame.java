@@ -32,11 +32,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Displays the Activate New Train dialog and processes information entered
  * there.
- *
+ * <p>
  * <P>
  * This module works with Dispatcher, which initiates the display of the dialog.
  * Dispatcher also creates the ActiveTrain.
- *
+ * <p>
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -122,12 +122,12 @@ public class ActivateTrainFrame {
     boolean transitsFromSpecificBlock = false;
 
     /**
-     * Open up a new train window for a given roster entry located in a
-     * specific block.
-     * 
-     * @param e the action event triggering the new window
+     * Open up a new train window for a given roster entry located in a specific
+     * block.
+     *
+     * @param e  the action event triggering the new window
      * @param re the roster entry to open the new window for
-     * @param b the block where the train is located
+     * @param b  the block where the train is located
      */
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b) {
         initiateTrain(e);
@@ -165,9 +165,10 @@ public class ActivateTrainFrame {
 
     /**
      * Displays a window that allows a new ActiveTrain to be activated.
-     *
+     * <p>
      * Called by Dispatcher in response to the dispatcher clicking the New Train
      * button.
+     *
      * @param e the action event triggering the window display
      */
     protected void initiateTrain(ActionEvent e) {
@@ -359,7 +360,7 @@ public class ActivateTrainFrame {
             p9.add(delaySensor);
             delaySensor.setFirstItemBlank(true);
             handleDelayStartClick(null);
-            initiatePane.add(p9);           
+            initiatePane.add(p9);
 
             JPanel p11 = new JPanel();
             p11.setLayout(new FlowLayout());
@@ -368,7 +369,7 @@ public class ActivateTrainFrame {
             loadAtStartupBox.setSelected(false);
             initiatePane.add(p11);
 
-            initiatePane.add(new JSeparator());           
+            initiatePane.add(new JSeparator());
             JPanel p5 = new JPanel();
             p5.setLayout(new FlowLayout());
             p5.add(autoRunBox);
@@ -381,7 +382,7 @@ public class ActivateTrainFrame {
             autoRunBox.setToolTipText(Bundle.getMessage("AutoRunBoxHint"));
             autoRunBox.setSelected(false);
             initiatePane.add(p5);
-            
+
             initializeAutoRunItems();
             initiatePane.add(new JSeparator());
             JPanel p7 = new JPanel();
@@ -553,7 +554,8 @@ public class ActivateTrainFrame {
 
     /**
      * Handles press of "Add New Train" button by edit-checking populated values
-     *  then (if no errors) creating an ActiveTrain and (optionally) an AutoActiveTrain
+     * then (if no errors) creating an ActiveTrain and (optionally) an
+     * AutoActiveTrain
      */
     private void addNewTrain(ActionEvent e) {
         // get information
@@ -693,8 +695,8 @@ public class ActivateTrainFrame {
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
         at.setDelaySensor((jmri.Sensor) delaySensor.getSelectedBean());
-        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY) || 
-                delayedStart==ActiveTrain.NODELAY) {
+        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY)
+                || delayedStart == ActiveTrain.NODELAY) {
             at.setStarted();
         }
         at.setRestartSensor((jmri.Sensor) delayReStartSensor.getSelectedBean());
@@ -914,7 +916,7 @@ public class ActivateTrainFrame {
             if ((selName == null) || (((String) selName).equals(""))) {
                 return;
             }
-            //read xml data from selected filename and move it into the new train dialog box 
+            //read xml data from selected filename and move it into the new train dialog box
             _trainInfoName = (String) selName;
             try {
                 info = _tiFile.readTrainInfo((String) selName);
@@ -973,9 +975,9 @@ public class ActivateTrainFrame {
         // write the Train Info file
         try {
             _tiFile.writeTrainInfo(info, fileName);
-        } //catch (org.jdom2.JDOMException jde) { 
-        // log.error("JDOM exception writing Train Info: "+jde); 
-        //}                           
+        } //catch (org.jdom2.JDOMException jde) {
+        // log.error("JDOM exception writing Train Info: "+jde);
+        //}
         catch (java.io.IOException ioe) {
             log.error("IO exception writing Train Info: " + ioe);
         }
@@ -1091,7 +1093,7 @@ public class ActivateTrainFrame {
         return info;
     }
 
-    // Normalizes a suggested xml file name.  Returns null string if a valid name cannot be assembled 
+    // Normalizes a suggested xml file name.  Returns null string if a valid name cannot be assembled
     private String normalizeXmlFileName(String name) {
         if (name.length() < 1) {
             return "";
@@ -1144,21 +1146,21 @@ public class ActivateTrainFrame {
      * ActiveTrains They are isolated here to simplify changing them in the
      * future.
      * <ul>
-     * <li>initializeAutoRunItems - initializes the display of auto run items
-     * in this window
-     * <li>initializeAutoRunValues - initializes the values of auto
-     * run items from values in a saved train info file hideAutoRunItems - hides
-     * all auto run items in this window showAutoRunItems - shows all auto run
-     * items in this window
-     * <li>autoTrainInfoToDialog - gets auto run items from a
-     * train info, puts values in items, and initializes auto run dialog items
-     * <li>autoTrainItemsToTrainInfo - copies values of auto run items to train info
-     * for saving to a file
-     * <li>readAutoRunItems - reads and checks values of all
-     * auto run items. returns true if OK, sends appropriate messages and
-     * returns false if not OK
-     * <li>setAutoRunItems - sets the user entered auto run
-     * items in the new AutoActiveTrain
+     * <li>initializeAutoRunItems - initializes the display of auto run items in
+     * this window
+     * <li>initializeAutoRunValues - initializes the values of auto run items
+     * from values in a saved train info file hideAutoRunItems - hides all auto
+     * run items in this window showAutoRunItems - shows all auto run items in
+     * this window
+     * <li>autoTrainInfoToDialog - gets auto run items from a train info, puts
+     * values in items, and initializes auto run dialog items
+     * <li>autoTrainItemsToTrainInfo - copies values of auto run items to train
+     * info for saving to a file
+     * <li>readAutoRunItems - reads and checks values of all auto run items.
+     * returns true if OK, sends appropriate messages and returns false if not
+     * OK
+     * <li>setAutoRunItems - sets the user entered auto run items in the new
+     * AutoActiveTrain
      * </ul>
      */
     // auto run items in ActivateTrainFrame
@@ -1245,7 +1247,7 @@ public class ActivateTrainFrame {
         soundDecoderBox.setSelected(_soundDecoder);
         runInReverseBox.setSelected(_runInReverse);
 
-        maxTrainLengthSpinner.setValue(Math.round(_maxTrainLength * 2)*0.5f); // set in spinner as 0.5 increments
+        maxTrainLengthSpinner.setValue(Math.round(_maxTrainLength * 2) * 0.5f); // set in spinner as 0.5 increments
     }
 
     private void hideAutoRunItems() {
@@ -1326,6 +1328,5 @@ public class ActivateTrainFrame {
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class.getName());
-
+    private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class);
 }

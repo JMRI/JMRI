@@ -360,5 +360,5 @@ public class VSDControl extends JPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDControl.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDControl.class);
 }

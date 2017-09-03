@@ -28,6 +28,6 @@ public class WaitSwitchListActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WaitSwitchListActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WaitSwitchListActionTest.class);
 
 }

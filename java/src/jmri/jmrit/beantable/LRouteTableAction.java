@@ -3020,5 +3020,5 @@ public class LRouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
 }

@@ -304,7 +304,6 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
             unusedRadioButton.updateUI();
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
 
 }

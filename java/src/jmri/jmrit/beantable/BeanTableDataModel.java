@@ -1066,5 +1066,5 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
 }

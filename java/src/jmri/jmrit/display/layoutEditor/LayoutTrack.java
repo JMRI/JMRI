@@ -415,5 +415,5 @@ public abstract class LayoutTrack {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

@@ -80,7 +80,7 @@ public class ZeroConfService {
     private static final HashMap<String, ZeroConfService> services = new HashMap<>();
     private static final HashMap<InetAddress, JmDNS> netServices = new HashMap<>();
     private final List<ZeroConfServiceListener> listeners = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class);
     private static final NetworkListener networkListener = new NetworkListener();
     private static final ShutDownTask shutDownTask = new ShutDownTask("Stop ZeroConfServices");
 

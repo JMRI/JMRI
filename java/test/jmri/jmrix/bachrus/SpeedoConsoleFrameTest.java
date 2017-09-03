@@ -33,6 +33,6 @@ public class SpeedoConsoleFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedoConsoleFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedoConsoleFrameTest.class);
 
 }

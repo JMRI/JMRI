@@ -2366,5 +2366,5 @@ public class AddSignalMastPanel extends JPanel {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class);
 }

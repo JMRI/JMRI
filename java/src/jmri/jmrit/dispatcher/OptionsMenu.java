@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -12,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -22,7 +20,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.jmrit.display.PanelMenu;
@@ -417,6 +414,5 @@ public class OptionsMenu extends JMenu {
         layoutScaleBox.setSelectedIndex(dispatcher.getScale() - 1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
-
+    private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class);
 }

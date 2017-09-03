@@ -285,6 +285,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     }
     static volatile LIUSBAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
 
 }

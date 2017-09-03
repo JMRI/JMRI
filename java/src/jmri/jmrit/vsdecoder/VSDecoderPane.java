@@ -484,5 +484,5 @@ public class VSDecoderPane extends JmriPanel {
         log.debug("VSDecoderPane windowClosing() called...");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class);
 }

@@ -527,6 +527,6 @@ public class NceConsistRoster extends XmlFile {
         firePropertyChange("change", null, r);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 
 }

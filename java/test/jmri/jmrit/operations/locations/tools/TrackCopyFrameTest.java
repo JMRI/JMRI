@@ -36,6 +36,6 @@ public class TrackCopyFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackCopyFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrackCopyFrameTest.class);
 
 }

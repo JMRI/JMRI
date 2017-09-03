@@ -29,6 +29,6 @@ public class SimulatorAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SimulatorAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SimulatorAdapterTest.class);
 
 }

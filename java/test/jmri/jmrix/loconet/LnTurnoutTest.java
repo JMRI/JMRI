@@ -276,6 +276,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class);
 
 }

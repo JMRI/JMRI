@@ -156,5 +156,5 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
 
     LayoutBlock lBlock;
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModel.class);
 }

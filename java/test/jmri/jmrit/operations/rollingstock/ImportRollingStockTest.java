@@ -29,6 +29,6 @@ public class ImportRollingStockTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImportRollingStockTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportRollingStockTest.class);
 
 }

@@ -589,5 +589,5 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static private org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);
 }

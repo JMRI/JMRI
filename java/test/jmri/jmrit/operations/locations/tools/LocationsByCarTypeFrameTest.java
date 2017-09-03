@@ -34,6 +34,6 @@ public class LocationsByCarTypeFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrameTest.class);
 
 }
