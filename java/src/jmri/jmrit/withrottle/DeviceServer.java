@@ -660,13 +660,15 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * Need to clear the address from the proper multiThrottle.
      * @param tc The throttle controller that was listening for a response to an
      *           address request
+     * @param address The address to send a cancel to
      */
     @Override
-    public void notifyControllerAddressDeclined(ThrottleController tc) {
+    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address) {
         log.debug("notifyControllerAddressDeclined");
         if (multiThrottles != null) {   //  Should exist by this point
             //  Safe to cast
             MultiThrottleController mtc = (MultiThrottleController) tc;
+            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
             multiThrottles.get(mtc.whichThrottle).canceledThrottleRequest(mtc.locoKey);
         }
     }

@@ -208,21 +208,20 @@ public class MultiThrottle {
      */
     public void canceledThrottleRequest(String key) {
         if (throttles == null) {
-            log.warn("No MultiThrottle to remove " + key + " from.");
+            log.warn("No MultiThrottle to remove {} from.", key);
             return;
         }
         if (!throttles.containsKey(key)) {
             if (log.isDebugEnabled()) {
-                log.debug("Throttle: " + key + " not in MultiThrottle.");
+                log.debug("Throttle: {} not in MultiThrottle.", key);
             }
             return;
         }
         MultiThrottleController mtc = throttles.get(key);
         mtc.removeControllerListener(parentController);
-        mtc.removeThrottleControllerListener(parentTCL);
         throttles.remove(key);
         if (log.isDebugEnabled()) {
-            log.debug("Throttle: " + key + " cancelled from MultiThrottle.");
+            log.debug("Throttle: {} cancelled from MultiThrottle.", key);
         }
     }
 

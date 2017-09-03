@@ -234,9 +234,7 @@ public class MultiThrottleController extends ThrottleController {
     }
     
     public void requestStealAddress(String action) {
-        if (log.isDebugEnabled()) {
-            log.debug("requestStealAddress: " + action);
-        }
+        log.debug("requestStealAddress: {}", action);
         int addr = Integer.parseInt(action.substring(1));
         boolean isLong;
         isLong = (action.charAt(0) == 'L');
