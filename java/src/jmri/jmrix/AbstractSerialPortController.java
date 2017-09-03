@@ -96,7 +96,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         serialPort.setRTS(rts);
         serialPort.setDTR(dtr);
         try {
-            serialPort.setFlowControlMode(flow);
+            if (flow!=purejavacomm.SerialPort.FLOWCONTROL_NONE) serialPort.setFlowControlMode(flow);
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
