@@ -29,6 +29,6 @@ public class ExceptionContextTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExceptionContextTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExceptionContextTest.class);
 
 }

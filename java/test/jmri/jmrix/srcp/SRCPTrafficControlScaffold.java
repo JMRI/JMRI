@@ -74,6 +74,6 @@ public class SRCPTrafficControlScaffold extends SRCPTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficControlScaffold.class);
 
 }

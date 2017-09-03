@@ -603,5 +603,5 @@ public class LightControl {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightControl.class);
 }

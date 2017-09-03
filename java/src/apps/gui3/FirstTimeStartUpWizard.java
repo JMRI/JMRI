@@ -390,6 +390,6 @@ public class FirstTimeStartUpWizard {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class);
 
 }

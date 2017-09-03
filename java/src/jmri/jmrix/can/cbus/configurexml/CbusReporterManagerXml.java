@@ -47,5 +47,5 @@ public class CbusReporterManagerXml extends AbstractReporterManagerConfigXML {
         return loadReporters(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusReporterManagerXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusReporterManagerXml.class);
 }

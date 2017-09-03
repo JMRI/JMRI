@@ -383,7 +383,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     Turnout turnout = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class);
 
     String newState = "";
 }

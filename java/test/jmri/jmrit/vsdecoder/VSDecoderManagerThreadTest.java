@@ -31,6 +31,6 @@ public class VSDecoderManagerThreadTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDecoderManagerThreadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDecoderManagerThreadTest.class);
 
 }

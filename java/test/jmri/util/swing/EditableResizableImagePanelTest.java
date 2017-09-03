@@ -32,6 +32,6 @@ public class EditableResizableImagePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanelTest.class);
 
 }

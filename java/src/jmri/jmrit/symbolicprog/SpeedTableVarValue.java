@@ -946,6 +946,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class);
 
 }

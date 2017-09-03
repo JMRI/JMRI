@@ -33,6 +33,6 @@ public class JsonClientMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientMenuTest.class);
 
 }

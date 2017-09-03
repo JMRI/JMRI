@@ -225,6 +225,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class);
 
 }

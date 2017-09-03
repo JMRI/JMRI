@@ -187,6 +187,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
 
 }

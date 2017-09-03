@@ -274,5 +274,5 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         return Bundle.getMessage("BeanNameSignalSystem");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);
 }

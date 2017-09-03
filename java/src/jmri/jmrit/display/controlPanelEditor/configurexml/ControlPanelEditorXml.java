@@ -309,6 +309,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class);
 
 }

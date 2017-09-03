@@ -299,6 +299,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }

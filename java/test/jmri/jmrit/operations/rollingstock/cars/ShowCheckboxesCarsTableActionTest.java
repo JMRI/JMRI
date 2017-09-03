@@ -29,6 +29,6 @@ public class ShowCheckboxesCarsTableActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ShowCheckboxesCarsTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ShowCheckboxesCarsTableActionTest.class);
 
 }

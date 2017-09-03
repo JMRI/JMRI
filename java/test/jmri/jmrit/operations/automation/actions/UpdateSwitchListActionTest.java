@@ -28,6 +28,6 @@ public class UpdateSwitchListActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UpdateSwitchListActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UpdateSwitchListActionTest.class);
 
 }

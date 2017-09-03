@@ -380,7 +380,7 @@ public class ScheduleManager implements InstanceManagerAutoDefault, InstanceMana
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class);
 
     @Override
     public void initialize() {

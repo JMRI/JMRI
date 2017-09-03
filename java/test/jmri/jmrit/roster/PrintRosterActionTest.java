@@ -36,6 +36,6 @@ public class PrintRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintRosterActionTest.class);
 
 }

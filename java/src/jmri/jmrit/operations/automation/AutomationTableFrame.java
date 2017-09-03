@@ -386,5 +386,5 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationTableFrame.class);
 }

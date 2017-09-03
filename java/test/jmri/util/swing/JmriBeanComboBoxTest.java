@@ -35,6 +35,6 @@ public class JmriBeanComboBoxTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBoxTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBoxTest.class);
 
 }

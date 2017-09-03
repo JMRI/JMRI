@@ -29,6 +29,6 @@ public class LnPr2PacketizerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnPr2PacketizerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnPr2PacketizerTest.class);
 
 }

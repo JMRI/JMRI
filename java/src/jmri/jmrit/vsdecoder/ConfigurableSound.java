@@ -354,6 +354,6 @@ class ConfigurableSound extends VSDSound {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurableSound.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigurableSound.class);
 
 }

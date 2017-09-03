@@ -31,6 +31,6 @@ public class SpeedoComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedoComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedoComponentFactoryTest.class);
 
 }

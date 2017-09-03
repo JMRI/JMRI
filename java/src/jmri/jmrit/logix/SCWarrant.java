@@ -550,5 +550,5 @@ public class SCWarrant extends Warrant {
     /**
      * 
      */
-    static Logger log = LoggerFactory.getLogger(SCWarrant.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SCWarrant.class);
 }

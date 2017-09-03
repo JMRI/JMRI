@@ -98,5 +98,5 @@ public class ImportRosterItemAction extends AbstractRosterItemAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ImportRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportRosterItemAction.class);
 }

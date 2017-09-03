@@ -29,6 +29,6 @@ public class SecsiMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SecsiMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SecsiMenuTest.class);
 
 }

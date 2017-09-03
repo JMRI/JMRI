@@ -29,6 +29,6 @@ public class SerialThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialThrottleTest.class);
 
 }

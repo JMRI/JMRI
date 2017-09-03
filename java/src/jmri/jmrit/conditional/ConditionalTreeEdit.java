@@ -4678,5 +4678,5 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         return ConditionalTreeEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalTreeEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalTreeEdit.class);
 }

@@ -265,6 +265,6 @@ public class ProgCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgCheckAction.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgCheckAction.class);
 
 }

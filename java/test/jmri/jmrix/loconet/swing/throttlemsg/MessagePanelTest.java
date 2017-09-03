@@ -29,6 +29,6 @@ public class MessagePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MessagePanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MessagePanelTest.class);
 
 }

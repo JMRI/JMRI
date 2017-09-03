@@ -73,6 +73,6 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppLightManagerTest.class);
 
 }

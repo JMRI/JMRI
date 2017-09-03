@@ -176,5 +176,5 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadXml.class);
 }

@@ -37,6 +37,6 @@ public class LnMessageServerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnMessageServerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnMessageServerTest.class);
 
 }

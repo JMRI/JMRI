@@ -35,6 +35,6 @@ public class RemoveRosterEntryToGroupActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupActionTest.class);
 
 }

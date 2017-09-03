@@ -230,5 +230,5 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(StagingEditFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(StagingEditFrame.class);
 }

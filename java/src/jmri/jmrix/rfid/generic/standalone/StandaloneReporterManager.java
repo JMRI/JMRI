@@ -76,6 +76,6 @@ public class StandaloneReporterManager extends RfidReporterManager {
         report.notify(idTag);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(StandaloneReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(StandaloneReporterManager.class);
 
 }

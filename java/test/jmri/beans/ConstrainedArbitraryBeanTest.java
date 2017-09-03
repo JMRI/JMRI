@@ -29,6 +29,6 @@ public class ConstrainedArbitraryBeanTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConstrainedArbitraryBeanTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConstrainedArbitraryBeanTest.class);
 
 }

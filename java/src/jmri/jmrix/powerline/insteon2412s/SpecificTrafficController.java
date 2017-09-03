@@ -105,7 +105,7 @@ public class SpecificTrafficController extends SerialTrafficController {
              try {
              wait(250);
              } catch (InterruptedException ex) {
-             LoggerFactory.getLogger(SpecificTrafficController.class.getName()).log(Level.SEVERE, null, ex);
+             log.error("", ex);
              }
              */
         }
@@ -271,5 +271,5 @@ public class SpecificTrafficController extends SerialTrafficController {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 }

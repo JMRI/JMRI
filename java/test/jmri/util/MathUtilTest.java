@@ -289,5 +289,5 @@ public class MathUtilTest extends TestCase {
         return suite;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class);
 }

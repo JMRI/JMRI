@@ -32,6 +32,6 @@ public class JsonPacketGenFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonPacketGenFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonPacketGenFrameTest.class);
 
 }

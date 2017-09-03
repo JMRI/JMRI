@@ -536,5 +536,5 @@ public class SensorTableDataModel extends BeanTableDataModel {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class);
 }

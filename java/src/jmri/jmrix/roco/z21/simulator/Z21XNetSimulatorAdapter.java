@@ -447,5 +447,5 @@ public class Z21XNetSimulatorAdapter {
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetSimulatorAdapter.class);
 }

@@ -40,6 +40,6 @@ public class Mx1TurnoutTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1TurnoutTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1TurnoutTest.class);
 
 }

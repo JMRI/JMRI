@@ -34,6 +34,6 @@ public class CarRosterMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarRosterMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarRosterMenuTest.class);
 
 }

@@ -124,6 +124,6 @@ public class EasyDccMonFrameTest {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrameTest.class);
 
 }

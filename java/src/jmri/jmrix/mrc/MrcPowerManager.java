@@ -98,7 +98,7 @@ public class MrcPowerManager
     @Override
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class);
 }
 
 

@@ -33,5 +33,5 @@ public class AddSignalMastJFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddSignalMastJFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddSignalMastJFrameTest.class);
 }

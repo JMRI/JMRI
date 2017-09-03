@@ -593,7 +593,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class);
 
     /**
      * Internal class to handle the separate character-receive thread

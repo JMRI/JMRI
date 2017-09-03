@@ -29,6 +29,6 @@ public class TamsSensorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TamsSensorTest.class);
 
 }

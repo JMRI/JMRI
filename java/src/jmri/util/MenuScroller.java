@@ -740,5 +740,5 @@ public class MenuScroller
         }
     }   // enum MenuScrollerIcon
 
-    private final static Logger log = LoggerFactory.getLogger(MenuScroller.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MenuScroller.class);
 }   // class MenuScroller

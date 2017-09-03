@@ -29,6 +29,6 @@ public class InternalSensorManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerXmlTest.class);
 
 }

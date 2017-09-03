@@ -33,5 +33,5 @@ public class FirstTimeStartUpWizardActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardActionTest.class);
 }

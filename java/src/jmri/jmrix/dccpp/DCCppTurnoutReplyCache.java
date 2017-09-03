@@ -120,7 +120,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);
 
 }
 

@@ -184,5 +184,5 @@ public class SoundSetPane extends JPanel
         // don't have to do anything
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class);
 }

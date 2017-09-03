@@ -29,6 +29,6 @@ public class VSDOptionPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDOptionPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDOptionPanelTest.class);
 
 }

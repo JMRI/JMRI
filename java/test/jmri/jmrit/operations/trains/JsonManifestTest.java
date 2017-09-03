@@ -30,6 +30,6 @@ public class JsonManifestTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonManifestTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonManifestTest.class);
 
 }

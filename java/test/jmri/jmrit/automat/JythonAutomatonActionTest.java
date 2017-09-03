@@ -30,6 +30,6 @@ public class JythonAutomatonActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JythonAutomatonActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JythonAutomatonActionTest.class);
 
 }

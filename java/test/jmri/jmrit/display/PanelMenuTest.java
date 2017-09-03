@@ -30,5 +30,5 @@ public class PanelMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PanelMenuTest.class);
 }

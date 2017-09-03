@@ -80,6 +80,6 @@ class ThrottleTrigger extends Trigger implements PropertyChangeListener {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ThrottleTrigger.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ThrottleTrigger.class);
 
 }

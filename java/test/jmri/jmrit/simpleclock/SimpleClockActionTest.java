@@ -29,6 +29,6 @@ public class SimpleClockActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SimpleClockActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SimpleClockActionTest.class);
 
 }

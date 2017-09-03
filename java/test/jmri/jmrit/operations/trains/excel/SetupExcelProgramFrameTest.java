@@ -34,6 +34,6 @@ public class SetupExcelProgramFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrameTest.class);
 
 }

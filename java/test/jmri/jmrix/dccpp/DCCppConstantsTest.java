@@ -29,6 +29,6 @@ public class DCCppConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppConstantsTest.class);
 
 }

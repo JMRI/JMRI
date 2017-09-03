@@ -33,6 +33,6 @@ public class NceConsistBackupTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceConsistBackupTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceConsistBackupTest.class);
 
 }

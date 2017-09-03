@@ -668,6 +668,6 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class);
 
 }

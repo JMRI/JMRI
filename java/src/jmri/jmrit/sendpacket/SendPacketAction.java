@@ -36,5 +36,5 @@ public class SendPacketAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class);
 }

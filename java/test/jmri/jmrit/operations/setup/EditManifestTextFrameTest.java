@@ -45,6 +45,6 @@ public class EditManifestTextFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditManifestTextFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditManifestTextFrameTest.class);
 
 }

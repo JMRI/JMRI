@@ -29,6 +29,6 @@ public class EntryExitPairsXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXmlTest.class);
 
 }

@@ -38,6 +38,6 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketServiceTest.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketServiceTest.class);
 
 }

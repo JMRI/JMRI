@@ -567,5 +567,5 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanel.class);
 }

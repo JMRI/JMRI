@@ -32,6 +32,6 @@ public class EcosTurnoutTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosTurnoutTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosTurnoutTest.class);
 
 }

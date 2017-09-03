@@ -158,6 +158,6 @@ abstract public class AbstractXNetInitializationManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class);
 
 }

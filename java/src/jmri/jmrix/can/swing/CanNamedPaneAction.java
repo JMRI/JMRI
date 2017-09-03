@@ -47,5 +47,5 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class);
 }

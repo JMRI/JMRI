@@ -240,6 +240,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class);
 
 }

@@ -481,7 +481,7 @@ public class Ash1_1Algorithm implements Calculator {
     }
 
 // ******************
-    private final static Logger log = LoggerFactory.getLogger(Ash1_1Algorithm.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ash1_1Algorithm.class);
 
     /**
      * Internal class to handle return value.

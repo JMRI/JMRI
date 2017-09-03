@@ -37,7 +37,7 @@ public class CMRInetManagerAction extends AbstractAction {
         f.setLocation(20, 40);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(CMRInetManagerAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CMRInetManagerAction.class);
 }
 
 

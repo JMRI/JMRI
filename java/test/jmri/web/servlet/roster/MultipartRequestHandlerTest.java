@@ -29,6 +29,6 @@ public class MultipartRequestHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MultipartRequestHandlerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MultipartRequestHandlerTest.class);
 
 }

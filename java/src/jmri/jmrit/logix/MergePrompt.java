@@ -440,6 +440,6 @@ public class MergePrompt extends JDialog {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergePrompt.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergePrompt.class);
 
 }

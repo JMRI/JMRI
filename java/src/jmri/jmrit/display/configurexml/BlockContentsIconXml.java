@@ -155,5 +155,5 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         l.displayState();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockContentsIconXml.class);
 }

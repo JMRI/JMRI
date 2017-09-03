@@ -29,6 +29,6 @@ public class GuiUtilBaseTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GuiUtilBaseTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GuiUtilBaseTest.class);
 
 }

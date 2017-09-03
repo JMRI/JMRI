@@ -29,6 +29,6 @@ public class JmriClockPropertyListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriClockPropertyListenerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriClockPropertyListenerTest.class);
 
 }

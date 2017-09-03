@@ -217,5 +217,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class);
 }

@@ -661,5 +661,5 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 e.getOldValue(), e.getNewValue()); // NOI18N
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CommonConductorYardmasterPanel.class);
 }

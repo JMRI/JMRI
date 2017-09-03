@@ -164,5 +164,5 @@ public class ConsistDataModel extends AbstractTableModel {
                 log.error("Unknown Consist Operation");
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(ConsistDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistDataModel.class);
 }

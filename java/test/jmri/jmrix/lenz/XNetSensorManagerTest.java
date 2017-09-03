@@ -106,7 +106,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     // from here down is testing infrastructure
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
     // The minimal setup for log4J
     @Override

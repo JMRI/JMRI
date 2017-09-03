@@ -150,7 +150,7 @@ public class PortalManager extends AbstractManager
         return Bundle.getMessage("BeanNamePortal");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
 }
 
 

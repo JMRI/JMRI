@@ -175,5 +175,5 @@ public class ReporterItemPanel extends TableItemPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterItemPanel.class);
 }

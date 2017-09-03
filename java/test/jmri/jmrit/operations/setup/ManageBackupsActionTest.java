@@ -29,6 +29,6 @@ public class ManageBackupsActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ManageBackupsActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ManageBackupsActionTest.class);
 
 }

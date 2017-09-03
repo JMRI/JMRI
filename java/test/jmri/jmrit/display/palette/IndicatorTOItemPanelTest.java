@@ -42,6 +42,6 @@ public class IndicatorTOItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanelTest.class);
 
 }

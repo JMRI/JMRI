@@ -617,6 +617,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     protected int mNumber;   // XpressNet turnout number
     DCCppTurnoutStateListener _stateListener;  // Internal class object
     
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class);
     
 }

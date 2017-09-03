@@ -38,6 +38,6 @@ public class SerialX10LightTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialX10LightTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialX10LightTest.class);
 
 }

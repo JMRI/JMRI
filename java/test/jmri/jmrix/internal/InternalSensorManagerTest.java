@@ -77,7 +77,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(InternalSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerTest.class);
 
 }

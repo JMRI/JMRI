@@ -29,6 +29,6 @@ public class LocationCopyActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocationCopyActionTest.class);
 
 }

@@ -29,6 +29,6 @@ public class JynstrumentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JynstrumentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JynstrumentFactoryTest.class);
 
 }

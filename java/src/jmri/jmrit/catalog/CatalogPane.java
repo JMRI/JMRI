@@ -131,5 +131,5 @@ public class CatalogPane extends JPanel {
 
     JTree dTree;
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogPane.class);
 }

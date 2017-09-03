@@ -29,6 +29,6 @@ public class DefaultRailComManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultRailComManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultRailComManagerTest.class);
 
 }

@@ -317,7 +317,7 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);
 
     @Override
     public void initialize() {

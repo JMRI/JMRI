@@ -126,5 +126,5 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         _leafs = leafs;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class);
 }

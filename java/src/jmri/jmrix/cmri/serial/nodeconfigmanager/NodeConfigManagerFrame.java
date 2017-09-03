@@ -2633,7 +2633,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     private int[]    cpnodeOpts = new int[16];  // Local storage for node options
     private int[]    cmrinetOpts = new int[16];  // Local storage for node options
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerFrame.class);
 
 }
 

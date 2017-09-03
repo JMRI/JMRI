@@ -77,5 +77,5 @@ public class StandaloneTrafficController extends RfidTrafficController {
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
 
-    private static final Logger log = LoggerFactory.getLogger(StandaloneTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(StandaloneTrafficController.class);
 }

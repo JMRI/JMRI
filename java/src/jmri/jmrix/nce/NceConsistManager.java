@@ -153,5 +153,5 @@ public class NceConsistManager extends AbstractConsistManager {
             notifyConsistListChanged();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class);
 }

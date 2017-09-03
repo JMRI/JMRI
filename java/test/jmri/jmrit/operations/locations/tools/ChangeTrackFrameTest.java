@@ -36,6 +36,6 @@ public class ChangeTrackFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeTrackFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ChangeTrackFrameTest.class);
 
 }

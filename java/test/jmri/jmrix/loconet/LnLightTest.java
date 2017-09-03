@@ -31,6 +31,6 @@ public class LnLightTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnLightTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnLightTest.class);
 
 }

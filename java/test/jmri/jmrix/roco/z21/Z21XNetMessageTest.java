@@ -29,6 +29,6 @@ public class Z21XNetMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Z21XNetMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Z21XNetMessageTest.class);
 
 }

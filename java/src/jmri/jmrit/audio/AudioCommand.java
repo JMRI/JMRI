@@ -107,5 +107,5 @@ public class AudioCommand {
         }
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(AudioCommand.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AudioCommand.class);
 }

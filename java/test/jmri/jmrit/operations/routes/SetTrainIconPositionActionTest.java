@@ -29,6 +29,6 @@ public class SetTrainIconPositionActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionActionTest.class);
 
 }

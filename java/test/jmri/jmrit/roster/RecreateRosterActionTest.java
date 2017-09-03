@@ -29,6 +29,6 @@ public class RecreateRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RecreateRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RecreateRosterActionTest.class);
 
 }

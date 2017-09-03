@@ -29,6 +29,6 @@ public class LnDplxGrpInfoImplConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImplConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImplConstantsTest.class);
 
 }

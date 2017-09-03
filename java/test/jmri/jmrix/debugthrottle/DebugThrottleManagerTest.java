@@ -29,6 +29,6 @@ public class DebugThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DebugThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DebugThrottleManagerTest.class);
 
 }

@@ -31,6 +31,6 @@ public class MarklinSensorManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorManagerTest.class);
 
 }

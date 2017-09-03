@@ -127,5 +127,5 @@ public class DebuggerTimePane extends JPanel
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebuggerTimePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebuggerTimePane.class);
 }

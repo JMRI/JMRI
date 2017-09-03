@@ -29,6 +29,6 @@ public class CbusOpCodesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusOpCodesTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusOpCodesTest.class);
 
 }

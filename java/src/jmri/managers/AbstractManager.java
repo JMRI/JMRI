@@ -448,6 +448,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return inputName;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractManager.class);
 
 }

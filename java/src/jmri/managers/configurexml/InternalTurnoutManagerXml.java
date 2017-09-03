@@ -37,6 +37,6 @@ public class InternalTurnoutManagerXml extends jmri.managers.configurexml.Abstra
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerXml.class);
 
 }

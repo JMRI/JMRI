@@ -1182,5 +1182,5 @@ abstract public class AbstractMRTrafficController {
         }
     } // end cleanUpHook
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
 }

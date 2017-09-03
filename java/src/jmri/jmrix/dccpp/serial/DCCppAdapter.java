@@ -325,6 +325,6 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
     static volatile DCCppAdapter mInstance = null; // TODO: Rename this?
     
-    private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class);
 
 }

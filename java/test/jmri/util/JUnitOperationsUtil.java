@@ -357,5 +357,5 @@ public class JUnitOperationsUtil {
         tmanager.register(train2);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
 }

@@ -29,6 +29,6 @@ public class MrcPacketsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcPacketsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcPacketsTest.class);
 
 }

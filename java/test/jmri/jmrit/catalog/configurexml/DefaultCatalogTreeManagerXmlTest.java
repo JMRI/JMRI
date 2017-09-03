@@ -29,6 +29,6 @@ public class DefaultCatalogTreeManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManagerXmlTest.class);
 
 }

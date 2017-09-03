@@ -158,5 +158,5 @@ public class AcelaTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class);
 }

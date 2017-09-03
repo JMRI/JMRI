@@ -29,6 +29,6 @@ public class Z21ConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Z21ConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Z21ConstantsTest.class);
 
 }

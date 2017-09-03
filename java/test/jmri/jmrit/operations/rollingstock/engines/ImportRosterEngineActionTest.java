@@ -34,6 +34,6 @@ public class ImportRosterEngineActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImportRosterEngineActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportRosterEngineActionTest.class);
 
 }

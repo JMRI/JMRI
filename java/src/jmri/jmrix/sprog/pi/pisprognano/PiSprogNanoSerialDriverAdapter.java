@@ -42,7 +42,6 @@ public class PiSprogNanoSerialDriverAdapter
     static public PiSprogNanoSerialDriverAdapter instance() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class);
 
 }

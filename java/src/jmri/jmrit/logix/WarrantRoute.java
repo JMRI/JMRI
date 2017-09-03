@@ -1394,5 +1394,5 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantRoute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantRoute.class);
 }

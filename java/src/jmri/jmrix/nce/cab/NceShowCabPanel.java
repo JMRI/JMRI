@@ -2046,5 +2046,5 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceShowCabPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceShowCabPanel.class);
 }

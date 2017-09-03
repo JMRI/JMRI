@@ -29,6 +29,6 @@ public class IntelliboxAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IntelliboxAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IntelliboxAdapterTest.class);
 
 }

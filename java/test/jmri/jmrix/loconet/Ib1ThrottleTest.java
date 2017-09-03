@@ -31,6 +31,6 @@ public class Ib1ThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleTest.class);
 
 }

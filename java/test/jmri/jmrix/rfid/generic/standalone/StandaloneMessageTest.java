@@ -29,6 +29,6 @@ public class StandaloneMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StandaloneMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StandaloneMessageTest.class);
 
 }

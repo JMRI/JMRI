@@ -29,6 +29,6 @@ public class XNetConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XNetConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XNetConstantsTest.class);
 
 }

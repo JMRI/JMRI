@@ -209,6 +209,6 @@ abstract public class RfidProtocol {
         return bytes;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidProtocol.class);
 
 }

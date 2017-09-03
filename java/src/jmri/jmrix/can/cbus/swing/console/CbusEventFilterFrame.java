@@ -134,5 +134,5 @@ public class CbusEventFilterFrame extends JmriJFrame {
 //     addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class);
 }

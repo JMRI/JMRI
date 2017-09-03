@@ -34,6 +34,6 @@ public class RoutesTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RoutesTableFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RoutesTableFrameTest.class);
 
 }

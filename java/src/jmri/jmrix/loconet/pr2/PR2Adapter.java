@@ -106,5 +106,5 @@ public class PR2Adapter extends LocoBufferAdapter {
         return new String[]{jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_PR2_ALONE.getName()};
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR2Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR2Adapter.class);
 }

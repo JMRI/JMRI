@@ -150,5 +150,5 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class);
 }

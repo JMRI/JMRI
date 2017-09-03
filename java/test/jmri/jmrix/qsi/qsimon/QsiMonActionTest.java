@@ -34,6 +34,6 @@ public class QsiMonActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(QsiMonActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(QsiMonActionTest.class);
 
 }

@@ -130,6 +130,6 @@ public class SpeedoReply {
     private int _nDataChars;
     private char _dataChars[] = new char[maxSize];
     private boolean unsolicited;
-    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class);
 
 }

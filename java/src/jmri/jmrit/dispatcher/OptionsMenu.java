@@ -438,5 +438,5 @@ public class OptionsMenu extends JMenu {
         layoutScaleBox.setSelectedIndex(dispatcher.getScale() - 1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class);
 }

@@ -29,6 +29,6 @@ public class DefaultSignalGroupManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXmlTest.class);
 
 }

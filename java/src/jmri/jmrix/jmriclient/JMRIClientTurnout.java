@@ -162,7 +162,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     public void message(JMRIClientMessage m) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnout.class);
 
 }
 

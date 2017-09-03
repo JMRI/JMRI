@@ -36,6 +36,6 @@ public class DCCppMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DCCppMenuTest.class);
 
 }

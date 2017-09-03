@@ -35,6 +35,6 @@ public class AcelaSensorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AcelaSensorTest.class);
 
 }

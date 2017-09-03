@@ -174,6 +174,6 @@ public class SimpleVisitor implements JmriServerParserVisitor {
         return data;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleVisitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleVisitor.class);
 
 }

@@ -580,7 +580,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         Bundle.getMessage("HeadingUserName"),
         Bundle.getMessage("HeadingComment")};
 
-    private final static Logger log = LoggerFactory.getLogger(NodeIOListFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeIOListFrame.class);
 
 }
 

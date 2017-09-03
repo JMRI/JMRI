@@ -34,6 +34,6 @@ public class EasyDccProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerManagerTest.class);
 
 }

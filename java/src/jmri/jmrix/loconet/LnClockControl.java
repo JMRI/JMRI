@@ -333,6 +333,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnClockControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
 }
 

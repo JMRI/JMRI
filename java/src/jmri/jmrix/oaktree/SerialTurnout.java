@@ -81,7 +81,7 @@ public class SerialTurnout extends AbstractTurnout {
         tNode.setOutputBit(tBit, closed);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
 }
 
 

@@ -32,6 +32,6 @@ public class SprogHexFileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogHexFileTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogHexFileTest.class);
 
 }

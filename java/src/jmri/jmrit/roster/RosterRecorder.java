@@ -116,6 +116,6 @@ public class RosterRecorder extends Thread {
     BlockingQueue<Roster> queue = new ArrayBlockingQueue<Roster>(25);
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterRecorder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterRecorder.class);
 
 }

@@ -105,5 +105,5 @@ public class ImportRosterEngines extends Thread {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(ImportRosterEngines.class.getName());
+            .getLogger(ImportRosterEngines.class);
 }

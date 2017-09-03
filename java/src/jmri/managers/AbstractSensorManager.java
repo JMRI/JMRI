@@ -311,6 +311,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);
 
 }

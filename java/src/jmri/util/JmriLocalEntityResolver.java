@@ -160,6 +160,6 @@ public class JmriLocalEntityResolver implements EntityResolver {
     }
 
     static private boolean toldYouOnce = false;
-    private static final Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class);
 
 }

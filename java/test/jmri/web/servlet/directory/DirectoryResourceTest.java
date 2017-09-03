@@ -29,6 +29,6 @@ public class DirectoryResourceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DirectoryResourceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DirectoryResourceTest.class);
 
 }

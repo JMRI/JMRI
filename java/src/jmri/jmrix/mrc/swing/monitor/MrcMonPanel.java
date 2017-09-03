@@ -135,6 +135,6 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcMonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcMonPanel.class);
 
 }

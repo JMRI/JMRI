@@ -371,5 +371,5 @@ public class SprogIIUpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogIIUpdateFrame.class.getName());
+            .getLogger(SprogIIUpdateFrame.class);
 }

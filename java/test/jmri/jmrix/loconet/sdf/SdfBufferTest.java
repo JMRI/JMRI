@@ -121,6 +121,6 @@ public class SdfBufferTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SdfBufferTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfBufferTest.class);
 
 }

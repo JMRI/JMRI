@@ -28,6 +28,6 @@ public class SpurTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpurTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpurTableModelTest.class);
 
 }

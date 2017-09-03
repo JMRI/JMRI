@@ -116,6 +116,6 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SampleAutomaton3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SampleAutomaton3.class);
 
 }

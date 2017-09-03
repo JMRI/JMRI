@@ -29,6 +29,6 @@ public class JsonRosterServiceFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonRosterServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonRosterServiceFactoryTest.class);
 
 }

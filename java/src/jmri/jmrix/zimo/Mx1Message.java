@@ -623,6 +623,6 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
         return m;
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Mx1Message.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Message.class);
 
 }

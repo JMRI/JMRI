@@ -29,6 +29,6 @@ public class SerialLightTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialLightTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialLightTest.class);
 
 }

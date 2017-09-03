@@ -102,5 +102,5 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class);
 }

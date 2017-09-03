@@ -264,6 +264,6 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Pr2Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr2Throttle.class);
 
 }

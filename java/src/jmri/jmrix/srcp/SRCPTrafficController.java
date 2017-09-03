@@ -395,7 +395,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         }
     } // SRCPRcvNotifier
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class);
 }
 
 

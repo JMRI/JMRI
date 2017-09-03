@@ -423,6 +423,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class);
 
 }

@@ -51,6 +51,6 @@ public class TransitTableActionTest extends AbstractTableActionBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TransitTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TransitTableActionTest.class);
 
 }

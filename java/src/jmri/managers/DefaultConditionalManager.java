@@ -466,5 +466,5 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return targetList;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManager.class);
 }

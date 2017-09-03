@@ -29,6 +29,6 @@ public class RosterEntryListCellRendererTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterEntryListCellRendererTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterEntryListCellRendererTest.class);
 
 }

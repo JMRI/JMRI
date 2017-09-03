@@ -444,5 +444,5 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         return InstanceManager.getDefault(jmri.ConditionalManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class);
 }

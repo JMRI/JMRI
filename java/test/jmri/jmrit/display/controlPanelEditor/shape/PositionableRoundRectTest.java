@@ -33,6 +33,6 @@ public class PositionableRoundRectTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PositionableRoundRectTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PositionableRoundRectTest.class);
 
 }

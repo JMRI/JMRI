@@ -188,6 +188,6 @@ public class JoalAudioListener extends AbstractAudioListener {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class);
 
 }

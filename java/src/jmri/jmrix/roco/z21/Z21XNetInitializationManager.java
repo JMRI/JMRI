@@ -59,6 +59,6 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetInitializationManager.class);
 
 }

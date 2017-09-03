@@ -39,6 +39,6 @@ public class AllocationPlanTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AllocationPlanTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AllocationPlanTest.class);
 
 }

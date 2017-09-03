@@ -617,6 +617,6 @@ public class Transit extends AbstractNamedBean {
         }
         // we ignore the property setConfigureManager
     }
-    private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Transit.class);
 
 }

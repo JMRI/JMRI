@@ -444,5 +444,5 @@ public class PreviewDialog extends JDialog {
         log.debug("PreviewDialog disposed.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PreviewDialog.class);
 }

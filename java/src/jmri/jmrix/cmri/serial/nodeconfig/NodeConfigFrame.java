@@ -1108,6 +1108,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
     private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

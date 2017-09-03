@@ -600,6 +600,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class);
 
 }

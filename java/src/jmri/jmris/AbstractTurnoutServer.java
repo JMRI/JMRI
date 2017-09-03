@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractTurnoutServer {
 
     protected final HashMap<String, TurnoutListener> turnouts;
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class);
 
     public AbstractTurnoutServer() {
         turnouts = new HashMap<String, TurnoutListener>();

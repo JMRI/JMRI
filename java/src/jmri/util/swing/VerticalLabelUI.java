@@ -174,5 +174,5 @@ public class VerticalLabelUI extends BasicLabelUI {
         return verticalLabelUI;
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class);
 }

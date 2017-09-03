@@ -29,6 +29,6 @@ public class PortTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PortTest.class);
 
 }

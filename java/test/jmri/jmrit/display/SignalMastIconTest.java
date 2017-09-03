@@ -170,5 +170,5 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class);
 }

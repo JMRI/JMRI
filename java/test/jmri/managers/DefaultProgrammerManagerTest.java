@@ -29,6 +29,6 @@ public class DefaultProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManagerTest.class);
 
 }

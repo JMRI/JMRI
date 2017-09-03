@@ -224,5 +224,5 @@ public class DefaultSignalMastManagerXml
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class);
 }

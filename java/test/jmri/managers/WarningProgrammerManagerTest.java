@@ -30,6 +30,6 @@ public class WarningProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WarningProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WarningProgrammerManagerTest.class);
 
 }

@@ -109,7 +109,7 @@ public class Distributor {
     final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
     final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
-    private final static Logger log = LoggerFactory.getLogger(Distributor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Distributor.class);
 
     /**
      * Forward the Reading from the Swing thread

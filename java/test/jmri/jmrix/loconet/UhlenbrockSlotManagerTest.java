@@ -30,6 +30,6 @@ public class UhlenbrockSlotManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotManagerTest.class);
 
 }

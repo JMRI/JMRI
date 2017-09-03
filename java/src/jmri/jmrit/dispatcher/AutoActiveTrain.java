@@ -1735,5 +1735,5 @@ public class AutoActiveTrain implements ThrottleListener {
         return RAMP_NONE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class);
 }

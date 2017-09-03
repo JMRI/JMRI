@@ -565,5 +565,5 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     // register for notification
-    private final static Logger log = LoggerFactory.getLogger(DCCppThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppThrottle.class);
 }

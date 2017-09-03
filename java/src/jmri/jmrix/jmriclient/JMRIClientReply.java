@@ -78,7 +78,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReply.class);
 
 }
 

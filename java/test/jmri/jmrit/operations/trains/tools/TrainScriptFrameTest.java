@@ -34,6 +34,6 @@ public class TrainScriptFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);
 
 }

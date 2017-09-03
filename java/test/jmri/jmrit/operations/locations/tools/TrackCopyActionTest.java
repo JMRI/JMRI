@@ -35,6 +35,6 @@ public class TrackCopyActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrackCopyActionTest.class);
 
 }

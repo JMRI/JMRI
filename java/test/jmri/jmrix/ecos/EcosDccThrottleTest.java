@@ -99,6 +99,6 @@ public class EcosDccThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleTest.class);
 
 }

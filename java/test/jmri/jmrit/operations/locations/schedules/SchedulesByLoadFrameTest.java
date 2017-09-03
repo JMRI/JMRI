@@ -35,6 +35,6 @@ public class SchedulesByLoadFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadFrameTest.class);
 
 }

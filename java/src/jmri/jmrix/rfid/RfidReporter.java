@@ -142,6 +142,6 @@ public class RfidReporter extends AbstractReporter
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidReporter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidReporter.class);
 
 }

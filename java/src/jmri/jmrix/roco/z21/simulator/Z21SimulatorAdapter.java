@@ -324,6 +324,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         return(r);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21SimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21SimulatorAdapter.class);
 
 }

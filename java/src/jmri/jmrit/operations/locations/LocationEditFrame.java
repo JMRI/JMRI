@@ -787,5 +787,5 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationEditFrame.class);
 }

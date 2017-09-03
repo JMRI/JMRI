@@ -68,5 +68,5 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
         return Bundle.getMessage("BeanNameReporter");
     }
 
-//    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class.getName());
+//    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class);
 }

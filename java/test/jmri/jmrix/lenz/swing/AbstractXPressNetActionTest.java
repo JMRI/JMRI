@@ -35,6 +35,6 @@ public class AbstractXPressNetActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractXPressNetActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractXPressNetActionTest.class);
 
 }

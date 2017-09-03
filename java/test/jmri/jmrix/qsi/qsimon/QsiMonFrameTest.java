@@ -121,6 +121,6 @@ public class QsiMonFrameTest {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class);
 
 }

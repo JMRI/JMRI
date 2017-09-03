@@ -37,6 +37,6 @@ public class NceComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceComponentFactoryTest.class);
 
 }

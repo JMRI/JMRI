@@ -471,7 +471,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     private String[] nodeEnableColumnsNames = {"Node","Monitor"};
 
-    private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialFilterFrame.class);
 
 }
 

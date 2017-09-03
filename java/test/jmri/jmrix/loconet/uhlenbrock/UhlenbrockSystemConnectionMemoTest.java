@@ -29,6 +29,6 @@ public class UhlenbrockSystemConnectionMemoTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSystemConnectionMemoTest.class);
 
 }

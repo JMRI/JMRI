@@ -28,6 +28,6 @@ public class GetClassPathTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GetClassPathTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GetClassPathTest.class);
 
 }

@@ -33,6 +33,6 @@ public class JsonClientMonitorFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientMonitorFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientMonitorFrameTest.class);
 
 }

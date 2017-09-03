@@ -162,6 +162,6 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class);
 
 }

@@ -34,6 +34,6 @@ public class NceClockControlTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceClockControlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceClockControlTest.class);
 
 }

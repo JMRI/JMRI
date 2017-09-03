@@ -156,5 +156,5 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         setImagePath(dest.getPath());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class);
 }

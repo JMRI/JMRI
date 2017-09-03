@@ -393,5 +393,5 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         }
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class);
 }

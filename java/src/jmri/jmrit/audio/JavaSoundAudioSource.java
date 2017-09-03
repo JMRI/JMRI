@@ -424,7 +424,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioSource.class);
 
     private static class JavaSoundAudioChannel {
 

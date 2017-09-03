@@ -291,6 +291,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
 
 }

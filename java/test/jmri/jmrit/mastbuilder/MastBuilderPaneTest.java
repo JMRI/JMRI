@@ -29,6 +29,6 @@ public class MastBuilderPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MastBuilderPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MastBuilderPaneTest.class);
 
 }

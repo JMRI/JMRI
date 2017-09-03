@@ -145,5 +145,5 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsSetFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsSetFrame.class);
 }

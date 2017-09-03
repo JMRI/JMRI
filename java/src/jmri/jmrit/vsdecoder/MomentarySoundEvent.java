@@ -136,6 +136,6 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
          */
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(MomentarySoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(MomentarySoundEvent.class);
 
 }

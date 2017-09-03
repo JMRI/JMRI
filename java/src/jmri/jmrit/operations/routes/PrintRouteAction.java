@@ -118,5 +118,5 @@ public class PrintRouteAction extends AbstractAction {
         return buf.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRouteAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintRouteAction.class);
 }

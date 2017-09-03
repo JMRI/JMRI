@@ -32,6 +32,6 @@ public class LnThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnThrottleManagerTest.class);
 
 }

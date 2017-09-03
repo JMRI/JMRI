@@ -29,6 +29,6 @@ public class OlcbConfigurationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class);
 
 }

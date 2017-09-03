@@ -36,6 +36,6 @@ public class PacketGenAction extends AbstractXPressNetAction {
         f.connect(_memo.getXNetTrafficController());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 
 }

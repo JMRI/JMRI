@@ -2691,5 +2691,5 @@ public class TransitTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleTransitTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class);
 }

@@ -421,5 +421,5 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetTrainIconPositionFrame.class.getName());
+            .getLogger(SetTrainIconPositionFrame.class);
 }

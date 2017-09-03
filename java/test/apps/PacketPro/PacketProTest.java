@@ -34,5 +34,5 @@ public class PacketProTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PacketProTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PacketProTest.class);
 }

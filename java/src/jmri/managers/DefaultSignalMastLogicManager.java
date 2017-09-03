@@ -584,5 +584,5 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

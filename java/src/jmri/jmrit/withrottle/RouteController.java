@@ -213,5 +213,5 @@ public class RouteController extends AbstractController implements PropertyChang
         indication = new Hashtable<NamedBeanHandle<Sensor>, Route>();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteController.class);
 }

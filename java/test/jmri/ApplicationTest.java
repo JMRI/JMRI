@@ -68,6 +68,6 @@ public class ApplicationTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 
 }

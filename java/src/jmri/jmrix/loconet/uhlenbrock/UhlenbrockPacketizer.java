@@ -376,5 +376,5 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
 }

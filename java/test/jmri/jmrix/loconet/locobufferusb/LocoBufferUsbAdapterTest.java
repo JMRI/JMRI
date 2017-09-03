@@ -29,6 +29,6 @@ public class LocoBufferUsbAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapterTest.class);
 
 }

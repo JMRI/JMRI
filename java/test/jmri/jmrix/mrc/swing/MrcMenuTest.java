@@ -35,6 +35,6 @@ public class MrcMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcMenuTest.class);
 
 }

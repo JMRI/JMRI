@@ -36,5 +36,5 @@ public class ScheduleEditFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScheduleEditFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ScheduleEditFrameTest.class);
 }

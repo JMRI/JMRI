@@ -50,5 +50,5 @@ public class DeleteCarRosterAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeleteCarRosterAction.class);
 }

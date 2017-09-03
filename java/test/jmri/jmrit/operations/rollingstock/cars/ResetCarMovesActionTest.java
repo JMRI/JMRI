@@ -33,6 +33,6 @@ public class ResetCarMovesActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResetCarMovesActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ResetCarMovesActionTest.class);
 
 }

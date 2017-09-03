@@ -30,6 +30,6 @@ public class OpSessionLogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OpSessionLogTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OpSessionLogTest.class);
 
 }

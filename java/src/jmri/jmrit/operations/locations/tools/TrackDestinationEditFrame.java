@@ -504,5 +504,5 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class);
 }

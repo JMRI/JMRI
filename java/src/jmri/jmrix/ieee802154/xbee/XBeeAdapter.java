@@ -293,6 +293,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
        // openPort call, which is called from the JMRI infrastructure.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class);
 
 }

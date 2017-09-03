@@ -28,6 +28,6 @@ public class InterchangeTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InterchangeTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InterchangeTableModelTest.class);
 
 }

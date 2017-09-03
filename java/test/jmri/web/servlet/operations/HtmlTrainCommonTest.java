@@ -34,6 +34,6 @@ public class HtmlTrainCommonTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HtmlTrainCommonTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HtmlTrainCommonTest.class);
 
 }

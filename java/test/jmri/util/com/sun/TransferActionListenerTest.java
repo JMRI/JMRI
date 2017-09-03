@@ -29,6 +29,6 @@ public class TransferActionListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TransferActionListenerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TransferActionListenerTest.class);
 
 }

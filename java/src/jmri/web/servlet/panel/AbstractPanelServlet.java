@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class);
 
     abstract protected String getPanelType();
 

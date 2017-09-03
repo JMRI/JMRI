@@ -386,6 +386,6 @@ public class TrainIconAnimationTest {
         JUnitUtil.tearDown();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);
 
 }

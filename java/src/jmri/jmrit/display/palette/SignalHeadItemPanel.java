@@ -224,5 +224,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
 }

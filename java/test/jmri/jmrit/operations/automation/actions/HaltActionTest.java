@@ -28,6 +28,6 @@ public class HaltActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HaltActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HaltActionTest.class);
 
 }

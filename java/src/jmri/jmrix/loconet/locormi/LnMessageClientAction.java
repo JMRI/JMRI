@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnMessageClientAction extends AbstractAction {
 
-    private final static Logger log = LoggerFactory.getLogger(LnMessageClientAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageClientAction.class);
 
     public LnMessageClientAction(String s) {
         super(s);

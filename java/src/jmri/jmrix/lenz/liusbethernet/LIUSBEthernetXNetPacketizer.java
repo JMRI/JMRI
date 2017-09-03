@@ -95,6 +95,6 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizer.class);
 
 }

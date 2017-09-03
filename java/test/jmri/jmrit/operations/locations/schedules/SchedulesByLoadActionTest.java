@@ -28,6 +28,6 @@ public class SchedulesByLoadActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SchedulesByLoadActionTest.class);
 
 }

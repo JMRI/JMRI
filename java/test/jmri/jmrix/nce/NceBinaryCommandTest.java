@@ -29,6 +29,6 @@ public class NceBinaryCommandTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceBinaryCommandTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceBinaryCommandTest.class);
 
 }

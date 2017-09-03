@@ -33,5 +33,5 @@ public class VSDManagerFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDManagerFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDManagerFrameTest.class);
 }

@@ -648,5 +648,5 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class);
 }

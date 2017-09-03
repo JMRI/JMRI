@@ -34,5 +34,5 @@ public class PanelProTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelProTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PanelProTest.class);
 }

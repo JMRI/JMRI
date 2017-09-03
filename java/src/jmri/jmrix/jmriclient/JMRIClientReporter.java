@@ -87,7 +87,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         return state;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporter.class);
 
 }
 

@@ -205,5 +205,5 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class);
 }

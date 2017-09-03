@@ -29,6 +29,6 @@ public class EngineManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EngineManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EngineManagerXmlTest.class);
 
 }

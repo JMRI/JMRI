@@ -283,5 +283,5 @@ public class LnTcpServer {
             return clients.size();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(LnTcpServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTcpServer.class);
 }

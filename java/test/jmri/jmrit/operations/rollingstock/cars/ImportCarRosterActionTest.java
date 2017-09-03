@@ -33,6 +33,6 @@ public class ImportCarRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImportCarRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportCarRosterActionTest.class);
 
 }

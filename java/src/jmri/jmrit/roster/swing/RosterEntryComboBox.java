@@ -40,7 +40,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
     protected String _nonSelectedItem = Bundle.getMessage("RosterEntryComboBoxNoSelection");
     protected RosterEntry[] _currentSelection = null;
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class);
 
     /**
      * Create a combo box with the default Roster and all entries in the active

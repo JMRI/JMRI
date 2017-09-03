@@ -35,5 +35,5 @@ public class SetPhysicalLocationFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrameTest.class);
 }

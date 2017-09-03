@@ -29,6 +29,6 @@ public class LabelMacroTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LabelMacroTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LabelMacroTest.class);
 
 }

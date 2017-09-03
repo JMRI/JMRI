@@ -1888,5 +1888,5 @@ public class LayoutSlip extends LayoutTurnout {
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
 }

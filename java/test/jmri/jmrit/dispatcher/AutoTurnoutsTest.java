@@ -37,6 +37,6 @@ public class AutoTurnoutsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutoTurnoutsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutoTurnoutsTest.class);
 
 }

@@ -29,6 +29,6 @@ public class ErrorHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ErrorHandlerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ErrorHandlerTest.class);
 
 }

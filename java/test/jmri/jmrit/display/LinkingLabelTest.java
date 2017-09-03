@@ -100,5 +100,5 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

@@ -371,5 +371,5 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 // public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
 //  pcs.removePropertyChangeListener(l);
 // }
-    private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class);
 }

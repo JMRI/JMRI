@@ -180,5 +180,5 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class);
 }

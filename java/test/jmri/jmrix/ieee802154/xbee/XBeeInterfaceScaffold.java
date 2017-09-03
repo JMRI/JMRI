@@ -132,6 +132,6 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
           remoteDevice3=null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class);
 
 }

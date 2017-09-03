@@ -29,6 +29,6 @@ public class JsonLayoutBlockServiceFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactoryTest.class);
 
 }

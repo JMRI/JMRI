@@ -32,6 +32,6 @@ public class SendPacketFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SendPacketFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SendPacketFrameTest.class);
 
 }

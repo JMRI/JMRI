@@ -131,5 +131,5 @@ public class CatalogTreeFS extends AbstractCatalogTree {
 
     HashMap<String, Object> parameters = null;
 
-    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogTreeFS.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogTreeFS.class);
 }

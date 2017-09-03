@@ -848,5 +848,5 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SpeedometerFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SpeedometerFrame.class);
 }

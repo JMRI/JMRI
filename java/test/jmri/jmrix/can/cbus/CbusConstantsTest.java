@@ -29,6 +29,6 @@ public class CbusConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusConstantsTest.class);
 
 }

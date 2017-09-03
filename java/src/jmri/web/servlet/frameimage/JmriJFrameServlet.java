@@ -507,5 +507,5 @@ public class JmriJFrameServlet extends HttpServlet {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class);
 }

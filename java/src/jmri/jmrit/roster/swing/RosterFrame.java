@@ -1743,5 +1743,5 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             return true;
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class);
 }

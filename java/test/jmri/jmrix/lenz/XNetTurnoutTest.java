@@ -184,6 +184,6 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class);
 
 }

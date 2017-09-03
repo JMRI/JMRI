@@ -155,6 +155,6 @@ public class SignalMastTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class);
 
 }

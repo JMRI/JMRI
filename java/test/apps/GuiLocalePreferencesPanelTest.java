@@ -29,6 +29,6 @@ public class GuiLocalePreferencesPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GuiLocalePreferencesPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GuiLocalePreferencesPanelTest.class);
 
 }

@@ -32,6 +32,6 @@ public class LnProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnProgrammerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnProgrammerManagerTest.class);
 
 }

@@ -28,6 +28,6 @@ public class OperationsManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OperationsManagerTest.class);
 
 }

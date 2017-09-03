@@ -29,6 +29,6 @@ public class MapleMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MapleMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MapleMenuTest.class);
 
 }

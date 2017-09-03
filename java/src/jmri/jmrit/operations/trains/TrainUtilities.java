@@ -36,5 +36,5 @@ public class TrainUtilities {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainUtilities.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainUtilities.class);
 }

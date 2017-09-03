@@ -255,5 +255,5 @@ public class LayoutConnectivity {
         return hash;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class);
 }   // class LayoutConnectivity

@@ -28,6 +28,6 @@ public class MouseInputAdapterInstallerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MouseInputAdapterInstallerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MouseInputAdapterInstallerTest.class);
 
 }

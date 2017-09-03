@@ -29,6 +29,6 @@ public class WarrantPreferencesPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanelTest.class);
 
 }

@@ -869,6 +869,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected int mNumber;   // XpressNet turnout number
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnout.class);
 
 }

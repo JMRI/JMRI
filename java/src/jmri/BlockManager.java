@@ -293,5 +293,5 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         return blockList;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
 }

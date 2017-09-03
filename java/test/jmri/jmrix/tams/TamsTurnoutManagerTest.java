@@ -66,6 +66,6 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerTest.class);
 
 }

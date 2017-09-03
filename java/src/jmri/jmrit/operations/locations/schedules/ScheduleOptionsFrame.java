@@ -126,5 +126,5 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrame.class);
 }

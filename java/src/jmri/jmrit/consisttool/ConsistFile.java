@@ -342,5 +342,5 @@ public class ConsistFile extends XmlFile {
         return getFileLocation() + "consist.xml";
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFile.class);
 }

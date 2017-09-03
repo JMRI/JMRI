@@ -1096,5 +1096,5 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditFrame.class);
 }

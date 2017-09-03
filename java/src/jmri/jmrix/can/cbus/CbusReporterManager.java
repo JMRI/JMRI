@@ -132,6 +132,6 @@ public class CbusReporterManager extends AbstractReporterManager implements
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class);
 
 }

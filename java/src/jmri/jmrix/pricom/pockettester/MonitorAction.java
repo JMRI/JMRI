@@ -39,6 +39,6 @@ public abstract class MonitorAction extends AbstractAction {
 
     abstract void connect(DataListener l);
 
-    private final static Logger log = LoggerFactory.getLogger(MonitorAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitorAction.class);
 
 }

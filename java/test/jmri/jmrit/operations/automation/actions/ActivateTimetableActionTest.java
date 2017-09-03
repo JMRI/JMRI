@@ -28,6 +28,6 @@ public class ActivateTimetableActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ActivateTimetableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ActivateTimetableActionTest.class);
 
 }

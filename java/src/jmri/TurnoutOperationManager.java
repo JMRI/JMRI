@@ -310,5 +310,5 @@ public class TurnoutOperationManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManager.class);
 }

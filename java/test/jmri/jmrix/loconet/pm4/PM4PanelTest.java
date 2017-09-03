@@ -29,6 +29,6 @@ public class PM4PanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PM4PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PM4PanelTest.class);
 
 }

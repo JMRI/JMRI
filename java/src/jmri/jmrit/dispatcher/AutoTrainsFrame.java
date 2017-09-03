@@ -576,7 +576,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         autoTrainsFrame.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 

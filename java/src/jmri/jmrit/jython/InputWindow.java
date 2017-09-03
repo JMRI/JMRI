@@ -285,5 +285,5 @@ public class InputWindow extends JPanel {
         }
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InputWindow.class);
 }

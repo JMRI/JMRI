@@ -33,5 +33,5 @@ public class VSDecoderFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDecoderFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDecoderFrameTest.class);
 }

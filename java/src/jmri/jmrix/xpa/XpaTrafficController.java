@@ -334,5 +334,5 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XpaTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTrafficController.class);
 }

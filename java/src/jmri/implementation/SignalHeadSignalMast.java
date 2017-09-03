@@ -311,5 +311,5 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class);
 }

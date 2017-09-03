@@ -110,6 +110,6 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class);
 
 }

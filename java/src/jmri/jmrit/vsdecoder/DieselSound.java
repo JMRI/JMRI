@@ -313,6 +313,6 @@ class DieselSound extends EngineSound {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(EngineSound.class);
 
 }

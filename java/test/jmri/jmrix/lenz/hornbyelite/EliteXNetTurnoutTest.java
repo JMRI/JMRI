@@ -114,6 +114,6 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class);
 
 }

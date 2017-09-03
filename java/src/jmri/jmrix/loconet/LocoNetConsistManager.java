@@ -129,5 +129,5 @@ public class LocoNetConsistManager extends AbstractConsistManager {
     protected boolean shouldRequestUpdateFromLayout() {
         return !requestingUpdate;
     }
-    private final static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class);
 }

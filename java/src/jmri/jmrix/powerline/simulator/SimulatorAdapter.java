@@ -125,6 +125,6 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

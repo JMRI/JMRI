@@ -216,5 +216,5 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlePreferencesFrame.requestFocus();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

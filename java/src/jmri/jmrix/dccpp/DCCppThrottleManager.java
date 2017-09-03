@@ -169,6 +169,6 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class);
 
 }

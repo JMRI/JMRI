@@ -839,5 +839,5 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconAdder.class);
 }

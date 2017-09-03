@@ -356,5 +356,5 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class);
 }

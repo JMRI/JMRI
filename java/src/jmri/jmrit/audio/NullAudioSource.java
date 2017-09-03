@@ -170,6 +170,6 @@ public class NullAudioSource extends AbstractAudioSource {
         // do nothing
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class);
 
 }

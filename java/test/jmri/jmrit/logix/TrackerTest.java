@@ -29,6 +29,6 @@ public class TrackerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrackerTest.class);
 
 }

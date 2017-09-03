@@ -634,5 +634,5 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarSetFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarSetFrame.class);
 }

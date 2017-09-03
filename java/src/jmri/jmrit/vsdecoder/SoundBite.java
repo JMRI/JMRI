@@ -351,5 +351,5 @@ class SoundBite extends VSDSound {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SoundBite.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SoundBite.class);
 }

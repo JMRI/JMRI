@@ -36,6 +36,6 @@ public class RenameRosterGroupActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RenameRosterGroupActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RenameRosterGroupActionTest.class);
 
 }

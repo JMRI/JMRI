@@ -338,5 +338,5 @@ public class ReportPanel extends JPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ReportPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ReportPanel.class);
 }

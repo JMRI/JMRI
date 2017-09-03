@@ -29,6 +29,6 @@ public class MergConnectionConfigXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MergConnectionConfigXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MergConnectionConfigXmlTest.class);
 
 }

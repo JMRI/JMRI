@@ -33,6 +33,6 @@ public class SE8cSignalHeadTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadTest.class);
 
 }

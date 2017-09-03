@@ -165,5 +165,5 @@ public class MatrixSignalMastTest {
         JUnitUtil.resetInstanceManager();
     }
 
-    static protected Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
 }

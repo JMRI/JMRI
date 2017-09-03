@@ -32,6 +32,6 @@ public class NceTurnoutMonitorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceTurnoutMonitorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceTurnoutMonitorTest.class);
 
 }

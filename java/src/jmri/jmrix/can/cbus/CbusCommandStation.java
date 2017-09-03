@@ -147,5 +147,5 @@ public class CbusCommandStation implements CommandStation, CanListener {
         return adapterMemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class);
 }

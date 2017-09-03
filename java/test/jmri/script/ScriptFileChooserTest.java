@@ -29,6 +29,6 @@ public class ScriptFileChooserTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScriptFileChooserTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ScriptFileChooserTest.class);
 
 }

@@ -65,5 +65,5 @@ public class BusyDialog extends JDialog {
     }
 
     // Unused, for now.  Commented out to avoid the compiler warning.
-    //private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class);
 }

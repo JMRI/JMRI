@@ -133,5 +133,5 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         packetReplyField.setText(r.toHexString());
     } // ignore replies
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
 }

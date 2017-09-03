@@ -794,5 +794,5 @@ public abstract class XmlFile {
         return builder;
     }
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(XmlFile.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(XmlFile.class);
 }

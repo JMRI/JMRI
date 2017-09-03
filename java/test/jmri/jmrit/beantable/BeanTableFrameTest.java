@@ -32,6 +32,6 @@ public class BeanTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BeanTableFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BeanTableFrameTest.class);
 
 }

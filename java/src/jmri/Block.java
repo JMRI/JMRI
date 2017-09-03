@@ -1015,5 +1015,5 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Block.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Block.class);
 }

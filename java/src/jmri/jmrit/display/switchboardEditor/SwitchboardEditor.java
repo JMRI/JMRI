@@ -2366,5 +2366,5 @@ public class SwitchboardEditor extends Editor {
         return _selectionGroup;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);
 }

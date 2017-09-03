@@ -110,5 +110,5 @@ public class LightIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIconXml.class);
 }

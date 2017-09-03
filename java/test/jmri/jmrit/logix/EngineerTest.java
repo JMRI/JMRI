@@ -33,6 +33,6 @@ public class EngineerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EngineerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EngineerTest.class);
 
 }

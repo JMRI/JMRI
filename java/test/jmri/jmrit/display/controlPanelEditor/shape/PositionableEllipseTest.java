@@ -33,6 +33,6 @@ public class PositionableEllipseTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PositionableEllipseTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PositionableEllipseTest.class);
 
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class AutoBackup extends BackupBase {
 
-//    private final static Logger log = LoggerFactory.getLogger(AutoBackup.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(AutoBackup.class);
 
     /**
      * Creates an AutoBackup instance and initializes the root directory to the

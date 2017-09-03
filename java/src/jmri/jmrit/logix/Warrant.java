@@ -2261,5 +2261,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return waitTime;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Warrant.class);
 }

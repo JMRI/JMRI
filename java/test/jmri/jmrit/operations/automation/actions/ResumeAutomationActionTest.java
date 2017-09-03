@@ -28,6 +28,6 @@ public class ResumeAutomationActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class);
 
 }

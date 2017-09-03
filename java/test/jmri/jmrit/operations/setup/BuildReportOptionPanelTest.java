@@ -29,6 +29,6 @@ public class BuildReportOptionPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BuildReportOptionPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BuildReportOptionPanelTest.class);
 
 }

@@ -103,5 +103,5 @@ public class CbusLight extends AbstractLight
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusLight.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusLight.class);
 }

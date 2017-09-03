@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // labels
     private JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));

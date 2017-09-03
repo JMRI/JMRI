@@ -315,7 +315,7 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManager.class);
 
     @Override
     public void initialize() {

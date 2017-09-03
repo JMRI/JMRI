@@ -557,6 +557,6 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class);
 
 }

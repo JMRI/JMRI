@@ -849,7 +849,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                                 : "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class);
 
     /**
      * An internal class used to create a new thread to monitor and maintain

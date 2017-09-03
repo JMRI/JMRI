@@ -31,6 +31,6 @@ public class DecoderProPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderProPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderProPaneTest.class);
 
 }

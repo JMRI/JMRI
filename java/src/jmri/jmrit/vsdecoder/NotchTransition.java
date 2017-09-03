@@ -52,5 +52,5 @@ class NotchTransition extends SoundBite {
     }
 
     //Unused for now... commented out to hide the warning.
-    //private static final Logger log = LoggerFactory.getLogger(NotchTransition.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(NotchTransition.class);
 }

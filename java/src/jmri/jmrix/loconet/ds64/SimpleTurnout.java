@@ -150,6 +150,6 @@ public class SimpleTurnout {
         isUnused = true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnout.class);
 
 }

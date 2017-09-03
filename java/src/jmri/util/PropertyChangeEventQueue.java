@@ -97,5 +97,5 @@ public class PropertyChangeEventQueue {
         return new String(b);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueue.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueue.class);
 }

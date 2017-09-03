@@ -32,6 +32,6 @@ public class ConfigToolPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConfigToolPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConfigToolPaneTest.class);
 
 }

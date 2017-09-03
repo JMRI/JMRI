@@ -28,6 +28,6 @@ public class PrintTrainManifestIfSelectedActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class);
 
 }

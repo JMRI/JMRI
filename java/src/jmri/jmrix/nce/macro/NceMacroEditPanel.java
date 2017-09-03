@@ -1647,5 +1647,5 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class);
 }

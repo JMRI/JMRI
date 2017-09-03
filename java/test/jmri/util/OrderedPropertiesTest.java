@@ -28,6 +28,6 @@ public class OrderedPropertiesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OrderedPropertiesTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OrderedPropertiesTest.class);
 
 }

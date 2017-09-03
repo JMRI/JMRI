@@ -213,7 +213,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialX10Light.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialX10Light.class);
 }
 
 

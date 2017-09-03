@@ -29,6 +29,6 @@ public class DefaultBackupTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultBackupTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultBackupTest.class);
 
 }

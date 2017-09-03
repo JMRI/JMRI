@@ -89,7 +89,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Z21InterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21InterfaceScaffold.class);
 
 }
 

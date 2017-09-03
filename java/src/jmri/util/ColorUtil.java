@@ -146,6 +146,6 @@ public class ColorUtil {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ColorUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ColorUtil.class);
 
 }

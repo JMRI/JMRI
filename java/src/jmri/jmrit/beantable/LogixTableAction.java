@@ -1792,5 +1792,5 @@ public class LogixTableAction extends AbstractTableAction {
         return condText;
     }  // buildConditionalListing
 
-    private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class);
 }

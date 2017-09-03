@@ -29,6 +29,6 @@ public class TieTablePaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TieTablePaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TieTablePaneTest.class);
 
 }

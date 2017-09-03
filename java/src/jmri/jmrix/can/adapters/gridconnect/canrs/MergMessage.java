@@ -114,5 +114,5 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergMessage.class);
 }

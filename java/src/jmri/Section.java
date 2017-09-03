@@ -2675,6 +2675,6 @@ public class Section extends AbstractNamedBean {
         // "DoDelete" case, if needed, should be handled here.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Section.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Section.class);
 
 }

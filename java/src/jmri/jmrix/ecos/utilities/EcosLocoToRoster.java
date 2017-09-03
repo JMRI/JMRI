@@ -971,7 +971,7 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class);
 
 }
 /*

@@ -32,6 +32,6 @@ public class EasyDccThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleTest.class);
 
 }

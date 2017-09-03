@@ -53,6 +53,6 @@ public class AbstractNodeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractNodeTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractNodeTest.class);
 
 }

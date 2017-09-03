@@ -483,5 +483,5 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class);
 }

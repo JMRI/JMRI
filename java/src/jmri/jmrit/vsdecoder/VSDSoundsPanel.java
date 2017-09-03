@@ -69,6 +69,6 @@ public class VSDSoundsPanel extends JmriPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDSoundsPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDSoundsPanel.class);
 
 }

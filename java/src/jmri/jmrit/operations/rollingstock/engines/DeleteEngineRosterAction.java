@@ -31,5 +31,5 @@ public class DeleteEngineRosterAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(DeleteEngineRosterAction.class.getName());
+            .getLogger(DeleteEngineRosterAction.class);
 }

@@ -96,6 +96,6 @@ public class OlimexRfidProtocol extends RfidProtocol {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OlimexRfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(OlimexRfidProtocol.class);
 
 }

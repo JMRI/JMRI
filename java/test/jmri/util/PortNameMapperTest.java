@@ -28,6 +28,6 @@ public class PortNameMapperTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortNameMapperTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PortNameMapperTest.class);
 
 }

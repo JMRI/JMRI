@@ -29,6 +29,6 @@ public class ToggleSoundEventTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ToggleSoundEventTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ToggleSoundEventTest.class);
 
 }

@@ -35,6 +35,6 @@ public class NceThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceThrottleTest.class);
 
 }

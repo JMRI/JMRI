@@ -22,5 +22,5 @@ public class ImportEngineAction extends AbstractAction {
         mb.start();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ImportEngineAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(ImportEngineAction.class);
 }

@@ -33,6 +33,6 @@ public class MrcThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcThrottleManagerTest.class);
 
 }

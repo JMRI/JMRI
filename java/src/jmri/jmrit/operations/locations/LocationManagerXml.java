@@ -102,7 +102,7 @@ public class LocationManagerXml extends OperationsXml implements InstanceManager
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class);
 
     @Override
     public void initialize() {

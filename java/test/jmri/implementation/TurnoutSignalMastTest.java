@@ -29,6 +29,6 @@ public class TurnoutSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class);
 
 }

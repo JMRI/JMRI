@@ -29,6 +29,6 @@ public class JmriMultiStatePropertyListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListenerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListenerTest.class);
 
 }

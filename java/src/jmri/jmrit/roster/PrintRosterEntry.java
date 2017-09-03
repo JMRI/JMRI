@@ -352,5 +352,5 @@ public class PrintRosterEntry implements PaneContainer {
         w.setFontStyle(Font.PLAIN);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);
 }

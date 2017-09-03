@@ -42,6 +42,6 @@ public class SetPhysicalLocationActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
 
 }

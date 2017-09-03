@@ -127,5 +127,5 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
     }
 
     // initialize logging
-    // private final static Logger log = LoggerFactory.getLogger(PickSinglePanel.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PickSinglePanel.class);
 }

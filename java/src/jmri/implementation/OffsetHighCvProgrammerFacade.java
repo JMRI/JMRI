@@ -203,6 +203,6 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         return Integer.parseInt(addr) <= 1024;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacade.class);
 
 }

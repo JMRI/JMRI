@@ -34,5 +34,5 @@ public class SignalProTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalProTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalProTest.class);
 }

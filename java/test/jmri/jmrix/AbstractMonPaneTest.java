@@ -38,6 +38,6 @@ public class AbstractMonPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractMonPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractMonPaneTest.class);
 
 }

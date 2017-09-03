@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public class ClientActions {
-    private final static Logger log = LoggerFactory.getLogger(ClientActions.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClientActions.class);
     private final OlcbInterface iface;
 
     public ClientActions(OlcbInterface iface) {

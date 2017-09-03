@@ -31,6 +31,6 @@ public class SystemConsoleConfigPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelTest.class);
 
 }

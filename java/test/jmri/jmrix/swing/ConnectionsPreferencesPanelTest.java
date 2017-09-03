@@ -31,6 +31,6 @@ public class ConnectionsPreferencesPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanelTest.class);
 
 }

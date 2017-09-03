@@ -300,7 +300,7 @@ class Diesel3Sound extends EngineSound {
         this.startThread();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Diesel3Sound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Diesel3Sound.class);
 
     private static class D3Notch {
 
@@ -524,7 +524,7 @@ class Diesel3Sound extends EngineSound {
             return (buf);
         }
 
-        private static final Logger log = LoggerFactory.getLogger(D3Notch.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(D3Notch.class);
     }
 
     private static class D3LoopThread extends Thread {
@@ -734,7 +734,7 @@ class Diesel3Sound extends EngineSound {
             _notch = null;
             _sound = null;
         }
-        private static final Logger log = LoggerFactory.getLogger(D3LoopThread.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(D3LoopThread.class);
 
     }
 }

@@ -3368,5 +3368,5 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Editor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Editor.class);
 }

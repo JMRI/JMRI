@@ -29,6 +29,6 @@ public class PerformFileModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PerformFileModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PerformFileModelTest.class);
 
 }

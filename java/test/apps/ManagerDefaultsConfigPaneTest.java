@@ -31,6 +31,6 @@ public class ManagerDefaultsConfigPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);
 
 }

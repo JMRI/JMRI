@@ -336,5 +336,5 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
        return svq;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class);
 }

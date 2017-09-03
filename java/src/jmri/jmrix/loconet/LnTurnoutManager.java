@@ -230,6 +230,6 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);
 
 }

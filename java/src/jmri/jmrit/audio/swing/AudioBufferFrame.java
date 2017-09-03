@@ -300,6 +300,6 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class);
 
 }

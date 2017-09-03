@@ -38,5 +38,5 @@ public class AllocatedSectionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AllocatedSectionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AllocatedSectionTest.class);
 }

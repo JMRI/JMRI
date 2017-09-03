@@ -230,5 +230,5 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     public void notifyTimeout(DCCppMessage m) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
 }

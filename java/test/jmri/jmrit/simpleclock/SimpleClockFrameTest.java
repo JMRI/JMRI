@@ -32,6 +32,6 @@ public class SimpleClockFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SimpleClockFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SimpleClockFrameTest.class);
 
 }

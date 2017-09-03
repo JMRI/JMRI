@@ -84,5 +84,5 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUI.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUI.class);
 }

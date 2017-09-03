@@ -1126,5 +1126,5 @@ public class LayoutTurntable extends LayoutTrack {
         // nothing to do here... move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
 }

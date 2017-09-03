@@ -126,6 +126,6 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
     }
 
     @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class);
 
 }

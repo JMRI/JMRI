@@ -374,6 +374,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class);
 
 }

@@ -285,6 +285,6 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
     @Deprecated
     static SerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

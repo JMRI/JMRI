@@ -162,5 +162,5 @@ public class CodeLine {
                 }, CODE_SEND_DELAY);
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class);
 }

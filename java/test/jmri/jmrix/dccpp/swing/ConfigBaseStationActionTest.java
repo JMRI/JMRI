@@ -29,6 +29,6 @@ public class ConfigBaseStationActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationActionTest.class);
 
 }

@@ -35,6 +35,6 @@ public class AbstractXNetInitializationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManagerTest.class);
 
 }

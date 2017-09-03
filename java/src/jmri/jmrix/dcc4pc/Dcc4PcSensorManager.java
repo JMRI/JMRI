@@ -1116,5 +1116,5 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class);
 }

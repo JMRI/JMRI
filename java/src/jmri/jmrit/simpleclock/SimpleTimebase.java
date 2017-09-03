@@ -639,6 +639,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class);
 
 }

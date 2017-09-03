@@ -417,5 +417,5 @@ public class AllocatedSection {
         pcs.firePropertyChange(name, oldVal, newVal);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class);
 }

@@ -133,6 +133,6 @@ public class AbstractRailComReporter extends AbstractReporter
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractRailComReporter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractRailComReporter.class);
 
 }

@@ -127,5 +127,5 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         return false;  // should never be reached, because should only be invoked after returnFromExistsLogic() == true
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class);
 }

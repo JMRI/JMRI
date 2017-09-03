@@ -29,6 +29,6 @@ public class NewLocoSelPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NewLocoSelPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NewLocoSelPaneTest.class);
 
 }

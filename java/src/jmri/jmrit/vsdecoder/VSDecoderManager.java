@@ -651,6 +651,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderManager.class);
 
 }

@@ -2054,6 +2054,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private String[] outputType = new String[16];
     private String[] outputLength = new String[16];
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

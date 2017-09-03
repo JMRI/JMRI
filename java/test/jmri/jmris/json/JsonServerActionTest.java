@@ -29,6 +29,6 @@ public class JsonServerActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonServerActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonServerActionTest.class);
 
 }

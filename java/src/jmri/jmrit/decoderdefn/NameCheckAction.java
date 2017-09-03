@@ -133,6 +133,6 @@ public class NameCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameCheckAction.class);
 
 }

@@ -186,6 +186,5 @@ public class SignalSystemTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SignalSystemTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalSystemTest.class);
 }

@@ -73,5 +73,5 @@ public class VSDOptionsDialog extends JDialog {
     }
 
     // Log not used... yet...
-    //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class.getName());
+    //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class);
 }

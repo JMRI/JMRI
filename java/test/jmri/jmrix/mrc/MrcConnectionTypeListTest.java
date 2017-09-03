@@ -29,6 +29,6 @@ public class MrcConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcConnectionTypeListTest.class);
 
 }

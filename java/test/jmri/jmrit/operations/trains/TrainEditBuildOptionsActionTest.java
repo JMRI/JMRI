@@ -35,5 +35,5 @@ public class TrainEditBuildOptionsActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsActionTest.class);
 }

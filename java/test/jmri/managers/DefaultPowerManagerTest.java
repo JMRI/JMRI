@@ -29,6 +29,6 @@ public class DefaultPowerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultPowerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultPowerManagerTest.class);
 
 }

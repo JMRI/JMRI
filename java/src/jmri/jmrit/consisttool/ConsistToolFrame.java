@@ -677,6 +677,6 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         initializeConsistBox();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class);
 
 }

@@ -116,5 +116,5 @@ public class CbusEventFilter {
     private int _type;
     private Color _color;
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventFilter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusEventFilter.class);
 }

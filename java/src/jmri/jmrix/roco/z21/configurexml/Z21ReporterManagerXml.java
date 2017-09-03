@@ -37,5 +37,5 @@ public class Z21ReporterManagerXml extends jmri.managers.configurexml.AbstractRe
         return loadReporters(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManagerXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManagerXml.class);
 }

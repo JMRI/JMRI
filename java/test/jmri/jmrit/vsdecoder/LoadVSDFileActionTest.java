@@ -29,6 +29,6 @@ public class LoadVSDFileActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoadVSDFileActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LoadVSDFileActionTest.class);
 
 }

@@ -1448,5 +1448,5 @@ public class Maintenance {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(Maintenance.class.getName());
+            .getLogger(Maintenance.class);
 }

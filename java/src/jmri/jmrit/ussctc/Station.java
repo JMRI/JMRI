@@ -150,5 +150,5 @@ public class Station {
     ArrayList<Enum> sentValues;         // type is constrained in generic arguments to Section
     ArrayList<Enum> indicationValues;   // type is constrained in generic arguments to Section
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class);
 }

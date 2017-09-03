@@ -32,6 +32,6 @@ public class HexFileFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HexFileFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HexFileFrameTest.class);
 
 }

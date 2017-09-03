@@ -24,6 +24,6 @@ public class RunSwitchListAction extends RunSwitchListChangesAction {
         // no cancel for this action     
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(RunSwitchListAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(RunSwitchListAction.class);
 
 }

@@ -102,6 +102,6 @@ public class PaneOpsProgFrame extends PaneProgFrame
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgFrame.class);
 
 }

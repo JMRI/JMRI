@@ -36,5 +36,5 @@ public class InternalReporterManagerXml extends jmri.managers.configurexml.Abstr
         return loadReporters(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalReporterManagerXml.class);
 }

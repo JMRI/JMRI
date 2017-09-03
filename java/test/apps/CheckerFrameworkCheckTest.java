@@ -29,6 +29,6 @@ public class CheckerFrameworkCheckTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CheckerFrameworkCheckTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CheckerFrameworkCheckTest.class);
 
 }

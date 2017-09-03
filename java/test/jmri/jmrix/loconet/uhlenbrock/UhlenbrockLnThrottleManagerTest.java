@@ -35,6 +35,6 @@ public class UhlenbrockLnThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManagerTest.class);
 
 }

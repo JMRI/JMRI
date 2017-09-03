@@ -390,6 +390,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class);
 
 }

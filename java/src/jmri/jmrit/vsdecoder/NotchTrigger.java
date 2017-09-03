@@ -103,6 +103,6 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NotchTrigger.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NotchTrigger.class);
 
 }

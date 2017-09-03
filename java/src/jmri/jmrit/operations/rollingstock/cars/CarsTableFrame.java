@@ -411,6 +411,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         numCars.setText(showNumber + "/" + totalNumber);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableFrame.class);
 
 }

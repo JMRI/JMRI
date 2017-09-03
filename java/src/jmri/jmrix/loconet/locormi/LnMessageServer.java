@@ -21,7 +21,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
     private static LnMessageServer self = null;
     static final String serviceName = "LocoNetServer"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class);
 
     private LnMessageServer() throws RemoteException {
         super();

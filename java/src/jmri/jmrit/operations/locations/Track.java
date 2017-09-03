@@ -2898,6 +2898,6 @@ public class Track {
         return _reader;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Track.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Track.class);
 
 }

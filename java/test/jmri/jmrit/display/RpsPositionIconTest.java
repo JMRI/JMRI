@@ -125,5 +125,5 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);
 }

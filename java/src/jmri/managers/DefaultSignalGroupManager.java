@@ -139,5 +139,5 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return Bundle.getMessage("BeanNameSignalGroup");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
 }

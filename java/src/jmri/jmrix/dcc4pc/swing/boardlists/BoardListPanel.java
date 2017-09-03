@@ -338,6 +338,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class);
 
 }

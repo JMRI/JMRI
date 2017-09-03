@@ -272,6 +272,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);
 
 }

@@ -476,6 +476,6 @@ public class ConsistController extends AbstractController implements ProgListene
         throw new UnsupportedOperationException("Not used.");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConsistController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistController.class);
 
 }

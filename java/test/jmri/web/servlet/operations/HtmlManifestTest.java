@@ -34,6 +34,6 @@ public class HtmlManifestTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HtmlManifestTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HtmlManifestTest.class);
 
 }

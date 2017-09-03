@@ -392,6 +392,6 @@ public class VSDFile extends ZipFile {
         return (true);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(VSDFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDFile.class);
 
 }

@@ -29,6 +29,6 @@ public class InternalConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InternalConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InternalConnectionTypeListTest.class);
 
 }

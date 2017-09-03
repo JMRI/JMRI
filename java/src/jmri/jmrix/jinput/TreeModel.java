@@ -273,5 +273,5 @@ public final class TreeModel extends DefaultTreeModel {
         pcs.removePropertyChangeListener(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TreeModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TreeModel.class);
 }

@@ -31,6 +31,6 @@ public class Dcc4PcOpsModeProgrammerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammerTest.class);
 
 }

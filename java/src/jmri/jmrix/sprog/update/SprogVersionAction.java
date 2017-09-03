@@ -32,6 +32,6 @@ public class SprogVersionAction extends AbstractAction {
 //        f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionAction.class);
 
 }

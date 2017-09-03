@@ -114,7 +114,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         userName.setText(a.getUserName());
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(AbstractAudioFrame.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AbstractAudioFrame.class);
     /**
      * A convenience class to create a JPanel to edit a Vector3f object using 3
      * separate JSpinner Swing objects

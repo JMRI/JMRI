@@ -31,6 +31,6 @@ public class NceSensorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceSensorTest.class);
 
 }

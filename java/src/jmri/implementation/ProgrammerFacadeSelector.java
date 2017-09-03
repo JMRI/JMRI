@@ -130,5 +130,5 @@ public class ProgrammerFacadeSelector {
         return programmer;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammerFacadeSelector.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgrammerFacadeSelector.class);
 }

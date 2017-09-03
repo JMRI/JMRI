@@ -30,6 +30,6 @@ public class JsonClientPowerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientPowerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientPowerManagerTest.class);
 
 }

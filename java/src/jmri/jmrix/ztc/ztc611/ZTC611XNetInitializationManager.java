@@ -56,6 +56,6 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetInitializationManager.class);
 
 }

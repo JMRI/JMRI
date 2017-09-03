@@ -28,6 +28,6 @@ public class FontUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FontUtilTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FontUtilTest.class);
 
 }

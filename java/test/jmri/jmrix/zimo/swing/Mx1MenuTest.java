@@ -45,6 +45,6 @@ public class Mx1MenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1MenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1MenuTest.class);
 
 }

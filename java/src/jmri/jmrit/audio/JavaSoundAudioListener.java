@@ -96,6 +96,6 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class);
 
 }

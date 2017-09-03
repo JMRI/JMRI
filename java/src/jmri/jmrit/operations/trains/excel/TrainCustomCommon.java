@@ -244,5 +244,5 @@ public abstract class TrainCustomCommon {
         mc.addContent(common);
     }
 
-        private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class.getName());
+        private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);
 }

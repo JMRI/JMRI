@@ -29,6 +29,6 @@ public class LnMessageBufferTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnMessageBufferTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnMessageBufferTest.class);
 
 }

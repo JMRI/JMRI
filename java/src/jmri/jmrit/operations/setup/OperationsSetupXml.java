@@ -108,7 +108,7 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
 
     private String operationsFileName = "Operations.xml"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class);
 
     @Override
     public void initialize() {

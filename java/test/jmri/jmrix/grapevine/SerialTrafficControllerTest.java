@@ -446,6 +446,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

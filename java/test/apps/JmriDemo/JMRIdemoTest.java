@@ -34,5 +34,5 @@ public class JMRIdemoTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JMRIdemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JMRIdemoTest.class);
 }

@@ -119,7 +119,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     }
 
     @SuppressWarnings("unused")
-    private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
 
     /**
      * Nested class to open specific windows when proper tree element is picked

@@ -29,6 +29,6 @@ public class PrintMoreOptionPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintMoreOptionPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintMoreOptionPanelTest.class);
 
 }

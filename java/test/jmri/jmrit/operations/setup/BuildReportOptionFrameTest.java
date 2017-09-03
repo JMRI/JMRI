@@ -47,6 +47,6 @@ public class BuildReportOptionFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BuildReportOptionFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BuildReportOptionFrameTest.class);
 
 }

@@ -409,5 +409,5 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         clear();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroupFrame.class);
 }

@@ -2849,6 +2849,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class);
 
 }

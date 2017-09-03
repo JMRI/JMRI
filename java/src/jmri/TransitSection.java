@@ -158,5 +158,5 @@ public class TransitSection {
         return new ArrayList<>(mTransitSectionActionList);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitSection.class);
 }

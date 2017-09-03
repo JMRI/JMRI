@@ -33,5 +33,5 @@ public class SpeedProfileFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedProfileFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedProfileFrameTest.class);
 }

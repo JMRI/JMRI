@@ -86,6 +86,6 @@ public class AudioCommandThread extends AbstractAudioThread {
         super.cleanup();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioCommandThread.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioCommandThread.class);
 
 }

@@ -29,6 +29,6 @@ public class EditorPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditorPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditorPaneTest.class);
 
 }

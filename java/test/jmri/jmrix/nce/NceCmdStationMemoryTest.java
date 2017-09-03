@@ -29,6 +29,6 @@ public class NceCmdStationMemoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceCmdStationMemoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceCmdStationMemoryTest.class);
 
 }

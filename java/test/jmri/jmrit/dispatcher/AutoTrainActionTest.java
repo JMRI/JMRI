@@ -32,6 +32,6 @@ public class AutoTrainActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutoTrainActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutoTrainActionTest.class);
 
 }

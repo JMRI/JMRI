@@ -29,6 +29,6 @@ public class ExportTrainRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportTrainRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExportTrainRosterActionTest.class);
 
 }

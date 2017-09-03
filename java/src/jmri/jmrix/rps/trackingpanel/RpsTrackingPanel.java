@@ -315,5 +315,5 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         Shape rep2;
         Measurement measurement;
     }
-    private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class);
 }

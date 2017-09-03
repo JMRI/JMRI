@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2008, 2010
  */
 public class TestTrafficController extends TrafficController {
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
 
     public CanMessage rcvMessage = null;
 

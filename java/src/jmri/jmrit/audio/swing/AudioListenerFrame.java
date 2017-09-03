@@ -156,5 +156,5 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         }
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class);
 }

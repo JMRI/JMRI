@@ -4338,7 +4338,7 @@ public class Llnmon {
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(Llnmon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Llnmon.class);
 
 }
 

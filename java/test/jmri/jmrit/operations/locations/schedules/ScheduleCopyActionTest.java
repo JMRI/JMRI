@@ -28,6 +28,6 @@ public class ScheduleCopyActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScheduleCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ScheduleCopyActionTest.class);
 
 }

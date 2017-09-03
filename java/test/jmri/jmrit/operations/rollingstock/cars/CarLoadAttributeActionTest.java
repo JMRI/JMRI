@@ -33,6 +33,6 @@ public class CarLoadAttributeActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarLoadAttributeActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarLoadAttributeActionTest.class);
 
 }

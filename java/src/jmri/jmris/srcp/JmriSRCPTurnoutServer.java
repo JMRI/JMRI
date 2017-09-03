@@ -170,5 +170,5 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class);
 }

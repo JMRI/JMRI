@@ -29,6 +29,6 @@ public class LoadXmlVSDecoderActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoadXmlVSDecoderActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LoadXmlVSDecoderActionTest.class);
 
 }

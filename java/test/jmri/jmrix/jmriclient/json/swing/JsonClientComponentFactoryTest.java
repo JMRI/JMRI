@@ -30,6 +30,6 @@ public class JsonClientComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientComponentFactoryTest.class);
 
 }

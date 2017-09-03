@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BackupBase {
 
-    private final static Logger log = LoggerFactory.getLogger(BackupBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackupBase.class);
 
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions

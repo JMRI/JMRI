@@ -29,6 +29,6 @@ public class SpeedTableVarValueTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValueTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValueTest.class);
 
 }

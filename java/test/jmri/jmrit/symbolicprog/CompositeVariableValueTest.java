@@ -342,7 +342,7 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class);
 
     // The minimal setup for log4J
     @Override

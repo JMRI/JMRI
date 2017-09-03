@@ -29,6 +29,6 @@ public class RollingStockManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RollingStockManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RollingStockManagerTest.class);
 
 }

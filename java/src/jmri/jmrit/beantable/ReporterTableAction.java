@@ -544,6 +544,6 @@ public class ReporterTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class);
 
 }

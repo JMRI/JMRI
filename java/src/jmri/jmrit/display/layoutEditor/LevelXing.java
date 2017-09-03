@@ -1735,5 +1735,5 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
-    private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
 }

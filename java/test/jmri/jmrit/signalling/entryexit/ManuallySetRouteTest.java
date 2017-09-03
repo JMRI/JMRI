@@ -43,6 +43,6 @@ public class ManuallySetRouteTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ManuallySetRouteTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ManuallySetRouteTest.class);
 
 }

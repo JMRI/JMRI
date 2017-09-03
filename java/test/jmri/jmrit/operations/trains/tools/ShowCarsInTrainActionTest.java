@@ -31,6 +31,6 @@ public class ShowCarsInTrainActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);
 
 }

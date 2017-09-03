@@ -376,6 +376,6 @@ public abstract class Apps3 extends AppsBase {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Apps3.class);
 
 }

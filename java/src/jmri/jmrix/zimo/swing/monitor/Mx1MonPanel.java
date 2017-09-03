@@ -134,6 +134,6 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class);
 
 }

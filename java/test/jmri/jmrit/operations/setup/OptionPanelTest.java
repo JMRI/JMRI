@@ -29,6 +29,6 @@ public class OptionPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OptionPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OptionPanelTest.class);
 
 }

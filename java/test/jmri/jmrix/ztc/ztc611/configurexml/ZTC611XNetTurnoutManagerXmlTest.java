@@ -29,6 +29,6 @@ public class ZTC611XNetTurnoutManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerXmlTest.class);
 
 }

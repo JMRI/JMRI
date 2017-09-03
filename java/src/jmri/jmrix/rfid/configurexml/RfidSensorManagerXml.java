@@ -37,5 +37,5 @@ public class RfidSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidSensorManagerXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidSensorManagerXml.class);
 }

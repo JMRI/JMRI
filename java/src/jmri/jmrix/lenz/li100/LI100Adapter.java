@@ -282,6 +282,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
     static volatile LI100Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class);
 
 }

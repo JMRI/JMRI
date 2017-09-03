@@ -137,6 +137,6 @@ public class DefaultIdTag extends AbstractIdTag {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class);
 
 }

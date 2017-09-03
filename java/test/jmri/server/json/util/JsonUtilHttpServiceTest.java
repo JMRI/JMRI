@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilHttpServiceTest {
 
-    public final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
     public JsonUtilHttpServiceTest() {
     }

@@ -80,5 +80,5 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
 
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorTrafficController.class);
 }

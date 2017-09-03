@@ -1965,6 +1965,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class);
 
 }

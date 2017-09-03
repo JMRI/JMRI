@@ -163,7 +163,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class);
 
     public void setUIFontSize(float size) {
         Enumeration<Object> keys = UIManager.getDefaults().keys();

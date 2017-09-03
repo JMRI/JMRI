@@ -29,6 +29,6 @@ public class LocoNetSystemConnectionMemoTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class);
 
 }

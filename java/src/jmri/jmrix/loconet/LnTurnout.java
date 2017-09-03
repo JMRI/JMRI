@@ -387,6 +387,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     static java.util.Timer consistencyTimer = new java.util.Timer();
     int noConsistencyTimersRunning = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class);
 
 }

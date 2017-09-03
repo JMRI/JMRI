@@ -269,6 +269,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

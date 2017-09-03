@@ -30,6 +30,6 @@ public class EcosComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosComponentFactoryTest.class);
 
 }

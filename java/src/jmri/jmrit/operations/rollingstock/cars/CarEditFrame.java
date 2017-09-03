@@ -1008,5 +1008,5 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class);
 }

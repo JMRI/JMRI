@@ -160,6 +160,6 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class);
 
 }

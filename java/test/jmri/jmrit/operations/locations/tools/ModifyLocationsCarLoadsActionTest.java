@@ -29,6 +29,6 @@ public class ModifyLocationsCarLoadsActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ModifyLocationsCarLoadsActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ModifyLocationsCarLoadsActionTest.class);
 
 }

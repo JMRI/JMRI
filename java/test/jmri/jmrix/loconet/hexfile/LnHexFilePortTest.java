@@ -29,6 +29,6 @@ public class LnHexFilePortTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnHexFilePortTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnHexFilePortTest.class);
 
 }

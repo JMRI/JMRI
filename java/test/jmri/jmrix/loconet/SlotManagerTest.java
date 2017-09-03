@@ -762,6 +762,6 @@ public class SlotManagerTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class);
 
 }

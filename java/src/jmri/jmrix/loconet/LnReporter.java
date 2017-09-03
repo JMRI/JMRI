@@ -219,6 +219,6 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
 
 }

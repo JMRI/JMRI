@@ -29,6 +29,6 @@ public class JTitledSeparatorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JTitledSeparatorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JTitledSeparatorTest.class);
 
 }

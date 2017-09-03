@@ -32,6 +32,6 @@ public class XmlFileCheckActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlFileCheckActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XmlFileCheckActionTest.class);
 
 }

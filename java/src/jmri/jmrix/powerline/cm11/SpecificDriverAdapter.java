@@ -255,6 +255,6 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     protected int[] validSpeedValues = new int[]{4800};
     protected String selectedSpeed = validSpeeds[0];
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class);
 
 }

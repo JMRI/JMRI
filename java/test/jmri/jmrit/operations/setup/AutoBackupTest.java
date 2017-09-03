@@ -29,6 +29,6 @@ public class AutoBackupTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutoBackupTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutoBackupTest.class);
 
 }

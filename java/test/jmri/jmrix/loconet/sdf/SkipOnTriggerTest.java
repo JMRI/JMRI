@@ -29,6 +29,6 @@ public class SkipOnTriggerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SkipOnTriggerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SkipOnTriggerTest.class);
 
 }

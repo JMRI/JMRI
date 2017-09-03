@@ -28,6 +28,6 @@ public class AutomationsTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutomationsTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutomationsTableModelTest.class);
 
 }

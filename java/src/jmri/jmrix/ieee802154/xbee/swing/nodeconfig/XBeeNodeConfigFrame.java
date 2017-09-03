@@ -530,6 +530,6 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
 
 
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigFrame.class);
 
 }

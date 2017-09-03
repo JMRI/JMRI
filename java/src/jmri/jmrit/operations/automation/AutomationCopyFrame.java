@@ -138,5 +138,5 @@ public class AutomationCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class);
 }

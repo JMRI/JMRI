@@ -35,7 +35,7 @@ public class EditSwitchListTextAction extends AbstractAction {
         f.setVisible(true); // this also brings the frame into focus
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextAction.class);
 }
 
 

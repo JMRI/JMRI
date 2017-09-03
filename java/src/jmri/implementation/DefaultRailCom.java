@@ -327,5 +327,5 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return comment;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class);
 }

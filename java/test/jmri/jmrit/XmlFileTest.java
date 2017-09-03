@@ -270,6 +270,6 @@ public class XmlFileTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-    static protected Logger log = LoggerFactory.getLogger(XmlFileTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XmlFileTest.class);
 
 }

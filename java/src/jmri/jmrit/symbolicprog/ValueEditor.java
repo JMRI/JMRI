@@ -189,5 +189,5 @@ public class ValueEditor extends JComboBox<Object> implements TableCellEditor, F
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ValueEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ValueEditor.class);
 }

@@ -64,6 +64,6 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);
 
 }

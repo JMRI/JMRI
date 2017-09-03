@@ -226,5 +226,5 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class);
 }

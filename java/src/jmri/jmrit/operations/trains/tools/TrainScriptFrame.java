@@ -423,5 +423,5 @@ public class TrainScriptFrame extends OperationsFrame {
         saveTrainButton.setEnabled(enabled);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScriptFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainScriptFrame.class);
 }

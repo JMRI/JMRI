@@ -271,6 +271,6 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPProgrammer.class);
 
 }

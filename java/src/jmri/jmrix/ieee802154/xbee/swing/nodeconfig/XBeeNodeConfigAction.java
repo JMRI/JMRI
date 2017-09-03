@@ -54,6 +54,6 @@ public class XBeeNodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeNodeConfigAction.class);
 
 }

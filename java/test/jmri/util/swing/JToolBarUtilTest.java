@@ -29,6 +29,6 @@ public class JToolBarUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JToolBarUtilTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JToolBarUtilTest.class);
 
 }

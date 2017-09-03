@@ -29,6 +29,6 @@ public class FourByteMacroTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FourByteMacroTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FourByteMacroTest.class);
 
 }

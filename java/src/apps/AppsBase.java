@@ -49,7 +49,7 @@ public abstract class AppsBase {
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
     static boolean preInit = false;
-    private final static Logger log = LoggerFactory.getLogger(AppsBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsBase.class);
 
     /**
      * Initial actions before frame is created, invoked in the applications

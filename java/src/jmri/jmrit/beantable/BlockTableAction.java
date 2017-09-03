@@ -1121,6 +1121,6 @@ public class BlockTableAction extends AbstractTableAction {
         return BlockTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class);
 
 }

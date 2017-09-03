@@ -340,5 +340,5 @@ public class OPath extends jmri.Path {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OPath.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OPath.class);
 }

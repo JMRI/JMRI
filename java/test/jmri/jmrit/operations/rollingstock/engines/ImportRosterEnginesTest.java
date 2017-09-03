@@ -29,6 +29,6 @@ public class ImportRosterEnginesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImportRosterEnginesTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportRosterEnginesTest.class);
 
 }

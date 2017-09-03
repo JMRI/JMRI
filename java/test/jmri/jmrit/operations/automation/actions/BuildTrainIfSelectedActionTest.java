@@ -28,6 +28,6 @@ public class BuildTrainIfSelectedActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BuildTrainIfSelectedActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BuildTrainIfSelectedActionTest.class);
 
 }

@@ -33,5 +33,5 @@ public class SetTrainIconPositionFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class);
 }

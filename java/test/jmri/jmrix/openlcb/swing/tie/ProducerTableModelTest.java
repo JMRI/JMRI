@@ -29,6 +29,6 @@ public class ProducerTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProducerTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProducerTableModelTest.class);
 
 }

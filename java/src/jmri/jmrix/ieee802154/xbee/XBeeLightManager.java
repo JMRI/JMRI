@@ -185,6 +185,6 @@ public class XBeeLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class);
 
 }

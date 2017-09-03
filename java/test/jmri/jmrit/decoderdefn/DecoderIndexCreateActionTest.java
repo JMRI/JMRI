@@ -29,6 +29,6 @@ public class DecoderIndexCreateActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexCreateActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexCreateActionTest.class);
 
 }

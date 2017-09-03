@@ -34,6 +34,6 @@ public class TrainsScheduleTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrameTest.class);
 
 }

@@ -202,7 +202,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return Bundle.getMessage("BeanNameCatalog");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

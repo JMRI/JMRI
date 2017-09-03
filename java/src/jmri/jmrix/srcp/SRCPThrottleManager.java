@@ -102,6 +102,6 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPThrottleManager.class);
 
 }

@@ -199,6 +199,6 @@ public class AudioTablePanel extends JPanel {
         sourceDataScroll = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioTablePanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTablePanel.class);
 
 }

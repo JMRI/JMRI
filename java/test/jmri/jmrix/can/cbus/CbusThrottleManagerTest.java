@@ -34,6 +34,6 @@ public class CbusThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);
 
 }

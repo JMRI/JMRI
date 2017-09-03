@@ -28,6 +28,6 @@ public class MessageYesNoActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MessageYesNoActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MessageYesNoActionTest.class);
 
 }

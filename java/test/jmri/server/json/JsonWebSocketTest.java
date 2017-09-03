@@ -29,6 +29,6 @@ public class JsonWebSocketTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonWebSocketTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonWebSocketTest.class);
 
 }

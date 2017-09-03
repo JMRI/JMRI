@@ -387,6 +387,6 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioBuffer.class);
 
 }

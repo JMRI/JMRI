@@ -184,5 +184,5 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     protected abstract void addPressed(ActionEvent e);
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
 }

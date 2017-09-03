@@ -67,6 +67,6 @@ public class LsDecSignalHeadTest extends AbstractSignalHeadTestBase {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadTest.class);
 
 }

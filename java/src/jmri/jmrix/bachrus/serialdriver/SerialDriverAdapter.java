@@ -196,6 +196,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
     private SerialDriverAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

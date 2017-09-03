@@ -37,6 +37,6 @@ public class PrintTrainBuildReportActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintTrainBuildReportActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintTrainBuildReportActionTest.class);
 
 }

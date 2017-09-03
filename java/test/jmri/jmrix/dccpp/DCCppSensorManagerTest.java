@@ -93,7 +93,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class);
 
     // The minimal setup for log4J
     @Override

@@ -28,6 +28,6 @@ public class IsTrainEnRouteActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class);
 
 }

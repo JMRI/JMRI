@@ -257,6 +257,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class);
 
 }

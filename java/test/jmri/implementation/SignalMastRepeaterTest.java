@@ -31,6 +31,6 @@ public class SignalMastRepeaterTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterTest.class);
 
 }

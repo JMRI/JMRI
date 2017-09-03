@@ -33,5 +33,5 @@ public class YardmasterByTrackFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackFrameTest.class);
 }

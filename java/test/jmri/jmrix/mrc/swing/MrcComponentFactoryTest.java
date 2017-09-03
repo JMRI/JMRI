@@ -35,6 +35,6 @@ public class MrcComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcComponentFactoryTest.class);
 
 }

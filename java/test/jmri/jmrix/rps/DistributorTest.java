@@ -29,6 +29,6 @@ public class DistributorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DistributorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DistributorTest.class);
 
 }

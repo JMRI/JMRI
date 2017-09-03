@@ -187,5 +187,5 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidTrafficController.class);
 }

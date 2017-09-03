@@ -33,5 +33,5 @@ public class NixieClockFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NixieClockFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NixieClockFrameTest.class);
 }

@@ -192,6 +192,6 @@ public class XBeeAddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Add
         nodeIdentifierField.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeAddNodeFrame.class);
 
 }

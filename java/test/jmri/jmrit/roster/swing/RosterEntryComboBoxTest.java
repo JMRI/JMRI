@@ -29,6 +29,6 @@ public class RosterEntryComboBoxTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBoxTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBoxTest.class);
 
 }

@@ -29,6 +29,6 @@ public class LocoAddressXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoAddressXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoAddressXmlTest.class);
 
 }

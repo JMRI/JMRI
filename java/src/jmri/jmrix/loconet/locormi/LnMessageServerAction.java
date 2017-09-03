@@ -33,7 +33,7 @@ public class LnMessageServerAction extends AbstractAction {
             // disable action, as already run
             setEnabled(false);
         } catch (RemoteException ex) {
-            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex); // NOI18N
+            LoggerFactory.getLogger(LnMessageServerAction.class).warn("LnMessageServerAction Exception: " + ex); // NOI18N
         }
     }
 

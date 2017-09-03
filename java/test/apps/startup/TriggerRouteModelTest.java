@@ -29,6 +29,6 @@ public class TriggerRouteModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelTest.class);
 
 }

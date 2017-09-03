@@ -134,5 +134,5 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
 
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcBoardManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcBoardManager.class);
 }

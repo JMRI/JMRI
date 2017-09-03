@@ -157,6 +157,6 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacadeTest.class);
 
 }

@@ -193,7 +193,7 @@ public class QualifiedVarTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
 
     // The minimal setup for log4J
     @Override

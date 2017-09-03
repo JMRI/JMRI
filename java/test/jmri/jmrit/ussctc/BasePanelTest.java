@@ -29,6 +29,6 @@ public class BasePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BasePanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BasePanelTest.class);
 
 }

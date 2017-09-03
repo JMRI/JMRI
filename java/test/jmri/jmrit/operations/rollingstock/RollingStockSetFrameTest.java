@@ -34,6 +34,6 @@ public class RollingStockSetFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrameTest.class);
 
 }

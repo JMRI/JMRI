@@ -348,6 +348,6 @@ class LocoFile extends XmlFile {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoFile.class);
 
 }

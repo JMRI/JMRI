@@ -29,6 +29,6 @@ public class EnablingCheckboxRendererTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EnablingCheckboxRendererTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EnablingCheckboxRendererTest.class);
 
 }

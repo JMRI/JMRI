@@ -4631,5 +4631,5 @@ public class ConditionalListEdit extends ConditionalEditBase {
         return ConditionalListEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalListEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalListEdit.class);
 }

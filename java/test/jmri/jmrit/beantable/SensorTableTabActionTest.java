@@ -29,6 +29,6 @@ public class SensorTableTabActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTableTabActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SensorTableTabActionTest.class);
 
 }

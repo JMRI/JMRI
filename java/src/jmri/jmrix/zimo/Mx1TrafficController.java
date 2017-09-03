@@ -137,5 +137,5 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class);
 }

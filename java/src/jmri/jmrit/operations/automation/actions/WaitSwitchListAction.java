@@ -80,6 +80,6 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitTrainAction.class);
 
 }

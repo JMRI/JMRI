@@ -29,6 +29,6 @@ public class AmpMeterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AmpMeterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AmpMeterActionTest.class);
 
 }

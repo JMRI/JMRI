@@ -148,5 +148,5 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(TurnoutTableActionTest.class);
 }

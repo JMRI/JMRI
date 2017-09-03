@@ -840,6 +840,6 @@ public class VSDecoder implements PropertyChangeListener {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoder.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoder.class);
 
 }

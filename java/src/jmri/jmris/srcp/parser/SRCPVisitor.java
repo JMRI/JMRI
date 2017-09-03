@@ -826,6 +826,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
         return data;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPVisitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPVisitor.class);
 
 }

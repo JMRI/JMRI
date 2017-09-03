@@ -29,6 +29,6 @@ public class CatalogTreeNodeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CatalogTreeNodeTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CatalogTreeNodeTest.class);
 
 }

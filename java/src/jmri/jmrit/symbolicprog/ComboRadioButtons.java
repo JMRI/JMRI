@@ -144,6 +144,6 @@ public class ComboRadioButtons extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class);
 
 }

@@ -213,5 +213,5 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

@@ -236,7 +236,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class);
 
     // The minimal setup for log4J
     @Override

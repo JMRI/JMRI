@@ -279,6 +279,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
     static Mx1Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
 
 }

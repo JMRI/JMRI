@@ -252,5 +252,5 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         setTurnoutHandling(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
 }

@@ -377,5 +377,5 @@ public class DecoderFileTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-    // static Logger log = LoggerFactory.getLogger(DecoderFileTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderFileTest.class);
 }

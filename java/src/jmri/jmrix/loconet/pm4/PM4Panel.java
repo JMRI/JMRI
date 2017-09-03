@@ -243,6 +243,6 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev4 = new JCheckBox();
 
-    private final static Logger log = LoggerFactory.getLogger(PM4Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PM4Panel.class);
 
 }

@@ -32,6 +32,6 @@ public class LocationTrackPairTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationTrackPairTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocationTrackPairTest.class);
 
 }

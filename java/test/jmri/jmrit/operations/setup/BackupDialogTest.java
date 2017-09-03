@@ -32,6 +32,6 @@ public class BackupDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BackupDialogTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BackupDialogTest.class);
 
 }
