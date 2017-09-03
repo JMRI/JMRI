@@ -24,7 +24,7 @@ public class AllocatedSectionTest {
         jmri.Section section2 = new jmri.Section("TS2");
         AllocatedSection t = new AllocatedSection(section1, at, 1, section2, 2);
         Assert.assertNotNull("exists", t);
-        InstanceManager.getDefault(DispatcherFrame.class).dispose();
+        JUnitUtil.dispose(InstanceManager.getDefault(DispatcherFrame.class));
     }
 
     // The minimal setup for log4J
