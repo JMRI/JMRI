@@ -194,7 +194,8 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
       org.slf4j.LoggerFactory in your imports section:</p>
       <pre>
 <code>
-        import org.slf4j.Logger;<br>        import org.slf4j.LoggerFactory;
+        import org.slf4j.Logger;<br>
+        import org.slf4j.LoggerFactory;
 </code>
 </pre>It's also OK to combine those into the fully-qualified form:
       <pre>
@@ -220,10 +221,15 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
 <code>
         log.debug("Found {}", numberEntries);
 </code>
-</pre>The string operations to build the actual error message (in
-this case, combining "Found" and the numberEntries argument) are
-only done if the message is going to be stored in the logs, which
-saves a lot of time during normal (non-debug) execution.
+</pre>
+      <p>The string operations to build the actual error message (in
+        this case, combining "Found" and the numberEntries argument) are
+        only done if the message is going to be stored in the logs, which
+        saves a lot of time during normal (non-debug) execution.</p>
+
+      <p><strong>Note</strong> It slows down logging to add <code>.toString()</code>
+          to any fields or method results, so do not add that. SLF4J takes care
+          of ensuring that <code>toString()</code> is called correctly.</p>
 
       <p>If it would be computationally expensive to pass a
       parameter into the log, use following form so the program
@@ -244,7 +250,7 @@ saves a lot of time during normal (non-debug) execution.
         log.error("my local text"+exception.getLocalizedMessage(), exception);
 </code>
 </pre>to include the user readable description from the exception
-itself, plus all its traceback information. 
+itself, plus all its traceback information.
 <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
