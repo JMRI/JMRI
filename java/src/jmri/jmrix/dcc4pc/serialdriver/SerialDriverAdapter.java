@@ -50,7 +50,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             try {
                 activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+                configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
             }

@@ -349,10 +349,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         if (getOptionState(option1Name).equals("MERG Concentrator")) {
@@ -360,8 +356,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             log.debug("Set hardware flow control for Concentrator");
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
-        activeSerialPort.setFlowControlMode(flow);
-        activeSerialPort.setRTS(true);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
