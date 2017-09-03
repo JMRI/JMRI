@@ -20,26 +20,37 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.WindowOperator;
 
 /**
- * Swing jfcUnit tests for dispatcher options
+ * Swing tests for dispatcher options
  *
  * @author	Dave Duchamp
+ * @author  Paul Bender Copyright(C) 2017
  */
 public class DispatcherFrameTest {
 
     @Test
     public void testShowAndClose() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
-
-        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
-        // test some options from file
-        Assert.assertTrue("File AutoTurnouts", d.getAutoTurnouts());
-        Assert.assertTrue("File HasOccupancyDetection", d.getHasOccupancyDetection());
+        // Find new table window by name
+        JFrameOperator dw = new JFrameOperator("Dispatcher");
+        // Ask to close Dispatcher window
+        dw.requestClose();
+
+        JUnitUtil.dispose(d);
+    }
+
+    @Test
+    public void testParametersRead() {
+        // The Dispatcher functionality is tightly coupled to the Dispatcher 
+        // Frame.  As a result, we can currently only test seting the 
+        // options file by creating a DispatcherFrame object.  A future 
+        // enhancement shold probably break this coupling.
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+
         // set all options
         d.setLayoutEditor(null);
         d.setUseConnectivity(false);
@@ -80,10 +91,9 @@ public class DispatcherFrameTest {
         d.setScale(Scale.N);
         Assert.assertEquals("New Scale", Scale.N, d.getScale());
 
-        // Find new table window by name
-        JFrameOperator dw = new JFrameOperator("Dispatcher");
-        // Ask to close Dispatcher window
-        dw.requestClose();
+        // Find the window by name and close it.
+        (new org.netbeans.jemmy.operators.JFrameOperator("Dispatcher")).requestClose();
+        JUnitUtil.dispose(d);
     }
 
     @Before
