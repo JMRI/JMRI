@@ -310,8 +310,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 log.error("internal state inconsistent with table requst for " + row + " " + col);
                 return null;
         }
-    }
-
+    }         
+   
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         switch (col) {
             case SLOTCOLUMN:

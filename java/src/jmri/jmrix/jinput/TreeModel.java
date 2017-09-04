@@ -43,7 +43,8 @@ public final class TreeModel extends DefaultTreeModel {
 
         // load initial USB objects
         boolean pass = loadSystem();
-
+        if (!pass) log.error("loadSystem failed");
+        
         // If you don't call loadSystem, the following line was
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);

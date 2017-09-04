@@ -425,7 +425,7 @@ public class MergePrompt extends JDialog {
        }
     }
 
-    public class ButtonCellRenderer extends ButtonRenderer {
+    public static class ButtonCellRenderer extends ButtonRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             Component b = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);

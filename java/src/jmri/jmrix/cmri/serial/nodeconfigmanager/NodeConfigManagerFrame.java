@@ -688,9 +688,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             // print the column header labels
             String[] columnStrings = new String[NUM_COLUMNS];
             // Put each column header in the array
-            for (int i = 0; i < NUM_COLUMNS; i++)
-              if(i!=SELECT_COLUMN) {
-                  if (i!=SELECT_COLUMN) columnStrings[i] = this.getColumnName(i);
+            for (int i = 0; i < NUM_COLUMNS; i++) {
+                if(i!=SELECT_COLUMN) {
+                    columnStrings[i] = this.getColumnName(i);
+                }
             }
   //          w.setFontStyle(Font.BOLD);
             printColumns(w,columnStrings,columnSize);
