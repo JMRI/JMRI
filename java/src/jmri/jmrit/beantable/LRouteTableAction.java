@@ -1354,7 +1354,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
+                soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting sound file: " + e);
             }
@@ -1375,7 +1375,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
+                scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting script file: " + e);
             }
