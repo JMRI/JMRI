@@ -90,6 +90,8 @@ public class SCWarrant extends Warrant {
         
         startupWarrant();
         getSpeedUtil().setThrottle(throttle);
+        getSpeedUtil().setOrders(getBlockOrders());
+
         _engineer = new Engineer(this, throttle);
         firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
         runSignalControlledTrain();

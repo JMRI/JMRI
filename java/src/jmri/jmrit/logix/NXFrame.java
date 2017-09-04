@@ -506,10 +506,10 @@ public class NXFrame extends WarrantRoute {
         String s = ("" + Math.random()).substring(2);
         Warrant warrant = new Warrant("IW" + s, "NX(" + getAddress() + ")");
         warrant.setBlockOrders(_orders);
-        warrant.setSpeedUtil(_speedUtil);
         warrant.setTrainName(getTrainName());
         warrant.setNoRamp(_noRamp.isSelected());
         _speedUtil.setDistanceTravelled(_startDist);
+        warrant.setSpeedUtil(_speedUtil);   // transfer SpeedUtil to warrant
         if (log.isDebugEnabled()) log.debug("Warrant {). Route and loco set.", warrant.getDisplayName());
         int mode;
         if (!_runManual.isSelected()) {

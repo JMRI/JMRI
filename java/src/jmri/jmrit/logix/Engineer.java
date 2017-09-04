@@ -900,11 +900,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug(msg);
     }
 
-    protected DccThrottle getThrottle() {
-        return _throttle;
-
-    }
-
     /*
      * *************************************************************************************
      */
