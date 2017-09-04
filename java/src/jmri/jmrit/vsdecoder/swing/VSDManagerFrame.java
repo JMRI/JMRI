@@ -223,7 +223,7 @@ public class VSDManagerFrame extends JmriJFrame {
             }
 
         });
-        //firePropertyChange(PropertyChangeID.ADD_DECODER, null, null);
+        //firePropertyChange(PropertyChangeId.ADD_DECODER, null, null);
     }
 
     /**
@@ -263,7 +263,7 @@ public class VSDManagerFrame extends JmriJFrame {
         this.pack();
         //this.setVisible(true);
         // Do we need to make newControl a listener to newDecoder?
-        //firePropertyChange(PropertyChangeID.ADD_DECODER, null, newDecoder);
+        //firePropertyChange(PropertyChangeId.ADD_DECODER, null, newDecoder);
     }
 
     /**
@@ -271,7 +271,7 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void vsdControlPropertyChange(PropertyChangeEvent event) {
         String property = event.getPropertyName();
-        if (property.equals(VSDControl.PCIDMap.get(VSDControl.PropertyChangeID.DELETE))) {
+        if (property.equals(VSDControl.PCIdMap.get(VSDControl.PropertyChangeId.DELETE))) {
             String ov = (String) event.getOldValue();
             String nv = (String) event.getNewValue();
             VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
@@ -423,5 +423,5 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     //public List<JMenu> getMenus() { return menuList; }
-    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class);
 }

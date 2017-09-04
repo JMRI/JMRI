@@ -1,7 +1,7 @@
 package jmri.jmrix.grapevine;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid lenz Protrak Connection Types

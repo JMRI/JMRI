@@ -1068,5 +1068,5 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
 }

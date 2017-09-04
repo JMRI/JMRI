@@ -6,7 +6,6 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
-import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1239,6 +1238,6 @@ public class AcelaNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaNode.class);
 
 }

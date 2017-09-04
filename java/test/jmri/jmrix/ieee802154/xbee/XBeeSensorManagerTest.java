@@ -1,24 +1,16 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.XBeeDevice;
 import jmri.Sensor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.powermock.modules.junit4.PowerMockRunner;
-
-import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.models.XBeeProtocol;
-import com.digi.xbee.api.XBeeDevice;
-import com.digi.xbee.api.RemoteXBeeDevice;
-
-
 import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
 import org.powermock.core.classloader.annotations.MockPolicy;
+import org.powermock.modules.junit4.PowerMockRunner;
 @MockPolicy(Slf4jMockPolicy.class)
 
 /**

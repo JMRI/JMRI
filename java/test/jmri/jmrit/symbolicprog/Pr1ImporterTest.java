@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import jmri.util.FileUtil;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -37,9 +37,9 @@ public class Pr1ImporterTest {
         if (f.exists()) {
             f.delete();
         }
-        PrintStream p = new PrintStream(new FileOutputStream(f));
-        p.print(contents);
-        p.close();
+        try (PrintStream p = new PrintStream(new FileOutputStream(f))) {
+            p.print(contents);
+        }
 
         return f;
     }
@@ -98,15 +98,14 @@ public class Pr1ImporterTest {
         Assert.assertTrue("should pack", result);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

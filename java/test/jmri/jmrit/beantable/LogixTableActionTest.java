@@ -1,42 +1,26 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
-
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.jmrit.beantable.LogixTableAction;
-
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.netbeans.jemmy.operators.JMenuItemOperator;
-import org.netbeans.jemmy.operators.JMenuOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /*
 * Tests for the LogixTableAction Class
 * Re-created using JUnit4 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017
-*/
+ */
 public class LogixTableActionTest extends AbstractTableActionBase {
 
     @Test
@@ -58,7 +42,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Override
     @Test
     public void testGetClassDescription() {
-         Assert.assertEquals("Logix Table Action class description", Bundle.getMessage("TitleLogixTable"), a.getClassDescription());  // NOI18N
+        Assert.assertEquals("Logix Table Action class description", Bundle.getMessage("TitleLogixTable"), a.getClassDescription());  // NOI18N
     }
 
     /**
@@ -69,7 +53,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Override
     @Test
     public void testIncludeAddButton() {
-         Assert.assertTrue("Default include add button", a.includeAddButton());  // NOI18N
+        Assert.assertTrue("Default include add button", a.includeAddButton());  // NOI18N
     }
 
     @Test
@@ -81,9 +65,9 @@ public class LogixTableActionTest extends AbstractTableActionBase {
 
         JFrame frame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("BrowserTitle"), true, true);  // NOI18N
         Assert.assertNotNull(frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
-    
+
     @Test
     public void testWhereused() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -93,7 +77,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
 
         JFrame frame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("DisplayWhereUsed"), true, true);  // NOI18N
         Assert.assertNotNull(frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -131,9 +115,9 @@ public class LogixTableActionTest extends AbstractTableActionBase {
 
         // Add creates an edit frame; find and dispose
         JFrame editFrame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("TitleEditLogix"), true, true);  // NOI18N
-        editFrame.dispose();
+        JUnitUtil.dispose(editFrame);
 
-        lgxFrame.dispose();
+        JUnitUtil.dispose(lgxFrame);
     }
 
     @Test
@@ -157,7 +141,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         Logix chk103 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX103");  // NOI18N
         Assert.assertNull("Verify IX103 Is Deleted", chk103);  // NOI18N
 
-        lgxFrame.dispose();
+        JUnitUtil.dispose(lgxFrame);
     }
 
     void createModalDialogOperatorThread(String dialogTitle, String buttonText) {
@@ -172,8 +156,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
 
@@ -188,7 +171,6 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

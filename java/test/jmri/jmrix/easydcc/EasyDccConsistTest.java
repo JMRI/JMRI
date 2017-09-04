@@ -1,12 +1,11 @@
 package jmri.jmrix.easydcc;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import jmri.DccLocoAddress;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * EasyDccConsistTest.java
@@ -72,8 +71,7 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         EasyDccSystemConnectionMemo m = new EasyDccSystemConnectionMemo(new EasyDccTrafficControlScaffold());
         jmri.InstanceManager.setDefault(jmri.CommandStation.class,new EasyDccCommandStation(m));
         c = new EasyDccConsist(5);
@@ -82,8 +80,7 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         c = null;
     }
 

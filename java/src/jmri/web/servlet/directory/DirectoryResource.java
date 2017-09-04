@@ -242,5 +242,5 @@ public class DirectoryResource extends Resource {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DirectoryResource.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DirectoryResource.class);
 }

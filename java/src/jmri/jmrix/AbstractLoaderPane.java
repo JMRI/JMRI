@@ -511,6 +511,6 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         updateDownloadVerifyButtons();
         log.info("ActionListener");
     }
-    private final static Logger log = LoggerFactory.getLogger(AbstractLoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLoaderPane.class);
 
 }

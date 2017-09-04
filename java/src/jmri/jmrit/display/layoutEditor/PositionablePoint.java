@@ -200,7 +200,7 @@ public class PositionablePoint extends LayoutTrack {
 
     public String getLinkedPointId() {
         if (linkedPoint != null) {
-            return linkedPoint.getID();
+            return linkedPoint.getId();
         }
         return "";
     }
@@ -731,20 +731,20 @@ public class PositionablePoint extends LayoutTrack {
         yClick = e.getY();
         // if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
-            showPopUp(e);
+            showPopup(e);
         }
     }
 
     public void mouseReleased(MouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
-            showPopUp(e);
+            showPopup(e);
         }
     }
 
     public void mouseClicked(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            showPopUp(e);
+            showPopup(e);
         }
     }
 
@@ -754,7 +754,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * For editing: only provides remove
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -781,13 +781,13 @@ public class PositionablePoint extends LayoutTrack {
                     block2 = connect2.getLayoutBlock();
                 }
                 if ((block1 != null) && (block1 == block2)) {
-                    jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + block1.getID());
+                    jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + block1.getId());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     jmi = popup.add(rb.getString("BlockDivider"));
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getId());
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getId());
                     blockBoundary = true;
                 }
                 jmi.setEnabled(false);
@@ -801,7 +801,7 @@ public class PositionablePoint extends LayoutTrack {
                     blockEnd = connect1.getLayoutBlock();
                 }
                 if (blockEnd != null) {
-                    jmi = popup.add(rb.getString("BlockID") + ": " + blockEnd.getID());
+                    jmi = popup.add(rb.getString("BlockID") + ": " + blockEnd.getId());
                     jmi.setEnabled(false);
                 }
                 endBumper = true;
@@ -828,9 +828,9 @@ public class PositionablePoint extends LayoutTrack {
                 if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     jmi = popup.add(rb.getString("BlockDivider"));
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getId());
                     jmi.setEnabled(false);
-                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getId());
                     jmi.setEnabled(false);
                 }
                 blockBoundary = true;
@@ -1350,5 +1350,5 @@ public class PositionablePoint extends LayoutTrack {
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
 }

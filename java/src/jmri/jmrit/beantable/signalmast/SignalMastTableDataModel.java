@@ -515,6 +515,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class);
 
 }

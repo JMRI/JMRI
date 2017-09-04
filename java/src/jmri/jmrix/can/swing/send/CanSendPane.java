@@ -9,11 +9,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerNumberModel;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -321,6 +320,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class);
 
 }

@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;
@@ -375,6 +374,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class);
 
 }

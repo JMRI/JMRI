@@ -2,13 +2,13 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -77,9 +77,9 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
 
 }

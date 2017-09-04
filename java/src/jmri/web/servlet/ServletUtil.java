@@ -40,9 +40,9 @@ public class ServletUtil implements InstanceManagerAutoDefault {
      */
     public String getRailroadName(boolean inComments) {
         if (inComments) {
-            return "-->" + InstanceManager.getDefault(WebServerPreferences.class).getRailRoadName() + "<!--"; // NOI18N
+            return "-->" + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + "<!--"; // NOI18N
         }
-        return InstanceManager.getDefault(WebServerPreferences.class).getRailRoadName();
+        return InstanceManager.getDefault(WebServerPreferences.class).getRailroadName();
     }
 
     /**

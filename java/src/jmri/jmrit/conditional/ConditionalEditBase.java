@@ -167,7 +167,7 @@ public class ConditionalEditBase {
      */
     public interface LogixEventListener extends EventListener {
 
-        void LogixEventOccurred();
+        void logixEventOccurred();
     }
 
     /**
@@ -204,7 +204,7 @@ public class ConditionalEditBase {
      */
     void fireLogixEvent() {
         for (LogixEventListener l : listenerList) {
-            l.LogixEventOccurred();
+            l.logixEventOccurred();
         }
     }
 
@@ -1385,5 +1385,5 @@ public class ConditionalEditBase {
         return ConditionalEditBase.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class);
 }

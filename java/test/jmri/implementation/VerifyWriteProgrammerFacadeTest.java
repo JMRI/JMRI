@@ -4,10 +4,10 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,6 +125,6 @@ public class VerifyWriteProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VerifyWriteProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VerifyWriteProgrammerFacadeTest.class);
 
 }

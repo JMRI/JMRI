@@ -163,6 +163,6 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class);
 
 }

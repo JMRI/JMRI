@@ -5,7 +5,6 @@ import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import jmri.util.SwingTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -61,7 +60,7 @@ public class PanedTest {
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
-        SwingTestCase.disposeFrame("Decoder Pro Wizard", true, true);
+        JUnitUtil.disposeFrame("Decoder Pro Wizard", true, true);
     }
 
     // The minimal setup for log4J
@@ -77,6 +76,6 @@ public class PanedTest {
         Log4JFixture.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanedTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PanedTest.class);
 
 }

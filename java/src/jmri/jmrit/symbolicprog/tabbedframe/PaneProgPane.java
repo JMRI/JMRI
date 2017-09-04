@@ -2,7 +2,6 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -2969,6 +2968,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgPane.class);
 
 }

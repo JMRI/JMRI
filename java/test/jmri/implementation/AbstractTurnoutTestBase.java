@@ -75,7 +75,7 @@ public abstract class AbstractTurnoutTestBase {
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController 
+        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController
         //is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());

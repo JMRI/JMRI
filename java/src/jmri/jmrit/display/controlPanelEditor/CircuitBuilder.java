@@ -1168,7 +1168,7 @@ public class CircuitBuilder {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
         _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
                 Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
-        _convertFrame = new convertFrame(_convertDialog);
+        _convertFrame = new ConvertFrame(_convertDialog);
 
         _convertDialog.setLocationRelativeTo(_editor);
         _convertDialog.toFront();
@@ -1177,11 +1177,11 @@ public class CircuitBuilder {
     /*
      * gimmick to get JDialog to re-layout contents and repaint
      */
-    static class convertFrame extends JmriJFrame {
+    static class ConvertFrame extends JmriJFrame {
 
         JDialog _dialog;
 
-        convertFrame(JDialog dialog) {
+        ConvertFrame(JDialog dialog) {
             super(false, false);
             _dialog = dialog;
         }
@@ -1713,5 +1713,5 @@ public class CircuitBuilder {
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CircuitBuilder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CircuitBuilder.class);
 }

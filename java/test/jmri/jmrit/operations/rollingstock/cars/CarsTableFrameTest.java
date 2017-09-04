@@ -10,6 +10,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -226,7 +227,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         // create the CarEditFrame
         enterClickAndLeave(ctf.addButton);
 
-        ctf.dispose();
+        JUnitUtil.dispose(ctf);
 
     }
 

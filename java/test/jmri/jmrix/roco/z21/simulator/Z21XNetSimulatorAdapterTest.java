@@ -1,12 +1,12 @@
 package jmri.jmrix.roco.z21.simulator;
 
+import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XNetReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 
 /**
  * Z21XNetSimulatorAdapterTest.java
@@ -74,12 +74,12 @@ public class Z21XNetSimulatorAdapterTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

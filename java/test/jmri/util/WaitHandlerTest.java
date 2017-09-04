@@ -1,10 +1,10 @@
 package jmri.util;
 
 import java.util.Calendar;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -204,6 +204,6 @@ public class WaitHandlerTest extends TestCase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class);
 
 }

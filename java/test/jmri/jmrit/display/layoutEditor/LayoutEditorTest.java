@@ -29,7 +29,7 @@ public class LayoutEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor(); // create layout editor
         Assert.assertNotNull("exists", e);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -650,9 +650,7 @@ public class LayoutEditorTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            le = new LayoutEditor("Test Layout");
         }
@@ -660,8 +658,10 @@ public class LayoutEditorTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        if (le != null) {
+            JUnitUtil.dispose(le);
+            le = null;
+        }
+        JUnitUtil.tearDown();
     }
 }

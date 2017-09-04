@@ -1,6 +1,5 @@
 package jmri.jmrix.ecos.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -66,6 +65,6 @@ public class EcosMenu extends JMenu {
         String load;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosMenu.class);
 
 }

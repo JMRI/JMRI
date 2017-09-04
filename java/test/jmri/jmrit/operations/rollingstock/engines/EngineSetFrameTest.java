@@ -9,6 +9,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -32,7 +33,7 @@ public class EngineSetFrameTest extends OperationsSwingTestCase {
         EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         Engine e3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadEngine(e3);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

@@ -1,11 +1,11 @@
 package jmri.jmrit.speedometer;
 
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 /*
  *  Helper class for operating the Speedometer Frame.

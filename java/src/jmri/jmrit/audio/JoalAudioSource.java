@@ -531,7 +531,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JoalAudioSource (" + this.getSystemName() + ")");
         }
@@ -572,7 +572,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return this._source;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioSource.class);
 
     /**
      * An internal class used to create a new thread to monitor looping as,

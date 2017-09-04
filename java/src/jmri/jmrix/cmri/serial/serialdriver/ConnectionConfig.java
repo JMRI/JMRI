@@ -3,10 +3,8 @@ package jmri.jmrix.cmri.serial.serialdriver;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-// import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction; c2
-import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI

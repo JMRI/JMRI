@@ -574,6 +574,28 @@
           <td>4096</td>
         </tr>
         <tr>
+          <td>Maple</td>
+          <td>i</td>
+          <td>2010</td>
+          <td>Node 2 Input bit 10</td>
+          <td>KS2010</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Maple</td>
+          <td>o</td>
+          <td>1016</td>
+          <td>Node 1 Output (Turnout) 16</td>
+          <td>KT1016</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>8000</td>
+        </tr>
+        <tr>
           <td>MERG CBUS</td>
           <td>i</td>
           <td>200018M07</td>
@@ -603,7 +625,7 @@
           <td>MT18</td>
           <td>integer</td>
           <td>+18;-18</td>
-          <td>Note: not working</td>
+          <td> </td>
           <td> </td>
         </tr>
         <tr>

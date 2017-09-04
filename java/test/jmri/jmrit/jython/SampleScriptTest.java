@@ -1,7 +1,6 @@
 package jmri.jmrit.jython;
 
 import java.io.File;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -67,9 +66,7 @@ public class SampleScriptTest extends TestCase {
         
         @Override
         protected void tearDown() throws Exception {
-            jmri.util.JUnitUtil.resetInstanceManager();
-            super.tearDown();
-            apps.tests.Log4JFixture.tearDown();
+            jmri.util.JUnitUtil.tearDown();
         }
     }
 
@@ -104,8 +101,6 @@ public class SampleScriptTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 }

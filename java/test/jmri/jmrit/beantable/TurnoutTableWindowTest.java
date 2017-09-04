@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -18,8 +19,8 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for the turnout table.
- * Do not convert to JUnit4 (no support for enterClickAndLeave() etc.)
+ * Swing jfcUnit tests for the turnout table. Do not convert to JUnit4 (no
+ * support for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010, 2017
  */
@@ -30,7 +31,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
             return; // can't Assume in TestCase
         }
 
-       // ask for the window to open
+        // ask for the window to open
         TurnoutTableAction a = new TurnoutTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
@@ -88,11 +89,10 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        
         // The following line works on the CI servers, but not in some standalone cases
         //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
         hwAddressField.setText("1"); // workaround
-        
+
         flushAWT();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
@@ -120,7 +120,6 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         //Assert.assertNotNull(editbutton);
         // Click button to edit turnout
         //getHelper().enterClickAndLeave(new MouseEventData(this, editbutton));
-
         // open Edit pane by method instead
         Turnout it1 = InstanceManager.turnoutManagerInstance().getTurnout("IT1");
         a.editButton(it1); // open edit pane
@@ -141,7 +140,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(ft, this);
 
         flushAWT();
-        
+
         // check that turnout was created
         Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
     }
@@ -167,8 +166,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
@@ -176,7 +174,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }

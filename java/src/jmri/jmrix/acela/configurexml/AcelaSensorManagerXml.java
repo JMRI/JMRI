@@ -1,6 +1,5 @@
 package jmri.jmrix.acela.configurexml;
 
-import jmri.jmrix.acela.AcelaSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +37,6 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class);
 
 }

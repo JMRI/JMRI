@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
 
 /**
@@ -49,7 +50,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

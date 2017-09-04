@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -120,6 +119,21 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
             return ((ReporterManager) getMgr(i)).allowMultipleAdditions(systemName);
         }
         return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
+    }
+
+    /**
+     * Validate system name format. Locate a system specfic ReporterManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((ReporterManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return false;
     }
 
     @Override

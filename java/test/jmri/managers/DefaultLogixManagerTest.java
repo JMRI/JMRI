@@ -1,12 +1,11 @@
 package jmri.managers;
 
+import jmri.Logix;
+import jmri.LogixManager;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-
-import jmri.Logix;
-import jmri.LogixManager;
 
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
@@ -83,9 +82,7 @@ public class DefaultLogixManagerTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // Main entry point

@@ -1,6 +1,5 @@
 package jmri.jmrix.rps.trackingpanel;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import javax.swing.BoxLayout;
 import javax.vecmath.Point3d;
@@ -103,15 +102,12 @@ public class RpsTrackingPanelTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
 }

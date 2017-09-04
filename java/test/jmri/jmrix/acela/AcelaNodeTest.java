@@ -11,10 +11,11 @@ import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the AcelaNode class
@@ -225,7 +226,7 @@ public class AcelaNodeTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

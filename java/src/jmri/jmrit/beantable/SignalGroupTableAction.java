@@ -395,7 +395,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     JPanel p3xsi = null;
 
     SignalGroup curSignalGroup = null;
-    boolean SignalGroupDirty = false;  // true to fire reminder to save work
+    boolean signalGroupDirty = false;  // true to fire reminder to save work
     boolean inEditMode = false; // to warn and prevent opening more than 1 editing session
 
     /**
@@ -704,13 +704,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // remind to save, if Signal Group was created or edited
-                if (SignalGroupDirty) {
+                if (signalGroupDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showInfoMessage(Bundle.getMessage("ReminderTitle"),
                                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")),
                                     "beantable.SignalGroupTableAction",
                                     "remindSignalGroup"); // NOI18N
-                    SignalGroupDirty = false;
+                    signalGroupDirty = false;
                 }
                 // hide addFrame
                 if (addFrame != null) {addFrame.setVisible(false);} // hide first, could be gone by the time of the close event,
@@ -830,7 +830,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String uName = _userName.getText();
         if (sName.length() == 0) {
             JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("RouteAddStatusEnter"),
+                    Bundle.getMessage("AddBeanStatusEnter"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.WARNING_MESSAGE);
             // Reuse a key with general wording
@@ -995,7 +995,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         _AspectModel.fireTableDataChanged();
         initializeIncludedList();
 
-        SignalGroupDirty = true;  // to fire reminder to save work
+        signalGroupDirty = true;  // to fire reminder to save work
         updateButton.setVisible(true);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
@@ -1054,7 +1054,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         setMastAspectInformation(g);
 
         g.setSignalMast((SignalMast) mainSignalComboBox.getSelectedBean(), mainSignalComboBox.getSelectedDisplayName());
-        SignalGroupDirty = true;  // to fire reminder to save work
+        signalGroupDirty = true;  // to fire reminder to save work
         if (close) {
             finishUpdate();
             inEditMode = false;
@@ -1736,6 +1736,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         return Bundle.getMessage("TitleSignalGroupTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class);
 
 }

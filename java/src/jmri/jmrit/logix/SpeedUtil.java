@@ -321,7 +321,6 @@ public class SpeedUtil {
         _throttle = throttle;
         _stepIncrement = _throttle.getSpeedIncrement();
         getSpeedProfile();
-        clearStats();
     }
     /**
      * Calculates the scale speed of the current throttle setting for display
@@ -661,6 +660,7 @@ public class SpeedUtil {
         return _distanceTravelled;            
     }
     protected void setDistanceTravelled(float dist) {
+        clearStats();
         _distanceTravelled = dist;
     }
 

@@ -2,6 +2,7 @@ package jmri.jmrit.sensorgroup;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -21,7 +22,7 @@ public class SensorGroupTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SensorGroupFrame frame = new SensorGroupFrame();
         Assert.assertNotNull(frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Test
@@ -36,21 +37,20 @@ public class SensorGroupTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(SensorGroupFrame.class.getName(), frame.getClass().getName());
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

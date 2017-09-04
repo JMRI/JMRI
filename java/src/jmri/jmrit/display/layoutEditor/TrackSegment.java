@@ -335,7 +335,7 @@ public class TrackSegment extends LayoutTrack {
     public void setLayoutBlock(LayoutBlock b) {
         block = b;
         if (b != null) {
-            blockName = b.getID();
+            blockName = b.getId();
         }
     }
 
@@ -536,7 +536,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Display popup menu for information and editing.
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -565,7 +565,7 @@ public class TrackSegment extends LayoutTrack {
         if (blockName.isEmpty()) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
-            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getId());
         }
         jmi.setEnabled(false);
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -1733,5 +1733,5 @@ public class TrackSegment extends LayoutTrack {
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
 }

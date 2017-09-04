@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: AutoTrains Window Help</title>
+  <title>JMRI: AutoTrains Help</title>
   <meta content="Dave Duchamp" name="Author">
   <meta name="keywords" content=
   "JMRI help Dispatcher Auto Active Trains"><!-- Style -->
@@ -25,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>The AutoTrains Window</h1>
+      <h1>Dispatcher: Auto Trains</h1>
 
       <h2>Introduction</h2>
 
@@ -53,7 +53,7 @@
 
       <p>Below is an <b>AutoTrains</b> window showing two Auto
       Active Trains, Amtrak 139 and GTW 6418. Entries are separated
-      by a horizontal line.</p><img src="AutoTrainsA.jpg" height=
+      by a horizontal line.</p><img src="images/AutoTrainsA.jpg" height=
       "154" width="255">
 
       <p>Each entry has a <b>Stop</b> button and a <b>To Manual</b>
@@ -73,7 +73,7 @@
 
       <p>If the dispatcher clicks the <b>To Manual</b> button for
       Amtrak 139, the above window changes to:</p><img src=
-      "AutoTrainsB.jpg" height="154" width="551">
+      "images/AutoTrainsB.jpg" height="154" width="551">
 
       <p>The slider controls the train speed, and the <b>For</b>
       and <b>Rev</b> radio buttons control the train direction. The
@@ -104,6 +104,8 @@
       the human engineer should run the train in the same position
       it was in when manual mode operation was initiated. This
       insures smooth resumption of automatic operation.</p>
+
+      <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

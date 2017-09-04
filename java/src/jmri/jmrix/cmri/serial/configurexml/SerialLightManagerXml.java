@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.configurexml;
 
-import jmri.jmrix.cmri.serial.SerialLightManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,5 +36,5 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class);
 }

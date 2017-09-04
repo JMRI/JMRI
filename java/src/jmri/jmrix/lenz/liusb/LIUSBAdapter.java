@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -285,6 +285,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     }
     static volatile LIUSBAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
 
 }

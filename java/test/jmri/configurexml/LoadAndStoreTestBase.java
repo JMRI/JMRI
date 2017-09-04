@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
@@ -119,8 +118,8 @@ public class LoadAndStoreTestBase {
             lineNumber1++;
             lineNumber2++;
 
-            // where the (empty) entryexitpairs line ends up seems to be non-deterministic…
-            // so if we see it in ether file we just skip it
+            // where the (empty) entryexitpairs line ends up seems to be non-deterministic
+            // so if we see it in either file we just skip it
             String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
             if (line1.contains(entryexitpairs)) {
                 line1 = next1;
@@ -282,8 +281,7 @@ public class LoadAndStoreTestBase {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -293,9 +291,7 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);

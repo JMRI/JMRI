@@ -3,10 +3,10 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * ComboRadioButtonsTest.java
@@ -138,5 +138,5 @@ public class ComboRadioButtonsTest extends TestCase {
         return suite;
     }
 
-    // static Logger log = LoggerFactory.getLogger(ComboRadioButtonsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ComboRadioButtonsTest.class);
 }

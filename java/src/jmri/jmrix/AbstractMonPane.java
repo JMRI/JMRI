@@ -650,5 +650,5 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected StringBuffer linesBuffer = new StringBuffer();
     private static final int MAX_LINES = 500;
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractMonPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractMonPane.class);
 }

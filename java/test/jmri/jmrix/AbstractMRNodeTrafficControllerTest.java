@@ -55,8 +55,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     @Override
     public void tearDown(){
        tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.tearDown(); 
     }
 
 }

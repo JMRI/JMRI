@@ -3,7 +3,6 @@ package apps.gui3;
 import apps.gui3.dp3.DecoderPro3;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import jmri.util.SwingTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -62,7 +61,7 @@ public class FirstTimeStartUpWizardTest {
         FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(jf, a);
         Assert.assertNotNull("exists", t);
         t.dispose();
-        jf.dispose();
+        JUnitUtil.dispose(jf);
     }
 
     // The minimal setup for log4J
@@ -77,5 +76,5 @@ public class FirstTimeStartUpWizardTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class);
 }

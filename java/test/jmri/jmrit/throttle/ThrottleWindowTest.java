@@ -20,17 +20,16 @@ public class ThrottleWindowTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThrottleWindow frame = new ThrottleWindow();
         Assert.assertNotNull("exists", frame);
-        frame.dispose();
+        JUnitUtil.dispose(frame);
     }
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

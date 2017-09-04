@@ -6,6 +6,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,16 +97,14 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     }
 
     @After
-    public void tearDown(){
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         // create and register the manager object
@@ -113,6 +112,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class);
 
 }

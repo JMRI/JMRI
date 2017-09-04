@@ -200,7 +200,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 waitPrefLoad.interrupt();
                 waitPrefLoad = null;
             }
-            waitPrefLoad = new Thread(new waitPrefLoad());
+            waitPrefLoad = new Thread(new WaitPrefLoad());
             waitPrefLoad.setName("Wait for Preferences to be loaded");
             waitPrefLoad.start();
             return;
@@ -584,7 +584,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     if (msgDetails.length == 0) {
                         EcosMessage mout = new EcosMessage("queryObjects(10)");
                         tc.sendEcosMessage(mout, this);
-                        //Version 3.0.1 of the software has an issue in that it stops sending updates on the 
+                        //Version 3.0.1 of the software has an issue in that it stops sending updates on the
                         //loco objects when a delete has happened, we therefore need to release the old view
                         //then re-request it.
                         mout = new EcosMessage("release(10, view)");
@@ -686,7 +686,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         }
     }
 
-    /* This is used after an event update form the ecos informing us of a change in the 
+    /* This is used after an event update form the ecos informing us of a change in the
      * loco list, we have to determine if it is an addition or delete.
      * We should only ever do either a remove or an add in one go, if we are adding the loco
      * to the roster otherwise this causes a problem with the roster list.
@@ -823,7 +823,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
     Thread waitPrefLoad;
 
-    private class waitPrefLoad implements Runnable {
+    private class WaitPrefLoad implements Runnable {
 
         @Override
         public void run() {
@@ -884,6 +884,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         return Bundle.getMessage("EcosLocoAddresses");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class);
 
 }

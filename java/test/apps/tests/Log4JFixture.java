@@ -1,11 +1,11 @@
 package apps.tests;
 
+import java.util.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.Log4JUtil;
 import org.apache.log4j.Level;
 import org.junit.Assert;
-import java.util.*;
 
 public class Log4JFixture {
 

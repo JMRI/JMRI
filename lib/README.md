@@ -26,6 +26,17 @@ development and release operations:
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
 
+On macOS, most of these changes can be affected with:
+```
+find . -type f -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+```
+(you may need to install gsed using [Homebrew](http://brew.sh))
+
+On Linux, these same changes can be affected with:
+```
+find . -type f -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+```
+
 Note that Windows installers don't necessarily remove existing library versions.
 (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion
 on this)  Until that's changed, if you remove a library from here that really

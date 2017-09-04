@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -281,6 +281,6 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC640Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640Adapter.class);
 
 }

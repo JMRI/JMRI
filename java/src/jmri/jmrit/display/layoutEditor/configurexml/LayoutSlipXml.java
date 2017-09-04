@@ -43,16 +43,16 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         }
 
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
+            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getID());
+            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getID());
+            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
+            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
         }
         if (!p.getSignalA1Name().isEmpty()) {
             element.addContent(new Element("signala1name").addContent(p.getSignalA1Name()));
@@ -286,5 +286,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class);
 }

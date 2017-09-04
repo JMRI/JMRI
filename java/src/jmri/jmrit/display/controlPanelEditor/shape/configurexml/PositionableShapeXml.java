@@ -56,9 +56,9 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         element.setAttribute("forcecontroloff", !p.isControlling() ? "true" : "false");
         element.setAttribute("hidden", p.isHidden() ? "yes" : "no");
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
-        element.setAttribute("showtooltip", p.showTooltip() ? "true" : "false");
+        element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
-        ToolTip tip = p.getTooltip();
+        ToolTip tip = p.getToolTip();
         String txt = tip.getText();
         if (txt != null) {
             Element elem = new Element("toolTip").addContent(txt);
@@ -142,9 +142,9 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 
         a = element.getAttribute("showtooltip");
         if ((a != null) && a.getValue().equals("true")) {
-            ps.setShowTooltip(true);
+            ps.setShowToolTip(true);
         } else {
-            ps.setShowTooltip(false);
+            ps.setShowToolTip(false);
         }
 
         a = element.getAttribute("editable");
@@ -156,7 +156,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 
         Element elem = element.getChild("toolTip");
         if (elem != null) {
-            ToolTip tip = ps.getTooltip();
+            ToolTip tip = ps.getToolTip();
             if (tip != null) {
                 tip.setText(elem.getText());
             }
@@ -251,5 +251,5 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class);
 }

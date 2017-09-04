@@ -1074,5 +1074,5 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorIcon.class);
 }

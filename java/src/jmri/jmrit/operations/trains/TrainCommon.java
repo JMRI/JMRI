@@ -2083,5 +2083,5 @@ public class TrainCommon {
         return sbuf.toString();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(TrainCommon.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(TrainCommon.class);
 }

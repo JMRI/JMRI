@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.ztc640;
 
-import org.junit.After;
 import org.junit.Before;
 
 

@@ -208,6 +208,6 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return distanceAttenuated;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioFactory.class);
 
 }

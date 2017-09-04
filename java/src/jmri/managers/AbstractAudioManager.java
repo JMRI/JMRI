@@ -164,5 +164,5 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return Bundle.getMessage("BeanNameAudio");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);
 }

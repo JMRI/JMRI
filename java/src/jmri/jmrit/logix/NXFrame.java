@@ -1082,5 +1082,5 @@ public class NXFrame extends WarrantRoute {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NXFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NXFrame.class);
 }

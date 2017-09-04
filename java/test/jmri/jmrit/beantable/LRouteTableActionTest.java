@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
-import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Route;

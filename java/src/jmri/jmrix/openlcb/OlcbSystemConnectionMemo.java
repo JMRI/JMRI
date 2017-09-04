@@ -1,10 +1,9 @@
 package jmri.jmrix.openlcb;
 
-import org.openlcb.OlcbInterface;
-
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
+import org.openlcb.OlcbInterface;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
