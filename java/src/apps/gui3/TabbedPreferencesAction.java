@@ -108,7 +108,10 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         // This is needed as certain controls are instantiated
         // prior to the setup of the Look and Feel
         setWait(false);
-        f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
+        
+        // might not be a preferences item set yet
+        if (preferencesItem != null) f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
+        
         f.pack();
 
         f.setVisible(true);
