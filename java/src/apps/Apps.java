@@ -153,7 +153,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
-        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
+        if (ProfileManager.getDefault().getConfigFile() == null || !ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
                     // notify user of change only if migration occurred
@@ -177,7 +177,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             // Apps.setConfigFilename() does not reset the system property
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-            log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
+            log.info("Starting with profile {}", (ProfileManager.getDefault().getActiveProfile()!=null ? ProfileManager.getDefault().getActiveProfile().getId() : "<none>"));
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
@@ -342,7 +342,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("New preferences format will be used after JMRI is restarted.");
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", ProfileManager.getDefault().getActiveProfile().getName()),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", 
+                                            ( ProfileManager.getDefault().getActiveProfile() != null ? ProfileManager.getDefault().getActiveProfile().getName() : "<none>") 
+                                        ),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
