@@ -65,8 +65,8 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # is left justified, at least 5 and no more than 10 characters wide
 
 log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
-# always limit output to WARN; if you want more, add R to the rootCategory above
-log4j.appender.A1.Threshold=WARN
+# always limit output to INFO; if you want more, add R to the rootCategory above and log there
+log4j.appender.A1.Threshold=INFO
 
 # R is set to output to a log file, but then not used in normal testing
 log4j.appender.R=org.apache.log4j.FileAppender
