@@ -574,6 +574,23 @@ public class LayoutEditorFindItems {
         }
         return result;
     }
+    
+   /**
+     * Determine the first unused LayoutTrack object name...
+     * @param inPrefix ...with this prefix...
+     * @param inStartIndex ...and this starting index...
+     * @return the first unused LayoutTrack object name
+     */
+    public String uniqueName(String inPrefix, int inStartIndex) {
+        String result;
+        for (int idx = inStartIndex; true; idx++) {
+            result = String.format("%s%d", inPrefix, idx);
+            if (findObjectByName(result) == null) {
+                break;
+            }
+        }
+        return result;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }
