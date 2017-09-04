@@ -260,7 +260,6 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
         while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
             if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
                 return;
             }
             evt = list.remove(0);
