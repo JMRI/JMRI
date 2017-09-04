@@ -90,7 +90,7 @@ public class JUnitUtil {
 
     static final int DEFAULT_RELEASETHREAD_DELAY = 50;
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 20000; // really long, but only matters when failing
+    static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
 
     static int count = 0;
 
