@@ -11,8 +11,8 @@ import org.junit.Test;
 /**
  * Test simple functioning of SwitchboardEditor
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Egbert Broerse Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2016
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class SwitchboardEditorTest {
 
@@ -52,7 +52,6 @@ public class SwitchboardEditorTest {
 //        Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);
 //        Assert.assertEquals("Zoom Get", 3.33, e.getZoom(), 0.0);
 //    }
-
     @Test
     public void testIsDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -127,15 +126,14 @@ public class SwitchboardEditorTest {
 //        e.setShowHelpBar(false);
 //        Assert.assertFalse("getShowHelpBar after set", e.getShowHelpBar());
 //    }
-
     // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz;
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
 
-    protected Hashtable<XNetListener, Integer> mListenerMasks;
+    protected HashMap<XNetListener, Integer> mListenerMasks;
 
     /**
      * Static function returning the TrafficController instance to use.
@@ -55,13 +56,12 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     XNetTrafficController(LenzCommandStation pCommandStation) {
         mCommandStation = pCommandStation;
         setAllowUnexpectedReply(true);
-        mListenerMasks = new Hashtable<XNetListener, Integer>();
-        HighPriorityQueue = new java.util.concurrent.LinkedBlockingQueue<XNetMessage>();
-        HighPriorityListeners = new java.util.concurrent.LinkedBlockingQueue<XNetListener>();
+        mListenerMasks = new HashMap<>();
+        highPriorityQueue = new LinkedBlockingQueue<>();
+        highPriorityListeners = new LinkedBlockingQueue<>();
     }
 
     // Abstract methods for the XNetInterface
-
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *
@@ -70,16 +70,15 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     @Override
     abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
 
-
     /**
      * Make connection to existing PortController object.
      */
     @Override
     public void connectPort(jmri.jmrix.AbstractPortController p) {
-       super.connectPort(p);
-       if(p instanceof XNetPortController ){
-          this.addXNetListener(XNetInterface.COMMINFO,new XNetTimeSlotListener((XNetPortController)p));
-       }
+        super.connectPort(p);
+        if (p instanceof XNetPortController) {
+            this.addXNetListener(XNetInterface.COMMINFO, new XNetTimeSlotListener((XNetPortController) p));
+        }
     }
 
     /**
@@ -89,8 +88,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      */
     @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
-        if(!(reply instanceof XNetListener) || !(m instanceof XNetMessage)){
-           throw new IllegalArgumentException("");
+        if (!(reply instanceof XNetListener) || !(m instanceof XNetMessage)) {
+            throw new IllegalArgumentException("");
         }
         ((XNetListener) reply).message((XNetMessage) m);
     }
@@ -100,20 +99,20 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * <p>
      * NOTE: this drops the packet if the checksum is bad.
      *
-     * @param m Message to send # @param client is the client getting the
-     *          message
+     * @param client is the client getting the message
+     * @param m      Message to send
      */
     @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
-        if(!(client instanceof XNetListener) || !(m instanceof XNetReply)){
-           throw new IllegalArgumentException("");
+        if (!(client instanceof XNetListener) || !(m instanceof XNetReply)) {
+            throw new IllegalArgumentException("");
         }
         // check parity
         if (!((XNetReply) m).checkParity()) {
-            log.warn("Ignore packet with bad checksum: " + ((XNetReply) m).toString());
+            log.warn("Ignore packet with bad checksum: {}", ((XNetReply) m));
         } else {
             try {
-                int mask = (mListenerMasks.get(client)).intValue();
+                int mask = (mListenerMasks.get((XNetListener) client));
                 if (mask == XNetInterface.ALL) {
                     ((XNetListener) client).message((XNetReply) m);
                 } else if ((mask & XNetInterface.COMMINFO)
@@ -163,13 +162,13 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     // We use the pollMessage routines for high priority messages.
     // This means responses to time critical messages (turnout off messages).
-    java.util.concurrent.LinkedBlockingQueue<XNetMessage> HighPriorityQueue = null;
-    java.util.concurrent.LinkedBlockingQueue<XNetListener> HighPriorityListeners = null;
+    LinkedBlockingQueue<XNetMessage> highPriorityQueue = null;
+    LinkedBlockingQueue<XNetListener> highPriorityListeners = null;
 
     public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener reply) {
         try {
-            HighPriorityQueue.put(m);
-            HighPriorityListeners.put(reply);
+            highPriorityQueue.put(m);
+            highPriorityListeners.put(reply);
         } catch (java.lang.InterruptedException ie) {
             log.error("Interupted while adding High Priority Message to Queue");
         }
@@ -178,10 +177,10 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     @Override
     protected AbstractMRMessage pollMessage() {
         try {
-            if (HighPriorityQueue.peek() == null) {
+            if (highPriorityQueue.peek() == null) {
                 return null;
             } else {
-                return HighPriorityQueue.take();
+                return highPriorityQueue.take();
             }
         } catch (java.lang.InterruptedException ie) {
             log.error("Interupted while removing High Priority Message from Queue");
@@ -192,10 +191,10 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     @Override
     protected AbstractMRListener pollReplyHandler() {
         try {
-            if (HighPriorityListeners.peek() == null) {
+            if (highPriorityListeners.peek() == null) {
                 return null;
             } else {
-                return HighPriorityListeners.take();
+                return highPriorityListeners.take();
             }
         } catch (java.lang.InterruptedException ie) {
             log.error("Interupted while removing High Priority Message Listener from Queue");
@@ -208,20 +207,20 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         addListener(l);
         // This is adds all the mask information.  A better way to do
         // this would be to allow updating individual bits
-        mListenerMasks.put(l, Integer.valueOf(mask));
+        mListenerMasks.put(l, mask);
     }
 
     @Override
     public synchronized void removeXNetListener(int mask, XNetListener l) {
         removeListener(l);
-        // This is removes all the mask information.  A better way to do 
+        // This is removes all the mask information.  A better way to do
         // this would be to allow updating of individual bits
         mListenerMasks.remove(l);
     }
 
     /**
-     * This method has to be available, even though it doesn't do anything
-     * on lenz.
+     * This method has to be available, even though it doesn't do anything on
+     * lenz.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -237,8 +236,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     /**
-     * Check to see if the programmer associated with this
-     * interface is idle or not.
+     * Check to see if the programmer associated with this interface is idle or
+     * not.
      */
     @Override
     protected boolean programmerIdle() {
@@ -250,8 +249,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
             return true;
         }
         XNetProgrammer p = (XNetProgrammer) pm.getGlobalProgrammer();
-        if(p == null) {
-           return true;
+        if (p == null) {
+            return true;
         }
         return !(p.programmerBusy());
     }
@@ -259,12 +258,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         int len = (((XNetReply) msg).getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
-        log.debug("Message Length " + len + " Current Size " + msg.getNumDataElements());
-        if (msg.getNumDataElements() < len) {
-            return false;
-        } else {
-            return true;
-        }
+        log.debug("Message Length {} Current Size {}", len, msg.getNumDataElements());
+        return msg.getNumDataElements() >= len;
     }
 
     @Override
@@ -357,6 +352,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return _FeedbackCache;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
 
 }

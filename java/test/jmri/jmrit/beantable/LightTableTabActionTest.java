@@ -29,6 +29,6 @@ public class LightTableTabActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LightTableTabActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LightTableTabActionTest.class);
 
 }

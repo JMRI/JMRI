@@ -31,6 +31,6 @@ public class PrintSwitchListActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintSwitchListActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintSwitchListActionTest.class);
 
 }

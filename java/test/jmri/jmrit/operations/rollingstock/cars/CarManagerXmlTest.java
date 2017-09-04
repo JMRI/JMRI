@@ -29,6 +29,6 @@ public class CarManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarManagerXmlTest.class);
 
 }

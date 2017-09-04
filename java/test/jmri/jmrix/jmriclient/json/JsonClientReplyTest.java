@@ -29,6 +29,6 @@ public class JsonClientReplyTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientReplyTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientReplyTest.class);
 
 }

@@ -29,6 +29,6 @@ public class PerformActionModelFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PerformActionModelFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PerformActionModelFactoryTest.class);
 
 }

@@ -29,6 +29,6 @@ public class SignalMastTableDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModelTest.class);
 
 }

@@ -249,5 +249,5 @@ public class JUnitAppenderTest extends TestCase {
         
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class);
 }

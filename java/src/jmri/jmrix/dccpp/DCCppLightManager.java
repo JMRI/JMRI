@@ -133,6 +133,6 @@ public class DCCppLightManager extends AbstractLightManager {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class);
 
 }

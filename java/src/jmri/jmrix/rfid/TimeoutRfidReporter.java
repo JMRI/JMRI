@@ -95,6 +95,6 @@ public class TimeoutRfidReporter extends RfidReporter {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(TimeoutRfidReporter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(TimeoutRfidReporter.class);
 
 }

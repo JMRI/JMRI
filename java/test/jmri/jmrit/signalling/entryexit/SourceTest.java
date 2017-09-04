@@ -43,6 +43,6 @@ public class SourceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SourceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SourceTest.class);
 
 }

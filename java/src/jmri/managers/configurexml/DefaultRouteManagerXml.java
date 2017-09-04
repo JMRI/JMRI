@@ -518,5 +518,5 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         return InstanceManager.getDefault(jmri.RouteManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class);
 }

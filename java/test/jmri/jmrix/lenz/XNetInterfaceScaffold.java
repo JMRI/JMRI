@@ -100,7 +100,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class);
 
 }
 

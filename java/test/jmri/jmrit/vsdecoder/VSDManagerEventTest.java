@@ -30,6 +30,6 @@ public class VSDManagerEventTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDManagerEventTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDManagerEventTest.class);
 
 }

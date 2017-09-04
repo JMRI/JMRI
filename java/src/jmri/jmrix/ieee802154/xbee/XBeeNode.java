@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeNode extends IEEE802154Node {
 
-    private String Identifier;
+    private String identifier;
     private HashMap<Integer, NamedBean> pinObjects = null;
     private boolean isPolled;
     private XBeeTrafficController tc = null;
@@ -49,14 +49,14 @@ public class XBeeNode extends IEEE802154Node {
      * Creates a new instance of XBeeNode
      */
     public XBeeNode() {
-        Identifier = "";
+        identifier = "";
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
     }
 
     public XBeeNode(byte pan[], byte user[], byte global[]) {
         super(pan, user, global);
-        Identifier = "";
+        identifier = "";
         if (log.isDebugEnabled()) {
             log.debug("Created new node with panId: "
                     + StringUtil.arrayToString(pan)
@@ -71,7 +71,7 @@ public class XBeeNode extends IEEE802154Node {
 
     public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
-        Identifier = rxd.getNodeID();
+        identifier = rxd.getNodeID();
        
         try{
            setPANAddress(rxd.getPANID());
@@ -260,13 +260,13 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * Get the prefered name for this XBee Node.
      *
-     * @return the Identifier string if it is not blank then a string
-     *         representation of the bytes of the 16 bit address if it is not a
-     *         broadcast address. Otherwise return the 64 bit GUID.
+     * @return the identifier string if it is not blank then a string
+         representation of the bytes of the 16 bit address if it is not a
+         broadcast address. Otherwise return the 64 bit GUID.
      */
     public String getPreferedName() {
-        if (!Identifier.equals("")) {
-            return Identifier;
+        if (!identifier.equals("")) {
+            return identifier;
         } else if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
                 && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return jmri.util.StringUtil.hexStringFromBytes(useraddress);
@@ -298,7 +298,7 @@ public class XBeeNode extends IEEE802154Node {
     public RemoteXBeeDevice getXBee() {
            if( device == null && tc !=null) {
                device = new RemoteXBeeDevice(tc.getXBee(),globalAddress,
-                                    userAddress,Identifier);
+                                    userAddress,identifier);
            }
            return device;
     }
@@ -315,7 +315,7 @@ public class XBeeNode extends IEEE802154Node {
            globalAddress = device.get64BitAddress();
            setUserAddress(rxd.get16BitAddress().getValue());
            setGlobalAddress(rxd.get64BitAddress().getValue());
-           Identifier = rxd.getNodeID();
+           identifier = rxd.getNodeID();
 
     }
 
@@ -570,6 +570,6 @@ public class XBeeNode extends IEEE802154Node {
        return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeNode.class);
 
 }

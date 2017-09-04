@@ -30,6 +30,6 @@ public class CbusDccOpsModeProgrammerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammerTest.class);
 
 }

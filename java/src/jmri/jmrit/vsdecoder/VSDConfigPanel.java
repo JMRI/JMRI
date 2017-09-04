@@ -536,6 +536,6 @@ public class VSDConfigPanel extends JmriPanel {
         updateAddress();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDConfigPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigPanel.class);
 
 }

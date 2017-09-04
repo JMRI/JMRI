@@ -30,6 +30,6 @@ public class EcosPowerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosPowerManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosPowerManagerTest.class);
 
 }

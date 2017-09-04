@@ -219,6 +219,6 @@ public class HexFileFrame extends JmriJFrame {
     }
     private LnHexFilePort port = null;
 
-    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileFrame.class);
 
 }

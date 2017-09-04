@@ -29,6 +29,6 @@ public class JmriSimplePropertyListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriSimplePropertyListenerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriSimplePropertyListenerTest.class);
 
 }

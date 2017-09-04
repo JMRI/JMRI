@@ -29,6 +29,6 @@ public class SCWarrantTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SCWarrantTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SCWarrantTest.class);
 
 }

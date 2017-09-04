@@ -524,5 +524,5 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         NamedIcon icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIcon.class);
 }

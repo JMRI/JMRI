@@ -34,6 +34,6 @@ public class SprogIIUpdateFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogIIUpdateFrameTest.class);
 
 }

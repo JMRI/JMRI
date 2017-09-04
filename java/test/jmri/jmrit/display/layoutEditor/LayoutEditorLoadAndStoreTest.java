@@ -4,6 +4,8 @@ import static jmri.configurexml.LoadAndStoreTestBase.getFiles;
 
 import java.io.File;
 import jmri.configurexml.LoadAndStoreTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -31,5 +33,14 @@ public class LayoutEditorLoadAndStoreTest extends LoadAndStoreTestBase {
 
     public LayoutEditorLoadAndStoreTest(File inFile, boolean inPass) {
         super(inFile, inPass, SaveType.User, true);
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        // since each file tested will open its own windows, just close any
+        // open windows since we can't accurately list them here
+        JUnitUtil.resetWindows(false, false);
+        super.tearDown();
     }
 }

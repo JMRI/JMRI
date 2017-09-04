@@ -334,6 +334,6 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         openButton = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOPanel.class);
 
 }

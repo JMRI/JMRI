@@ -302,7 +302,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         if (opened && !allowConnectionRecovery) {
             return;
         }
-        reconnectwait thread = new reconnectwait();
+        ReconnectWait thread = new ReconnectWait();
         thread.setName("Connection Recovery " + getHostName());
         thread.start();
         try {
@@ -326,7 +326,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     protected void resetupConnection() {
     }
 
-    class reconnectwait extends Thread {
+    class ReconnectWait extends Thread {
 
         public final static int THREADPASS = 0;
         public final static int THREADFAIL = 1;
@@ -336,7 +336,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return _status;
         }
 
-        public reconnectwait() {
+        public ReconnectWait() {
             _status = THREADFAIL;
         }
 
@@ -401,6 +401,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return connTimeout;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class);
 
 }

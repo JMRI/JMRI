@@ -29,6 +29,6 @@ public class EditSwitchListTextActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextActionTest.class);
 
 }

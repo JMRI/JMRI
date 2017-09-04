@@ -30,6 +30,6 @@ public class AutoSaveTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutoSaveTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutoSaveTest.class);
 
 }

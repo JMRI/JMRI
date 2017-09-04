@@ -29,6 +29,6 @@ public class DefaultEditableListModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultEditableListModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultEditableListModelTest.class);
 
 }

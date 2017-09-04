@@ -141,6 +141,6 @@ public class SignalMastRepeater {
         _slave = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeater.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeater.class);
 
 }

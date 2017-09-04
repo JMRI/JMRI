@@ -28,18 +28,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SRCP interface between the JMRI service mode programmer and a network
- * connection
+ * JMRI interface between the JMRI service mode programmer and a network
+ * connection.
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Randall Wood Copyright (C) 2014
- * 
+ *
  */
 public class JsonProgrammerServer extends AbstractProgrammerServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(JsonProgrammerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonProgrammerServer.class);
 
     public JsonProgrammerServer(JmriConnection connection) {
         super();

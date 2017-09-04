@@ -130,6 +130,8 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                    justification="better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         switch (col) {
             case ADDRCOLUMN:
@@ -265,6 +267,6 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         memo.getTrafficController().sendTamsMessage(m, this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoDataModel.class);
 
 }

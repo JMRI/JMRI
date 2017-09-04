@@ -274,6 +274,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
         return node.childrenAccept(this, data);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class);
 
 }

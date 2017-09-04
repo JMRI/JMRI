@@ -401,6 +401,6 @@ public class NceThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceThrottle.class);
 
 }

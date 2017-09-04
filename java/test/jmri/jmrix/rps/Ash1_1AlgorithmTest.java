@@ -47,7 +47,7 @@ public class Ash1_1AlgorithmTest {
         Calculator c = new Ash1_1Algorithm(s, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 3.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 2.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 1.) < 0.001);
@@ -68,7 +68,7 @@ public class Ash1_1AlgorithmTest {
         Calculator c = new Ash1_1Algorithm(s, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 3.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 2.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 1.) < 0.001);
@@ -89,7 +89,7 @@ public class Ash1_1AlgorithmTest {
         Calculator c = new Ash1_1Algorithm(s, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 3.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 2.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 1.) < 0.001);
@@ -110,7 +110,7 @@ public class Ash1_1AlgorithmTest {
         Calculator c = new Ash1_1Algorithm(s, vs);
 
         Measurement m = c.convert(r, new Point3d(1.f, 1.f, 10.f));
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
         Assert.assertEquals("x close", true, Math.abs(m.x - 3.) < 0.001);
         Assert.assertEquals("y close", true, Math.abs(m.y - 2.) < 0.001);
         Assert.assertEquals("z close", true, Math.abs(m.z - 1.) < 0.001);

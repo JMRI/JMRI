@@ -123,20 +123,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     } else if (info.getTrainFromUser()) {
                         tSource = ActiveTrain.USER;
                     }
-                    //block and seq are stored together, split out for use here
-                    String startBlock = info.getStartBlockName().split("-")[0];
-                    int startBlockSeq = Integer.parseInt(info.getStartBlockName().split("-")[1]);
-                    String destinationBlock = info.getDestinationBlockName().split("-")[0];
-                    int destinationBlockSeq = Integer.parseInt(info.getDestinationBlockName().split("-")[1]);
 
                     if (!pathsInited) { //only init the layoutblockpaths once here
                         log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
                     }
-                    
-                    ActiveTrain at = createActiveTrain(info.getTransitName().split("\\(")[0], info.getTrainName(), tSource,
-                            startBlock.split("\\(")[0], startBlockSeq, destinationBlock.split("\\(")[0], destinationBlockSeq,
-                            info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
+                    ActiveTrain at = createActiveTrain(info.getTransitId(), info.getTrainName(), tSource,
+                            info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(), info.getDestinationBlockSeq(),
+                            info.getAutoRun(), info.getDccAddress(), info.getPriority(),
                             info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
@@ -147,7 +141,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
                         at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
-                        at.setDelayedReStart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+                        at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
                         at.setDelaySensor(info.getDelaySensor());
                         if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY)
@@ -266,9 +260,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         try {
             InstanceManager.getDefault(OptionsFile.class).readDispatcherOptions(this);
         } catch (org.jdom2.JDOMException jde) {
-            log.error("JDOM Exception when retreiving dispatcher options " + jde);
+            log.error("JDOM Exception when retrieving dispatcher options " + jde);
         } catch (java.io.IOException ioe) {
-            log.error("I/O Exception when retreiving dispatcher options " + ioe);
+            log.error("I/O Exception when retrieving dispatcher options " + ioe);
         }
     }
 
@@ -2491,6 +2485,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case TRANSIT_COLUMN:
@@ -2855,6 +2851,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DispatcherFrame.class);
 
 }
