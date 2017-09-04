@@ -66,9 +66,10 @@ log4j.appender.A1.Threshold=WARN
 # R is set to output to a log file, but then not used in normal testing
 log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=tests.log
+log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
-log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
-log4j.appender.R.Threshold=TRACE
+log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
+log4j.appender.R.Threshold=DEBUG
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
@@ -90,9 +91,9 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
-# log4j.category.jmri.implementation=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
+# log4j.category.jmri.InstanceManager=DEBUG
+# log4j.category.jmri.implementation.DefaultSignalMastLogic=DEBUG
+# log4j.category.jmri.implementation.SignalSpeedMap=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
