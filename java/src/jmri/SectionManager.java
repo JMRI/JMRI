@@ -153,11 +153,11 @@ public class SectionManager extends AbstractManager<Section> implements Property
 
     public Section getBySystemName(String name) {
         String key = name.toUpperCase();
-        return (Section) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public Section getByUserName(String key) {
-        return (Section) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
