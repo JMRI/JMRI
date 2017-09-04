@@ -348,8 +348,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             }
         }
 
-        /*Once all the preferences have been loaded we can initial the preferences
-         doing it in a thread at this stage means we can let it work in the background*/
+        // Before starting to load preferences, make sure some managers are created.
+        // This is needed because these aren't particularly well-behaved during
+        // creation.
+        InstanceManager.getDefault(jmri.LogixManager.class);
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+
+        // Once all the preferences have been loaded we can initial the preferences
+        // doing it in a thread at this stage means we can let it work in the background
         Runnable r = new Runnable() {
             @Override
             public void run() {
