@@ -93,6 +93,12 @@ log4j.category.jmri.util.I18NTest=DEBUG
 # Needed for jmri.util.Log4JUtilTest
 log4j.category.jmri.util.Log4JUtilTest = WARN
 
+# Make most tests less verbose
+log4j.category.jmri.jmrit=WARN
+log4j.category.jmri.jmrix=WARN
+log4j.category.jmri.progdebugger=WARN
+log4j.category.jmri.script=WARN
+
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
