@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.util.ArrayList;
 import jmri.jmrix.AbstractMRListener;
@@ -34,7 +33,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         super();
 
         // set node range
-        init(0, 127);
+        super.init(0, 127);
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 5;  // default = 25
@@ -53,7 +52,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node
+     * Initialize a CMRI node.
+     *
+     * @param node the node to initialize
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -81,7 +82,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Forward a SerialMessage to all registered SerialInterface listeners.
+     * Forward a message to all registered listeners.
+     *
+     * @param client the listener to receive the message; may throw an uncaught
+     *               exception if not a
+     *               {@link jmri.jmrix.cmri.serial.SerialListener}
+     * @param m      the message to forward; may throw an uncaught exception if
+     *               not a {@link jmri.jmrix.cmri.serial.SerialMessage}
      */
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
@@ -89,7 +96,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Forward a SerialReply to all registered SerialInterface listeners.
+     * Forward a reply to all registered listeners.
+     *
+     * @param client the listener to receive the reply; may throw an uncaught
+     *               exception if not a
+     *               {@link jmri.jmrix.cmri.serial.SerialListener}
+     * @param m      the reply to forward; may throw an uncaught exception if
+     *               not a {@link jmri.jmrix.cmri.serial.SerialMessage}
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
@@ -139,7 +152,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Handles initialization, output and polling for C/MRI Serial Nodes from
-     * within the running thread
+     * within the running thread.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -148,7 +163,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             return null;
         }
 
-        // If total network polling not enabled, exit  c2
+        // If total network polling not enabled, exit
         if (!getPollNetwork()) {
             return null;
         }
@@ -248,7 +263,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Forward a preformatted message to the actual interface.
+     * Forward a pre-formatted message to the actual interface.
+     *
+     * @param m     the message to forward
+     * @param reply the listener for the response to m
      */
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
@@ -261,8 +279,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Override
     @Deprecated
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         log.debug("deprecated setInstance should not have been called");
     }
@@ -304,7 +320,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Add header to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg the output byte stream
+     * @param m   the message in msg
      * @return next location in the stream to fill
      */
     @Override
@@ -318,8 +335,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Add trailer to the outgoing byte stream.
      *
-     * @param msg    The output byte stream
+     * @param msg    the output byte stream
      * @param offset the first byte not yet used
+     * @param m      the message in msg
      */
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
