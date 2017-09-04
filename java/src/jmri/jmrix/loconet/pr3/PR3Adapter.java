@@ -43,16 +43,13 @@ public class PR3Adapter extends LocoBufferAdapter {
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in Mac DIN8; on main connector, this is DTR
-
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
                 + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
@@ -174,5 +171,5 @@ public class PR3Adapter extends LocoBufferAdapter {
         return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }

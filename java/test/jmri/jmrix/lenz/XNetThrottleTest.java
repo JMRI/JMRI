@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +17,7 @@ public class XNetThrottleTest{
 
     private XNetInterfaceScaffold tc = null;
     private XNetSystemConnectionMemo memo = null;
- 
+
     @Test(timeout=1000)
     public void testCtor() {
         XNetThrottle t = new XNetThrottle(memo, tc);
@@ -73,7 +74,7 @@ public class XNetThrottleTest{
 	// Sending the not supported message should make the throttle change
         // to the idle state.
 
-        // now we're going to wait and verify the throttle eventually has 
+        // now we're going to wait and verify the throttle eventually has
         // its status set to idle.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
         jmri.util.JUnitUtil.releaseThread(this);  // give the messages
@@ -151,8 +152,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -240,8 +241,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -318,8 +319,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -411,8 +412,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -495,15 +496,15 @@ public class XNetThrottleTest{
         m.setElement(0, 0x61);
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
-        
+
         n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -587,8 +588,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -673,8 +674,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -760,8 +761,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -847,8 +848,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -933,8 +934,8 @@ public class XNetThrottleTest{
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1161,7 +1162,7 @@ public class XNetThrottleTest{
         int count=0;
         while (n == tc.outbound.size() && count < 1000) {
           count++;
-        } 
+        }
 
         // if the loop exited early, we sent the message, and we
         // shouldn't do that in this case.
@@ -1287,7 +1288,7 @@ public class XNetThrottleTest{
         int count=0;
         while (n == tc.outbound.size() && count < 1000) {
           count++;
-        } 
+        }
 
         // if the loop exited early, we sent the message, and we
         // shouldn't do that in this case.
@@ -1335,8 +1336,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1420,8 +1421,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1505,8 +1506,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1590,8 +1591,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1680,8 +1681,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1794,8 +1795,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1882,8 +1883,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -1970,8 +1971,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -2055,8 +2056,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -2145,8 +2146,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -2235,8 +2236,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -2325,8 +2326,8 @@ public class XNetThrottleTest{
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
-	// Sending the not supported message should make the throttle send a 
-        // request for the high function status information.  
+	// Sending the not supported message should make the throttle send a
+        // request for the high function status information.
         // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -2378,7 +2379,7 @@ public class XNetThrottleTest{
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
@@ -2386,7 +2387,7 @@ public class XNetThrottleTest{
 
     @After
     public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

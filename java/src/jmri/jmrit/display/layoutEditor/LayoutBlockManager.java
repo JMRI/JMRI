@@ -2545,5 +2545,5 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return layoutBlockList;
     }	//getLayoutBlocksOccupiedByRosterEntry
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);
 }

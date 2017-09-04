@@ -2,7 +2,6 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 
-import java.util.*;
 
 /**
  * Lock if a turnout isn't in the desired state.

@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb.swing.monitor;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -77,20 +78,18 @@ public class MonitorFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initConfigureManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
-        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetWindows(false);
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.tearDown();
     }
 }

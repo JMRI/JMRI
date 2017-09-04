@@ -96,7 +96,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SPEED_PROFILE = "speedprofile"; // NOI18N
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class);
 
     // members to remember all the info
     protected String _fileName = null;

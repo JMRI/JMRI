@@ -158,7 +158,7 @@ public class NullAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup NullAudioSource (" + this.getSystemName() + ")");
         }
@@ -170,6 +170,6 @@ public class NullAudioSource extends AbstractAudioSource {
         // do nothing
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class);
 
 }

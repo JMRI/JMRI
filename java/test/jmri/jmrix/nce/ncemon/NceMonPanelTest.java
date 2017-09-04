@@ -1,20 +1,19 @@
 package jmri.jmrix.nce.ncemon;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.AbstractMonPaneScaffold;
+import jmri.jmrix.nce.NceInterfaceScaffold;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceInterfaceScaffold;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JmriJFrame;
-import jmri.jmrix.AbstractMonPaneScaffold;
 
 /**
  * JUnit tests for the NceProgrammer class
@@ -102,8 +101,7 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         NceInterfaceScaffold tc = new NceInterfaceScaffold();
         memo = new NceSystemConnectionMemo();
@@ -115,9 +113,6 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

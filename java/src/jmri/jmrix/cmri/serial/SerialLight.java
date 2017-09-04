@@ -1,9 +1,9 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractLight;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * SerialLight.java
@@ -78,5 +78,5 @@ public class SerialLight extends AbstractLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLight.class);
 }

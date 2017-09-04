@@ -158,6 +158,6 @@ public interface AudioManager extends Manager<Audio> {
     /**
      * Perform any clean-up operations
      */
-    public void cleanUp();
+    public void cleanup();
 
 }

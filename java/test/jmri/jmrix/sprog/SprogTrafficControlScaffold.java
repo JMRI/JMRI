@@ -71,6 +71,6 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class);
 
 }

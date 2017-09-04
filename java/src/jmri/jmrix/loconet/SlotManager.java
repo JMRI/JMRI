@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 import javax.annotation.Nonnull;
-
 import jmri.CommandStation;
 import jmri.ProgListener;
 import jmri.Programmer;
@@ -1176,5 +1175,5 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlotManager.class);
 }

@@ -787,7 +787,7 @@ public class LayoutSlip extends LayoutTurnout {
      * Display popup menu for information and editing
      */
     @Override
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -831,7 +831,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
+                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getId());
                 blockAssigned = true;
             }
             jmi.setEnabled(false);
@@ -874,7 +874,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 // prompt for rotation angle
                                 error = false;
                                 newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                    Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
+                                        Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
                                 if (newAngle.isEmpty()) {
                                     return;  // cancelled
                                 }
@@ -1003,7 +1003,6 @@ public class LayoutSlip extends LayoutTurnout {
     /*====================================*\
     |*      Dialog box to edit slip       *|
     \*====================================*/
-
     // variables for Edit slip Crossing pane
     JButton slipEditDone;
     JButton slipEditCancel;
@@ -1771,7 +1770,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
-    */
+     */
     protected int getConnectivityStateForLayoutBlocks(LayoutBlock thisLayoutBlock, LayoutBlock prevLayoutBlock, LayoutBlock nextLayoutBlock, boolean suppress) {
         int result = Turnout.UNKNOWN;
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();
@@ -1889,5 +1888,5 @@ public class LayoutSlip extends LayoutTurnout {
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
 }

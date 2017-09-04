@@ -162,7 +162,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private boolean _positionable = true;
     private boolean _controlLayout = true;
     private boolean _showHidden = true;
-    private boolean _showTooltip = true;
+    private boolean _showToolTip = true;
 //    private boolean _showCoordinates = true;
 
     final public static int OPTION_POSITION = 1;
@@ -500,7 +500,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void actionPerformed(ActionEvent event) {
         //log.debug("_tooltipTimer actionPerformed: Timer on= {}", (_tooltipTimer!=null));
         if (_tooltipTimer != null) {
-            _tooltip = _tooltipTimer.getTooltip();
+            _tooltip = _tooltipTimer.getToolTip();
             _tooltipTimer.stop();
         }
         if (_tooltip != null) {
@@ -522,7 +522,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             tooltip = tip;
         }
 
-        ToolTip getTooltip() {
+        ToolTip getToolTip() {
             return tooltip;
         }
     }
@@ -770,7 +770,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 case OPTION_HIDDEN:
                     return _showHidden;
                 case OPTION_TOOLTIP:
-                    return _showTooltip;
+                    return _showToolTip;
 //                case OPTION_COORDS:
 //                    return _showCoordinates;
                 default:
@@ -861,15 +861,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _showHidden;
     }
 
-    public void setAllShowTooltip(boolean state) {
-        _showTooltip = state;
+    public void setAllShowToolTip(boolean state) {
+        _showToolTip = state;
         for (Positionable _content : _contents) {
-            _content.setShowTooltip(state);
+            _content.setShowToolTip(state);
         }
     }
 
-    public boolean showTooltip() {
-        return _showTooltip;
+    public boolean showToolTip() {
+        return _showToolTip;
     }
 
     /*
@@ -1073,7 +1073,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setAllEditable(isEditable());
             ed.setAllPositionable(allPositionable());
             //ed.setShowCoordinates(showCoordinates());
-            ed.setAllShowTooltip(showTooltip());
+            ed.setAllShowToolTip(showToolTip());
             ed.setAllControlling(allControlling());
             ed.setShowHidden(isVisible());
             ed.setPanelMenuVisible(frame.getJMenuBar().isVisible());
@@ -1417,20 +1417,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param p     the item to set the menu for
      * @param popup the menu to add for p
      */
-    public void setShowTooltipMenu(Positionable p, JPopupMenu popup) {
+    public void setShowToolTipMenu(Positionable p, JPopupMenu popup) {
         if (p.getDisplayLevel() == BKG) {
             return;
         }
         JMenu edit = new JMenu(Bundle.getMessage("EditTooltip"));
-        JCheckBoxMenuItem showTooltipItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowTooltip"));
-        showTooltipItem.setSelected(p.showTooltip());
-        showTooltipItem.addActionListener(new ActionListener() {
+        JCheckBoxMenuItem showToolTipItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowTooltip"));
+        showToolTipItem.setSelected(p.showToolTip());
+        showToolTipItem.addActionListener(new ActionListener() {
             Positionable comp;
             JCheckBoxMenuItem checkBox;
 
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                comp.setShowTooltip(checkBox.isSelected());
+                comp.setShowToolTip(checkBox.isSelected());
             }
 
             ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
@@ -1438,9 +1438,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 checkBox = cb;
                 return this;
             }
-        }.init(p, showTooltipItem));
-        edit.add(showTooltipItem);
-        edit.add(CoordinateEdit.getTooltipEditAction(p));
+        }.init(p, showToolTipItem));
+        edit.add(showToolTipItem);
+        edit.add(CoordinateEdit.getToolTipEditAction(p));
         jmri.NamedBean bean = p.getNamedBean();
         if (bean != null) {
             edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
@@ -1449,7 +1449,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ToolTip tip = comp.getTooltip();
+                    ToolTip tip = comp.getToolTip();
                     if (tip != null) {
                         String uName = bean.getUserName();
                         String sName = bean.getSystemName();
@@ -1614,7 +1614,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         PositionableLabel l = new PositionableLabel(icon, this);
         l.setPopupUtility(null);        // no text
         l.setPositionable(false);
-        l.setShowTooltip(false);
+        l.setShowToolTip(false);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         l.setDisplayLevel(BKG);
         l.setLocation(getNextBackgroundLeft(), 0);
@@ -1682,8 +1682,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.invalidate();
         l.setPositionable(true);
         l.setVisible(true);
-        if (l.getTooltip() == null) {
-            l.setTooltip(new ToolTip(_defaultToolTip, l));
+        if (l.getToolTip() == null) {
+            l.setToolTip(new ToolTip(_defaultToolTip, l));
         }
         addToTarget(l);
         if (!_contents.add(l)) {
@@ -2627,6 +2627,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return (selectedValue == JOptionPane.YES_OPTION);
     }
 
+    /**
+     * Dispose of the editor.
+     *
+     * @param clear true to discard Positionables; false to retain Positionables
+     *              for future use
+     */
     public void dispose(boolean clear) {
         log.debug("Editor delete and dispose done. clear= {}", clear);
         Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
@@ -2654,7 +2660,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * **************** Mouse Methods **********************
      */
     public void showToolTip(Positionable selection, MouseEvent event) {
-        ToolTip tip = selection.getTooltip();
+        ToolTip tip = selection.getToolTip();
         String txt = tip.getText();
         if (txt == null) {
             tip.setText(selection.getNameString());
@@ -2822,7 +2828,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //                    where = new Point2D.Double(x, y);
                 }
             }
-            Rectangle2D rect2D = MathUtil.scale(MathUtil.RectangleToRectangle2D(rect), _paintScale);
+            Rectangle2D rect2D = MathUtil.scale(MathUtil.rectangleToRectangle2D(rect), _paintScale);
             int level = p.getDisplayLevel();
             if (rect2D.contains(where) && (level > BKG || event.isControlDown())) {
                 boolean added = false;
@@ -3362,5 +3368,5 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Editor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Editor.class);
 }

@@ -3,9 +3,9 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually

@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,10 +9,8 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
-import java.nio.ByteBuffer;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import java.lang.Math;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -375,7 +374,7 @@ class Steam1Sound extends EngineSound {
         this.startThread();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Steam1Sound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Steam1Sound.class);
 
     private static class S1Notch {
 
@@ -554,7 +553,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private static final Logger log = LoggerFactory.getLogger(S1Notch.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(S1Notch.class);
     }
 
     private static class S1LoopThread extends Thread {
@@ -1166,7 +1165,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private static final Logger log = LoggerFactory.getLogger(S1LoopThread.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(S1LoopThread.class);
 
     }
 }

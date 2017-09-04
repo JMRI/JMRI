@@ -2,8 +2,8 @@ package jmri.jmrix.cmri.serial.networkdriver;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
  * Definition of objects to handle configuring a layout connection via a

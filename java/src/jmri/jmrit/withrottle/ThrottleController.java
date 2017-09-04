@@ -36,12 +36,12 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
 
 public class ThrottleController implements ThrottleListener, PropertyChangeListener {
 
@@ -817,6 +817,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);
 
 }

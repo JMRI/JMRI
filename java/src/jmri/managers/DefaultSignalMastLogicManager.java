@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -22,9 +24,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Default implementation of a SignalMastLogicManager.
@@ -585,5 +584,5 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

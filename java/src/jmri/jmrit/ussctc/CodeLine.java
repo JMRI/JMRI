@@ -1,7 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
 import java.util.*;
+import jmri.*;
 /**
  * Drive the code line communications on a USS CTC panel.
  * <p>
@@ -162,5 +162,5 @@ public class CodeLine {
                 }, CODE_SEND_DELAY);
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CodeLine.class);
 }

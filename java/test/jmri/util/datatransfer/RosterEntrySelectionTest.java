@@ -1,11 +1,11 @@
 package jmri.util.datatransfer;
 
+import java.util.ArrayList;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 /**
  * Description: tests for the RosterEntrySelection class
@@ -24,12 +24,12 @@ public class RosterEntrySelectionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

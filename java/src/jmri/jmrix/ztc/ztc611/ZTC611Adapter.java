@@ -1,12 +1,5 @@
 package jmri.jmrix.ztc.ztc611;
 
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
-import purejavacomm.UnsupportedCommOperationException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,6 +11,13 @@ import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to XpressNet via a ZTC611 connected via an FTDI virtual comm
@@ -249,18 +249,12 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = 0; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
-        activeSerialPort.setFlowControlMode(flow);
-        /* if (getOptionState(option2Name).equals(validOption2[0]))
-         setCheckBuffer(true);*/
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -286,6 +280,6 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC611Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class);
 
 }

@@ -40,7 +40,7 @@ public class AnalogClock2DisplayXml
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("scale", "" + p.getScale());
         element.setAttribute("color", "" + p.getColor().name());
-        String link = p.getUrl();
+        String link = p.getURL();
         if (link != null && link.trim().length() > 0) {
             element.setAttribute("link", link);
         }
@@ -87,7 +87,7 @@ public class AnalogClock2DisplayXml
             log.error("failed to convert positional attribute");
         }
         if (element.getAttribute("link") != null) {
-            l.setUrl(element.getAttribute("link").getValue());
+            l.setULRL(element.getAttribute("link").getValue());
         }
         l.setOpaque(false);
         l.update();
@@ -102,5 +102,5 @@ public class AnalogClock2DisplayXml
         ed.putItem(l);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class);
 }

@@ -8,13 +8,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import javax.swing.Icon;
@@ -22,7 +19,6 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
@@ -744,5 +740,5 @@ public class MenuScroller
         }
     }   // enum MenuScrollerIcon
 
-    private final static Logger log = LoggerFactory.getLogger(MenuScroller.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MenuScroller.class);
 }   // class MenuScroller

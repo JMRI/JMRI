@@ -1,11 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
-import org.junit.Assert;
-import org.junit.Test;
+import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.jdom2.Element;
+import org.junit.Test;
 
 /**
  * Tests for the NotchSound class
@@ -37,15 +36,13 @@ public class NotchSoundTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         uut = new NotchSound(null, filename, "sysname", "uname"); // BOUND_MODE
     }
 
     @After
     public void tearDown() {
         uut = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

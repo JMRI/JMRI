@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet;
 
-import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
-
-import org.junit.Assert;
+import jmri.ProgrammingMode;
+import jmri.managers.DefaultProgrammerManager;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 public class LnOpsModeProgrammerTest extends TestCase {
 
@@ -265,6 +265,6 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -35,7 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
         suite.addTest(new JUnit4TestAdapter(ReporterIconTest.class));
         suite.addTest(RpsPositionIconTest.suite());
-        suite.addTest(SensorIconWindowTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SensorIconWindowTest.class));
         suite.addTest(SignalMastIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(SignalSystemTest.class));
         suite.addTest(TurnoutIconWindowTest.suite());
@@ -83,11 +84,11 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

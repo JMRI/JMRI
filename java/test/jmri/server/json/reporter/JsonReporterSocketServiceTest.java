@@ -1,6 +1,5 @@
 package jmri.server.json.reporter;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -100,15 +99,12 @@ public class JsonReporterSocketServiceTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         JUnitUtil.initReporterManager();
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
 }

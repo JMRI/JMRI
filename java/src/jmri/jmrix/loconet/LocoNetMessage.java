@@ -423,6 +423,6 @@ public class LocoNetMessage implements Serializable {
     static char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoNetMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetMessage.class);
 
 }

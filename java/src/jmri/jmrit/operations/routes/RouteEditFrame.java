@@ -95,7 +95,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
         if (_route != null) {
             _route.addPropertyChangeListener(this);
-            routeNameTextField.setText(_route.getName());
+            routeName = _route.getName();
+            routeNameTextField.setText(routeName);
             commentTextField.setText(_route.getComment());
             enableButtons(!route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
             addRouteButton.setEnabled(false); // override and disable
@@ -433,5 +434,5 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteEditFrame.class);
 }

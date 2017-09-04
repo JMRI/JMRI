@@ -2,11 +2,9 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on

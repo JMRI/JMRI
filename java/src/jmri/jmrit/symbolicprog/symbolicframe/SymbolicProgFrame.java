@@ -516,6 +516,6 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class);
 
 }

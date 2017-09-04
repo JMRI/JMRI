@@ -1,6 +1,7 @@
 package jmri.jmrix.internal;
 
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -31,7 +32,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

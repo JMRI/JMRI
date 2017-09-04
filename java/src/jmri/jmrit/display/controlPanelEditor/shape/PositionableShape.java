@@ -19,7 +19,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
@@ -63,7 +62,7 @@ public class PositionableShape extends PositionableJComponent
     public PositionableShape(Editor editor) {
         super(editor);
         setName("Graphic");
-        setShowTooltip(false);
+        setShowToolTip(false);
         setDisplayLevel(ControlPanelEditor.LABELS);
     }
 
@@ -561,5 +560,5 @@ public class PositionableShape extends PositionableJComponent
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableShape.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableShape.class);
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.swing.send;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,8 +23,7 @@ public class OpenLcbCanSendPaneTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         tc = new jmri.jmrix.can.adapters.loopback.LoopbackTrafficController();
@@ -34,7 +34,6 @@ public class OpenLcbCanSendPaneTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

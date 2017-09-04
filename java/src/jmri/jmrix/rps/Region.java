@@ -142,7 +142,7 @@ public class Region {
 
     final Point3d[] points;
 
-    private final static Logger log = LoggerFactory.getLogger(Region.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Region.class);
 }
 
 

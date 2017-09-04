@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
-
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;
@@ -410,5 +409,5 @@ public class ProgDebugger implements AddressedProgrammer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class);
 }

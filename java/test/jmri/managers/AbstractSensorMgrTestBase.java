@@ -102,7 +102,7 @@ public abstract class AbstractSensorMgrTestBase {
         Sensor t2 = l.provideSensor("" + getNumToTest2());
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 

@@ -31,7 +31,7 @@ public class ProgServiceModePaneTest {
         f.pack();
         f.setLocation(0, 0);
         f.setVisible(true);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class ProgServiceModePaneTest {
         f.pack();
         f.setLocation(0, 100);
         f.setVisible(true);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -62,18 +62,16 @@ public class ProgServiceModePaneTest {
         f.pack();
         f.setLocation(0, 200);
         f.setVisible(true);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -1,7 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 /**
  * A Section is the base type for the pieces that make up and are referenced by a {@link jmri.jmrit.ussctc.Station}.
  * <p>

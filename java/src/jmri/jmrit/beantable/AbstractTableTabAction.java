@@ -147,7 +147,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
-        Boolean AddToFrameRan = false;
+        boolean addToFrameRan = false;
         Manager manager;
 
         int bottomBoxIndex; // index to insert extra stuff
@@ -239,11 +239,11 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
 
         public boolean getAdditionsToFrameDone() {
-            return AddToFrameRan;
+            return addToFrameRan;
         }
 
         public void setAddToFrameRan() {
-            AddToFrameRan = true;
+            addToFrameRan = true;
         }
 
         public JTable getDataTable() {
@@ -272,6 +272,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class);
 
 }

@@ -43,9 +43,9 @@ import jmri.server.json.JsonException;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.JmriJFrame;
 import jmri.web.server.WebServerPreferences;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A simple servlet that returns a JMRI window as a PNG image or enclosing HTML
@@ -507,5 +507,5 @@ public class JmriJFrameServlet extends HttpServlet {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class);
 }

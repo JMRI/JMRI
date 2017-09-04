@@ -77,6 +77,6 @@ public class NceThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceThrottleManager.class);
 
 }

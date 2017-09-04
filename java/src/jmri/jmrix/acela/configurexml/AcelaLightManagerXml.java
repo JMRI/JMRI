@@ -1,6 +1,5 @@
 package jmri.jmrix.acela.configurexml;
 
-import jmri.jmrix.acela.AcelaLightManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +37,6 @@ public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLig
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class);
 
 }

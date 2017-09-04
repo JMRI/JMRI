@@ -1,16 +1,12 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
-
-import jmri.jmrit.beantable.LogixTableAction;
-
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -69,16 +65,13 @@ public class ConditionalListEditTest {
     
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initLogixManager();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

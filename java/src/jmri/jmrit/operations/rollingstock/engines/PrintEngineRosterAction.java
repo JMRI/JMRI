@@ -152,5 +152,5 @@ public class PrintEngineRosterAction extends AbstractAction {
         return buf.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class);
 }

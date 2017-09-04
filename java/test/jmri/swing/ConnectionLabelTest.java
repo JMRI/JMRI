@@ -1,20 +1,19 @@
 package jmri.swing;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.ConnectionStatus;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
 import org.junit.Before;
-import org.junit.After;
-import javax.swing.JFrame;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import jmri.jmrix.ConnectionStatus;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.ConnectionLabel class
  *
  * @author	Bob Jacobsen Copyright (c) 2001, 2002
- * @author  Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ConnectionLabelTest {
 
@@ -30,104 +29,113 @@ public class ConnectionLabelTest {
     @Test
     public void checkSuccessColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
-        Assert.assertEquals("Color for Success",java.awt.Color.BLACK,action.getForeground());
+        Assert.assertEquals("Color for Success", java.awt.Color.BLACK, action.getForeground());
     }
 
     @Test
     public void checkUnknownColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UNKNOWN);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UNKNOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         // unknown is currently the same color as up.
-        Assert.assertEquals("Color for Unknown",java.awt.Color.BLACK,action.getForeground());
+        Assert.assertEquals("Color for Unknown", java.awt.Color.BLACK, action.getForeground());
     }
 
     @Test
     public void checkFailColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
-        Assert.assertEquals("Color for Failure",java.awt.Color.RED,action.getForeground());
+        Assert.assertEquals("Color for Failure", java.awt.Color.RED, action.getForeground());
     }
 
     @Test
     public void checkColorOnChangeFromSuccess() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
-        Assert.assertEquals("Color for Failure after success",java.awt.Color.RED,action.getForeground());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        Assert.assertEquals("Color for Failure after success", java.awt.Color.RED, action.getForeground());
     }
 
     @Test
     public void checkColorOnChangeFromFailure() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
-        Assert.assertEquals("Color for Failure after success",java.awt.Color.BLACK,action.getForeground());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        Assert.assertEquals("Color for Failure after success", java.awt.Color.BLACK, action.getForeground());
     }
 
     @Before
-    public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       jmri.util.JUnitUtil.resetInstanceManager();
-       config = new jmri.jmrix.AbstractConnectionConfig(){
-          @Override
-          protected void checkInitDone(){
-          }
-          @Override
-          public void updateAdapter(){
-          }
-          @Override
-          protected void setInstance(){
-          }
-          @Override
-          public String getInfo(){
-             return "foo";
-          }
-          @Override
-          public void loadDetails(final javax.swing.JPanel details){
-          }
-          @Override
-          protected void showAdvancedItems(){
-          }
-          @Override
-          public String getManufacturer(){
-             return "foo";
-          }
+    public void setUp() {
+        JUnitUtil.setUp();
+        config = new jmri.jmrix.AbstractConnectionConfig() {
+            @Override
+            protected void checkInitDone() {
+            }
 
-          @Override
-          public void setManufacturer(String manufacturer){
-          }
-          @Override
-          public String getConnectionName(){
-             return "bar";
-          }
-          @Override
-          public boolean getDisabled(){
-             return false;
-          }
-          @Override
-          public void setDisabled(boolean disabled){
-          }
-          @Override
-          public jmri.jmrix.PortAdapter getAdapter() {
-              return null;
-          }
-          @Override
-          public String name(){ 
-             return "bar";
-          }
-       };
+            @Override
+            public void updateAdapter() {
+            }
+
+            @Override
+            protected void setInstance() {
+            }
+
+            @Override
+            public String getInfo() {
+                return "foo";
+            }
+
+            @Override
+            public void loadDetails(final javax.swing.JPanel details) {
+            }
+
+            @Override
+            protected void showAdvancedItems() {
+            }
+
+            @Override
+            public String getManufacturer() {
+                return "foo";
+            }
+
+            @Override
+            public void setManufacturer(String manufacturer) {
+            }
+
+            @Override
+            public String getConnectionName() {
+                return "bar";
+            }
+
+            @Override
+            public boolean getDisabled() {
+                return false;
+            }
+
+            @Override
+            public void setDisabled(boolean disabled) {
+            }
+
+            @Override
+            public jmri.jmrix.PortAdapter getAdapter() {
+                return null;
+            }
+
+            @Override
+            public String name() {
+                return "bar";
+            }
+        };
     }
 
     @After
-    public void tearDown(){
-       jmri.util.JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

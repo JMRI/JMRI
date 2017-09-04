@@ -5,10 +5,10 @@ import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,9 +99,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // from here down is testing infrastructure
@@ -122,6 +120,6 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class);
 
 }

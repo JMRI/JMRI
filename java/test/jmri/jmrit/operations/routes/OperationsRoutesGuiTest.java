@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
@@ -48,8 +49,8 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         // create edit route frame
         f.routesModel.setValueAt(null, 2, RoutesTableModel.EDIT_COLUMN);
 
-        ref.dispose();
-        f.dispose();
+        JUnitUtil.dispose(ref);
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -116,7 +117,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -133,7 +134,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("route name", "Test Route C", f.routeNameTextField.getText());
         Assert.assertEquals("route comment", "Comment test route C", f.commentTextField.getText());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadLocations() {

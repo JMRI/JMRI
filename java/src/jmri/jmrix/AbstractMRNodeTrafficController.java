@@ -148,5 +148,5 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         nodeArray[numNodes] = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRNodeTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRNodeTrafficController.class);
 }

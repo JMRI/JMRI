@@ -1,13 +1,12 @@
 package jmri.jmrix.ecos.swing.preferences;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of PreferencesFrame
@@ -27,8 +26,7 @@ public class PreferencesFrameTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
 
@@ -36,8 +34,5 @@ public class PreferencesFrameTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

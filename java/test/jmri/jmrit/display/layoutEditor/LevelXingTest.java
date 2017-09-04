@@ -22,21 +22,17 @@ public class LevelXingTest {
         LayoutEditor e = new LayoutEditor();
         LevelXing t = new LevelXing("test", new Point2D.Double(0.0, 0.0),e);
         Assert.assertNotNull("exists", t);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

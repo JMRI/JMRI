@@ -11,8 +11,8 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -403,5 +403,5 @@ abstract public class SprogUpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogUpdateFrame.class.getName());
+            .getLogger(SprogUpdateFrame.class);
 }

@@ -1,9 +1,7 @@
 package jmri.jmris.srcp;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTimeServer class

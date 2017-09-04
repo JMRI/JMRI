@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
@@ -127,7 +125,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         isAutoMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                AutoModeAction();
+                autoModeAction();
             }
         }
         );
@@ -136,7 +134,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         isManualMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                ManualModeAction();
+                manualModeAction();
             }
         }
         );
@@ -271,7 +269,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     /**
      * Toggle Auto Power-up Mode.
      */
-    synchronized void AutoModeAction() {
+    synchronized void autoModeAction() {
         log.debug("Auto Mode Action Called");
         isAutoMode.setSelected(true);
         isManualMode.setSelected(false);
@@ -281,7 +279,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     /**
      * Toggle Manual Power-up Mode.
      */
-    synchronized void ManualModeAction() {
+    synchronized void manualModeAction() {
         log.debug("Manual Mode Action Called");
         isAutoMode.setSelected(false);
         isManualMode.setSelected(true);
@@ -294,6 +292,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LZ100Frame.class);
 
 }

@@ -35,6 +35,6 @@ abstract public class AbstractFrameAction extends AbstractAction {
             log.error("Error starting JFrame " + className + ": " + ex);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(AbstractFrameAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractFrameAction.class);
 
 }

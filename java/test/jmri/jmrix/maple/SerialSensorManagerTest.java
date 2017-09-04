@@ -1,6 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +11,7 @@ import org.junit.Test;
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
-  */
+ */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
@@ -41,8 +42,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace SerialTurnoutManager to make sure nodes start
         // at the beginning
         new SerialTrafficController() {
@@ -60,8 +60,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

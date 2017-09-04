@@ -87,5 +87,5 @@ public class RunTrainAction extends Action {
         // no cancel for this action     
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class);
 }

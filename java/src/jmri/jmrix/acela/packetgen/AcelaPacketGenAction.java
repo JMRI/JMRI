@@ -2,9 +2,9 @@ package jmri.jmrix.acela.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 
 /**
  * Swing action to create and register an AcelaPacketGenFrame object
@@ -38,6 +38,6 @@ public class AcelaPacketGenAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class);
 
 }

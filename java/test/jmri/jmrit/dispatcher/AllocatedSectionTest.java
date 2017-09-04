@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,21 +24,19 @@ public class AllocatedSectionTest {
         jmri.Section section2 = new jmri.Section("TS2");
         AllocatedSection t = new AllocatedSection(section1, at, 1, section2, 2);
         Assert.assertNotNull("exists", t);
-        InstanceManager.getDefault(DispatcherFrame.class).dispose();
+        JUnitUtil.dispose(InstanceManager.getDefault(DispatcherFrame.class));
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AllocatedSectionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AllocatedSectionTest.class);
 }

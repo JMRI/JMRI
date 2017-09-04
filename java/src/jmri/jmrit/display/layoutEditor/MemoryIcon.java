@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -12,12 +13,12 @@ import org.slf4j.LoggerFactory;
  * An icon to display a status of a Memory.
  *
  * This is the same name as display.MemoryIcon, but a very
- * separate class. That's not good. Unfortunately, it's too 
+ * separate class. That's not good. Unfortunately, it's too
  * hard to disentangle that now because it's resident in the
- * panel file that have been written out, so we just annoted 
+ * panel file that have been written out, so we just annotated
  * the fact, but now we want to leave it on the list to fix.
  */
-//@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Cannot rename for user data compatiblity reasons.")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     private String defaultText = " ";
@@ -222,5 +223,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class);
 }

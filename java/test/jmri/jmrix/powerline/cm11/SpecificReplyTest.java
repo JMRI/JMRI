@@ -2,10 +2,11 @@ package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the cm11.SpecficReply class.
@@ -53,15 +54,14 @@ public class SpecificReplyTest extends TestCase {
     }
 
     @Override
-    protected void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    protected void setUp() {
+        JUnitUtil.setUp();
+
     }
 
     @Override
-    protected void tearDown(){
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    protected void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

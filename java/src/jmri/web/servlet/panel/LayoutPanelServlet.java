@@ -3,6 +3,7 @@ package jmri.web.servlet.panel;
 import java.awt.Color;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -17,10 +18,9 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.servlet.http.HttpServlet;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
@@ -52,7 +52,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("width", Integer.toString(editor.getLayoutWidth()));
             panel.setAttribute("panelheight", Integer.toString(editor.getLayoutHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getLayoutWidth()));
-            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
             panel.setAttribute("xscale", Float.toString((float) editor.getXScale()));
             panel.setAttribute("yscale", Float.toString((float) editor.getYScale()));

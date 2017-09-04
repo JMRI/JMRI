@@ -195,8 +195,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             }
             // icon
             _tIon = editor.addTrainIcon(_rl.getName());
-            _tIon.getTooltip().setText(_route.getName());
-            _tIon.getTooltip().setBackgroundColor(Color.white);
+            _tIon.getToolTip().setText(_route.getName());
+            _tIon.getToolTip().setBackgroundColor(Color.white);
             _tIon.setLocation(_rl.getTrainIconX(), _rl.getTrainIconY());
             setTrainIconNameAndColor();
             addIconListener(_tIon);
@@ -330,5 +330,5 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class);
 }

@@ -36,5 +36,5 @@ public class RfidReporterManagerXml extends jmri.managers.configurexml.AbstractR
         return loadReporters(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidReporterManagerXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidReporterManagerXml.class);
 }
