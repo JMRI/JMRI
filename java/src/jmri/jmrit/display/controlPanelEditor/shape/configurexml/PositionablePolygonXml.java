@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionablePolygonXml extends PositionableShapeXml {
 
