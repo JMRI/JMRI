@@ -338,7 +338,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    long signalLogicDelay = 1000L;
+    long signalLogicDelay = 500L;
 
     @Override
     public long getSignalLogicDelay() {
