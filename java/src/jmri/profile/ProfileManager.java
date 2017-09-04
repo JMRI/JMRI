@@ -128,6 +128,18 @@ public class ProfileManager extends Bean {
     }
 
     /**
+     * Convenience method to get the name of the active profile while avoiding,
+     * in many cases, the need to verify the active profile is not null.
+     *
+     * @return the name of the active profile or null if there is no active
+     *         profile
+     */
+    @CheckForNull
+    public String getActiveProfileName() {
+        return activeProfile != null ? activeProfile.getName() : null;
+    }
+
+    /**
      * Set the {@link Profile} to use. This method finds the Profile by path or
      * Id and calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
@@ -228,7 +240,7 @@ public class ProfileManager extends Bean {
             p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
         }
         if (!this.configFile.exists() && !this.configFile.createNewFile()) {
-            throw new IOException("Unable to create file at " + this.getConfigFile().getAbsolutePath()); // NOI18N
+            throw new IOException("Unable to create file at " + (this.configFile != null ? this.configFile.getAbsolutePath() : null)); // NOI18N
         }
         try {
             os = new FileOutputStream(this.getConfigFile());
@@ -743,11 +755,10 @@ public class ProfileManager extends Bean {
         if (exportExternalUserFiles) {
             FileUtil.copy(new File(FileUtil.getUserFilesPath()), tempProfilePath);
             Element fileLocations = doc.getRootElement().getChild("fileLocations"); // NOI18N
-            for (Element fl : fileLocations.getChildren()) {
-                if (fl.getAttribute("defaultUserLocation") != null) { // NOI18N
-                    fl.setAttribute("defaultUserLocation", "profile:"); // NOI18N
-                }
-            }
+            fileLocations.getChildren().stream().filter((fl) -> (fl.getAttribute("defaultUserLocation") != null)) // NOI18N
+                    .forEachOrdered((fl) -> {
+                        fl.setAttribute("defaultUserLocation", "profile:"); // NOI18N
+                    });
         }
         if (exportExternalRoster) {
             FileUtil.copy(new File(Roster.getDefault().getRosterIndexPath()), new File(tempProfilePath, "roster.xml")); // NOI18N
