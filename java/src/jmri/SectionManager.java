@@ -273,15 +273,6 @@ public class SectionManager extends AbstractManager<Section> implements Property
         }
     }
 
-    /**
-     * @deprecated since 4.9.1; use
-     * {@link InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static private SectionManager instance() {
-        return InstanceManager.getDefault(SectionManager.class);
-    }
-
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSection");
