@@ -25,7 +25,7 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= INFO, A1
+log4j.rootCategory= WARN, A1
 
 # Note that many JMRI tests assume that INFO, WARN, ERROR and FATAL will 
 # be logged so that they can test for their presence in specific cases.
@@ -93,11 +93,8 @@ log4j.category.jmri.util.I18NTest=DEBUG
 # Needed for jmri.util.Log4JUtilTest
 log4j.category.jmri.util.Log4JUtilTest = WARN
 
-# Make most tests less verbose
-log4j.category.jmri.jmrit=WARN
-log4j.category.jmri.jmrix=WARN
-log4j.category.jmri.progdebugger=WARN
-log4j.category.jmri.script=WARN
+# Turn on INFO for application tests
+log4j.category.apps.Apps = INFO
 
 # Examples of changing priority of specific categories (classes, packages):
 #
