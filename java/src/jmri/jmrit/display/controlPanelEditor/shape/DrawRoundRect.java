@@ -37,7 +37,7 @@ public class DrawRoundRect extends DrawRectangle {
         _radiusText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_radiusText);
         _radiusText.addActionListener((ActionEvent e) -> {
-            if (!(_shape instanceof PositionablePolygon)) {
+            if (!(_shape instanceof PositionableRoundRect)) {
                 throw new IllegalArgumentException("parameter is not a PositionableRoundRect");
             }
             ((PositionableRoundRect) _shape).setCornerRadius(
@@ -52,7 +52,7 @@ public class DrawRoundRect extends DrawRectangle {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (!(ps instanceof PositionablePolygon)) {
+                if (!(_shape instanceof PositionableRoundRect)) {
                     throw new IllegalArgumentException("parameter is not a PositionableRoundRect");
                 }
                 ((PositionableRoundRect) _shape).setCornerRadius(

@@ -46,7 +46,7 @@ public class PositionableRoundRect extends PositionableRectangle {
 
     @Override
     protected Positionable finishClone(PositionableShape pos) {
-        if (!(pos instanceof PositionablePolygon)) {
+        if (!(pos instanceof PositionableRoundRect)) {
             throw new IllegalArgumentException("parameter is not a PositionableRoundRect");
         }
         ((PositionableRoundRect) pos)._radius = _radius;
