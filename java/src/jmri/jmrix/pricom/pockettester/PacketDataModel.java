@@ -103,6 +103,8 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                        justification="better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         switch (col) {
             case ADDRESSCOLUMN:
