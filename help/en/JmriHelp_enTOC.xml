@@ -300,7 +300,11 @@
 
    <tocitem text="Add/Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
-   <tocitem text="Add/Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
+   <tocitem text="Add/Edit Conditionals using the List Editor " target="package.jmri.jmrit.conditional.ConditionalListEditor"/>
+
+   <tocitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
+
+   <tocitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">
