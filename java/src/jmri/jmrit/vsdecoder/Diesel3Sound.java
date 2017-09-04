@@ -594,16 +594,16 @@ class Diesel3Sound extends EngineSound {
             _sound.unqueueBuffers();
             // Adjust the current notch to match the throttle setting
             log.debug("Notch = " + _notch.getNotch() + " prev = " + _notch.getPrevNotch() + " next = " + _notch.getNextNotch());
-            if (!_notch.isInLimits(_throttle)) {
-                // We're out of whack. Find the right notch for the current throttle setting.
-                while (!_notch.isInLimits(_throttle)) {
-                    if (_throttle > _notch.getAccelLimit()) {
-                        _notch = _parent.getNotch(_notch.getNextNotch());
-                    } else if (_throttle < _notch.getDecelLimit()) {
-                        _notch = _parent.getNotch(_notch.getPrevNotch());
-                    }
+            
+            // If we're out of whack, find the right notch for the current throttle setting.
+            while (!_notch.isInLimits(_throttle)) {
+                if (_throttle > _notch.getAccelLimit()) {
+                    _notch = _parent.getNotch(_notch.getNextNotch());
+                } else if (_throttle < _notch.getDecelLimit()) {
+                    _notch = _parent.getNotch(_notch.getPrevNotch());
                 }
             }
+            
             // Only queue the start buffer if we know we're in the idle notch.
             // This is indicated by prevNotch == self.
             if (_notch.isIdleNotch()) {
