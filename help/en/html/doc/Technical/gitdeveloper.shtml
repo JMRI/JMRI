@@ -105,8 +105,9 @@
     There are several different ways to do that, see the sidebar,
     including 
         <a href="Ant.shtml">using Ant from the command line</a>,
-        <a href="NetBeans.shtml">using the NetBeans IDE</a>, and 
-        <a href="Eclipse.shtml">using the Eclipse IDE</a>.
+        <a href="NetBeans.shtml">using the NetBeans IDE</a>,  
+        <a href="Eclipse.shtml">using the Eclipse IDE</a>, and 
+        <a href="IntelliJ.shtml">using the IntelliJ IDE</a>.
     You use one of those to compile your code and organize it
     so that it can be run, and then to run both the individual
     programs (PanelPro, DecoderPro et al) and various 
