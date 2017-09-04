@@ -758,7 +758,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     }
 
     volatile boolean inWait = false;
-    Thread thr = null;
 
     /*
      * Before going active or checking that we can go active, wait 500ms
@@ -777,32 +776,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
         // The next line forces a single initialization of InstanceManager.getDefault(jmri.SignalMastLogicManager.class)
-        // before launching parallel threads
-        long tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay();
+        // before launching delay
+        int tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay()/2;
         
-        Runnable r = new Runnable() {
-            final long delayTime = tempDelay;
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(delayTime / 2);
-                    jmri.util.ThreadingUtil.runOnLayout(
-                        () -> {setMastAppearance();} );
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                } finally {
-                    inWait = false;
-                }
-            }
-        };
-
-        thr = new Thread(r);
-        thr.setName("DSML.setSignalApp \""+getSourceMast().getDisplayName()+"\"");
-        try {
-            thr.start();
-        } catch (java.lang.IllegalThreadStateException ex) {
-            log.error("exception while starting setSignalAppearance thread: {}", ex.getMessage());
-        }
+        jmri.util.ThreadingUtil.runOnLayoutDelayed(
+            () -> {
+                setMastAppearance();
+                inWait = false;
+            },
+            tempDelay
+        );
+        
     }
 
     /**
@@ -1689,31 +1673,15 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
             // The next line forces a single initialization of InstanceManager.getDefault(jmri.SignalMastLogicManager.class)
             // before launching parallel threads
-            long tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay();
+            int tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay();
 
-            Runnable r = new Runnable() {
-                long delay = tempDelay;
-                @Override
-                public void run() {
-                    try {
-                        //log.debug("wait started");
-                        Thread.sleep(delay);
-                        // log.debug("wait is over");
-                        jmri.util.ThreadingUtil.runOnLayout(
-                            () -> {checkStateDetails();});
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    } finally {
-                        inWait = false;
-                    }
-                }
-            };
-            thr = new Thread(r);
-            thr.setName("DSML.checkState \""+getSourceMast().getDisplayName()+"\" \""+destination.getDisplayName()+"\"");
-            thr.start();
+            jmri.util.ThreadingUtil.runOnLayoutDelayed(
+                () -> {
+                    checkStateDetails();
+                    inWait = false;
+                }, tempDelay
+            );
         }
-
-        Thread thr = null;
 
         /**
          * Check the details of this source-destination signal mast logic pair.
@@ -2410,11 +2378,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         /**
          * Remove references from this Destination Mast and clear lists, so that
          * it can eventually be garbage-collected.
+         * <p>
+         * Note: This does not stop any delayed operations that might be queued.
          */
         void dispose() {
-            if (thr != null) {
-                thr.interrupt();
-            }
             disposed = true;
             clearTurnoutLock();
             destination.removePropertyChangeListener(propertyDestinationMastListener);
@@ -2852,11 +2819,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
     }
 
+    /**
+     * Note: This does not stop any delayed operations that might be queued.
+     */
     @Override
     public void dispose() {
-        if (thr != null) {
-            thr.interrupt();
-        }
         disposing = true;
         getSourceMast().removePropertyChangeListener(propertySourceMastListener);
         Enumeration<SignalMast> en = destList.keys();
