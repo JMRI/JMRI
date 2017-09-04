@@ -67,8 +67,6 @@ public class PanelProTest {
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
-            // ...
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts") != null;}, "last Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
             
@@ -112,8 +110,6 @@ public class PanelProTest {
             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("PanelPro") != null;},"window up");
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
-            // ...
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts") != null;}, "last Info line seen");
 
             // maybe have it run a script to indicate that it's really up?
             
