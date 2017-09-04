@@ -947,7 +947,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             } else { // make smooth speed changes by ramping
                 getBlockSpeedTimes();
             }
-            new Thread(_engineer).start();
+            Thread t = new Thread(_engineer);
+            t.setName("Engineer "+throttle.toString());
+            t.start();
 
             if ((getBlockAt(0).getState() & OBlock.UNDETECTED) != 0) {
                 // user must explicitly start train (resume) in a dark block
