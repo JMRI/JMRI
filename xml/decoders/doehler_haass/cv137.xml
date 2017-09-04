@@ -38,16 +38,19 @@
         <choice>Activated</choice>
         <choice xml:lang="fr">Activé</choice>
         <choice xml:lang="de">Aktiviert</choice>
+        <choice xml:lang="ca">Activat</choice>
       </enumChoice>
       <enumChoice choice="Deactivated (Use ZCLK and ZDAT as AUX instead)" value="1">
         <choice>Deactivated (Use ZCLK and ZDAT as AUX instead)</choice>
         <choice xml:lang="fr">Désactivé (Utiliser ZCLK et ZDAT comme AUX)</choice>
         <choice xml:lang="de">Deaktiviert (ZCLK und ZDAT als AUX nutzen)</choice>
+        <choice xml:lang="ca">Desactivat (ZCLK i ZDAT s'usen com AUX)</choice>
       </enumChoice>
     </enumVal>
     <label>SUSI mode</label>
     <label xml:lang="fr">Mode SUSI</label>
     <label xml:lang="de">SUSI Modus</label>
+    <label xml:lang="ca">Mode SUSI</label>
     <tooltip>bit 0</tooltip>
   </variable>
   <variable CV="137" item="Advanced Group 2 Option 1" mask="XXXXXXVX">
@@ -56,6 +59,7 @@
     <label xml:lang="fr">Désactiver économie d'énergie</label>
     <label xml:lang="de">Energiesparmodus ausschalten</label>
     <label xml:lang="it">Disattiva modalità risparmio energetico</label>
+    <label xml:lang="ca">Desactiva estalvi d'energia</label>
     <tooltip>bit 1</tooltip>
   </variable>
   <variable CV="137" item="Revert SUSI direction" mask="XXXXXVXX" exclude="PD12A_2016.03,PD12A_2016.06">
@@ -63,6 +67,7 @@
     <label>Revert SUSI direction</label>
     <label xml:lang="fr">Inverser sens de marche SUSI</label>
     <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
+	    <label xml:lang="ca">nverteix sentit SUSI</label>
     <tooltip>bit 2</tooltip>
   </variable>
   <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="PD12A_2016.03,PD12A_2016.06">
@@ -76,6 +81,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Extended mapping</label>
     <label xml:lang="de">Erweiterte Funktionszuordnung</label>
+    <label xml:lang="ca">Mapejat estès</label>
     <tooltip>bit4</tooltip>
     <tooltip xml:lang="de">Erweiterte Funktionszuordnungen aktivieren</tooltip>
   </variable>
@@ -86,15 +92,18 @@
       <enumChoice choice="AUX3">
         <choice>AUX3 and AUX4 on ZCLK and ZDAT</choice>
         <choice xml:lang="de">AUX3 und AUX4 an ZCLK und ZDAT</choice>
+        <choice xml:lang="ca">AUX3 i AUX4 en lloc de  ZCLK i ZDAT</choice>
       </enumChoice>
       <enumChoice choice="AUX5">
         <choice>AUX5 and AUX6 on ZCLK and ZDAT</choice>
         <choice xml:lang="de">AUX5 und AUX6 an ZCLK und ZDAT</choice>
+         <choice xml:lang="ca">AUX5 i AUX6 en lloc de  ZCLK i ZDAT</choice>
       </enumChoice>
      </enumChoiceGroup>
     </enumVal>
     <label>AUX on SUSI</label>
     <label xml:lang="de">AUX an SUSI</label>
+    <label xml:lang="ca">AUX en SUSI</label>
     <tooltip>bit5</tooltip>
     <tooltip xml:lang="de">Nur gültig, wenn CV137/Bit 0=1 und Bit 4=1</tooltip>
   </variable>
