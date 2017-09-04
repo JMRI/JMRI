@@ -61,7 +61,7 @@ public class JsonClientHandler {
 
     /**
      * Process a JSON string and handle appropriately.
-     *
+     * <p>
      * Currently JSON strings in four different forms are handled by this
      * method:<ul> <li>list requests in the form:
      * <code>{"type":"list","list":"trains"}</code> or
@@ -100,7 +100,7 @@ public class JsonClientHandler {
 
     /**
      * Process a JSON node and handle appropriately.
-     *
+     * <p>
      * See {@link #onMessage(java.lang.String)} for expected JSON objects.
      *
      * @param root the JSON node.
