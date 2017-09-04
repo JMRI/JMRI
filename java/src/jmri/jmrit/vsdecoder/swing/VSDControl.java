@@ -222,7 +222,7 @@ public class VSDControl extends JPanel {
         soundsPanel.removeAll();
         for (SoundEvent e : elist) {
             if (e.getButton() != null) {
-                log.debug("adding button " + e.getButton().toString());
+                log.debug("adding button " + e.getButton());
                 JComponent jc = e.getButton();
                 GridBagConstraints gbc = new GridBagConstraints();
                 // Force the EngineSoundEvent to the second row.

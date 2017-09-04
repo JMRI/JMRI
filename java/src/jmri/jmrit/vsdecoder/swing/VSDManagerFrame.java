@@ -48,7 +48,6 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import javax.swing.WindowConstants;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.SoundEvent;
@@ -91,8 +90,6 @@ public class VSDManagerFrame extends JmriJFrame {
         // Other GUI
         Mnemonics.put("MuteButton", KeyEvent.VK_M);
         Mnemonics.put("AddButton", KeyEvent.VK_A);
-        Mnemonics.put("CloseButton", KeyEvent.VK_C);
-
     }
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -105,17 +102,13 @@ public class VSDManagerFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    private List<VSDecoder> vsd_list;
-
     /**
      * Constructor
      */
     public VSDManagerFrame() {
         super(false, false);
         config = new VSDConfig();
-        vsd_list = new ArrayList<>();
         this.addPropertyChangeListener(VSDecoderManager.instance());
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         initGUI();
     }
 
@@ -142,7 +135,6 @@ public class VSDManagerFrame extends JmriJFrame {
         volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
         JToggleButton muteButton = new JToggleButton(Bundle.getMessage("MuteButtonLabel"));
         JButton addButton = new JButton(Bundle.getMessage("AddButtonLabel"));
-        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         JSlider volume = new JSlider(0, 100);
         volume.setMinorTickSpacing(10);
         volume.setPaintTicks(true);
@@ -175,32 +167,22 @@ public class VSDManagerFrame extends JmriJFrame {
                 addButtonPressed(e);
             }
         });
-        volumePane.add(closeButton);
-        closeButton.setToolTipText(Bundle.getMessage("MgrCloseButtonToolTip"));
-        closeButton.setMnemonic(Mnemonics.get("CloseButton"));
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeButtonPressed(e);
-            }
-        });
 
         this.add(decoderPane);
         this.add(volumePane);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
+            }
+        });
 
         log.debug("pane size + " + decoderPane.getPreferredSize());
         this.pack();
         this.setVisible(true);
 
         log.debug("done...");
-    }
-
-    /**
-     * Handle "Close" button press
-     */
-    protected void closeButtonPressed(ActionEvent e) {
-        firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
-        dispose();
     }
 
     /**
@@ -226,7 +208,6 @@ public class VSDManagerFrame extends JmriJFrame {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 addButtonPropertyChange(event);
             }
-
         });
         //firePropertyChange(PropertyChangeID.ADD_DECODER, null, null);
     }
@@ -236,17 +217,16 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
-        log.debug("New Config: " + config.toString());
-        VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
-        if (newDecoder == null) {
-            log.debug("no New Decoder constructed!" + config.toString());
-            return;
-        }
+        log.debug("New Config: " + config);
         // If this decoder already exists, don't create a new Control
-        if (vsd_list.contains(newDecoder)) {
+        if (VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
         } else {
-            vsd_list.add(newDecoder);
+            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+            if (newDecoder == null) {
+                log.info("no New Decoder constructed!" + config);
+                return;
+            }
             VSDControl newControl = new VSDControl(config);
             // Set the Decoder to listen to PropertyChanges from the control
             newControl.addPropertyChangeListener(newDecoder);
@@ -287,7 +267,6 @@ public class VSDManagerFrame extends JmriJFrame {
             if (vsd == null) {
                 log.debug("VSD is null.");
             }
-            vsd_list.remove(vsd);
             this.removePropertyChangeListener(vsd);
             log.debug("vsdControlPropertyChange: ID = " + PCIDMap.get(PropertyChangeID.REMOVE_DECODER) + " Old " + ov + " New " + nv);
             firePropertyChange(PropertyChangeID.REMOVE_DECODER, ov, nv);
@@ -368,22 +347,6 @@ public class VSDManagerFrame extends JmriJFrame {
         // add Help menu
         jmri.util.HelpUtil.helpMenu(bar, ref, direct);
         setJMenuBar(bar);
-    }
-
-    /**
-     * Handle window close event
-     */
-    @Override
-    public void windowClosing(java.awt.event.WindowEvent e) {
-        // Call the superclass function
-        //super.windowClosing(e);
-
-        log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
-		
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("MgrQuitMessage", Bundle.getMessage("ButtonClose")));
-
-        log.debug("Calling decoderPane.windowClosing() directly " + e.toString());
-        //decoderPane.windowClosing(e);
     }
 
     // VSDecoderManager Events
