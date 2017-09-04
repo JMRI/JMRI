@@ -6,40 +6,48 @@
     <decVal/>
     <label>Effect LV</label>
     <label xml:lang="de">Effekt LV</label>
+    <label xml:lang="ca">Efecte LV</label>
   </variable>
   <variable item="Effect LR" CV="146" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <decVal max="161"/>
     <label>Effect LR</label>
     <label xml:lang="de">Effekt LR</label>
+    <label xml:lang="ca">Efecte LR</label>
   </variable>
   <variable item="Effect AUX1" CV="147" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <decVal max="161"/>
     <label>Effect AUX1</label>
     <label xml:lang="de">Effekt AUX1</label>
+    <label xml:lang="ca">Efecte  AUX1</label>
   </variable>
   <variable item="Effect AUX2" CV="148" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <decVal max="161"/>
     <label>Effect AUX2</label>
     <label xml:lang="de">Effekt AUX2</label>
+    <label xml:lang="ca">Efecte  AUX2</label>
   </variable>
   <variable item="Effect AUX3" CV="149" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
     <decVal max="161"/>
     <label>Effect AUX3</label>
     <label xml:lang="de">Effekt AUX3</label>
+    <label xml:lang="ca">Efecte  AUX3</label>
   </variable>
   <variable item="Effect AUX4" CV="150" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
     <decVal max="161"/>
     <label>Effect AUX4</label>
     <label xml:lang="de">Effekt AUX4</label>
+    <label xml:lang="ca">Efecte  AUX4</label>
   </variable>
   <variable item="Effect AUX5" CV="151" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
     <decVal max="161"/>
     <label>Effect AUX5</label>
     <label xml:lang="de">Effekt AUX5</label>
+    <label xml:lang="ca">Efecte  AUX5</label>
   </variable>
   <variable item="Effect AUX6" CV="152" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
     <decVal max="161"/>
     <label>Effect AUX6</label>
     <label xml:lang="de">Effekt AUX6</label>
+    <label xml:lang="ca">Efecte  AUX6</label>
   </variable>
 </variables>
