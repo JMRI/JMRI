@@ -786,7 +786,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             public void run() {
                 try {
                     Thread.sleep(delayTime / 2);
-                    setMastAppearance();
+                    jmri.util.ThreadingUtil.runOnLayout(
+                        () -> {setMastAppearance();} );
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 } finally {
@@ -1698,7 +1699,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                         //log.debug("wait started");
                         Thread.sleep(delay);
                         // log.debug("wait is over");
-                        checkStateDetails();
+                        jmri.util.ThreadingUtil.runOnLayout(
+                            () -> {checkStateDetails();});
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     } finally {
