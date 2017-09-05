@@ -67,7 +67,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // As a work-around for backward compatibility, store systemName and username as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 elem.setAttribute("systemName", sname);
-                if (c.getUserName()!=null && !c.getUserName().equals("")) elem.setAttribute("userName", c.getUserName());
+                String uName = c.getUserName();
+                if (uName != null && !uName.isEmpty()) {
+                    elem.setAttribute("userName", uName);
+                }
 
                 elem.addContent(new Element("systemName").addContent(sname));
 
@@ -87,7 +90,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // Don't need a clone for read-only use.
 //                List <ConditionalVariable> variableList = c.getCopyOfStateVariables();
                 List<ConditionalVariable> variableList = ((jmri.implementation.DefaultConditional) c).getStateVariableList();
-                /*                numStateVars += variableList.size();                
+                /*                numStateVars += variableList.size();
                  if (numCond>1190) {
                  partTime = System.currentTimeMillis() - partTime;
                  System.out.println("time to for getCopyOfStateVariables "+partTime+"ms. total stateVariable= "+numStateVars);
@@ -133,7 +136,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     aElem.setAttribute("systemName", action.getDeviceName());
                     aElem.setAttribute("data", Integer.toString(action.getActionData()));
                     // To allow regression of config files back to previous releases
-                    // add "delay" attribute 
+                    // add "delay" attribute
                     try {
                         Integer.parseInt(action.getActionString());
                         aElem.setAttribute("delay", action.getActionString());
@@ -146,7 +149,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 conditionals.addContent(elem);
                 /*				condTime = System.currentTimeMillis() - condTime;
                  if (condTime>1) {
-                 System.out.println(numCond+"th Conditional \""+sname+"\" took "+condTime+"ms to store.");					
+                 System.out.println(numCond+"th Conditional \""+sname+"\" took "+condTime+"ms to store.");
                  }*/
             }
         }
@@ -252,7 +255,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 log.error("Conditional '{}' cannot be created", sysName);
                 continue;
             }
-            
+
             // conditional already exists
             // load common parts
             loadCommon(c, condElem);
@@ -271,10 +274,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             // load state variables, if there are any
             List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
 
-            // Note: Because things like (R1 or R2) and R3) return to positions in the 
+            // Note: Because things like (R1 or R2) and R3) return to positions in the
             // list of state variables, we can't just append when re-reading a conditional;
             // we have to drop any existing ConditionalStateVariables and create a clean, new list.
-            
+
             if (conditionalVarList.size() == 0) {
                 log.warn("No state variables found for conditional " + sysName);
             }
@@ -335,7 +338,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
 
             // Really OK, since a user may use such conditionals to define a reusable
-            // expression of state variables.  These conditions are then used as a 
+            // expression of state variables.  These conditions are then used as a
             // state variable in other conditionals.  (pwc)
             //if (conditionalActionList.size() == 0) {
             //    log.warn("No actions found for conditional "+sysName);
@@ -390,7 +393,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             }
             c.setAction(actionList);
 
-            // 1/16/2011 - trigger for execution of the action list changed to execute each 
+            // 1/16/2011 - trigger for execution of the action list changed to execute each
             // time state is computed.  Formerly execution of the action list was done only
             // when state changes.  All conditionals are upgraded to this new policy.
             // However, for conditionals with actions that toggle on change of state

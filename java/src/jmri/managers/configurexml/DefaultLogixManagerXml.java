@@ -55,7 +55,10 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
 
                 // As a work-around for backward compatibility, store systemName and username as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                if (x.getUserName()!=null && !x.getUserName().equals("")) elem.setAttribute("userName", x.getUserName());
+                String uName = x.getUserName();
+                if (uName != null && !uName.isEmpty()) {
+                    elem.setAttribute("userName", uName);
+                }
 
                 // store common part
                 storeCommon(x, elem);
@@ -149,7 +152,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 log.debug("create logix: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
-            
+
             Logix x = tm.createNewLogix(sysName, userName);
             if (x != null) {
                 // load common part
@@ -201,7 +204,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             if (cmOD != null) {
                 cmOD.deregister(InstanceManager.getDefault(jmri.LogixManager.class));
             }
-                    
+
         }
 
         // register new one with InstanceManager

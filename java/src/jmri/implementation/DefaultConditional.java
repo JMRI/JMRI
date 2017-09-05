@@ -974,6 +974,9 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case Conditional.ACTION_CONTROL_AUDIO:
                         Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(devName);
+                        if (audio == null) {
+                            break;
+                        }
                         if (audio.getSubType() == Audio.SOURCE) {
                             AudioSource audioSource = (AudioSource) audio;
                             switch (action.getActionData()) {

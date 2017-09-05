@@ -325,10 +325,11 @@ public class DefaultLogix extends AbstractNamedBean
                     if (cRef != null) {
                         // re-arrange names as needed
                         var.setName(cRef.getSystemName());      // The state variable reference is now a conditional system name
-                        if (cRef.getUserName() == null || cRef.getUserName().length() < 1) {
+                        String uName = cRef.getUserName();
+                        if (uName == null || uName.isEmpty()) {
                             var.setGuiName(cRef.getSystemName());
                         } else {
-                            var.setGuiName(cRef.getUserName());
+                            var.setGuiName(uName);
                         }
                         // Add the conditional reference to the where used map
                         InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(var.getName(), cName);
@@ -1014,9 +1015,6 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-            //Do nothing at this stage
-
         }
     }
 
