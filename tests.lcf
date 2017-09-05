@@ -95,6 +95,7 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 
 # Turn on INFO for application tests
 log4j.category.apps.Apps = INFO
+log4j.category.apps.PanelPro.PanelPro = INFO
 
 # Examples of changing priority of specific categories (classes, packages):
 #
