@@ -129,6 +129,7 @@ public class JsonClientHandler {
             }
             if (data.isMissingNode()) {
                 this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                return;
             }
             if (root.path(METHOD).isValueNode() && data.path(METHOD).isMissingNode()) {
                 ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
