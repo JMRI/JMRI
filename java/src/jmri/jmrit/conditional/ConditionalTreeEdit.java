@@ -211,8 +211,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void makeEditLogixWindow() {
         _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-//         _editLogixFrame.addHelpMenu(
-//                 "package.jmri.jmrit.conditional.TreeView", true);               // NOI18N  TODO
+        _editLogixFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.ConditionalTreeEditor", true);  // NOI18N
         Container contentPane = _editLogixFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
