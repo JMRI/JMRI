@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for the LayoutEditor
+ * Swing tests for the LayoutEditor
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
  */
