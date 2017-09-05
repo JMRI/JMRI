@@ -33,10 +33,8 @@ import org.slf4j.LoggerFactory;
  * Displays the Activate New Train dialog and processes information entered
  * there.
  * <p>
- * <P>
  * This module works with Dispatcher, which initiates the display of the dialog.
  * Dispatcher also creates the ActiveTrain.
- * <p>
  * <P>
  * This file is part of JMRI.
  * <P>

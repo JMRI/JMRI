@@ -1,0 +1,125 @@
+# Default logging configuration file for JMRI project releases.
+
+# #############################################################
+#  Log4J configuration
+# #############################################################
+
+# Output is sent to system.err, generally a console window.
+# The output info consists of relative time, priority, thread name,
+# category name, nested diagnostic context, the and the message in
+# that order.
+
+# For the general syntax of property based configuration files see the
+# documentation of org.apache.log4j.PropertyConfigurator.
+
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
+
+# The root category is set to log priority INFO and above
+# to the console (A1), to rolling log files (T), and to a single file (R).
+
+# The root category is the only category that is given
+# a default priority. All other categories do not have a default
+# priority, in which case the priority is inherited from the
+# hierarchy.  See the end of the file for examples of how to 
+# control this at a finer level.
+
+log4j.rootCategory= INFO, A1, T, R
+
+# A1 is set to be a ConsoleAppender which outputs to System.err. 
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+
+# A1 writes to system.err to synchronize with e.g. exception traces
+log4j.appender.A1.target=System.err
+
+# A1 uses PatternLayout to control the format of the log messages
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+
+# The conversion pattern uses format specifiers. For details, see
+# the org.apache.log4j.PatternLayout JavaDocs. To summarize:
+#
+# c category, e.g. %c{2} for right-most two tokens
+# C classname of call (slow)
+# d date, e.g. %d{ISO8601}, %d{ABSOLUTE}, %d{DATE}, %d{HH:mm:ss,SSS} 
+#              or %d{dd MMM yyyy HH:mm:ss,SSS}
+# F filename of call (slow)
+# l location, JVM-dependent (extremely slow)
+# m message
+# M method name (slow)
+# n line separator
+# p priority
+# r milliseconds elapsed
+# t thread
+# x nested diagnostic context
+# % the sequence %% emits a single %
+#
+# Justification, padding and truncation can be controlled e.g. %-5.10p 
+# is left justified, at least 5 and no more than 10 characters wide
+
+# log4j.appender.A1.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.A1.layout.ConversionPattern=%d{HH:mm:ss.SSS} %-37.37c{2} %-5p - %m [%t]%n
+
+# R is set to output to a single log file. This is defined
+# for systems that can't (or don't want to) have rolling files.
+log4j.appender.R=org.apache.log4j.FileAppender
+# log4j.appender.R.File=${jmri.log.path}session.log
+log4j.appender.R.File=${jmri.log.path}session.log
+log4j.appender.R.Append=false
+log4j.appender.R.layout=org.apache.log4j.PatternLayout
+log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
+# log4j.appender.R.layout.ConversionPattern=%d{HH:mm:ss.SSS}\t%-37.37c{2} %-5p - %m [%t]%n
+
+# T is set to output to a rolling file.  This only works for certain systems,
+# but manages files in a convenient way.
+# T is defined to preserve messages between sessions and to keep up to #2 NOW four 
+# previous log files in addition to the current.
+log4j.appender.T=org.apache.log4j.RollingFileAppender
+log4j.appender.T.File=${jmri.log.path}messages.log
+log4j.appender.T.Append=true
+log4j.appender.T.layout=org.apache.log4j.PatternLayout
+# log4j.appender.T.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.T.layout.ConversionPattern=%d{HH:mm:ss.SSS}\t%-37.37c{2}\t%-5p - %m [%t]%n
+# log4j.appender.T.MaxFileSize=1000KB
+# log4j.appender.T.MaxBackupIndex=2
+log4j.appender.T.MaxFileSize=2000KB
+log4j.appender.T.MaxBackupIndex=4
+
+# Default Jetty server to only logging WARN since it can be verbose at points
+log4j.category.org.eclipse.jetty=WARN
+log4j.category.org.eclipse.jetty.server.handler=WARN
+
+# Turning off logging for Java Xerces; emits WARNING messages during routine use
+log4j.category.org.jdom2.transform=SEVERE
+
+# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l routinely
+log4j.category.com.strangeberry=OFF
+log4j.category.javax.jmdns=OFF
+
+# Examples of changing priority of specific categories (classes, packages):
+#
+# log4j.category.jmri=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
+# log4j.category.jmri.jmrix.nce=DEBUG
+# log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
+# log4j.category.org.eclipse.jetty=INFO
+
+# The next line is from Steve Todd:
+log4j.category.jmri.jmrix.loconet.locomon.LocoMonPane=TRACE
+# Following lines are from Billybob ...
+log4j.category.jmri.jmrix.loconet.LnThrottleManager=DEBUG
+log4j.category.jmri.jmrix.loconet.LocoNetThrottle=DEBUG
+log4j.category.jmri.jmrix.loconet.SlotManager=DEBUG
+log4j.category.jmri.jmrix.loconet.LocoNetSlot=DEBUG
+log4j.category.jmri.jmrix.loconet.LnTrafficController=DEBUG
+log4j.category.jmri.jmrix.loconet.LocoNetConsist=DEBUG
+log4j.category.jmri.jmrix.loconet.LocoNetConsistManager=DEBUG
+log4j.category.jmri.jmrit.withrottle.ConsistController=DEBUG
+log4j.category.jmri.jmrit.withrottle.ControllerInterface=DEBUG
+log4j.category.jmri.jmrit.withrottle.ThrottleController=DEBUG
+log4j.category.jmri.jmrit.withrottle.WiFiConsistManager=DEBUG
+log4j.category.jmri.jmrit.withrottle.WiFiThrottleManager=DEBUG
+
+log4j.category.jmri.jmrit.jython.exec=DEBUG
