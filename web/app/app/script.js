@@ -45,7 +45,7 @@ angular.module('jmri.app').run(function($rootScope, $translate) {
 
 // add the navigation menu controller to the jmri.app module
 angular.module('jmri.app').controller('NavigationCtrl',
-  function($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications, $translate, $translatePartialLoader, $window) {
+  function($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications, $translate, $translatePartialLoader, $window, $locale) {
 
     // translation
     // for the controller
@@ -122,6 +122,8 @@ angular.module('jmri.app').controller('NavigationCtrl',
       open: function() {
         jmriWebSocket.list('power');
         jmriWebSocket.getRailroad();
+        jmriWebSocket.get('client', {});
+        jmriWebSocket.post('locale', {locale: $locale.id});
       },
       power: function(data, method) {
         $log.debug('got ' + (data.default ? 'default ' : '') + 'power ' + data.name + " (" + data.state + ")");
@@ -150,8 +152,12 @@ angular.module('jmri.app').controller('NavigationCtrl',
       close: function() {
         $scope.stopHeartbeat();
       },
+      client: function(data, method) {
+        $log.debug("Got client " + data.client);
+        $rootScope.clientId = data.client;
+      },
       railroad: function(data, method) {
-        $log.debug("Got " + data);
+        $log.debug("Got railroad " + data.name);
         $rootScope.railroad = data.name;
         $window.document.title = data.name;
       }
