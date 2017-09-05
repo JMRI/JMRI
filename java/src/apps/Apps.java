@@ -356,8 +356,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initial the preferences
-        // doing it in a thread at this stage means we can let it work in the background
+        // Once all the preferences have been loaded we can initial the preferences.
+        // Doing it in a thread at this stage means we can let it work in the background.
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -372,6 +372,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         };
         Thread thr = new Thread(r, "init prefs");
         thr.start();
+
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         r = new Runnable() {
             @Override
@@ -400,6 +401,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Thread thr3 = new Thread(r, "initialize python interpreter");
             thr3.start();
         }
+
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);
         if (!configOK || !configDeferredLoadOK) {
