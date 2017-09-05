@@ -92,11 +92,9 @@ public class LayoutSlip extends LayoutTurnout {
     /**
      * constructor method
      */
-    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor myPanel, int type) {
-        instance = this;
-        layoutEditor = myPanel;
-        ident = id;
-        center = c;
+    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, int type) {
+        super(id, c, layoutEditor);
+
         dispA = new Point2D.Double(-20.0, 0.0);
         pointA = MathUtil.add(center, dispA);
         pointC = MathUtil.subtract(center, dispA);
@@ -250,71 +248,109 @@ public class LayoutSlip extends LayoutTurnout {
      * disabled
      */
     public void toggleState(int selectedPointType) {
-        switch (selectedPointType) {
-            case SLIP_LEFT: {
-                switch (currentState) {
-                    case STATE_AC: {
-                        if (type == SINGLE_SLIP) {
+        if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            switch (selectedPointType) {
+                case SLIP_LEFT: {
+                    switch (currentState) {
+                        case STATE_AC: {
+                            if (type == SINGLE_SLIP) {
+                                currentState = STATE_BD;
+                            } else {
+                                currentState = STATE_BC;
+                            }
+                            break;
+                        }
+                        case STATE_AD: {
                             currentState = STATE_BD;
-                        } else {
-                            currentState = STATE_BC;
+                            break;
                         }
-                        break;
-                    }
-                    case STATE_AD: {
-                        currentState = STATE_BD;
-                        break;
-                    }
-                    case STATE_BC:
-                    default: {
-                        currentState = STATE_AC;
-                        break;
-                    }
-                    case STATE_BD: {
-                        currentState = STATE_AD;
-                        break;
-                    }
-                }
-                break;
-            }
-            case SLIP_RIGHT: {
-                switch (currentState) {
-                    case STATE_AC: {
-                        currentState = STATE_AD;
-                        break;
-                    }
-                    case STATE_AD: {
-                        currentState = STATE_AC;
-                        break;
-                    }
-                    case STATE_BC:
-                    default: {
-                        currentState = STATE_BD;
-                        break;
-                    }
-                    case STATE_BD: {
-                        if (type == SINGLE_SLIP) {
+                        case STATE_BC:
+                        default: {
                             currentState = STATE_AC;
-                        } else {
-                            currentState = STATE_BC;
+                            break;
                         }
-                        break;
+                        case STATE_BD: {
+                            currentState = STATE_AD;
+                            break;
+                        }
                     }
+                    break;
                 }
-                break;
-            }
-        }   // switch
-        setSlipState(turnoutStates.get(currentState));
+                case SLIP_RIGHT: {
+                    switch (currentState) {
+                        case STATE_AC: {
+                            currentState = STATE_AD;
+                            break;
+                        }
+                        case STATE_AD: {
+                            currentState = STATE_AC;
+                            break;
+                        }
+                        case STATE_BC:
+                        default: {
+                            currentState = STATE_BD;
+                            break;
+                        }
+                        case STATE_BD: {
+                            if (type == SINGLE_SLIP) {
+                                currentState = STATE_AC;
+                            } else {
+                                currentState = STATE_BC;
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }   // switch
+            setSlipState(turnoutStates.get(currentState));
+        }
     }
 
-    void setSlipState(TurnoutState ts) {
-        if (getTurnout() != null) {
-            getTurnout().setCommandedState(ts.getTurnoutAState());
-        }
-        if (getTurnoutB() != null) {
-            getTurnoutB().setCommandedState(ts.getTurnoutBState());
+    private void setSlipState(TurnoutState ts) {
+        if (disableWhenOccupied && isOccupied()) {
+            log.debug("Turnout not changed as Block is Occupied");
+        } else if (!disabled) {
+            if (getTurnout() != null) {
+                getTurnout().setCommandedState(ts.getTurnoutAState());
+            }
+            if (getTurnoutB() != null) {
+                getTurnoutB().setCommandedState(ts.getTurnoutBState());
+            }
         }
     }
+
+    /**
+     * is this turnout occupied?
+     *
+     * @return true if occupied
+     */
+    private boolean isOccupied() {
+        Boolean result = false; // assume failure (pessimist!)
+        switch (currentState) {
+            case STATE_AC: {
+                result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+            case STATE_AD: {
+                result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+            case STATE_BC: {
+                result = ((blockB.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+            case STATE_BD: {
+                result = ((blockB.getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
+        }
+        return result;
+    }   // isOccupied()
 
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
@@ -800,17 +836,14 @@ public class LayoutSlip extends LayoutTurnout {
             JMenuItem jmi = null;
             switch (type) {
                 case SINGLE_SLIP: {
-                    jmi = popup.add(rb.getString("LayoutSingleSlip"));
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutSingleSlip")) + ident);
                     break;
                 }
                 case DOUBLE_SLIP: {
-                    jmi = popup.add(rb.getString("LayoutDoubleSlip"));
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutDoubleSlip")) + ident);
                     break;
                 }
             }
-            jmi.setEnabled(false);
-
-            jmi = popup.add(ident);
             jmi.setEnabled(false);
 
             if (getTurnout() == null) {
@@ -831,30 +864,94 @@ public class LayoutSlip extends LayoutTurnout {
             if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getId());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block.getDisplayName());
                 blockAssigned = true;
             }
             jmi.setEnabled(false);
+
+            // if there are any track connections
+            if ((connectA != null) || (connectB != null)
+                    || (connectC != null) || (connectD != null)) {
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+                if (connectA != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectA).getName());
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                        }
+                    });
+                }
+                if (connectB != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack) connectB).getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectB).getName());
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                        }
+                    });
+                }
+                if (connectC != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack) connectC).getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectC).getName());
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                        }
+                    });
+                }
+                if (connectD != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack) connectD).getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectD).getName());
+                            layoutEditor.setSelectionRect(lt.getBounds());
+                        }
+                    });
+                }
+                popup.add(connectionsMenu);
+            }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setHidden(hiddenCheckBoxMenuItem.isSelected());
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+                setHidden(o.isSelected());
+            });
+
+            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+            cbmi.setSelected(disabled);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
+                setDisabled(o.isSelected());
+            });
+
+            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            cbmi.setSelected(disableWhenOccupied);
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
+                setDisableWhenOccupied(o.isSelected());
             });
 
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLayoutSlip(instance);
+                    editLayoutSlip(LayoutSlip.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutSlip(instance)) {
+                    if (layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -902,12 +999,12 @@ public class LayoutSlip extends LayoutTurnout {
                 AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools.setSlipFromMenu((LayoutSlip) instance,
+                        tools.setSignalsAtSlipFromMenu(LayoutSlip.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                if (tools.addLayoutSlipSignalHeadInfoToMenu(instance, jm)) {
+                if (tools.addLayoutSlipSignalHeadInfoToMenu(LayoutSlip.this, jm)) {
                     jm.add(ssaa);
                     popup.add(jm);
                 } else {
@@ -928,13 +1025,13 @@ public class LayoutSlip extends LayoutTurnout {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools.setSignalMastsAtSlipFromMenu((LayoutSlip) instance, boundaryBetween, layoutEditor.signalFrame);
+                        tools.setSignalMastsAtSlipFromMenu(LayoutSlip.this, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools.setSensorsAtSlipFromMenu((LayoutSlip) instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                        tools.setSensorsAtSlipFromMenu(LayoutSlip.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
             }

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableShapeXml extends AbstractXmlAdapter {
 
@@ -174,7 +174,6 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         ps.setLineColor(getColor(element, "lineColor", alpha));
         ps.setFillColor(getColor(element, "fillColor", alpha));
 
-        ps.makeShape();
         ps.rotate(getInt(element, "degrees"));
 
         a = element.getAttribute("hideOnSensor");
@@ -186,7 +185,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         try {
             changeLevel = getInt(element, "changeLevelOnSensor");
         } catch (Exception e) {
-            log.error("failed to get changeLevel attribute ex= " + e);
+            log.error("failed to get changeLevel attribute ex= {}", e.getMessage());
         }
         try {
             Attribute attr = element.getAttribute("controlSensor");
@@ -220,7 +219,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 return new Color(red, green, blue, alpha);
             }
         } catch (DataConversionException e) {
-            log.warn("failed to convert color attribute for " + name + " - " + e);
+            log.warn("failed to convert color attribute for {} - {}", name, e);
         }
         return null;
     }
@@ -233,7 +232,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 return num;
             }
         } catch (DataConversionException e) {
-            log.error("failed to convert integer attribute for " + name + " - " + e);
+            log.error("failed to convert integer attribute for {} - {}", name, e);
         }
         return 0;
     }
@@ -246,7 +245,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 return num;
             }
         } catch (DataConversionException e) {
-            log.error("failed to convert integer attribute for " + name + " - " + e);
+            log.error("failed to convert integer attribute for {} - {}", name, e);
         }
         return 0;
     }

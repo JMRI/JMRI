@@ -95,79 +95,76 @@ public class LayoutEditorTools {
     public LayoutEditorTools(LayoutEditor thePanel) {
         layoutEditor = thePanel;
 
-        // defer these actions until all these actually exist...
-        SwingUtilities.invokeLater(() -> {
-            LayoutEditor.setupComboBox(turnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutComboBox, true, true);
 
-            LayoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(block1IDComboBox, true, true);
-            LayoutEditor.setupComboBox(block2IDComboBox, true, true);
+        LayoutEditor.setupComboBox(block1IDComboBox, true, true);
+        LayoutEditor.setupComboBox(block2IDComboBox, true, true);
 
-            LayoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1ComboBox, true, true);
-            LayoutEditor.setupComboBox(a2ComboBox, true, true);
-            LayoutEditor.setupComboBox(b1ComboBox, true, true);
-            LayoutEditor.setupComboBox(b2ComboBox, true, true);
-            LayoutEditor.setupComboBox(c1ComboBox, true, true);
-            LayoutEditor.setupComboBox(c2ComboBox, true, true);
-            LayoutEditor.setupComboBox(d1ComboBox, true, true);
-            LayoutEditor.setupComboBox(d2ComboBox, true, true);
+        LayoutEditor.setupComboBox(a1ComboBox, true, true);
+        LayoutEditor.setupComboBox(a2ComboBox, true, true);
+        LayoutEditor.setupComboBox(b1ComboBox, true, true);
+        LayoutEditor.setupComboBox(b2ComboBox, true, true);
+        LayoutEditor.setupComboBox(c1ComboBox, true, true);
+        LayoutEditor.setupComboBox(c2ComboBox, true, true);
+        LayoutEditor.setupComboBox(d1ComboBox, true, true);
+        LayoutEditor.setupComboBox(d2ComboBox, true, true);
 
-            LayoutEditor.setupComboBox(blockAComboBox, true, true);
-            LayoutEditor.setupComboBox(blockCComboBox, true, true);
+        LayoutEditor.setupComboBox(blockAComboBox, true, true);
+        LayoutEditor.setupComboBox(blockCComboBox, true, true);
 
-            LayoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
-            LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
+        LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
+        LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
-            LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
 
-            LayoutEditor.setupComboBox(xingBlockAComboBox, true, true);
-            LayoutEditor.setupComboBox(xingBlockCComboBox, true, true);
+        LayoutEditor.setupComboBox(xingBlockAComboBox, true, true);
+        LayoutEditor.setupComboBox(xingBlockCComboBox, true, true);
 
-            LayoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
 
-            LayoutEditor.setupComboBox(xingSensorsBlockAComboBox, true, true);
-            LayoutEditor.setupComboBox(xingSensorsBlockCComboBox, true, true);
+        LayoutEditor.setupComboBox(xingSensorsBlockAComboBox, true, true);
+        LayoutEditor.setupComboBox(xingSensorsBlockCComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
-        });
+        LayoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
     }
 
     /**
@@ -2632,7 +2629,7 @@ public class LayoutEditorTools {
         if (!xoverFromMenu) {
             //TODO: convert to use turnout ComboBox
             xoverTurnoutName = JOptionPane.showInputDialog(layoutEditor,
-                Bundle.getMessage("MakeLabel", rb.getString("EnterXOverTurnout")));
+                    Bundle.getMessage("MakeLabel", rb.getString("EnterXOverTurnout")));
             if (xoverTurnoutName.length() < 3) {
                 return;	 // cancelled
             }
@@ -2672,7 +2669,7 @@ public class LayoutEditorTools {
             });
             getSavedXoverSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
-                        
+
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
@@ -3703,7 +3700,7 @@ public class LayoutEditorTools {
             });
             getSavedXingSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
-                        
+
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
@@ -4458,7 +4455,7 @@ public class LayoutEditorTools {
     private SignalHead d1TToTHead = null;
     private SignalHead d2TToTHead = null;
 
-    public void setThroatToThroatFromMenu(LayoutTurnout to, String linkedTurnoutName,
+    public void setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout to, String linkedTurnoutName,
             MultiIconEditor theEditor, JFrame theFrame) {
         ttotFromMenu = true;
         ttotTurnoutName1 = to.getTurnoutName();
@@ -4473,10 +4470,10 @@ public class LayoutEditorTools {
         d1TToTSignalHeadComboBox.setText("");
         d2TToTSignalHeadComboBox.setText("");
 
-        setSignalsAtTToTTurnouts(theEditor, theFrame);
+        setSignalsAtThroatToThroatTurnouts(theEditor, theFrame);
     }
 
-    public void setSignalsAtTToTTurnouts(MultiIconEditor theEditor, JFrame theFrame) {
+    public void setSignalsAtThroatToThroatTurnouts(MultiIconEditor theEditor, JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
         if (setSignalsAtTToTOpen) {
@@ -4532,7 +4529,7 @@ public class LayoutEditorTools {
             getSavedTToTSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel20);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-                       
+
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
             panel2a.add(setPlaceAllHeads);
@@ -5854,7 +5851,7 @@ public class LayoutEditorTools {
     private SignalHead c3WayHead = null;	// saved in B1 of Turnout B - at continuing
     private SignalHead d3WayHead = null;	// saved in C1 of Turnout B - at diverging B
 
-    public void set3WayFromMenu(String aName, String bName,
+    public void setSignalsAt3WayTurnoutFromMenu(String aName, String bName,
             MultiIconEditor theEditor, JFrame theFrame) {
         turnoutAComboBox.setText(aName);
         turnoutBComboBox.setText(bName);
@@ -5908,7 +5905,7 @@ public class LayoutEditorTools {
             });
             getSaved3WaySignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
-                       
+
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
@@ -11950,7 +11947,7 @@ public class LayoutEditorTools {
     private JPanel dblSlipB2SigPanel;
     private boolean slipSignalFromMenu = false;
 
-    public void setSlipFromMenu(LayoutSlip ls,
+    public void setSignalsAtSlipFromMenu(LayoutSlip ls,
             MultiIconEditor theEditor, JFrame theFrame) {
         layoutSlip = ls;
         a1SlipSignalHeadComboBox.setText("");
@@ -12016,7 +12013,7 @@ public class LayoutEditorTools {
             });
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-                     
+
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
             panel2a.add(setPlaceAllHeads);

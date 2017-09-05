@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -122,9 +123,14 @@ public class SensorIconWindowTest {
             return sn.getState() != Sensor.UNKNOWN;
         }, "state not still unknown after one click");
 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
+        // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
-            return sn.getState() == Sensor.INACTIVE;
-        }, "state after one click");
+            return sn.getState() != Sensor.UNKNOWN;
+        }, "state not still unknown after one click");
+
+        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
 
         // Click icon change state to inactive
         co.clickMouse(xloc,yloc,1);
