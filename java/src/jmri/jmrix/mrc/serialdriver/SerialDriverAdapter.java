@@ -55,12 +55,8 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();//IN18N
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -89,7 +85,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (UnsupportedCommOperationException | IOException ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);//IN18N
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;//IN18N
@@ -168,6 +164,6 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
 
     protected String[] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};//IN18N
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

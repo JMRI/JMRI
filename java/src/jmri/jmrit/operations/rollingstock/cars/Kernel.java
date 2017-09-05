@@ -40,5 +40,5 @@ public class Kernel extends RollingStockGroup {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Kernel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Kernel.class);
 }

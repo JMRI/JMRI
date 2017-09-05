@@ -113,6 +113,6 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         tm = null;
         super.dispose();
-
     }
+
 }

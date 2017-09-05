@@ -3,6 +3,7 @@ package jmri.jmrit.operations.automation;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -106,7 +107,7 @@ public class AutomationTableFrameTest extends OperationsSwingTestCase {
                 "The 1st item: getId() was 1c1");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -178,7 +179,7 @@ public class AutomationTableFrameTest extends OperationsSwingTestCase {
         pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), "Yes");
         Assert.assertEquals(0, InstanceManager.getDefault(AutomationManager.class).getSize());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -210,7 +211,7 @@ public class AutomationTableFrameTest extends OperationsSwingTestCase {
         pressDialogButton(f, Bundle.getMessage("DeleteAutomation?"), "No");
         Assert.assertEquals(1, InstanceManager.getDefault(AutomationManager.class).getSize());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

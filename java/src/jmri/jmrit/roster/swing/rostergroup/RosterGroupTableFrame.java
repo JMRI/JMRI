@@ -1,7 +1,6 @@
 package jmri.jmrit.roster.swing.rostergroup;
 
 import java.awt.Component;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;

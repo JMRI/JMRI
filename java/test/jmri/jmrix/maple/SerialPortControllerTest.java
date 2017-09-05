@@ -15,8 +15,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        SerialTrafficController tc = new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
@@ -63,8 +62,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

@@ -1689,8 +1689,9 @@
       <b>Track Color:</b> selection box, and select the occupied
       track color in the <b>Occupied Track Color:</b> selection
       box. An alternate unoccupied track color is provided for
-      special uses. For example, Dispatcher has an option to use
-      the alternate unoccupied track color for blocks that are
+      special uses. For example, <a href=
+      "../dispatcher/Dispatcher.shtml">Dispatcher</a> has an option
+      to use the alternate unoccupied track color for blocks that are
       allocated but unoccupied. Set the alternate unoccupied track
       color using the <b>Alternate Track Color:</b> selection box.
       When track color is set, Layout Editor will use the occupied

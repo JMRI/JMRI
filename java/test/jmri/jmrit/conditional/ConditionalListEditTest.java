@@ -1,16 +1,12 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
-
-import jmri.jmrit.beantable.LogixTableAction;
-
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -30,7 +26,7 @@ public class ConditionalListEditTest {
     @Test
     public void addConditionalTest() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConditionalListEdit cdlList = new ConditionalListEdit("IX101");
+        ConditionalListEdit cdlList = new ConditionalListEdit("IX101");  // NOI18N
 
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(editFrame);
@@ -69,8 +65,7 @@ public class ConditionalListEditTest {
     
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
@@ -78,7 +73,6 @@ public class ConditionalListEditTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

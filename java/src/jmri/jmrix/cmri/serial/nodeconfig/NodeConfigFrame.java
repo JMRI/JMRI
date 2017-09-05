@@ -3,7 +3,6 @@ package jmri.jmrix.cmri.serial.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -1109,6 +1108,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private boolean[] searchlightBits = new boolean[48];   // true if this bit is a searchlight bit
     private boolean[] firstSearchlight = new boolean[48];  // true if first of a pair of searchlight bits
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

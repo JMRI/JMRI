@@ -23,9 +23,9 @@ public class WiFiConsist extends NmraConsist {
 
     @Override
     public void remove(DccLocoAddress loco) {
-        ConsistDir.remove(loco);
-        ConsistList.remove(loco);
-        ConsistPosition.remove(loco);
+        consistDir.remove(loco);
+        consistList.remove(loco);
+        consistPosition.remove(loco);
         sendConsistCommand(loco, true, null);
     }
 
@@ -54,6 +54,6 @@ public class WiFiConsist extends NmraConsist {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WiFiConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiFiConsist.class);
 
 }

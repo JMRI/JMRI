@@ -6,8 +6,8 @@
 package jmri.jmrix.dccpp.swing;
 
 import java.util.Iterator;
-import javax.swing.table.AbstractTableModel;
 import java.util.Vector;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *

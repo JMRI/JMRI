@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Content;
@@ -863,6 +862,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _status = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class);
 
 }

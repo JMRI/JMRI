@@ -44,7 +44,6 @@ public class OperationsTestCase extends TestCase {
         super.tearDown();
         // restore locale
         Locale.setDefault(Locale.getDefault());
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

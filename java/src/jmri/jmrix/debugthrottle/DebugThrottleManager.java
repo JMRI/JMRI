@@ -82,6 +82,6 @@ public class DebugThrottleManager extends AbstractThrottleManager {
                 | DccThrottle.SpeedStepMode14);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class);
 
 }

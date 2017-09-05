@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
- *
-*/
+ */
 public class LayoutEditorFindItems {
 
     private LayoutEditor layoutEditor;
@@ -26,7 +25,7 @@ public class LayoutEditorFindItems {
             return null;
         }
         for (TrackSegment t : layoutEditor.trackList) {
-            if (t.getID().equals(name)) {
+            if (t.getId().equals(name)) {
                 return t;
             }
         }
@@ -38,7 +37,7 @@ public class LayoutEditorFindItems {
             return null;
         }
         for (PositionablePoint p : layoutEditor.pointList) {
-            if (p.getID().equals(name)) {
+            if (p.getId().equals(name)) {
                 return p;
             }
         }
@@ -416,7 +415,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
         LayoutTurnout result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getName().equals(name)) {
                     result = t;
@@ -429,7 +428,7 @@ public class LayoutEditorFindItems {
 
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
         LayoutTurnout result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getTurnoutName().equals(name)) {
                     result = t;
@@ -441,9 +440,9 @@ public class LayoutEditorFindItems {
 
     public LevelXing findLevelXingByName(String name) {
         LevelXing result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LevelXing x : layoutEditor.xingList) {
-                if (x.getID().equals(name)) {
+                if (x.getId().equals(name)) {
                     result = x;
                     break;
                 }
@@ -454,7 +453,7 @@ public class LayoutEditorFindItems {
 
     public LayoutSlip findLayoutSlipByName(String name) {
         LayoutSlip result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutSlip x : layoutEditor.slipList) {
                 if (x.getName().equals(name)) {
                     result = x;
@@ -467,9 +466,9 @@ public class LayoutEditorFindItems {
 
     public LayoutTurntable findLayoutTurntableByName(String name) {
         LayoutTurntable result = null;
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             for (LayoutTurntable x : layoutEditor.turntableList) {
-                if (x.getID().equals(name)) {
+                if (x.getId().equals(name)) {
                     result = x;
                     break;
                 }
@@ -538,6 +537,7 @@ public class LayoutEditorFindItems {
 
     /**
      * find object by name
+     *
      * @param name the name of the object that you are looking for
      * @return object the named object
      */
@@ -550,7 +550,7 @@ public class LayoutEditorFindItems {
     // code you would just call this method instead.
     public Object findObjectByName(String name) {
         Object result = null;   // assume failure (pessimist!)
-        if (!name.isEmpty()) {
+        if ((name != null) && !name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
             } else if (name.startsWith("A") || name.startsWith("EB") || name.startsWith("EC")) {
@@ -574,6 +574,23 @@ public class LayoutEditorFindItems {
         }
         return result;
     }
+    
+   /**
+     * Determine the first unused LayoutTrack object name...
+     * @param inPrefix ...with this prefix...
+     * @param inStartIndex ...and this starting index...
+     * @return the first unused LayoutTrack object name
+     */
+    public String uniqueName(String inPrefix, int inStartIndex) {
+        String result;
+        for (int idx = inStartIndex; true; idx++) {
+            result = String.format("%s%d", inPrefix, idx);
+            if (findObjectByName(result) == null) {
+                break;
+            }
+        }
+        return result;
+    }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

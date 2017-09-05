@@ -3301,7 +3301,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         if (_trainIcon != null && _trainIcon.isActive()) {
             setTrainIconColor();
-            _trainIcon.setShowTooltip(true);
+            _trainIcon.setShowToolTip(true);
             String txt = null;
             if (getCurrentLocationName().equals(NONE)) {
                 txt = getDescription() + " " + Bundle.getMessage("Terminated") + " (" + getTrainTerminatesName() + ")";
@@ -3309,8 +3309,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 txt = MessageFormat.format(Bundle.getMessage("TrainAtNext"), new Object[]{getDescription(),
                         getCurrentLocationName(), getNextLocationName()});
             }
-            _trainIcon.getTooltip().setText(txt);
-            _trainIcon.getTooltip().setBackgroundColor(Color.white);
+            _trainIcon.getToolTip().setText(txt);
+            _trainIcon.getToolTip().setBackgroundColor(Color.white);
             if (rl != null) {
                 if (rl.getTrainIconX() != 0 || rl.getTrainIconY() != 0) {
                     if (animation) {
@@ -4266,6 +4266,6 @@ public class Train implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Train.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Train.class);
 
 }

@@ -6,7 +6,6 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
-//import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1275,5 +1274,5 @@ public class SerialNode extends AbstractNode {
         timeout = 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
 }

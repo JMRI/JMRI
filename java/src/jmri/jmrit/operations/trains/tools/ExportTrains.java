@@ -228,15 +228,15 @@ public class ExportTrains extends XmlFile {
     }
 
     public static void setOperationsFileName(String name) {
-        OperationsFileName = name;
+        operationsFileName = name;
     }
 
     public static String getOperationsFileName() {
-        return OperationsFileName;
+        return operationsFileName;
     }
 
-    private static String OperationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
+    private static String operationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCars.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportCars.class);
 
 }

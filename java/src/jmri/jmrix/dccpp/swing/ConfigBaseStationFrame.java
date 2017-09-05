@@ -9,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -32,7 +30,6 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -638,7 +635,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class);
 
     
     /**

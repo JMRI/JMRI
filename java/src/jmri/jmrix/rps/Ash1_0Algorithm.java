@@ -438,7 +438,7 @@ public class Ash1_0Algorithm implements Calculator {
         }//  GPS Position = x0, y0, z0
         return 0;
     }
-    private final static Logger log = LoggerFactory.getLogger(Ash1_0Algorithm.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ash1_0Algorithm.class);
 
     /**
      * Internal class to handle return value.

@@ -829,5 +829,5 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class);
 }

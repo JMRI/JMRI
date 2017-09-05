@@ -378,9 +378,7 @@ public class LayoutTurnoutTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            layoutEditor = new LayoutEditor();
            ltRH = new LayoutTurnout("Right Hand",
@@ -412,7 +410,7 @@ public class LayoutTurnoutTest {
     @After
     public void tearDown() throws Exception {
         if(layoutEditor!=null) {
-           layoutEditor.dispose();
+           JUnitUtil.dispose(layoutEditor);
         }
         layoutEditor = null;
         ltRH = null;
@@ -422,8 +420,7 @@ public class LayoutTurnoutTest {
         ltRX = null;
         ltLX = null;
         // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
 }

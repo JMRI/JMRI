@@ -3,6 +3,7 @@ package jmri.jmrit.operations.automation;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,7 +34,7 @@ public class AutomationCopyFrameTest extends OperationsSwingTestCase {
         // dialog window requesting automation to copy should appear
         pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), "OK");
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -84,8 +85,8 @@ public class AutomationCopyFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("confirm name is correct", "Name of new automation 2", editAutomationFrame.automationNameTextField.getText());
         Assert.assertEquals("confirm comment is correct", "Comment for automation to copy", editAutomationFrame.commentTextField.getText());
 
-        editAutomationFrame.dispose();
-        copyFrame.dispose();
+        JUnitUtil.dispose(editAutomationFrame);
+        JUnitUtil.dispose(copyFrame);
     }
 
     // Ensure minimal setup for log4J

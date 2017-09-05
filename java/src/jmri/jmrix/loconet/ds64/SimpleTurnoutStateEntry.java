@@ -1,11 +1,11 @@
 package jmri.jmrix.loconet.ds64;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import jmri.util.swing.ValidatedTextField;
-import javax.swing.ButtonGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -304,7 +304,6 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
             unusedRadioButton.updateUI();
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
 
 }

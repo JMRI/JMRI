@@ -678,6 +678,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);
 
 }

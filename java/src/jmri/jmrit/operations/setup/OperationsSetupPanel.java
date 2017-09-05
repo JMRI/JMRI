@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // labels
     private JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -385,7 +385,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             railroadNameTextField.setEnabled(false);
         }
         createShutDownTask();
@@ -563,14 +563,14 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (scaleG.isSelected()) {
             Setup.setScale(Setup.G_SCALE);
         }
-        if (!Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (!Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             Setup.setRailroadName(railroadNameTextField.getText());
             int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{
-                WebServerPreferences.getDefault().getRailRoadName(), Setup.getRailroadName()}), Bundle
+                WebServerPreferences.getDefault().getRailroadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
             if (results == JOptionPane.OK_OPTION) {
-                WebServerPreferences.getDefault().setRailRoadName(Setup.getRailroadName());
+                WebServerPreferences.getDefault().setRailroadName(Setup.getRailroadName());
                 WebServerPreferences.getDefault().save();
             }
         }

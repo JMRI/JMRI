@@ -1,10 +1,9 @@
 package jmri.implementation;
 
 import jmri.*;
-
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the DefaultConditional implementation class
@@ -56,9 +55,7 @@ public class DefaultConditionalTest extends NamedBeanTest {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // Main entry point

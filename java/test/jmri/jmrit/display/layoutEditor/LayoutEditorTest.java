@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of LayoutEditor
@@ -29,7 +31,7 @@ public class LayoutEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor(); // create layout editor
         Assert.assertNotNull("exists", e);
-        e.dispose();
+        JUnitUtil.dispose(e);
     }
 
     @Test
@@ -601,6 +603,7 @@ public class LayoutEditorTest {
         le.setXOverLong(2.0);
         le.setXOverHWid(2.0);
         le.setXOverShort(2.0);
+
         // reset - uses reflection to get a private method.
         java.lang.reflect.Method resetTurnoutSize = null;
         try {
@@ -646,24 +649,73 @@ public class LayoutEditorTest {
         Assert.assertTrue("getDirectTurnoutControl after set", le.getDirectTurnoutControl());
     }
 
+    @Test
+    public void testSetDirectTurnoutControlOff() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setDirectTurnoutControl(false);
+        Assert.assertFalse("getDirectTurnoutControl after set", le.getDirectTurnoutControl());
+    }
+
+    @Test
+    public void testIsEditableDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to true
+        Assert.assertTrue("isEditable default true", le.isEditable());
+    }
+
+    @Test
+    public void testSetAllEditableFalse() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setAllEditable(false);
+        Assert.assertFalse("isEditable after setAllEditable(false)", le.isEditable());
+    }
+
+    @Test
+    public void testSetAllEditableTrue() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setAllEditable(true);
+        Assert.assertTrue("isEditable after setAllEditable(true)", le.isEditable());
+    }
+
+    @Test
+    public void testGetHighlightSelectedBlockDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("le.getHighlightSelectedBlock default false", le.getHighlightSelectedBlock());
+    }
+
+    @Test
+    public void testSetHighlightSelectedBlockTrue() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setHighlightSelectedBlock(true);
+        Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", le.getHighlightSelectedBlock());
+    }
+
+    @Test
+    public void testSetHighlightSelectedBlockFalse() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setHighlightSelectedBlock(false);
+        Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", le.getHighlightSelectedBlock());
+    }
+
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           le = new LayoutEditor("Test Layout");
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            le = new LayoutEditor("Test Layout");
         }
     }
 
     @After
     public void tearDown() throws Exception {
         if (le != null) {
-            le.dispose();
+            JUnitUtil.dispose(le);
             le = null;
         }
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
+
+    //initialize logging
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

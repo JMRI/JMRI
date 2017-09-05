@@ -337,6 +337,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     synchronized public void message(XNetMessage l) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class);
 
 }

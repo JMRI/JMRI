@@ -993,8 +993,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.resetPreferencesProviders();
         // ensure no existing UserPreferencesManager interferes with this test
         InstanceManager.reset(UserPreferencesManager.class);

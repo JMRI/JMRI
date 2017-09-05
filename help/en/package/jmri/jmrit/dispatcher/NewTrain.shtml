@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: New Train Help</title>
+  <title>JMRI: Activate New Train Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta content="Dave Duchamp" name="Author">
@@ -28,7 +27,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Activate New Train Window</h1>
+      <h1>Dispatcher: Activate New Train</h1>
 
       <h2>Introduction</h2>
 
@@ -124,7 +123,7 @@
           <p>Click the <b>New Train...</b> button in the
           <b><a href="Dispatcher.shtml">Dispatcher</a></b> window
           to bring up the window shown below.</p><img src=
-          "NewTrainWindow.jpg" height="399" width="480">
+          "images/NewTrainWindow.png" height="567" width="434">
         </li>
 
         <li>
@@ -156,11 +155,13 @@
         </li>
 
         <li>
-          <p>If the window shown below is displayed,</p><img src=
-          "NewTrainAltWindow.jpg" height="418" width="407">
-
-          <p>enter a train name in the <b>Train:</b> field, and
-          enter a numeric address in the <b>DCC Address:</b> field.
+          <a>If <a href="Options.shtml">Dispatcher Options</a> is
+          set to <b>Trains from User Entry</b>,
+          the following pane is displayed.<br>
+          Enter a train name in the <b>Train:</b> field, and set a numeric
+          address from 1 to 9999 as the <b>DCC Address</b>.</p><img src=
+          "images/NewTrainAltWindow.png" height="593" width="463">
+          <p>
           Any short name that identifies the train may be used
           provided the name is not being used by another Active
           Train. Dcc addresses must be a number in the range 1 -
@@ -236,8 +237,8 @@
         </li>
 
         <li>
-          <p>Check <b>Reverse At End</b> to set up the Active Train
-          for back and forth running. With <b>Reverse At End</b>
+          <p>Check <b>Reverse at End</b> to set up the Active Train
+          for back and forth running. With <b>Reverse at End</b>
           selected, when an Active Train is has reached the end of
           its Transit, the Transit direction is reversed, and the
           Train backs up through the Transit to its starting point.
@@ -294,7 +295,7 @@
           <b>Run Train Automatically</b> will extend this window
           (see below) to display options that are only related to
           automatic running of trains.</p><img src=
-          "NewTrainAutoWindow.jpg" height="528" width="480">
+          "images/NewTrainAutoWindow.png" height="710" width="550">
 
           <p><b>Note:</b> Requirements for automatic running are
           not validated until creation of an Active Train is
@@ -305,23 +306,23 @@
         </li>
 
         <li>
-          <p>In the <b>Speed Factor:</b> field, enter a factor (0.1
-          - 1.5) to modify all train speed settings. If the
-          locomotive runs <i>normally</i>, enter 1.0. If the
+          <p>In the <b>Loco Speed Correction:</b> field, enter a
+          percentage (10 - 150&#37;) to modify all train speed settings. If the
+          locomotive runs <i>normally</i>, enter 100&#37;. If the
           locomotive runs slower than normal, enter a factor
-          between 1.0 and 1.5. If the locomotive runs faster than
-          normal, enter a factor less than 1.0. This factor is
+          between 100 and 150&#37;. If the locomotive runs faster than
+          normal, enter a factor less than 100&#37;. This factor is
           designed to allow the user to compensate for differences
-          between locomotives. The entered Speed Factor multiplies
+          between locomotives. The entered Correection factor multiplies
           all speed settings immediately before the speed is sent
           to the locomotive.</p>
         </li>
 
         <li>
           <p>In the <b>Default Maximum Speed:</b> field, enter a
-          number (0.1 - 1.0) to limit the maximum speed the Active
-          Train will run. For example, entering 0.6 will limit the
-          maximum speed to 60% of the possible speed setting.
+          number (10 - 100&#37;) to limit the maximum speed the Active
+          Train will run. For example, entering 60&#37; will limit the
+          maximum speed to 60&#37; of the possible speed setting.
           Maximum Speed can be used to make certain Active Trains,
           for example a local freight, to run slower than signals
           alone would determine. The Maximum Speed entered here is
@@ -433,7 +434,10 @@
           <p>Click <b>Cancel</b> to exit this window without
           creating a new Active Train.</p>
         </li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol>
+
+      <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

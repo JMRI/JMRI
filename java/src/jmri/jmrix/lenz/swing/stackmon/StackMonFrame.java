@@ -35,7 +35,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     JButton previousButton = new JButton(Bundle.getMessage("PreviousButtonLabel"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton refreshButton = new JButton(Bundle.getMessage("RefreshButtonLabel"));
-    JLabel CurrentStatus = new JLabel(" ");
+    JLabel currentStatus = new JLabel(" ");
 
     JTextField adrTextField = new javax.swing.JTextField(4);
 
@@ -126,7 +126,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-        pane3.add(CurrentStatus);
+        pane3.add(currentStatus);
         //getContentPane().add(pane3); // not working?
 
         // Set up the JTable in a Scroll Pane
@@ -252,7 +252,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             Integer intAddress = Integer.valueOf(address);
             switch (r.getElement(1)) {
                 case XNetConstants.LOCO_SEARCH_RESPONSE_N:
-                    CurrentStatus.setText(Bundle.getMessage("SearchNormal"));
+                    currentStatus.setText(Bundle.getMessage("SearchNormal"));
                     adrTextField.setText("" + address);
                     stackModel.updateData(intAddress, Bundle.getMessage("SearchNormal"));
                     // Request Address Status
@@ -263,7 +263,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_DH:
-                    CurrentStatus.setText(Bundle.getMessage("SearchDH"));
+                    currentStatus.setText(Bundle.getMessage("SearchDH"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
                     stackModel.updateData(intAddress, Bundle.getMessage("SearchDH"));
                     // Request Address Status
@@ -274,7 +274,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
-                    CurrentStatus.setText(Bundle.getMessage("SearchMUBase"));
+                    currentStatus.setText(Bundle.getMessage("SearchMUBase"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
                     stackModel.updateData(intAddress, Bundle.getMessage("SearchMUBase"));
                     // Request Address Status
@@ -285,7 +285,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_RESPONSE_MU:
-                    CurrentStatus.setText(Bundle.getMessage("SearchMU"));
+                    currentStatus.setText(Bundle.getMessage("SearchMU"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
                     stackModel.updateData(intAddress, Bundle.getMessage("SearchMU"));
                     // Request Address Status
@@ -296,7 +296,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
                     }
                     break;
                 case XNetConstants.LOCO_SEARCH_NO_RESULT:
-                    CurrentStatus.setText(Bundle.getMessage("SearchFail"));
+                    currentStatus.setText(Bundle.getMessage("SearchFail"));
                     adrTextField.setText("" + r.getThrottleMsgAddr());
                     if (_getAll) {
                         _getAll = false;  //finished getting all entries
@@ -329,6 +329,6 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // Register for logging
-    private final static Logger log = LoggerFactory.getLogger(StackMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StackMonFrame.class);
 
 }

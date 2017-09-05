@@ -120,11 +120,15 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         sensor = runtimes(route);
         Assert.assertNotNull("Sensor not null", sensor);
 
-        JUnitUtil.waitFor(() -> {
-            return (warrant.getThrottle() == null);
-        }, "Wait for run to end");
-        String msg = w.getRunModeMessage();
-        Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
+        // wait for done
+        final String name =  w.getDisplayName();
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
+         
+//        JUnitUtil.waitFor(() -> {
+//            return (warrant.getThrottle() == null);
+ //       }, "Wait for run to end");
+ //       String msg = w.getRunModeMessage();
+//        Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
 
         pressButton(frame, Bundle.getMessage("ButtonSave"));
@@ -254,9 +258,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

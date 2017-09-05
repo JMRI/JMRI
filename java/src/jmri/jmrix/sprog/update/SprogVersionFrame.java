@@ -1,9 +1,9 @@
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Display the firmware version of the attached SPROG hardware.
@@ -40,5 +40,5 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionFrame.class);
 }

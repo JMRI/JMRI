@@ -17,7 +17,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -1308,6 +1307,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedoConsoleFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoConsoleFrame.class);
 
 }

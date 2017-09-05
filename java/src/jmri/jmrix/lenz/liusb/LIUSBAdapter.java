@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -247,16 +247,14 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         //if (getOptionState(option2Name).equals(validOption2[0]))
         //    checkBuffer = true;
     }
@@ -285,6 +283,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     }
     static volatile LIUSBAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class);
 
 }

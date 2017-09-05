@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.swing;
 
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
-import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of XNetComponentFactory
@@ -33,8 +32,7 @@ public class XNetComponentFactoryTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         m = new XNetSystemConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -43,9 +41,6 @@ public class XNetComponentFactoryTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-        tc = null;
+    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }
 }

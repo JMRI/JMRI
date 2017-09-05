@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -218,5 +217,5 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return Bundle.getMessage("BeanNameLogix");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
 }

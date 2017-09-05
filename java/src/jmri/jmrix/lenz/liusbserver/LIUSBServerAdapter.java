@@ -413,6 +413,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);
 
 }

@@ -1,8 +1,8 @@
 package jmri.jmrit.roster;
 
 import java.io.*;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.*;
 import org.jdom2.*;
@@ -348,6 +348,6 @@ class LocoFile extends XmlFile {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoFile.class);
 
 }

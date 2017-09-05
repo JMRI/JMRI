@@ -166,5 +166,5 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetPhysicalLocationFrame.class.getName());
+            .getLogger(SetPhysicalLocationFrame.class);
 }

@@ -38,14 +38,14 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-
         EntryExitPairs p = (EntryExitPairs) o;
         Element element = new Element("entryexitpairs");  // NOI18N
         setStoreElementClass(element);
         ArrayList<LayoutEditor> editors = p.getSourcePanelList();
         if (editors.isEmpty()) {
-            return element;
+            return null;    //return element;   // <== don't store empty (unused) element
         }
+
         element.addContent(new Element("cleardown").addContent("" + p.getClearDownOption()));  // NOI18N
         if (p.getDispatcherIntegration()) {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
@@ -368,5 +368,5 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return InstanceManager.getDefault(EntryExitPairs.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class);
 }

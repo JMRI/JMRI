@@ -12,6 +12,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -148,7 +149,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         // create the EngineEditFrame
         enterClickAndLeave(etf.addButton);
 
-        etf.dispose();
+        JUnitUtil.dispose(etf);
     }
 
     // Ensure minimal setup for log4J

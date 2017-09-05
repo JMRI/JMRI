@@ -3,9 +3,8 @@ package jmri.jmrix.dccpp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-
-import jmri.ProgrammingMode;
 import jmri.Programmer;
+import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
@@ -299,6 +298,6 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppProgrammer.class);
 
 }

@@ -473,6 +473,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MarklinThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinThrottle.class);
 
 }

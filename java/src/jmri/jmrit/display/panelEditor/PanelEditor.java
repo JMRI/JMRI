@@ -92,23 +92,23 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelEditor extends Editor implements ItemListener {
 
-    JTextField nextX = new JTextField("0", 4);
-    JTextField nextY = new JTextField("0", 4);
+    private JTextField nextX = new JTextField("0", 4);
+    private JTextField nextY = new JTextField("0", 4);
 
-    JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
-    JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
-    JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
-    //JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
-    JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
-    JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
-    JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
-    JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
-    JComboBox<String> scrollableComboBox = new JComboBox<String>();
+    private JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
+    private JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
+    private JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
+    //private JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
+    private JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
+    private JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
+    private JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
+    private JComboBox<String> scrollableComboBox = new JComboBox<String>();
 
-    JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
-    JTextField nextLabel = new JTextField(10);
+    private JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
+    private JTextField nextLabel = new JTextField(10);
 
-    JComboBox<ComboBoxItem> _addIconBox;
+    private JComboBox<ComboBoxItem> _addIconBox;
 
     public PanelEditor() {
     }
@@ -133,6 +133,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         };
         Thread thr = new Thread(r);
+        thr.setName("PanelEditor init");
         thr.start();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -359,10 +360,10 @@ public class PanelEditor extends Editor implements ItemListener {
             showTooltipBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setAllShowTooltip(showTooltipBox.isSelected());
+                    setAllShowToolTip(showTooltipBox.isSelected());
                 }
             });
-            showTooltipBox.setSelected(showTooltip());
+            showTooltipBox.setSelected(showToolTip());
 
             contentPane.add(menuBox);
             menuBox.addActionListener(new ActionListener() {
@@ -459,21 +460,21 @@ public class PanelEditor extends Editor implements ItemListener {
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
         hiddenBox.setSelected(showHidden());
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
     }
 
     static class ComboBoxItem {
 
-        String name;
-        String BundleName;
+        private String name;
+        private String bundleName;
 
-        ComboBoxItem(String n) {
+        protected ComboBoxItem(String n) {
             name = n;
         }
 
-        String getName() {
+        protected String getName() {
             return name;
         }
 
@@ -482,27 +483,27 @@ public class PanelEditor extends Editor implements ItemListener {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
             if ("Sensor".equals(name)) {
-                BundleName = "BeanNameSensor";
+                bundleName = "BeanNameSensor";
             } else if ("SignalHead".equals(name)) {
-                BundleName = "BeanNameSignalHead";
+                bundleName = "BeanNameSignalHead";
             } else if ("SignalMast".equals(name)) {
-                BundleName = "BeanNameSignalMast";
+                bundleName = "BeanNameSignalMast";
             } else if ("Memory".equals(name)) {
-                BundleName = "BeanNameMemory";
+                bundleName = "BeanNameMemory";
             } else if ("Reporter".equals(name)) {
-                BundleName = "BeanNameReporter";
+                bundleName = "BeanNameReporter";
             } else if ("Light".equals(name)) {
-                BundleName = "BeanNameLight";
+                bundleName = "BeanNameLight";
             } else {
-                BundleName = name;
+                bundleName = name;
             }
-            return Bundle.getMessage(BundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            return Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
 
-    int locationX = 0;
-    int locationY = 0;
-    static final int DELTA = 20;
+    private int locationX = 0;
+    private int locationY = 0;
+    private static final int DELTA = 20;
 
     /*
      *  itemListener for JComboBox
@@ -711,7 +712,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * ***************************************************
      */
-    boolean delayedPopupTrigger;
+    private boolean delayedPopupTrigger;
 
     @Override
     public void mousePressed(MouseEvent event) {
@@ -930,7 +931,7 @@ public class PanelEditor extends Editor implements ItemListener {
             _highlightcomponent = null;
             _targetPanel.repaint();
         }
-        if (selection != null && selection.getDisplayLevel() > BKG && selection.showTooltip()) {
+        if (selection != null && selection.getDisplayLevel() > BKG && selection.showToolTip()) {
             showToolTip(selection, event);
             //selection.highlightlabel(true);
             _targetPanel.repaint();
@@ -1374,5 +1375,5 @@ public class PanelEditor extends Editor implements ItemListener {
      * ***************************************************
      */
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
 }

@@ -362,9 +362,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         _optionMenu.add(showTooltipBox);
         showTooltipBox.addActionListener((ActionEvent e) -> {
-            setAllShowTooltip(showTooltipBox.isSelected());
+            setAllShowToolTip(showTooltipBox.isSelected());
         });
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -996,7 +996,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
         hiddenBox.setSelected(showHidden());
         switch (_scrollState) {
             case SCROLL_NONE:
@@ -1404,7 +1404,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         if (!(event.isShiftDown() && event.isControlDown()) && !_shapeDrawer.doMouseMoved(event)) {
             Positionable selection = getCurrentSelection(event);
-            if (selection != null && selection.getDisplayLevel() > BKG && selection.showTooltip()) {
+            if (selection != null && selection.getDisplayLevel() > BKG && selection.showToolTip()) {
                 showToolTip(selection, event);
                 //selection.highlightlabel(true);
             } else {
@@ -1664,7 +1664,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             p.showPopUp(popup);
 
             if (p.doViemMenu()) {
-                setShowTooltipMenu(p, popup);
+                setShowToolTipMenu(p, popup);
                 setRemoveMenu(p, popup);
             }
         } else {
@@ -1929,5 +1929,5 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class);
 }

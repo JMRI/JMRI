@@ -403,5 +403,5 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
        }
     }   
 
-    private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnThrottleManager.class);
 }

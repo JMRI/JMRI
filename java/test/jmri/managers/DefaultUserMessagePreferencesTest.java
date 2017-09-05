@@ -1,9 +1,10 @@
 package jmri.managers;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.managers.DefaultUserMessagePreferencesTest class.
@@ -52,15 +53,13 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         System.setProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -2,12 +2,10 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import javax.swing.Box;
@@ -25,24 +23,19 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import jmri.jmrit.display.Editor.TargetPane;
 
-//import javax.swing.JRadioButton;
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2012
- *
+ * @author Pete Cressman Copyright (c) 2012
  */
 public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     protected ShapeDrawer _parent;
     protected PositionableShape _shape;       // for use while editing
-    private PositionableShape _originalShape;       // saved for use if cancelled
+    private PositionableShape _originalShape; // saved for use if cancelled
 
     static int STRUT_SIZE = 10;
-    static Point _loc = new Point(100, 100);
-    static Dimension _dim = new Dimension(500, 500);
+    private Point _loc = new Point(100, 100);
 
     int _lineWidth;
     Color _lineColor;
@@ -62,7 +55,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     public DrawFrame(String which, String title, ShapeDrawer parent) {
         super(title, false, false);
         _parent = parent;
-        setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));
+        super.setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));
 
         _lineWidth = 1;
         _lineColor = Color.black;
@@ -107,21 +100,21 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         panel.add(makeSensorPanel());
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        setContentPane(panel);
+        super.setContentPane(panel);
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
+        super.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent(true);
             }
         });
-        pack();
-        setLocation(_loc);
-        setVisible(true);
+        super.pack();
+        super.setLocation(_loc);
+        super.setVisible(true);
         setAlwaysOnTop(true);
     }
 
-    protected JPanel makePanel() {
+    protected final JPanel makePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
@@ -130,13 +123,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         JPanel pp = new JPanel();
         pp.add(new JLabel(Bundle.getMessage("thin")));
         _lineSlider = new JSlider(SwingConstants.HORIZONTAL, 1, 30, _lineWidth);
-        _lineSlider.addChangeListener(
-                new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        widthChange();
-                    }
-                });
+        _lineSlider.addChangeListener((ChangeEvent e) -> {
+            widthChange();
+        });
         pp.add(_lineSlider);
         pp.add(new JLabel(Bundle.getMessage("thick")));
         p.add(pp);
@@ -153,13 +142,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         panel.add(p);
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
         _chooser.setColor(Color.green);
-        _chooser.getSelectionModel().addChangeListener(
-                new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        colorChange();
-                    }
-                });
+        _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
+            colorChange();
+        });
         _chooser.setPreviewPanel(new JPanel());
         panel.add(_chooser);
         p = new JPanel();
@@ -168,21 +153,13 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         pp = new JPanel();
         pp.add(new JLabel(Bundle.getMessage("transparent")));
         _alphaSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _lineColor.getAlpha());
-        _alphaSlider.addChangeListener(
-                new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        alphaChange();
-                    }
-                });
+        _alphaSlider.addChangeListener((ChangeEvent e) -> {
+            alphaChange();
+        });
         pp.add(_alphaSlider);
-        _lineColorButon.addChangeListener(
-                new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        buttonChange();
-                    }
-                });
+        _lineColorButon.addChangeListener((ChangeEvent e) -> {
+            buttonChange();
+        });
         pp.add(new JLabel(Bundle.getMessage("opaque")));
         p.add(pp);
         panel.add(p);
@@ -190,7 +167,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         return panel;
     }
 
-    protected JPanel makeSensorPanel() {
+    protected final JPanel makeSensorPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
@@ -199,24 +176,22 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         panel.add(p0);
         p.add(new JLabel(Bundle.getMessage("VisibleSensor") + ":"));
         p.add(_sensorName);
-        _sensorName.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
-                if (msg != null) {
-                    JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
-                    _sensorName.setText("");
-                }
+        _sensorName.addActionListener((ActionEvent e) -> {
+            String msg = _shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());
+            if (msg != null) {
+                JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
+                _sensorName.setText("");
             }
         });
-        _sensorName.addMouseMotionListener( new MouseMotionListener() {
+        _sensorName.addMouseMotionListener(new MouseMotionListener() {
             @Override
-            public void mouseDragged( MouseEvent e) {               
+            public void mouseDragged(MouseEvent e) {
                 updateShape();
             }
+
             @Override
             public void mouseMoved(MouseEvent e) {
-                String msg =_shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());                
+                String msg = _shape.setControlSensor(_sensorName.getText(), _hideShape.isSelected(), _shape.getChangeLevel());
                 if (msg != null) {
                     JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensor")), JOptionPane.INFORMATION_MESSAGE); // NOI18N
                     _sensorName.setText("");
@@ -232,30 +207,20 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         ButtonGroup bg = new ButtonGroup();
         bg.add(_hideShape);
         bg.add(_changeLevel);
-        _levelComboBox = new JComboBox<String>();
+        _levelComboBox = new JComboBox<>();
         _levelComboBox.addItem(Bundle.getMessage("SameLevel"));
         for (int i = 1; i < 11; i++) {
-            _levelComboBox.addItem(Bundle.getMessage("Level") + " " + Integer.valueOf(i));
+            _levelComboBox.addItem(Bundle.getMessage("Level") + " " + i);
         }
-        _levelComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                int level = _levelComboBox.getSelectedIndex();
-                _shape.setChangeLevel(level);
-            }
-            
+        _levelComboBox.addActionListener((ActionEvent evt) -> {
+            int level = _levelComboBox.getSelectedIndex();
+            _shape.setChangeLevel(level);
         });
-        _hideShape.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                _levelComboBox.setEnabled(false);
-            }
+        _hideShape.addActionListener((ActionEvent a) -> {
+            _levelComboBox.setEnabled(false);
         });
-        _changeLevel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                _levelComboBox.setEnabled(true);
-            }
+        _changeLevel.addActionListener((ActionEvent a) -> {
+            _levelComboBox.setEnabled(true);
         });
         p1.add(_hideShape);
         p1.add(_changeLevel);
@@ -279,7 +244,15 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         return panel;
     }
 
-    protected JPanel makeParamsPanel(PositionableShape ps) {
+    /**
+     * Create a panel for setting parameters for the PositionableShape.
+     *
+     * @param ps the shape to edit parameters for
+     * @return a parameters panel
+     * @throws IllegalArgumentException if ps cannot be cast to the required
+     *                                  subclass of PositionableShape
+     */
+    protected JPanel makeParamsPanel(PositionableShape ps) throws IllegalArgumentException {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -287,8 +260,9 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set parameters on the popup that will edit the PositionableShape
-     * Called both for creation and editing. (don't make a copy for Cancel)
+     * Set parameters on the popup that will edit the PositionableShape Called
+     * both for creation and editing. (don't make a copy for Cancel)
+     *
      * @param ps Shape being created or edited
      */
     protected void setDisplayParams(PositionableShape ps) {
@@ -320,52 +294,47 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     /**
      * Editing an existing shape (only make copy for cancel of edits)
+     *
      * @param ps shape
      */
     protected void makeCopy(PositionableShape ps) {
         // make a copy, but keep it out of editor's content
-        _originalShape = (PositionableShape)ps.deepClone();
+        _originalShape = (PositionableShape) ps.deepClone();
         // cloning adds to editor's targetPane - (fix needed in editor)
-        _originalShape.remove();        
+        _originalShape.remove();
     }
 
     private JPanel makeDoneButtonPanel() {
         JPanel panel0 = new JPanel();
         panel0.setLayout(new FlowLayout());
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent(false);
-            }
+        doneButton.addActionListener((ActionEvent a) -> {
+            closingEvent(false);
         });
         panel0.add(doneButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent(true);
-            }
+        cancelButton.addActionListener((ActionEvent a) -> {
+            closingEvent(true);
         });
         panel0.add(cancelButton);
         return panel0;
     }
-    
+
     private void buttonChange() {
         if (_lineColorButon.isSelected()) {
             _chooser.getSelectionModel().setSelectedColor(_lineColor);
             _alphaSlider.setValue(_lineColor.getAlpha());
-        } else if (_fillColor!=null){
+        } else if (_fillColor != null) {
             _chooser.getSelectionModel().setSelectedColor(_fillColor);
             _alphaSlider.setValue(_fillColor.getAlpha());
         }
         _alphaSlider.revalidate();
         _alphaSlider.repaint();
     }
-    
+
     private void widthChange() {
-        if (_shape==null) {
+        if (_shape == null) {
             return;
         }
         _lineWidth = _lineSlider.getValue();
@@ -374,7 +343,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
     private void colorChange() {
-        if (_shape==null) {
+        if (_shape == null) {
             return;
         }
         if (_lineColorButon.isSelected()) {
@@ -384,7 +353,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         } else {
             Color c = _chooser.getColor();
             int alpha;
-            if (_fillColor!=null) {
+            if (_fillColor != null) {
                 alpha = _fillColor.getAlpha();
             } else {
                 alpha = _alphaSlider.getValue();
@@ -396,14 +365,14 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     }
 
     private void alphaChange() {
-        if (_shape==null) {
+        if (_shape == null) {
             return;
         }
         int alpha = _alphaSlider.getValue();
         if (_lineColorButon.isSelected()) {
             _lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), alpha);
             _shape.setLineColor(_lineColor);
-        } else if (_fillColorButon.isSelected() && _fillColor!=null) {
+        } else if (_fillColorButon.isSelected() && _fillColor != null) {
             _fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), alpha);
             _shape.setFillColor(_fillColor);
         }
@@ -419,15 +388,14 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     protected void closingEvent(boolean cancel) {
         _loc = getLocation(_loc);
-        _dim = getSize(_dim);
-        if (_shape!=null) {
+        if (_shape != null) {
             if (cancel) {
                 _shape.remove();
-                if (_originalShape!=null) {
+                if (_originalShape != null) {
                     _originalShape.getEditor().putItem(_originalShape);
                 }
             }
-            _shape.closeEditFrame();            
+            _shape.closeEditFrame();
         }
         if (_parent != null) {
             _parent.closeDrawFrame(this);
@@ -451,20 +419,26 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             return value;
         }
     }
-    
+
     protected void updateShape() {
         _shape.removeHandles();
-        _shape.makeShape();
         _shape.drawHandles();
         _shape.updateSize();
         _shape.getEditor().getTargetPanel().repaint();
     }
 
     // these 2 methods update the JTextfields when mouse moves handles
-    void setDisplayWidth(int w) {       
+    void setDisplayWidth(int w) {
     }
+
     void setDisplayHeight(int h) {
     }
 
+    /**
+     * Create a new PositionableShape in an Editor.
+     *
+     * @param event the triggering event
+     * @return true if created; false otherwise
+     */
     abstract protected boolean makeFigure(MouseEvent event);
 }

@@ -84,9 +84,9 @@ public class DefaultIdTag extends AbstractIdTag {
         Element e = new Element("idtag"); //NOI18N
         // e.setAttribute("systemName", this.mSystemName); // not needed from 2.11.1
         e.addContent(new Element("systemName").addContent(this.mSystemName)); //NOI18N
-        if (this.mUserName != null && this.mUserName.length() > 0) {
-            // e.setAttribute("userName", this.mUserName); // not needed from 2.11.1
-            e.addContent(new Element("userName").addContent(this.mUserName)); //NOI18N
+        if (this.getUserName() != null && this.getUserName().length() > 0) {
+            // e.setAttribute("userName", this.getUserName()); // not needed from 2.11.1
+            e.addContent(new Element("userName").addContent(this.getUserName())); //NOI18N
         }
         if (this.getComment() != null && this.getComment().length() > 0) {
             e.addContent(new Element("comment").addContent(this.getComment())); //NOI18N
@@ -137,6 +137,6 @@ public class DefaultIdTag extends AbstractIdTag {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class);
 
 }

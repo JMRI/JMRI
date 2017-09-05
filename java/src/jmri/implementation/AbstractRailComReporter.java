@@ -9,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.ReporterManager;
-import jmri.implementation.AbstractReporter;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,6 +133,6 @@ public class AbstractRailComReporter extends AbstractReporter
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractRailComReporter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractRailComReporter.class);
 
 }
