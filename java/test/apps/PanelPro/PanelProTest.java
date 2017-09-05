@@ -27,12 +27,6 @@ import jmri.util.JUnitUtil;
  */
 public class PanelProTest {
 
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PanelPro t = new PanelPro();
-        Assert.assertNotNull("exists", t);
-    }
-
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -68,13 +62,16 @@ public class PanelProTest {
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
 
+            //JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts:") != null;}, "last Info line seen");
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
+
             // maybe have it run a script to indicate that it's really up?
             
             // now clean up frames, depending on what's actually left
                 // PanelPro
         } finally {
-        
-            // need to clean up the temp directory
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
         }
     }
 
@@ -111,13 +108,16 @@ public class PanelProTest {
         
             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("PanelPro version") != null;}, "first Info line seen");
 
+            //JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("File path scripts:") != null;}, "last Info line seen");
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("Main initialization done") != null;}, "last Info line seen");
+
             // maybe have it run a script to indicate that it's really up?
             
             // now clean up frames, depending on what's actually left
                 // PanelPro
         } finally {
-        
-            // need to clean up the temp directory
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
         }
     }
      
