@@ -1441,7 +1441,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
                         Bundle.getMessage("Question1"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return null;   // return without allocating if "No" response
                 }
@@ -1454,7 +1454,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
                         Bundle.getMessage("Question4"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return null;
                 } else {
@@ -1757,7 +1757,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
                         Bundle.getMessage("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return false;   // return without allocating if "No" response
                 }
@@ -2055,7 +2055,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame, java.text.MessageFormat.format(
                     Bundle.getMessage("Question5"), new Object[]{as.getSectionName()}), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYesX"), Bundle.getMessage("ButtonNo")},
+                    new Object[]{Bundle.getMessage("ButtonRelease"), Bundle.getMessage("ButtonNo")},
                     Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return;   // return without releasing if "No" response

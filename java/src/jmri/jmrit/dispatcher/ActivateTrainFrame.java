@@ -963,7 +963,7 @@ public class ActivateTrainFrame {
                 int selectedValue = JOptionPane.showOptionDialog(initiateFrame,
                         Bundle.getMessage("Question3", fileName),
                         Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("FileYes"),
+                        JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("ButtonReplace"),
                             Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return;   // return without writing if "No" response
