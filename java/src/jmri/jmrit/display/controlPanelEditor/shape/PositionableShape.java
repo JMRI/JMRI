@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
-public class PositionableShape extends PositionableJComponent implements PropertyChangeListener {
+public abstract class PositionableShape extends PositionableJComponent implements PropertyChangeListener {
 
     private Shape _shape;
     protected Color _lineColor = Color.black;
@@ -81,6 +81,7 @@ public class PositionableShape extends PositionableJComponent implements Propert
         _shape = s;
     }
 
+    @Nonnull
     protected Shape getShape() {
         if (_shape == null) {
             _shape = makeShape();
@@ -122,18 +123,11 @@ public class PositionableShape extends PositionableJComponent implements Propert
 
     /**
      * Create the shape returned by {@link #getShape()}.
-     * <p>
-     * This should be abstract, but {@link #deepClone()} requires this class not
-     * be abstract, and we never want to accept a null return value from this
-     * method, so the default implementation throws an uncaught exception
-     * instead.
      *
      * @return the created shape
      */
     @Nonnull
-    protected Shape makeShape() {
-        throw new UnsupportedOperationException("Must be overridden by an implementing class.");
-    }
+    protected abstract Shape makeShape();
 
     /**
      * Force the shape to be regenerated next time it is needed.
@@ -251,10 +245,7 @@ public class PositionableShape extends PositionableJComponent implements Propert
     }
 
     @Override
-    public Positionable deepClone() {
-        PositionableShape pos = new PositionableShape(_editor);
-        return finishClone(pos);
-    }
+    public abstract Positionable deepClone();
 
     protected Positionable finishClone(PositionableShape pos) {
         pos._lineWidth = _lineWidth;
