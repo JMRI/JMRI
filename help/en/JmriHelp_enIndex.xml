@@ -259,7 +259,11 @@
  <indexitem text="Logix ">
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
-  <indexitem text="Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
+  <indexitem text="Add/Edit Conditionals using the List Editor " target="package.jmri.jmrit.conditional.ConditionalListEditor"/>
+
+  <indexitem text="Add/Edit Conditionals using the Tree Editor " target="package.jmri.jmrit.conditional.ConditionalTreeEditor"/>
+
+  <indexitem text="Conditional State Variable and Action List " target="package.jmri.jmrit.conditional.StateVariableActionList"/>
 
   <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 

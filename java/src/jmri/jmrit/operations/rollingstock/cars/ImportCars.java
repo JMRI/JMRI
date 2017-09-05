@@ -758,5 +758,5 @@ public class ImportCars extends ImportRollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportCars.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportCars.class);
 }

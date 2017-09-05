@@ -264,5 +264,5 @@ public class DecoderIndexFileTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class);
 }

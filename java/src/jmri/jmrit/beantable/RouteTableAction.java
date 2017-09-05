@@ -1391,12 +1391,12 @@ public class RouteTableAction extends AbstractTableAction {
         String file = soundFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_RUN_SCRIPT, "", -1, file));
+                    Conditional.ACTION_PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
         }
         file = scriptFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_PLAY_SOUND, "", -1, file));
+                    Conditional.ACTION_RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
         }
 
         ///// Construct 'AND' clause from 'VETO' controls ////////
@@ -2260,6 +2260,6 @@ public class RouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class);
 
 }

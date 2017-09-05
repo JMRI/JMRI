@@ -298,6 +298,6 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class);
 
 }

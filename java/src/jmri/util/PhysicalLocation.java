@@ -324,5 +324,5 @@ public class PhysicalLocation extends Vector3f {
         this.setZ(this.getZ() - ref.getZ());
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PhysicalLocation.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(PhysicalLocation.class);
 }

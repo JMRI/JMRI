@@ -69,6 +69,6 @@ public class AudioTableActionTest extends AbstractTableActionBase {
         a = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AudioTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AudioTableActionTest.class);
 
 }

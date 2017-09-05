@@ -461,6 +461,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
         log.debug("dispose");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryPane.class);
 
 }

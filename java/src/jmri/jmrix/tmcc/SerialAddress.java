@@ -367,5 +367,5 @@ public class SerialAddress {
         return (nName);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
 }

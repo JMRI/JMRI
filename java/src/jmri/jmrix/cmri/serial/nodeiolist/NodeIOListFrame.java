@@ -12,6 +12,8 @@ import javax.swing.table.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for running CMRI assignment list.
@@ -578,7 +580,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         Bundle.getMessage("HeadingUserName"),
         Bundle.getMessage("HeadingComment")};
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeIOListFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeIOListFrame.class);
 
 }
 

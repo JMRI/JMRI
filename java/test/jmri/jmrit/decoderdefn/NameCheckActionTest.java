@@ -29,6 +29,6 @@ public class NameCheckActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NameCheckActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NameCheckActionTest.class);
 
 }

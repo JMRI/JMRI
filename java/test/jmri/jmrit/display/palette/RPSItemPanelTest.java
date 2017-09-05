@@ -37,6 +37,6 @@ public class RPSItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RPSItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RPSItemPanelTest.class);
 
 }

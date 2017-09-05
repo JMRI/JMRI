@@ -83,7 +83,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
-            _mergeCandidates.put(entry.getKey(), true);
+            _mergeCandidates.put(entry.getKey(), Boolean.valueOf(true));
         }
         return true;
     }
@@ -118,6 +118,6 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Roster.getDefault().writeRoster();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class);
 
 }

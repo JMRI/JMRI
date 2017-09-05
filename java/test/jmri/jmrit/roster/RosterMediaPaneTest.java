@@ -29,6 +29,6 @@ public class RosterMediaPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterMediaPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterMediaPaneTest.class);
 
 }

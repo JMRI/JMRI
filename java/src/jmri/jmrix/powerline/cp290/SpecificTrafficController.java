@@ -207,7 +207,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class);
 }
 
 

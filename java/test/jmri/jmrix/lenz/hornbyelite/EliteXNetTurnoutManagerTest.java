@@ -112,6 +112,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class);
 
 }

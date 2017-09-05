@@ -30,6 +30,6 @@ public class AbstractMRMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractMRMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractMRMessageTest.class);
 
 }

@@ -133,6 +133,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         };
         Thread thr = new Thread(r);
+        thr.setName("PanelEditor init");
         thr.start();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -1374,5 +1375,5 @@ public class PanelEditor extends Editor implements ItemListener {
      * ***************************************************
      */
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
 }

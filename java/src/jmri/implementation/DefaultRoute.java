@@ -1313,7 +1313,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class);
 
     /**
      * Class providing a thread to set route turnouts.
@@ -1414,6 +1414,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         private DefaultRoute r;
 
-        private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
+        private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class);
     }
 }

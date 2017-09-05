@@ -304,8 +304,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         protected JPanel makeDoneButtonPanel() {
-            JPanel panel0 = new JPanel();
-            panel0.setLayout(new FlowLayout());
+            JPanel result = new JPanel();
+            result.setLayout(new FlowLayout());
             JButton doneButton = new JButton(Bundle.getMessage("ButtonContinue"));
             doneButton.addActionListener(new ActionListener() {
                 @Override
@@ -318,7 +318,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             });
             doneButton.setToolTipText(Bundle.getMessage("TooltipContinue"));
-            panel0.add(doneButton);
+            result.add(doneButton);
 
             JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
             deleteButton.addActionListener(new ActionListener() {
@@ -328,7 +328,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     dispose();
                 }
             });
-            panel0.add(deleteButton);
+            result.add(deleteButton);
             deleteButton.setToolTipText(Bundle.getMessage("TooltipDelete"));
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonIgnore"));
@@ -339,9 +339,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     dispose();
                 }
             });
-            panel0.add(cancelButton);
+            result.add(cancelButton);
             cancelButton.setToolTipText(Bundle.getMessage("TooltipIgnore"));
-            return panel0;
+            return result;
         }
     }
 
@@ -2145,14 +2145,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return The sensor that was added to the panel.
      */
     protected SensorIcon putSensor() {
-        SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+        SensorIcon result = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
         IconAdder editor = getIconEditor("Sensor");
         Hashtable<String, NamedIcon> map = editor.getIconMap();
         Enumeration<String> e = map.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            l.setIcon(key, map.get(key));
+            result.setIcon(key, map.get(key));
         }
 //        l.setActiveIcon(editor.getIcon("SensorStateActive"));
 //        l.setInactiveIcon(editor.getIcon("SensorStateInactive"));
@@ -2160,12 +2160,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         jmri.NamedBean b = editor.getTableSelection();
         if (b != null) {
-            l.setSensor(b.getDisplayName());
+            result.setSensor(b.getDisplayName());
         }
-        l.setDisplayLevel(SENSORS);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setDisplayLevel(SENSORS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     /**
@@ -2182,47 +2182,48 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected TurnoutIcon addTurnout(IconAdder editor) {
-        TurnoutIcon l = new TurnoutIcon(this);
-        l.setTurnout(editor.getTableSelection().getDisplayName());
+        TurnoutIcon result = new TurnoutIcon(this);
+        result.setTurnout(editor.getTableSelection().getDisplayName());
         Hashtable<String, NamedIcon> map = editor.getIconMap();
         Enumeration<String> e = map.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            l.setIcon(key, map.get(key));
+            result.setIcon(key, map.get(key));
         }
-        l.setDisplayLevel(TURNOUTS);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setDisplayLevel(TURNOUTS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
-    void addSlip() {
+    SlipTurnoutIcon addSlip() {
+        SlipTurnoutIcon result = new SlipTurnoutIcon(this);
         SlipIconAdder editor = (SlipIconAdder) getIconEditor("SlipTOEditor");
-        SlipTurnoutIcon l = new SlipTurnoutIcon(this);
-        l.setSingleSlipRoute(editor.getSingleSlipRoute());
+        result.setSingleSlipRoute(editor.getSingleSlipRoute());
+
         switch (editor.getTurnoutType()) {
             case SlipTurnoutIcon.DOUBLESLIP:
-                l.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
-                l.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
-                l.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
-                l.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
+                result.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
+                result.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
+                result.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
+                result.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
                 break;
             case SlipTurnoutIcon.SINGLESLIP:
-                l.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
-                l.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
-                l.setLowerWestToLowerEastIcon(editor.getIcon("Slip"));
-                l.setSingleSlipRoute(editor.getSingleSlipRoute());
+                result.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
+                result.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
+                result.setLowerWestToLowerEastIcon(editor.getIcon("Slip"));
+                result.setSingleSlipRoute(editor.getSingleSlipRoute());
                 break;
             case SlipTurnoutIcon.THREEWAY:
-                l.setLowerWestToUpperEastIcon(editor.getIcon("Upper"));
-                l.setUpperWestToLowerEastIcon(editor.getIcon("Middle"));
-                l.setLowerWestToLowerEastIcon(editor.getIcon("Lower"));
-                l.setSingleSlipRoute(editor.getSingleSlipRoute());
+                result.setLowerWestToUpperEastIcon(editor.getIcon("Upper"));
+                result.setUpperWestToLowerEastIcon(editor.getIcon("Middle"));
+                result.setLowerWestToLowerEastIcon(editor.getIcon("Lower"));
+                result.setSingleSlipRoute(editor.getSingleSlipRoute());
                 break;
             case SlipTurnoutIcon.SCISSOR: //Scissor is the same as a Double for icon storing.
-                l.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
-                l.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
-                l.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
+                result.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
+                result.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
+                result.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
                 //l.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
                 break;
             default:
@@ -2231,17 +2232,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         if ((editor.getTurnoutType() == SlipTurnoutIcon.SCISSOR) && (!editor.getSingleSlipRoute())) {
-            l.setTurnout(editor.getTurnout("lowerwest").getName(), SlipTurnoutIcon.LOWERWEST);
-            l.setTurnout(editor.getTurnout("lowereast").getName(), SlipTurnoutIcon.LOWEREAST);
+            result.setTurnout(editor.getTurnout("lowerwest").getName(), SlipTurnoutIcon.LOWERWEST);
+            result.setTurnout(editor.getTurnout("lowereast").getName(), SlipTurnoutIcon.LOWEREAST);
         }
-        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        l.setTurnoutType(editor.getTurnoutType());
-        l.setTurnout(editor.getTurnout("west").getName(), SlipTurnoutIcon.WEST);
-        l.setTurnout(editor.getTurnout("east").getName(), SlipTurnoutIcon.EAST);
-        l.setDisplayLevel(TURNOUTS);
-        setNextLocation(l);
-        putItem(l);
+        result.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        result.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        result.setTurnoutType(editor.getTurnoutType());
+        result.setTurnout(editor.getTurnout("west").getName(), SlipTurnoutIcon.WEST);
+        result.setTurnout(editor.getTurnout("east").getName(), SlipTurnoutIcon.EAST);
+        result.setDisplayLevel(TURNOUTS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     /**
@@ -2250,19 +2252,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return The signal head that was added to the target.
      */
     protected SignalHeadIcon putSignalHead() {
-        SignalHeadIcon l = new SignalHeadIcon(this);
+        SignalHeadIcon result = new SignalHeadIcon(this);
         IconAdder editor = getIconEditor("SignalHead");
-        l.setSignalHead(editor.getTableSelection().getDisplayName());
+        result.setSignalHead(editor.getTableSelection().getDisplayName());
         Hashtable<String, NamedIcon> map = editor.getIconMap();
         Enumeration<String> e = map.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            l.setIcon(key, map.get(key));
+            result.setIcon(key, map.get(key));
         }
-        l.setDisplayLevel(SIGNALS);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setDisplayLevel(SIGNALS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     /**
@@ -2271,59 +2273,59 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return The signal mast that was added to the target.
      */
     protected SignalMastIcon putSignalMast() {
-        SignalMastIcon l = new SignalMastIcon(this);
+        SignalMastIcon result = new SignalMastIcon(this);
         IconAdder editor = _iconEditorFrame.get("SignalMast").getEditor();
-        l.setSignalMast(editor.getTableSelection().getDisplayName());
-        l.setDisplayLevel(SIGNALS);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setSignalMast(editor.getTableSelection().getDisplayName());
+        result.setDisplayLevel(SIGNALS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     protected MemoryIcon putMemory() {
-        MemoryIcon l = new MemoryIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+        MemoryIcon result = new MemoryIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
-        l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(MEMORIES);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     protected MemorySpinnerIcon addMemorySpinner() {
-        MemorySpinnerIcon l = new MemorySpinnerIcon(this);
+        MemorySpinnerIcon result = new MemorySpinnerIcon(this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
-        l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(MEMORIES);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     protected MemoryInputIcon addMemoryInputBox() {
-        MemoryInputIcon l = new MemoryInputIcon(_spinCols.getNumber().intValue(), this);
+        MemoryInputIcon result = new MemoryInputIcon(_spinCols.getNumber().intValue(), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
-        l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(MEMORIES);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     protected BlockContentsIcon putBlockContents() {
-        BlockContentsIcon l = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+        BlockContentsIcon result = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
         IconAdder blockIconEditor = getIconEditor("BlockLabel");
-        l.setBlock(blockIconEditor.getTableSelection().getDisplayName());
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(MEMORIES);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setBlock(blockIconEditor.getTableSelection().getDisplayName());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     /**
@@ -2332,28 +2334,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return The light indicator that was added to the target.
      */
     protected LightIcon addLight() {
-        LightIcon l = new LightIcon(this);
+        LightIcon result = new LightIcon(this);
         IconAdder editor = getIconEditor("Light");
-        l.setOffIcon(editor.getIcon("LightStateOff"));
-        l.setOnIcon(editor.getIcon("LightStateOn"));
-        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        l.setLight((Light) editor.getTableSelection());
-        l.setDisplayLevel(LIGHTS);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setOffIcon(editor.getIcon("LightStateOff"));
+        result.setOnIcon(editor.getIcon("LightStateOn"));
+        result.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        result.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        result.setLight((Light) editor.getTableSelection());
+        result.setDisplayLevel(LIGHTS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     protected ReporterIcon addReporter() {
-        ReporterIcon l = new ReporterIcon(this);
+        ReporterIcon result = new ReporterIcon(this);
         IconAdder reporterIconEditor = getIconEditor("Reporter");
-        l.setReporter((Reporter) reporterIconEditor.getTableSelection());
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(REPORTERS);
-        setNextLocation(l);
-        putItem(l);
-        return l;
+        result.setReporter((Reporter) reporterIconEditor.getTableSelection());
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(REPORTERS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     /**
@@ -2379,49 +2381,51 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (log.isDebugEnabled()) {
             log.debug("putIcon: {} url= {}", (icon == null ? "null" : "icon"), url);
         }
-        PositionableLabel l = new PositionableLabel(icon, this);
+        PositionableLabel result = new PositionableLabel(icon, this);
 //        l.setPopupUtility(null);        // no text
-        l.setDisplayLevel(ICONS);
-        setNextLocation(l);
-        putItem(l);
-        l.updateSize();
-        return l;
+        result.setDisplayLevel(ICONS);
+        setNextLocation(result);
+        putItem(result);
+        result.updateSize();
+        return result;
     }
 
     public MultiSensorIcon addMultiSensor() {
-        MultiSensorIcon m = new MultiSensorIcon(this);
+        MultiSensorIcon result = new MultiSensorIcon(this);
         MultiSensorIconAdder editor = (MultiSensorIconAdder) getIconEditor("MultiSensor");
-        m.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        m.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        m.setInactiveIcon(editor.getIcon("SensorStateInactive"));
+        result.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        result.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        result.setInactiveIcon(editor.getIcon("SensorStateInactive"));
         int numPositions = editor.getNumIcons();
         for (int i = 3; i < numPositions; i++) {
             NamedIcon icon = editor.getIcon(i);
             String sensor = editor.getSensor(i).getName();
-            m.addEntry(sensor, icon);
+            result.addEntry(sensor, icon);
         }
-        m.setUpDown(editor.getUpDown());
-        m.setDisplayLevel(SENSORS);
-        setNextLocation(m);
-        putItem(m);
-        return m;
+        result.setUpDown(editor.getUpDown());
+        result.setDisplayLevel(SENSORS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
-    protected void addClock() {
-        AnalogClock2Display l = new AnalogClock2Display(this);
-        l.setOpaque(false);
-        l.update();
-        l.setDisplayLevel(CLOCK);
-        setNextLocation(l);
-        putItem(l);
+    protected AnalogClock2Display addClock() {
+        AnalogClock2Display result = new AnalogClock2Display(this);
+        result.setOpaque(false);
+        result.update();
+        result.setDisplayLevel(CLOCK);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
-    protected void addRpsReporter() {
-        RpsPositionIcon l = new RpsPositionIcon(this);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setDisplayLevel(SENSORS);
-        setNextLocation(l);
-        putItem(l);
+    protected RpsPositionIcon addRpsReporter() {
+        RpsPositionIcon result = new RpsPositionIcon(this);
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(SENSORS);
+        setNextLocation(result);
+        putItem(result);
+        return result;
     }
 
     /*
@@ -3368,5 +3372,5 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Editor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Editor.class);
 }

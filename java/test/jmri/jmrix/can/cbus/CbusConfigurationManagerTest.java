@@ -30,6 +30,6 @@ public class CbusConfigurationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConfigurationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusConfigurationManagerTest.class);
 
 }

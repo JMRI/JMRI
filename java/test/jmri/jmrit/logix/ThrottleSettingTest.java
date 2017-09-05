@@ -35,6 +35,6 @@ public class ThrottleSettingTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ThrottleSettingTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ThrottleSettingTest.class);
 
 }

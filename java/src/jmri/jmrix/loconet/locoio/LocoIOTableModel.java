@@ -305,5 +305,5 @@ public class LocoIOTableModel
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class);
 }

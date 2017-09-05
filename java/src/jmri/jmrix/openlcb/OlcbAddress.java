@@ -217,7 +217,7 @@ public class OlcbAddress {
         return new EventID(b);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class);
 
 }
 

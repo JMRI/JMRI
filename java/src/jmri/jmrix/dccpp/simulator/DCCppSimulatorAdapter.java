@@ -599,6 +599,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class);
 
 }

@@ -111,6 +111,6 @@ public class AcelaLight extends AbstractLight {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLight.class);
 
 }

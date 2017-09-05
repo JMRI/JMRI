@@ -186,6 +186,6 @@ public class MultipartMessage {
         return response;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(MultipartMessage.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(MultipartMessage.class);
 
 }

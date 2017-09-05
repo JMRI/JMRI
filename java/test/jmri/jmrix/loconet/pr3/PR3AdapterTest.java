@@ -29,6 +29,6 @@ public class PR3AdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PR3AdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PR3AdapterTest.class);
 
 }

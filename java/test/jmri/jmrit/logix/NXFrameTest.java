@@ -124,7 +124,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
         List<BlockOrder> orders = warrant.getBlockOrders();
-        if (orders.size()!=7) {
+/*        if (orders.size()!=7) {
             System.out.println();
             System.out.println(warrant.getSystemName()+" " +warrant.getUserName());
             for (BlockOrder bo : orders) {
@@ -134,7 +134,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             for (ThrottleSetting ts : commands) {
                 System.out.println(ts.toString());
             }
-        }
+        }*/
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 

@@ -29,6 +29,6 @@ public class DefaultMemoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultMemoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultMemoryTest.class);
 
 }

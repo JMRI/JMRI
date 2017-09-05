@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class);
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     UserPreferencesManager userPreferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
@@ -207,6 +207,6 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             log.debug("Leaving ThreadNoUI.run()");
         }
 
-    private final static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FacelessThread.class);
     }
 }

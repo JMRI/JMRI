@@ -64,7 +64,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
         return val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class);
 
 }
 

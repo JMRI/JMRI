@@ -285,8 +285,14 @@
         </B-C>
       </states>
     </layoutSlip>
+    <layoutturntable ident="TUR1" radius="35.0" xcen="200.0" ycen="200.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+      <raytrack angle="0.0" index="0" />
+      <raytrack angle="90.0" index="1" />
+      <raytrack angle="180.0" index="2" />
+      <raytrack angle="270.0" index="3" />
+    </layoutturntable>
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.9.4ish+geowar+20170824T1125Z+Rd26127433b on Thu Aug 24 04:25:36 PDT 2017-->
+  <!--Written by JMRI version 4.9.4ish+geowar+20170828T2327Z+R47df887669 on Mon Aug 28 16:27:34 PDT 2017-->
 </layout-config>

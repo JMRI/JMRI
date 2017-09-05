@@ -90,7 +90,7 @@ public class JUnitUtil {
 
     static final int DEFAULT_RELEASETHREAD_DELAY = 50;
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
+    static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
 
     static int count = 0;
 
@@ -653,5 +653,5 @@ public class JUnitUtil {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
 }

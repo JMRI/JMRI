@@ -374,7 +374,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class);
 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations

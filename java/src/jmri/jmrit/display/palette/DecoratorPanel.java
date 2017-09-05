@@ -708,5 +708,5 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class);
 }

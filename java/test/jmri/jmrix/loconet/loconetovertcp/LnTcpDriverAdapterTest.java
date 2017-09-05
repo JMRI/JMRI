@@ -29,6 +29,6 @@ public class LnTcpDriverAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnTcpDriverAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnTcpDriverAdapterTest.class);
 
 }

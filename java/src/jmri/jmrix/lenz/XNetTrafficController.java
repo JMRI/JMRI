@@ -352,6 +352,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return _FeedbackCache;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class);
 
 }

@@ -434,13 +434,13 @@ public class Transit extends AbstractNamedBean {
      * Check if this Transit is capable of continuous running.
      * <p>
      * A Transit is capable of continuous running if, after an Active Train
-     * completes the Transit,
-     * it can automatically be restarted. To be restartable, the first
-     * Section and the last Section must be the same Section, and the first and
-     * last Sections must be defined to run in the same direction. If the last
-     * Section is an alternate Section, the previous Section is tested. However,
-     * if the Active Train does not complete its Transit in the same Section it
-     * started in, the restart will not take place.
+     * completes the Transit, it can automatically be restarted. To be
+     * restartable, the first Section and the last Section must be the same
+     * Section, and the first and last Sections must be defined to run in the
+     * same direction. If the last Section is an alternate Section, the previous
+     * Section is tested. However, if the Active Train does not complete its
+     * Transit in the same Section it started in, the restart will not take
+     * place.
      *
      * @return true if continuous running is possible; otherwise false
      */
@@ -562,7 +562,7 @@ public class Transit extends AbstractNamedBean {
         return numErrors;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT" , 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UC_USELESS_OBJECT",
             justification = "FindBugs doesn't see that toBeRemoved is being read by the forEach clause")
     public void removeTemporarySections() {
         ArrayList<TransitSection> toBeRemoved = new ArrayList<>();
@@ -609,6 +609,6 @@ public class Transit extends AbstractNamedBean {
         // we ignore the property setConfigureManager
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Transit.class);
 
 }

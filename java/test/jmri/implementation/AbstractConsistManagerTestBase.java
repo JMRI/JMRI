@@ -36,6 +36,6 @@ abstract public class AbstractConsistManagerTestBase {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);
 
 }

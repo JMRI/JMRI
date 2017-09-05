@@ -221,6 +221,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class);
 
 }

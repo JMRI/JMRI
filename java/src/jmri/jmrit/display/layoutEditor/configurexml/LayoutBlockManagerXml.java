@@ -64,9 +64,9 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                         elem.setAttribute("occupancysensor", b.getOccupancySensorName());
                     }
                     elem.setAttribute("occupiedsense", "" + b.getOccupiedSense());
-                    elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
+                    elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
                     if (!b.getMemoryName().isEmpty()) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }
@@ -217,5 +217,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class);
 }

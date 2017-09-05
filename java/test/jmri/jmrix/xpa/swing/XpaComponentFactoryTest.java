@@ -30,6 +30,6 @@ public class XpaComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XpaComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XpaComponentFactoryTest.class);
 
 }

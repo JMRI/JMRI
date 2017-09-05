@@ -29,6 +29,6 @@ public class RawTurnoutOperationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationTest.class);
 
 }

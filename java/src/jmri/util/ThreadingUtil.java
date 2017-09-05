@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.annotation.Nonnull;
 
 /**
  * Utilities for handling JMRI's threading conventions.
@@ -41,7 +42,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLayout(ThreadAction ta) {
+    static public void runOnLayout(@Nonnull ThreadAction ta) {
         runOnGUI(ta);
     }
 
@@ -59,7 +60,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnLayoutEventually(ThreadAction ta) {
+    static public void runOnLayoutEventually(@Nonnull ThreadAction ta) {
         runOnGUIEventually(ta);
     }
 
@@ -77,9 +78,11 @@ public class ThreadingUtil {
      *
      * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
+     * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
-    static public void runOnLayoutDelayed(ThreadAction ta, int delay) {
-        runOnGUIDelayed(ta, delay);
+    @Nonnull 
+    static public Timer runOnLayoutDelayed(@Nonnull ThreadAction ta, int delay) {
+        return runOnGUIDelayed(ta, delay);
     }
 
     /**
@@ -102,7 +105,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnGUI(ThreadAction ta) {
+    static public void runOnGUI(@Nonnull ThreadAction ta) {
         if (isGUIThread()) {
             // run now
             ta.run();
@@ -132,7 +135,7 @@ public class ThreadingUtil {
      *
      * @param ta What to run, usually as a lambda expression
      */
-    static public void runOnGUIEventually(ThreadAction ta) {
+    static public void runOnGUIEventually(@Nonnull ThreadAction ta) {
         // dispatch to Swing
         SwingUtilities.invokeLater(ta);
     }
@@ -150,14 +153,17 @@ public class ThreadingUtil {
      *
      * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
+     * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */
-    static public void runOnGUIDelayed(ThreadAction ta, int delay) {
+    @Nonnull 
+    static public Timer runOnGUIDelayed(@Nonnull ThreadAction ta, int delay) {
         // dispatch to Swing via timer
         Timer timer = new Timer(delay, (ActionEvent e) -> {
             ta.run();
         });
         timer.setRepeats(false);
         timer.start();
+        return timer;
     }
 
     /**
@@ -175,7 +181,7 @@ public class ThreadingUtil {
      * @param t the thread to check
      * @return true is the specified thread is or could be running right now
      */
-    static public boolean canThreadRun(Thread t) {
+    static public boolean canThreadRun(@Nonnull Thread t) {
         Thread.State s = t.getState();
         return s.equals(Thread.State.RUNNABLE);
     }
@@ -193,10 +199,10 @@ public class ThreadingUtil {
      * @param t the thread to check
      * @return true is the specified thread is or could be running right now
      */
-    static public boolean isThreadWaiting(Thread t) {
+    static public boolean isThreadWaiting(@Nonnull Thread t) {
         Thread.State s = t.getState();
         return s.equals(Thread.State.BLOCKED) || s.equals(Thread.State.WAITING) || s.equals(Thread.State.TIMED_WAITING);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
 }

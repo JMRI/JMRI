@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
      jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocolTest.class,
      jmri.jmrix.rfid.protocol.em18.Em18RfidProtocolTest.class,
      jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocolTest.class,
+     jmri.jmrix.rfid.protocol.olimex.OlimexRfid1356mifareProtocolTest.class,
      jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocolTest.class,
      jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocolTest.class,
      jmri.jmrix.rfid.serialdriver.PackageTest.class,

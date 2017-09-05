@@ -32,6 +32,6 @@ public class TableFramesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TableFramesTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TableFramesTest.class);
 
 }

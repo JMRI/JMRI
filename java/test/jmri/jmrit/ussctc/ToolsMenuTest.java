@@ -29,6 +29,6 @@ public class ToolsMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ToolsMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ToolsMenuTest.class);
 
 }

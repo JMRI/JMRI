@@ -34,6 +34,6 @@ public class IgnoreUsedTrackFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IgnoreUsedTrackFrameTest.class);
 
 }

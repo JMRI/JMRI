@@ -403,6 +403,6 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioBuffer.class);
 
 }

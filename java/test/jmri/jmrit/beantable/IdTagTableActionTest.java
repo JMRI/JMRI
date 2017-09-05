@@ -53,6 +53,6 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
         a = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IdTagTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IdTagTableActionTest.class);
 
 }

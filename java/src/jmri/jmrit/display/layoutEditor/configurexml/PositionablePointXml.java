@@ -162,5 +162,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         p.pointList.add(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class);
 }

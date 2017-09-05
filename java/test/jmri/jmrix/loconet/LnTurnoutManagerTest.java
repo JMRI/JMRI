@@ -109,6 +109,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class);
 
 }

@@ -29,6 +29,6 @@ public class Pr3SelectPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Pr3SelectPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Pr3SelectPaneTest.class);
 
 }

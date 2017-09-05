@@ -32,6 +32,6 @@ public class NceAIUCheckerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceAIUCheckerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceAIUCheckerTest.class);
 
 }

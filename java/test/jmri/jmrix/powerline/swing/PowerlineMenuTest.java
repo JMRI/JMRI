@@ -41,6 +41,6 @@ public class PowerlineMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerlineMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PowerlineMenuTest.class);
 
 }

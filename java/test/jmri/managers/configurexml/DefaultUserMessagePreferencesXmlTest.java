@@ -29,6 +29,6 @@ public class DefaultUserMessagePreferencesXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXmlTest.class);
 
 }

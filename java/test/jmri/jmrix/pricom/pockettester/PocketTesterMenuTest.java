@@ -29,6 +29,6 @@ public class PocketTesterMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PocketTesterMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PocketTesterMenuTest.class);
 
 }

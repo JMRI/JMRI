@@ -31,6 +31,6 @@ public class SystemsMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemsMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SystemsMenuTest.class);
 
 }

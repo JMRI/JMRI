@@ -29,6 +29,6 @@ public class LnHexFileActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnHexFileActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnHexFileActionTest.class);
 
 }

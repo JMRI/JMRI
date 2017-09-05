@@ -17,6 +17,7 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -81,7 +82,6 @@ public class LayoutTurntable extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-    private LayoutTurntable instance = null;
 
     private boolean dccControlledTurnTable = false;
 
@@ -93,11 +93,8 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * constructor method
      */
-    public LayoutTurntable(String id, Point2D c, LayoutEditor myPanel) {
-        instance = this;
-        layoutEditor = myPanel;
-        ident = id;
-        center = c;
+    public LayoutTurntable(@Nonnull String id, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        super(id, c, layoutEditor);
         radius = 25.0;
     }
 
@@ -488,19 +485,22 @@ public class LayoutTurntable extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        JMenuItem jmi = popup.add(rb.getString("Turntable"));
+
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + ident);
         jmi.setEnabled(false);
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editTurntable(instance);
+                editTurntable(LayoutTurntable.this);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (layoutEditor.removeTurntable(instance)) {
+                if (layoutEditor.removeTurntable(LayoutTurntable.this)) {
                     // Returned true if user did not cancel
                     remove();
                     dispose();
@@ -1126,5 +1126,5 @@ public class LayoutTurntable extends LayoutTrack {
         // nothing to do here... move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
 }

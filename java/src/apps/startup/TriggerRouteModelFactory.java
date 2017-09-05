@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = StartupModelFactory.class)
 public class TriggerRouteModelFactory implements StartupModelFactory {
 
-    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class);
 
     @Override
     public Class<? extends StartupModel> getModelClass() {

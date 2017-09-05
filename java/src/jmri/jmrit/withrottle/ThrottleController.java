@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
-import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -153,11 +152,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     /**
-     * Recieve notification that a DccThrottle has been found and is in use.
+     * Receive notification that a DccThrottle has been found and is in use.
      *
      * @param t The throttle which has been found
      */
-//    public void notifyAddressThrottleFound(DccThrottle throttle){
     @Override
     public void notifyThrottleFound(DccThrottle t) {
         if (isAddressSet) {
@@ -170,7 +168,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             throttle.addPropertyChangeListener(this);
             isAddressSet = true;
             if (log.isDebugEnabled()) {
-                log.debug("DccThrottle found for: " + throttle.getLocoAddress());
+                log.debug("DccThrottle found for: {}", throttle.getLocoAddress());
             }
         } else {
             log.error("*throttle is null!*");
@@ -180,7 +178,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressFound(this);
             if (log.isDebugEnabled()) {
-                log.debug("Notify TCListener address found: " + l.getClass());
+                log.debug("Notify TCListener address found: {}", l.getClass());
             }
         }
 
@@ -206,13 +204,21 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        log.error("Throttle request failed for " + address + " because " + reason);
+        log.warn("Throttle request failed for {} because {}.", address, reason);
+        for (ThrottleControllerListener l : listeners) {
+            l.notifyControllerAddressDeclined(this, address);
+            if (log.isDebugEnabled()) {
+                log.debug("Notify TCListener address declined in-use: {}", l.getClass());
+            }
+        }
     }
 
     @Override
     public void notifyStealThrottleRequired(DccLocoAddress address){
+        notifyFailedThrottleRequest(address, "Steal Required");
+        
         // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+//        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
 
@@ -227,9 +233,8 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         String eventName = event.getPropertyName();
-        if (log.isDebugEnabled()) {
-            log.debug("property change: " + eventName);
-        }
+        log.debug("property change: {}", eventName);
+
         if (eventName.startsWith("F")) {
 
             if (eventName.contains("Momentary")) {
@@ -255,7 +260,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + ((DccLocoAddress) t.getLocoAddress()).getNumber(), null, null, null, null);
             if (l.size() > 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Roster Loco found: " + l.get(0).getDccAddress());
+                    log.debug("Roster Loco found: {}", l.get(0).getDccAddress());
                 }
                 re = l.get(0);
             }
@@ -604,6 +609,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     protected void setAddress(int number, boolean isLong) {
+        log.debug("setAddress: {}, isLong: {}", number, isLong);
         if (rosterLoco != null) {
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
         } else {
@@ -817,6 +823,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);
 
 }

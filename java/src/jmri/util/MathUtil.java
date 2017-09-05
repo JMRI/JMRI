@@ -632,6 +632,15 @@ public final class MathUtil {
     }
 
     /**
+     * calculate the midpoint of the rectangle
+     * @param r the rectangle
+     * @return the midpoint of the rectangle
+     */
+    public static Point2D midPoint(Rectangle2D r) {
+        return center(r);
+    }
+
+    /**
      * offset a rectangle
      *
      * @param r the rectangle

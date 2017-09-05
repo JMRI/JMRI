@@ -33,5 +33,5 @@ public class SensorGroupFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorGroupFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SensorGroupFrameTest.class);
 }
