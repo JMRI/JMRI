@@ -1523,6 +1523,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
+        if (_pickTables != null) {
+            _pickTables.dispose();
+            _pickTables = null;
+        }
+
         _editLogixFrame.setVisible(false);
         _editLogixFrame.dispose();
         _editLogixFrame = null;
