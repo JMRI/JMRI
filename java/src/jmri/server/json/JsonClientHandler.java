@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
+import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -120,6 +121,14 @@ public class JsonClientHandler {
                 // so create one if the message did not contain one to avoid
                 // special casing later
                 data = this.connection.getObjectMapper().createObjectNode();
+            }
+            if (data.isMissingNode() && root.path(METHOD).isValueNode()
+                    && JSON.GET.equals(root.path(METHOD).asText())) {
+                // create an empty data node for get requests, if only to contain the method
+                data = this.connection.getObjectMapper().createObjectNode();
+            }
+            if (data.isMissingNode()) {
+                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
             }
             if (root.path(METHOD).isValueNode() && data.path(METHOD).isMissingNode()) {
                 ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
