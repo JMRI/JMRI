@@ -17,12 +17,21 @@
  * client key each time (note that such a client will receive multiple messages
  * for every message broadcast to all clients).
  * <p>
+ * A client can request that JMRI create a client code on its behalf by sending
+ * a {@code client} message with a {@code get} method (no data object is
+ * required). If requesting a JMRI-generated code, JMRI provides an existing
+ * client-generated code, if one is already subscribed, or generates a UUID on
+ * behalf of the requestor. JMRI will return the same UUID for a single
+ * connection until that UUID is subscription is canceled by the client.
+ * <p>
  * Examples:
  * <ul>
  * <li>{@code {"type": "client", "data": {"client": "42"}, "method": "put"}} to
  * subscribe</li>
  * <li>{@code {"type": "client", "data": {"client": "42"}, "method": "delete"}}
  * to cancel a subscription</li>
+ * <li>{@code {"type": "client", "method": "get"}} to request a JMRI-generated
+ * client identity</li>
  * </ul>
  * <p>
  * Messages sent by this server include the following properties in the JSON
