@@ -34,6 +34,6 @@ public class CarsSetFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);
 
 }

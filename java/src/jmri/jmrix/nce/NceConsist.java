@@ -509,6 +509,6 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsist.class);
 
 }

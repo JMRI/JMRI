@@ -262,7 +262,6 @@
     <positionablepoint ident="A4" type="1" x="150.0" y="220.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A5" type="1" x="420.0" y="240.0" connect1name="T20" connect2name="T21" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A6" type="1" x="500.0" y="140.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="60.0" xb="240.0" yb="80.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
     <layoutSlip ident="SL1" slipType="8" blockname="Yard" connectbname="T18" connectcname="T22" connectdname="T17" xcen="300.0" ycen="90.0" xa="280.0" ya="80.0" xb="280.0" yb="100.0" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml">
       <turnout>IT5</turnout>
       <turnoutB>IT6</turnoutB>
@@ -285,8 +284,15 @@
         </B-C>
       </states>
     </layoutSlip>
+    <layoutturntable ident="TUR1" radius="35.0" xcen="200.0" ycen="200.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+      <raytrack angle="0.0" index="0" />
+      <raytrack angle="90.0" index="1" />
+      <raytrack angle="180.0" index="2" />
+      <raytrack angle="270.0" index="3" />
+    </layoutturntable>
+    <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="60.0" xb="240.0" yb="80.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.9.4ish+geowar+20170823T1619Z+Ree7e7c8c94 on Wed Aug 23 09:19:58 PDT 2017-->
+  <!--Written by JMRI version 4.9.4ish+geowar+20170824T1125Z+Rd26127433b on Thu Aug 24 04:25:36 PDT 2017-->
 </layout-config>

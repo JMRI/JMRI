@@ -271,7 +271,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Copy from the GUI to the opsw array.
-     * <p>
+     * <P>
      * Used before write operations start
      */
     protected void copyToOpsw() {
@@ -3079,6 +3079,5 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             index = i;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class.getName()); // NOI18N
+    private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
 }

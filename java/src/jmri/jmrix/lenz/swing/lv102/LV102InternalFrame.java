@@ -642,6 +642,6 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class);
 
 }

@@ -29,6 +29,6 @@ public class VirtualSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastTest.class);
 
 }

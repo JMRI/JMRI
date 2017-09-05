@@ -524,5 +524,5 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         super.doMouseClicked(event);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AnalogClock2Display.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AnalogClock2Display.class);
 }

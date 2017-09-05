@@ -29,6 +29,6 @@ public class ProfileFileFilterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfileFileFilterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProfileFileFilterTest.class);
 
 }

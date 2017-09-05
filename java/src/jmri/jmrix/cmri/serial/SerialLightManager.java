@@ -134,6 +134,6 @@ public class SerialLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);
 
 }

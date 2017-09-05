@@ -34,6 +34,6 @@ public class AbstractMessageTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractMessageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractMessageTest.class);
 
 }

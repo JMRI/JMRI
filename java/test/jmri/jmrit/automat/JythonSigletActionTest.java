@@ -30,6 +30,6 @@ public class JythonSigletActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JythonSigletActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JythonSigletActionTest.class);
 
 }

@@ -40,5 +40,5 @@ public class MonitorPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MonitorPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MonitorPaneTest.class);
 }

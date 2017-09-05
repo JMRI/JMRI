@@ -287,5 +287,5 @@ public class SectionManager extends AbstractManager<Section> implements Property
         return Bundle.getMessage("BeanNameSection");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManager.class);
 }

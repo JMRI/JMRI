@@ -1083,5 +1083,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusConsolePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusConsolePane.class);
 }

@@ -14,9 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2013
- *
+ * @author Pete Cressman Copyright (c) 2013
  */
 public class DrawPolygon extends DrawFrame {
 
@@ -30,19 +28,22 @@ public class DrawPolygon extends DrawFrame {
 
     public DrawPolygon(String which, String title, ShapeDrawer parent) {
         super(which, title, parent);
-        _vertices = new ArrayList<Point>();
+        _vertices = new ArrayList<>();
         _editing = false;
     }
 
     @Override
     protected JPanel makeParamsPanel(PositionableShape ps) {
+        if (!(ps instanceof PositionablePolygon)) {
+            throw new IllegalArgumentException("parameter is not a PositionablePolygon");
+        }
         JPanel panel = super.makeParamsPanel(ps);
-       _pShape = (PositionablePolygon)ps;
+        _pShape = (PositionablePolygon) ps;
         _editing = true;
         _pShape.editing(true);
         int x = getX();
         int y = getY();
-        PathIterator iter = ps.getPathIterator(null);
+        PathIterator iter = _shape.getPathIterator(null);
         float[] coord = new float[6];
         while (!iter.isDone()) {
             iter.currentSegment(coord);
@@ -91,7 +92,7 @@ public class DrawPolygon extends DrawFrame {
 
     protected void drawShape(Graphics g) {
         if (!_editing) {
-            if (_vertices.size() == 0) {
+            if (_vertices.isEmpty()) {
                 return;
             }
             Graphics2D g2d = (Graphics2D) g;
@@ -121,24 +122,22 @@ public class DrawPolygon extends DrawFrame {
      if (hitIndex==0) {
      Point p0 = _vertices.get(1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);   
+     path.lineTo(_curX, _curY);
      } else if (hitIndex==_vertices.size()-1) {
      Point p0 = _vertices.get(hitIndex-1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);      
+     path.lineTo(_curX, _curY);
      } else {
      Point p0 = _vertices.get(hitIndex-1);
      Point p1 = _vertices.get(hitIndex+1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);   
-     path.lineTo(p1.x, p1.y);      
+     path.lineTo(_curX, _curY);
+     path.lineTo(p1.x, p1.y);
      }
-     g2d.draw(path);             
+     g2d.draw(path);
      }
      }
-     }  
-     /**
-     * Create a new PositionableShape 
+     }
      */
     @Override
     protected boolean makeFigure(MouseEvent event) {
@@ -149,7 +148,7 @@ public class DrawPolygon extends DrawFrame {
                 try {
                     pt = _pShape.getInversePoint(event.getX(), event.getY());
                 } catch (java.awt.geom.NoninvertibleTransformException nte) {
-                    log.error("Can't locate Hit Rectangles " + nte.getMessage());
+                    log.error("Can't locate Hit Rectangles {}", nte.getMessage());
                     return false;
                 }
                 _vertices.remove(hitIndex);
@@ -162,7 +161,7 @@ public class DrawPolygon extends DrawFrame {
             Point p = new Point(event.getX(), event.getY());
             if (hitPolygonVertex(p)) {
                 if (near(_vertices.get(0), p)) {
-                    _vertices.add(p); // close polygon       
+                    _vertices.add(p); // close polygon
                 }
                 Editor ed = _parent.getEditor();
                 Point spt = getStartPoint();
@@ -171,7 +170,7 @@ public class DrawPolygon extends DrawFrame {
                 ps.updateSize();
                 setDisplayParams(ps);
                 ps.setEditFrame(this);
-                ed.putItem(ps);            
+                ed.putItem(ps);
                 return true;
             }
             _vertices.add(p);
@@ -201,7 +200,7 @@ public class DrawPolygon extends DrawFrame {
 
     /**
      * "startPoint" will be the upper left corner of the figure
-     *
+     * <p>
      */
     private Point getStartPoint() {
         int x = _vertices.get(0).x;
@@ -224,15 +223,13 @@ public class DrawPolygon extends DrawFrame {
     }
 
     static private boolean near(Point p1, Point p2) {
-        if (Math.abs(p1.x - p2.x) < NEAR && Math.abs(p1.y - p2.y) < NEAR) {
-            return true;
-        }
-        return false;
+        return Math.abs(p1.x - p2.x) < NEAR && Math.abs(p1.y - p2.y) < NEAR;
     }
 
     @Override
     void setDisplayWidth(int w) {
     }
+
     @Override
     void setDisplayHeight(int h) {
     }
@@ -281,5 +278,5 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawPolygon.class);
 }

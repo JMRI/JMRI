@@ -29,6 +29,6 @@ public class DefaultSignalMastLogicManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerTest.class);
 
 }

@@ -384,7 +384,7 @@ public class AudioUtil {
         return retbuf;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioUtil.class);
 
     /**
      * Private class used to associate audio information (frequency, format,

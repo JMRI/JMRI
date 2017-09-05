@@ -304,7 +304,7 @@ public class ListedTableFrame extends BeanTableFrame {
         try {
             return Integer.parseInt(InstanceManager.getDefault(UserPreferencesManager.class)
                     .getProperty(ListedTableFrame.class.getName(), "dividerLocation").toString());
-        } catch (NumberFormatException ex) {
+        } catch (NullPointerException | NumberFormatException ex) {
             // ignore, this means the divider location has never been saved
             return 0;
         }
@@ -606,5 +606,5 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ListedTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListedTableFrame.class);
 }

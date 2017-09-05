@@ -884,6 +884,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         return Bundle.getMessage("EcosLocoAddresses");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class);
 
 }

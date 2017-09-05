@@ -29,6 +29,6 @@ public class SensorDebounceEditActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorDebounceEditActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SensorDebounceEditActionTest.class);
 
 }

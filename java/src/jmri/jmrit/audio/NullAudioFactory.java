@@ -127,6 +127,6 @@ public class NullAudioFactory extends AbstractAudioFactory {
         return new NullAudioSource(systemName, userName);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NullAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioFactory.class);
 
 }

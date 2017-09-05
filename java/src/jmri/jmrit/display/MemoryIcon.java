@@ -643,5 +643,5 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class);
 }

@@ -28,6 +28,6 @@ public class JmriNullEntityResolverTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriNullEntityResolverTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriNullEntityResolverTest.class);
 
 }

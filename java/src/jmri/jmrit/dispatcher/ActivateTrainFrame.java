@@ -14,7 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Transit;
@@ -30,11 +32,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Displays the Activate New Train dialog and processes information entered
  * there.
- *
+ * <p>
  * <P>
  * This module works with Dispatcher, which initiates the display of the dialog.
  * Dispatcher also creates the ActiveTrain.
- *
+ * <p>
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -78,7 +80,7 @@ public class ActivateTrainFrame {
     private JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
     private JTextField trainNameField = new JTextField(10);
     private JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
-    private JTextField dccAddressField = new JTextField(6);
+    private JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
     private JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
     private JComboBox<String> startingBlockBox = new JComboBox<String>();
     private ArrayList<Block> startingBlockBoxList = new ArrayList<Block>();
@@ -94,7 +96,7 @@ public class ActivateTrainFrame {
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
     private JCheckBox allocateAllTheWayBox = new JCheckBox(Bundle.getMessage("AllocateAllTheWay"));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
-    private JTextField priorityField = new JTextField(6);
+    private JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
     private JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
     int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
@@ -106,12 +108,12 @@ public class ActivateTrainFrame {
     private jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
     private jmri.util.swing.JmriBeanComboBox delayReStartSensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
 
-    private JTextField departureHrField = new JTextField(2);
-    private JTextField departureMinField = new JTextField(2);
+    private JSpinner departureHrSpinner = new JSpinner(new SpinnerNumberModel(8, 0, 23, 1));
+    private JSpinner departureMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
     private JLabel departureTimeLabel = new JLabel(Bundle.getMessage("DepartureTime"));
     private JLabel departureSepLabel = new JLabel(":");
 
-    private JTextField delayMinField = new JTextField(3);
+    private JSpinner delayMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
     private JLabel delayMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
 
     private JComboBox<String> trainTypeBox = new JComboBox<String>();
@@ -120,12 +122,12 @@ public class ActivateTrainFrame {
     boolean transitsFromSpecificBlock = false;
 
     /**
-     * Open up a new train window for a given roster entry located in a
-     * specific block.
-     * 
-     * @param e the action event triggering the new window
+     * Open up a new train window for a given roster entry located in a specific
+     * block.
+     *
+     * @param e  the action event triggering the new window
      * @param re the roster entry to open the new window for
-     * @param b the block where the train is located
+     * @param b  the block where the train is located
      */
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b) {
         initiateTrain(e);
@@ -163,9 +165,10 @@ public class ActivateTrainFrame {
 
     /**
      * Displays a window that allows a new ActiveTrain to be activated.
-     *
+     * <p>
      * Called by Dispatcher in response to the dispatcher clicking the New Train
      * button.
+     *
      * @param e the action event triggering the window display
      */
     protected void initiateTrain(ActionEvent e) {
@@ -199,7 +202,7 @@ public class ActivateTrainFrame {
                 }
             });
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
-            p0.add(deleteButton = new JButton(Bundle.getMessage("ButtonDelete")));
+            p0.add(deleteButton = new JButton(Bundle.getMessage("DeleteButton")));
             deleteButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -231,8 +234,8 @@ public class ActivateTrainFrame {
             p1a.add(trainNameField);
             trainNameField.setToolTipText(Bundle.getMessage("TrainFieldHint"));
             p1a.add(dccAddressFieldLabel);
-            p1a.add(dccAddressField);
-            dccAddressField.setToolTipText(Bundle.getMessage("DccAddressFieldHint"));
+            p1a.add(dccAddressSpinner);
+            dccAddressSpinner.setToolTipText(Bundle.getMessage("DccAddressFieldHint"));
             initiatePane.add(p1a);
             JPanel p2 = new JPanel();
             p2.setLayout(new FlowLayout());
@@ -297,9 +300,8 @@ public class ActivateTrainFrame {
             p6b.setLayout(new FlowLayout());
             ((FlowLayout) p6b.getLayout()).setVgap(1);
             p6b.add(delayMinLabel);
-            p6b.add(delayMinField);
-            delayMinField.setText("0");
-            delayMinField.setToolTipText(Bundle.getMessage("RestartTimedHint"));
+            p6b.add(delayMinSpinner); // already set to 0
+            delayMinSpinner.setToolTipText(Bundle.getMessage("RestartTimedHint"));
             p6b.add(delayReStartSensorLabel);
             p6b.add(delayReStartSensor);
             delayReStartSensor.setFirstItemBlank(true);
@@ -325,9 +327,8 @@ public class ActivateTrainFrame {
             JPanel p8 = new JPanel();
             p8.setLayout(new FlowLayout());
             p8.add(new JLabel(Bundle.getMessage("PriorityLabel") + " :"));
-            p8.add(priorityField);
-            priorityField.setToolTipText(Bundle.getMessage("PriorityHint"));
-            priorityField.setText("5");
+            p8.add(prioritySpinner); // already set to 5
+            prioritySpinner.setToolTipText(Bundle.getMessage("PriorityHint"));
             p8.add(new JLabel("     "));
             p8.add(new JLabel(Bundle.getMessage("TrainTypeBoxLabel")));
             initializeTrainTypeBox();
@@ -347,17 +348,19 @@ public class ActivateTrainFrame {
                 }
             });
             p9.add(departureTimeLabel);
-            p9.add(departureHrField);
-            departureHrField.setText("08");
-            departureHrField.setToolTipText(Bundle.getMessage("DepartureTimeHrHint"));
+            departureHrSpinner.setEditor(new JSpinner.NumberEditor(departureHrSpinner, "00"));
+            p9.add(departureHrSpinner);
+            departureHrSpinner.setValue(8);
+            departureHrSpinner.setToolTipText(Bundle.getMessage("DepartureTimeHrHint"));
             p9.add(departureSepLabel);
-            p9.add(departureMinField);
-            departureMinField.setText("00");
-            departureMinField.setToolTipText(Bundle.getMessage("DepartureTimeMinHint"));
+            departureMinSpinner.setEditor(new JSpinner.NumberEditor(departureMinSpinner, "00"));
+            p9.add(departureMinSpinner);
+            departureMinSpinner.setValue(0);
+            departureMinSpinner.setToolTipText(Bundle.getMessage("DepartureTimeMinHint"));
             p9.add(delaySensor);
             delaySensor.setFirstItemBlank(true);
             handleDelayStartClick(null);
-            initiatePane.add(p9);           
+            initiatePane.add(p9);
 
             JPanel p11 = new JPanel();
             p11.setLayout(new FlowLayout());
@@ -366,7 +369,7 @@ public class ActivateTrainFrame {
             loadAtStartupBox.setSelected(false);
             initiatePane.add(p11);
 
-            initiatePane.add(new JSeparator());           
+            initiatePane.add(new JSeparator());
             JPanel p5 = new JPanel();
             p5.setLayout(new FlowLayout());
             p5.add(autoRunBox);
@@ -379,7 +382,7 @@ public class ActivateTrainFrame {
             autoRunBox.setToolTipText(Bundle.getMessage("AutoRunBoxHint"));
             autoRunBox.setSelected(false);
             initiatePane.add(p5);
-            
+
             initializeAutoRunItems();
             initiatePane.add(new JSeparator());
             JPanel p7 = new JPanel();
@@ -409,7 +412,7 @@ public class ActivateTrainFrame {
             trainFieldLabel.setVisible(false);
             trainNameField.setVisible(false);
             dccAddressFieldLabel.setVisible(false);
-            dccAddressField.setVisible(false);
+            dccAddressSpinner.setVisible(false);
         } else if (_TrainsFromUser) {
             trainNameField.setText("");
             trainBoxLabel.setVisible(false);
@@ -417,7 +420,7 @@ public class ActivateTrainFrame {
             trainFieldLabel.setVisible(true);
             trainNameField.setVisible(true);
             dccAddressFieldLabel.setVisible(true);
-            dccAddressField.setVisible(true);
+            dccAddressSpinner.setVisible(true);
         }
         setAutoRunDefaults();
         autoRunBox.setSelected(false);
@@ -481,23 +484,24 @@ public class ActivateTrainFrame {
     }
 
     private void handleDelayStartClick(ActionEvent e) {
-        departureHrField.setVisible(false);
-        departureMinField.setVisible(false);
+        departureHrSpinner.setVisible(false);
+        departureMinSpinner.setVisible(false);
         departureTimeLabel.setVisible(false);
         departureSepLabel.setVisible(false);
         delaySensor.setVisible(false);
         if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartTimed"))) {
-            departureHrField.setVisible(true);
-            departureMinField.setVisible(true);
+            departureHrSpinner.setVisible(true);
+            departureMinSpinner.setVisible(true);
             departureTimeLabel.setVisible(true);
             departureSepLabel.setVisible(true);
         } else if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))) {
             delaySensor.setVisible(true);
         }
+        initiateFrame.pack(); // to fit extra hh:mm in window
     }
 
     private void handleResetWhenDoneClick(ActionEvent e) {
-        delayMinField.setVisible(false);
+        delayMinSpinner.setVisible(false);
         delayMinLabel.setVisible(false);
         delayedReStartLabel.setVisible(false);
         delayedReStartBox.setVisible(false);
@@ -507,7 +511,7 @@ public class ActivateTrainFrame {
             delayedReStartLabel.setVisible(true);
             delayedReStartBox.setVisible(true);
             if (delayedReStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartTimed"))) {
-                delayMinField.setVisible(true);
+                delayMinSpinner.setVisible(true);
                 delayMinLabel.setVisible(true);
             } else if (delayedReStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))) {
                 delayReStartSensor.setVisible(true);
@@ -550,7 +554,8 @@ public class ActivateTrainFrame {
 
     /**
      * Handles press of "Add New Train" button by edit-checking populated values
-     *  then (if no errors) creating an ActiveTrain and (optionally) an AutoActiveTrain
+     * then (if no errors) creating an ActiveTrain and (optionally) an
+     * AutoActiveTrain
      */
     private void addNewTrain(ActionEvent e) {
         // get information
@@ -585,53 +590,15 @@ public class ActivateTrainFrame {
         int delayedStart = delayModeFromBox(delayedStartBox);
         int delayedReStart = delayModeFromBox(delayedReStartBox);
         int departureTimeHours = 8;
-        try {
-            departureTimeHours = Integer.parseInt(departureHrField.getText());
-            if ((departureTimeHours < 0) || (departureTimeHours > 23)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "BadEntry3", departureHrField.getText()),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.warn("Range error in Departure Time Hours field");
-                return;
-            }
-        } catch (NumberFormatException ehr) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "BadEntry2", departureHrField.getText()),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.warn("Conversion exception in departure time hours field");
-            return;
-        }
+        departureTimeHours = (Integer) departureHrSpinner.getValue();
         int departureTimeMinutes = 8;
-        try {
-            departureTimeMinutes = Integer.parseInt(departureMinField.getText());
-            if ((departureTimeMinutes < 0) || (departureTimeMinutes > 59)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "BadEntry3", departureMinField.getText()),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.warn("Range error in Departure Time Minutes field");
-                return;
-            }
-        } catch (NumberFormatException emn) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "BadEntry2", departureMinField.getText()),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.warn("Conversion exception in departure time minutes field");
-            return;
-        }
+        departureTimeMinutes = (Integer) departureMinSpinner.getValue();
         int delayRestartMinutes = 0;
-        try {
-            delayRestartMinutes = Integer.parseInt(delayMinField.getText());
-            if ((delayRestartMinutes < 0)) {
-                JOptionPane.showMessageDialog(initiateFrame, delayMinField.getText(),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.warn("Range error in Delay Restart Time Minutes field");
-                return;
-            }
-        } catch (NumberFormatException emn) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "BadEntry2", delayMinField.getText()),
+        delayRestartMinutes = (Integer) delayMinSpinner.getValue();
+        if ((delayRestartMinutes < 0)) {
+            JOptionPane.showMessageDialog(initiateFrame, (Integer) delayMinSpinner.getValue(),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.warn("Conversion exception in restart delay minutes field");
+            log.warn("Range error in Delay Restart Time Minutes field");
             return;
         }
         int tSource = 0;
@@ -691,21 +658,9 @@ public class ActivateTrainFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            dccAddress = dccAddressField.getText();
             int address = -1;
-            try {
-                address = Integer.parseInt(dccAddress);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error23"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.error("Conversion exception in dccAddress field");
-                return;
-            }
-            if ((address < 1) || (address > 9999)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error23"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            address = (Integer) dccAddressSpinner.getValue(); // SpinnerNumberModel limits address to 1 - 9999 inclusive
+            dccAddress = String.valueOf(address);
             if (!isAddressFree(address)) {
                 // DCC address is already in use by an Active Train
                 JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
@@ -716,15 +671,7 @@ public class ActivateTrainFrame {
             tSource = ActiveTrain.USER;
         }
         int priority = 5;
-        try {
-            priority = Integer.parseInt(priorityField.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "BadEntry", priorityField.getText()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            log.error("Conversion exception in priority field");
-            return;
-        }
+        priority = (Integer) prioritySpinner.getValue();
         int trainType = trainTypeBox.getSelectedIndex();
         if (autoRunBox.isSelected()) {
             if (!readAutoRunItems()) {
@@ -748,8 +695,8 @@ public class ActivateTrainFrame {
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
         at.setDelaySensor((jmri.Sensor) delaySensor.getSelectedBean());
-        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY) || 
-                delayedStart==ActiveTrain.NODELAY) {
+        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY)
+                || delayedStart == ActiveTrain.NODELAY) {
             at.setStarted();
         }
         at.setRestartSensor((jmri.Sensor) delayReStartSensor.getSelectedBean());
@@ -969,7 +916,7 @@ public class ActivateTrainFrame {
             if ((selName == null) || (((String) selName).equals(""))) {
                 return;
             }
-            //read xml data from selected filename and move it into the new train dialog box 
+            //read xml data from selected filename and move it into the new train dialog box
             _trainInfoName = (String) selName;
             try {
                 info = _tiFile.readTrainInfo((String) selName);
@@ -1028,9 +975,9 @@ public class ActivateTrainFrame {
         // write the Train Info file
         try {
             _tiFile.writeTrainInfo(info, fileName);
-        } //catch (org.jdom2.JDOMException jde) { 
-        // log.error("JDOM exception writing Train Info: "+jde); 
-        //}                           
+        } //catch (org.jdom2.JDOMException jde) {
+        // log.error("JDOM exception writing Train Info: "+jde);
+        //}
         catch (java.io.IOException ioe) {
             log.error("IO exception writing Train Info: " + ioe);
         }
@@ -1069,24 +1016,24 @@ public class ActivateTrainFrame {
             }
         } else if (_TrainsFromUser) {
             trainNameField.setText(info.getTrainName());
-            dccAddressField.setText(info.getDccAddress());
+            dccAddressSpinner.setValue(Integer.parseInt(info.getDccAddress()));
         }
         inTransitBox.setSelected(info.getTrainInTransit());
         initializeStartingBlockCombo();
         initializeDestinationBlockCombo();
         setComboBox(startingBlockBox, info.getStartBlockName());
         setComboBox(destinationBlockBox, info.getDestinationBlockName());
-        priorityField.setText(Integer.toString(info.getPriority()));
+        prioritySpinner.setValue(info.getPriority());
         resetWhenDoneBox.setSelected(info.getResetWhenDone());
         reverseAtEndBox.setSelected(info.getReverseAtEnd());
         setDelayModeBox(info.getDelayedStart(), delayedStartBox);
         //delayedStartBox.setSelected(info.getDelayedStart());
-        departureHrField.setText(Integer.toString(info.getDepartureTimeHr()));
-        departureMinField.setText(Integer.toString(info.getDepartureTimeMin()));
+        departureHrSpinner.setValue(info.getDepartureTimeHr());
+        departureMinSpinner.setValue(info.getDepartureTimeMin());
         delaySensor.setSelectedBeanByName(info.getDelaySensorName());
 
         setDelayModeBox(info.getDelayedRestart(), delayedReStartBox);
-        delayMinField.setText(Integer.toString(info.getRestartDelayMin()));
+        delayMinSpinner.setValue(info.getRestartDelayMin());
         delayReStartSensor.setSelectedBeanByName(info.getRestartSensorName());
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
         setComboBox(trainTypeBox, info.getTrainType());
@@ -1105,7 +1052,7 @@ public class ActivateTrainFrame {
             info.setDccAddress(" ");
         } else if (_TrainsFromUser) {
             info.setTrainName(trainNameField.getText());
-            info.setDccAddress(dccAddressField.getText());
+            info.setDccAddress((String) dccAddressSpinner.getValue());
         }
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
@@ -1127,26 +1074,26 @@ public class ActivateTrainFrame {
         info.setTrainFromRoster(_TrainsFromRoster);
         info.setTrainFromTrains(_TrainsFromTrains);
         info.setTrainFromUser(_TrainsFromUser);
-        info.setPriority(Integer.parseInt(priorityField.getText()));
+        info.setPriority((Integer) prioritySpinner.getValue());
         info.setResetWhenDone(resetWhenDoneBox.isSelected());
         info.setReverseAtEnd(reverseAtEndBox.isSelected());
         info.setDelayedStart(delayModeFromBox(delayedStartBox));
         info.setDelaySensorName(delaySensor.getSelectedDisplayName());
-        info.setDepartureTimeHr(Integer.parseInt(departureHrField.getText()));
-        info.setDepartureTimeMin(Integer.parseInt(departureMinField.getText()));
+        info.setDepartureTimeHr((Integer) departureHrSpinner.getValue());
+        info.setDepartureTimeMin((Integer) departureMinSpinner.getValue());
         info.setTrainType((String) trainTypeBox.getSelectedItem());
         info.setAutoRun(autoRunBox.isSelected());
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
         info.setAllocateAllTheWay(allocateAllTheWayBox.isSelected());
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
-        info.setRestartDelayMin(Integer.parseInt(delayMinField.getText()));
+        info.setRestartDelayMin((Integer) delayMinSpinner.getValue());
         info.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
         autoRunItemsToTrainInfo(info);
         return info;
     }
 
-    // Normalizes a suggested xml file name.  Returns null string if a valid name cannot be assembled 
+    // Normalizes a suggested xml file name.  Returns null string if a valid name cannot be assembled
     private String normalizeXmlFileName(String name) {
         if (name.length() < 1) {
             return "";
@@ -1197,24 +1144,31 @@ public class ActivateTrainFrame {
     /**
      * The following are for items that are only for automatic running of
      * ActiveTrains They are isolated here to simplify changing them in the
-     * future initializeAutoRunItems - initializes the display of auto run items
-     * in this window initializeAutoRunValues - initializes the values of auto
-     * run items from values in a saved train info file hideAutoRunItems - hides
-     * all auto run items in this window showAutoRunItems - shows all auto run
-     * items in this window autoTrainInfoToDialog - gets auto run items from a
-     * train info, puts values in items, and initializes auto run dialog items
-     * autoTrainItemsToTrainInfo - copies values of auto run items to train info
-     * for saving to a file readAutoRunItems - reads and checks values of all
-     * auto run items. returns true if OK, sends appropriate messages and
-     * returns false if not OK setAutoRunItems - sets the user entered auto run
-     * items in the new AutoActiveTrain
+     * future.
+     * <ul>
+     * <li>initializeAutoRunItems - initializes the display of auto run items in
+     * this window
+     * <li>initializeAutoRunValues - initializes the values of auto run items
+     * from values in a saved train info file hideAutoRunItems - hides all auto
+     * run items in this window showAutoRunItems - shows all auto run items in
+     * this window
+     * <li>autoTrainInfoToDialog - gets auto run items from a train info, puts
+     * values in items, and initializes auto run dialog items
+     * <li>autoTrainItemsToTrainInfo - copies values of auto run items to train
+     * info for saving to a file
+     * <li>readAutoRunItems - reads and checks values of all auto run items.
+     * returns true if OK, sends appropriate messages and returns false if not
+     * OK
+     * <li>setAutoRunItems - sets the user entered auto run items in the new
+     * AutoActiveTrain
+     * </ul>
      */
     // auto run items in ActivateTrainFrame
     private JPanel pa1 = new JPanel();
     private JLabel speedFactorLabel = new JLabel(Bundle.getMessage("SpeedFactorLabel"));
-    private JTextField speedFactorField = new JTextField(5);
+    private JSpinner speedFactorSpinner = new JSpinner();
     private JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
-    private JTextField maxSpeedField = new JTextField(5);
+    private JSpinner maxSpeedSpinner = new JSpinner();
     private JPanel pa2 = new JPanel();
     private JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private JComboBox<String> rampRateBox = new JComboBox<String>();
@@ -1224,7 +1178,7 @@ public class ActivateTrainFrame {
     private JPanel pa4 = new JPanel();
     private JCheckBox resistanceWheelsBox = new JCheckBox(Bundle.getMessage("ResistanceWheels"));
     private JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
-    private JTextField maxTrainLengthField = new JTextField(5);
+    private JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
     // auto run variables
     float _speedFactor = 1.0f;
     float _maxSpeed = 0.6f;
@@ -1248,12 +1202,16 @@ public class ActivateTrainFrame {
         initializeRampCombo();
         pa1.setLayout(new FlowLayout());
         pa1.add(speedFactorLabel);
-        pa1.add(speedFactorField);
-        speedFactorField.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
+        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        speedFactorSpinner.setEditor(new JSpinner.NumberEditor(speedFactorSpinner, "# %"));
+        pa1.add(speedFactorSpinner);
+        speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
-        pa1.add(maxSpeedField);
-        maxSpeedField.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
+        pa1.add(maxSpeedSpinner);
+        maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         initiatePane.add(pa1);
         pa2.setLayout(new FlowLayout());
         pa2.add(rampRateLabel);
@@ -1272,21 +1230,24 @@ public class ActivateTrainFrame {
         resistanceWheelsBox.setToolTipText(Bundle.getMessage("ResistanceWheelsBoxHint"));
         pa4.add(new JLabel("   "));
         pa4.add(trainLengthLabel);
-        pa4.add(maxTrainLengthField);
-        maxTrainLengthField.setToolTipText(Bundle.getMessage("MaxTrainLengthHint"));
+        maxTrainLengthSpinner.setModel(new SpinnerNumberModel(Float.valueOf(18.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.5f)));
+        maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
+        pa4.add(maxTrainLengthSpinner);
+        maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint"));
         initiatePane.add(pa4);
         hideAutoRunItems();   // initialize with auto run items hidden
         initializeAutoRunValues();
     }
 
     private void initializeAutoRunValues() {
-        speedFactorField.setText("" + _speedFactor);
-        maxSpeedField.setText("" + _maxSpeed);
+        speedFactorSpinner.setValue(_speedFactor);
+        maxSpeedSpinner.setValue(_maxSpeed);
         rampRateBox.setSelectedIndex(_rampRate);
         resistanceWheelsBox.setSelected(_resistanceWheels);
         soundDecoderBox.setSelected(_soundDecoder);
         runInReverseBox.setSelected(_runInReverse);
-        maxTrainLengthField.setText("" + _maxTrainLength);
+
+        maxTrainLengthSpinner.setValue(Math.round(_maxTrainLength * 2) * 0.5f); // set in spinner as 0.5 increments
     }
 
     private void hideAutoRunItems() {
@@ -1304,13 +1265,13 @@ public class ActivateTrainFrame {
     }
 
     private void autoTrainInfoToDialog(TrainInfo info) {
-        speedFactorField.setText(Float.toString(info.getSpeedFactor()));
-        maxSpeedField.setText(Float.toString(info.getMaxSpeed()));
+        speedFactorSpinner.setValue(info.getSpeedFactor());
+        maxSpeedSpinner.setValue(info.getMaxSpeed());
         setComboBox(rampRateBox, info.getRampRate());
         resistanceWheelsBox.setSelected(info.getResistanceWheels());
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
-        maxTrainLengthField.setText(Float.toString(info.getMaxTrainLength()));
+        maxTrainLengthSpinner.setValue(info.getMaxTrainLength());
         if (autoRunBox.isSelected()) {
             showAutoRunItems();
         } else {
@@ -1320,74 +1281,30 @@ public class ActivateTrainFrame {
     }
 
     private void autoRunItemsToTrainInfo(TrainInfo info) {
-        info.setSpeedFactor(Float.parseFloat(speedFactorField.getText()));
-        info.setMaxSpeed(Float.parseFloat(maxSpeedField.getText()));
+        info.setSpeedFactor((float) speedFactorSpinner.getValue());
+        info.setMaxSpeed((float) maxSpeedSpinner.getValue());
         info.setRampRate((String) rampRateBox.getSelectedItem());
         info.setResistanceWheels(resistanceWheelsBox.isSelected());
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
-        info.setMaxTrainLength(Float.parseFloat(maxTrainLengthField.getText()));
+        info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
     }
 
     private boolean readAutoRunItems() {
         boolean success = true;
         float factor = 1.0f;
-        try {
-            factor = Float.parseFloat(speedFactorField.getText());
-            if ((factor < 0.1f) || (factor > 1.5f)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "Error29", speedFactorField.getText()), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                speedFactorField.setText("1.0");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error30", speedFactorField.getText()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            speedFactorField.setText("1.0");
-            return false;
-        }
+        factor = (float) speedFactorSpinner.getValue();
         _speedFactor = factor;
         float max = 0.6f;
-        try {
-            max = Float.parseFloat(maxSpeedField.getText());
-            if ((max < 0.1f) || (max > 1.5f)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "Error37", maxSpeedField.getText()), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                speedFactorField.setText("0.6");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error38", maxSpeedField.getText()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            speedFactorField.setText("0.6");
-            return false;
-        }
+        max = (float) maxSpeedSpinner.getValue();
         _maxSpeed = max;
         _rampRate = rampRateBox.getSelectedIndex();
         _resistanceWheels = resistanceWheelsBox.isSelected();
         _runInReverse = runInReverseBox.isSelected();
         _soundDecoder = soundDecoderBox.isSelected();
-        try {
-            factor = Float.parseFloat(maxTrainLengthField.getText());
-            if ((factor < 0.0f) || (factor > 10000.0f)) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "Error31", maxTrainLengthField.getText()), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                maxTrainLengthField.setText("18.0");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error32", maxTrainLengthField.getText()), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            maxTrainLengthField.setText("18.0");
-            return false;
-        }
-        _maxTrainLength = factor;
+        float length = 18.0f;
+        length = (Float) maxTrainLengthSpinner.getValue();
+        _maxTrainLength = length;
         return success;
     }
 
@@ -1411,5 +1328,5 @@ public class ActivateTrainFrame {
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class);
 }

@@ -118,6 +118,6 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Roster.getDefault().writeRoster();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class);
 
 }

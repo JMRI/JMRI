@@ -29,6 +29,6 @@ public class NetworkDriverAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapterTest.class);
 
 }

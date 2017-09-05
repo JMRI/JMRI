@@ -463,5 +463,5 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _numTurnouts.setText(String.valueOf(turnouts));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class);
 }

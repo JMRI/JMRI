@@ -230,6 +230,6 @@ public class LenzCommandStation implements jmri.CommandStation {
     /*
      * Register for logging.
      */
-    private final static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LenzCommandStation.class);
 
 }

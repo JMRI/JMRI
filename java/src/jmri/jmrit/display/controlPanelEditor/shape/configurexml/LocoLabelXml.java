@@ -10,7 +10,7 @@ import org.jdom2.Element;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class LocoLabelXml extends PositionableRectangleXml {
 
@@ -37,11 +37,11 @@ public class LocoLabelXml extends PositionableRectangleXml {
         elem.setAttribute("width", "" + p.getWidth());
         elem.setAttribute("height", "" + p.getHeight());
         element.addContent(elem);
-        
+
         elem = new Element("OBlock");
         OBlock block = p.getBlock();
         elem.setAttribute("systemName", "" + block.getSystemName());
-        elem.setAttribute("trainName", "" +  block.getValue());
+        elem.setAttribute("trainName", "" + block.getValue());
         element.addContent(elem);
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.shape.configurexml.LocoLabelXml");
@@ -64,16 +64,16 @@ public class LocoLabelXml extends PositionableRectangleXml {
         ll.setWidth(getInt(elem, "width"));
         ll.setHeight(getInt(elem, "height"));
 
-        if (elem!=null && elem.getAttribute("systemName") != null) {
+        if (elem != null && elem.getAttribute("systemName") != null) {
             String name = elem.getAttribute("systemName").getValue();
             OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
             OBlock block = manager.getBySystemName(name);
             ll.setBlock(block);
-            if (elem.getAttribute("trainName") != null && block!=null) {
+            if (elem.getAttribute("trainName") != null && block != null) {
                 block.setValue(elem.getAttribute("trainName").getValue());
             }
         } else {
-            return;     // don't put into editor's content list without           
+            return;     // don't put into editor's content list without
         }
 
         ed.putItem(ll);

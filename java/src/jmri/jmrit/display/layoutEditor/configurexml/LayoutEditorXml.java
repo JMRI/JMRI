@@ -292,8 +292,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         double xScale = 1.0;
         double yScale = 1.0;
-        a = shared.getAttribute("xscale");
-        if (a != null) {
+        if ((a = shared.getAttribute("xscale")) != null) {
             try {
                 xScale = (Float.parseFloat(a.getValue()));
             } catch (Exception e) {
@@ -301,8 +300,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        a = shared.getAttribute("yscale");
-        if (a != null) {
+        if ((a = shared.getAttribute("yscale")) != null) {
             try {
                 yScale = (Float.parseFloat(a.getValue()));
             } catch (Exception e) {
@@ -311,10 +309,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        // find the name and default track color
+        // find the name
         String name = "";
-        a = shared.getAttribute("name");
-        if (a != null) {
+        if ((a = shared.getAttribute("name")) != null) {
             name = a.getValue();
         }
         if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
@@ -341,29 +338,25 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setYScale(yScale);
 
         String defaultColor = "black";
-        a = shared.getAttribute("defaulttrackcolor");
-        if (a != null) {
+        if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
             defaultColor = a.getValue();
         }
         panel.setDefaultTrackColor(defaultColor);
 
         String defaultTextColor = "black";
-        a = shared.getAttribute("defaulttextcolor");
-        if (a != null) {
+        if ((a = shared.getAttribute("defaulttextcolor")) != null) {
             defaultTextColor = a.getValue();
         }
         panel.setDefaultTextColor(defaultTextColor);
 
         String turnoutCircleColor = "track";  //default to using use default track color for circle color
-        a = shared.getAttribute("turnoutcirclecolor");
-        if (a != null) {
+        if ((a = shared.getAttribute("turnoutcirclecolor")) != null) {
             turnoutCircleColor = a.getValue();
         }
         panel.setTurnoutCircleColor(turnoutCircleColor);
 
         int turnoutCircleSize = 2;
-        a = shared.getAttribute("turnoutcirclesize");
-        if (a != null) {
+        if ((a = shared.getAttribute("turnoutcirclesize")) != null) {
             try {
                 turnoutCircleSize = a.getIntValue();
             } catch (DataConversionException e1) {
@@ -382,8 +375,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // turnout size parameters
         double sz = 20.0;
-        a = shared.getAttribute("turnoutbx");
-        if (a != null) {
+        if ((a = shared.getAttribute("turnoutbx")) != null) {
             try {
                 sz = (Float.parseFloat(a.getValue()));
                 panel.setTurnoutBX(sz);
@@ -393,8 +385,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        a = shared.getAttribute("turnoutcx");
-        if (a != null) {
+        if ((a = shared.getAttribute("turnoutcx")) != null) {
             try {
                 sz = (Float.parseFloat(a.getValue()));
                 panel.setTurnoutCX(sz);
@@ -404,8 +395,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        a = shared.getAttribute("turnoutwid");
-        if (a != null) {
+        if ((a = shared.getAttribute("turnoutwid")) != null) {
             try {
                 sz = (Float.parseFloat(a.getValue()));
                 panel.setTurnoutWid(sz);
@@ -415,8 +405,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        a = shared.getAttribute("xoverlong");
-        if (a != null) {
+        if ((a = shared.getAttribute("xoverlong")) != null) {
             try {
                 sz = (Float.parseFloat(a.getValue()));
                 panel.setXOverLong(sz);
@@ -425,8 +414,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        a = shared.getAttribute("xoverhwid");
-        if (a != null) {
+        if ((a = shared.getAttribute("xoverhwid")) != null) {
             try {
                 sz = (Float.parseFloat(a.getValue()));
                 panel.setXOverHWid(sz);
@@ -435,8 +423,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        a = shared.getAttribute("xovershort");
-        if (a != null) {
+        if ((a = shared.getAttribute("xovershort")) != null) {
             try {
                 sz = (Float.parseFloat(a.getValue()));
                 panel.setXOverShort(sz);
@@ -447,8 +434,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         // grid size parameter
         int iz = 10; // this value is never used but it's the default
-        a = shared.getAttribute("gridSize");
-        if (a != null) {
+        if ((a = shared.getAttribute("gridSize")) != null) {
             try {
                 iz = (Integer.parseInt(a.getValue()));
                 panel.setGridSize(iz);
@@ -460,8 +446,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // second grid size parameter
         iz = 10; // this value is never used but it's the default
-        a = shared.getAttribute("gridSize2nd");
-        if (a != null) {
+        if ((a = shared.getAttribute("gridSize2nd")) != null) {
             try {
                 iz = (Integer.parseInt(a.getValue()));
                 panel.setGridSize2nd(iz);
@@ -557,8 +542,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
-            panel.setDefaultBackgroundColor(ColorUtil.colorToString(new Color(red, green, blue)));
-            panel.setBackgroundColor(new Color(red, green, blue));
+            Color backgroundColor = new Color(red, green, blue);
+            panel.setDefaultBackgroundColor(ColorUtil.colorToColorName(backgroundColor));
+            panel.setBackgroundColor(backgroundColor);
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
@@ -671,5 +657,5 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     public int loadOrder() {
         return jmri.Manager.PANELFILES;
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class);
 }

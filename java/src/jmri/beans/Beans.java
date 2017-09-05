@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Intentional pattern")
 public class Beans extends java.beans.Beans {
 
-    private final static Logger log = LoggerFactory.getLogger(Beans.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Beans.class);
 
     /**
      * Set element <i>index</i> of property <i>key</i> of <i>bean</i> to

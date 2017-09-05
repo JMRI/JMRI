@@ -29,6 +29,6 @@ public class DecoderPro3ActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderPro3ActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DecoderPro3ActionTest.class);
 
 }

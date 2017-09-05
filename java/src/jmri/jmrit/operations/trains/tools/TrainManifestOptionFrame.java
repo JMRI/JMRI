@@ -185,5 +185,5 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrame.class);
 }

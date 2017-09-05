@@ -34,6 +34,6 @@ public class AmpMeterFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
 
 }

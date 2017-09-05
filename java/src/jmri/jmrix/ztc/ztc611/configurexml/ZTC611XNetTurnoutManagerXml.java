@@ -34,6 +34,6 @@ public class ZTC611XNetTurnoutManagerXml extends jmri.managers.configurexml.Abst
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerXml.class);
 
 }

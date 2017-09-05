@@ -41,6 +41,6 @@ public class Mx1ThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Mx1ThrottleTest.class);
 
 }

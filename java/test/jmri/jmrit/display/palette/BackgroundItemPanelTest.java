@@ -37,6 +37,6 @@ public class BackgroundItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BackgroundItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BackgroundItemPanelTest.class);
 
 }

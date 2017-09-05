@@ -219,6 +219,6 @@ public class DefaultRailComManager extends AbstractManager<jmri.IdTag>
         return Bundle.getMessage("BeanNameReporter");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class);
 
 }

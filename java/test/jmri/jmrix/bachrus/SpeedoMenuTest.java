@@ -30,6 +30,6 @@ public class SpeedoMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedoMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SpeedoMenuTest.class);
 
 }

@@ -29,6 +29,6 @@ public class CanConfigurationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CanConfigurationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CanConfigurationManagerTest.class);
 
 }

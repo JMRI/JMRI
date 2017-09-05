@@ -29,6 +29,6 @@ public class ReportActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ReportActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ReportActionTest.class);
 
 }

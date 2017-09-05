@@ -30,6 +30,6 @@ public class IEEE802154MenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IEEE802154MenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IEEE802154MenuTest.class);
 
 }
