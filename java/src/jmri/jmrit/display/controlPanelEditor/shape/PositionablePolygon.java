@@ -302,5 +302,16 @@ public class PositionablePolygon extends PositionableShape {
         }
     }
 
+    @Override
+    protected void invalidateShape() {
+        // do nothing to prevent PositionableShape from invalidating this path
+    }
+
+    @Override
+    protected Shape makeShape() {
+        // return an empty shape so it can be appended to
+        return new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class);
 }
