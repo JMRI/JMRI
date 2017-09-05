@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog.sprogslotmon;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
@@ -30,8 +29,7 @@ public class SprogSlotMonFrameTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         memo = new jmri.jmrix.sprog.SprogSystemConnectionMemo();
         memo.setSprogTrafficController(new SprogTrafficControlScaffold(memo));
         memo.setSprogMode(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
@@ -39,8 +37,5 @@ public class SprogSlotMonFrameTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

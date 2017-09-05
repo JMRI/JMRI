@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet;
 
-import org.junit.Assert;
+import jmri.DccLocoAddress;
+import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import jmri.DccLocoAddress;
 
 /**
  * LocoNetConsistTest.java
@@ -24,7 +24,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     LocoNetSystemConnectionMemo memo;
     LnThrottleManager ltm;
 
-    //utility function, handle slot messages required to suppress 
+    //utility function, handle slot messages required to suppress
     // errors from the LnThrottleManager after constructor call.
     private void ReturnSlotInfo(){
                // echo of the original message
@@ -60,13 +60,13 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     }
 
     @Test
-    @Override 
+    @Override
     public void testGetConsistType(){
         // LocoNet consists default to CS consists.
         Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Test 
+    @Test
     @Override
     public void testSetConsistTypeCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
@@ -95,8 +95,8 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
 
     @Test public void checkSizeLimitCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("CS Consist Limit",-1,c.sizeLimit());   
-    } 
+        Assert.assertEquals("CS Consist Limit",-1,c.sizeLimit());
+    }
 
     @Test public void checkGetLocoDirectionCS(){
         LocoNetConsist c = new LocoNetConsist(3,memo);
@@ -107,8 +107,8 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));   
-        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));   
+        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));
+        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));
     }
 
 
@@ -116,8 +116,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
@@ -146,13 +145,13 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         ReturnSlotInfo();
 
     }
-   
+
     @After
+    @Override
     public void tearDown() {
         ltm.dispose();
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
         c = null;
+        JUnitUtil.tearDown();
     }
 
 }

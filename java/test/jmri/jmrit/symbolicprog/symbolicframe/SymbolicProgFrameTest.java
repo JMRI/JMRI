@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.symbolicframe;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -21,18 +20,14 @@ public class SymbolicProgFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SymbolicProgFrame action = new SymbolicProgFrame();
         Assert.assertNotNull("exists", action);
-        action.dispose();
+        JUnitUtil.dispose(action);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

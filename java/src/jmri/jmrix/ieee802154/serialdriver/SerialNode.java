@@ -85,5 +85,5 @@ public class SerialNode extends IEEE802154Node {
         return;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
 }

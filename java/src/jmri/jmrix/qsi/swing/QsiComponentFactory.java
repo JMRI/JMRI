@@ -1,7 +1,7 @@
 package jmri.jmrix.qsi.swing;
 
-import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QSIMenu;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the Qsi subsystem.

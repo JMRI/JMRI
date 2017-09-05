@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various object on the layout editor panel.
- * <p>
  */
 public class LayoutEditorFindItems {
 
@@ -26,7 +25,7 @@ public class LayoutEditorFindItems {
             return null;
         }
         for (TrackSegment t : layoutEditor.trackList) {
-            if (t.getID().equals(name)) {
+            if (t.getId().equals(name)) {
                 return t;
             }
         }
@@ -38,7 +37,7 @@ public class LayoutEditorFindItems {
             return null;
         }
         for (PositionablePoint p : layoutEditor.pointList) {
-            if (p.getID().equals(name)) {
+            if (p.getId().equals(name)) {
                 return p;
             }
         }
@@ -443,7 +442,7 @@ public class LayoutEditorFindItems {
         LevelXing result = null;
         if ((name != null) && !name.isEmpty()) {
             for (LevelXing x : layoutEditor.xingList) {
-                if (x.getID().equals(name)) {
+                if (x.getId().equals(name)) {
                     result = x;
                     break;
                 }
@@ -469,7 +468,7 @@ public class LayoutEditorFindItems {
         LayoutTurntable result = null;
         if ((name != null) && !name.isEmpty()) {
             for (LayoutTurntable x : layoutEditor.turntableList) {
-                if (x.getID().equals(name)) {
+                if (x.getId().equals(name)) {
                     result = x;
                     break;
                 }
@@ -575,6 +574,23 @@ public class LayoutEditorFindItems {
         }
         return result;
     }
+    
+   /**
+     * Determine the first unused LayoutTrack object name...
+     * @param inPrefix ...with this prefix...
+     * @param inStartIndex ...and this starting index...
+     * @return the first unused LayoutTrack object name
+     */
+    public String uniqueName(String inPrefix, int inStartIndex) {
+        String result;
+        for (int idx = inStartIndex; true; idx++) {
+            result = String.format("%s%d", inPrefix, idx);
+            if (findObjectByName(result) == null) {
+                break;
+            }
+        }
+        return result;
+    }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

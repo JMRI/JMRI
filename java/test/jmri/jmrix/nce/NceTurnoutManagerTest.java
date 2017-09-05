@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +20,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     @After 
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override
@@ -63,6 +64,6 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class);
 
 }

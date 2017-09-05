@@ -162,7 +162,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.getDefault(jmri.AudioManager.class).cleanUp();
+                        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
                         return true;
                     }
                 };
@@ -183,31 +183,27 @@ public class DefaultAudioManager extends AbstractAudioManager {
             justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(Audio s) {
         super.deregister(s);
-        if (s instanceof Audio) {
-            // Decrement the relevant Audio object counter
-            switch (((Audio) s).getSubType()) {
-                case (Audio.BUFFER): {
-                    countBuffers--;
-                    break;
-                }
-                case (Audio.SOURCE): {
-                    countSources--;
-                    break;
-                }
-                case (Audio.LISTENER): {
-                    countListeners--;
-                    break;
-                }
-                default:
-                    throw new IllegalArgumentException();
+        // Decrement the relevant Audio object counter
+        switch (((Audio) s).getSubType()) {
+            case (Audio.BUFFER): {
+                countBuffers--;
+                break;
             }
-        } else {
-            throw new IllegalArgumentException(s.getSystemName() + " is not an Audio object");
+            case (Audio.SOURCE): {
+                countSources--;
+                break;
+            }
+            case (Audio.LISTENER): {
+                countListeners--;
+                break;
+            }
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
     @Override
-    public void cleanUp() {
+    public void cleanup() {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
         activeAudioFactory.cleanup();
@@ -234,6 +230,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private volatile static DefaultAudioManager _instance;
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 
 }

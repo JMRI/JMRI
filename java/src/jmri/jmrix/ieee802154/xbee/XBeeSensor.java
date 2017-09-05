@@ -1,14 +1,13 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
-import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
-import com.digi.xbee.api.RemoteXBeeDevice;
-
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
@@ -21,10 +20,10 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
-    private String NodeIdentifier; /* This is a string representation of
+    private String nodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
-     the NodeIdentifier string stored in
+     the nodeIdentifier string stored in
      the NI parameter on the node.*/
 
     private int pin;         /* Which DIO pin does this sensor represent. */
@@ -65,11 +64,11 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
                //Address format passed is in the form of encoderAddress:input or S:sensor address
                int seperator = systemName.indexOf(":");
                try {
-                   NodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
-                   if ((node = (XBeeNode) tc.getNodeFromName(NodeIdentifier)) == null) {
-                       if ((node = (XBeeNode) tc.getNodeFromAddress(NodeIdentifier)) == null) {
+                   nodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
+                   if ((node = (XBeeNode) tc.getNodeFromName(nodeIdentifier)) == null) {
+                       if ((node = (XBeeNode) tc.getNodeFromAddress(nodeIdentifier)) == null) {
                            try {
-                               node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(NodeIdentifier));
+                               node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(nodeIdentifier));
                            } catch (java.lang.NumberFormatException nfe) {
                                // if there was a number format exception, we couldn't
                                // find the node.
@@ -83,7 +82,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
                }
            } else {
                try {
-                   NodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
+                   nodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
                    int address = Integer.parseInt(id.substring(prefix.length() + 1, id.length()));
                    node = (XBeeNode) tc.getNodeFromAddress(address / 10);
                    // calculate the pin to examine
@@ -94,7 +93,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
            }
            if (log.isDebugEnabled()) {
                log.debug("Created Sensor " + systemName
-                    + " (NodeIdentifier " + NodeIdentifier
+                    + " (NodeIdentifier " + nodeIdentifier
                     + " ,D" + pin
                     + ")");
            }
@@ -198,7 +197,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class);
 
 }
 

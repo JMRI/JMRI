@@ -15,18 +15,18 @@ import jmri.ThrottleListener;
 public class Transmitter implements ThrottleListener {
 
     Transmitter(String id, boolean polled, int address, boolean longAddress) {
-        setID(id);
+        setId(id);
         setPolled(polled);
         setAddress(address);
         setLongAddress(longAddress);
     }
 
-    public String getID() {
+    public String getId() {
         return id;
     }
     String id;
 
-    public void setID(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 

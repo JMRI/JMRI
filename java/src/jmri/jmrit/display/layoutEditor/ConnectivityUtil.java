@@ -2234,7 +2234,7 @@ public class ConnectivityUtil {
         Object curObj = ob;
 
         if (log.isDebugEnabled()) {
-            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
@@ -2263,10 +2263,10 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-                    log.error("Connectivity error when following track {} in Block {}", curTS.getID(), currLayoutBlock.getUserName());
+                    log.error("Connectivity error when following track {} in Block {}", curTS.getId(), currLayoutBlock.getUserName());
                     log.error("{} not connected to {} (connects: {} & {})",
                             objectToNameOrIDString(curObj),
-                            curTS.getID(),
+                            curTS.getId(),
                             curTS.getConnect1Name(),
                             curTS.getConnect2Name());
                     return false;
@@ -2276,10 +2276,10 @@ public class ConnectivityUtil {
                     log.info("In block {}, going from {} thru {} to {} (conType: {}), nextLayoutBlock: {}",
                             currLayoutBlock.getUserName(),
                             objectToNameOrIDString(conObj),
-                            curTS.getID(),
+                            curTS.getId(),
                             objectToNameOrIDString(curObj),
                             connectionTypeToString(conType),
-                            nextLayoutBlock.getID());
+                            nextLayoutBlock.getId());
                 }
 
                 // follow track according to next destination type
@@ -2289,7 +2289,7 @@ public class ConnectivityUtil {
                     if (((PositionablePoint) conObj).getType() == PositionablePoint.END_BUMPER) {
                         // end of line without reaching 'nextLayoutBlock'
                         if (log.isDebugEnabled()) {
-                            log.info("end of line without reaching {}", nextLayoutBlock.getID());
+                            log.info("end of line without reaching {}", nextLayoutBlock.getId());
                         }
                         curTS = null;
                     } else if (((PositionablePoint) conObj).getType() == PositionablePoint.ANCHOR
@@ -2626,13 +2626,13 @@ public class ConnectivityUtil {
             result = ((AbstractNamedBean) obj).getDisplayName();
         } catch (Exception ex1) {
             try {
-                result = ((PositionablePoint) obj).getID();
+                result = ((PositionablePoint) obj).getId();
             } catch (Exception ex2) {
                 try {
                     result = ((LayoutTurnout) obj).getName();
                 } catch (Exception ex3) {
                     try {
-                        result = ((LevelXing) obj).getID();
+                        result = ((LevelXing) obj).getId();
                     } catch (Exception ex4) {
                         result = "<" + obj + ">";
                     }
@@ -2701,5 +2701,5 @@ public class ConnectivityUtil {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class);
 }

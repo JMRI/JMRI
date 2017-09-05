@@ -4,7 +4,6 @@ import java.awt.Color;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import org.jdom2.Attribute;
@@ -16,9 +15,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
-public class PositionableShapeXml extends AbstractXmlAdapter {
+public abstract class PositionableShapeXml extends AbstractXmlAdapter {
 
     public PositionableShapeXml() {
     }
@@ -56,9 +55,9 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         element.setAttribute("forcecontroloff", !p.isControlling() ? "true" : "false");
         element.setAttribute("hidden", p.isHidden() ? "yes" : "no");
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
-        element.setAttribute("showtooltip", p.showTooltip() ? "true" : "false");
+        element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
-        ToolTip tip = p.getTooltip();
+        ToolTip tip = p.getToolTip();
         String txt = tip.getText();
         if (txt != null) {
             Element elem = new Element("toolTip").addContent(txt);
@@ -104,23 +103,6 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         return false;
     }
 
-    /**
-     * Create a PositionableShape, then add to a target JLayeredPane
-     *
-     * @param element Top level Element to unpack.
-     * @param o       Editor as an Object
-     */
-    @Override
-    public void load(Element element, Object o) {
-        // create the objects
-        Editor ed = (Editor) o;
-        PositionableShape ps = new PositionableShape(ed);
-
-        ed.putItem(ps);
-        // load individual item's option settings after editor has set its global settings
-        loadCommonAttributes(ps, Editor.MARKERS, element);
-    }
-
     public void loadCommonAttributes(PositionableShape ps, int defaultLevel, Element element) {
         int x = getInt(element, "x");
         int y = getInt(element, "y");
@@ -142,9 +124,9 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 
         a = element.getAttribute("showtooltip");
         if ((a != null) && a.getValue().equals("true")) {
-            ps.setShowTooltip(true);
+            ps.setShowToolTip(true);
         } else {
-            ps.setShowTooltip(false);
+            ps.setShowToolTip(false);
         }
 
         a = element.getAttribute("editable");
@@ -156,7 +138,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 
         Element elem = element.getChild("toolTip");
         if (elem != null) {
-            ToolTip tip = ps.getTooltip();
+            ToolTip tip = ps.getToolTip();
             if (tip != null) {
                 tip.setText(elem.getText());
             }
@@ -174,7 +156,6 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         ps.setLineColor(getColor(element, "lineColor", alpha));
         ps.setFillColor(getColor(element, "fillColor", alpha));
 
-        ps.makeShape();
         ps.rotate(getInt(element, "degrees"));
 
         a = element.getAttribute("hideOnSensor");
@@ -186,7 +167,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         try {
             changeLevel = getInt(element, "changeLevelOnSensor");
         } catch (Exception e) {
-            log.error("failed to get changeLevel attribute ex= " + e);
+            log.error("failed to get changeLevel attribute ex= {}", e.getMessage());
         }
         try {
             Attribute attr = element.getAttribute("controlSensor");
@@ -220,7 +201,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 return new Color(red, green, blue, alpha);
             }
         } catch (DataConversionException e) {
-            log.warn("failed to convert color attribute for " + name + " - " + e);
+            log.warn("failed to convert color attribute for {} - {}", name, e);
         }
         return null;
     }
@@ -233,7 +214,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 return num;
             }
         } catch (DataConversionException e) {
-            log.error("failed to convert integer attribute for " + name + " - " + e);
+            log.error("failed to convert integer attribute for {} - {}", name, e);
         }
         return 0;
     }
@@ -246,10 +227,10 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
                 return num;
             }
         } catch (DataConversionException e) {
-            log.error("failed to convert integer attribute for " + name + " - " + e);
+            log.error("failed to convert integer attribute for {} - {}", name, e);
         }
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class);
 }

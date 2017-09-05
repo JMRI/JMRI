@@ -3,10 +3,9 @@ package jmri.jmrix.dcc4pc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.ShutDownTask;
@@ -1117,5 +1116,5 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class);
 }

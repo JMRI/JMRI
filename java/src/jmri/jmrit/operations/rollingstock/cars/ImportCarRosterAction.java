@@ -22,5 +22,5 @@ public class ImportCarRosterAction extends AbstractAction {
         mb.start();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ImportCarRosterAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(ImportCarRosterAction.class);
 }

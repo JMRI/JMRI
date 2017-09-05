@@ -1,7 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 /**
  * A Lock is the base interface for implementations that check layout conditions.
  * <p>

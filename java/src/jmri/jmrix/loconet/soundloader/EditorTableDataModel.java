@@ -172,6 +172,8 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         JTextField b;
         switch (col) {
@@ -479,6 +481,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class);
 
 }

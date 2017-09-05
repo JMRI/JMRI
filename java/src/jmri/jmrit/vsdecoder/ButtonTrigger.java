@@ -147,6 +147,6 @@ public class ButtonTrigger extends Trigger implements PropertyChangeListener, Ac
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ButtonTrigger.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ButtonTrigger.class);
 
 }

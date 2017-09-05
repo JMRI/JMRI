@@ -13,7 +13,6 @@ import jmri.Application;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;
@@ -535,6 +534,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag>
         return Bundle.getMessage("BeanNameReporter");
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);
 
 }

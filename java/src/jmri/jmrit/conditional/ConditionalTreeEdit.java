@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Logix;
+import jmri.NamedBean;
 import jmri.Route;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -79,9 +82,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     public ConditionalTreeEdit(String sName) {
         super(sName);
+        buildConditionalComponents();
         buildActionComponents();
         buildVariableComponents();
         makeEditLogixWindow();
+        setFocusListeners();
+        setEditMode(false);
     }
 
     public ConditionalTreeEdit() {
@@ -95,9 +101,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JPanel _detailGrid = new JPanel();
     JPanel _detailFooter = new JPanel();
     JPanel _gridPanel;  // Child of _detailGrid, contains the current grid labels and fields
-    JTextField _editConditionalUserName = new JTextField(20);
-    JTextField _editAntecedent = new JTextField(20);
-    JComboBox _editOperatorMode = new JComboBox();
+    JTextField _editConditionalUserName;
+    JTextField _editAntecedent;
+    JComboBox<String> _editOperatorMode;
+    boolean _editActive = false;
+    JButton _cancelAction;
+    JButton _updateAction;
+    String _pickCommand = null;
+    int _pickItem = 0;
 
     // ------------ Tree variables ------------
     JTree _cdlTree;
@@ -116,9 +127,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     // ------------ Current tree node variables ------------
     ConditionalTreeNode _curNode = null;
-    String _curNodeName;
-    String _curNodeType;
-    String _curNodeText;
+    String _curNodeName = null;
+    String _curNodeType = null;
+    String _curNodeText = null;
     int _curNodeRow = -1;
 
     // ------------ Button bar components ------------
@@ -131,14 +142,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JPanel _deleteButtonPanel;
     JPanel _helpButtonPanel;
 
-    JLabel _conditionalLabel = new JLabel(Bundle.getMessage("LabelConditionalActions")); // NOI18N
-    JLabel _antecedentLabel = new JLabel(Bundle.getMessage("LabelAntecedentActions"));   // NOI18N
-    JLabel _logicTypeLabel = new JLabel(Bundle.getMessage("LabelLogicTypeActions"));     // NOI18N
-    JLabel _triggerModeLabel = new JLabel(Bundle.getMessage("LabelTriggerModeActions")); // NOI18N
-    JLabel _variablesLabel = new JLabel(Bundle.getMessage("LabelVariablesActions"));     // NOI18N
-    JLabel _variableLabel = new JLabel(Bundle.getMessage("LabelVariableActions"));       // NOI18N
-    JLabel _actionsLabel = new JLabel(Bundle.getMessage("LabelActionsActions"));         // NOI18N
-    JLabel _actionLabel = new JLabel(Bundle.getMessage("LabelActionActions"));           // NOI18N
+    JLabel _conditionalLabel = new JLabel(Bundle.getMessage("LabelConditionalActions"));  // NOI18N
+    JLabel _antecedentLabel = new JLabel(Bundle.getMessage("LabelAntecedentActions"));  // NOI18N
+    JLabel _logicTypeLabel = new JLabel(Bundle.getMessage("LabelLogicTypeActions"));  // NOI18N
+    JLabel _triggerModeLabel = new JLabel(Bundle.getMessage("LabelTriggerModeActions"));  // NOI18N
+    JLabel _variablesLabel = new JLabel(Bundle.getMessage("LabelVariablesActions"));  // NOI18N
+    JLabel _variableLabel = new JLabel(Bundle.getMessage("LabelVariableActions"));  // NOI18N
+    JLabel _actionsLabel = new JLabel(Bundle.getMessage("LabelActionsActions"));  // NOI18N
+    JLabel _actionLabel = new JLabel(Bundle.getMessage("LabelActionActions"));  // NOI18N
 
     // ------------ Current conditional components ------------
     Conditional _curConditional;
@@ -200,8 +211,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void makeEditLogixWindow() {
         _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-//         _editLogixFrame.addHelpMenu(
-//                 "package.jmri.jmrit.conditional.TreeView", true);               // NOI18N  TODO
+        _editLogixFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.ConditionalTreeEditor", true);  // NOI18N
         Container contentPane = _editLogixFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -259,21 +270,21 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         JTree treeContent = buildConditionalTree();
         JScrollPane treeScroll = new JScrollPane(treeContent);
 
-        /* ------------ body - detail (right side) ------------ */
+        // ------------ body - detail (right side) ------------
         JPanel detailPane = new JPanel();
         detailPane.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.DARK_GRAY));
         detailPane.setLayout(new BoxLayout(detailPane, BoxLayout.Y_AXIS));
 
-        /* ------------ Edit Detail Panel ------------ */
+        // ------------ Edit Detail Panel ------------
         makeDetailGrid("EmptyGrid");  // NOI18N
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-        JButton cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
-        cancelAction.setToolTipText(Bundle.getMessage("HintCancelButton"));  // NOI18N
-        panel.add(cancelAction);
-        cancelAction.addActionListener(new ActionListener() {
+        _cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
+        _cancelAction.setToolTipText(Bundle.getMessage("HintCancelButton"));  // NOI18N
+        panel.add(_cancelAction);
+        _cancelAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cancelPressed();
@@ -281,10 +292,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         });
         panel.add(Box.createHorizontalStrut(10));
 
-        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));  // NOI18N
-        updateAction.setToolTipText(Bundle.getMessage("UpdateButtonHint"));  // NOI18N
-        panel.add(updateAction);
-        updateAction.addActionListener(new ActionListener() {
+        _updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));  // NOI18N
+        _updateAction.setToolTipText(Bundle.getMessage("UpdateButtonHint"));  // NOI18N
+        panel.add(_updateAction);
+        _updateAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updatePressed();
@@ -304,14 +315,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         bodyPane.setOneTouchExpandable(true);
         contentPane.add(bodyPane);
 
-        /* ------------ footer ------------ */
+        // ------------ footer ------------
         JPanel footer = new JPanel(new BorderLayout());
         _labelPanel = new JPanel();
         _labelPanel.add(_conditionalLabel);
         _leftButtonBar = new JPanel();
         _leftButtonBar.add(_labelPanel);
 
-        /* ------------ Add Button ------------ */
+        // ------------ Add Button ------------
         JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));    // NOI18N
         addButton.setToolTipText(Bundle.getMessage("HintAddButton"));       // NOI18N
         addButton.addActionListener(new ActionListener() {
@@ -324,7 +335,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _addButtonPanel.add(addButton);
         _leftButtonBar.add(_addButtonPanel);
 
-        /* ------------ Help Button ------------ */
+        // ------------ Help Button ------------
         JButton helpButton = new JButton(Bundle.getMessage("ButtonHelp"));  // NOI18N
         helpButton.setToolTipText(Bundle.getMessage("HintHelpButton"));     // NOI18N
         helpButton.addActionListener(new ActionListener() {
@@ -338,7 +349,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _helpButtonPanel.setVisible(false);
         _leftButtonBar.add(_helpButtonPanel);
 
-        /* ------------ Toggle Button ------------ */
+        // ------------ Toggle Button ------------
         JButton toggleButton = new JButton(Bundle.getMessage("ButtonToggle"));  // NOI18N
         toggleButton.setToolTipText(Bundle.getMessage("HintToggleButton"));     // NOI18N
         toggleButton.addActionListener(new ActionListener() {
@@ -352,7 +363,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _toggleButtonPanel.setVisible(false);
         _leftButtonBar.add(_toggleButtonPanel);
 
-        /* ------------ Check Button ------------ */
+        // ------------ Check Button ------------
         JButton checkButton = new JButton(Bundle.getMessage("ButtonCheck"));  // NOI18N
         checkButton.setToolTipText(Bundle.getMessage("HintCheckButton"));     // NOI18N
         checkButton.addActionListener(new ActionListener() {
@@ -366,7 +377,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _checkButtonPanel.setVisible(true);
         _leftButtonBar.add(_checkButtonPanel);
 
-        /* ------------ Delete Button ------------ */
+        // ------------ Delete Button ------------
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete")); // NOI18N
         deleteButton.setToolTipText(Bundle.getMessage("HintDeleteButton"));    // NOI18N
         deleteButton.addActionListener(new ActionListener() {
@@ -383,7 +394,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         footer.add(_leftButtonBar, BorderLayout.WEST);
         JPanel rightButtonBar = new JPanel();
 
-        /* ------------ Move Buttons ------------ */
+        // ------------ Move Buttons ------------
         JLabel moveLabel = new JLabel(Bundle.getMessage("LabelMove"));      // NOI18N
 
         JButton upButton = new JButton(Bundle.getMessage("ButtonUp"));      // NOI18N
@@ -439,6 +450,18 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _editLogixFrame.setVisible(true);
     }
 
+    /**
+     * Initialize conditional components
+     */
+    void buildConditionalComponents() {
+        _editConditionalUserName = new JTextField(20);
+        _editAntecedent = new JTextField(20);
+        _editOperatorMode = new JComboBox<>(new String[]{
+                Bundle.getMessage("LogicAND"), // NOI18N
+                Bundle.getMessage("LogicOR"), // NOI18N
+                Bundle.getMessage("LogicMixed")});  // NOI18N
+    }
+
     // ------------ Create Conditional GridBag panels ------------
     /**
      * Build new GridBag content The grid panel is hidden, emptied, re-built and
@@ -463,7 +486,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _detailFooter.setVisible(false);
                 break;
 
-            /* ------------ Conditional Edit Grids ------------ */
+            // ------------ Conditional Edit Grids ------------ 
             case "Conditional":  // NOI18N
                 makeConditionalGrid(c);
                 break;
@@ -476,7 +499,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 makeLogicTypeGrid(c);
                 break;
 
-            /* ------------ Variable Edit Grids ------------ */
+            // ------------ Variable Edit Grids ------------
             case "EmptyVariable":  // NOI18N
                 makeEmptyVariableGrid(c);
                 break;
@@ -501,7 +524,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 makeFastClockVariableGrid(c);
                 break;
 
-            /* ------------ Action Edit Grids ------------ */
+            // ------------ Action Edit Grids ------------
             case "EmptyAction":  // NOI18N
                 makeEmptyActionGrid(c);
                 break;
@@ -672,7 +695,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _cdlModel.nodeStructureChanged(_cdlRoot);
 
                 // Switch to new node
-//                TreePath newPath = new TreePath(_curNode.getPath());
                 _cdlTree.setSelectionPath(new TreePath(_curNode.getPath()));
                 break;
 
@@ -792,7 +814,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "Conditional":     // NOI18N
                 _editConditionalUserName.setText(_curConditional.getUserName());
                 makeDetailGrid("Conditional");  // NOI18N
-                _inEditMode = true;
                 break;
 
             case "Antecedent":      // NOI18N
@@ -805,25 +826,16 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _helpButtonPanel.setVisible(true);
                 _editAntecedent.setText(_curConditional.getAntecedentExpression());
                 makeDetailGrid("Antecedent");  // NOI18N
-                _inEditMode = true;
                 break;
 
             case "LogicType":       // NOI18N
                 int curLogicType = _curConditional.getLogicType();
-                _editOperatorMode = new JComboBox<String>(new String[]{
-                    Bundle.getMessage("LogicAND"), // NOI18N
-                    Bundle.getMessage("LogicOR"), // NOI18N
-                    Bundle.getMessage("LogicMixed")});  // NOI18N
                 _editOperatorMode.setSelectedIndex(curLogicType - 1);
                 makeDetailGrid("LogicType");  // NOI18N
-                _inEditMode = true;
                 break;
 
             case "Variable":     // NOI18N
                 _labelPanel.add(_variableLabel);
-                if (_selectionMode == SelectionMode.USEMULTI && _pickTables == null) {
-                    openPickListTable();
-                }
                 _curVariable = _variableList.get(_curNodeRow);
                 variableTypeChanged(Conditional.TYPE_NONE);
                 initializeStateVariables();
@@ -832,17 +844,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 _oldTargetNames.clear();
                 loadReferenceNames(_variableList, _oldTargetNames);
-                _inEditMode = true;
                 break;
 
             case "Action":     // NOI18N
                 _labelPanel.add(_actionLabel);
-                if (_selectionMode == SelectionMode.USEMULTI && _pickTables == null) {
-                    openPickListTable();
-                }
-
                 _curAction = _actionList.get(_curNodeRow);
-                _actionOptionBox = new JComboBox<String>();
+                _actionOptionBox.removeAllItems();
                 for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
                     _actionOptionBox.addItem(DefaultConditionalAction.getOptionString(i, _triggerMode));
                 }
@@ -850,7 +857,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 actionItemChanged(Conditional.TYPE_NONE);
                 initializeActionVariables();
                 setMoveButtons();
-                _inEditMode = true;
                 break;
 
             default:
@@ -866,17 +872,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         switch (_curNodeType) {
             case "Conditional":     // NOI18N
                 userNameChanged(_editConditionalUserName.getText().trim());
-                _inEditMode = false;
                 break;
 
             case "Antecedent":      // NOI18N
                 antecedentChanged(_editAntecedent.getText().trim());
-                _inEditMode = false;
                 break;
 
             case "LogicType":       // NOI18N
                 logicTypeChanged(_editOperatorMode.getSelectedIndex() + 1);
-                _inEditMode = false;
                 break;
 
             case "Variable":       // NOI18N
@@ -890,6 +893,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             default:
                 log.warn("Invalid update button press");  // NOI18N
         }
+        setEditMode(false);
         _curLogix.activateLogix();
         _cdlTree.setSelectionPath(_curTreePath);
         _cdlTree.grabFocus();
@@ -953,11 +957,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     }
                     // Commit the changes
                     cRef.setStateVariables(varList);
-                    // Refresh the local copy in case cRef was parallel copy
+                    // Refresh the local copy in case cRef was a parallel copy
                     _variableList = _curConditional.getCopyOfStateVariables();
                 }
             }
-            // Update any tree nodes
         }
     }
 
@@ -1183,6 +1186,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         ConditionalTreeNode parentNode;
         TreeSet<String> oldTargetNames = new TreeSet<>();
         TreeSet<String> newTargetNames = new TreeSet<>();
+        setEditMode(false);
 
         // Conditional
         switch (_curNodeType) {
@@ -1218,7 +1222,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                             Bundle.getMessage("Warn1"), Bundle.getMessage("WarningTitle"), // NOI18N
                             javax.swing.JOptionPane.WARNING_MESSAGE);
                 }
-                _inEditMode = false;
                 setMoveButtons();
                 break;
 
@@ -1464,9 +1467,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             down.setEnabled(false);
         }
 
-        // Disable move buttons during Variable or Action add processing, or nothing selected
+        // Disable move buttons during Variable or Action add or edit processing, or nothing selected
         if ((_newVariableItem && _curNodeType.equals("Variable")) // NOI18N
                 || (_newActionItem && _curNodeType.equals("Action"))
+                || (_editActive)
                 || (_cdlTree.getSelectionCount() == 0)) {  // NOI18N
             up.setEnabled(false);
             down.setEnabled(false);
@@ -1507,9 +1511,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             default:
-                _inEditMode = false;
+                break;
         }
         makeDetailGrid("EmptyGrid");  // NOI18N
+        setEditMode(false);
         _cdlTree.setSelectionPath(_curTreePath);
         _cdlTree.grabFocus();
     }
@@ -1518,8 +1523,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
-        if (_inEditMode) {
-            cancelPressed();
+        if (_pickTables != null) {
+            _pickTables.dispose();
+            _pickTables = null;
         }
 
         _editLogixFrame.setVisible(false);
@@ -1560,6 +1566,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _cdlTree.addTreeSelectionListener(_cdlListener = new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
+                if (_editActive) {
+                    if (e.getNewLeadSelectionPath() != _curTreePath) {
+                        _cdlTree.setSelectionPath(e.getOldLeadSelectionPath());
+                        showNodeEditMessage();
+                    }
+                    return;
+                }
+
                 _curTreePath = _cdlTree.getSelectionPath();
                 if (_curTreePath != null) {
                     Object chkLast = _curTreePath.getLastPathComponent();
@@ -1652,11 +1666,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * @param selectedNode The node object
      */
     void treeRowSelected(ConditionalTreeNode selectedNode) {
-        if (_inEditMode) {
-            showCancelMessage();
-            cancelPressed();    // Automatic edit cancel
-        }
-
         // Set the current node variables
         _curNode = selectedNode;
         _curNodeName = selectedNode.getName();
@@ -1854,13 +1863,157 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     /**
      * Display reminder to save.
      */
-    void showCancelMessage() {
+    void showNodeEditMessage() {
         if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(Bundle.getMessage("TreeCancelTitle"), // NOI18N
-                            Bundle.getMessage("TreeCancelText"), // NOI18N
+                    showInfoMessage(Bundle.getMessage("NodeEditTitle"), // NOI18N
+                            Bundle.getMessage("NodeEditText"), // NOI18N
                             getClassName(),
-                            "SkipCancelEditMessage"); // NOI18N
+                            "SkipNodeEditMessage"); // NOI18N
+        }
+    }
+
+    /**
+     * Focus gained implies intent to make changes, set up for edit
+     */
+    transient FocusListener detailFocusEvent = new FocusListener() {
+        @Override
+        public void focusGained(FocusEvent e) {
+            if (!_editActive) {
+                setEditMode(true);
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+        }
+    };
+
+    /**
+     * Add the focus listener to each detail edit field
+     */
+    void setFocusListeners() {
+        _editConditionalUserName.addFocusListener(detailFocusEvent);
+        _editAntecedent.addFocusListener(detailFocusEvent);
+        _editOperatorMode.addFocusListener(detailFocusEvent);
+        _variableTypeBox.addFocusListener(detailFocusEvent);
+        _variableOperBox.addFocusListener(detailFocusEvent);
+        _variableNegated.addFocusListener(detailFocusEvent);
+        _variableTriggerActions.addFocusListener(detailFocusEvent);
+        _variableNameField.addFocusListener(detailFocusEvent);
+        _variableStateBox.addFocusListener(detailFocusEvent);
+        _variableSignalBox.addFocusListener(detailFocusEvent);
+        _selectLogixBox.addFocusListener(detailFocusEvent);
+        _selectConditionalBox.addFocusListener(detailFocusEvent);
+        _variableCompareOpBox.addFocusListener(detailFocusEvent);
+        _variableCompareTypeBox.addFocusListener(detailFocusEvent);
+        _variableData1Field.addFocusListener(detailFocusEvent);
+        _variableData2Field.addFocusListener(detailFocusEvent);
+        _actionItemTypeBox.addFocusListener(detailFocusEvent);
+        _actionNameField.addFocusListener(detailFocusEvent);
+        _actionTypeBox.addFocusListener(detailFocusEvent);
+        _actionBox.addFocusListener(detailFocusEvent);
+        _shortActionString.addFocusListener(detailFocusEvent);
+        _longActionString.addFocusListener(detailFocusEvent);
+        _actionSetButton.addFocusListener(detailFocusEvent);
+        _actionOptionBox.addFocusListener(detailFocusEvent);
+    }
+
+    /**
+     * Enable/disable buttons based on edit state.
+     * Open pick lists based on the current SelectionMode
+     * The edit state controls the ability to select tree nodes.
+     * @param active True to make edit active, false to make edit inactive
+     */
+    void setEditMode(boolean active) {
+        _editActive = active;
+        _cancelAction.setEnabled(active);
+        _updateAction.setEnabled(active);
+        Component delButton = _deleteButtonPanel.getComponent(0);
+        if (delButton instanceof JButton) {
+            delButton.setEnabled(!active);
+        }
+        Component addButton = _addButtonPanel.getComponent(0);
+        if (addButton instanceof JButton) {
+            addButton.setEnabled(!active);
+        }
+        if (_curNodeType != null) {
+            if (_curNodeType.equals("Conditional") || _curNodeType.equals("Variable") || _curNodeType.equals("Action")) {  // NOI18N
+                setMoveButtons();
+            }
+        }
+        if (active) {
+            setPickWindow("Activate", 0);  // NOI18N
+        } else {
+            setPickWindow("Deactivate", 0);  // NOI18N
+        }
+    }
+
+    /**
+     * Ceate tabbed Pick Taba;e or Pick Single based on Selection Mode
+     * Called by {@link #setEditMode} when edit mode becomes active.
+     * Called by {@link #variableTypeChanged} and {@link #actionItemChanged} when item type changes.
+     * @param cmd The source or action to be performed.
+     * @param item The item type for Variable or Action or zero
+     */
+    void setPickWindow(String cmd, int item) {
+        if (_selectionMode == SelectionMode.USECOMBO) {
+            return;
+        }
+        // Save the item information
+        if (cmd.equals("Variable") || cmd.equals("Action")) {  // NOI18N
+            _pickCommand = cmd;
+            _pickItem = item;
+            if (_editActive) {
+                if (_selectionMode == SelectionMode.USEMULTI) {
+                    doPickList();
+                } else {
+                    doPickSingle();
+                }
+            }
+        }
+        if (cmd.equals("Activate")) {  // NOI18N
+            if (_curNodeType.equals("Variable") || _curNodeType.equals("Action")) {  // NOI18N
+                // Open the appropriate window based on the save values
+                if (_selectionMode == SelectionMode.USEMULTI) {
+                    doPickList();
+                } else {
+                    doPickSingle();
+                }
+            }
+        }
+        if (cmd.equals("Deactivate")) {  // NOI18N
+            // Close/dispose the pick window
+            hidePickListTable();
+            closeSinglePanelPickList();
+        }
+    }
+
+    /**
+     * Create a Variable or Action based tabbed PickList with appropriate tab selected.
+     */
+    void doPickList() {
+        if (_pickItem == 0) {
+            return;
+        }
+        if (_pickTables == null) {
+            openPickListTable();
+        }
+        if (_pickCommand.equals("Variable")) {
+            setPickListTab(_pickItem, false);
+        } else if (_pickCommand.equals("Action")) {
+            setPickListTab(_pickItem, true);
+        }
+    }
+
+    /**
+     * Create a Variable or Action based single pane PickList
+     */
+    void doPickSingle() {
+        if (_pickCommand.equals("Variable")) {
+            createSinglePanelPickList(_pickItem, new PickSingleListener(_variableNameField, _pickItem), false);
+        } else if (_pickCommand.equals("Action")) {
+            createSinglePanelPickList(_pickItem, new PickSingleListener(_actionNameField, _pickItem), true);
         }
     }
 
@@ -2311,18 +2464,16 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _variableNameField.removeActionListener(variableSignalHeadNameListener);
         _variableNameField.removeActionListener(variableSignalMastNameListener);
         _variableStateBox.removeActionListener(variableSignalTestStateListener);
+        _detailGrid.setVisible(false);
+
         if (_comboNameBox != null) {
             for (ItemListener item : _comboNameBox.getItemListeners()) {
                 _comboNameBox.removeItemListener(item);
             }
+            _comboNameBox.removeFocusListener(detailFocusEvent);
         }
-        _detailGrid.setVisible(false);
-        if (_selectionMode == SelectionMode.USESINGLE) {
-            createSinglePanelPickList(itemType, new PickSingleListener(_variableNameField, itemType), false);
-        } else if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType, false);
-        }
-
+        setPickWindow("Variable", itemType);  // NOI18N
+        
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
         _variableNegated.setSelected(_curVariable.isNegated());
         _variableTriggerActions.setSelected(_curVariable.doTriggerActions());
@@ -2476,6 +2627,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         // Select the current entry, add the listener
         _comboNameBox.setSelectedBeanByName(_curVariable.getName());
         _comboNameBox.addItemListener(new NameBoxListener(_variableNameField));
+        _comboNameBox.addFocusListener(detailFocusEvent);
     }
 
     // ------------ Variable detail methods ------------
@@ -2518,10 +2670,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         if (_logicType != Conditional.MIXED) {
             setMoveButtons();
         }
-
-        hidePickListTable();
-        closeSinglePanelPickList();
-        _inEditMode = false;
     }
 
     /**
@@ -3547,13 +3695,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             for (ItemListener item : _comboNameBox.getItemListeners()) {
                 _comboNameBox.removeItemListener(item);
             }
+            _comboNameBox.removeFocusListener(detailFocusEvent);
         }
-
-        if (_selectionMode == SelectionMode.USESINGLE) {
-            createSinglePanelPickList(itemType, new PickSingleListener(_actionNameField, itemType), true);
-        } else if (_selectionMode == SelectionMode.USEMULTI) {
-            setPickListTab(itemType, true);
-        }
+        setPickWindow("Action", itemType);  // NOI18N
 
         switch (itemType) {
             case Conditional.TYPE_NONE:
@@ -3926,6 +4070,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         // Select the current entry
         _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
         _comboNameBox.addItemListener(new NameBoxListener(_actionNameField));
+        _comboNameBox.addFocusListener(detailFocusEvent);
     }
 
     // ------------ Action detail methods ------------
@@ -3964,9 +4109,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void cleanUpAction() {
         setMoveButtons();
-        hidePickListTable();
-        closeSinglePanelPickList();
-        _inEditMode = false;
     }
 
     /**
@@ -4541,5 +4683,5 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         return ConditionalTreeEdit.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalTreeEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalTreeEdit.class);
 }

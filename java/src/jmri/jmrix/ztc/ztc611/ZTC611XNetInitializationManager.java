@@ -1,9 +1,9 @@
 package jmri.jmrix.ztc.ztc611;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.jmrix.lenz.XNetProgrammer;
+import jmri.jmrix.lenz.XNetProgrammerManager;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +56,6 @@ public class ZTC611XNetInitializationManager extends AbstractXNetInitializationM
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetInitializationManager.class);
 
 }

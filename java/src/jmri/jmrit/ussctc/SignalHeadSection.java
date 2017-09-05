@@ -1,9 +1,9 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-import java.util.*;
 import java.beans.*;
+import java.util.*;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.*;
 
 /**
  * Drive a signal section on a USS CTC panel.
@@ -474,5 +474,5 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class);
 }

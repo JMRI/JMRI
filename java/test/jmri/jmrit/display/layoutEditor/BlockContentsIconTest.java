@@ -20,21 +20,17 @@ public class BlockContentsIconTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         BlockContentsIcon t = new BlockContentsIcon("test", new LayoutEditor());
         Assert.assertNotNull("exists", t);
-        t.getEditor().dispose();
+        JUnitUtil.dispose(t.getEditor());
     }
 
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -37,8 +37,7 @@ public class LayoutTurntableTest {
     // from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         if(!GraphicsEnvironment.isHeadless()){
 
@@ -51,8 +50,11 @@ public class LayoutTurntableTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false);
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        if(layoutEditor!=null){
+           JUnitUtil.dispose(layoutEditor);
+        }
+        lt = null;
+        layoutEditor = null;
+        JUnitUtil.tearDown();
     }
 }

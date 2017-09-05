@@ -1,7 +1,8 @@
 package jmri.jmrix.lenz;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * <p>
@@ -148,12 +149,12 @@ public class XNetTrafficRouterTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

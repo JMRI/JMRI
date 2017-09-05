@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -18,7 +19,7 @@ public class DispatcherTrainInfoTest extends TestCase {
         // set up TrainInfo object
         ti.setTransitName("Transit");
         ti.setTrainName("Train");
-        ti.setDCCAddress("346");
+        ti.setDccAddress("346");
         ti.setTrainInTransit(true);
         ti.setStartBlockName("IB12");
         ti.setDestinationBlockName("IB22");
@@ -43,7 +44,7 @@ public class DispatcherTrainInfoTest extends TestCase {
         // test it
         Assert.assertEquals("Transit Name", ti.getTransitName(), "Transit");
         Assert.assertEquals("Train Name", ti.getTrainName(), "Train");
-        Assert.assertEquals("DCC Address", ti.getDCCAddress(), "346");
+        Assert.assertEquals("DCC Address", ti.getDccAddress(), "346");
         Assert.assertTrue("Train In Transit", ti.getTrainInTransit());
         Assert.assertEquals("Start Block Name", ti.getStartBlockName(), "IB12");
         Assert.assertEquals("Destination Block Name", ti.getDestinationBlockName(), "IB22");
@@ -89,8 +90,7 @@ public class DispatcherTrainInfoTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override

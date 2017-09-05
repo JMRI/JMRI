@@ -106,6 +106,6 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadXmlVSDecoderAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadXmlVSDecoderAction.class);
 
 }

@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.packetgen;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.packet.GenericXBeePacket;
 import com.digi.xbee.api.packet.XBeeAPIPacket;
-
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +47,6 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     // private data
     private XBeeTrafficController tc = null;
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class);
 
 }

@@ -1,14 +1,14 @@
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Test;
 import org.junit.Before;
-import org.junit.After;
-import javax.swing.JFrame;
+import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import java.util.ResourceBundle;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.LZ100Action class
@@ -50,17 +50,16 @@ public class LZ100ActionTest {
     }
 
     @Before
-    public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+
        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
        memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
     }
 
     @After
-    public void tearDown(){
-       jmri.util.JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

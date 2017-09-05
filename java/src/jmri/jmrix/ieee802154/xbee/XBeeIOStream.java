@@ -217,7 +217,7 @@ final public class XBeeIOStream extends AbstractPortController {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeIOStream.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeIOStream.class);
 
 }
 

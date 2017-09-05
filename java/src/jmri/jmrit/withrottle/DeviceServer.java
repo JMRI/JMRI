@@ -84,6 +84,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import jmri.CommandStation;
+import jmri.DccLocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.web.server.WebServerPreferences;
@@ -653,6 +654,24 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
 
     }
+        
+    /**
+     * System has declined the address request, may be an in-use address.
+     * Need to clear the address from the proper multiThrottle.
+     * @param tc The throttle controller that was listening for a response to an
+     *           address request
+     * @param address The address to send a cancel to
+     */
+    @Override
+    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address) {
+        log.debug("notifyControllerAddressDeclined");
+        if (multiThrottles != null) {   //  Should exist by this point
+            //  Safe to cast
+            MultiThrottleController mtc = (MultiThrottleController) tc;
+            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
+            multiThrottles.get(mtc.whichThrottle).canceledThrottleRequest(mtc.locoKey);
+        }
+    }
 
     /**
      * Format a package to be sent to the device for roster list selections.
@@ -684,6 +703,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return ("RL" + rosterList.size() + rosterString);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DeviceServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeviceServer.class);
 
 }

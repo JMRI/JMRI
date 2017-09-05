@@ -702,16 +702,16 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         if (log.isDebugEnabled()) {
             log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFilename());
+                    + " " + df.getFileName());
         }
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (org.jdom2.JDOMException e) {
-            log.error("Exception while parsing decoder XML file: " + df.getFilename(), e);
+            log.error("Exception while parsing decoder XML file: " + df.getFileName(), e);
             return;
         } catch (java.io.IOException  e) {
-            log.error("Exception while reading decoder XML file: " + df.getFilename(), e);
+            log.error("Exception while reading decoder XML file: " + df.getFileName(), e);
             return;
         }
         // load variables from decoder tree
@@ -1816,6 +1816,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         return _rosterEntry;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgFrame.class);
 
 }

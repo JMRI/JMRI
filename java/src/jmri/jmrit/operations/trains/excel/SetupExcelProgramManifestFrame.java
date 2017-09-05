@@ -66,5 +66,5 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramManifestFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramManifestFrame.class);
 }

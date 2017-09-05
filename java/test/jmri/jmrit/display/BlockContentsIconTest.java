@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -23,20 +22,16 @@ public class BlockContentsIconTest {
         BlockContentsIcon bci = new BlockContentsIcon("foo",ef);
         Assert.assertNotNull("BlockContentsIcon Constructor",bci);
         ef.getTargetFrame().dispose();
-        ef.dispose();
+        JUnitUtil.dispose(ef);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 
 }

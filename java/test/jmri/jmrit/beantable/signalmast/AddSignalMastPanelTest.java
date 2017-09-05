@@ -41,6 +41,8 @@ public class AddSignalMastPanelTest {
                 }
             }
             Assert.assertTrue("did not find JUnit Test Signals", found);
+        } catch (Exception e) {
+            Assert.fail("testSearch exception thrown: " + e.getCause().getMessage());
         } finally {
             SignalSystemTestUtil.deleteMockSystem();
         }
@@ -48,8 +50,7 @@ public class AddSignalMastPanelTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -58,8 +59,6 @@ public class AddSignalMastPanelTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-
 }

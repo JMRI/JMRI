@@ -2,10 +2,10 @@ package jmri.progdebugger;
 
 import jmri.ProgListener;
 import jmri.Programmer;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +135,6 @@ public class DebugProgrammerTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class);
 
 }

@@ -1,20 +1,20 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.util.JUnitAppender;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the serial address functions in memo.
- * 
+ * <p>
  * These used to be in a separate SerialAddress class, with its own test class.
  * This structure is a vestige of that.
  *
- * @author	Dave Duchamp   Copyright 2004
- * @author Bob Jacobsen    Copyright 2017
+ * @author	Dave Duchamp Copyright 2004
+ * @author Bob Jacobsen Copyright 2017
  */
 public class SerialAddressTest extends TestCase {
 
@@ -26,31 +26,29 @@ public class SerialAddressTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-        // log4j
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
-
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(stcs);
 
-        n10 = new SerialNode(10, SerialNode.SMINI,stcs);
-        n18 = new SerialNode(18, SerialNode.SMINI,stcs);
+        n10 = new SerialNode(10, SerialNode.SMINI, stcs);
+        n18 = new SerialNode(18, SerialNode.SMINI, stcs);
 
-        
         // create and register the manager objects
         jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
             @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {}
+            public void notifyTurnoutCreationError(String conflict, int bitNum) {
+            }
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.LightManager lgt = new SerialLightManager(memo) {
             @Override
-            public void notifyLightCreationError(String conflict, int bitNum) {}
+            public void notifyLightCreationError(String conflict, int bitNum) {
+            }
         };
         jmri.InstanceManager.setLightManager(lgt);
 
@@ -63,12 +61,10 @@ public class SerialAddressTest extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         stcs = null;
         memo = null;
     }
-
 
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", memo.validSystemNameFormat("CL2", 'L'));
@@ -78,7 +74,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL");
 
         Assert.assertTrue("invalid format - CLB2", !memo.validSystemNameFormat("CLB2", 'L'));
-        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: CLB2");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB2");
 
         Assert.assertTrue("valid format - CL2005", memo.validSystemNameFormat("CL2005", 'L'));
         Assert.assertTrue("valid format - CL2B5", memo.validSystemNameFormat("CL2B5", 'L'));
@@ -97,35 +93,35 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - CL22B1", memo.validSystemNameFormat("CL22B1", 'L'));
 
         Assert.assertTrue("invalid format - CL22000", !memo.validSystemNameFormat("CL22000", 'L'));
-        JUnitAppender.assertErrorMessage("bit number not in range 1 - 999 in CMRI system name: CL22000");
+        JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CL22000");
 
         Assert.assertTrue("invalid format - CL22B0", !memo.validSystemNameFormat("CL22B0", 'L'));
-        JUnitAppender.assertErrorMessage("bit number field out of range in CMRI system name: CL22B0");
+        JUnitAppender.assertWarnMessage("bit number field out of range in CMRI system name: CL22B0");
 
         Assert.assertTrue("valid format - CL2999", memo.validSystemNameFormat("CL2999", 'L'));
         Assert.assertTrue("valid format - CL2B2048", memo.validSystemNameFormat("CL2B2048", 'L'));
 
         Assert.assertTrue("invalid format - CL2B2049", !memo.validSystemNameFormat("CL2B2049", 'L'));
-        JUnitAppender.assertErrorMessage("bit number field out of range in CMRI system name: CL2B2049");
+        JUnitAppender.assertWarnMessage("bit number field out of range in CMRI system name: CL2B2049");
 
         Assert.assertTrue("valid format - CL127999", memo.validSystemNameFormat("CL127999", 'L'));
 
         Assert.assertTrue("invalid format - CL128000", !memo.validSystemNameFormat("CL128000", 'L'));
-        JUnitAppender.assertErrorMessage("number field out of range in CMRI system name: CL128000");
+        JUnitAppender.assertWarnMessage("number field out of range in CMRI system name: CL128000");
 
         Assert.assertTrue("valid format - CL127B7", memo.validSystemNameFormat("CL127B7", 'L'));
 
         Assert.assertTrue("invalid format - CL128B7", !memo.validSystemNameFormat("CL128B7", 'L'));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
 
         Assert.assertTrue("invalid format - CL2oo5", !memo.validSystemNameFormat("CL2oo5", 'L'));
         JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL2oo5");
 
         Assert.assertTrue("invalid format - CL2aB5", !memo.validSystemNameFormat("CL2aB5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in node address field of CMRI system name: CL2aB5");
+        JUnitAppender.assertWarnMessage("illegal character in node address field of CMRI system name: CL2aB5");
 
         Assert.assertTrue("invalid format - CL2B5x", !memo.validSystemNameFormat("CL2B5x", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in bit number field of CMRI system name: CL2B5x");
+        JUnitAppender.assertWarnMessage("illegal character in bit number field of CMRI system name: CL2B5x");
     }
 
     public void testGetBitFromSystemName() {
@@ -147,19 +143,18 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("CL11B2048", 2048, memo.getBitFromSystemName("CL11B2048"));
     }
 
-
     public void testGetNodeFromSystemName() {
-        SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC,stcs);
-        SerialNode c = new SerialNode(17, SerialNode.SMINI,stcs);
-        SerialNode b = new SerialNode(127, SerialNode.SMINI,stcs);
-        Assert.assertEquals("node of CL14007", d, memo.getNodeFromSystemName("CL14007",stcs));
-        Assert.assertEquals("node of CL14B7", d, memo.getNodeFromSystemName("CL14B7",stcs));
-        Assert.assertEquals("node of CL127007", b, memo.getNodeFromSystemName("CL127007",stcs));
-        Assert.assertEquals("node of CL127B7", b, memo.getNodeFromSystemName("CL127B7",stcs));
-        Assert.assertEquals("node of CL17007", c, memo.getNodeFromSystemName("CL17007",stcs));
-        Assert.assertEquals("node of CL17B7", c, memo.getNodeFromSystemName("CL17B7",stcs));
-        Assert.assertEquals("node of CL11007", null, memo.getNodeFromSystemName("CL11007",stcs));
-        Assert.assertEquals("node of CL11B7", null, memo.getNodeFromSystemName("CL11B7",stcs));
+        SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC, stcs);
+        SerialNode c = new SerialNode(17, SerialNode.SMINI, stcs);
+        SerialNode b = new SerialNode(127, SerialNode.SMINI, stcs);
+        Assert.assertEquals("node of CL14007", d, memo.getNodeFromSystemName("CL14007", stcs));
+        Assert.assertEquals("node of CL14B7", d, memo.getNodeFromSystemName("CL14B7", stcs));
+        Assert.assertEquals("node of CL127007", b, memo.getNodeFromSystemName("CL127007", stcs));
+        Assert.assertEquals("node of CL127B7", b, memo.getNodeFromSystemName("CL127B7", stcs));
+        Assert.assertEquals("node of CL17007", c, memo.getNodeFromSystemName("CL17007", stcs));
+        Assert.assertEquals("node of CL17B7", c, memo.getNodeFromSystemName("CL17B7", stcs));
+        Assert.assertEquals("node of CL11007", null, memo.getNodeFromSystemName("CL11007", stcs));
+        Assert.assertEquals("node of CL11B7", null, memo.getNodeFromSystemName("CL11B7", stcs));
     }
 
     public void testGetNodeAddressFromSystemName() {
@@ -178,7 +173,7 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testValidSystemNameConfig() {
-        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC,stcs);
+        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC, stcs);
         d.setNumBitsPerCard(32);
         d.setCardTypeByAddress(0, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(1, SerialNode.OUTPUT_CARD);
@@ -186,31 +181,31 @@ public class SerialAddressTest extends TestCase {
         d.setCardTypeByAddress(3, SerialNode.OUTPUT_CARD);
         d.setCardTypeByAddress(4, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(5, SerialNode.OUTPUT_CARD);
-        
-        SerialNode c = new SerialNode(10, SerialNode.SMINI,stcs);
+
+        SerialNode c = new SerialNode(10, SerialNode.SMINI, stcs);
         Assert.assertNotNull("exists", c);
-        Assert.assertTrue("valid config CL4007", memo.validSystemNameConfig("CL4007", 'L',stcs));
-        Assert.assertTrue("valid config CL4B7", memo.validSystemNameConfig("CL4B7", 'L',stcs));
-        Assert.assertTrue("valid config CS10007", memo.validSystemNameConfig("CS10007", 'S',stcs));
-        Assert.assertTrue("valid config CS10B7", memo.validSystemNameConfig("CS10B7", 'S',stcs));
-        Assert.assertTrue("valid config CL10048", memo.validSystemNameConfig("CL10048", 'L',stcs));
-        Assert.assertTrue("valid config CL10B48", memo.validSystemNameConfig("CL10B48", 'L',stcs));
-        Assert.assertTrue("invalid config CL10049", !memo.validSystemNameConfig("CL10049", 'L',stcs));
-        Assert.assertTrue("invalid config CL10B49", !memo.validSystemNameConfig("CL10B49", 'L',stcs));
-        Assert.assertTrue("valid config CS10024", memo.validSystemNameConfig("CS10024", 'S',stcs));
-        Assert.assertTrue("valid config CS10B24", memo.validSystemNameConfig("CS10B24", 'S',stcs));
-        Assert.assertTrue("invalid config CS10025", !memo.validSystemNameConfig("CS10025", 'S',stcs));
-        Assert.assertTrue("invalid config CS10B25", !memo.validSystemNameConfig("CS10B25", 'S',stcs));
-        Assert.assertTrue("valid config CT4128", memo.validSystemNameConfig("CT4128", 'T',stcs));
-        Assert.assertTrue("valid config CT4B128", memo.validSystemNameConfig("CT4B128", 'T',stcs));
-        Assert.assertTrue("invalid config CT4129", !memo.validSystemNameConfig("CT4129", 'T',stcs));
-        Assert.assertTrue("invalid config CT4129", !memo.validSystemNameConfig("CT4B129", 'T',stcs));
-        Assert.assertTrue("valid config CS4064", memo.validSystemNameConfig("CS4064", 'S',stcs));
-        Assert.assertTrue("valid config CS4B64", memo.validSystemNameConfig("CS4B64", 'S',stcs));
-        Assert.assertTrue("invalid config CS4065", !memo.validSystemNameConfig("CS4065", 'S',stcs));
-        Assert.assertTrue("invalid config CS4B65", !memo.validSystemNameConfig("CS4B65", 'S',stcs));
-        Assert.assertTrue("invalid config CL11007", !memo.validSystemNameConfig("CL11007", 'L',stcs));
-        Assert.assertTrue("invalid config CL11B7", !memo.validSystemNameConfig("CL11B7", 'L',stcs));
+        Assert.assertTrue("valid config CL4007", memo.validSystemNameConfig("CL4007", 'L', stcs));
+        Assert.assertTrue("valid config CL4B7", memo.validSystemNameConfig("CL4B7", 'L', stcs));
+        Assert.assertTrue("valid config CS10007", memo.validSystemNameConfig("CS10007", 'S', stcs));
+        Assert.assertTrue("valid config CS10B7", memo.validSystemNameConfig("CS10B7", 'S', stcs));
+        Assert.assertTrue("valid config CL10048", memo.validSystemNameConfig("CL10048", 'L', stcs));
+        Assert.assertTrue("valid config CL10B48", memo.validSystemNameConfig("CL10B48", 'L', stcs));
+        Assert.assertTrue("invalid config CL10049", !memo.validSystemNameConfig("CL10049", 'L', stcs));
+        Assert.assertTrue("invalid config CL10B49", !memo.validSystemNameConfig("CL10B49", 'L', stcs));
+        Assert.assertTrue("valid config CS10024", memo.validSystemNameConfig("CS10024", 'S', stcs));
+        Assert.assertTrue("valid config CS10B24", memo.validSystemNameConfig("CS10B24", 'S', stcs));
+        Assert.assertTrue("invalid config CS10025", !memo.validSystemNameConfig("CS10025", 'S', stcs));
+        Assert.assertTrue("invalid config CS10B25", !memo.validSystemNameConfig("CS10B25", 'S', stcs));
+        Assert.assertTrue("valid config CT4128", memo.validSystemNameConfig("CT4128", 'T', stcs));
+        Assert.assertTrue("valid config CT4B128", memo.validSystemNameConfig("CT4B128", 'T', stcs));
+        Assert.assertTrue("invalid config CT4129", !memo.validSystemNameConfig("CT4129", 'T', stcs));
+        Assert.assertTrue("invalid config CT4129", !memo.validSystemNameConfig("CT4B129", 'T', stcs));
+        Assert.assertTrue("valid config CS4064", memo.validSystemNameConfig("CS4064", 'S', stcs));
+        Assert.assertTrue("valid config CS4B64", memo.validSystemNameConfig("CS4B64", 'S', stcs));
+        Assert.assertTrue("invalid config CS4065", !memo.validSystemNameConfig("CS4065", 'S', stcs));
+        Assert.assertTrue("invalid config CS4B65", !memo.validSystemNameConfig("CS4B65", 'S', stcs));
+        Assert.assertTrue("invalid config CL11007", !memo.validSystemNameConfig("CL11007", 'L', stcs));
+        Assert.assertTrue("invalid config CL11B7", !memo.validSystemNameConfig("CL11B7", 'L', stcs));
     }
 
     public void testConvertSystemNameFormat() {
@@ -223,7 +218,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("convert CL14B8", "CL14008", memo.convertSystemNameToAlternate("CL14B8"));
 
         Assert.assertEquals("convert CL128B7", "", memo.convertSystemNameToAlternate("CL128B7"));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
     }
 
     public void testNormalizeSystemName() {
@@ -236,7 +231,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("normalize CL014B0008", "CL14B8", memo.normalizeSystemName("CL014B0008"));
 
         Assert.assertEquals("normalize CL128B7", "", memo.normalizeSystemName("CL128B7"));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: CL128B7");
+        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
     }
 
     public void testConstructSystemName() {
@@ -270,7 +265,7 @@ public class SerialAddressTest extends TestCase {
         // check that turnout was created correctly
         Assert.assertEquals("create CT18032 check 1", "CT18032", t2.getSystemName());
         Assert.assertEquals("create CT18032 check 2", 1, t2.getNumberOutputBits());
-        // create two new lights  
+        // create two new lights
         jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
         jmri.Light lgt1 = lMgr.newLight("CL18036", "userL36");
         jmri.Light lgt2 = lMgr.newLight("CL18037", "userL37");

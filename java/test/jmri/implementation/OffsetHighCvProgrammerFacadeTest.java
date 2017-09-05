@@ -3,10 +3,10 @@ package jmri.implementation;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,6 +133,6 @@ public class OffsetHighCvProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OffsetHighCvProgrammerFacadeTest.class);
 
 }

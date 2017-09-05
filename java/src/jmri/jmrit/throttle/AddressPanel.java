@@ -663,7 +663,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddressPanel.class);
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

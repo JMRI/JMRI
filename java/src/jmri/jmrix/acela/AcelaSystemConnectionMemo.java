@@ -3,12 +3,6 @@ package jmri.jmrix.acela;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,6 +170,6 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSystemConnectionMemo.class);
 
 }

@@ -2,9 +2,9 @@ package jmri.jmrix.qsi.qsimon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
  * Swing action to create and register a QsiMonFrame object
@@ -37,7 +37,7 @@ public class QsiMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiMonAction.class);
 
 }
 

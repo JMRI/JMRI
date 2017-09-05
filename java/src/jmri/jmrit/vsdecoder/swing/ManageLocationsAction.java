@@ -137,6 +137,6 @@ public class ManageLocationsAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(ManageLocationsAction.class.getName());
+            .getLogger(ManageLocationsAction.class);
 
 }

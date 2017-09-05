@@ -1,7 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 /**
  * Interface defining operations for a CTC machine bell.
  *

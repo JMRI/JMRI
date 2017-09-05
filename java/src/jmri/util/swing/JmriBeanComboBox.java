@@ -20,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.text.JTextComponent;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
@@ -31,27 +32,33 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
-    /*
-     * Create a default Jmri Combo box for the given bean manager
-     * @param manager the jmri manager that is used to populate the combo box
+    /**
+     * Create a default Jmri Combo box for the given bean manager.
+     *
+     * @param inManager the jmri manager that is used to populate the combo box
      */
-    public JmriBeanComboBox(jmri.Manager inManager) {
+    public JmriBeanComboBox(Manager inManager) {
         this(inManager, null, DisplayOptions.DISPLAYNAME);
     }
 
-    /*
-     * Create a Jmri Combo box for the given bean manager, with the Namedbean already selected and the items displayed and ordered
-     * @param manager the jmri manager that is used to populate the combo box
-     * @param nBean the namedBean that should automatically be selected
-     * @param displayOrder the way in which the namedbeans should be displayed
+    /**
+     * Create a Jmri Combo box for the given bean manager, with the Namedbean
+     * nBean already selected and the items displayed and ordered by
+     * displayOrder.
+     *
+     * @param inManager      the jmri manager that is used to populate the combo
+     *                       box
+     * @param inNamedBean    the namedBean that should automatically be selected
+     * @param inDisplayOrder the way in which the namedbeans should be
+     *                       displayed: by System or Display Name
      */
-    public JmriBeanComboBox(jmri.Manager inManager, NamedBean inNamedBean, DisplayOptions inDisplayOrder) {
+    public JmriBeanComboBox(Manager inManager, NamedBean inNamedBean, DisplayOptions inDisplayOrder) {
         _displayOrder = inDisplayOrder;
         _manager = inManager;
         setSelectedBean(inNamedBean);
         //setEditable(true);
         _manager.addPropertyChangeListener(this);
-        setKeySelectionManager(new beanSelectionManager());
+        setKeySelectionManager(new BeanSelectionManager());
 
         //fires when drop down list item is selected
         addItemListener((ItemEvent event) -> {
@@ -100,11 +107,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     private DisplayOptions _displayOrder;
     private boolean _firstBlank = false;
 
-    private jmri.Manager _manager;
+    private Manager _manager;
 
     private HashMap<String, NamedBean> displayToBean = new HashMap<>();
 
-    public jmri.Manager getManager() {
+    public Manager getManager() {
         return _manager;
     }
 
@@ -134,7 +141,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the display list used by this combo box
+     * Get the display list used by this combo box.
      *
      * @return the display list used by this combo box
      */
@@ -199,7 +206,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the selected namedBean
+     * Get the selected namedBean.
      *
      * @return the selected bean or null if there is no selection
      */
@@ -209,7 +216,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the User name of the selected namedBean
+     * Get the User Name of the selected namedBean.
      *
      * @return the user name of the selected bean or null if there is no
      *         selection
@@ -224,7 +231,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the system name of the selected namedBean
+     * Get the System Name of the selected namedBean.
      *
      * @return the system name of the selected bean or null if there is no
      *         selection
@@ -239,7 +246,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the display name of the selected namedBean
+     * Get the Display Name of the selected namedBean.
      *
      * @return the display name of the selected bean or null if there is no
      *         selection
@@ -254,7 +261,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Get the user name of the selection in this JmriBeanComboBox (based on
+     * Get the User Name of the selection in this JmriBeanComboBox (based on
      * typed in text or drop down list).
      *
      * @return the username or null if no selection
@@ -279,13 +286,13 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     /**
      * Get the display name for the selection in this JmriBeanComboBox (based on
-     * typed in text or drop down list)
+     * typed in text or drop down list).
      *
      * @return the display name or null if no selection
      */
     public String getDisplayName() {
         String result = null;
-        NamedBean b = null;
+        NamedBean b;
 
         if (isEditable()) {
             result = getText();
@@ -302,7 +309,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }   //getDisplayName
 
     /**
-     * Get the text from the editor for this JmriBeanComboBox
+     * Get the text from the editor for this JmriBeanComboBox.
      *
      * @return the text
      */
@@ -335,7 +342,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Set the display order of the combobox
+     * Set the display order of the combobox.
      *
      * @param inDisplayOrder - the desired display order for this combobox
      */
@@ -349,7 +356,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     /**
-     * Insert a blank entry at the top of the list
+     * Insert a blank entry at the top of the list.
      *
      * @param inFirstItemBlank true to insert, false to remove
      */
@@ -419,7 +426,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         setSelectedBean(nBean);
     }
 
-    List<NamedBean> exclude = new ArrayList<NamedBean>();
+    List<NamedBean> exclude = new ArrayList<>();
 
     public void excludeItems(List<NamedBean> inExcludeList) {
         this.exclude = inExcludeList;
@@ -449,7 +456,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     // this is called to validate that the text in the textfield
     // is a valid member of the managed data.
-    //note:  if _validateMode is true
+    // note:  if _validateMode is true
     //           if text is valid set textfield background to green else red
     //       if _validateMode is false
     //           if text is valid set textfield background to green else yellow
@@ -478,57 +485,59 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @return the selected bean or null if no selection
      */
     public NamedBean getNamedBean() {
-        NamedBean result = null;
+        NamedBean result;
 
-        jmri.Manager uDaManager = getManager();
+        Manager uDaManager = getManager();
 
-        String comboBoxText = getText();
-        comboBoxText = (null != comboBoxText) ? NamedBean.normalizeUserName(comboBoxText) : "";
+        String comboBoxText = NamedBean.normalizeUserName(getText());
+        if (comboBoxText != null) {
 
-        //try user name
-        result = uDaManager.getBeanByUserName(comboBoxText);
+            //try user name
+            result = uDaManager.getBeanByUserName(comboBoxText);
 
-        if (null == result) {
-            //try system name
-            //note: don't use getBeanBySystemName here
-            //throws an IllegalArgumentException if text is invalid
-            result = uDaManager.getNamedBean(comboBoxText);
-        }
-
-        if (null == result) {
-            //quick search to see if text matches anything in the drop down list
-            String[] displayList = getDisplayList();
-            boolean found = false;  //assume failure (pessimist!)
-
-            for (String item : displayList) {
-                if (item.equals(comboBoxText)) {
-                    found = true;
-                    break;
-                }
+            if (null == result) {
+                //try system name
+                //note: don't use getBeanBySystemName here
+                //throws an IllegalArgumentException if text is invalid
+                result = uDaManager.getNamedBean(comboBoxText);
             }
 
-            if (found) {    //if we found it there then...
-                //walk the namedBeanList...
-                List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
+            if (null == result) {
+                //quick search to see if text matches anything in the drop down list
+                String[] displayList = getDisplayList();
+                boolean found = false;  //assume failure (pessimist!)
 
-                for (NamedBean namedBean : namedBeanList) {
-                    //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
-                    String uname = namedBean.getUserName();
-                    String sname = namedBean.getSystemName();
+                for (String item : displayList) {
+                    if (item.equals(comboBoxText)) {
+                        found = true;
+                        break;
+                    }
+                }
 
-                    if ((null != uname) && (null != sname)) {
-                        String usname = uname + " - " + sname;
-                        String suname = sname + " - " + uname;
+                if (found) {    //if we found it there then...
+                    //walk the namedBeanList...
+                    List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
 
-                        if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
-                            result = namedBean;
-                            break;
+                    for (NamedBean namedBean : namedBeanList) {
+                        //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
+                        String uname = namedBean.getUserName();
+                        String sname = namedBean.getSystemName();
+
+                        if ((null != uname)) {
+                            String usname = uname + " - " + sname;
+                            String suname = sname + " - " + uname;
+
+                            if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
+                                result = namedBean;
+                                break;
+                            }
                         }
                     }
                 }
             }
+            return result;
         }
-        return result;
+        return null;
     }   //getBean
 
     public enum DisplayOptions {
@@ -590,7 +599,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     }
 
-    static class beanSelectionManager implements KeySelectionManager {
+    static class BeanSelectionManager implements KeySelectionManager {
 
         long lastKeyTime = 0;
         String pattern = "";
@@ -855,5 +864,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class);
+
 }

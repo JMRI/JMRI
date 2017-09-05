@@ -212,6 +212,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
 
 }

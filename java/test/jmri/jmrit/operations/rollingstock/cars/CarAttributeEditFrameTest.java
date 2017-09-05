@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -42,7 +43,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         // black is the first default color
         Assert.assertEquals("old color", "Black", f.comboBox.getItemAt(0));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -85,7 +86,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("space 2", "", f.comboBox.getItemAt(0));
         Assert.assertEquals("previous kernel 2", "TwoCars", f.comboBox.getItemAt(1));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -93,16 +94,16 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.LENGTH);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.OWNER);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.ROAD);
-        f.dispose();
+        JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.TYPE);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

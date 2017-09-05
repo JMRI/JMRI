@@ -41,7 +41,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         }
         NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
-        nxFrame.dispose();
+        JUnitUtil.dispose(nxFrame);
     }
 
     public void testRoutePanel() throws Exception {
@@ -124,7 +124,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
         List<BlockOrder> orders = warrant.getBlockOrders();
-        if (orders.size()!=7) {
+/*        if (orders.size()!=7) {
             System.out.println();
             System.out.println(warrant.getSystemName()+" " +warrant.getUserName());
             for (BlockOrder bo : orders) {
@@ -134,7 +134,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             for (ThrottleSetting ts : commands) {
                 System.out.println(ts.toString());
             }
-        }
+        }*/
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 
@@ -334,9 +334,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

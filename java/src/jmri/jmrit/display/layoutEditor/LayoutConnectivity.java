@@ -87,13 +87,13 @@ public class LayoutConnectivity {
     public String toString() {
         String result = "between " + block1 + " and " + block2 + " in direction " + Path.decodeDirection(direction);
         if (track1 != null) {
-            result = result + ", track: " + track1.getID();
+            result = result + ", track: " + track1.getId();
         }
         if (connect2 != null) {
-            result = result + ", connect2: " + ((LayoutTrack) connect2).getID() + ", type2: " + typeConnect2;
+            result = result + ", connect2: " + ((LayoutTrack) connect2).getId() + ", type2: " + typeConnect2;
         }
         if (xover != null) {
-            result = result + ", xover: " + xover.getID() + ", xoverBoundaryType: " + xoverBoundaryType;
+            result = result + ", xover: " + xover.getId() + ", xoverBoundaryType: " + xoverBoundaryType;
         }
         return result;
     }
@@ -255,5 +255,5 @@ public class LayoutConnectivity {
         return hash;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class);
 }   // class LayoutConnectivity

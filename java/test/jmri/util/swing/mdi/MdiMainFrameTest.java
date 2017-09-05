@@ -1,6 +1,7 @@
 package jmri.util.swing.mdi;
 
 import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -10,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
-public class MdiMainFrameTest{
+public class MdiMainFrameTest {
 
     @Test
     public void testShow() {
@@ -24,19 +25,18 @@ public class MdiMainFrameTest{
         f.setVisible(true);
 
         // close
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

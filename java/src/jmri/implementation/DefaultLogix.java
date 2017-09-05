@@ -2,9 +2,7 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import jmri.Conditional;
-import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -1022,5 +1020,5 @@ public class DefaultLogix extends AbstractNamedBean
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class);
 }

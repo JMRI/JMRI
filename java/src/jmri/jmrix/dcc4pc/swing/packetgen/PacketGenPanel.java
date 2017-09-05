@@ -2,10 +2,10 @@ package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
@@ -119,7 +119,7 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     public void reply(Dcc4PcReply r) {
     } // ignore replies
     
-    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
     /**
      * Nested class to create one of these using old-style defaults
      */

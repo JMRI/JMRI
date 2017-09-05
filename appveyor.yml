@@ -31,5 +31,8 @@ on_finish:
 
 deploy: off
 
+artifacts:
+  - path: instanceManagerSequence.txt
+
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

@@ -11,6 +11,7 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.MathUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -55,10 +56,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
             _panel.repaint();
         });
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
-                y + icon.getSize().height / 2);
-
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sensor.getState());
+
+        java.awt.Point location = MathUtil.pointForPoint2D(MathUtil.center(icon.getBounds()));
 
         getHelper().enterClickAndLeave(new MouseEventData(
                 this,
@@ -443,9 +443,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetWindows(true);  // log existing windows in setup
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
@@ -472,9 +470,8 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
             _editor.dispose(true);
         }
 
-        JUnitUtil.resetWindows(false); // don't log existing windows here, should just be from this class
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
+        JUnitUtil.tearDown();
 
         super.tearDown();
     }

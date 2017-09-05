@@ -69,5 +69,5 @@ public class BasePanel extends JPanel implements Constants {
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BasePanel.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BasePanel.class);
 }

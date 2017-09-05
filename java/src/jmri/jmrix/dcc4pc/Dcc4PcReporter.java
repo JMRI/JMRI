@@ -93,7 +93,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             return dcc_addr_type;
         }
 
-        int getDCCAddress() {
+        int getDccAddress() {
             return dccAddress;
         }
 
@@ -302,15 +302,15 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
                         if (rcTag.getExpectedCv() != -1) {
                             rcTag.setCvValue(chbyte);
                         } else {
-                            rcTag.setCv(rc.getCvNumber(), chbyte);
+                            rcTag.setCV(rc.getCvNumber(), chbyte);
                         }
                     }
                     break;
                 case 4:
                     if (log.isDebugEnabled()) {
-                        log.debug(this.getDisplayName() + " Create/Get id tag for " + rc.getDCCAddress());
+                        log.debug(this.getDisplayName() + " Create/Get id tag for " + rc.getDccAddress());
                     }
-                    addr = rc.getDCCAddress();
+                    addr = rc.getDccAddress();
                     addr_type = rc.getAddressType();
                     break;
                 case 1: // Address byte 1
@@ -445,7 +445,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             rcTag.setActualSpeed(actual_speed);
         }
         for (Integer cv : cvValues.keySet()) {
-            rcTag.setCv(cv, cvValues.get(cv));
+            rcTag.setCV(cv, cvValues.get(cv));
             if (cvvalue != -1) {
                 rcTag.setCvValue(cvvalue);
             }
@@ -575,6 +575,6 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }

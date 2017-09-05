@@ -1,6 +1,7 @@
 package jmri.jmrix.easydcc;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
     // The minimal setup for log4J
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

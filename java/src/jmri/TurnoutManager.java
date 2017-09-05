@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -226,6 +227,15 @@ public interface TurnoutManager extends Manager<Turnout> {
      * @return true if a range of turnouts can be added; false otherwise
      */
     public boolean allowMultipleAdditions(@Nonnull String systemName);
+
+    /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @param systemName the system name
+     * @return true if formatted correctly; false otherwise
+     */
+    @CheckReturnValue
+    public boolean validSystemNameFormat(@Nonnull String systemName);
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall

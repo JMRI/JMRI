@@ -46,8 +46,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
         pos.setControlling(isControlling());
         pos.setHidden(isHidden());
         pos.setPositionable(isPositionable());
-        pos.setShowTooltip(showTooltip());
-        pos.setTooltip(getTooltip());
+        pos.setShowToolTip(showToolTip());
+        pos.setToolTip(getToolTip());
         pos.setEditable(isEditable());
         pos.updateSize();
         return pos;
@@ -149,22 +149,22 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
 
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = set;
     }
 
     @Override
-    public boolean showTooltip() {
+    public boolean showToolTip() {
         return _showTooltip;
     }
 
     @Override
-    public void setTooltip(ToolTip tip) {
+    public void setToolTip(ToolTip tip) {
         _tooltip = tip;
     }
 
     @Override
-    public ToolTip getTooltip() {
+    public ToolTip getToolTip() {
         return _tooltip;
     }
 
@@ -341,5 +341,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class);
 }
