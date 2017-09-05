@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
-        suite.addTest(LayoutEditorConnectivityTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorConnectivityTest.class));
         suite.addTest(new JUnit4TestAdapter(BlockContentsIconTest.class));
         suite.addTest(new JUnit4TestAdapter(BlockValueFileTest.class)); 
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
