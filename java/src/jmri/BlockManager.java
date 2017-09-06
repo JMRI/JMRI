@@ -193,13 +193,13 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @CheckForNull
     public Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
-        return (Block) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @CheckReturnValue
     @CheckForNull
     public Block getByUserName(@Nonnull String key) {
-        return (Block) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @CheckReturnValue

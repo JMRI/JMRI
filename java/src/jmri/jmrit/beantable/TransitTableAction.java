@@ -55,7 +55,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a TransitTable GUI.
  * <p>
- * <P>
  * This file is part of JMRI.
  * <P>
  * JMRI is open source software; you can redistribute it and/or modify it under

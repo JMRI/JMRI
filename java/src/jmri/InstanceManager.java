@@ -111,7 +111,7 @@ public final class InstanceManager {
             log.error("Should not store null value of type {}", type.getName());
             throw npe;
         }
-        List<T> l = (ArrayList<T>) getList(type);
+        List<T> l = getList(type);
         l.add(item);
     }
 
@@ -151,7 +151,7 @@ public final class InstanceManager {
      */
     static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
-        List<T> l = (ArrayList<T>) getList(type);
+        List<T> l = getList(type);
         int index = l.indexOf(item);
         if (index != -1) { // -1 means items was not in list, and therefor, not registered
             l.remove(item);
@@ -220,7 +220,7 @@ public final class InstanceManager {
     @CheckForNull
     static public <T> T getNullableDefault(@Nonnull Class<T> type) {
         log.trace("getOptionalDefault of type {}", type.getName());
-        List<T> l = (ArrayList<T>) getList(type);
+        List<T> l = getList(type);
         if (l.isEmpty()) {
 
             // example of tracing where something is being initialized
@@ -246,7 +246,7 @@ public final class InstanceManager {
             log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
                 try {
-                    T obj = (T) type.getConstructor((Class[]) null).newInstance((Object[]) null);
+                    T obj = type.getConstructor((Class[]) null).newInstance((Object[]) null);
                     l.add(obj);
                     // obj has been added, now initialize it if needed
                     if (obj instanceof InstanceManagerAutoInitialize) {
