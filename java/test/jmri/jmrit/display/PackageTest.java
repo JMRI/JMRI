@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.display");   // no tests in this class itself
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(PositionableLabelTest.suite());
-        suite.addTest(LinkingLabelTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LinkingLabelTest.class));
         suite.addTest(MemoryIconTest.suite());
         suite.addTest(MemorySpinnerIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
@@ -40,7 +40,7 @@ public class PackageTest extends TestCase {
         suite.addTest(SignalMastIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(SignalSystemTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutIconWindowTest.class));
-        suite.addTest(TurnoutIconTest.suite());
+        suite.addTest(new JUnit4TestAdapter(TurnoutIconTest.class));
         suite.addTest(new JUnit4TestAdapter(IndicatorTurnoutIconTest.class));
         suite.addTest(IconEditorWindowTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.configurexml.PackageTest.class));
