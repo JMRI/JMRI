@@ -96,7 +96,7 @@
 		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
 		<label xml:lang="fr">Forcer son à vide avec function</label>
 		<label xml:lang="de">Funktionszuordnung Zwangslehrlauf</label>
-		<label xml:lang="ca">For´ça el so a ralentí amb la funció</label>
+		<label xml:lang="ca">Força el so a ralentí amb la funció</label>
 	</variable>
 	<!-- END SIMILAR CV --> 
 </variables>
