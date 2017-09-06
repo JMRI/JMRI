@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
@@ -1668,7 +1669,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type1, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect2(), type2),
                                 layoutEditor.getCoords(getConnect1(), type1)));
                         results.add(lc);
@@ -1686,7 +1687,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type1, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect2(), type2),
                                 layoutEditor.getCoords(getConnect1(), type1)));
                         results.add(lc);
@@ -1701,7 +1702,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(layoutEditor.getCoords(getConnect2(),
+                    lc.setDirection(Path.computeDirection(layoutEditor.getCoords(getConnect2(),
                             type2), layoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
@@ -1730,7 +1731,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type2, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect1(), type1),
                                 layoutEditor.getCoords(getConnect2(), type2)));
                         results.add(lc);
@@ -1748,7 +1749,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type2, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect1(), type1),
                                 layoutEditor.getCoords(getConnect2(), type2)));
                         results.add(lc);
@@ -1763,7 +1764,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                    lc.setDirection(Path.computeDirection(
                             layoutEditor.getCoords(getConnect1(), type1),
                             layoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);
