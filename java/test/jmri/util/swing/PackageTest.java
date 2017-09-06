@@ -53,6 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(BusyDialogTest.class));
         suite.addTest(new JUnit4TestAdapter(TextFilterTest.class));
         suite.addTest(new JUnit4TestAdapter(BeanSelectCreatePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ValidatedTextFieldTest.class));
 
         return suite;
     }
