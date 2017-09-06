@@ -37,6 +37,7 @@
     <label>Extended mapping</label>
     <label xml:lang="fr">Mapping etendu</label>
     <label xml:lang="de">Erweiterte Funktionszuordnung</label>
+    <label xml:lang="ca">Mapejat estés</label>
   </variable>
   <variable item="SUSI ouptuts mapping" CV="137" mask="XXVXXXXX" tooltip="CV137 bit 5" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
     <enumVal>
@@ -44,15 +45,18 @@
         <choice>ZCLK and ZDAT as AUX 3 and AUX 4</choice>
         <choice xml:lang="fr">ZCLK et ZDAT comme AUX 3 et AUX 4</choice>
         <choice xml:lang="de">ZCLK und ZDAT als AUX 3 und AUX 4</choice>
+        <choice xml:lang="ca">ZCLK i ZDAT com AUX 3 i AUX 4</choice>
       </enumChoice>
       <enumChoice choice="ZCLK and ZDAT as AUX 5 and AUX 6" value="0">
         <choice>ZCLK and ZDAT as AUX 5 and AUX 6</choice>
         <choice xml:lang="fr">ZCLK et ZDAT comme AUX 5 et AUX 6</choice>
         <choice xml:lang="de">ZCLK und ZDAT als AUX 5 und AUX 6</choice>
+        <choice xml:lang="ca">ZCLK i ZDAT com AUX 3 und AUX 4</choice>
       </enumChoice>
     </enumVal>
     <label>SUSI ouptuts mapping</label>
     <label xml:lang="fr">Mapping sorties SUSI</label>
     <label xml:lang="de">SUSI Ausgänge Mapping</label>
+    <label xml:lang="ca">Mapejat de sortides SUSI</label>
   </variable>
 </variables>
