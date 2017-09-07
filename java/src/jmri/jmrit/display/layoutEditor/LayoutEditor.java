@@ -4957,7 +4957,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 (inColor != null) && (inColor == turnoutCircleColor), a);
     } //addTurnoutCircleColorMenuEntry
 
-    private void addTurnoutCircleSizeMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, @Nonnull final int inSize) {
+    private void addTurnoutCircleSizeMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, final int inSize) {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
