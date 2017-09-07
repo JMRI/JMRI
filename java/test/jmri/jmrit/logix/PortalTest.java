@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -83,8 +84,9 @@ public class PortalTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        _blkMgr = new OBlockManager();
-        _portalMgr = new PortalManager();
+        JUnitUtil.setUp();        
+        _blkMgr = InstanceManager.getDefault(OBlockManager.class);
+        _portalMgr = InstanceManager.getDefault(PortalManager.class);
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
