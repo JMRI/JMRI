@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TurnoutIconWindowTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutIconTest.class));
         suite.addTest(new JUnit4TestAdapter(IndicatorTurnoutIconTest.class));
-        suite.addTest(IconEditorWindowTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IconEditorWindowTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.configurexml.PackageTest.class));
         suite.addTest(jmri.jmrit.display.switchboardEditor.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
