@@ -324,7 +324,7 @@ public class ActivateTrainFrame {
 
             JPanel p8 = new JPanel();
             p8.setLayout(new FlowLayout());
-            p8.add(new JLabel(Bundle.getMessage("PriorityLabel") + " :"));
+            p8.add(new JLabel(Bundle.getMessage("PriorityLabel") + ":"));
             p8.add(prioritySpinner); // already set to 5
             prioritySpinner.setToolTipText(Bundle.getMessage("PriorityHint"));
             p8.add(new JLabel("     "));
@@ -460,7 +460,7 @@ public class ActivateTrainFrame {
     private void handleInTransitClick(ActionEvent e) {
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(initiateFrame, Bundle
-                    .getMessage("NoEntryBlocks"), Bundle.getMessage("InformationTitle"),
+                    .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             inTransitBox.setSelected(true);
         }
@@ -474,7 +474,7 @@ public class ActivateTrainFrame {
                 && (!selectedTransit.canBeResetWhenDone())) {
             resetWhenDoneBox.setSelected(false);
             javax.swing.JOptionPane.showMessageDialog(initiateFrame, Bundle
-                    .getMessage("NoResetMessage"), Bundle.getMessage("InformationTitle"),
+                    .getMessage("NoResetMessage"), Bundle.getMessage("MessageTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
@@ -705,7 +705,7 @@ public class ActivateTrainFrame {
             setAutoRunItems(aat);
             if (!aat.initialize()) {
                 JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "Error27", at.getTrainName()), Bundle.getMessage("InformationTitle"),
+                        "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
             }
             _dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
@@ -963,8 +963,8 @@ public class ActivateTrainFrame {
                 int selectedValue = JOptionPane.showOptionDialog(initiateFrame,
                         Bundle.getMessage("Question3", fileName),
                         Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("FileYes"),
-                            Bundle.getMessage("FileNo")}, Bundle.getMessage("FileNo"));
+                        JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("ButtonReplace"),
+                            Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return;   // return without writing if "No" response
                 }
@@ -1231,7 +1231,9 @@ public class ActivateTrainFrame {
         maxTrainLengthSpinner.setModel(new SpinnerNumberModel(Float.valueOf(18.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.5f)));
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
         pa4.add(maxTrainLengthSpinner);
-        maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint"));
+        boolean unitIsMeter = InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters(); // read from user setting
+        maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint",
+                (unitIsMeter ? Bundle.getMessage("ScaleMeters") : Bundle.getMessage("ScaleFeet")))); // won't be updated while Dispatcher is open
         initiatePane.add(pa4);
         hideAutoRunItems();   // initialize with auto run items hidden
         initializeAutoRunValues();
