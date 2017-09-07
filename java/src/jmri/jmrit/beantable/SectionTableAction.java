@@ -1254,7 +1254,7 @@ public class SectionTableAction extends AbstractTableAction {
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (n == 0) {
                         JOptionPane.showMessageDialog(frame, rbx.getString("Message15"),
-                                rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
@@ -1276,7 +1276,7 @@ public class SectionTableAction extends AbstractTableAction {
                                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == 0) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
-                                    rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 }
@@ -1299,7 +1299,7 @@ public class SectionTableAction extends AbstractTableAction {
                                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == 0) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
-                                    rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 }

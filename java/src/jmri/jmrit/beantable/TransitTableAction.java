@@ -1017,6 +1017,7 @@ public class TransitTableAction extends AbstractTableAction {
                 Math.min(seqMax, 1), // minimum value, either 0 (empty list) or 1
                 seqMax, // maximum order number
                 1));
+        seqNum.setValue(Math.min(seqMax, 1));
         return;
     }
 
@@ -1663,8 +1664,8 @@ public class TransitTableAction extends AbstractTableAction {
     private JButton cancelAddEditActionButton = null;
     private JComboBox<String> blockBox = new JComboBox<>();
     private ArrayList<Block> blockList = new ArrayList<>();
-    private JRadioButton onButton = new JRadioButton(rbx.getString("On"));
-    private JRadioButton offButton = new JRadioButton(rbx.getString("Off"));
+    private JRadioButton onButton = new JRadioButton(Bundle.getMessage("StateOn"));
+    private JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
     private JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
     private JPanel signalPanel;
     private JmriBeanComboBox doneSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -1830,6 +1831,10 @@ public class TransitTableAction extends AbstractTableAction {
         } else {
             // initialize for add new action
             addEditActionFrame.setTitle(rbx.getString("TitleAddAction"));
+            whenBox.setSelectedIndex(0);
+            // setWhen(1) and setWhat(1) are set via whenBox and whatBox
+            whatBox.setSelectedIndex(0);
+            // set initial values after setting model
             whenDataSpinner.setValue(0);
             whenSensorComboBox.setSelectedItem(0);
             whatPercentSpinner.setValue(Float.valueOf(1.0f));
@@ -1841,10 +1846,6 @@ public class TransitTableAction extends AbstractTableAction {
             doneSensorComboBox.setSelectedItem(0);
             whatStringField.setText("");
             onButton.setSelected(true);
-            log.debug("setWhen called for new action, editmode = {}", editActionMode);
-            whenBox.setSelectedIndex(0);
-            // setWhen(1) and setWhat(1) are set via whenBox and whatBox
-            whatBox.setSelectedIndex(0);
             updateActionButton.setVisible(false);
             createActionButton.setVisible(true);
             setBlockBox();
@@ -1921,6 +1922,7 @@ public class TransitTableAction extends AbstractTableAction {
                     whatMinuteSpinner1.setValue(curTSA.getDataWhat1());
                 }
                 whatMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
+                whatMinuteSpinner1.setValue(1);
                 whatMinuteSpinner1.setVisible(true);
                 whatMinuteSpinner1.setToolTipText(rbx.getString("HintPauseData"));
                 break;
@@ -1967,6 +1969,7 @@ public class TransitTableAction extends AbstractTableAction {
             case TransitSectionAction.STOPBELL:
                 break;
             case TransitSectionAction.SOUNDHORN:
+                whatMinuteSpinner1.setValue(100);
                 whatMinuteSpinner1.setModel(new SpinnerNumberModel(100, 100, 65500, 1));
                 if (editActionMode) {
                     whatMinuteSpinner1.setValue(curTSA.getDataWhat1());
@@ -1975,6 +1978,7 @@ public class TransitTableAction extends AbstractTableAction {
                 whatMinuteSpinner1.setToolTipText(rbx.getString("HintSoundHornData1"));
                 break;
             case TransitSectionAction.SOUNDHORNPATTERN:
+                whatMinuteSpinner1.setValue(100);
                 whatMinuteSpinner1.setModel(new SpinnerNumberModel(100, 100, 65500, 1));
                 // whatMinuteSpinner2 model never changes
                 if (editActionMode) {
@@ -2179,9 +2183,9 @@ public class TransitTableAction extends AbstractTableAction {
                 }
                 break;
             case TransitSectionAction.SETLIGHT:
-                tWhatString = "On";
+                tWhatString = "On"; // NOI18N
                 if (offButton.isSelected()) {
-                    tWhatString = "Off";
+                    tWhatString = "Off"; // NOI18N
                 }
                 break;
             case TransitSectionAction.STARTBELL:
@@ -2213,9 +2217,9 @@ public class TransitTableAction extends AbstractTableAction {
                 break;
             case TransitSectionAction.LOCOFUNCTION:
                 tWhatData1 = (Integer) whatMinuteSpinner1.getValue();
-                tWhatString = "On";
+                tWhatString = "On"; // NOI18N
                 if (offButton.isSelected()) {
-                    tWhatString = "Off";
+                    tWhatString = "Off"; // NOI18N
                 }
                 break;
             case TransitSectionAction.SETSENSORACTIVE:
@@ -2464,8 +2468,12 @@ public class TransitTableAction extends AbstractTableAction {
                 }
                 return rbx.getString("ToManualModeFull");
             case TransitSectionAction.SETLIGHT:
+                if (tsa.getStringWhat().equals("Off")) {
+                    return java.text.MessageFormat.format(rbx.getString("SetLightFull"),
+                        new Object[]{Bundle.getMessage("StateOff")});
+                }
                 return java.text.MessageFormat.format(rbx.getString("SetLightFull"),
-                        new Object[]{rbx.getString(tsa.getStringWhat())});
+                        new Object[]{Bundle.getMessage("StateOn")});
             case TransitSectionAction.STARTBELL:
                 return rbx.getString("StartBellFull");
             case TransitSectionAction.STOPBELL:
