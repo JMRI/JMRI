@@ -332,7 +332,7 @@
 			subject to ramping speed changes due to signals or rogue
 			occupancy.</li> 
 			<li><b>Don't Ramp Speed Changes</b> Suppress the 
-			ramping calculations. Instead, thw warrant makes immediate speed
+			ramping calculations. Instead, the warrant makes immediate speed
 			change upon entering the approach block to the block requiring
 			a speed change.</li>
 			<li><b>Use Elapsed Time Only</b> Do not use
@@ -361,7 +361,7 @@
           control the train and override the Throttle commands.
 
 		    <ul>
-			<li><b>Halt</b>Ramp the speed down to a stop.</li>
+			<li><b>Halt</b>Stop the train.</li>
 			<li><b>Resume</b>Ramp the speed up to its previous speed.</li>
 			<li><b>E-Stop</b>Issue an Emergency Stop to the train.</li>
 			<li><b>Abort</b>Stop the train and null the warrant.</li>
@@ -456,7 +456,9 @@
           compensate for changes in the size of the train or
           different address of the power, by attempting to produce 
           the same track speed. Lacking a speed profile, the recorded
-          throttle setting is used.
+          throttle setting is used.  In <i>Release 4.9.4</i> the 
+          scripted throttle setting is not modified by the track speed.
+          (i.e. the above is a 4.9.2 feature only)
           
           <p>The DCC address used in the recording is the "standard 
           power" of the warrant. To base the track speeds on a different
