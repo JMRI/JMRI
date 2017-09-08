@@ -22,7 +22,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JComponentOperator;
 
 /**
- * Swing jfcUnit tests for the SensorIcon
+ * Swing tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
  */
