@@ -59,7 +59,9 @@ import org.junit.runners.Suite;
     ComboOnRadioButtonTest.class,
     DccAddressVarHandlerTest.class,
     DecVarSliderTest.class,
-    DccAddressPanelTest.class
+    DccAddressPanelTest.class,
+    PrintActionTest.class,
+    PrintCvActionTest.class
 })
 
 /**
