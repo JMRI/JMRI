@@ -10,6 +10,7 @@
                     <text>Master Controls</text>
                     <text xml:lang="it">Controlli principali</text>
                     <text xml:lang="de">Globale Einstellungen</text>
+                    <text xml:lang="ca">Control Master</text>
                 </label>
             </griditem>
             <griditem gridx="1" gridy="0" gridwidth="2" anchor="LINE_START">
@@ -67,6 +68,7 @@
                 <label>
                     <text>Heavy Load and Coast Modes</text>
                     <text xml:lang="de">Lastregelung und Coasting</text>
+                    <text xml:lang="ca">Càrrega alta i pendent fort</text>
                 </label>
             </griditem>
             <griditem gridx="0" gridy="1">
@@ -74,12 +76,14 @@
                     <label>
                         <text>Requires decoder firmware version 4.15.9240 or later</text>
                         <text xml:lang="de">Mind. v4.15.9240 oder später</text>
+                        <text xml:lang="ca">Es necessita firmware 4.15.9240 o superior</text>
                     </label>
                     <column>
                         <row>
                             <label>
                                 <text>Your version is</text>
                                 <text xml:lang="de">Ihr Decoder hat</text>
+                                <text xml:lang="ca">La teva versió</text>
                             </label>
                             <display item="Firmware Major Version" label=""/>
                             <display item="Firmware Minor Version" label=""/>
@@ -92,6 +96,7 @@
                                   notwendig sein um die Werte anzuzeigen.
                                   &lt;/html&gt;
                             </text>
+                            <text xml:lang="ca">Es necessita llegir la pestanya sencera per veure-ho</text>
                             <!--text xml:lang="de">Ein "Diese Seite vollständig lesen" kann notwendig sein um die Werte anzuzeigen</text-->
                         </label>
                     </column>
@@ -218,11 +223,13 @@
                         <text>Due to the flexible and free-form design of LokSound Decoders, it is possible</text>
                         <text xml:lang="it">Grazie al progetto flessibile dei decoders LokSound è possibile</text>
                         <text xml:lang="de">Durch die flexible und freie Gestaltung von LokSound Decodern ist es</text>
+                        <text xml:lang="ca">Pel disseny del LokSound és possible</text>
                     </label>
                     <label>
                         <text>for project designers to assign sounds to arbitrary sound slots.</text>
                         <text xml:lang="it">assegnare suoni arbitrari ai singoli Slots</text>
                         <text xml:lang="de">Projekt-Designern möglich Sounds beliebigen Sound-Slots zuzuordnen.</text>
+                        <text xml:lang="ca">Per assignar sons a sa</text>
                     </label>
                     <label>
                         <text> </text>
@@ -231,11 +238,13 @@
                         <text>Any sound slot labels shown below are only a guide from ESU documentation and</text>
                         <text xml:lang="it">Tutte le etichette degli sloto visualizzati sono solo esempi presi dalla documentazione ESU</text>
                         <text xml:lang="de">Alle unten aufgeführten Sound-Slots sind aus der Anleitung der ESU-Dokumentation und passen</text>
+						<text xml:lang="ca">Els slots inferiors són una guia ESU</text>                   
                     </label>
                     <label>
                         <text>may not be correct for the particular sound project loaded into your loco decoder.</text>
                         <text xml:lang="it">e potrebbero anche non corrispondere al particolare progetto caricato nel vostro decoder</text>
                         <text xml:lang="de">möglicherweise nicht korrekt für das jeweilige Soundprojekt, das in Ihren Lokdecoder geladen wurde.</text>
+						<text xml:lang="ca">i potser no són correctes pel projecte de so en particular</text>
                     </label>
                     <label>
                         <text> </text>
