@@ -17,7 +17,7 @@ public class DccAddressPanelTest {
 
     @Test
     public void testCTor() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.Programmer.class);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         VariableTableModel vtm = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},

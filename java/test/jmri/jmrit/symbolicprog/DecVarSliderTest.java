@@ -17,7 +17,7 @@ public class DecVarSliderTest {
 
     @Test
     public void testCTor() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.Programmer.class);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         HashMap<String, CvValue> v = new HashMap<String, CvValue>();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
