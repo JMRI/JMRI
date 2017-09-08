@@ -1,4 +1,4 @@
-package jmri.jmrix.roco.z21.simulator.configurexml;
+package jmri.jmrit.display.switchboardEditor.configurexml;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -11,11 +11,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Z21SimulatorClassMigrationTest {
+public class SwitchboardEditorClassMigrationTest {
 
     @Test
     public void testCTor() {
-        Z21SimulatorClassMigration t = new Z21SimulatorClassMigration();
+        SwitchboardEditorClassMigration t = new SwitchboardEditorClassMigration();
         Assert.assertNotNull("exists",t);
     }
 
