@@ -3,9 +3,6 @@ package jmri.jmrit.display;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-
-import jmri.util.JUnitUtil;
-
 /**
  * Tests for the jmrit.display package
  *
