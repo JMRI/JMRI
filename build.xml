@@ -317,6 +317,7 @@
         <exclude name="jmri/jmrix/openlcb/SampleFactory.class" />
         <exclude name="jmri/util/swing/SamplePane.class" />
         <exclude name="apps/tests/Log4JFixture.class" />
+        <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
     </fileset>
 
 

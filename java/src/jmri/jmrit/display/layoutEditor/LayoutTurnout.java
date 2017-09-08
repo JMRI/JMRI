@@ -33,6 +33,7 @@ import javax.swing.event.PopupMenuListener;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -4124,7 +4125,7 @@ public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
                     lc = new LayoutConnectivity(lbA, lbB);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsB()));
+                    lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
                     results.add(lc);
                 }
                 if ((getTurnoutType() != LayoutTurnout.LH_XOVER) && (lbA != lbC)) {
@@ -4132,7 +4133,7 @@ public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
                     lc = new LayoutConnectivity(lbA, lbC);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsC()));
+                    lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
                     results.add(lc);
                 }
                 if (lbC != lbD) {
@@ -4140,7 +4141,7 @@ public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
                     lc = new LayoutConnectivity(lbC, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsC(), getCoordsD()));
+                    lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
                     results.add(lc);
                 }
                 if ((getTurnoutType() != LayoutTurnout.RH_XOVER) && (lbB != lbD)) {
@@ -4148,7 +4149,7 @@ public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
                     lc = new LayoutConnectivity(lbB, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsD()));
+                    lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
                     results.add(lc);
                 }
             }
