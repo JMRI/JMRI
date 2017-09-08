@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(PositionableLabelTest.suite());
         suite.addTest(new JUnit4TestAdapter(LinkingLabelTest.class));
-        suite.addTest(MemoryIconTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MemoryIconTest.class));
         suite.addTest(MemorySpinnerIconTest.suite());
         suite.addTest(new JUnit4TestAdapter(PanelEditorTest.class));
         suite.addTest(new JUnit4TestAdapter(ReporterIconTest.class));
