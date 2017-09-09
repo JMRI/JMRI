@@ -1125,7 +1125,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setDisableWhenOccupied(boolean state) {
         if (disableWhenOccupied != state) {
-        disableWhenOccupied = state;
+            disableWhenOccupied = state;
             if (layoutEditor != null) {
                 layoutEditor.redrawPanel();
             }
@@ -1390,18 +1390,20 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Set default size parameters to correspond to this turnout's size
+     * Set default size parameters to correspond to this turnout's size.
+     * <p>
+     * note: only protected so LayoutTurnoutTest can call it
      */
-    private void setUpDefaultSize() {
+    protected void setUpDefaultSize() {
         // remove the overall scale factor
         double bX = dispB.getX() / layoutEditor.getXScale();
         double bY = dispB.getY() / layoutEditor.getYScale();
         double cX = dispA.getX() / layoutEditor.getXScale();
         double cY = dispA.getY() / layoutEditor.getYScale();
         // calculate default parameters according to type of turnout
-        double lenB = Math.sqrt((bX * bX) + (bY * bY));
-        double lenC = Math.sqrt((cX * cX) + (cY * cY));
-        double distBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
+        double lenB = Math.hypot(bX, bY);
+        double lenC = Math.hypot(cX, cY);
+        double distBC = Math.hypot(bX - cX, bY - cY);
         if ((type == LH_TURNOUT) || (type == RH_TURNOUT)) {
             layoutEditor.setTurnoutBX(Math.round(lenB + 0.1));
             double xc = ((bX * cX) + (bY * cY)) / lenB;
@@ -1420,9 +1422,9 @@ public class LayoutTurnout extends LayoutTrack {
                 bY = pointB.getY() / layoutEditor.getYScale();
                 cX = pointC.getX() / layoutEditor.getXScale();
                 cY = pointC.getY() / layoutEditor.getYScale();
-                double lenAB = Math.sqrt(((bX - aX) * (bX - aX)) + ((bY - aY) * (bY - aY)));
+                double lenAB = Math.hypot(bX - aX, bY - aY);
                 if (type == DOUBLE_XOVER) {
-                    double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
+                    double lenBC = Math.hypot(bX - cX, bY - cY);
                     layoutEditor.setXOverLong(Math.round(lenAB / 2)); //set to half to be backwardly compatible
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
                     layoutEditor.setXOverShort(Math.round((0.5 * lenAB) / 2));
@@ -1436,9 +1438,8 @@ public class LayoutTurnout extends LayoutTrack {
                     bY = bY + opp;
                     double adj = Math.cos(ang) * lenAB;
                     bX = bX + adj;
-                    double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
+                    double lenBC = Math.hypot(bX - cX, bY - cY);
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
-
                 } else if (type == LH_XOVER) {
                     double dY = pointD.getY() / layoutEditor.getYScale();
                     lenAB = lenAB / 3;
@@ -1450,7 +1451,7 @@ public class LayoutTurnout extends LayoutTrack {
                     cY = cY + opp;
                     double adj = Math.cos(ang) * lenAB;
                     cX = cX + adj;
-                    double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
+                    double lenBC = Math.hypot(bX - cX, bY - cY);
                     layoutEditor.setXOverHWid(Math.round(lenBC / 2));
                 }
             } else if (type == DOUBLE_XOVER) {
@@ -1459,13 +1460,13 @@ public class LayoutTurnout extends LayoutTrack {
                 layoutEditor.setXOverHWid(Math.round((0.5 * distBC) + 0.1));
                 layoutEditor.setXOverShort(Math.round((0.5 * lng) + 0.1));
             } else if (type == RH_XOVER) {
-                double distDC = Math.sqrt(((bX + cX) * (bX + cX)) + ((bY + cY) * (bY + cY)));
+                double distDC = Math.hypot(bX + cX, bY + cY);
                 layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
                 layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
                 double hwid = Math.sqrt((lenC * lenC) - (0.5625 * distDC * distDC));
                 layoutEditor.setXOverHWid(Math.round(hwid + 0.1));
             } else if (type == LH_XOVER) {
-                double distDC = Math.sqrt(((bX + cX) * (bX + cX)) + ((bY + cY) * (bY + cY)));
+                double distDC = Math.hypot(bX + cX, bY + cY);
                 layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
                 layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
                 double hwid = Math.sqrt((lenC * lenC) - (0.0625 * distDC * distDC));
@@ -2104,7 +2105,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         return false;
-    }
+    }   // isOccupied
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -2196,7 +2197,7 @@ public class LayoutTurnout extends LayoutTrack {
                 namedTurnout = null;
             }
         }
-    }
+    }   // setObjects
 
     private JPopupMenu popup = null;
     private LayoutEditorTools tools = null;
@@ -2529,7 +2530,7 @@ public class LayoutTurnout extends LayoutTrack {
             setAdditionalViewPopUpMenu(popup);
             popup.show(e.getComponent(), e.getX(), e.getY());
         }
-    }
+    }   // showPopup
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -2675,7 +2676,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         }
         return boundaryBetween;
-    }
+    }   // getBlockBoundaries
 
     // variables for Edit Layout Turnout pane
     protected JmriJFrame editLayoutTurnoutFrame = null;
@@ -2954,7 +2955,7 @@ public class LayoutTurnout extends LayoutTrack {
         editLayoutTurnoutFrame.setVisible(true);
         editOpen = true;
         needsBlockUpdate = false;
-    }
+    }   // editLayoutTurnout
 
     void turnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -2989,7 +2990,7 @@ public class LayoutTurnout extends LayoutTrack {
         block.editLayoutBlock(editLayoutTurnoutFrame);
         needRedraw = true;
         layoutEditor.setDirty();
-    }
+    }   // turnoutEditBlockPressed
 
     void turnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -3024,7 +3025,7 @@ public class LayoutTurnout extends LayoutTrack {
         blockB.editLayoutBlock(editLayoutTurnoutFrame);
         needRedraw = true;
         layoutEditor.setDirty();
-    }
+    }   // turnoutEditBlockBPressed
 
     void turnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -3059,7 +3060,7 @@ public class LayoutTurnout extends LayoutTrack {
         blockC.editLayoutBlock(editLayoutTurnoutFrame);
         needRedraw = true;
         layoutEditor.setDirty();
-    }
+    }   // turnoutEditBlockCPressed
 
     void turnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -3094,7 +3095,7 @@ public class LayoutTurnout extends LayoutTrack {
         blockD.editLayoutBlock(editLayoutTurnoutFrame);
         needRedraw = true;
         layoutEditor.setDirty();
-    }
+    }   // turnoutEditBlockDPressed
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
@@ -3252,7 +3253,7 @@ public class LayoutTurnout extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
+    }   // turnoutEditDonePressed
 
     void turnoutEditCancelPressed(ActionEvent a) {
         editOpen = false;
@@ -3369,7 +3370,7 @@ public class LayoutTurnout extends LayoutTrack {
                 sensorDNamed = null;
             }
         }
-    }
+    }   // reCheckBlockBoundary
 
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<LayoutBlock>(2);
@@ -3506,7 +3507,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         return ret;
-    }
+    }   // getProtectedBlocks
 
     protected void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -3943,7 +3944,7 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             }
         }
-    }   // draw(Graphics2D g2)
+    }   // draw
 
     public void drawControls(Graphics2D g2) {
         g2.draw(layoutEditor.trackControlCircleAt(center));
@@ -3991,12 +3992,16 @@ public class LayoutTurnout extends LayoutTrack {
             }
             g2.draw(layoutEditor.trackControlPointRectAt(pt));
         }
-    }
+    }   // drawEditControls
 
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
-    protected int getConnectivityStateForLayoutBlocks(LayoutBlock currLayoutBlock, LayoutBlock prevLayoutBlock, LayoutBlock nextLayoutBlock, boolean suppress) {
+    protected int getConnectivityStateForLayoutBlocks(
+            LayoutBlock currLayoutBlock, 
+            LayoutBlock prevLayoutBlock, 
+            LayoutBlock nextLayoutBlock, 
+            boolean suppress) {
         int result = Turnout.UNKNOWN;
 
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();
