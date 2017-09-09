@@ -525,10 +525,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     synchronized public int getRunState() {
-        if (_halt) {
-            return Warrant.HALT;
-        } else if (_stopPending) {
+        if (_stopPending) {
             return Warrant.STOP_PENDING;
+        } else if (_halt) {
+            return Warrant.HALT;
         } else if (_waitForClear) {
             return Warrant.WAIT_FOR_CLEAR;
         } else if (_abort) {
@@ -957,7 +957,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
                     _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward), speed);
 
-            float incr = _speedUtil.getRampThrottleIncrement();
+            float incr = _speedUtil.getRampThrottleIncrement(); // from Preferences
             int delay = _speedUtil.getRampTimeIncrement();
             float mf = _speedUtil.getMomentumFactor();
 
@@ -976,6 +976,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }          
             // Get distance to travel at normal current speed up to next speed change
             float scriptDist = _speedUtil.getTrackSpeed(_normalSpeed, _isForward) * time;
+            
+            if (_endSpeed < speed) {   // ramp down
+                float tempSpeed = _endSpeed;
+                while (tempSpeed +incr <= speed) {
+                    tempSpeed += incr;
+                    incr *= NXFrame.INCRE_RATE;
+                }
+                if (_endSpeed <= 0) {
+                    _stopPending = true;                    
+                }
+            }
             
             synchronized (this) {
                 try {
@@ -1004,6 +1015,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 speed = _endSpeed;
                             }
                             setSpeed(speed);
+                            incr *= NXFrame.INCRE_RATE;
 
                             if (scriptDist <= rampDist) {
                                 // get next scripted speed change and distance
@@ -1029,13 +1041,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             if (stop) {
                                 break;
                             }
-                            _stopPending = true;
                             rampDist += _speedUtil.getTrackSpeed(speed - incr*mf, _isForward) * delay;
                             speed -= incr;
                             if (speed < _endSpeed) { // don't undershoot
                                 speed = _endSpeed;
                             }
                             setSpeed(speed);
+                            incr /= NXFrame.INCRE_RATE;
 
                             if (scriptDist <= rampDist) {
                                 // get next scripted speed change and distance
@@ -1056,6 +1068,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             // _Skip all commands up to the "protected block". 
                             String sysName = _warrant.getCurrentBlockOrder().getBlock().getSystemName();
                             log.debug("Ramp down ends in block \"{}\"", sysName);
+                            //  if there is a ramp overrun, the advanceToCommandIndex is incorrect.
+                            // TODO figure out how to get it right.
                             for (int idx = _idxCurrentCommand; idx < _commands.size(); idx++) {
                                 ts = _commands.get(idx);
                                 if ("NOOP".equals(ts.getCommand().toUpperCase()) && sysName.equals(ts.getBeanSystemName())) {

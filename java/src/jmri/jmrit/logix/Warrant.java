@@ -102,18 +102,19 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public static final int ABORT = 3;
     public static final int RETRY = 4;
     public static final int ESTOP = 5;
-    protected static final int RUNNING = 5;
-    protected static final int SPEED_RESTRICTED = 6;
-    protected static final int WAIT_FOR_CLEAR = 7;
-    protected static final int WAIT_FOR_SENSOR = 8;
-    protected static final int WAIT_FOR_TRAIN = 9;
-    protected static final int WAIT_FOR_DELAYED_START = 10;
-    protected static final int LEARNING = 11;
-    protected static final int STOP_PENDING = 12;
-    protected static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "Retry", "EStop"};
-    protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resumed", "Aborts", "Retried",
-            "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor", "RunningLate",
-            "WaitingForStart", "RecordingScript", "StopPending"};
+    protected static final int RAMP_HALT = 6;
+    protected static final int RUNNING = 7;
+    protected static final int SPEED_RESTRICTED = 8;
+    protected static final int WAIT_FOR_CLEAR = 9;
+    protected static final int WAIT_FOR_SENSOR = 10;
+    protected static final int WAIT_FOR_TRAIN = 11;
+    protected static final int WAIT_FOR_DELAYED_START = 12;
+    protected static final int LEARNING = 13;
+    protected static final int STOP_PENDING = 14;
+    protected static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "Retry", "EStop", "Ramp"};
+    protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resumed", "Aborts", "Retried", 
+            "EStop", "Ramp", "Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor", 
+            "RunningLate", "WaitingForStart", "RecordingScript", "StopPending"};
 
     // Estimated positions of the train in the block it occupies
     static final int BEG = 1;
@@ -591,6 +592,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     case Warrant.SPEED_RESTRICTED:
                         return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);
 
+                    case Warrant.RAMP_HALT:
+                        return Bundle.getMessage("HaltPending", speed, blockName);
+
                     case Warrant.STOP_PENDING:
                         return Bundle.getMessage("StopPending", speed, blockName, (_waitForSignal
                                 ? Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy")));
@@ -848,6 +852,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case HALT:
                 case RESUME:
                 case RETRY:
+                case RAMP_HALT:
                     firePropertyChange("SpeedChange", null, idx);
                     break;
                 case STOP:
@@ -867,7 +872,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         int runState = _engineer.getRunState();
         synchronized (_engineer) {
             switch (idx) {
-                case HALT:
+                case RAMP_HALT:
                     cancelRamp();
                     _engineer.setHalt(true); // does rampSpeedTo(Stop);
                     ret = true;
@@ -914,6 +919,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     stopWarrant(true);
                     ret = true;
                     break;
+                case HALT:
                 case STOP:
                     cancelRamp();
                     _engineer.setStop(false);
@@ -944,7 +950,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         b.setState(b.getState() | OBlock.RUNNING);
     }
 
-    protected void runWarrant(DccThrottle throttle) {
+    private void runWarrant(DccThrottle throttle) {
         if (_runMode == MODE_LEARN) {
             synchronized (this) {
                 _student.notifyThrottleFound(throttle);

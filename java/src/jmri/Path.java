@@ -1,9 +1,11 @@
 package jmri;
 
+import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import jmri.util.MathUtil;
 
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
@@ -378,4 +380,67 @@ public class Path {
     private int _toBlockDirection;
     private int _fromBlockDirection;
     private float _length = 0.0f;  // always stored in millimeters
+
+    /**
+     * compute octagonal direction of vector from p1 to p2
+     *
+     * Note: the octagonal (8) directions are:
+     *      North, North-East, East, South-East, 
+     *      South, South-West, West and North-West
+     * 
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the octagonal direction from p1 to p2
+     */
+    public static int computeDirection(Point2D p1, Point2D p2) {
+        double angleDEG = MathUtil.computeAngleDEG(p2, p1);
+        angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
+
+        // convert the angleDEG into an octant index
+        // note: because we use round here, the octants are offset by half (+/-22.5 deg)
+        // so SOUTH isn't from 0-45 deg; it's from -22.5 deg to +22.5 deg; etc. for other octants.
+        // (and this is what we want!)
+        int octant = (int) Math.round(angleDEG / 45.0);
+
+        // use the octant index to lookup its direction
+        int dirs[] = {SOUTH, SOUTH + EAST, EAST, NORTH + EAST,
+            NORTH, NORTH + WEST, WEST, SOUTH + WEST, SOUTH};
+        return dirs[octant];
+    }   // computeOctagonalDirection
+    
+    /**
+     * return the reverse octagonal direction
+     * @param inDir the direction
+     * @return the reverse direction
+     */
+    public static int reverseDirection(int inDir) {
+        int result = NONE;
+        switch (inDir) {
+            case NORTH:
+                result = SOUTH;
+                break;
+            case NORTH + EAST:
+                result = SOUTH + WEST;
+                break;
+            case EAST:
+                result = WEST;
+                break;
+            case SOUTH + EAST:
+                result = NORTH + WEST;
+                break;
+            case SOUTH:
+                result = NORTH;
+                break;
+            case SOUTH + WEST:
+                result = NORTH + EAST;
+                break;
+            case WEST:
+                result = EAST;
+                break;
+            case NORTH + WEST:
+                result = SOUTH + EAST;
+                break;
+        }
+        return result;
+    }   // reverseDirection
 }
