@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(JsonServerActionTest.class));
         suite.addTest(new JUnit4TestAdapter(JsonServerPreferencesPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(JsonServerPreferencesTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonProgrammerServerTest.class));
         return suite;
     }
 
