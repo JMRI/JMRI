@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
     ManageLocationsActionTest.class,
     VSDPreferencesActionTest.class,
     VSDControlTest.class,
-    VSDManagerFrameTest.class
+    VSDManagerFrameTest.class,
+    VSDOptionsDialogTest.class
 })
 
 

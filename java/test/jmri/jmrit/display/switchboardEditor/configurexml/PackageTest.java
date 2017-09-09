@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BeanSwitchXmlTest.class,
-    SwitchboardEditorXmlTest.class
+    SwitchboardEditorXmlTest.class,
+    SwitchboardEditorClassMigrationTest.class
 })
 /**
  * Tests for the jmri.jmrit.display.switchboardEditor.configurexml package.
