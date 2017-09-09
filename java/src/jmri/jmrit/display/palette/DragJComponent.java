@@ -122,5 +122,5 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
         return _dataFlavor.equals(flavor);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DragJComponent.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DragJComponent.class);
 }

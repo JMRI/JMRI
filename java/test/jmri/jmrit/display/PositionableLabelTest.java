@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -13,6 +14,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import jmri.ConfigureManager;
@@ -21,10 +23,14 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.finder.JLabelFinder;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.ComponentChooser;
 
 /**
  * Test of PositionableLabel
@@ -38,16 +44,14 @@ import org.junit.Assert;
  *
  * @author Bob Jacobsen Copyright 2015
  */
-public class PositionableLabelTest extends jmri.util.SwingTestCase {
+public class PositionableLabelTest {
 
     PositionableLabel to = null;
     PanelEditor panel;
 
+    @Test
     public void testSmallPanel() {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         panel = new PanelEditor("PositionableLabel Test Panel");
 
@@ -73,7 +77,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         to.setBounds(80, 80, 40, 40);
         panel.putItem(to);
         to.setDisplayLevel(Editor.LABELS);
-        assertEquals("Display Level ", to.getDisplayLevel(), Editor.LABELS);
+        Assert.assertEquals("Display Level ", to.getDisplayLevel(), Editor.LABELS);
 
         p.add(to);
 
@@ -83,16 +87,14 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     // Load file showing four labels with backgrounds and make sure they have right color
     // The file used was written with 4.0.1, and behaves as expected from panel names
+    @Test
     public void testBackgroundColorFile() throws Exception {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         // Find color in label by frame name
         int color1 = getColor("F Bkg none, label Bkg none"); // transparent background
@@ -112,22 +114,27 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     int getColor(String name) {
 
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(name);
         Assert.assertNotNull("frame: " + name, frame);
 
         // find label within that
-        JLabelFinder finder = new JLabelFinder("....");
-        // FIXME: finder.findAll returns an untyped list, so we have issues with casting
-        @SuppressWarnings("rawtypes")
-        List list = finder.findAll(frame);
-        Assert.assertNotNull("list: " + name, list);
-        Assert.assertTrue("length: " + name + ": " + list.size(), list.size() > 0);
+        JLabel jl = JLabelOperator.findJLabel(frame,new ComponentChooser(){
+               public boolean checkComponent(Component comp){
+                   if(comp == null){
+                      return false;
+                   } else {
+                     return (comp instanceof JLabel);
+                   }
+               }
+               public String getDescription(){
+                  return "find the first JLabel";
+               }
+        });
 
-        JComponent component = (JComponent) list.get(0);
-        int[] content = getDisplayedContent(component, component.getSize(), new Point(0, 0));
+        int[] content = jmri.util.SwingTestCase.getDisplayedContent(jl, jl.getSize(), new Point(0, 0));
 
         int color = content[0];
 
@@ -139,11 +146,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // Explicit tests of PositionableLabel features
+    @Test
     public void testDisplayTransparent() {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -155,10 +160,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 13 * 13, val.length);
 
@@ -171,7 +176,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 13 * 13, val.length);
 
@@ -183,11 +188,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
     public void testDisplayTransparent45degrees() {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -199,7 +202,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
@@ -207,11 +210,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         // and check
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 19 * 19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -223,7 +226,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 19 * 19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -235,11 +238,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
+    @Test
     public void testDisplayAnimatedRGB() throws IOException {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
             log.info("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
@@ -261,16 +262,15 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // wait for a bit
         f.setVisible(true);  // needed to get initial animation contents
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         // check for initial red
-        sleep(5);
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 13 * 13, val.length);
 
@@ -282,7 +282,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location in frame first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 13 * 13, val.length);
 
@@ -292,9 +292,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
         // wait for long enough to reach final red, skipping intermediate green as timing too fussy
-        waitAtLeast(250);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
-        val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 13 * 13, val.length);
 
@@ -307,7 +307,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 13 * 13, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -320,11 +320,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
+    @Test
     public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
             log.info("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
@@ -341,7 +339,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
@@ -349,15 +347,15 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
 
         // wait for a bit
         f.setVisible(true);  // needed to get initial animation contents
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         // and check
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 19 * 19, val.length);
 
@@ -370,7 +368,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 19 * 19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -379,10 +377,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.GREEN, Pixel.RED, Pixel.GREEN);
 
         // wait for long enough to reach final blue, skipping intermediate green as timing too fussy
-        waitAtLeast(250);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
         // and check
-        val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 19 * 19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -394,7 +392,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 19 * 19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
@@ -414,11 +412,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // BLACK SMALL SQUARE \u25AA
     // BLACK DIAMOND \u25C6
     // HEAVY MULTIPLICATION X \u2716
+    @Test
     public void testDisplayText() {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -430,11 +426,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         Assert.assertTrue("Expect size " + label.getSize() + " wider than height", label.getSize().width > label.getSize().height);
 
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
         assertImageNinePoints("icon", val, label.getSize(),
@@ -446,7 +442,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
@@ -456,11 +452,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
     public void testDisplayTextRotated90() {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -472,16 +466,16 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         label.rotate(90);
 
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         Assert.assertTrue("Expect size " + label.getSize() + " higher than width", label.getSize().width < label.getSize().height);
 
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+formatPixel(val[i]));
         assertImageNinePoints("icon", val, label.getSize(),
@@ -493,7 +487,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
@@ -503,11 +497,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JUnitUtil.dispose(f);
     }
 
+    @Test
     public void testDisplayTextRotated45() {
-        // TextCase subclasses fail on unmet assumptions
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -519,14 +511,14 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.add(label);
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         label.rotate(45);
 
         f.pack();
-        flushAWT();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
-        int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
+        int[] val = jmri.util.SwingTestCase.getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
         //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
         assertImageNinePoints("icon", val, label.getSize(),
@@ -538,7 +530,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label, 0, 0, f.getContentPane());
 
-        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+        val = jmri.util.SwingTestCase.getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
@@ -548,46 +540,107 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // from here down is testing infrastructure
-    public PositionableLabelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PositionableLabelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PositionableLabelTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         // now close panel window
         if (panel != null) {
             WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
             for (WindowListener listener : listeners) {
                 panel.getTargetFrame().removeWindowListener(listener);
             }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            JFrameOperator jfo = new JFrameOperator(panel.getTargetFrame());
+            jfo.requestClose();
             panel = null;
             JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         }
 
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    static private org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class.getName());
+    // All of the Pixel enum, and related methods, below was copied from 
+    // jmri.util.SwingTestCase.  The tests above use Pixel values extensively. 
+    protected enum Pixel { // protected to limit leakage outside Swing tests
+
+        TRANSPARENT(0x00000000),
+        RED(0xFFFF0000),
+        GREEN(0xFF00FF00),
+        BLUE(0xFF0000FF),
+        WHITE(0xFFFFFFFF),
+        BLACK(0xFF000000),
+        YELLOW(0xFFFFFF00);
+
+        @Override
+        public String toString() {
+            return formatPixel(value);
+        }
+
+        public boolean equals(int v) {
+            return value == v;
+        }
+        private final int value;
+
+        private Pixel(int value) {
+            this.value = value;
+        }
+    }
+
+    /**
+     * Standard parsing of ARCG pixel (int) value to String
+     */
+    public static String formatPixel(int pixel) {
+        return String.format("0x%8s", Integer.toHexString(pixel)).replace(' ', '0');
+    }
+
+    /**
+     * Clean way to assert against a pixel value.
+     *
+     * @param name  Condition being asserted
+     * @param value Correct ARGB value for test
+     * @param pixel ARGB piel value being tested
+     */
+    protected static void assertPixel(String name, Pixel value, int pixel) {
+        Assert.assertEquals(name, value.toString(), formatPixel(pixel));
+    }
+
+    /**
+     * Check four corners and center of an image
+     *
+     * @param name   Condition being asserted
+     * @param pixels Image ARCG array
+     */
+    protected static void assertImageNinePoints(String name, int[] pixels, Dimension size,
+            Pixel upperLeft, Pixel upperCenter, Pixel upperRight,
+            Pixel midLeft, Pixel center, Pixel midRight,
+            Pixel lowerLeft, Pixel lowerCenter, Pixel lowerRight
+    ) {
+        int rows = size.height;
+        int cols = size.width;
+
+        Assert.assertEquals("size consistency", pixels.length, rows * cols);
+
+        assertPixel(name + " upper left", upperLeft, pixels[0]);
+        assertPixel(name + " upper middle", upperCenter, pixels[0 + cols / 2]);
+        assertPixel(name + " upper right", upperRight, pixels[0 + (cols - 1)]);
+
+        assertPixel(name + " middle left", midLeft, pixels[(rows / 2) * cols]);
+        assertPixel(name + " middle right", midRight, pixels[(rows / 2) * cols + (cols - 1)]);
+
+        assertPixel(name + " lower left", lowerLeft, pixels[(rows * cols - 1) - (cols - 1)]);
+        assertPixel(name + " lower middle", lowerCenter, pixels[(rows * cols - 1) - (cols - 1) + cols / 2]);
+        assertPixel(name + " lower right", lowerRight, pixels[rows * cols - 1]);
+
+        // we've checked the corners first on purpose, to see they're all right
+        assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
+
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);
 }

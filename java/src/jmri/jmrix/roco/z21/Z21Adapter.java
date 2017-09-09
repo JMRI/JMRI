@@ -158,6 +158,6 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
                                         // result in not allowing reconnection.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class);
 
 }

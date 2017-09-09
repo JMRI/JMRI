@@ -34,6 +34,7 @@ public class WebServerAction extends JmriAbstractAction {
         synchronized (this) {
             if (serverThread == null) {
                 serverThread = new ServerThread();
+                serverThread.setName("WebServerAction action");
                 serverThread.start();
             } else {
                 log.info("Web Server already running");

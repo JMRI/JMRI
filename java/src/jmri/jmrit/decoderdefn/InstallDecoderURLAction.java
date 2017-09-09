@@ -196,5 +196,5 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class);
 }

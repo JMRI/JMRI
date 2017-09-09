@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2014
  */
-public class PortalManager extends AbstractManager
+public class PortalManager extends AbstractManager<Portal>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     private static int _nextSName = 1;
@@ -94,6 +95,9 @@ public class PortalManager extends AbstractManager
         return portal;
     }
 
+    @SuppressFBWarnings(value=" ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification="Lesser of two evils")
+    // Multiple instances prevented by use of the InstanceManager.  However, should multiple 
+    // instances happen a static '_nextSName' provides a chance the session can survive.
     public String generateSystemName() {
         String name;
         do {
@@ -106,6 +110,8 @@ public class PortalManager extends AbstractManager
      * Method to get an existing Portal. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     * @param name - either System name or user name
+     * @return Portal, if found
      */
     public Portal getPortal(String name) {
         Portal portal = getByUserName(name);
@@ -119,14 +125,14 @@ public class PortalManager extends AbstractManager
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        return (Portal) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     public Portal getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (Portal) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     public Portal providePortal(String name) {
@@ -150,7 +156,7 @@ public class PortalManager extends AbstractManager
         return Bundle.getMessage("BeanNamePortal");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
 }
 
 

@@ -248,7 +248,7 @@
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
-        <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
+        <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
     </path>
@@ -317,6 +317,7 @@
         <exclude name="jmri/jmrix/openlcb/SampleFactory.class" />
         <exclude name="jmri/util/swing/SamplePane.class" />
         <exclude name="apps/tests/Log4JFixture.class" />
+        <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
     </fileset>
 
 

@@ -38,5 +38,5 @@ public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XpaTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTurnoutManagerXml.class);
 }

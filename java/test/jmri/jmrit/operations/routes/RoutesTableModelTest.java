@@ -29,6 +29,6 @@ public class RoutesTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RoutesTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RoutesTableModelTest.class);
 
 }

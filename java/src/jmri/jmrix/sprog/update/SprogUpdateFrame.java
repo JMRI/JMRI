@@ -403,5 +403,5 @@ abstract public class SprogUpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogUpdateFrame.class.getName());
+            .getLogger(SprogUpdateFrame.class);
 }

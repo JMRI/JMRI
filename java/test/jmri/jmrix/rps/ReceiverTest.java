@@ -29,6 +29,6 @@ public class ReceiverTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ReceiverTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ReceiverTest.class);
 
 }

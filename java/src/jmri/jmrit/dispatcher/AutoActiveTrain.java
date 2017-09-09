@@ -96,17 +96,17 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _forward = true;
     private float _targetSpeed = 0.0f;
     private int _savedStatus = ActiveTrain.RUNNING;
-    private int _currentRampRate = RAMP_NONE;     // current Ramp Rate
-    private boolean _pausingActive = false;  // true if train pausing thread is active
+    private int _currentRampRate = RAMP_NONE; // current Ramp Rate
+    private boolean _pausingActive = false;   // true if train pausing thread is active
 
     // persistent instance variables (saved with train info)
-    private int _rampRate = RAMP_NONE;     // default Ramp Rate
-    private float _speedFactor = 1.0f;  // default speed factor
-    private float _maxSpeed = 0.6f;   // default maximum train speed
-    private boolean _resistanceWheels = true;  // true if all train cars show occupancy
-    private boolean _runInReverse = false;  // true if the locomotive should run through Transit in reverse
-    private boolean _soundDecoder = false;  // true if locomotive has a sound decoder
-    private volatile float _maxTrainLength = 200.0f;  // default train length (scale feet/meters)
+    private int _rampRate = RAMP_NONE; // default Ramp Rate
+    private float _speedFactor = 1.0f; // default speed factor
+    private float _maxSpeed = 0.6f;    // default maximum train speed
+    private boolean _resistanceWheels = true; // true if all train cars show occupancy
+    private boolean _runInReverse = false;    // true if the locomotive should run through Transit in reverse
+    private boolean _soundDecoder = false;    // true if locomotive has a sound decoder
+    private volatile float _maxTrainLength = 200.0f; // default train length (scale feet/meters)
 
     // accessor functions
     public ActiveTrain getActiveTrain() {
@@ -273,7 +273,7 @@ public class AutoActiveTrain implements ThrottleListener {
         _throttle = t;
         if (_throttle == null) {
             javax.swing.JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage(
-                    "Error28"), new Object[]{_activeTrain.getTrainName()}), Bundle.getMessage("InformationTitle"),
+                    "Error28"), new Object[]{_activeTrain.getTrainName()}), Bundle.getMessage("MessageTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             log.warn("null throttle returned for train  " + _activeTrain.getTrainName() + "during automatic initialization.");
             _activeTrain.setMode(ActiveTrain.DISPATCHED);
@@ -727,7 +727,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 || (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null
                 || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
                 || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
-            // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal, 
+            // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal,
             //   don't set speed based on controlling signal
             return;
         }
@@ -737,7 +737,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 case SignalHead.DARK:
                 case SignalHead.RED:
                 case SignalHead.FLASHRED:
-                    // May get here from signal changing before Block knows it is occupied, so must 
+                    // May get here from signal changing before Block knows it is occupied, so must
                     //      check Block occupancy sensor, which must change before signal.
                     if (_conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
                         // Train has just passed this signal - ignore this signal
@@ -766,7 +766,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
             }
         } else {
-            //Set speed using SignalMasts;           
+            //Set speed using SignalMasts;
             String displayedAspect = _controllingSignalMast.getAspect();
             if (log.isTraceEnabled()) {
                 log.trace("{}: Controlling mast {} ({})", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(), displayedAspect);
@@ -795,7 +795,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _activeTrain.setStatus(ActiveTrain.RUNNING);
             } else {
 
-                //if using signalmasts, set speed to lesser of aspect speed and signalmastlogic speed 
+                //if using signalmasts, set speed to lesser of aspect speed and signalmastlogic speed
                 //  (minimum speed on the path to next signal, using turnout and block speeds)
                 String aspectSpeedStr = (String) _controllingSignalMast.getSignalSystem().getProperty(displayedAspect, "speed");
                 log.trace("{}: Signal {} speed {} for aspect {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(), aspectSpeedStr, displayedAspect);
@@ -1044,7 +1044,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         switch (task) {
             case END_REVERSAL:
-                /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  
+                /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails
                 to stop the loco in the correct block
                  if the first block we come to has a stopped or held signal */
                 _previousBlock = _currentBlock;
@@ -1061,7 +1061,7 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 if (_activeTrain.getResetWhenDone()) {
                     if (_activeTrain.getReverseAtEnd()) {
-                        /* Reset _previousBlock to be the _currentBlock if we do a continious 
+                        /* Reset _previousBlock to be the _currentBlock if we do a continious
                         reverse otherwise the stop in block method fails  to stop the loco in the correct block
                          if the first block we come to has a stopped or held signal */
                         _previousBlock = _currentBlock;
@@ -1158,7 +1158,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    //pass in speed as shown on dialogs, and convert to decimal speed needed by throttle
+    /**
+     * Pass in speed as shown on dialogs, and convert to decimal speed needed by throttle.
+     */
     private synchronized void setTargetSpeedValue(float speed) {
         _autoEngineer.slowToStop(false);
         float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
@@ -1190,9 +1192,9 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Initiates running in manual mode with external throttle This method is
-     * triggered by an action in the Transit The throttle in use for automatic
-     * operation is dispatched
+     * Initiates running in manual mode with external throttle.
+     * <p>This method is triggered by an action in the Transit.
+     * The throttle in use for automatic operation is dispatched.
      */
     protected void initiateWorking() {
         if (_activeTrain.getStatus() != ActiveTrain.WORKING) {
@@ -1210,8 +1212,9 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Returns when train is stopped Note: Provides for _autoEngineer becoming
-     * null during wait Ties up the current autoActiveTrain thread
+     * Returns when train is stopped.
+     * <p>Note: Provides for _autoEngineer becoming
+     * null during wait Ties up the current autoActiveTrain thread.
      */
     protected void waitUntilStopped() {
         boolean doneWaiting = false;
@@ -1318,7 +1321,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
                 executeStopTasks(_task);
             } catch (InterruptedException e) {
-                // interrupting will cause termination without executing the task      
+                // interrupting will cause termination without executing the task
             }
         }
         private int _delay = 91;
@@ -1468,13 +1471,18 @@ public class AutoActiveTrain implements ThrottleListener {
                     _currentSpeed = 0.0f;
                     _halted = true;
                 } else if (_slowToStop) {
-//                    re.getSpeedProfile().setExtraInitialDelay(1500f);
-//                    re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
-                    _currentSpeed = _throttle.getSpeedSetting();
+                    if (useSpeedProfile) {
+                        re.getSpeedProfile().setExtraInitialDelay(1500f);
+                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
+                    }else {
+                        _currentSpeed = _throttle.getSpeedSetting();
+                    }
                     if (_currentBlock != _lastBlock) {
                         _lastBlock = _currentBlock;
-//                        re.getSpeedProfile().setExtraInitialDelay(1500f);
-//                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
+                        if (useSpeedProfile) {
+                            re.getSpeedProfile().setExtraInitialDelay(1500f);
+                            re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
+                        }
                     } else {
                         if (_currentSpeed <= _targetSpeed) {
                             _halted = true;
@@ -1613,7 +1621,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         /**
-         * Flag from user to end run
+         * Flag from user to end run.
          */
         public void abort() {
             _abort = true;
@@ -1716,8 +1724,8 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * routine to convert ramp rate name, stored as a string into the constant
-     * value assigned
+     * Convert ramp rate name, stored as a string into the constant
+     * value assigned.
      *
      * @param rampRate - name of ramp rate, such as "RAMP_FAST"
      * @return integer representing a ramprate constant value
@@ -1735,5 +1743,5 @@ public class AutoActiveTrain implements ThrottleListener {
         return RAMP_NONE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class);
 }

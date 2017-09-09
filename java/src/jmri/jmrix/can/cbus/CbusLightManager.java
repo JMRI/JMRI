@@ -153,6 +153,6 @@ public class CbusLightManager extends AbstractLightManager {
         return entryToolTip;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class);
 
 }

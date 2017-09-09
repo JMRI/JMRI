@@ -128,6 +128,6 @@ abstract public class Siglet {
 
     PropertyChangeEventQueue pq;
     Thread thread;
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Siglet.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Siglet.class);
 
 }

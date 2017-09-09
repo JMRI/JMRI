@@ -16,7 +16,7 @@ public class JmriJFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame();
+        JmriJFrame t = new JmriJFrame("JmriJFrame ConstructorTest");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }
@@ -32,6 +32,6 @@ public class JmriJFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class);
 
 }

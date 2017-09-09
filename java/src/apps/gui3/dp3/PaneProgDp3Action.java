@@ -748,6 +748,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgDp3Action.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgDp3Action.class);
 
 }

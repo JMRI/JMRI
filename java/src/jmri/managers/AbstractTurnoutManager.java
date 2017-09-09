@@ -381,6 +381,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
 
 }

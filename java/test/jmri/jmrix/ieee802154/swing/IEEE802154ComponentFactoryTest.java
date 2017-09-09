@@ -30,6 +30,6 @@ public class IEEE802154ComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IEEE802154ComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IEEE802154ComponentFactoryTest.class);
 
 }

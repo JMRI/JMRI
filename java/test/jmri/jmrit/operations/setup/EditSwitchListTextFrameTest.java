@@ -46,6 +46,6 @@ public class EditSwitchListTextFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextFrameTest.class);
 
 }

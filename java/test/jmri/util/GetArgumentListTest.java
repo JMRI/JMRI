@@ -28,6 +28,6 @@ public class GetArgumentListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GetArgumentListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GetArgumentListTest.class);
 
 }

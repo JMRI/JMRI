@@ -20,13 +20,11 @@ import org.slf4j.LoggerFactory;
  * A Block (at least in this implementation) corresponds exactly to the track
  * covered by at most one sensor. That could be generalized in the future.
  * <p>
- * <p>
  * As trains move around the layout, a set of Block objects that are attached to
  * sensors can interact to keep track of which train is where, going in which
  * direction. As a result of this, the set of Block objects pass around "token"
  * (value) Objects representing the trains. This could be e.g. a Throttle to
  * control the train, or something else.
- * <p>
  * <p>
  * A block maintains a "direction" flag that is set from the direction of the
  * incoming train. When an arriving train is detected via the connected sensor
@@ -34,24 +32,20 @@ import org.slf4j.LoggerFactory;
  * arriving via a particular Path, that Path's getFromBlockDirection becomes the
  * direction of the train in this Block. This only works
  * <p>
- * <p>
  * Optionally, a Block can be associated with a Reporter. In this case, the
  * Reporter will provide the Block with the "token" (value). This could be e.g
  * an RFID reader reading an ID tag attached to a locomotive. Depending on the
  * specific Reporter implementation, either the current reported value or the
  * last reported value will be relevant - this can be configured
  * <p>
- * <p>
  * Objects of this class are Named Beans, so can be manipulated through tables,
  * have listeners, etc.
- * <p>
  * <p>
  * There is no functional requirement for a type letter in the System Name, but
  * by convention we use 'B' for 'Block'. The default implementation is not
  * system-specific, so a system letter of 'I' is appropriate. This leads to
  * system names like "IB201".
  * <p>
- * <P>
  * Issues:
  * <UL>
  * <LI>The tracking doesn't handle a train pulling in behind another well:
@@ -75,12 +69,10 @@ import org.slf4j.LoggerFactory;
  * we're not noticing that the train must have reversed to go back out.
  * </UL>
  * <p>
- * <P>
  * Do not assume that a Block object uniquely represents a piece of track. To
  * allow independent development, it must be possible for multiple Block objects
  * to take care of a particular section of track.
  * <p>
- * <P>
  * Possible state values:
  * <ul>
  * <li>UNKNOWN - The sensor shows UNKNOWN, so this block doesn't know if it's
@@ -94,7 +86,6 @@ import org.slf4j.LoggerFactory;
  * <li>UNDETECTED - No sensor configured.
  * </ul>
  * <p>
- * <P>
  * Possible Curvature attributes (optional) User can set the curvature if
  * desired. For use in automatic running of trains, to indicate where slow down
  * is required.
@@ -106,7 +97,6 @@ import org.slf4j.LoggerFactory;
  * <li>SEVERE - Severe curve in Block track - Train should slow down a lot
  * </ul>
  * <p>
- * <P>
  * The length of the block may also optionally be entered if desired. This
  * attribute is for use in automatic running of trains. Length should be the
  * actual length of model railroad track in the block. It is always stored here
@@ -1025,5 +1015,5 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Block.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Block.class);
 }

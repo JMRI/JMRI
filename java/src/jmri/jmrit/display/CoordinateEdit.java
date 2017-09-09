@@ -93,7 +93,7 @@ public class CoordinateEdit extends JmriJFrame {
     }
     //////////////////////////////////////////////////////////////
 
-    public static AbstractAction getTooltipEditAction(final Positionable pos) {
+    public static AbstractAction getToolTipEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetTooltip", "...")) {
 
             @Override
@@ -387,13 +387,13 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initSetTip() {
-        oldStr = pl.getTooltip().getText();
+        oldStr = pl.getToolTip().getText();
         textX = new javax.swing.JLabel();
         textX.setText(Bundle.getMessage("TooltipLabel") + ": ");
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
-        xTextField.setText(pl.getTooltip().getText());
+        xTextField.setText(pl.getToolTip().getText());
         xTextField.setToolTipText(Bundle.getMessage("EnterTooltip"));
 //  xTextField.setMaximumSize(new Dimension(
 //    xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
@@ -405,7 +405,7 @@ public class CoordinateEdit extends JmriJFrame {
         okButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.getTooltip().setText(xTextField.getText()); // is fetched from pane OK but not stored in icon pl
+                pl.getToolTip().setText(xTextField.getText()); // is fetched from pane OK but not stored in icon pl
                 dispose();
             }
         });
@@ -413,7 +413,7 @@ public class CoordinateEdit extends JmriJFrame {
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.getTooltip().setText(oldStr);
+                pl.getToolTip().setText(oldStr);
                 dispose();
             }
         });
@@ -843,5 +843,5 @@ public class CoordinateEdit extends JmriJFrame {
         getContentPane().add(c, gc);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CoordinateEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CoordinateEdit.class);
 }

@@ -10,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.FileUtil;
+import jmri.util.swing.TextFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ class OpSessionLog {
 
         JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         fileChooser.setDialogTitle(Bundle.getMessage("logSession"));
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt", "TXT"));
+        fileChooser.setFileFilter(new TextFilter());
         int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return false;
@@ -47,7 +47,7 @@ class OpSessionLog {
                 return false;
             }
         }
-        
+
         try {
             _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
             writeHeader(fileName);
@@ -106,5 +106,5 @@ class OpSessionLog {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OpSessionLog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OpSessionLog.class);
 }

@@ -114,7 +114,7 @@ public class WebAppServlet extends HttpServlet {
         ObjectNode about = mapper.createObjectNode();
         about.put("additionalInfo", "TRADEMARKS AND LICENSE GO HERE"); // NOI18N
         about.put("copyright", Version.getCopyright()); // NOI18N
-        about.put("title", InstanceManager.getDefault(WebServerPreferences.class).getRailRoadName()); // NOI18N
+        about.put("title", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName()); // NOI18N
         about.put("imgAlt", Application.getApplicationName()); // NOI18N
         // assuming Application.getLogo() is relative to program:
         about.put("imgSrc", "/" + Application.getLogo()); // NOI18N

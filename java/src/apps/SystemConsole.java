@@ -665,6 +665,6 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SystemConsole.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SystemConsole.class);
 
 }

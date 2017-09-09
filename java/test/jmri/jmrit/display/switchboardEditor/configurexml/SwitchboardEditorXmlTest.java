@@ -20,7 +20,7 @@ public class SwitchboardEditorXmlTest {
 
     @Test
     public void testBeanSwitchXmlCtor() {
-        SwitchboardEditorXml.BeanSwitchXml t = new SwitchboardEditorXml.BeanSwitchXml();
+        BeanSwitchXml t = new BeanSwitchXml();
         Assert.assertNotNull("exists", t);
     }
 

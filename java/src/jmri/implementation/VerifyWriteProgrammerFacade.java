@@ -193,6 +193,6 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VerifyWriteProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VerifyWriteProgrammerFacade.class);
 
 }

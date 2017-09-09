@@ -93,7 +93,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             return dcc_addr_type;
         }
 
-        int getDCCAddress() {
+        int getDccAddress() {
             return dccAddress;
         }
 
@@ -308,9 +308,9 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
                     break;
                 case 4:
                     if (log.isDebugEnabled()) {
-                        log.debug(this.getDisplayName() + " Create/Get id tag for " + rc.getDCCAddress());
+                        log.debug(this.getDisplayName() + " Create/Get id tag for " + rc.getDccAddress());
                     }
-                    addr = rc.getDCCAddress();
+                    addr = rc.getDccAddress();
                     addr_type = rc.getAddressType();
                     break;
                 case 1: // Address byte 1
@@ -575,6 +575,6 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }

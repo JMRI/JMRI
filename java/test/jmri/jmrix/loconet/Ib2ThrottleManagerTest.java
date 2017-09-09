@@ -29,6 +29,6 @@ public class Ib2ThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Ib2ThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Ib2ThrottleManagerTest.class);
 
 }

@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.conditional.PackageTest.class));
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.PackageTest.suite());
-        suite.addTest(jmri.jmrit.display.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.PackageTest.class));
         suite.addTest(jmri.jmrit.jython.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.log.PackageTest.class));
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());

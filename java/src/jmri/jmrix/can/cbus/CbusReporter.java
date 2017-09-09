@@ -127,5 +127,5 @@ public class CbusReporter extends AbstractReporter implements CanListener {
         return rval;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusReporter.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusReporter.class);
 }

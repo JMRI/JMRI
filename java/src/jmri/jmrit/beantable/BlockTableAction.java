@@ -22,7 +22,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -309,7 +308,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
                     Reporter r = null;
-                    if (value != null && !value.equals("") ) {
+                    if (value != null && !value.equals("")) {
                         r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter((String) value);
                     }
                     b.setReporter(r);
@@ -540,9 +539,10 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             /**
-             * Customize the block table State column to show an appropriate graphic for the block occupancy state
-             * if _graphicState = true, or (default) just show the localized state text
-             * when the TableDataModel is being called from ListedTableAction.
+             * Customize the block table State column to show an appropriate
+             * graphic for the block occupancy state if _graphicState = true, or
+             * (default) just show the localized state text when the
+             * TableDataModel is being called from ListedTableAction.
              *
              * @param table a JTable of Blocks
              */
@@ -559,9 +559,12 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             /**
-             * Visualize state in table as a graphic, customized for Blocks (2 states).
-             * Renderer and Editor are identical, as the cell contents are not actually edited.
-             * @see jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
+             * Visualize state in table as a graphic, customized for Blocks (2
+             * states). Renderer and Editor are identical, as the cell contents
+             * are not actually edited.
+             *
+             * @see
+             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
@@ -629,11 +632,9 @@ public class BlockTableAction extends AbstractTableAction {
                         iconHeight = 0;
                     }
                     label.setToolTipText(value);
-                    label.addMouseListener (new MouseAdapter ()
-                    {
+                    label.addMouseListener(new MouseAdapter() {
                         @Override
-                        public final void mousePressed (MouseEvent evt)
-                        {
+                        public final void mousePressed(MouseEvent evt) {
                             log.debug("Clicked on icon in row {}", row);
                             stopCellEditing();
                         }
@@ -649,7 +650,9 @@ public class BlockTableAction extends AbstractTableAction {
 
                 /**
                  * Read and buffer graphics. Only called once for this table.
-                 * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+                 *
+                 * @see #getTableCellEditorComponent(JTable, Object, boolean,
+                 * int, int)
                  */
                 protected void loadIcons() {
                     try {
@@ -715,10 +718,9 @@ public class BlockTableAction extends AbstractTableAction {
     JRadioButton centimeterBox = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     /**
-     * Add the radiobuttons (only 1 may be selected)
-     * TODO change names from -box to radio-
-     * add radio buttons to a ButtongGroup
-     * delete extra inchBoxChanged() and centimeterBoxChanged() methods
+     * Add the radiobuttons (only 1 may be selected) TODO change names from -box
+     * to radio- add radio buttons to a ButtongGroup delete extra
+     * inchBoxChanged() and centimeterBoxChanged() methods
      */
     @Override
     public void addToFrame(BeanTableFrame f) {
@@ -742,10 +744,10 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     /**
-     * Insert 2 table specific menus.
-     * Account for the Window and Help menus, which are already added to the menu bar
-     * as part of the creation of the JFrame, by adding the menus 2 places earlier
-     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * Insert 2 table specific menus. Account for the Window and Help menus,
+     * which are already added to the menu bar as part of the creation of the
+     * JFrame, by adding the menus 2 places earlier unless the table is part of
+     * the ListedTableFrame, that adds the Help menu later on.
      *
      * @param f the JFrame of this table
      */
@@ -788,7 +790,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     protected void setDefaultSpeeds(JFrame _who) {
-        JComboBox<String> blockSpeedCombo = new JComboBox<String>(speedList);
+        JComboBox<String> blockSpeedCombo = new JComboBox<>(speedList);
         blockSpeedCombo.setEditable(true);
 
         JPanel block = new JPanel();
@@ -810,24 +812,14 @@ public class BlockTableAction extends AbstractTableAction {
         block.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(block);
 
-        JOptionPane pane = new JOptionPane(
+        int retval = JOptionPane.showConfirmDialog(
+                _who,
                 speedspanel,
-                JOptionPane.INFORMATION_MESSAGE,
-                0,
-                null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
-        //pane.setxxx(value); // Configure more?
-        JDialog dialog = pane.createDialog(_who, title);
-        dialog.pack();
-        dialog.show();
-
-        if(pane.getValue() == null) { // pane close button was clicked, check before assigning to retval
-            return;
-        }
-        Object retval = pane.getValue();
-        log.debug("Retval = {}", retval.toString());
-        // only 2 buttons to choose from, Create = button 2
-        if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
+                title,
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        log.debug("Retval = {}", retval);
+        if (retval != JOptionPane.OK_OPTION) { // OK button not clicked
             return;
         }
 
@@ -837,7 +829,6 @@ public class BlockTableAction extends AbstractTableAction {
             InstanceManager.getDefault(jmri.BlockManager.class).setDefaultSpeed(speedValue);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
-            return;
         }
     }
 
@@ -889,7 +880,9 @@ public class BlockTableAction extends AbstractTableAction {
             };
             ActionListener cancellistener = new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonCreate", oklistener, cancellistener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
@@ -967,9 +960,9 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     void cancelPressed(ActionEvent e) {
-                addFrame.setVisible(false);
-                addFrame.dispose();
-                addFrame = null;
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {
@@ -1062,8 +1055,12 @@ public class BlockTableAction extends AbstractTableAction {
                 }
             }
             // add first and last names to statusMessage user feedback string
-            if (x == 0 || x == NumberOfBlocks - 1) statusMessage = statusMessage + " " + sName + " (" + user + ")";
-            if (x == NumberOfBlocks - 2) statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            if (x == 0 || x == NumberOfBlocks - 1) {
+                statusMessage = statusMessage + " " + sName + " (" + user + ")";
+            }
+            if (x == NumberOfBlocks - 2) {
+                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+            }
             // only mention first and last of range added
         } // end of for loop creating range of Blocks
 
@@ -1092,7 +1089,7 @@ public class BlockTableAction extends AbstractTableAction {
         // Set option to prevent the path information from being saved.
 
         Object[] options = {Bundle.getMessage("ButtonRemove"),
-                Bundle.getMessage("ButtonKeep")};
+            Bundle.getMessage("ButtonKeep")};
 
         int retval = JOptionPane.showOptionDialog(f,
                 Bundle.getMessage("BlockPathMessage"),
@@ -1124,6 +1121,6 @@ public class BlockTableAction extends AbstractTableAction {
         return BlockTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class);
 
 }

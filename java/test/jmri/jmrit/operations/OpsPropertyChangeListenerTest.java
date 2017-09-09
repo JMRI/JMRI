@@ -28,6 +28,6 @@ public class OpsPropertyChangeListenerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OpsPropertyChangeListenerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OpsPropertyChangeListenerTest.class);
 
 }

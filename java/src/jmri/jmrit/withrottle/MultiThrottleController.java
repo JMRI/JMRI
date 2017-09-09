@@ -2,7 +2,9 @@ package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Method;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,7 +212,35 @@ public class MultiThrottleController extends ThrottleController {
             }
         }
     }
+    
+    public void sendStealAddress() {
+        StringBuilder message = new StringBuilder(buildPacketWithChar('S'));
+        message.append(locoKey);
+        for (ControllerInterface listener : controllerListeners) {
+            listener.sendPacketToDevice(message.toString());
+        }
+    }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class.getName());
+    /**
+     * Send a steal required message to the connected device prior to disposing
+     * of this MTC
+     * @param address 
+     */
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        sendStealAddress();
+        notifyFailedThrottleRequest(address, "Steal Required");
+        
+    }
+    
+    public void requestStealAddress(String action) {
+        log.debug("requestStealAddress: {}", action);
+        int addr = Integer.parseInt(action.substring(1));
+        boolean isLong;
+        isLong = (action.charAt(0) == 'L');
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(addr, isLong, this, true);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);
 
 }

@@ -75,6 +75,6 @@ public class HexFileServer {
     }
     private LnHexFilePort port = null;
 
-    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class);
 
 }

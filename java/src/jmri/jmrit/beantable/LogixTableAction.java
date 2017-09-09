@@ -439,7 +439,7 @@ public class LogixTableAction extends AbstractTableAction {
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                OpenPickListTable();
+                openPickListTable();
             }
         });
         menu.add(item);
@@ -580,7 +580,7 @@ public class LogixTableAction extends AbstractTableAction {
     /**
      * Open a new Pick List to drag Actions from to form Logix Conditionals.
      */
-    void OpenPickListTable() {
+    void openPickListTable() {
         if (_pickTables == null) {
             _pickTables = new jmri.jmrit.picker.PickFrame(rbx.getString("TitlePickList"));  // NOI18N
         } else {
@@ -1244,7 +1244,7 @@ public class LogixTableAction extends AbstractTableAction {
             _inEditMode = true;
             _treeEdit.addLogixEventListener(new ConditionalEditBase.LogixEventListener() {
                 @Override
-                public void LogixEventOccurred() {
+                public void logixEventOccurred() {
                     String lgxName = sName;
                     _treeEdit.logixData.forEach((key, value) -> {
                         if (key.equals("Finish")) {                  // NOI18N
@@ -1267,7 +1267,7 @@ public class LogixTableAction extends AbstractTableAction {
             _inEditMode = true;
             _listEdit.addLogixEventListener(new ConditionalEditBase.LogixEventListener() {
                 @Override
-                public void LogixEventOccurred() {
+                public void logixEventOccurred() {
                     String lgxName = sName;
                     _listEdit.logixData.forEach((key, value) -> {
                         if (key.equals("Finish")) {                  // NOI18N
@@ -1792,5 +1792,5 @@ public class LogixTableAction extends AbstractTableAction {
         return condText;
     }  // buildConditionalListing
 
-    private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class);
 }

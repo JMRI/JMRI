@@ -3,10 +3,8 @@ package jmri.jmrit.withrottle;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -35,11 +33,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
-    //static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
-            Bundle.getMessage("ColumnUserName"),
-            Bundle.getMessage("Include")};
+    private static final String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+        Bundle.getMessage("ColumnUserName"),
+        Bundle.getMessage("Include")};
 
     public ControllerFilterFrame() {
         super(Bundle.getMessage("TitleControlsFilter"), true, true);
@@ -50,12 +46,12 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         JTabbedPane tabbedPane = new JTabbedPane();
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
 
-            tabbedPane.addTab(Bundle.getMessage("Turnouts"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
+            tabbedPane.addTab(Bundle.getMessage("Turnouts"), null, addTurnoutPanel(), Bundle.getMessage("ToolTipTurnoutTab"));
         }
 
         if (InstanceManager.getNullableDefault(jmri.RouteManager.class) != null) {
 
-            tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(), rb.getString("ToolTipRouteTab"));
+            tabbedPane.addTab(Bundle.getMessage("LabelRoute"), null, addRoutePanel(), Bundle.getMessage("ToolTipRouteTab"));
         }
 
         add(tabbedPane);
@@ -67,7 +63,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     private JPanel addTurnoutPanel() {
         JPanel tPanel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel(rb.getString("LabelTurnoutTab"), SwingConstants.CENTER);
+        JLabel label = new JLabel(Bundle.getMessage("LabelTurnoutTab"), SwingConstants.CENTER);
         tPanel.add(label, BorderLayout.NORTH);
         tPanel.add(addCancelSavePanel(), BorderLayout.WEST);
 
@@ -85,7 +81,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     private JPanel addRoutePanel() {
         JPanel tPanel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel(rb.getString("LabelRouteTab"), SwingConstants.CENTER);
+        JLabel label = new JLabel(Bundle.getMessage("LabelRouteTab"), SwingConstants.CENTER);
         tPanel.add(label, BorderLayout.NORTH);
         tPanel.add(addCancelSavePanel(), BorderLayout.WEST);
 
@@ -138,30 +134,21 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
         pane.add(Box.createHorizontalGlue());
 
-        JButton selectAllButton = new JButton(rb.getString("ButtonSelectAll"));
-        selectAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                fm.setIncludeColToValue(true);
-            }
+        JButton selectAllButton = new JButton(Bundle.getMessage("ButtonSelectAll"));
+        selectAllButton.addActionListener((ActionEvent event) -> {
+            fm.setIncludeColToValue(true);
         });
         pane.add(selectAllButton);
 
-        JButton deselectAllButton = new JButton(rb.getString("ButtonDeselectAll"));
-        deselectAllButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                fm.setIncludeColToValue(false);
-            }
+        JButton deselectAllButton = new JButton(Bundle.getMessage("ButtonDeselectAll"));
+        deselectAllButton.addActionListener((ActionEvent event) -> {
+            fm.setIncludeColToValue(false);
         });
         pane.add(deselectAllButton);
 
-        JButton selectUserNamedButton = new JButton(rb.getString("ButtonSelectByUserName"));
-        selectUserNamedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                fm.SetIncludeToUserNamed();
-            }
+        JButton selectUserNamedButton = new JButton(Bundle.getMessage("ButtonSelectByUserName"));
+        selectUserNamedButton.addActionListener((ActionEvent event) -> {
+            fm.setIncludeToUserNamed();
         });
         pane.add(selectUserNamedButton);
 
@@ -175,24 +162,18 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.setAlignmentX(CENTER_ALIGNMENT);
-        cancelButton.setToolTipText(rb.getString("ToolTipCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                dispose();
-            }
+        cancelButton.setToolTipText(Bundle.getMessage("ToolTipCancel"));
+        cancelButton.addActionListener((ActionEvent event) -> {
+            dispose();
         });
         p.add(cancelButton);
 
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         saveButton.setAlignmentX(CENTER_ALIGNMENT);
-        saveButton.setToolTipText(rb.getString("ToolTipSave"));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                storeValues();
-                dispose();
-            }
+        saveButton.setToolTipText(Bundle.getMessage("ToolTipSave"));
+        saveButton.addActionListener((ActionEvent event) -> {
+            storeValues();
+            dispose();
         });
         p.add(saveButton);
 
@@ -260,7 +241,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         abstract void setIncludeColToValue(boolean value);
 
-        abstract void SetIncludeToUserNamed();
+        abstract void setIncludeToUserNamed();
 
         public static final int SNAMECOL = 0;
         public static final int UNAMECOL = 1;
@@ -289,9 +270,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                 case INCLUDECOL:
                     Object o = mgr.getBySystemName(sysNameList.get(r)).getProperty("WifiControllable");
                     if ((o != null) && (o.toString().equalsIgnoreCase("false"))) {
-                        return Boolean.valueOf(false);
+                        return false;
                     }
-                    return Boolean.valueOf(true);
+                    return true;
                 case SNAMECOL:
                     return sysNameList.get(r);
                 case UNAMECOL:
@@ -327,7 +308,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         }
 
         @Override
-        public void SetIncludeToUserNamed() {
+        public void setIncludeToUserNamed() {
             for (String sysName : sysNameList) {
                 NamedBean bean = mgr.getBySystemName(sysName);
                 String uname = bean.getUserName();
@@ -367,9 +348,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     }
                     Object o = rt.getProperty("WifiControllable");
                     if ((o != null) && (o.toString().equalsIgnoreCase("false"))) {
-                        return Boolean.valueOf(false);
+                        return false;
                     }
-                    return Boolean.valueOf(true);
+                    return true;
                 case SNAMECOL:
                     return sysNameList.get(r);
                 case UNAMECOL:
@@ -414,7 +395,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         }
 
         @Override
-        public void SetIncludeToUserNamed() {
+        public void setIncludeToUserNamed() {
             for (String sysName : sysNameList) {
                 NamedBean bean = mgr.getBySystemName(sysName);
                 if (bean != null) {
@@ -432,6 +413,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControllerFilterFrame.class);
 
 }

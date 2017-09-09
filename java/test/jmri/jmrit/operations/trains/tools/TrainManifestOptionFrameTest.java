@@ -34,6 +34,6 @@ public class TrainManifestOptionFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrameTest.class);
 
 }

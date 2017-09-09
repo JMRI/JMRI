@@ -43,5 +43,5 @@ public class TextItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TextItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TextItemPanelTest.class);
 }

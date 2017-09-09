@@ -21,90 +21,92 @@
     <div id="mainContent">
       <h1>Adding/Editing Logix</h1>
 
-      <p>In the Add Logix window, entering a system name and a user
-      name, then clicking <strong>Create Logix</strong>, will create a new
-      Logix, and bring up the Edit Logix window. A user name may be
-      any useful text, provided the new user name was not
-      previously assigned to another Logix. Once a Logix is
-      created, its system name cannot be changed. Its user name may
-      be changed in either the Logix Table or the Edit Logix
-      window. The user name is usually used to identify the
-      particular Logix, for example, "Signal 5 Control".</p>
+      <h2>Create a New Logix</h2>
+      <p>To create a new Logix, click on the <strong>Add...</strong> button.
+      The <strong>Add Logix</strong> window will be displayed.</p>
+      <div style="margin-left: 2em">
+      <a href="images/AddLogix.png">
+      <img src="images/AddLogix.png"
+      alt="Add Logix Window" height="165" width="644">
+      </a>
+      </div>
 
-      <p>The system name for a Logix always must begin with the two
-      letters <strong>IX</strong>, usually followed by a number selected
-      by the user. For example, valid Logix system names include: IX1,
-      IX34, and IX100. All letters in a system name must be in
+      <p>The system name is required. The system name for a Logix always must
+      begin with the two letters <strong>IX</strong>, usually followed by a
+      number selected by the user. For example, valid Logix system names
+      include: IX1, IX34, and IX100. All letters in a system name must be in
       upper case. If the user enters lower case letters, JMRI will
-      automatically convert them to upper case. Also, as a
-      convenience to the user, if the entered system name does not
-      begin with IX, the program will add IX in front of what is
-      entered. For example, to enter a system name of IX32, simply
-      enter 32 in the system name field, and the program will do
-      the rest.</p>
+      automatically convert them to upper case. Also, as a convenience to the
+      user, if the entered system name does not begin with IX, the program
+      will add IX in front of what is entered. For example, to enter a system
+      name of IX32, simply enter 32 in the system name field, and the program
+      will do the rest.</p>
 
-      <p>The Edit Logix pane allows Conditionals to be created
-      and edited. The system name and user name of the Logix are
-      displayed at the top. The user name may be changed by
-      entering/modifying the text in the User Name field. Next is a
-      table of Conditionals belonging to the Logix. To add a new
-      Conditional, click the <strong>New Conditional</strong> button under
-      the Conditional Table. (See also the <a href=
-      "ConditionalAddEdit.shtml">separate help page on
-      adding/editing Conditionals</a>) This will create a new
-      Conditional (a new row in the Conditional Table), and open
-      the Edit Conditional pane allowing the logical expression
-      and actions of the new Conditional to be defined. An existing
-      Conditional may be edited by clicking the <strong>Edit</strong> button
-      of that Conditional in the table. The user name of the
-      Conditional may be changed in the table. Conditional user
-      names may be any useful text, provided the new user name is
-      not used by another Conditional belonging to this Logix. It
-      may be the same as the user name of another Logix's
-      Conditional. <em>When editing the user name (or any item in    
-      any JMRI table) please remember to move to another cell in
-      the table so that the program is notified that you have
-      finished your entry, otherwise the entry may not take
-      effect.</em></p>
+      <p>The user name is optional but recommended.  A user name may be any
+      useful text, provided the new user name was not previously assigned to
+      another Logix. Once a Logix is created, its system name cannot be
+      changed. Its user name may be changed in either the Logix Table or the
+      Edit Logix window. The user name is usually used to identify the
+      particular Logix, for example, "Signal 5 Control".</p>
+      
+      <p>After clicking <strong>Create new</strong>, the Logix will be
+      created and the <strong>Edit Logix</strong> window will appear.
 
-      <p>Clicking <strong>Calculate</strong> under the Conditional Table
-      causes all Conditionals of the Logix to be calculated.
-      Resulting states are displayed in the State column of the
-      table. Since the Logix is "inactive" while being edited, no
-      Conditional actions are taken when the <strong>Calculate</strong>
-      button is pressed.</p>
+      <h2>Edit an existing Logix</h2>
+      <p>Click on the <strong>Select</strong> menu on the right side 
+      of the desired Logix.  The resulting menu has a number of options.</p>
+      <div style="margin-left: 2em">
+      <a href="images/LogixSelectMenu.png">
+      <img src="images/LogixSelectMenu.png"
+      alt="Logix Select Menu" height="103" width="149">
+      </a>
+      </div>
+      <p>Select <strong>Edit</strong> to open the <strong>Edit Logix</strong>
+      window for the appropriate Conditional Editor based on the
+      <strong>Options</strong> menu editor selection.</p>
 
-      <p>The order of Conditionals in the Conditional Table may be
-      changed by clicking <strong>Reorder</strong> (below the Conditional
-      Table). Clicking <strong>Reorder</strong> changes all edit buttons in
-      the last Column of the table to <strong>First</strong>. Select the
-      Conditional that is to be first, and it is immediately moved
-      to the top of the table. All remaining buttons change to
-      <strong>Next</strong>. Select remaining Conditionals in desired order,
-      until all buttons change back to <strong>Edit</strong>. Note that the
-      order that Conditionals are listed in the Logix does not
-      determine the order in which they're evaluated, nor does it
-      force evaluation of one Conditional when an earlier or later
-      one is evaluated. For more on this, see the discussion on the
-      <a href="../../../../html/tools/Logix.shtml">Logix main
-      page</a>.</p>
+      <p>For editor details, see the
+      <a href="../conditional/ConditionalListEditor.shtml">
+      Conditional List Editor</a> page or the
+      <a href="../conditional/ConditionalTreeEditor.shtml">
+      Conditional Tree Editor</a> page.</p>
 
-      <p>When <strong>Done</strong> is clicked at the bottom of the Edit
-      Logix window, any change in the Logix user name is checked
-      and made. A check is made for inconsistencies in specifying
-      that an entity (sensor, turnout, etc.) referenced in multiple
-      state variables is not monitored as a trigger for calculation
-      of the Logix, and a warning message appears if any
-      inconsistencies are found. Then the Logix is activated, the
-      Edit Logix window is dismissed, and the user is returned to
-      the Logix Table. Immediately before the Logix is activated,
-      the state of all its Conditionals is set to UNKNOWN.
-      Immediately after activation, all Conditionals are
-      calculated.</p>
+      <h2>Browse</h2>
+      <p>Selecting the <strong>Browse</strong> item from the drop down
+      menu on the Logix Table will open a window with a list showing
+      the details for each conditional. It is an effective way to
+      review the entire contents of a Logix. Click on the close button
+      to close the window.<span class="since">since 4.7.3</span><p>
+      <div style="margin-left: 2em">
+      <a href="images/ConditionalBrowser.png">
+      <img src="images/ConditionalBrowser.png"
+      alt="Logix Browser Window" height="296" width="562">
+      </a>
+      </div>
 
-      <p>The Edit Logix window also provides a way to delete a
-      Logix if it is no longer needed. Click <strong>Delete Logix</strong> to
-      delete the Logix being edited and all its Conditionals.</p>
+      <h2>Copy</h2>
+      <p>Select <strong>Copy</strong> to duplicate an existing Logix.
+      The <strong>Copy Logix</strong> window will be displayed.</p>
+      <div style="margin-left: 2em">
+      <a href="images/CopyLogix.png">
+      <img src="images/CopyLogix.png"
+      alt="Add Logix Window" height="165" width="644">
+      </a>
+      </div>
+      <p>Enter the system and user names and click on <strong>Copy</strong>. An Input box
+      will be displayed for each conditional in the orignal Logix.</p>
+      <div style="margin-left: 2em">
+      <a href="images/CopyConditional.png">
+      <img src="images/CopyConditional.png"
+      alt="Add Logix Window" height="179" width="541">
+      </a>
+      </div>
+      <p>Change the name if desired and click on <strong>OK</strong>.  If this conditional
+      is not needed, click on <strong>Cancel</strong>.</p>
+
+      <h2>Delete</h2>
+      <p>Select <strong>Delete</strong> to delete the selected Logix and all of its
+      conditionals.  A confirmation dialog will be displayed.
 
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix

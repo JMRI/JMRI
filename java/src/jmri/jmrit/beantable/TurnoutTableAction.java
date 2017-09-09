@@ -1300,8 +1300,8 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param _who parent JFrame to center the pane on
      */
     protected void setDefaultSpeeds(JFrame _who) {
-        JComboBox<String> thrownCombo = new JComboBox<String>(speedListThrown);
-        JComboBox<String> closedCombo = new JComboBox<String>(speedListClosed);
+        JComboBox<String> thrownCombo = new JComboBox<>(speedListThrown);
+        JComboBox<String> closedCombo = new JComboBox<>(speedListClosed);
         thrownCombo.setEditable(true);
         closedCombo.setEditable(true);
 
@@ -1332,24 +1332,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         closed.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(closed);
 
-        JOptionPane pane = new JOptionPane(
+        int retval = JOptionPane.showConfirmDialog(_who,
                 speedspanel,
-                JOptionPane.INFORMATION_MESSAGE,
-                0,
-                null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
-        //pane.setxxx(value); // Configure more?
-        JDialog dialog = pane.createDialog(_who, title);
-        dialog.pack();
-        dialog.show();
-
-        if (pane.getValue() == null) { // pane close button was clicked, check before assigning to retval
-            return;
-        }
-        Object retval = pane.getValue();
-        log.debug("Retval = {}", retval.toString());
-        // only 2 buttons to choose from, OK = button 2
-        if (retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
+                title,
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        log.debug("Retval = {}", retval);
+        if (retval != JOptionPane.OK_OPTION) { // OK button not clicked
             return;
         }
         String closedValue = (String) closedCombo.getSelectedItem();
@@ -1976,6 +1965,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class);
 
 }

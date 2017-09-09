@@ -73,7 +73,7 @@
       <p>This tab allows you to assign a Sensor to the Block to
       change the occupancy state. It also allows certain
       information about the Sensor to be changed:</p><img src=
-      "images/BlocksEditSensorTab.png" width="460" height="191">
+      "images/BlocksEditSensorTab.png" width="460" height="193">
 
       <ul>
         <li>

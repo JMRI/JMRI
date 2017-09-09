@@ -29,6 +29,6 @@ public class EasyDCCMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDCCMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDCCMenuTest.class);
 
 }

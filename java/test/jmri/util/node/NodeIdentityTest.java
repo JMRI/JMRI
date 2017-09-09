@@ -28,6 +28,6 @@ public class NodeIdentityTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NodeIdentityTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NodeIdentityTest.class);
 
 }

@@ -29,6 +29,6 @@ public class JsonTurnoutServiceFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonTurnoutServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonTurnoutServiceFactoryTest.class);
 
 }

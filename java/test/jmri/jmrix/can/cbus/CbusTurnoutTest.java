@@ -30,6 +30,6 @@ public class CbusTurnoutTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class);
 
 }

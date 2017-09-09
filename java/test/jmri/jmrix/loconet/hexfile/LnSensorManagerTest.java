@@ -94,7 +94,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class);
 
     // The minimal setup for log4J
     @Override
