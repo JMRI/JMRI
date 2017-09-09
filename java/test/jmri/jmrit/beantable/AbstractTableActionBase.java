@@ -82,5 +82,5 @@ public abstract class AbstractTableActionBase {
     @After
     abstract public void tearDown();
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);
 }

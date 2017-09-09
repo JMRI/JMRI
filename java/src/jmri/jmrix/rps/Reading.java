@@ -45,7 +45,7 @@ public class Reading {
     }
 
     public Reading(Reading r) {
-        this.id = r.getID();
+        this.id = r.getId();
         this.values = r.getValues();
         this.rawData = null;
         this.time = r.getTime();
@@ -61,7 +61,7 @@ public class Reading {
     /**
      * Return the ID int of the transmitter this reading describes
      */
-    public String getID() {
+    public String getId() {
         return id;
     }
 
@@ -98,7 +98,7 @@ public class Reading {
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
-        b.append("Reading id=").append(getID()).append(" values=");
+        b.append("Reading id=").append(getId()).append(" values=");
         for (int i = 1; i <= getNValues(); i++) {
             b.append(getValue(i)).append(i != getNValues() ? "," : " ");
         }

@@ -35,5 +35,5 @@ public class AboutAction extends JmriAbstractAction {
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    //private static final Logger log = LoggerFactory.getLogger(AboutAction.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(AboutAction.class);
 }

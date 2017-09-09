@@ -28,6 +28,6 @@ public class OperationsMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OperationsMenuTest.class);
 
 }

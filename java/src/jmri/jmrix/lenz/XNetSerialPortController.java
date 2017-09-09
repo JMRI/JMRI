@@ -16,7 +16,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 
     protected SerialPort activeSerialPort = null;
 
-    private boolean OutputBufferEmpty = true;
+    private boolean outputBufferEmpty = true;
 
     private boolean timeSlot = true;
 
@@ -57,16 +57,16 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     public boolean okToSend() {
         if ((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
             if (checkBuffer) {
-                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                return (activeSerialPort.isCTS() && OutputBufferEmpty);
+                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + outputBufferEmpty);
+                return (activeSerialPort.isCTS() && outputBufferEmpty);
             } else {
                 log.debug("CTS: " + activeSerialPort.isCTS());
                 return (activeSerialPort.isCTS());
             }
         } else {
             if (checkBuffer) {
-                log.debug("Buffer Empty: {}", OutputBufferEmpty);
-                return (OutputBufferEmpty && hasTimeSlot() );
+                log.debug("Buffer Empty: {}", outputBufferEmpty);
+                return (outputBufferEmpty && hasTimeSlot() );
             } else {
                 log.debug("No Flow Control or Buffer Check");
                 return (hasTimeSlot());
@@ -112,7 +112,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
-        OutputBufferEmpty = s;
+        outputBufferEmpty = s;
     }
 
 
@@ -139,6 +139,6 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
         return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSerialPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSerialPortController.class);
 
 }

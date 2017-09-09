@@ -29,6 +29,6 @@ public class LocationTrackBlockingOrderActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderActionTest.class);
 
 }

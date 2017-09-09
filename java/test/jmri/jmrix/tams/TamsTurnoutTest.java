@@ -51,6 +51,6 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsTurnoutTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TamsTurnoutTest.class);
 
 }

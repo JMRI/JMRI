@@ -80,6 +80,6 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
 
 }

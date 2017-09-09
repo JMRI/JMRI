@@ -29,6 +29,6 @@ public class InstallDecoderFileActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InstallDecoderFileActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InstallDecoderFileActionTest.class);
 
 }

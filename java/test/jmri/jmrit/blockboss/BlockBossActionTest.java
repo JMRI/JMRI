@@ -29,6 +29,6 @@ public class BlockBossActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockBossActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockBossActionTest.class);
 
 }

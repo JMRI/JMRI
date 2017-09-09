@@ -6,9 +6,7 @@ import java.awt.geom.Ellipse2D;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2012
- *
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class DrawEllipse extends DrawRectangle {
 
@@ -16,9 +14,6 @@ public class DrawEllipse extends DrawRectangle {
         super(which, title, parent);
     }
 
-    /**
-     * Create a new PositionableShape
-     */
     @Override
     protected boolean makeFigure(MouseEvent event) {
         ControlPanelEditor ed = _parent.getEditor();
@@ -32,20 +27,22 @@ public class DrawEllipse extends DrawRectangle {
             ps.updateSize();
             setDisplayParams(ps);
             ps.setEditFrame(this);
-            ed.putItem(ps);            
+            ed.putItem(ps);
         }
         return true;
     }
 
     /**
-     * Set parameters on the popup that will edit the PositionableShape
+     * Set parameters on the contextual menu that will edit the
+     * PositionableShape.
+     *
+     * @param p the shape to be edited
      */
     @Override
     protected void setDisplayParams(PositionableShape p) {
         super.setDisplayParams(p);
-        PositionableEllipse pos = (PositionableEllipse) p;
-        _width = pos.getWidth();
-        _height = pos.getHeight();
+        _width = p.getWidth();
+        _height = p.getHeight();
     }
 
 }

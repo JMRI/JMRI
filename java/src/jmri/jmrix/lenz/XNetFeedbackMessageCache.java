@@ -119,7 +119,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class);
 
 }
 

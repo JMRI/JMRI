@@ -18,14 +18,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010, 2011
  */
- 
+
  /*
  * @startuml jmri/jmrix/openlcb/doc-files/OlcbTurnout-State-Diagram.png
  * CLOSED --> CLOSED: Event 1
  * THROWN --> CLOSED: Event 1
  * THROWN --> THROWN: Event 0
  * CLOSED --> THROWN: Event 0
- * [*] --> UNKNOWN 
+ * [*] --> UNKNOWN
  * UNKNOWN --> CLOSED: Event 1\nEvent 1 Produced msg with valid set\nEvent 1 Consumed msg with valid set
  * UNKNOWN --> THROWN: Event 0\nEvent 1 Produced msg with valid set\nEvent 0 Consumed msg with valid set
  * state INCONSISTENT
@@ -139,9 +139,9 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      * @return user-visible string to represent this event.
      */
     private String getEventName(boolean isThrown) {
-        String name = mUserName;
+        String name = getUserName();
         if (name == null) name = mSystemName;
-        String msgName = isThrown ? "TurnoutThrownEventName": "TurnoutClosedEventName"; 
+        String msgName = isThrown ? "TurnoutThrownEventName": "TurnoutClosedEventName";
         return Bundle.getMessage(msgName, name);
     }
 
@@ -161,7 +161,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             closedEventTableEntryHolder.getEntry().updateDescription(getEventName(false));
         }
     }
-    
+
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
         boolean recreate = (mode != _activeFeedbackType) && (pc != null);
@@ -221,6 +221,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class);
 
 }

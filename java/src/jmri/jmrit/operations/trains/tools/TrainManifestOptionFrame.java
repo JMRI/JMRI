@@ -42,7 +42,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 
     // radio buttons
     // check boxes
-    JCheckBox ShowTimesCheckBox = new JCheckBox(Bundle.getMessage("ShowTimes"));
+    JCheckBox showTimesCheckBox = new JCheckBox(Bundle.getMessage("ShowTimes"));
 
     // text fields
     JTextField railroadNameTextField = new JTextField(35);
@@ -90,7 +90,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         JScrollPane pCheckboxesPane = new JScrollPane(pCheckboxes);
         pCheckboxesPane
                 .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifest")));
-        addItem(pCheckboxes, ShowTimesCheckBox, 0, 0);
+        addItem(pCheckboxes, showTimesCheckBox, 0, 0);
 
         // row 11
         JPanel pControl = new JPanel();
@@ -110,7 +110,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         // load fields
         if (_train != null) {
             railroadNameTextField.setText(_train.getRailroadName());
-            ShowTimesCheckBox.setSelected(_train.isShowArrivalAndDepartureTimesEnabled());
+            showTimesCheckBox.setSelected(_train.isShowArrivalAndDepartureTimesEnabled());
         }
 
         // build menu
@@ -175,7 +175,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         if (ae.getSource() == saveButton) {
             if (_train != null) {
                 _train.setRailroadName(railroadNameTextField.getText());
-                _train.setShowArrivalAndDepartureTimes(ShowTimesCheckBox.isSelected());
+                _train.setShowArrivalAndDepartureTimes(showTimesCheckBox.isSelected());
                 _train.setModified(true);
             }
             OperationsXml.save();
@@ -185,5 +185,5 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionFrame.class);
 }

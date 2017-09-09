@@ -476,5 +476,5 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class);
 }

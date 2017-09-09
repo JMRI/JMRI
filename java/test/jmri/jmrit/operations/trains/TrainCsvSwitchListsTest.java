@@ -29,6 +29,6 @@ public class TrainCsvSwitchListsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchListsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchListsTest.class);
 
 }

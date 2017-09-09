@@ -29,6 +29,6 @@ public class PathTurnoutTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PathTurnoutTableModelTest.class);
 
 }

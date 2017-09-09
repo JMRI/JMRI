@@ -602,6 +602,6 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     };
 
-    private final static Logger log = LoggerFactory.getLogger(ListFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListFrame.class);
 
 }

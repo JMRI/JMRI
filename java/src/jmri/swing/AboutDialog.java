@@ -104,5 +104,5 @@ public class AboutDialog extends JDialog {
         p.add(c);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class);
 }

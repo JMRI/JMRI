@@ -29,6 +29,6 @@ public class JythonWindowTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JythonWindowTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JythonWindowTest.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +15,7 @@ public class PortalManagerTest {
 
     @Test
     public void testCTor() {
-        PortalManager t = new PortalManager();
+        PortalManager t = InstanceManager.getDefault(PortalManager.class);
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +30,6 @@ public class PortalManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortalManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PortalManagerTest.class);
 
 }

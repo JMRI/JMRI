@@ -29,6 +29,6 @@ public class EditCarTypeActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditCarTypeActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditCarTypeActionTest.class);
 
 }

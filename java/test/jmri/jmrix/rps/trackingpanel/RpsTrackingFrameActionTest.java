@@ -29,6 +29,6 @@ public class RpsTrackingFrameActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsTrackingFrameActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RpsTrackingFrameActionTest.class);
 
 }

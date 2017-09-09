@@ -47,7 +47,7 @@ public class LocoIcon extends PositionableLabel {
                 "resources/icons/markers/loco-white.gif"), editor);
         _locoColor = Color.WHITE;
         setDisplayLevel(Editor.MARKERS);
-        setShowTooltip(false);
+        setShowToolTip(false);
         //setEditable(false);
         _text = true; //Markers are an icon with text
         setPopupUtility(new PositionablePopupUtil(this, this) {       // need this class for Font Edit
@@ -85,8 +85,8 @@ public class LocoIcon extends PositionableLabel {
 
     // Marker tool tips are always disabled
     @Override
-    public void setShowTooltip(boolean set) {
-        super.setShowTooltip(false);
+    public void setShowToolTip(boolean set) {
+        super.setShowToolTip(false);
     }
 
     // Markers are always positionable
@@ -335,5 +335,5 @@ public class LocoIcon extends PositionableLabel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class);
 }

@@ -46,12 +46,12 @@
 
         <li><a href="#window">The Dispatcher Window</a></li>
 
-        <li><a href="#atrains">The Active Train Table</a></li>
+        <li><a href="#atrains">The Active Trains Table</a></li>
 
-        <li><a href="#arequests">The Requested Allocation
+        <li><a href="#arequests">The Requested Allocations
         Table</a></li>
 
-        <li><a href="#allocated">The Allocated Section
+        <li><a href="#allocated">The Allocated Sections
         Table</a></li>
 
         <li><a href="#automatic">Running Trains
@@ -64,8 +64,9 @@
 
         <li><a href="./NewTrain.shtml">Activate New Train
         Window</a></li>
-      </ul><a name="intro" id="intro"></a>
+      </ul>
 
+      <a name="intro" id="intro"></a>
       <h2>Introduction to Dispatcher</h2>
 
       <p><b>Dispatcher</b> provides functions and organizes
@@ -146,20 +147,21 @@
       <p>All Active Trains are displayed in a table in the
       <b>Dispatcher Window</b>, along with status information about
       the Active Train. The Dispatcher Window also contains a table
-      of pending <b>Allocation Requests</b>, a table of currently
+      of pending <b>Requested Allocations</b>, a table of currently
       <b>Allocated Sections</b>, and buttons that allow the
       dispatcher to easily allocate Sections, create new Active
       Trains, and terminate Active Trains. Allocated Sections are
-      released using buttons in the Allocated Section Table, or
+      released using buttons in the Allocated Sections table, or
       automatically if the <b>Auto Release</b> option is selected.
-      The <b><a href="#window">Dispatcher Window</a></b> is
-      discussed in detail below.</p>
+      The <b>Dispatcher Window</b> is
+      discussed in detail <a href="#window">below</a>.</p>
 
       <p><b>Note:</b> The current version of Dispatcher contains
       the first version of an automated allocation option. To
       request Dispatcher to attempt to automatically allocate
       Sections to Active Trains, select the <b>Auto Allocate</b>
-      option. <b>Auto Allocate</b> (discussed in detail below)
+      option. <b>Auto Allocate</b> (discussed in detail
+      <a href="#autoallocate">below</a>)
       works fine for single Active Trains, and for some cases of
       multiple Active Trains. Enhancements are planned in future
       releases.</p>
@@ -171,107 +173,119 @@
       reading the remainder of this documentation. Note that
       "<i>Dispatcher</i>" refers to the Dispatcher software, and
       "<i>the dispatcher</i>" refers to the person running the
-      Dispatcher software.</p><a name="glossary" id="glossary"></a>
+      Dispatcher software.</p>
 
+      <a name="glossary" id="glossary"></a>
       <h2>Glossary of Terms</h2>
 
-      <p><b>Block</b> - A portion of track whose occupancy may be
-      individually monitored. Blocks are defined by subdividing the
-      track in a layout. Blocks normally correspond to physical
-      blocks on a layout, each wired for occupancy detection.
-      However, if the layout track is not subdivided into blocks,
-      dividing a Layout Editor panel into blocks will allow
-      Dispatcher to be used for manually running trains. Hardware
-      occupancy detection is also optional for manual running
-      trains. Automatic running of trains requires hardware blocks
-      and hardware occupancy detection. For all Dispatcher use,
-      blocking of mainline track on a Layout Editor panel is
-      required. Dispatcher works best if hardware block occupancy
-      detection is present, but it can be used to run trains
-      manually without it.</p>
+      <dl>
+        <dt>Block</dt>
+        <dd>A portion of track whose occupancy may be
+        individually monitored. Blocks are defined by subdividing the
+        track in a layout. Blocks normally correspond to physical
+        blocks on a layout, each wired for occupancy detection.
+        However, if the layout track is not subdivided into blocks,
+        dividing a Layout Editor panel into blocks will allow
+        Dispatcher to be used for manually running trains. Hardware
+        occupancy detection is also optional for manual running
+        trains. Automatic running of trains requires hardware blocks
+        and hardware occupancy detection. For all Dispatcher use,
+        blocking of mainline track on a Layout Editor panel is
+        required. Dispatcher works best if hardware block occupancy
+        detection is present, but it can be used to run trains
+        manually without it.</dd>
 
-      <p><b>Section</b> - A group of one or more connected
-      <b>Blocks</b> that may be allocated to a train for travel in
-      a given direction. Blocks are normally defined to facilitate
-      signals. This often results in short Blocks, sometimes
-      containing only one track switch. Sections allow Blocks to be
-      grouped into track sections that are reasonable for a
-      dispatcher to allocate. More information is contained in the
-      <b><a href="../beantable/SectionTable.shtml">Section
-      Table</a></b> help file, along with instructions on how to
-      create a Section.</p>
+        <dt>Section</dt>
+        <dd>A group of one or more connected
+        <b>Blocks</b> that may be allocated to a train for travel in
+        a given direction. Blocks are normally defined to facilitate
+        signals. This often results in short Blocks, sometimes
+        containing only one track switch. Sections allow Blocks to be
+        grouped into track sections that are reasonable for a
+        dispatcher to allocate. More information is contained in the
+        <b><a href="../beantable/SectionTable.shtml">Section
+        Table</a></b> help file, along with instructions on how to
+        create a Section.</dd>
 
-      <p><b>Transit</b> - A group of two or more connected
-      <b>Sections</b> that describes a route around the layout for
-      a train traveling in a given direction. Transits are required
-      for Dispatcher, and at least one must be defined before
-      Dispatcher can be opened. Transits also contain information
-      about user-specified actions when running Active Trains
-      automatically. A detailed description of Transits, how they
-      are created, and how they are used is contained in the
-      <b><a href="../beantable/TransitTable.shtml">Transit
-      Table</a></b> help file.</p>
+        <dt>Transit</dt>
+        <dd>A group of two or more connected
+        <b>Sections</b> that describes a route around the layout for
+        a train traveling in a given direction. Transits are required
+        for Dispatcher, and at least one must be defined before
+        Dispatcher can be opened. Transits also contain information
+        about user-specified actions when running Active Trains
+        automatically. A detailed description of Transits, how they
+        are created, and how they are used is contained in the
+        <b><a href="../beantable/TransitTable.shtml">Transit
+        Table</a></b> help file.</dd>
 
-      <p><b>Train</b> - An engine (or consist) usually attached to
-      a group of cars, that travels around the layout as an entity.
-      For use with Dispatcher, trains may be selected from engines
-      in the JMRI engine roster, may be selected from trains
-      created in JMRI Operations, or train information may be
-      entered manually by the dispatcher.</p>
+        <dt>Train</dt>
+        <dd>An engine (or consist) usually attached to
+        a group of cars, that travels around the layout as an entity.
+        For use with Dispatcher, trains may be selected from engines
+        in the JMRI engine roster, may be selected from trains
+        created in JMRI Operations, or train information may be
+        entered manually by the dispatcher.</dd>
 
-      <p><b>Active Train</b> - A combination of a Train and a
-      Transit, along with other information and options. The Train
-      describes what is traveling, and the Transit describes where
-      it is going. Details are filled in by other information and
-      options selected when the Active Train is created. Active
-      Trains are central to Dispatcher. How Active Trains are used
-      is described in detail <a href="#transits">below</a>. The
-      <b><a href="#atrains">Active Train Table</a></b> section
-      below provides more details. Active Trains are created and
-      terminated from the Dispatcher window.</p>
+        <dt>Active Train</dt>
+        <dd>A combination of a Train and a
+        Transit, along with other information and options. The Train
+        describes what is traveling, and the Transit describes where
+        it is going. Details are filled in by other information and
+        options selected when the Active Train is created. Active
+        Trains are central to Dispatcher. How Active Trains are used
+        is described in detail <a href="#transits">below</a>.
+        <b><a href="#atrains">Active Trains Table</a></b> provides more
+        details. Active Trains are created and terminated from the
+        Dispatcher window.</dd>
 
-      <p><b>Auto Active Train</b> - An Active Train that is run
-      automatically by a <i>virtual engineer</i> instead of
-      manually by a human engineer. An Auto Active Train is a
-      special type of Active Train that is operated automatically
-      by the computer using a computer throttle. Automatic
-      operation is requested by the dispatcher when the Active
-      Train is created. Auto Active Trains are described in detail
-      <a href="#automatic">below</a>.</p>
+        <dt>Auto Active Train</dt>
+        <dd>An Active Train that is run
+        automatically by a <i>virtual engineer</i> instead of
+        manually by a human engineer. An Auto Active Train is a
+        special type of Active Train that is operated automatically
+        by the computer using a computer throttle. Automatic
+        operation is requested by the dispatcher when the Active
+        Train is created. Auto Active Trains are described in detail
+        <a href="#automatic">below</a>.</dd>
 
-      <p><b>Allocation Request</b> - A request to allocate (assign)
-      a <b>Section</b> for the exclusive use of an <b>Active
-      Train</b>. Allocation Requests that are not immediately acted
-      upon are gathered in a queue that is displayed in the
-      Dispatcher window. Fulfilling an Allocation Request may be
-      delayed for a number of reasons, for example, if the
-      requested Section is not FREE, but is allocated to a
-      different Active Train, or if the dispatcher is setting up a
-      meet. Allocation Requests are acted upon manually by the
-      dispatcher, or automatically if using the <b>Auto
-      Allocate</b> option.</p>
+        <dt>Requested Allocations</dt>
+        <dd>A request to allocate (assign)
+        a <b>Section</b> for the exclusive use of an <b>Active
+        Train</b>. Allocation Requests that are not immediately acted
+        upon are gathered in a queue that is displayed in the
+        Dispatcher window. Fulfilling an Allocation Request may be
+        delayed for a number of reasons, for example, if the
+        requested Section is not FREE, but is allocated to a
+        different Active Train, or if the dispatcher is setting up a
+        meet. Allocation Requests are acted upon manually by the
+        dispatcher, or automatically if using the <b>Auto
+        Allocate</b> option.</dd>
 
-      <p><b>Allocated Section</b> - A <b>Section</b> that is
-      currently assigned to an <b>Active Train</b> for its
-      exclusive use. When a Section is allocated, if there are
-      alternate Sections following the Allocated Section, the
-      dispatcher must choose the next Section from the alternate
-      Sections contained in the Transit. A table listing all
-      Allocated Sections is displayed in the Dispatcher window. The
-      Allocated Section Table is where Sections are released,
-      either manually by the dispatcher, or automatically if using
-      the <b>Auto Release</b> option.</p>
+        <dt>Allocated Section</dt>
+        <dd><b>Section</b> that is
+        currently assigned to an <b>Active Train</b> for its
+        exclusive use. When a Section is allocated, if there are
+        alternate Sections following the Allocated Section, the
+        dispatcher must choose the next Section from the alternate
+        Sections contained in the Transit. A table listing all
+        Allocated Sections is displayed in the Dispatcher window. The
+        Allocated Sections table is where Sections are released,
+        either manually by the dispatcher, or automatically if using
+        the <b>Auto Release</b> option.</dd>
 
-      <p><b>Alternate Section</b> - An <i>alternate</i>
-      <b>Section</b> connecting two Sections in a <b>Transit</b>.
-      In user-specified areas of a Transit, <i>alternate</i>
-      Sections may be designated. For example, to move between the
-      "2nd" and "4th" Sections in a Transit, there may be multiple
-      "3rd" Sections, any of which might be used to travel between
-      the 2nd and 4th Sections. Alternate Sections provide for
-      passing tracks and staging yards.</p><a name="transits" id=
-      "transits"></a>
+        <dt>Alternate Section</dt>
+        <dd>An <i>alternate</i> <b>Section</b> connecting two Sections
+        in a <b>Transit</b>.
+        In user-specified areas of a Transit, <i>alternate</i>
+        Sections may be designated. For example, to move between the
+        "2nd" and "4th" Sections in a Transit, there may be multiple
+        "3rd" Sections, any of which might be used to travel between
+        the 2nd and 4th Sections. Alternate Sections provide for
+        passing tracks and staging yards.</dd>
+      </dl>
 
+      <a name="transits" id="transits"></a>
       <h2>Using Transits and Sections in Dispatching Active
       Trains</h2>
 
@@ -317,8 +331,8 @@
       Active Trains. The actual allocation may be done by the
       dispatcher by manually clicking buttons in the Dispatcher
       Window, or the dispatcher may request <b>Auto Allocate</b> by
-      checking <b>Auto Allocate</b> above the Allocated Section
-      Table or by selecting it in the <b><a href=
+      checking <b>Auto Allocate</b> above the Allocated Sections
+      table or by selecting it in the <b><a href=
       "Options.shtml">Options</a></b> menu of the Dispatcher
       window, and allow the computer do some of the routine work.
       If a requested Section is currently in use, an Allocation
@@ -342,40 +356,45 @@
       menu.</p>
 
       <p>It displays a table of <b>Active Trains</b> and their
-      status, and a table of pending <b>Allocation Requests</b>. It
+      status, and a table of pending <b>Requested Allocations</b>. It
       provides buttons that allow the dispatcher to easily allocate
       Sections, create new Active Trains, terminate Active trains,
       and display a table of all <b><a href=
-      "AllocatedSections.shtml">Allocated Sections</a></b>.
+      "AllocateExtra.shtml">Allocated Sections</a></b>.
       Allocated Sections are <i>released</i> using buttons in the
-      Allocated Section Table. Dispatcher window buttons are
+      Allocated Sections table. Dispatcher window buttons are
       discussed below. The <b><a href="#atrains">Active
-      Trains</a></b> table and the Allocation Request table are
+      Trains</a></b> table and the Requested Allocations table are
       discussed in the following sections.</p>
 
       <p>A typical Active Trains window early in a train running
-      session is shown below.</p><img src="DispatcherWindow.jpg"
-      height="586" width="802">
+      session might look like this:</p>
+      <img src="images/DispatcherWindow.jpg" height="586" width="802">
 
-      <p>In the example window above, three Active Trains have been
-      created. The top Active Train, GTW 6418, has been allocated a
-      Section and is RUNNING in AUTOMATIC mode. The second Active
-      Train, Amtrak 515 is WAITING for its first allocation,
-      following its initial allocation when it was created. Amtrak
-      515 is in DISPATCHED mode (manual throttle). The third Active
-      Train, Amtrak 139, is scheduled to start at 8:35 on the fast
-      clock, and will run in AUTOMATIC mode. Allocation Requests
+      <p>In the example above, three Active Trains have been
+      created:
+        <ol>
+        <li>The top Active Train, GTW 6418, has been allocated a
+        Section and is RUNNING in AUTOMATIC mode.</li>
+        <li>The second Active
+        Train, Amtrak 515 is WAITING for its first allocation,
+        following its initial allocation when it was created.
+        Amtrak 515 is in DISPATCHED mode (manual throttle).</li>
+        <li>The third Active Train, Amtrak 139, is scheduled to start
+        at 8:35 on the fast clock, and will run in AUTOMATIC mode.</li>
+        </ol>
+      Allocation Requests
       have been entered for the next Sections needed by two of the
       Active Trains. The requested Sections are FREE and
       UNOCCUPIED, so the dispatcher could allocate either of them
       by clicking the <b>Allocate</b> button in the Requested
-      Allocation Table or the <b>Allocate Next</b> button in the
-      Active Train Table. Allocating a Section to Amtrak 139 would
+      Allocations table or the <b>Allocate Next</b> button in the
+      Active Trains table. Allocating a Section to Amtrak 139 would
       require the dispatcher override its scheduled start time. The
-      Sections currently allocated to the three trains are shown in
-      the Allocated Section Table.</p>
+      Sections currently allocated to the three Trains are shown in
+      the Allocated Sections table.</p>
 
-      <p>The four buttons below the Active Train Table are
+      <p>The four buttons below the Active Trains table are
       described below:</p>
 
       <ul>
@@ -383,8 +402,8 @@
           <p><b>New Train...</b> - Click this button to bring up an
           <b>Activate New Train</b> window that allows the
           dispatcher to create an Active Train. The Train source
-          used by this window is set in the <b><a href=
-          "Options.shtml">Options</a></b> window. More information
+          used by this window is set in <b><a href=
+          "Options.shtml">Dispatcher Options</a></b>. More information
           on creating new Active Trains may be found in the help
           file for the <b><a href="NewTrain.shtml">Activate New
           Train</a></b> window, along with a simple procedure to
@@ -401,9 +420,9 @@
           is FREE and is connected to an Allocated Section of the
           Active Train may be allocated to the Active Train using
           this window. More information and a simple procedure for
-          allocating extra Sections may be found in the help file
-          of the <b><a href="AllocateExtra.shtml">Allocate
-          Extra</a></b> window.</p>
+          allocating extra Sections may be found in the
+          <b><a href="AllocateExtra.shtml">Allocate Extra</a></b> help.
+          </p>
         </li>
 
         <li>
@@ -443,20 +462,20 @@
       </ul>
 
       <p>Dispatcher options allow tailoring of the dispatcher
-      function. Options are accessed via the Dispatcher window's
-      Options menu. Descriptions of items available in the Options
-      window, and of the Options menu, are contained in the
-      <b><a href="Options.shtml">Options</a></b> help
-      file.</p><a name="atrains" id="atrains"></a>
+      function. The pane to set these options is accessed via the Dispatcher
+      window's <b>Options</b> menu. Descriptions of items available in the
+      Dispatcher Options pane, and of the Options menu, are contained in
+      the <b><a href="Options.shtml">Dispatcher Options</a></b> help.</p>
 
-      <h2>The Active Train Table</h2>
+      <a name="atrains" id="atrains"></a>
+      <h2>The Active Trains Table</h2>
 
-      <p>The Active Train Table from the above example Dispatcher
-      window is shown below.</p><img src="ActiveTrainsTable.jpg"
-      height="118" width="802">
+      <p>The Active Trains table from the above Dispatcher
+      example is repeated below.</p>
+      <img src="images/ActiveTrainsTable.jpg" height="118" width="802">
 
-      <p>Each row of <b>Active Trains</b> table corresponds to one
-      Active Train. The columns are explained below.</p>
+      <p>Each row of the <b>Active Trains</b> table corresponds to one
+      Active Train. The columns are as folllows:</p>
 
       <ul>
         <li>
@@ -596,8 +615,8 @@
           Section and Next Section columns will be updated.</p>
 
           <p>If the Section is not FREE, an <b>Allocation
-          Request</b> will be entered into the <b>Allocation
-          Requests</b> table (see below). If the Section is FREE,
+          Request</b> will be entered into the <b>Requested
+          Allocations</b> table (see below). If the Section is FREE,
           but is OCCUPIED, the dispatcher will be queried. The
           dispatcher is responsible for deciding whether an
           OCCUPIED Section should be allocated. If the Next Section
@@ -606,18 +625,19 @@
           allocating the OCCUPIED Section is appropriate, so the
           dispatcher is not queried.</p>
         </li>
-      </ul><a name="arequests" id="arequests"></a>
+      </ul>
 
-      <h2>The Requested Allocation Table</h2>
+      <a name="arequests" id="arequests"></a>
+      <h2>The Requested Allocations Table</h2>
 
-      <p>The Requested Allocation Table from the above example
+      <p>The Requested Allocations Table from the above example
       Dispatcher window is shown below.</p><img src=
-      "RequestedAllocationsTable.jpg" height="101" width="802">
+      "images/RequestedAllocationsTable.jpg" height="101" width="802">
 
       <p>This table, headed <b>Requested Allocations waiting for
       Dispatch</b>, displays pending <b>Allocation Requests</b>.
       Each row corresponds to one <b>Allocation Request</b>.
-      Columns are explained below.</p>
+      The columns are:</p>
 
       <ul>
         <li>
@@ -709,7 +729,7 @@
           Options</a></b>. The Section length is calculated from
           the lengths of its Blocks as entered in the <b><a href=
           "../beantable/BlockTable.shtml">Block Table</a></b>
-          accessed from the Table submenu of the JMRI Tools menu.
+          accessed from the Toon -&gt; Tables JMRI submenu.
           Section length is important for stopping trains run in
           AUTOMATIC mode.</p>
         </li>
@@ -729,22 +749,22 @@
           allocated to only one Active Train at a time. If an
           ALLOCATED Section needs to be reallocated to a different
           Active Train, it must first be <b>released</b>. (See the
-          <b><a href="AllocatedSections.shtml">Allocated
-          Sections</a></b> window help file for instruction on
+          <b><a href="AllocatedExtra.shtml">Allocated
+          Sections</a></b> help for instruction on
           <i>releasing</i> Allocated Sections.)</p>
 
-          <p>If "<i>Use connectivity ...</i>" is checked in the
-          <b>Options</b> window, Dispatcher will check that
+          <p>If "<i>Use connectivity...</i>" is checked in
+          <b>Dispatcher Options</b>, Dispatcher will check that
           turnouts are set correctly before actually allocating a
           Section. If turnouts are not set correctly, Dispatcher
           will attempt to set the turnouts if <b>Auto Set
           Turnouts</b> is checked in the <b>Options</b> menu (or
-          checked in the <b>Options</b> window). If turnouts are
-          not set correctly, the dispatcher is warned and given the
-          option of overriding the turnout check and proceeding
-          with allocation of the Section. For more information see
-          <b><a href="Options.shtml">Dispatcher
-          Options</a></b>.</p>
+          checked in the <b>Dispatcher Options</b> window).
+          If turnouts are not set correctly, the dispatcher is
+          warned and given the option of overriding the turnout
+          check and proceeding with allocation of the Section.<br>
+          For more information see
+          <b><a href="Options.shtml">Dispatcher Options</a></b>.</p>
         </li>
 
         <li>
@@ -754,14 +774,18 @@
         </li>
       </ul><a name="allocated" id="allocated"></a>
 
-      <h2>The Allocated Section Table</h2>
+      <h2>The Allocated Sections Table</h2>
 
       <p>The <b>Allocated Sections</b> table displays all Sections
       currently allocated to Active Trains. This table serves two
-      purposes. It shows which Allocated Sections are allocated to
-      which Active Trains, and it allows the dispatcher to
-      <i>release</i> an Allocated Section for use by a different
-      Active Train.</p><img src="AllocatedSectionsTable.jpg"
+        purposes:</p>
+        <ol>
+        <li>It shows which Allocated Sections are allocated to
+        which Active Trains, and</li>
+        <li>it allows the dispatcher to <i>release</i> an Allocated
+        Section for use by a different Active Train.</li>
+        </ol>
+      <img src="images/AllocatedSectionsTable.jpg"
       height="177" width="746">
 
       <p>The table columns are as follows:</p>
@@ -828,7 +852,7 @@
       be released. <b>Auto Release</b> will only release
       <b>Allocated Sections</b> in the order in which they were
       allocated. <b>Auto Release</b> will not release Sections
-      allocated using the <a href="#window"><b>Allocate
+      allocated using the <a href="AllocateExtra.shtml"><b>Allocate
       Extra...</b></a> button. Extra Allocated Sections must be
       released manually by the dispatcher.</p>
 
@@ -840,14 +864,16 @@
       dispatcher is responsible for determining whether it is
       appropriate to release an OCCUPIED Section.</b></p>
 
+      <a id="autoallocate" name="autoallocate"></a>
+      <h4>Auto Allocate</h4>
       <p>The <b>Auto Allocate</b> check box, immediately above the
       <b>Allocated Sections</b> table, is used to switch on
       (checked) or off (unchecked) the automated allocation option.
       If <b>Auto Allocate</b> is off, the dispatcher is responsible
       for allocating all <b>Sections</b> using the <b>Allocate</b>
-      button of the <b>Allocation Request</b> in the Allocation
-      Request Table or the <b>Allocate Next</b> button of the
-      <b>Active Train</b> in the Active Train Table (see
+      button of the <b>Allocation Request</b> in the Requested
+      Allocations table or the <b>Allocate Next</b> button of the
+      <b>Active Train</b> in the Active Trains table (see
       above).</p>
 
       <p>The <b>Auto Allocate</b> option works cautiously. It will
@@ -873,8 +899,9 @@
       the option might be working on involving multiple Active
       Trains. <b>Note: Auto Allocate and Auto Release require
       reliable block occupancy hardware to operate
-      dependably</b>.</p><a name="automatic" id="automatic"></a>
+      dependably</b>.</p>
 
+      <a name="automatic" id="automatic"></a>
       <h2>Running Trains Automatically</h2>
 
       <p>Dispatcher supports running trains around the layout
@@ -904,11 +931,12 @@
           misbehaves, the dispatcher may need to take over control
           of that Auto Active Train from the <i>virtual
           engineer</i> to correct the problem. When the first Auto
-          Active Train is created, an <b>Auto Trains</b> window is
+          Active Train is created, an <b><a href="AutoTrains.shtml">Auto
+          Trains</a></b> window is
           created to the right of the Dispatcher window. This
           window has an entry for each Auto Active Train currently
           active on the layout. Functions in each entry allow the
-          dispatcher easily to take over control of an Auto Active
+          dispatcher to easily take over control of an Auto Active
           Train, to operate it as required to correct the
           malfunction, and to resume automatic operation once the
           problem is fixed.</p>
@@ -924,8 +952,8 @@
           engineer has completed work, the human engineer informs
           the dispatcher that automatic operation may be resumed.
           The dispatcher resumes automatic operation using a button
-          in the Auto Active Train's entry in the Auto Trains
-          window.</p>
+          in the Auto Active Train's entry in the
+          <a href="AutoTrains.shtml">Auto Trains</a> pane.</p>
         </li>
       </ul>
 
@@ -980,7 +1008,7 @@
       is green or flashing green, the train will run at its
       <i>maximum allowed speed</i>. If the facing signal is yellow
       or flashing yellow, the train will run at a reduced speed of
-      35% of the allowable speed range.</p>
+      35&#37; of the allowable speed range.</p>
 
       <p>If using SignalMasts, the speed between two SignalMasts is
       set to the lesser of the SignalMast indicated speed vs. the
@@ -1000,15 +1028,15 @@
       example, when passing through a town.</p>
 
       <p>Since all locomotives do not run the same, when an Auto
-      Active Train is created, a <b>Speed Factor</b> in the range
-      of 0.5 to 1.5 is specified. This Speed Factor multiplies all
+      Active Train is created, a <b>Loco Speed Compensation</b> in the range
+      of 50 to 150&#37; is specified. This Compensation factor multiplies all
       speed values immediately before the speed is sent to the
       throttle (after the speed has been tested against the
       <i>maximum allowed speed</i>). For "normally" running
-      locomotives, a speed factor of 1.0 is appropriate. For
+      locomotives, a speed factor of 100&#37; is appropriate. For
       locomotives that run slower than "normal", use a factor
-      greater than 1.0, and for trains that run faster than
-      "normal", a factor less than 1.0 is best.</p>
+      greater than 100&#37; and for trains that run faster than
+      "normal", a factor less than 100&#37; is best.</p>
 
       <p>Three different methods are provided currently for
       stopping an Auto Active Train when it needs to stop. If the
@@ -1033,9 +1061,9 @@
       (this usually means all cars must have resistance wheels on
       one or more trucks). Block lengths should not include the
       turnouts at the ends of the Section, or portions of a Section
-      not normally traversed by the Auto Active Train.</p><a name=
-      "require" id="require"></a>
+      not normally traversed by the Auto Active Train.</p>
 
+      <a name="require" id="require"></a>
       <h2>Requirements for Automatic Running</h2>
 
       <p>Automatic running of Active Trains requires the layout and
@@ -1043,7 +1071,7 @@
       Layout Editor panel be present to provide layout connectivity
       information. Some of the automatic running requirements are
       strongly recommended for manual running also. Requirements
-      are explained below:</p>
+      include:</p>
 
       <ul>
         <li>
@@ -1074,7 +1102,7 @@
           displayed, but must show up in the submenu of Panels/Show
           Panel. If multiple Layout Editor panels are present,
           Dispatcher will use the Layout Editor panel selected in
-          Dispatcher's Options window. The Layout Editor panel acts
+          Dispatcher Options. The Layout Editor panel acts
           as a connectivity database, supplying connectivity
           information as needed to Dispatcher or the Auto Active
           Train's <i>virtual engineer</i>.</p>
@@ -1146,7 +1174,7 @@
 
         <li>
           <p>Resistance wheels on all cars of an Auto Active Train
-          are not required unless <b>Auto Allocate&gt;</b> and/or
+          are not required unless <b>Auto Allocate</b> and/or
           <b>Auto Release</b> are being used (applies to both
           manual and automatic running of trains). <b>Resistance
           wheels on all cars are highly recommended</b> for all
@@ -1172,7 +1200,8 @@
       <p>Because Auto Active Trains use JMRI signalling for stops,
       starts and speeds, the signalling should also be flawless,
       including all blocks, turnouts and direction indicators
-      needed.</p><!--#include virtual="/Footer" -->
+      needed.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -47,6 +47,6 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     // private data
     private XBeeTrafficController tc = null;
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenFrame.class);
 
 }

@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.beans.Bean;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2010
  */
-public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault // auto-initialize in InstanceManager
+public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize // auto-initialize in InstanceManager
 {
 
     private final HashMap<String, Float> _table = new LinkedHashMap<>();
@@ -76,6 +77,9 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
                 // ignore other properties
             }
         };
+    }
+
+    public void initialize() {
         InstanceManager.getOptionalDefault(WarrantPreferences.class).ifPresent((wp) -> {
             wp.addPropertyChangeListener(this.warrantPreferencesListener);
         });
@@ -334,5 +338,5 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
         return _scale;
     }
 
-    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
+    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class);
 }

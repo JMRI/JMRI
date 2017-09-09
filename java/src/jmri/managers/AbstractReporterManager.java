@@ -184,7 +184,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
 }
 

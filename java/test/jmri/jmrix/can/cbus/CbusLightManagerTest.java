@@ -34,6 +34,6 @@ public class CbusLightManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class);
 
 }

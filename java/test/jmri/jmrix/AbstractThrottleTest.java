@@ -1565,6 +1565,6 @@ public class AbstractThrottleTest extends TestCase {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleTest.class);
 
 }

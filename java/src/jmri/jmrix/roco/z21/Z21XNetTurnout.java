@@ -141,6 +141,6 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
                 false, false ) );// for now always not active and not queued.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnout.class);
 
 }

@@ -104,7 +104,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) throws JsonException {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
-        if (Roster.ALLENTRIES.equals(group) || Roster.AllEntries(locale).equals(group)) {
+        if (Roster.ALLENTRIES.equals(group) || Roster.allEntries(locale).equals(group)) {
             group = null;
         }
         String roadName = (!data.path(ROAD).isMissingNode()) ? data.path(ROAD).asText() : null;
@@ -229,7 +229,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, JsonRoster.ROSTER_GROUP);
             ObjectNode data = root.putObject(DATA);
-            data.put(NAME, name.isEmpty() ? Roster.AllEntries(locale) : name);
+            data.put(NAME, name.isEmpty() ? Roster.allEntries(locale) : name);
             data.put(LENGTH, size);
             return root;
         } else {

@@ -40,6 +40,6 @@ public class MonitorActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MonitorActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MonitorActionTest.class);
 
 }

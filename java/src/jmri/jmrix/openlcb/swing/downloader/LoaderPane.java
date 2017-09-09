@@ -246,5 +246,5 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
 }

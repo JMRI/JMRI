@@ -37,6 +37,6 @@ public class IconItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IconItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IconItemPanelTest.class);
 
 }

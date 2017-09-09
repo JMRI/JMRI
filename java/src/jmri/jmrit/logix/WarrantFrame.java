@@ -1337,7 +1337,6 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
-        _warrant.setSpeedUtil(_speedUtil);
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
@@ -1348,6 +1347,8 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setAvoidOrder(getAvoidBlockOrder());
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
+        _speedUtil.setOrders(getOrders());
+        _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
                 _warrant.getDisplayName(), _speedUtil.getRosterId(), getTrainName());
@@ -1721,5 +1722,5 @@ public class WarrantFrame extends WarrantRoute {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class);
 }

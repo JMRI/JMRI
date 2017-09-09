@@ -29,6 +29,6 @@ public class TrainCopyActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainCopyActionTest.class);
 
 }

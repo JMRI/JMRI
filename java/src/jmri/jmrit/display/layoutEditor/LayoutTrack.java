@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,15 +53,14 @@ public abstract class LayoutTrack {
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
+    // operational instance variables (not saved between sessions)
     protected LayoutEditor layoutEditor = null;
-
     protected String ident = "";
+    protected Point2D center = new Point2D.Double(50.0, 50.0);
 
     // dashed line parameters (unused)
     //protected static int minNumDashes = 3;
     //protected static double maxDashLength = 10;
-    protected Point2D center = new Point2D.Double(50.0, 50.0);
-
     protected boolean hidden = false;
 
     protected static Color defaultTrackColor = Color.black;
@@ -71,13 +71,16 @@ public abstract class LayoutTrack {
     /**
      * constructor method
      */
-    public LayoutTrack() {
+    public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        this.ident = ident;
+        this.center = c;
+        this.layoutEditor = layoutEditor;
     }
 
     /**
      * accessor methods
      */
-    public String getID() {
+    public String getId() {
         return ident;
     }
 
@@ -107,13 +110,13 @@ public abstract class LayoutTrack {
         defaultTrackColor = color;
     }
 
-    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock b, boolean forceTrack) {
+    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb, boolean forceBlockTrackColor) {
         Color result = defaultTrackColor;
-        if (b != null) {
-            if (forceTrack) {
-                result = b.getBlockTrackColor();
+        if (lb != null) {
+            if (forceBlockTrackColor) {
+                result = lb.getBlockTrackColor();
             } else {
-                result = b.getBlockColor();
+                result = lb.getBlockColor();
             }
         }
         g2.setColor(result);
@@ -121,8 +124,8 @@ public abstract class LayoutTrack {
     }
 
     // optional prameter forceTrack = false
-    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock b) {
-        return setColorForTrackBlock(g2, b, false);
+    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
+        return setColorForTrackBlock(g2, lb, false);
     }
 
     /**
@@ -157,6 +160,7 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
+ 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
      *
@@ -273,8 +277,7 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected void showPopUp(MouseEvent e) {
-
+    protected void showPopup(MouseEvent e) {
     }
 
     /**
@@ -415,5 +418,5 @@ public abstract class LayoutTrack {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }
