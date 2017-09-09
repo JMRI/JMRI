@@ -4,7 +4,7 @@ import cucumber.api.java.en.*;
 import cucumber.api.java8.En;
 import cucumber.api.PendingException;
 import org.junit.Assert;
-import org.openqa.selenium.support.events.EVentFiringWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -18,7 +18,7 @@ public class HomeServletAcceptanceSteps implements En {
       
    public HomeServletAcceptanceSteps() {
 
-      webDriver = new EventFiringWebDriver(new FireFoxDriver());
+      webDriver = new EventFiringWebDriver(new FirefoxDriver());
 
       When("^I ask for the /index\\.html$", () -> {
          webDriver.get("http://localhost:12080");
