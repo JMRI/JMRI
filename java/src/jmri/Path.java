@@ -29,7 +29,6 @@ import jmri.util.MathUtil;
  * <P>
  * This implementation handles paths with a list of bean settings. This has been
  * extended from the initial implementation.
- * <p>
  * <P>
  * The length of the path may also optionally be entered if desired. This
  * attribute is for use in automatic running of trains. Length should be the

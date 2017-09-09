@@ -1352,34 +1352,14 @@ public class PositionablePoint extends LayoutTrack {
     public void drawControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-        switch (getType()) {
-            case ANCHOR:
-            case EDGE_CONNECTOR: {
-                if (getConnect1() == null) {
-                    g2.setColor(Color.red);
-                } else if (getConnect2() == null) {
-                    g2.setColor(Color.blue);
-                } else {
-                    g2.setColor(Color.green);
-                }
-                break;
-            }
-            case END_BUMPER: {
-                if (getConnect1() == null) {
-                    g2.setColor(Color.red);
-                } else {
-                    g2.setColor(Color.green);
-                }
-                break;
-            }
-            default: {
-                log.error("Illegal type of Positionable Point");
-                break;
-            }
-        }   //switch
-
-        Point2D pt = getCoordsCenter();
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        if (getConnect1() == null) {
+            g2.setColor(Color.red);
+        } else if ((getType() != END_BUMPER) && getConnect2() == null) {
+            g2.setColor(Color.yellow);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
     }   // drawControls
 
     /*
