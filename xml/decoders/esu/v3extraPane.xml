@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>ESU Extra</name>
   <column>
     <label>
       <text> </text>
@@ -52,6 +53,7 @@
       <text>                                                  Range 0 - 127 </text>
       <text xml:lang="it">                                                  Valori  0- 127</text>
       <text xml:lang="fr">                                                  Valeure 0 - 127</text>
+      <text xml:lang="de">                                                  Bereich 0 - 127</text>
     </label>
     <display item="DCstart">
       </display>
@@ -91,5 +93,4 @@
     <display item="Steam Shift Cycle Latest Start Position" format="hslider">
       </display>
   </column>
-  <name>ESU Extra</name>
 </pane>
