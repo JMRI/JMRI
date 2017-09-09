@@ -114,31 +114,7 @@ public class LayoutConnectivity {
     }
 
     public int getReverseDirection() {
-        if (direction == Path.NORTH) {
-            return (Path.SOUTH);
-        }
-        if (direction == Path.SOUTH) {
-            return (Path.NORTH);
-        }
-        if (direction == Path.EAST) {
-            return (Path.WEST);
-        }
-        if (direction == Path.WEST) {
-            return (Path.EAST);
-        }
-        if (direction == (Path.NORTH + Path.WEST)) {
-            return (Path.SOUTH + Path.EAST);
-        }
-        if (direction == (Path.NORTH + Path.EAST)) {
-            return (Path.SOUTH + Path.WEST);
-        }
-        if (direction == (Path.SOUTH + Path.WEST)) {
-            return (Path.NORTH + Path.EAST);
-        }
-        if (direction == (Path.SOUTH + Path.EAST)) {
-            return (Path.NORTH + Path.WEST);
-        }
-        return (Path.NONE);
+        return Path.reverseDirection(direction);
     }
 
     public boolean setDirection(int dir) {

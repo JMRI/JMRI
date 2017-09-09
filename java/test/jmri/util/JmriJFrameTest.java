@@ -16,7 +16,7 @@ public class JmriJFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame();
+        JmriJFrame t = new JmriJFrame("JmriJFrame ConstructorTest");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }

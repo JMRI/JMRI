@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -87,12 +88,12 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Set the control leads and flow control.
      * This handles any necessary ordering.
-     * @param serialPort
+     * @param serialPort Port to be updated
      * @param flow flow control mode from (@link purejavacomm.SerialPort} 
      * @param rts Set RTS active if true
      * @param dtr set DTR active if true
      */
-    protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow, boolean rts, boolean dtr) {
+    protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
         serialPort.setRTS(rts);
         serialPort.setDTR(dtr);
         try {
@@ -106,10 +107,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /** 
      * Sets the flow control, while also setting RTS and DTR to active.
-     * @param serialPort
+     * @param serialPort Port to be updated
      * @param flow flow control mode from (@link purejavacomm.SerialPort} 
      */
-    protected void configureLeadsAndFlowControl(purejavacomm.SerialPort serialPort, int flow) {
+    protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
     

@@ -7,17 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * ConnectionConfigXmlTest.java
+ * Z21SimulatorConnectionConfigXmlTest.java
 
- Description: tests for the Z21SimulatorConnectionConfigXml class
+ Description: tests for the Z21SimulatorZ21SimulatorConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
+public class Z21SimulatorConnectionConfigXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new Z21SimulatorConnectionConfigXml());
+      Assert.assertNotNull("Z21SimulatorConnectionConfigXml constructor",new Z21SimulatorConnectionConfigXml());
     }
 
     // The minimal setup for log4J
