@@ -590,6 +590,7 @@ public class LightTableAction extends AbstractTableAction {
             hardwareAddressTextField.setText(""); // reset from possible previous use
             hardwareAddressTextField.setBackground(Color.white); // reset after possible error notification
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+            hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(numberToAdd);
@@ -601,7 +602,6 @@ public class LightTableAction extends AbstractTableAction {
             panel2.add(userName);
             userName.setText(""); // reset from possible previous use
             userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
-            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
             userName.setName("userName"); // for jfcUnit test NOI18N
             prefixBox.setName("prefixBox"); // for jfcUnit test NOI18N
             contentPane.add(panel2);
