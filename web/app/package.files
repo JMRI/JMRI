@@ -16,7 +16,7 @@ web/app/node_modules/angular-translate-loader-partial/angular-translate-loader-p
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly-additions.min.css
 web/app/node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css
-web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/fonts/OpenSans-Regular-webfont.woff2
+web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/fonts/OpenSans-*-webfont.woff2
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/fonts/fontawesome-webfont.woff2
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/fonts/PatternFlyIcons-webfont.ttf
 web/app/node_modules/angular-patternfly/node_modules/patternfly/node_modules/jquery/dist/jquery.min.map
