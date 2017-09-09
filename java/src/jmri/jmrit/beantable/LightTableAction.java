@@ -602,8 +602,8 @@ public class LightTableAction extends AbstractTableAction {
             panel2.add(userName);
             userName.setText(""); // reset from possible previous use
             userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
-            userName.setName("userName"); // for jfcUnit test NOI18N
-            prefixBox.setName("prefixBox"); // for jfcUnit test NOI18N
+            userName.setName("userName"); // for GUI test NOI18N
+            prefixBox.setName("prefixBox"); // for GUI test NOI18N
             contentPane.add(panel2);
             // items for variable intensity lights
             varPanel = new JPanel();
