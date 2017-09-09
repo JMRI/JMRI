@@ -219,33 +219,88 @@ public class Llnmon {
      *      representation of the loco address, if appropriate
      */
     private static String convertToMixed(int addressLow, int addressHigh) {
-
         // if we have a 2 digit decoder address, proceed accordingly
-        String isShortAddress = "";
-        if (addressHigh == 0x7d) {
-            isShortAddress = Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_ADDRESS");
-            addressHigh = 0;
-        }
-        if ((addressHigh == 0) | (addressHigh == 0x7f)) {
-            if (addressLow >= 120) {
-                return Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
-                        String.valueOf(addressLow), isShortAddress, "(c" +     // NOI18N
-                        String.valueOf(addressLow - 120) + ")");    // NOI18N
-            } else if (addressLow >= 110) {
-                return Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
-                        String.valueOf(addressLow), isShortAddress, "(b" +     // NOI18N
-                        String.valueOf(addressLow - 110) + ")");    // NOI18N
-            } else if (addressLow >= 100) {
-               return  Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
-                        String.valueOf(addressLow), isShortAddress, "(a" +     // NOI18N
-                        String.valueOf(addressLow - 100) + ")");    // NOI18N
-            } else {
-               return  Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_UNMIXED_ADDRESS",
-                        String.valueOf(addressLow), isShortAddress);
-            }
-        } else {
-            // return the full 4 digit address
-            return String.valueOf(LOCO_ADR(addressHigh, addressLow));
+        switch (addressHigh) {
+            case 0x7d:
+                log.warn("addressLow / 10 = "+ Integer.toString(addressLow / 10));
+                switch (addressLow) {
+                    case 100: case 101: case 102: case 103: case 104: case 105:
+                    case 106: case 107: case 108: case 109:
+                        // N (short, alternately 'An') (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Ax", 
+                                addressLow, 
+                                addressLow-100, 
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between 
+                                // the thousands digit and the hundreds digit.  This comma is undesired 
+                                // in this application.
+                    case 110: case 111: case 112: case 113: case 114: case 115:
+                    case 116: case 117: case 118: case 119:
+                        // N (short, alternately 'Bn') (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Bx", 
+                                addressLow, 
+                                addressLow-110, 
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between 
+                                // the thousands digit and the hundreds digit.  This comma is undesired 
+                                // in this application.
+                    case 120: case 121: case 122: case 123: case 124: case 125:
+                    case 126: case 127:
+                        // N (short, alternately 'Cn') (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Cx", 
+                                addressLow, 
+                                addressLow-120, 
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between 
+                                // the thousands digit and the hundreds digit.  This comma is undesired 
+                                // in this application.
+                    default:
+                        // N (short) (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_AND_LONG_ADDRESS", 
+                                addressLow, 
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between 
+                                // the thousands digit and the hundreds digit.  This comma is undesired 
+                                // in this application.
+                }
+                
+            case 0x00:
+            case 0x7f:
+                switch (addressLow) {
+                    case 100: case 101: case 102: case 103: case 104: case 105:
+                    case 106: case 107: case 108: case 109:
+                        // N (short, alternately 'An')
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Ax", 
+                                addressLow, 
+                                addressLow-100);
+                    case 110: case 111: case 112: case 113: case 114: case 115:
+                    case 116: case 117: case 118: case 119:
+                        // N (short, alternately 'Bn')
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Bx", 
+                                addressLow, 
+                                addressLow-110);
+                    case 120: case 121: case 122: case 123: case 124: case 125:
+                    case 126: case 127:
+                        // N (short, alternately 'Cn')
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Cx", 
+                                addressLow, 
+                                addressLow-120);
+                    default:
+                        // N (short)                        
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_ADDRESS", 
+                                addressLow);
+                }
+            default:
+                // return the full 4 digit address
+                return String.valueOf(LOCO_ADR(addressHigh, addressLow));
+                // Note: .toString intentionally used here to remove the "internationalized"
+                // presentation of integers, which, in US English, adds a "," between 
+                // the thousands digit and the hundreds digit.  This comma is undesired 
+                // in this application.
         }
     } // end of private static String convertToMixed(int addressLow, int addressHigh)
 
