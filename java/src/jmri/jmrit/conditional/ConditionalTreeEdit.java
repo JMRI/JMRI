@@ -2925,10 +2925,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (c == null) {
                     return false;
                 }
-                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
-                    _curVariable.setGuiName(c.getUserName());
-                } else {
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
                     _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:

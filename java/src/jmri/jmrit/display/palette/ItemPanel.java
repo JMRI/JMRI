@@ -95,7 +95,7 @@ public abstract class ItemPanel extends JPanel {
         "SignalHeadStateHeld", "SignalHeadStateLunar",
         "SignalHeadStateFlashingRed", "SignalHeadStateFlashingYellow",
         "SignalHeadStateFlashingGreen", "SignalHeadStateFlashingLunar"};
-    static final String[] LIGHT = {"LightStateOff", "LightStateOn",
+    static final String[] LIGHT = {"StateOff", "StateOn",
         "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
         "BeanStateUnknown", "first", "second", "third"};
