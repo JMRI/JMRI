@@ -10,14 +10,14 @@
   "license": "GPL-2.0",
   "dependencies": {
     "angular": "1.6.6",
-    "angular-patternfly": "4.7.1",
+    "angular-patternfly": "^4.7.3",
     "angular-resource": "1.6.6",
     "angular-route": "1.6.6",
     "angular-translate": "2.15.2",
     "angular-translate-handler-log": "2.15.2",
     "angular-translate-loader-partial": "2.15.2",
     "angular-websocket": "2.0.1",
-    "angularjs-datatables": "0.5.7",
+    "angularjs-datatables": "^0.5.8",
     "lodash": "4.17.4",
     "moment": "2.18.1"
   }
