@@ -83,7 +83,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
-            _mergeCandidates.put(entry.getKey(), true);
+            _mergeCandidates.put(entry.getKey(), Boolean.valueOf(true));
         }
         return true;
     }

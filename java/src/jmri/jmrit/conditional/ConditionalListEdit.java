@@ -204,7 +204,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_editLogixFrame == null) {
             _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"), false, false);  // NOI18N
             _editLogixFrame.addHelpMenu(
-                    "package.jmri.jmrit.beantable.LogixAddEdit", true);  // NOI18N
+                    "package.jmri.jmrit.conditional.ConditionalListEditor", true);  // NOI18N
             _editLogixFrame.setLocation(100, 30);
             Container contentPane = _editLogixFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -671,7 +671,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_editConditionalFrame == null) {
             _editConditionalFrame = new JmriJFrame(Bundle.getMessage("TitleEditConditional"), false, false);  // NOI18N
             _editConditionalFrame.addHelpMenu(
-                    "package.jmri.jmrit.beantable.ConditionalAddEdit", true);  // NOI18N
+                    "package.jmri.jmrit.conditional.ConditionalListEditor", true);  // NOI18N
             Container contentPane = _editConditionalFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
@@ -2463,10 +2463,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (c == null) {
                     return false;
                 }
-                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
-                    _curVariable.setGuiName(c.getUserName());
-                } else {
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
                     _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:

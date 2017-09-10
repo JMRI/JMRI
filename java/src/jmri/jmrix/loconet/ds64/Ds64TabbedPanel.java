@@ -271,7 +271,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Copy from the GUI to the opsw array.
-     * <p>
+     * <P>
      * Used before write operations start
      */
     protected void copyToOpsw() {

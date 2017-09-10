@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
@@ -67,7 +68,6 @@ public class TrackSegment extends LayoutTrack {
     // defined constants
     // operational instance variables (not saved between sessions)
     private LayoutBlock block = null;
-    private TrackSegment instance = null;
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
@@ -88,8 +88,9 @@ public class TrackSegment extends LayoutTrack {
     private ArrayList<Point2D> bezierControlPoints = new ArrayList<Point2D>(); // list of control point displacements
 
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
-            boolean main, LayoutEditor myPanel) {
-        layoutEditor = myPanel;
+            boolean main, LayoutEditor layoutEditor) {
+        super(id, MathUtil.zeroPoint2D, layoutEditor);
+
         // validate input
         if ((c1 == null) || (c2 == null)) {
             log.error("Invalid object in TrackSegment constructor call - " + id);
@@ -107,8 +108,6 @@ public class TrackSegment extends LayoutTrack {
         } else {
             log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         }
-        instance = this;
-        ident = id;
 
         mainline = main;
         dashed = dash;
@@ -122,14 +121,13 @@ public class TrackSegment extends LayoutTrack {
 
     // alternate constructor for loading layout editor panels
     public TrackSegment(String id, String c1Name, int t1, String c2Name, int t2, boolean dash,
-            boolean main, boolean hide, LayoutEditor myPanel) {
-        layoutEditor = myPanel;
+            boolean main, boolean hide, LayoutEditor layoutEditor) {
+        super(id, MathUtil.zeroPoint2D, layoutEditor);
+
         tConnect1Name = c1Name;
         type1 = t1;
         tConnect2Name = c2Name;
         type2 = t2;
-        instance = this;
-        ident = id;
 
         mainline = main;
         dashed = dash;
@@ -399,7 +397,7 @@ public class TrackSegment extends LayoutTrack {
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
-            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
+            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
@@ -443,7 +441,7 @@ public class TrackSegment extends LayoutTrack {
         }
         if (type == POS_POINT) {
             PositionablePoint p = (PositionablePoint) connect;
-            if (p.getConnect1() != instance) {
+            if (p.getConnect1() != this) {
                 if (p.getConnect1() != null) {
                     return (p.getConnect1().getLayoutBlock());
                 } else {
@@ -523,9 +521,15 @@ public class TrackSegment extends LayoutTrack {
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
-        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep1 = center, ep2 = center;
+        if (getConnect1() != null) {
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        }
+        if (getConnect2() != null) {
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        }
+
         result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
-        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         result.add(ep2);
 
         return result;
@@ -556,18 +560,42 @@ public class TrackSegment extends LayoutTrack {
             info = info + " (" + Bundle.getMessage("Line") + ")";
         }
 
-        JMenuItem jmi = popup.add(info);
-        jmi.setEnabled(false);
-
-        jmi = popup.add(ident);
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", info) + ident);
         jmi.setEnabled(false);
 
         if (blockName.isEmpty()) {
             jmi = popup.add(rb.getString("NoBlock"));
         } else {
-            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getId());
+            jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
         }
         jmi.setEnabled(false);
+
+        // if there are any track connections
+        if ((connect1 != null) || (connect2 != null)) {
+            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+            if (connect1 != null) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName()) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LayoutEditorFindItems lf = layoutEditor.getFinder();
+                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect1).getName());
+                        layoutEditor.setSelectionRect(lt.getBounds());
+                    }
+                });
+            }
+            if (connect2 != null) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName()) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LayoutEditorFindItems lf = layoutEditor.getFinder();
+                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect2).getName());
+                        layoutEditor.setSelectionRect(lt.getBounds());
+                    }
+                });
+            }
+            popup.add(connectionsMenu);
+        }
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         mainlineCheckBoxMenuItem.setSelected(mainline);
@@ -600,13 +628,13 @@ public class TrackSegment extends LayoutTrack {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.removeTrackSegment(instance);
+                layoutEditor.removeTrackSegment(TrackSegment.this);
                 remove();
                 dispose();
             }
         });
-        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
 
+        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1232,7 +1260,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getCentreSeg() {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
 
         if ((null != connect1) && (null != connect2)) {
             // get the end points
@@ -1296,7 +1324,24 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getCentre() {
-        return new Point2D.Double(centreX, centreY);
+        Point2D result = new Point2D.Double(centreX, centreY);
+
+        Point2D ep1 = result;
+        Object c1 = getConnect1();
+        if (c1 != null) {
+            ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        }
+
+        Point2D ep2 = result;
+        Object c2 = getConnect2();
+        if (c2 != null) {
+            ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        }
+        result = MathUtil.midPoint(ep1, ep2);
+        centreX = result.getX();
+        centreY = result.getY();
+
+        return result;
     }
 
     private double tmpangle;
@@ -1560,24 +1605,23 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else if (getBezier()) {
             g2.draw(layoutEditor.trackControlPointRectAt(ep1));
-            Point2D lastPt = ep1;
-            for (Point2D bcp : bezierControlPoints) {
-                if (showConstructionLinesLE()) { //draw track circles
+            //draw construction lines and control circles
+            if (showConstructionLinesLE()) {
+                Point2D lastPt = ep1;
+                for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
+                    g2.draw(layoutEditor.trackControlPointRectAt(bcp));
                 }
-                g2.draw(layoutEditor.trackControlPointRectAt(bcp));
-            }
-            if (showConstructionLinesLE()) { //draw track circles
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
             g2.draw(layoutEditor.trackControlPointRectAt(ep2));
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
-            if (showConstructionLinesLE()) { //draw track circles
+            if (showConstructionLinesLE()) { //draw control circles
                 g2.draw(new Line2D.Double(ep1, ep2));
+                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
             }
-            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         }
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.
@@ -1625,7 +1669,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type1, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect2(), type2),
                                 layoutEditor.getCoords(getConnect1(), type1)));
                         results.add(lc);
@@ -1643,7 +1687,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type1, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect2(), type2),
                                 layoutEditor.getCoords(getConnect1(), type1)));
                         results.add(lc);
@@ -1658,7 +1702,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(layoutEditor.getCoords(getConnect2(),
+                    lc.setDirection(Path.computeDirection(layoutEditor.getCoords(getConnect2(),
                             type2), layoutEditor.getCoords(getConnect1(), type1)));
                     results.add(lc);
                 }
@@ -1687,7 +1731,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lt, type2, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect1(), type1),
                                 layoutEditor.getCoords(getConnect2(), type2)));
                         results.add(lc);
@@ -1705,7 +1749,7 @@ public class TrackSegment extends LayoutTrack {
                         log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                         lc = new LayoutConnectivity(lb1, lb2);
                         lc.setConnections(this, lx, type2, null);
-                        lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                        lc.setDirection(Path.computeDirection(
                                 layoutEditor.getCoords(getConnect1(), type1),
                                 layoutEditor.getCoords(getConnect2(), type2)));
                         results.add(lc);
@@ -1720,7 +1764,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(
+                    lc.setDirection(Path.computeDirection(
                             layoutEditor.getCoords(getConnect1(), type1),
                             layoutEditor.getCoords(getConnect2(), type2)));
                     results.add(lc);

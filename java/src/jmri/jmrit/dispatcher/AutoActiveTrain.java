@@ -273,7 +273,7 @@ public class AutoActiveTrain implements ThrottleListener {
         _throttle = t;
         if (_throttle == null) {
             javax.swing.JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage(
-                    "Error28"), new Object[]{_activeTrain.getTrainName()}), Bundle.getMessage("InformationTitle"),
+                    "Error28"), new Object[]{_activeTrain.getTrainName()}), Bundle.getMessage("MessageTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             log.warn("null throttle returned for train  " + _activeTrain.getTrainName() + "during automatic initialization.");
             _activeTrain.setMode(ActiveTrain.DISPATCHED);
@@ -1471,13 +1471,18 @@ public class AutoActiveTrain implements ThrottleListener {
                     _currentSpeed = 0.0f;
                     _halted = true;
                 } else if (_slowToStop) {
-//                    re.getSpeedProfile().setExtraInitialDelay(1500f);
-//                    re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
-                    _currentSpeed = _throttle.getSpeedSetting();
+                    if (useSpeedProfile) {
+                        re.getSpeedProfile().setExtraInitialDelay(1500f);
+                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
+                    }else {
+                        _currentSpeed = _throttle.getSpeedSetting();
+                    }
                     if (_currentBlock != _lastBlock) {
                         _lastBlock = _currentBlock;
-//                        re.getSpeedProfile().setExtraInitialDelay(1500f);
-//                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
+                        if (useSpeedProfile) {
+                            re.getSpeedProfile().setExtraInitialDelay(1500f);
+                            re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed);
+                        }
                     } else {
                         if (_currentSpeed <= _targetSpeed) {
                             _halted = true;

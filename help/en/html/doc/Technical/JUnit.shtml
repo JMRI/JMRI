@@ -605,7 +605,9 @@ the condition doesn't come true in a reasonable length of time.
 
       <h3><a name="tempFileCreation" id=
       "tempFileCreation">Temporary File Creation in
-      Tests</a></h3>Testcases which create temporary files must be
+      Tests</a></h3>
+      
+      Testcases which create temporary files must be
       carefully created so that there will not be any problems with
       file path, filesystem security, pre-existence of the file,
       etc. These tests must also be written in a way that will
@@ -616,9 +618,41 @@ the condition doesn't come true in a reasonable length of time.
 
       <p>Here are some ideas which can help avoid these types of
       problems.</p>
-
+      
       <ul>
-        <li>Place the temporary file(s) in the the "temp" directory
+        <li>
+        If you need a temporary file or directory, and your test
+        uses JUnit4, you can use a Rule to create a file or directory
+        before each test runs.
+<pre>
+ <code>
+    import org.junit.Rule;
+    import org.junit.rules.TemporaryFolder;
+
+    ...
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+</code>
+</pre>
+
+    <p>
+        You then reference "folder" in your test code:
+<pre>
+ <code>
+        // create a file in "temp"
+        File rosterDir = folder.newFolder();
+        File backupDir = folder.newFolder();
+</code>
+</pre>
+
+    
+      JUnit will make sure the file or folder is removed afterwards regardless of whether the 
+      test succeeds or fails. For more information on this, see the 
+      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest"</a>.
+     
+
+        <li>(Pre-JUnit4 only; use the above if using JUnit 4)
+        Place the temporary file(s) in the the "temp" directory
         which is a sub- directory of the jmri run-time directory.
         This directory is used by some testcases and is already
         configured as excluded from the JMRI code repository. It
@@ -692,6 +726,8 @@ environment.
       test was modified based on the temporary file recommendations
       shown here, the test became stable over multiple continuous
       integration executions of "headlesstest".</p>
+
+
 
       <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
       Swing Code</h2>AWT and Swing code runs on a separate thread

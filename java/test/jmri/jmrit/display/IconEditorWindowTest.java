@@ -11,28 +11,29 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import junit.extensions.jfcunit.TestHelper;
-import junit.extensions.jfcunit.eventdata.EventDataConstants;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.MathUtil;
 import org.junit.Assert;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JComponentOperator;
 
 /**
- * Swing jfcUnit tests for the SensorIcon
+ * Swing tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
  */
-public class IconEditorWindowTest extends jmri.util.SwingTestCase {
+public class IconEditorWindowTest {
 
     Editor _editor = null;
     JComponent _panel;
 
+    @Test
     public void testSensorEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         _editor.addSensorEditor();
 
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Sensor");
@@ -55,21 +56,13 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
             _panel.repaint();
         });
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
-                y + icon.getSize().height / 2);
-
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sensor.getState());
 
-        getHelper().enterClickAndLeave(new MouseEventData(
-                this,
-                _panel, // component
-                1, // number clicks
-                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                false, // isPopUpTrigger
-                10, // sleeptime
-                EventDataConstants.CUSTOM, // position
-                location)
-        );
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
         // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
@@ -79,15 +72,17 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         }, "state after one click");
 
         // Click icon change state to inactive
-        getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+        jfo.clickMouse(xloc,yloc,1);
         JUnitUtil.waitFor(() -> {
             return sensor.getState() == Sensor.ACTIVE;
         }, "state after two clicks");
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
+        iefo.requestClose();
     }
 
+    @Test
     public void testRightTOEditor() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
@@ -111,38 +106,29 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
             _panel.repaint();
         });
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
-                y + icon.getSize().height / 2);
-
         Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.CLOSED;
         }, "state after one click");
 
         // Click icon change state to inactive
-        getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+        jfo.clickMouse(xloc,yloc,1);
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.THROWN;
         }, "state after two clicks");
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
+        iefo.requestClose();
     }
 
+    @Test
     public void testLeftTOEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("LeftTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -168,33 +154,28 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
+
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.CLOSED;
         }, "state after one click");
 
         // Click icon change state to inactive
-        getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+        jfo.clickMouse(xloc,yloc,1);
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.THROWN;
         }, "state after two clicks");
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
+        iefo.requestClose();
     }
 
+    @Test
     public void testLightEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Light");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -217,33 +198,28 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         Assert.assertEquals("initial state", Light.OFF, light.getState());
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
+
         JUnitUtil.waitFor(() -> {
             return light.getState() == Light.ON;
         }, "state after one click");
 
         // Click icon change state to inactive
-        getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+        jfo.clickMouse(xloc,yloc,1);
         JUnitUtil.waitFor(() -> {
             return light.getState() == Light.OFF;
         }, "state after two clicks");
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
+        iefo.requestClose();
     }
 
+    @Test
     public void testSignalHeadEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("SignalHead");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -269,16 +245,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         int[] states = signalHead.getValidStates();
         Assert.assertEquals("initial state", states[0], signalHead.getState());
 
-        getHelper().enterClickAndLeave(new MouseEventData(
-                this,
-                _panel, // component
-                1, // number clicks
-                EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                false, // isPopUpTrigger
-                10, // sleeptime
-                EventDataConstants.CUSTOM, // position
-                location)
-        );
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
         for (int i = 1; i < states.length; i++) {
             //Assert.assertEquals("state after " + i + " click", states[i], signalHead.getState());
@@ -290,16 +261,15 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
                 return signalHead.getState() == state;
             }, "state after " + i + " click(s)");
 
-            getHelper().enterClickAndLeave(new MouseEventData(this, icon));
+            jfo.clickMouse(xloc,yloc,1);
         }
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
+        iefo.requestClose();
     }
 
+    @Test
     public void testMemoryEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Memory");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -317,18 +287,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         memIcon.setLocation(x, y);
         _panel.repaint();
 
-        java.awt.Point location = new java.awt.Point(x + memIcon.getSize().width / 2,
-                y + memIcon.getSize().height / 2);
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = memIcon.getLocation().x + memIcon.getSize().width / 2;
+        int yloc = memIcon.getLocation().y + memIcon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
         iconEditor._sysNametext.setText("IM1");
         iconEditor.addToTable();
@@ -343,18 +306,9 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         memSpinIcon.setLocation(x, y);
         _panel.repaint();
 
-        location = new java.awt.Point(x + memSpinIcon.getSize().width / 2,
-                y + memSpinIcon.getSize().height / 2);
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        xloc = memIcon.getLocation().x + memSpinIcon.getSize().width / 2;
+        yloc = memIcon.getLocation().y + memSpinIcon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
         iconEditor._sysNametext.setText("IM2");
         iconEditor.addToTable();
@@ -369,26 +323,16 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         memInputIcon.setLocation(x, y);
         _panel.repaint();
 
-        location = new java.awt.Point(x + memInputIcon.getSize().width / 2,
-                y + memInputIcon.getSize().height / 2);
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
+        xloc = memIcon.getLocation().x + memInputIcon.getSize().width / 2;
+        yloc = memIcon.getLocation().y + memInputIcon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
+        iefo.requestClose();
     }
 
+    @Test
     public void testReporterEditor() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Reporter");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -406,43 +350,19 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2, y + icon.getSize().height / 2);
+        JFrameOperator iefo = new JFrameOperator(iconEditorFrame);
+        JComponentOperator jfo = new JComponentOperator(_panel);
+        int xloc = icon.getLocation().x + icon.getSize().width / 2;
+        int yloc = icon.getLocation().y + icon.getSize().height / 2;
+        jfo.clickMouse(xloc,yloc,1);
 
-        getHelper().enterClickAndLeave(
-                new MouseEventData(this,
-                        _panel, // component
-                        1, // number clicks
-                        EventDataConstants.DEFAULT_MOUSE_MODIFIERS, // modifiers
-                        false, // isPopUpTrigger
-                        10, // sleeptime
-                        EventDataConstants.CUSTOM, // position
-                        location
-                ));
 
-        TestHelper.disposeWindow(iconEditorFrame, this);
-    }
-
-    // from here down is testing infrastructure
-    public IconEditorWindowTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", IconEditorWindowTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IconEditorWindowTest.class);
-        return suite;
+        iefo.requestClose();
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -459,8 +379,8 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         }
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         // Delete the editor by calling dispose(true) defined in PanelEditor
         // directly instead of closing the window through a WindowClosing()
@@ -472,7 +392,5 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
         JUnitUtil.tearDown();
-
-        super.tearDown();
     }
 }

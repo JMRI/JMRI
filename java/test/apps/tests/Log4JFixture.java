@@ -31,7 +31,7 @@ public class Log4JFixture {
     static int count = 0;
     public static void tearDown() {
         JUnitAppender.end();
-        Level severity = Level.ERROR;
+        Level severity = Level.ERROR; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);

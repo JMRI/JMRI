@@ -153,7 +153,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
-        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
+        if (ProfileManager.getDefault().getConfigFile() == null || !ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
                     // notify user of change only if migration occurred
@@ -177,7 +177,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             // Apps.setConfigFilename() does not reset the system property
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-            log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
+            log.info("Starting with profile {}", (ProfileManager.getDefault().getActiveProfile()!=null ? ProfileManager.getDefault().getActiveProfile().getId() : "<none>"));
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
@@ -342,14 +342,22 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("New preferences format will be used after JMRI is restarted.");
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", ProfileManager.getDefault().getActiveProfile().getName()),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", 
+                                            ( ProfileManager.getDefault().getActiveProfile() != null ? ProfileManager.getDefault().getActiveProfile().getName() : "<none>") 
+                                        ),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
-        /*Once all the preferences have been loaded we can initial the preferences
-         doing it in a thread at this stage means we can let it work in the background*/
+        // Before starting to load preferences, make sure some managers are created.
+        // This is needed because these aren't particularly well-behaved during
+        // creation.
+        InstanceManager.getDefault(jmri.LogixManager.class);
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+
+        // Once all the preferences have been loaded we can initial the preferences.
+        // Doing it in a thread at this stage means we can let it work in the background.
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -364,6 +372,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         };
         Thread thr = new Thread(r, "init prefs");
         thr.start();
+
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         r = new Runnable() {
             @Override
@@ -392,6 +401,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Thread thr3 = new Thread(r, "initialize python interpreter");
             thr3.start();
         }
+
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);
         if (!configOK || !configDeferredLoadOK) {
@@ -436,8 +446,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // do final activation
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        // Loads too late - now started from ItemPalette
-//        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
 
         log.debug("End constructor");
     }

@@ -153,15 +153,15 @@
       Trains, and terminate Active Trains. Allocated Sections are
       released using buttons in the Allocated Sections table, or
       automatically if the <b>Auto Release</b> option is selected.
-      The <b><a href="#window">Dispatcher Window</a></b> is
-      discussed in detail below.</p>
+      The <b>Dispatcher Window</b> is
+      discussed in detail <a href="#window">below</a>.</p>
 
       <p><b>Note:</b> The current version of Dispatcher contains
       the first version of an automated allocation option. To
       request Dispatcher to attempt to automatically allocate
       Sections to Active Trains, select the <b>Auto Allocate</b>
       option. <b>Auto Allocate</b> (discussed in detail
-      <a href=""autoallocate>below</a>)
+      <a href="#autoallocate">below</a>)
       works fine for single Active Trains, and for some cases of
       multiple Active Trains. Enhancements are planned in future
       releases.</p>
@@ -864,7 +864,7 @@
       dispatcher is responsible for determining whether it is
       appropriate to release an OCCUPIED Section.</b></p>
 
-      <a id="autoallocate" name="autoallacate"></a>
+      <a id="autoallocate" name="autoallocate"></a>
       <h4>Auto Allocate</h4>
       <p>The <b>Auto Allocate</b> check box, immediately above the
       <b>Allocated Sections</b> table, is used to switch on

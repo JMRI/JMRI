@@ -211,8 +211,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void makeEditLogixWindow() {
         _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-//         _editLogixFrame.addHelpMenu(
-//                 "package.jmri.jmrit.conditional.TreeView", true);               // NOI18N  TODO
+        _editLogixFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.ConditionalTreeEditor", true);  // NOI18N
         Container contentPane = _editLogixFrame.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -1523,6 +1523,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
+        if (_pickTables != null) {
+            _pickTables.dispose();
+            _pickTables = null;
+        }
+
         _editLogixFrame.setVisible(false);
         _editLogixFrame.dispose();
         _editLogixFrame = null;
@@ -2920,10 +2925,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (c == null) {
                     return false;
                 }
-                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
-                    _curVariable.setGuiName(c.getUserName());
-                } else {
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
                     _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
