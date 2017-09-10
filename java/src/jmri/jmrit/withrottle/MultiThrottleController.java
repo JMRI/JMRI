@@ -79,6 +79,9 @@ public class MultiThrottleController extends ThrottleController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendFunctionLabels(RosterEntry re) {
 
@@ -137,6 +140,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendCurrentSpeed(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
@@ -147,6 +153,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendCurrentDirection(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
@@ -157,6 +166,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendSpeedStepMode(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
@@ -167,6 +179,9 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendAllMomentaryStates(DccThrottle t) {
         log.debug("Sending momentary state of all functions");
@@ -200,7 +215,8 @@ public class MultiThrottleController extends ThrottleController {
     }
 
     /**
-     * + indicates the address was acquired, - indicates released
+     * {@inheritDoc}
+     * A + indicates the address was acquired, - indicates released
      */
     @Override
     public void sendAddress() {
@@ -224,7 +240,7 @@ public class MultiThrottleController extends ThrottleController {
     /**
      * Send a steal required message to the connected device prior to disposing
      * of this MTC
-     * @param address 
+     * @param address The locomotive involved in the steal
      */
     @Override
     public void notifyStealThrottleRequired(DccLocoAddress address){

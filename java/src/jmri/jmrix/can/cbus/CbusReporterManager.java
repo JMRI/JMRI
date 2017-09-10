@@ -47,11 +47,17 @@ public class CbusReporterManager extends AbstractReporterManager implements
     TrafficController tc;
     String prefix;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         if (tc != null) {
@@ -60,6 +66,9 @@ public class CbusReporterManager extends AbstractReporterManager implements
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
@@ -72,11 +81,15 @@ public class CbusReporterManager extends AbstractReporterManager implements
         return t;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean validSystemNameFormat(String systemName) {
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
         try {
-            num = Integer.valueOf(systemName.substring(
+            // try to parse the string; success returns true
+            Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
@@ -95,7 +108,8 @@ public class CbusReporterManager extends AbstractReporterManager implements
         return entryToolTip;
     }
 
-    /* (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * @see jmri.jmrix.can.CanListener#message(jmri.jmrix.can.CanMessage)
      */
     @Override
@@ -113,7 +127,8 @@ public class CbusReporterManager extends AbstractReporterManager implements
 
     }
 
-    /* (non-Javadoc)
+    /**
+     * {@inheritDoc}
      * @see jmri.jmrix.can.CanListener#reply(jmri.jmrix.can.CanReply)
      */
     @Override
