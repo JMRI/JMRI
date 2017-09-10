@@ -43,10 +43,9 @@
       <div class="section">
         <a name="single" id="single"></a>
 
-        <h2><a name="single" id="single">On Single Block</a></h2>
+        <h2>On Single Block</h2>
 
         <div class="para">
-          <a name="single" id="single"></a>
 
           <p>This signal protects one end of a straight through
           block, with no signaled turnouts.</p>
@@ -99,13 +98,11 @@
       </div>
 
       <div class="section">
-        <a name="trailmain" id="trailmain"></a>
 
-        <h2><a name="trailmain" id="trailmain">On Main Leg of
-        Trailing-Point Turnout</a></h2>
+        <a name="trailmain" id="trailmain"></a>
+        <h2>On Main Leg ofTrailing-Point Turnout</h2>
 
         <div class="para">
-          <a name="trailmain" id="trailmain"></a>
 
           <p>This signal is along the main route through a turnout,
           which is defined as the direction taken by trains when
@@ -166,13 +163,11 @@
       </div>
 
       <div class="section">
-        <a name="traildiv" id="traildiv"></a>
 
-        <h2><a name="traildiv" id="traildiv">On Diverging Leg of
-        Trailing-Point Turnout</a></h2>
+        <a name="traildiv" id="traildiv"></a>
+        <h2>On Diverging Leg of Trailing-Point Turnout</a></h2>
 
         <div class="para">
-          <a name="traildiv" id="traildiv"></a>
 
           <p>This signal is along the diverging route through a
           turnout, which is defined as the direction taken by
@@ -235,12 +230,9 @@
 
       <div class="section">
         <a name="face" id="face"></a>
-
-        <h2><a name="face" id="face">On Facing-Point
-        Turnout</a></h2>
+        <h2>On Facing-Point Turnout</a></h2>
 
         <div class="para">
-          <a name="face" id="face"></a>
 
           <p>This signal is protecting the points-end of a turnout.
           Depending on whether the turnout is thrown or closed, the

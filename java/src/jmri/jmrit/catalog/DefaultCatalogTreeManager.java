@@ -71,19 +71,19 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         String name = key.toUpperCase();
         if (log.isDebugEnabled()) {
             log.debug("getBySystemName: systemName= " + name);
-            CatalogTree tree = (CatalogTree) _tsys.get(name);
+            CatalogTree tree = _tsys.get(name);
             if (tree != null) {
                 CatalogTreeNode root = tree.getRoot();
                 log.debug("root= " + root.toString()
                         + ", has " + root.getChildCount() + " children");
             }
         }
-        return (CatalogTree) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public CatalogTree getByUserName(String key) {
-        return (CatalogTree) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
 
         @Override
         public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
+            Set<Class<?>> set = super.getInitalizes();
             set.add(CatalogTreeManager.class);
             return set;
         }

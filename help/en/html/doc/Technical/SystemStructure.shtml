@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -47,7 +48,8 @@
 
       <h2>Code Structure</h2>
 
-      <a href="images/JmrixPackageStructure.png"><img src="images/JmrixPackageStructure.png" align="right" height="50%" width="50%" /></a>
+      <a href="images/JmrixPackageStructure.png">
+      <img src="images/JmrixPackageStructure.png" align="right" height="50%" width="50%" /></a>
       The code for a general type, like "LocoNet connections"
       or "NCE connections", should be gathered in a specific
       package right under
@@ -108,7 +110,10 @@
       <p>
       Instead, configuration of the connection is from the bottom up:  From the most
       specific code up to the general. The "Adapter" object connects directly
-      to the system, e.g. managing a serial
+      to the system, e.g. managing a serial link, and then builds up the 
+      objects that work with that link, including all the various type managers.
+      This makes sense because the type of the connection is really specified
+      via the type of that link and what's on the other end of it.
 
       <p>
 
@@ -274,7 +279,6 @@
                     that should someday be cleaned up)
 
                 <li>The third group starts up operation
-                </ol>
 
            <p>At this point, the system is basically up and
                       ready for operation.</p>
@@ -310,7 +314,6 @@
                 the resource's class.</li>
             </ul>
       </ul>
-    </ul>
 
     <h4>Lessons</h4> <!-- Should this part move up? -->
 

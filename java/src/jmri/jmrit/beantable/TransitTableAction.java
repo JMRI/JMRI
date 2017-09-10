@@ -2175,7 +2175,7 @@ public class TransitTableAction extends AbstractTableAction {
             case TransitSectionAction.SETMAXSPEED:
             case TransitSectionAction.SETCURRENTSPEED:
             case TransitSectionAction.RAMPTRAINSPEED:
-                tWhatData1 = (Integer) Math.round(100 * (float) whatPercentSpinner.getValue());
+                tWhatData1 = Math.round(100 * (float) whatPercentSpinner.getValue());
                 break;
             case TransitSectionAction.TOMANUALMODE:
                 if (doneSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0

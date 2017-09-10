@@ -2242,7 +2242,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         aveThrottleSpeed = throttleSpeed;
                     } else {
                         aveThrottleSpeed = prevThrottleSpeed + (throttleSpeed - prevThrottleSpeed) * mf;
-                        ;
                     }
                     dist = _speedUtil.getDistanceTraveled(aveThrottleSpeed, _curSpeedType, waitTime, isForward);
                     if ((waitDist + dist + rampLen) > availDist) {
