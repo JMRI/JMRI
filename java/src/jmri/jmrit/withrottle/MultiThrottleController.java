@@ -50,7 +50,6 @@ public class MultiThrottleController extends ThrottleController {
             log.debug("property change: " + eventName);
         }
         if (eventName.startsWith("F")) {
-
             if (eventName.contains("Momentary")) {
                 return;
             }
@@ -76,7 +75,6 @@ public class MultiThrottleController extends ThrottleController {
         if (eventName.matches("SpeedSteps")) {
             sendSpeedStepMode(throttle);
         }
-
     }
 
     /**
@@ -99,7 +97,6 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(functionString.toString());
             }
         }
-
     }
 
     /**
@@ -127,7 +124,6 @@ public class MultiThrottleController extends ThrottleController {
                     listener.sendPacketToDevice(message.toString());
                 }
             }
-
         } catch (NoSuchMethodException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
             return;
@@ -201,7 +197,6 @@ public class MultiThrottleController extends ThrottleController {
                     listener.sendPacketToDevice(message.toString());
                 }
             }
-
         } catch (NoSuchMethodException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
             return;
@@ -240,13 +235,12 @@ public class MultiThrottleController extends ThrottleController {
     /**
      * Send a steal required message to the connected device prior to disposing
      * of this MTC
-     * @param address The locomotive involved in the steal
+     * @param address of DCC locomotive involved in the steal
      */
     @Override
     public void notifyStealThrottleRequired(DccLocoAddress address){
         sendStealAddress();
-        notifyFailedThrottleRequest(address, "Steal Required");
-        
+        notifyFailedThrottleRequest(address, "Steal Required");        
     }
     
     public void requestStealAddress(String action) {

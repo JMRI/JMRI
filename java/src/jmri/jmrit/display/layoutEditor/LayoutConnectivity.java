@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor panel. Allowed values (using Path object definitions) are:
  * Path.NORTH (up on panel) Path.SOUTH (down on panel) Path.EAST (right on
  * panel) Path.WEST (left on panel) and points in between: Path.NORTH +
- * Path.EAST Path.NORTH + Path.WEST Path.SOUTH + Path.EAST Path.SOUTH +
+ * Path.EAST Path.NORTH_WEST, Path.SOUTH_EAST Path.SOUTH +
  * Path.WEST
  * <P>
  * The connected object in the first block is usually a track segment. This
@@ -120,8 +120,8 @@ public class LayoutConnectivity {
     public boolean setDirection(int dir) {
         if ((dir == Path.NORTH) || (dir == Path.SOUTH)
                 || (dir == Path.EAST) || (dir == Path.WEST)
-                || (dir == (Path.NORTH + Path.WEST)) || (dir == (Path.NORTH + Path.EAST))
-                || (dir == (Path.SOUTH + Path.WEST)) || (dir == (Path.SOUTH + Path.EAST))) {
+                || (dir == Path.NORTH_WEST) || (dir == (Path.NORTH_EAST))
+                || (dir == (Path.SOUTH_WEST)) || (dir == (Path.SOUTH_EAST))) {
             direction = dir;
             return (true);
         }
