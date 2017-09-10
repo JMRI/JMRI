@@ -3,7 +3,6 @@ package jmri.jmrix.pi.configurexml;
 import apps.tests.Log4JFixture;
 import java.util.HashMap;
 import java.util.Map;
-import jmri.jmrix.pi.configurexml.RaspberryPiClassMigration;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,9 +31,8 @@ public class RaspberryPiClassMigrationTest {
     public void testGetMigrations() {
         RaspberryPiClassMigration instance = new RaspberryPiClassMigration();
         Map<String, String> expResult = new HashMap<>();
-        expResult.put("jmri.jmrix.pi.ConnectionConfigXML", "jmri.jmrix.pi.RaspberryPiConnectionConfigXML");
-        Map<String, String> result = instance.getMigrations();
-        Assert.assertEquals(expResult, result);
+        expResult.put("jmri.jmrix.pi.configurexml.ConnectionConfigXml", "jmri.jmrix.pi.configurexml.RaspberryPiConnectionConfigXml");
+        Assert.assertEquals(expResult, instance.getMigrations());
     }
 
 }
