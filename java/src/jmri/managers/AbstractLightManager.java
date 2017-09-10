@@ -77,7 +77,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public Light getBySystemName(String name) {
-        return (Light) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public Light getByUserName(String key) {
-        return (Light) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
