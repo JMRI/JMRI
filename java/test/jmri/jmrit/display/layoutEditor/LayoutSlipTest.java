@@ -689,10 +689,6 @@ public class LayoutSlipTest {
 
         // now try hit getCoordsA -> SLIP_A
         hitType = lts.findHitPointType(lts.getCoordsA(), false, true);
-        System.out.println("••••    lts.getCoordsLeft(): " + lts.getCoordsLeft());
-        System.out.println("••••    lts.getCoordsRight(): " + lts.getCoordsRight());
-        System.out.println("••••    lts.getCoordsA(): " + lts.getCoordsA());
-        System.out.println("••••    hitType: " + hitType);
         Assert.assertTrue("lts.findHitPointType equals SLIP_A", hitType == LayoutEditor.SLIP_A);
 
         // now try hit getCoordsB -> SLIP_B
