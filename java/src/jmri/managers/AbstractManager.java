@@ -7,7 +7,6 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
@@ -280,31 +279,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     @Override
     public String[] getSystemNameArray() {
-        String[] arr = new String[_tsys.size()];
-        Enumeration<String> en = _tsys.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
+        return this.getSystemNameList().toArray(new String[_tsys.size()]);
     }
 
     @Override
     public List<String> getSystemNameList() {
-        String[] arr = new String[_tsys.size()];
-        List<String> out = new ArrayList<>();
-        Enumeration<String> en = _tsys.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
-        jmri.util.StringUtil.sort(arr);
-        for (i = 0; i < arr.length; i++) {
-            out.add(arr[i]);
-        }
+        List<String> out = new ArrayList<>(_tsys.keySet());
+        out.sort(null);
         return out;
     }
 
