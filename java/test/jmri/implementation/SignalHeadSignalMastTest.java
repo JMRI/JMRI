@@ -244,5 +244,5 @@ public class SignalHeadSignalMastTest {
         JUnitUtil.resetInstanceManager();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);
 }

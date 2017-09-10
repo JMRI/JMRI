@@ -36,6 +36,6 @@ public class ResetTableModelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResetTableModelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ResetTableModelTest.class);
 
 }

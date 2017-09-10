@@ -33,6 +33,6 @@ public class TrainScheduleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScheduleTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TrainScheduleTest.class);
 
 }

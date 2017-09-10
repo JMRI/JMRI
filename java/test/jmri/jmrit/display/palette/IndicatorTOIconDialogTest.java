@@ -47,6 +47,6 @@ public class IndicatorTOIconDialogTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialogTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialogTest.class);
 
 }

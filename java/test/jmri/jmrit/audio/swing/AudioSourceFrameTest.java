@@ -38,6 +38,6 @@ public class AudioSourceFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AudioSourceFrameTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(AudioSourceFrameTest.class);
 
 }

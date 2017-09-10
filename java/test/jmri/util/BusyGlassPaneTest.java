@@ -45,6 +45,6 @@ public class BusyGlassPaneTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
 
 }
