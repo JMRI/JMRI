@@ -28,7 +28,7 @@ import jmri.managers.AbstractManager;
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
  */
-public class OBlockManager extends AbstractManager
+public class OBlockManager extends AbstractManager<OBlock>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {

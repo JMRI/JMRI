@@ -57,12 +57,12 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     @Override
     public SignalGroup getBySystemName(String key) {
-        return (SignalGroup) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @Override
     public SignalGroup getByUserName(String key) {
-        return (SignalGroup) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override

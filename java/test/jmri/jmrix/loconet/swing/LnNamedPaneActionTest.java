@@ -43,6 +43,6 @@ public class LnNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(LnNamedPaneActionTest.class);
 
 }
