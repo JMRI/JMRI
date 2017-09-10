@@ -9,7 +9,7 @@
       "path": "roster",
       "href": "/roster",
       "iconClass": "fa fa-train",
-      "title": "translate:NAVIGATION.ROSTER"
+      "title": "translate:ROSTER.ROSTER"
     }
   ],
   "routes":[
