@@ -1619,7 +1619,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Actions Level 3 contains the detail Variable and Action entries
      */
     void createConditionalContent() {
-        String nodeText;
         int _numConditionals = _curLogix.getNumConditionals();
         for (int i = 0; i < _numConditionals; i++) {
             String csName = _curLogix.getConditionalByNumberOrder(i);
@@ -2029,7 +2028,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
         _variableTypeBox.addItemListener(new ItemListener() {
-            ;
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {

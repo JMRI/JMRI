@@ -75,7 +75,6 @@ public class CbusReporterManager extends AbstractReporterManager implements
     @Override
     public boolean validSystemNameFormat(String systemName) {
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
-        int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())

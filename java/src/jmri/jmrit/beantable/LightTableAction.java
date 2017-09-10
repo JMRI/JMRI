@@ -1050,7 +1050,7 @@ public class LightTableAction extends AbstractTableAction {
         status2.setVisible(false);
         if (g.isIntensityVariable()) {
             if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
-                log.debug("minInt value entered: {}", (Double) minIntensity.getValue());
+                log.debug("minInt value entered: {}", minIntensity.getValue());
                 // do not set intensity
                 status2.setText(Bundle.getMessage("LightWarn9"));
                 status2.setVisible(true);
