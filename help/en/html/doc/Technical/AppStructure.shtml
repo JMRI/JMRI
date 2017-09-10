@@ -85,7 +85,6 @@
             set up logging, set up the console, etc.
         <li><code><a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setConfigFilename-java.lang.String-java.lang.String:A-">apps.gui3.Apps3.setConfigFilename</a></code>
             sets the filename (pathname) for the configuration file, either from system properties, launch arguments, or if needed from a default argument.
-        <p>
         <li>The DecoderPro constructor just refers up to the App3 constructor, which in turn handles some GUI initiatlization
             and relies on the AppsBase constructor for the rest.
         <li>Apps3.start() is then responsible for the program's dynamics.
@@ -109,6 +108,7 @@
                 loading the 
                 <a href="SystemStructure.shtml">system connections</a>.
             </dd>
+        </dl>
         <p>For more information, see the <code><a href="http://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code> Javadoc.
 
     
