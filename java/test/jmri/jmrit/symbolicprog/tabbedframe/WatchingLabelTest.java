@@ -16,7 +16,7 @@ public class WatchingLabelTest {
 
     @Test
     public void testCTor() {
-        WatchingLabel t = new Watchinglabel("Test Label",new javax.swing.JPanel());
+        WatchingLabel t = new WatchingLabel("Test Label",new javax.swing.JPanel());
         Assert.assertNotNull("exists",t);
     }
 
