@@ -1022,7 +1022,6 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
@@ -1032,6 +1031,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         }
         hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);

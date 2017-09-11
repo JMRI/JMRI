@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * To release the current thread and allow other listeners to execute:  <code><pre>
  * JUnitUtil.releaseThread(this);
  * </pre></code> Note that this is not appropriate for Swing objects; you need
- * to use JFCUnit for that.
+ * to use Jemmy for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
  * with:

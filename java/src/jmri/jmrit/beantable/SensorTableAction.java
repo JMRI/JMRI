@@ -154,7 +154,6 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
             hardwareAddressTextField.setBackground(Color.white);
             userName.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
@@ -163,6 +162,7 @@ public class SensorTableAction extends AbstractTableAction {
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.white);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));

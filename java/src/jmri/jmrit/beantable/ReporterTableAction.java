@@ -264,7 +264,6 @@ public class ReporterTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(reportManager.getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("sysName"); // for jfcUnit test NOI18N
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
@@ -272,6 +271,7 @@ public class ReporterTableAction extends AbstractTableAction {
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.white);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
