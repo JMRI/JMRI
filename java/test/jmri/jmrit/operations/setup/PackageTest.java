@@ -68,6 +68,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(OptionActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(RestoreFilesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BackupSetTest.class));
         return suite;
     }
 

@@ -26,6 +26,7 @@ import org.junit.runners.Suite;
     DirectorySearcherTest.class,
     CatalogTreeLeafTest.class,
     DragJLabelTest.class,
+    PreviewDialogTest.class,
 })
 
 public class PackageTest {
