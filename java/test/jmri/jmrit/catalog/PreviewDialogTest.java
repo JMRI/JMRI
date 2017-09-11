@@ -26,7 +26,8 @@ public class PreviewDialogTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("PreviewDialog test frame");
-        PreviewDialog t = new PreviewDialog(jf,"preview test",folder.getRoot(),new String[0]);
+        // the second paramter is a key for the bundle
+        PreviewDialog t = new PreviewDialog(jf,"catalogs",folder.getRoot(),new String[0]);
         Assert.assertNotNull("exists",t);
     }
 
