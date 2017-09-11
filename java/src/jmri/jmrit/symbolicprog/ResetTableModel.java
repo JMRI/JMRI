@@ -202,8 +202,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
             StringBuilder programmerModeListBuffer = new StringBuilder("");
             modes.forEach((m) -> {
-                programmerModeListBuffer.append(",");
-                programmerModeListBuffer.append(m.toString());
+                programmerModeListBuffer.append(",").append(m.toString());
             });
             String programmerModeList = programmerModeListBuffer.toString();
             if (programmerModeList.startsWith(",")) {
