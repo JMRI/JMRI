@@ -214,7 +214,7 @@ edit in new XML elements, make sure the structure is correct, etc.
 For more information, see the <a href="http://jmri.org:/xml/XSLT/I18N">xml/XSLT/I18N file</a>
 or ask on the jmri-developers list.
 
-<a id="help"><h3>Translating Help files</h3>
+<a id="help"></a><h3>Translating Help files</h3>
 (This has only been done once, so these instructions may not be complete)
 <p>
 The English help files are found in the help/en directory.
