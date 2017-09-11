@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LogixActionTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
-        suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
+        suite.addTest(new JUnit4TestAdapter(NXFrameTest.class)); //formerly NXWarrantTest        
         suite.addTest(LearnWarrantTest.suite());
         suite.addTest(new JUnit4TestAdapter(PortalManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(ThrottleSettingTest.class));
