@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
 import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.ConnectionNameFromSystemName;
@@ -71,22 +71,33 @@ public class BeanSelectCreatePanel extends JPanel {
         radio.add(newItem);
 
         if (_manager instanceof jmri.managers.AbstractProxyManager) {
-            List<Manager> managerList = new ArrayList<>();
+            List<String> manuNameList = new ArrayList<>();
             if (_manager instanceof jmri.TurnoutManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
-                managerList = proxy.getManagerList();
+                List<Manager<Turnout>> managerList = proxy.getManagerList();
+                for (Manager<Turnout> mgr : managerList) {
+                    manuNameList.add(ConnectionNameFromSystemName.getConnectionName(mgr.getSystemPrefix()));
+                }
             } else if (_manager instanceof jmri.SensorManager) {
                 jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
-                managerList = proxy.getManagerList();
+                List<Manager<Sensor>> managerList = proxy.getManagerList();
+                for (Manager<Sensor> mgr : managerList) {
+                    manuNameList.add(ConnectionNameFromSystemName.getConnectionName(mgr.getSystemPrefix()));
+                }
             } else if (_manager instanceof jmri.LightManager) {
                 jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) InstanceManager.lightManagerInstance();
-                managerList = proxy.getManagerList();
+                List<Manager<Light>> managerList = proxy.getManagerList();
+                for (Manager<Light> mgr : managerList) {
+                    manuNameList.add(ConnectionNameFromSystemName.getConnectionName(mgr.getSystemPrefix()));
+                }
             } else if (_manager instanceof jmri.ReporterManager) {
                 jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(jmri.ReporterManager.class);
-                managerList = proxy.getManagerList();
+                List<Manager<Reporter>> managerList = proxy.getManagerList();
+                for (Manager<Reporter> mgr : managerList) {
+                    manuNameList.add(ConnectionNameFromSystemName.getConnectionName(mgr.getSystemPrefix()));
+                }
             }
-            for (int x = 0; x < managerList.size(); x++) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
+            for (String manuName : manuNameList) {
                 Boolean addToPrefix = true;
                 //Simple test not to add a system with a duplicate System prefix
                 for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -114,7 +125,7 @@ public class BeanSelectCreatePanel extends JPanel {
         add(bean);
         update();
     }
-
+    
     void update() {
         boolean select = true;
         if (newItem.isSelected()) {

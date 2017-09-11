@@ -742,7 +742,7 @@ public class LightTableAction extends AbstractTableAction {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Light>> managerList = proxy.getManagerList();
             for (int i = 0; i < managerList.size(); i++) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(i).getSystemPrefix());
                 prefixBox.addItem(manuName);
@@ -783,7 +783,7 @@ public class LightTableAction extends AbstractTableAction {
         // get tooltip from ProxyLightManager
         if (lightManager.getClass().getName().contains("ProxyLightManager")) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) lightManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Light>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
