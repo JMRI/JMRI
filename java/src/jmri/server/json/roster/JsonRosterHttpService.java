@@ -19,6 +19,7 @@ import static jmri.server.json.JSON.MFG;
 import static jmri.server.json.JSON.MODEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.OWNER;
 import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.SELECTED_ICON;
 import static jmri.server.json.JSON.SHUNTING_FUNCTION;
@@ -183,6 +184,7 @@ public class JsonRosterHttpService extends JsonHttpService {
                 ? entryPath + ICON
                 : null);
         data.put(SHUNTING_FUNCTION, entry.getShuntingFunction());
+        data.put(OWNER, entry.getOwner());
         data.put(JsonRoster.DATE_MODIFIED, (entry.getDateModified() != null)
                 ? new ISO8601DateFormat().format(entry.getDateModified())
                 : null);
