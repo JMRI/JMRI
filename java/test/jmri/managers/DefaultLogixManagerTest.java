@@ -57,7 +57,7 @@ public class DefaultLogixManagerTest extends TestCase {
         Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
         Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
 
-        Logix l3 = m.createNewLogix("IX03", "User name 3");
+        m.createNewLogix("IX03", "User name 3");
         
         // test of some fails
         Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
