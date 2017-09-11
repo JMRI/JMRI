@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Read XML persistence data for the now removed
- * {@link jmri.managers.DefaultUserMessagePreferences} so that the current
+ * jmri.managers.DefaultUserMessagePreferences class so that the current
  * {@link jmri.UserPreferencesManager} can use it.
  */
 public class DefaultUserMessagePreferencesXml extends jmri.configurexml.AbstractXmlAdapter {

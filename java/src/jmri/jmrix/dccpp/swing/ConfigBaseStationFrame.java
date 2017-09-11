@@ -788,7 +788,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
      * NOTE: This isn't actually used anymore except as being a unique class
      * type that can be returned from the TableModel classes for the column that
      * includes the Delete buttons.
-     * <p>
      */
     class ButtonEditor extends DefaultCellEditor {
 

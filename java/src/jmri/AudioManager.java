@@ -24,7 +24,6 @@ import jmri.jmrit.audio.AudioFactory;
  * <P>
  * Much of the book-keeping is implemented in the AbstractAudioManager class,
  * which can form the basis for a system-specific implementation.
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>

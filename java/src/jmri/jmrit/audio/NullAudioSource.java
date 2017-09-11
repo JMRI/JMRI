@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * For now, no system-specific implementations are forseen - this will remain
  * internal-only
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <P>
