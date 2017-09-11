@@ -62,7 +62,7 @@ public class ActivateTrainFrame {
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
     private ArrayList<ActiveTrain> _ActiveTrainsList = null;
-    private TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
+    private final TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
 
     // initiate train window variables
@@ -70,19 +70,19 @@ public class ActivateTrainFrame {
     //private String selectedTrain = "";
     private JmriJFrame initiateFrame = null;
     private Container initiatePane = null;
-    private JComboBox<String> transitSelectBox = new JComboBox<String>();
-    private ArrayList<Transit> transitBoxList = new ArrayList<Transit>();
-    private JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
-    private JComboBox<String> trainSelectBox = new JComboBox<String>();
-    private ArrayList<RosterEntry> trainBoxList = new ArrayList<RosterEntry>();
-    private JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
-    private JTextField trainNameField = new JTextField(10);
-    private JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
-    private JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
-    private JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
-    private JComboBox<String> startingBlockBox = new JComboBox<String>();
-    private ArrayList<Block> startingBlockBoxList = new ArrayList<Block>();
-    private ArrayList<Integer> startingBlockSeqList = new ArrayList<Integer>();
+    private final JComboBox<String> transitSelectBox = new JComboBox<>();
+    private final ArrayList<Transit> transitBoxList = new ArrayList<>();
+    private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
+    private final JComboBox<String> trainSelectBox = new JComboBox<>();
+    private final ArrayList<RosterEntry> trainBoxList = new ArrayList<>();
+    private final JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
+    private final JTextField trainNameField = new JTextField(10);
+    private final JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
+    private final JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
+    private final JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
+    private final JComboBox<String> startingBlockBox = new JComboBox<>();
+    private ArrayList<Block> startingBlockBoxList = new ArrayList<>();
+    private ArrayList<Integer> startingBlockSeqList = new ArrayList<>();
     private JComboBox<String> destinationBlockBox = new JComboBox<String>();
     private ArrayList<Block> destinationBlockBoxList = new ArrayList<Block>();
     private ArrayList<Integer> destinationBlockSeqList = new ArrayList<Integer>();
@@ -1292,19 +1292,13 @@ public class ActivateTrainFrame {
 
     private boolean readAutoRunItems() {
         boolean success = true;
-        float factor = 1.0f;
-        factor = (float) speedFactorSpinner.getValue();
-        _speedFactor = factor;
-        float max = 0.6f;
-        max = (float) maxSpeedSpinner.getValue();
-        _maxSpeed = max;
+        _speedFactor = (float) speedFactorSpinner.getValue();
+        _maxSpeed = (float) maxSpeedSpinner.getValue();
         _rampRate = rampRateBox.getSelectedIndex();
         _resistanceWheels = resistanceWheelsBox.isSelected();
         _runInReverse = runInReverseBox.isSelected();
         _soundDecoder = soundDecoderBox.isSelected();
-        float length = 18.0f;
-        length = (Float) maxTrainLengthSpinner.getValue();
-        _maxTrainLength = length;
+        _maxTrainLength = (float) maxTrainLengthSpinner.getValue();
         return success;
     }
 

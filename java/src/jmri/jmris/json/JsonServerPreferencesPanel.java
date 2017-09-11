@@ -66,20 +66,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         return didSet;
     }
 
-    /**
-     * Update the singleton instance of prefs, then mark (isDirty) that the
-     * values have changed and needs to save to xml file.
-     */
-    protected void applyValues() {
-        this.setValues();
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
-        }
-    }
-
     private JPanel heartbeatPanel() {
         JPanel panel = new JPanel();
         heartbeatIntervalSpinner = new JSpinner(new SpinnerNumberModel(15, MIN_HEARTBEAT_INTERVAL, MAX_HEARTBEAT_INTERVAL, 1));

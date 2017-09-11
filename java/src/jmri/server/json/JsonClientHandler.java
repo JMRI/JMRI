@@ -148,26 +148,19 @@ public class JsonClientHandler {
                     return;
                 }
             } else if (!data.isMissingNode()) {
-                switch (type) {
-                    case HELLO:
-                    case LOCALE:
-                        if (!data.path(LOCALE).isMissingNode()) {
-                            String locale = data.path(LOCALE).asText();
-                            if (!locale.isEmpty()) {
-                                this.connection.setLocale(Locale.forLanguageTag(locale));
-                            }
-                        }
-                    //$FALL-THROUGH$ to default action
-                    default:
-                        if (this.services.get(type) != null) {
-                            for (JsonSocketService service : this.services.get(type)) {
-                                service.onMessage(type, data, this.connection.getLocale());
-                            }
-                        } else {
-                            log.warn("Requested type '{}' unknown.", type);
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
-                        }
-                        break;
+                if (type.equals(HELLO) || type.equals(LOCALE) && !data.path(LOCALE).isMissingNode()) {
+                    String locale = data.path(LOCALE).asText();
+                    if (!locale.isEmpty()) {
+                        this.connection.setLocale(Locale.forLanguageTag(locale));
+                    }
+                }
+                if (this.services.get(type) != null) {
+                    for (JsonSocketService service : this.services.get(type)) {
+                        service.onMessage(type, data, this.connection.getLocale());
+                    }
+                } else {
+                    log.warn("Requested type '{}' unknown.", type);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
                 this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));

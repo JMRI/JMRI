@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ResourceBundle;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -35,8 +35,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  */
 public class PositionableLabel extends JLabel implements Positionable {
-
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     protected Editor _editor;
 
@@ -69,12 +67,12 @@ public class PositionableLabel extends JLabel implements Positionable {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public PositionableLabel(NamedIcon s, Editor editor) {
+    public PositionableLabel(@Nullable NamedIcon s, Editor editor) {
         super(s);
         _editor = editor;
         _icon = true;
         _namedIcon = s;
-        log.debug("PositionableLabel ctor (icon) {}", s.getName());
+        log.debug("PositionableLabel ctor (icon) {}", s != null ? s.getName() : null);
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
@@ -434,7 +432,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         }
         if (log.isTraceEnabled()) { // avoid AWT size computation
-            log.trace("maxWidth= {} preferred width= ", result, getPreferredSize().width);
+            log.trace("maxWidth= {} preferred width= {}", result, getPreferredSize().width);
         }
         return result;
     }
@@ -860,8 +858,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * create a text image whose bit map can be rotated
-     *
+     * Create a text image whose bit map can be rotated.
      */
     private NamedIcon makeTextIcon(String text) {
         if (text == null || text.equals("")) {

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the CBUS-specific Reporter implementation.
- *
+ * <p>
  * System names are "MRnnn", where nnn is the reporter number without padding.
  * <hr>
  * This file is part of JMRI.
@@ -72,7 +72,7 @@ public class CbusReporterManager extends AbstractReporterManager implements
     @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
-        log.debug("ReporterManager create new CbusReporter: " + systemName);
+        log.debug("ReporterManager create new CbusReporter: {}", systemName);
         int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new CbusReporter(addr, tc, prefix);
         t.setUserName(userName);
@@ -89,18 +89,18 @@ public class CbusReporterManager extends AbstractReporterManager implements
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
         try {
             // try to parse the string; success returns true
-            Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
-        } catch (Exception e) {
-            log.debug("Warning: illegal character in number field of system name: " + systemName);
+            Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1, systemName.length()));
+        } catch (NumberFormatException e) {
+            log.debug("Warning: illegal character in number field of system name: {}", systemName);
             return false;
         }
         return true;
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tool tip for the Add new item beantable pane.
+     *
+     * @return the tool tip
      */
     @Override
     public String getEntryToolTip() {
@@ -110,12 +110,13 @@ public class CbusReporterManager extends AbstractReporterManager implements
 
     /**
      * {@inheritDoc}
+     *
      * @see jmri.jmrix.can.CanListener#message(jmri.jmrix.can.CanMessage)
      */
     @Override
     public void message(CanMessage m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle message: " + m.getOpCode());
+        log.debug("CbusReporterManager: handle message: {}", m.getOpCode());
         if (m.getOpCode() != CbusConstants.CBUS_DDES) {
             return;
         }
@@ -129,12 +130,13 @@ public class CbusReporterManager extends AbstractReporterManager implements
 
     /**
      * {@inheritDoc}
+     *
      * @see jmri.jmrix.can.CanListener#reply(jmri.jmrix.can.CanReply)
      */
     @Override
     public void reply(CanReply m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle reply: " + m.getOpCode() + " node: " + CbusMessage.getNodeNumber(m));
+        log.debug("CbusReporterManager: handle reply: {} node: {}", m.getOpCode(), CbusMessage.getNodeNumber(m));
         if (m.getOpCode() != CbusConstants.CBUS_DDES || m.getOpCode() != CbusConstants.CBUS_ACDAT) {
             return;
         }
