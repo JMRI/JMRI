@@ -306,8 +306,6 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                     }
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {
-
         }
     }
 

@@ -433,7 +433,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         double maxSpeedSet = msp.doubleValue();
         log.debug("Max Speed set to: {}", maxSpeedSet);
         maxSpeedSpinner.setValue(maxSpeedSet);
-        log.debug("Max Speed in spinner: {}", (Double) maxSpeedSpinner.getValue());
+        log.debug("Max Speed in spinner: {}", maxSpeedSpinner.getValue());
     }
 
     public void setDccAddress(String a) {

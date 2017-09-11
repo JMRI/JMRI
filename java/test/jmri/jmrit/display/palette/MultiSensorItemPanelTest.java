@@ -41,6 +41,6 @@ public class MultiSensorItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorItemPanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(MultiSensorItemPanelTest.class);
 
 }

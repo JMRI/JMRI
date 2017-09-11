@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -497,15 +498,15 @@ public class SectionTableAction extends AbstractTableAction {
                     layoutEditorSelectionChanged();
                 }
             });
-// djd debugging - temporarily hide these items until the automatic setting of entry point direction is ready
-//   addFrame.getContentPane().add(p32);
-// end djd debugging
+            // djd debugging - temporarily hide these items until the automatic setting of entry point direction is ready
+            //   addFrame.getContentPane().add(p32);
+            // end djd debugging
             JPanel p33 = new JPanel();
             // initialize table of entry points
             entryPointTableModel = new EntryPointTableModel();
             JTable entryPointTable = new JTable(entryPointTableModel);
             entryPointTable.setRowSelectionAllowed(false);
-            entryPointTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550, 100)); // GT - 12-Oct-2009
+            entryPointTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550, 100));
             TableColumnModel entryPointColumnModel = entryPointTable.getColumnModel();
             // From-Block
             TableColumn fromBlockColumn = entryPointColumnModel.getColumn(EntryPointTableModel.BLOCK_COLUMN);
@@ -533,7 +534,10 @@ public class SectionTableAction extends AbstractTableAction {
             p33.setVisible(true);
             JPanel p34 = new JPanel();
             p34.setLayout(new FlowLayout());
-            p34.add(new JLabel(rbx.getString("DirectionNote")));
+            JLabel direction = new JLabel(rbx.getString("DirectionNote"));
+            direction.setFont(direction.getFont().deriveFont(0.9f * blockBox.getFont().getSize())); // a bit smaller
+            direction.setForeground(Color.gray);
+            p34.add(direction);
             addFrame.getContentPane().add(p34);
             addFrame.getContentPane().add(new JSeparator());
             // set up pane for direction sensors
@@ -1254,7 +1258,7 @@ public class SectionTableAction extends AbstractTableAction {
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (n == 0) {
                         JOptionPane.showMessageDialog(frame, rbx.getString("Message15"),
-                                rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
@@ -1276,7 +1280,7 @@ public class SectionTableAction extends AbstractTableAction {
                                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == 0) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
-                                    rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 }
@@ -1299,7 +1303,7 @@ public class SectionTableAction extends AbstractTableAction {
                                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == 0) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
-                                    rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+                                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 }

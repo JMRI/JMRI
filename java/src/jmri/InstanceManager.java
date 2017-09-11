@@ -642,7 +642,7 @@ public final class InstanceManager {
     // store(p, TurnoutManager.class)
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(TurnoutManager.class)).addManager(p);
+        ((jmri.managers.AbstractProxyManager<Turnout>) getDefault(TurnoutManager.class)).addManager(p);
         //store(p, TurnoutManager.class);
     }
 
@@ -706,7 +706,7 @@ public final class InstanceManager {
     // store(p, TurnoutManager.class)
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(LightManager.class)).addManager(p);
+        ((jmri.managers.AbstractProxyManager<Light>) getDefault(LightManager.class)).addManager(p);
         //store(p, LightManager.class);
     }
 
@@ -745,7 +745,7 @@ public final class InstanceManager {
     // store(p, ReporterManager.class)
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(ReporterManager.class)).addManager(p);
+        ((jmri.managers.AbstractProxyManager<Reporter>) getDefault(ReporterManager.class)).addManager(p);
         //store(p, ReporterManager.class);
     }
 
@@ -755,7 +755,7 @@ public final class InstanceManager {
     // store(p, SensorManager.class)
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
-        ((jmri.managers.AbstractProxyManager) getDefault(SensorManager.class)).addManager(p);
+        ((jmri.managers.AbstractProxyManager<Sensor>) getDefault(SensorManager.class)).addManager(p);
         //store(p, SensorManager.class);
     }
 

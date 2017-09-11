@@ -34,6 +34,6 @@ public class SystemConnectionComboBoxTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionComboBoxTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SystemConnectionComboBoxTest.class);
 
 }

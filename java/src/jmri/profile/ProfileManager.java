@@ -122,11 +122,26 @@ public class ProfileManager extends Bean {
     /**
      * Get the {@link Profile} that is currently in use.
      *
-     * @return The in use Profile.
+     * @return the in use Profile or null if there is no Profile in use
      */
     @CheckForNull
     public Profile getActiveProfile() {
         return activeProfile;
+    }
+
+    /**
+     * Get the name of the {@link Profile} that is currently in use.
+     * <p>
+     * This is a convenience method that avoids a need to check that
+     * {@link #getActiveProfile()} does not return null when all that is needed
+     * is the name of the active profile.
+     *
+     * @return the name of the active profile or null if there is no active
+     *         profile
+     */
+    @CheckForNull
+    public String getActiveProfileName() {
+        return activeProfile != null ? activeProfile.getName() : null;
     }
 
     /**
@@ -223,17 +238,22 @@ public class ProfileManager extends Bean {
     protected void saveActiveProfile(@CheckForNull Profile profile, boolean autoStart) throws IOException {
         Properties p = new Properties();
         FileOutputStream os = null;
+        File config = this.getConfigFile();
 
+        if (config == null) {
+            log.debug("No config file defined, not attempting to save active profile.");
+            return;
+        }
         if (profile != null) {
             p.setProperty(ACTIVE_PROFILE, profile.getId());
             p.setProperty(AUTO_START, Boolean.toString(autoStart));
             p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
         }
-        if (!this.configFile.exists() && !this.configFile.createNewFile()) {
-            throw new IOException("Unable to create file at " + this.getConfigFile().getAbsolutePath()); // NOI18N
+        if (!config.exists() && !config.createNewFile()) {
+            throw new IOException("Unable to create file at " + config.getAbsolutePath()); // NOI18N
         }
         try {
-            os = new FileOutputStream(this.getConfigFile());
+            os = new FileOutputStream(config);
             p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
             os.close();
         } catch (IOException ex) {
@@ -256,18 +276,17 @@ public class ProfileManager extends Bean {
     public void readActiveProfile() throws IOException {
         Properties p = new Properties();
         FileInputStream is = null;
-        if (this.configFile.exists() && this.configFile.length() != 0) {
+        File config = this.getConfigFile();
+        if (config != null && config.exists() && config.length() != 0) {
             try {
-                is = new FileInputStream(this.getConfigFile());
+                is = new FileInputStream(config);
                 try {
                     p.loadFromXML(is);
                 } catch (IOException ex) {
-                    if (is != null) {
-                        is.close();
-                    }
+                    is.close();
                     if (ex.getCause().getClass().equals(SAXParseException.class)) {
                         // try loading the profile as a standard properties file
-                        is = new FileInputStream(this.getConfigFile());
+                        is = new FileInputStream(config);
                         p.load(is);
                     } else {
                         throw ex;
@@ -753,11 +772,11 @@ public class ProfileManager extends Bean {
         if (exportExternalUserFiles) {
             FileUtil.copy(new File(FileUtil.getUserFilesPath()), tempProfilePath);
             Element fileLocations = doc.getRootElement().getChild("fileLocations"); // NOI18N
-            for (Element fl : fileLocations.getChildren()) {
-                if (fl.getAttribute("defaultUserLocation") != null) { // NOI18N
-                    fl.setAttribute("defaultUserLocation", "profile:"); // NOI18N
-                }
-            }
+            fileLocations.getChildren().stream()
+                    .filter((fl) -> (fl.getAttribute("defaultUserLocation") != null)) // NOI18N
+                    .forEachOrdered((fl) -> {
+                        fl.setAttribute("defaultUserLocation", "profile:"); // NOI18N
+                    });
         }
         if (exportExternalRoster) {
             FileUtil.copy(new File(Roster.getDefault().getRosterIndexPath()), new File(tempProfilePath, "roster.xml")); // NOI18N

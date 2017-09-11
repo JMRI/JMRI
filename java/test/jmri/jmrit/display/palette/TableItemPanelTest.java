@@ -42,6 +42,6 @@ public class TableItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableItemPanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TableItemPanelTest.class);
 
 }

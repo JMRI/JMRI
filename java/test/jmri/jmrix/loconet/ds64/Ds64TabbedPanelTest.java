@@ -31,6 +31,6 @@ public class Ds64TabbedPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanelTest.class);
 
 }

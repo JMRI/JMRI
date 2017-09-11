@@ -189,11 +189,11 @@ public class LightTableAction extends AbstractTableAction {
                 int val = l.getState();
                 switch (val) {
                     case Light.ON:
-                        return Bundle.getMessage("LightStateOn");
+                        return Bundle.getMessage("StateOn");
                     case Light.INTERMEDIATE:
                         return Bundle.getMessage("LightStateIntermediate");
                     case Light.OFF:
-                        return Bundle.getMessage("LightStateOff");
+                        return Bundle.getMessage("StateOff");
                     case Light.TRANSITIONINGTOFULLON:
                         return Bundle.getMessage("LightStateTransitioningToFullOn");
                     case Light.TRANSITIONINGHIGHER:
@@ -340,7 +340,7 @@ public class LightTableAction extends AbstractTableAction {
 
             @Override
             public JButton configureButton() {
-                return new JButton(" " + Bundle.getMessage("LightStateOff") + " ");
+                return new JButton(" " + Bundle.getMessage("StateOff") + " ");
             }
 
             @Override
@@ -422,11 +422,11 @@ public class LightTableAction extends AbstractTableAction {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Lights
                     }
-                    if (value.equals(Bundle.getMessage("LightStateOff")) && offIcon != null) {
+                    if (value.equals(Bundle.getMessage("StateOff")) && offIcon != null) {
                         label = new JLabel(offIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("offIcon set");
-                    } else if (value.equals(Bundle.getMessage("LightStateOn")) && onIcon != null) {
+                    } else if (value.equals(Bundle.getMessage("StateOn")) && onIcon != null) {
                         label = new JLabel(onIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("onIcon set");
@@ -590,6 +590,7 @@ public class LightTableAction extends AbstractTableAction {
             hardwareAddressTextField.setText(""); // reset from possible previous use
             hardwareAddressTextField.setBackground(Color.white); // reset after possible error notification
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
+            hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(numberToAdd);
@@ -601,9 +602,8 @@ public class LightTableAction extends AbstractTableAction {
             panel2.add(userName);
             userName.setText(""); // reset from possible previous use
             userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
-            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
-            userName.setName("userName"); // for jfcUnit test NOI18N
-            prefixBox.setName("prefixBox"); // for jfcUnit test NOI18N
+            userName.setName("userName"); // for GUI test NOI18N
+            prefixBox.setName("prefixBox"); // for GUI test NOI18N
             contentPane.add(panel2);
             // items for variable intensity lights
             varPanel = new JPanel();
@@ -742,7 +742,7 @@ public class LightTableAction extends AbstractTableAction {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Light>> managerList = proxy.getManagerList();
             for (int i = 0; i < managerList.size(); i++) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(i).getSystemPrefix());
                 prefixBox.addItem(manuName);
@@ -783,7 +783,7 @@ public class LightTableAction extends AbstractTableAction {
         // get tooltip from ProxyLightManager
         if (lightManager.getClass().getName().contains("ProxyLightManager")) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) lightManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Light>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
@@ -1050,7 +1050,7 @@ public class LightTableAction extends AbstractTableAction {
         status2.setVisible(false);
         if (g.isIntensityVariable()) {
             if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
-                log.debug("minInt value entered: {}", (Double) minIntensity.getValue());
+                log.debug("minInt value entered: {}", minIntensity.getValue());
                 // do not set intensity
                 status2.setText(Bundle.getMessage("LightWarn9"));
                 status2.setVisible(true);
