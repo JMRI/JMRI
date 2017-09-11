@@ -59,7 +59,7 @@ public class WebServerPreferencesInstanceInitializer extends AbstractInstanceIni
             Element WSRoot = new Element(WebServerPreferences.WEB_SERVER_PREFERENCES);
             Element MSPrefs = MSRoot.getChild("MiniServerPreferences"); // NOI18N
             MSPrefs.getChildren().forEach((pref) -> {
-                WSRoot.addContent((Element) pref);
+                WSRoot.addContent(pref);
             });
             for (Attribute attr : MSPrefs.getAttributes()) {
                 switch (attr.getName()) {
