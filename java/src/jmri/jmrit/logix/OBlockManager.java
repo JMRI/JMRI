@@ -100,14 +100,14 @@ public class OBlockManager extends AbstractManager<OBlock>
             return null;
         }
         String key = name.toUpperCase();
-        return (OBlock) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public OBlock getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (OBlock) _tuser.get(key);
+        return  _tuser.get(key);
     }
 
     @Nonnull public OBlock provideOBlock(String name) throws IllegalArgumentException {

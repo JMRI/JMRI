@@ -145,11 +145,11 @@ public class TransitManager extends AbstractManager<Transit> implements Property
 
     public Transit getBySystemName(String name) {
         String key = name.toUpperCase();
-        return (Transit) _tsys.get(key);
+        return  _tsys.get(key);
     }
 
     public Transit getByUserName(String key) {
-        return (Transit) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
