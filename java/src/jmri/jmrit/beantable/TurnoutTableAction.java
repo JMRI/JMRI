@@ -1002,7 +1002,7 @@ public class TurnoutTableAction extends AbstractTableAction {
              duplicate usernames in multiple classes */
             if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
-                List<Manager> managerList = proxy.getManagerList();
+                List<Manager<Turnout>> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
@@ -1759,7 +1759,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Turnout>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
