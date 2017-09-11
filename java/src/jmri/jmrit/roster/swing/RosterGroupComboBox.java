@@ -75,7 +75,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      * Update the combo box and reselect the current selection.
      */
     public final void update() {
-        update((String) this.getSelectedItem());
+        update(this.getSelectedItem());
     }
 
     /**

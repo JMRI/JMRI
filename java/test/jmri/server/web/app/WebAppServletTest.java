@@ -31,6 +31,6 @@ public class WebAppServletTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WebAppServletTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(WebAppServletTest.class);
 
 }

@@ -7,16 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for Z21SimulatorConnectionConfig class.
+ * Tests for Z21SimulatorZ21SimulatorConnectionConfig class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class ConnectionConfigTest {
+public class Z21SimulatorConnectionConfigTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new Z21SimulatorConnectionConfig());
+      Assert.assertNotNull("Z21SimulatorConnectionConfig constructor",new Z21SimulatorConnectionConfig());
    }
 
    @Before

@@ -23,6 +23,7 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
@@ -133,7 +134,7 @@ There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
 of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
 
-<a name="commonkeys"><p>
+<a name="commonkeys"></a><p>
 You are advised to start a new language translation by completing the highest level bundles, starting with the
 <em>NamedBeanBundle</em> in the src/jmri directory end working your way down the folder hierarchy, of course following your personal
 interest in certain modules. By following this order, you will see your initial work all the way down inside the user interface for tools such as
@@ -171,7 +172,6 @@ share it with us <a href="index.shtml#contributing">contributing via GitHub</a>.
 By using a GitHub Pull Request, it's easy for us to merge your new and/or changed
 files into the code repository. If anything goes wrong, please don't hesitate to 
 ask for help with this.
-</ul>
 
 <h4>Non-Roman characters</h4>
 <p>Languages that involve non-roman letters require some
@@ -190,7 +190,7 @@ by converting special characters to the right sequences, but you must run your f
 Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
 ISO 8859-1 sequences on your computer before submission.
 
-<a name="xml"><h3>Translating XML files</h3>
+<a name="xml"></a><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
 decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 

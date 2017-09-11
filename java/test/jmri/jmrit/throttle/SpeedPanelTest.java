@@ -31,6 +31,6 @@ public class SpeedPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedPanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(SpeedPanelTest.class);
 
 }

@@ -44,6 +44,6 @@ public class NceNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceNamedPaneActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(NceNamedPaneActionTest.class);
 
 }

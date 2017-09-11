@@ -260,7 +260,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public Point2D getRayCoordsIndexed(int index) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
                 double angle = Math.toRadians(rt.getAngle());
@@ -275,7 +275,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public Point2D getRayCoordsOrdered(int i) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         RayTrack rt = rayList.get(i);
         if (rt != null) {
             double angle = Math.toRadians(rt.getAngle());

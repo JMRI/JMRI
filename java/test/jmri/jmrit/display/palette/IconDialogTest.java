@@ -46,6 +46,6 @@ public class IconDialogTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IconDialogTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(IconDialogTest.class);
 
 }

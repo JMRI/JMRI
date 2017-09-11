@@ -35,6 +35,6 @@ public class PickFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PickFrameTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(PickFrameTest.class);
 
 }

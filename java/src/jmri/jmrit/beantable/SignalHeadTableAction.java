@@ -501,7 +501,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     private String[] turnoutStates = new String[]{stateClosed, stateThrown};
     private int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
 
-    private String signalheadSingle = Bundle.getMessage("StringSignalheadSingle");
     private String signalheadDouble = Bundle.getMessage("StringSignalheadDouble");
     private String signalheadTriple = Bundle.getMessage("StringSignalheadTriple");
     private String signalheadRGB = Bundle.getMessage("StringSignalheadRGB");
@@ -1783,12 +1782,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     private TitledBorder ev7Border = BorderFactory.createTitledBorder(blackline);
 
     private Turnout et1 = null;
-    private Turnout et2 = null;
-    private Turnout et3 = null;
-    private Turnout et4 = null;
-    private Turnout et5 = null;
-    private Turnout et6 = null;
-    private Turnout et7 = null;
 
     private JLabel eSystemNameLabel = new JLabel("");
     private JLabel eUserNameLabel = new JLabel("");
@@ -2835,7 +2828,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
-            tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
             dccAspect[i] = tmp; // store the whole JSpinner
             dccSignalPanel.add(tmp); // and display that copy on the JPanel
             tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));

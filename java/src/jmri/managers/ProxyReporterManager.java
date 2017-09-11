@@ -32,7 +32,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter getReporter(String name) {
-        return (Reporter) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
 
     @Override
     public Reporter provideReporter(String sName) throws IllegalArgumentException {
-        return (Reporter) super.provideNamedBean(sName);
+        return super.provideNamedBean(sName);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter getBySystemName(String sName) {
-        return (Reporter) super.getBeanBySystemName(sName);
+        return super.getBeanBySystemName(sName);
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter getByUserName(String userName) {
-        return (Reporter) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public Reporter newReporter(String systemName, String userName) {
-        return (Reporter) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     @Override
