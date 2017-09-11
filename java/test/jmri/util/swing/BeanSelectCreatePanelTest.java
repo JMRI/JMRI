@@ -18,7 +18,7 @@ public class BeanSelectCreatePanelTest {
     public void testCTor() {
         jmri.TurnoutManager manager = jmri.InstanceManager.getDefault(jmri.TurnoutManager.class);
         jmri.Turnout turnout = manager.provideTurnout("IT1");
-        BeanSelectCreatePanel t = new BeanSelectCreatePanel(manager,turnout);
+        BeanSelectCreatePanel<jmri.Turnout> t = new BeanSelectCreatePanel<>(manager,turnout);
         Assert.assertNotNull("exists",t);
     }
 

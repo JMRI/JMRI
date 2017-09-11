@@ -752,13 +752,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             dccSignalPanel();
 
-            to1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+            to1 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to2 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to3 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to4 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to5 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to6 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to7 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSignalHead"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BorderLayout());
@@ -1845,13 +1845,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
         curS = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(editSysName);
         if (editFrame == null) {
             dccSignalPanelEdt();
-            eto1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+            eto1 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto2 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto3 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto4 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto5 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto6 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto7 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
             // set up a new edit window
             editFrame = new JmriJFrame(Bundle.getMessage("TitleEditSignalHead"), false, true);
             editFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
