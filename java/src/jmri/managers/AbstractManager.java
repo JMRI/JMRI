@@ -97,7 +97,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return requested Turnout object or null if none exists
      */
     protected E getInstanceByUserName(String userName) {
-        return _tuser.get(NamedBean.normalizeUserName(userName));
+        String normalizedUserName = NamedBean.normalizeUserName(userName);
+        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /**
@@ -121,7 +122,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @Override
     public E getBeanByUserName(String userName) {
-        return _tuser.get(NamedBean.normalizeUserName(userName));
+        String normalizedUserName = NamedBean.normalizeUserName(userName);
+        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /**
@@ -133,9 +135,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @Override
     public E getNamedBean(String name) {
-        E b = getBeanByUserName(NamedBean.normalizeUserName(name));
-        if (b != null) {
-            return b;
+        String normalizedUserName = NamedBean.normalizeUserName(name);
+        if (normalizedUserName != null) {
+            E b = getBeanByUserName(normalizedUserName);
+            if (b != null) {
+                return b;
+            }
         }
         return getBeanBySystemName(name);
     }
