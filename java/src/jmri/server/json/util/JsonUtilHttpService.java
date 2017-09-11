@@ -129,7 +129,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
         data.put(JSON.RAILROAD, WebServerPreferences.getDefault().getRailroadName());
         data.put(JSON.NODE, NodeIdentity.identity());
-        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
+        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
         return root;
     }
 
@@ -369,7 +369,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
         for (Profile p : ProfileManager.getDefault().getProfiles()) {
             boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
-            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile 
+            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile
             ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILE);
             ObjectNode data = connection.putObject(JSON.DATA);
             data.put(JSON.NAME, p.getName());
