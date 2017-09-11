@@ -205,7 +205,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 programmerModeListBuffer.append(",").append(m.toString());
             });
             String programmerModeList = programmerModeListBuffer.toString();
-            if (programmerModeList.startsWith(",")) {
+            if (programmerModeList.length() <= 1) {
+                programmerModeList = ""; // NOI18N
+            } else if (programmerModeList.startsWith(",")) {
                 programmerModeList = programmerModeList.substring(1);
             }
 
@@ -214,7 +216,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 resetModeBuilder.append(",").append(new ProgrammingMode(mode).toString());
             });
             String resetModeList = resetModeBuilder.toString();
-            if (resetModeList.startsWith(",")) {
+            if (resetModeList.length() <= 1) {
+                resetModeList = ""; // NOI18N
+            } else if (resetModeList.startsWith(",")) {
                 resetModeList = resetModeList.substring(1);
             }
 
