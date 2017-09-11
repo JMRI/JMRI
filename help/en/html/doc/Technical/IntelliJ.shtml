@@ -477,31 +477,41 @@
       <p>We've documented the following steps to help you get started. (Note that step 4. as yet is not complete.
       When you know what to enter as the Main Class Path, please report on JMRI Users)</p>
       <ol>
-        <li>In IntelliJ, choose Debug... from the Run menu.<br>
+        <li>In IntelliJ, start by opening Preferences > Build, Execution, Deployment
+        and check "Generate debugging info":<br>
+        <img src="images/IntelliJ/IjDebugPrefs.png" width="655" height="436"></li>
+        <li>Then, doubleclick "jar-resources" in the Build tab to have IntelliJ build afresh .jar Java archive to use
+        for our debugging.</li>
+        <li>When that has run, choose "Debug..." from the Run menu.<br>
         <img src="images/IntelliJ/IjDebug1Menu.png" width="377" height="145"><br>
         On the small "Debug" pane that appears, click "Edit Configurations..."<br>
-        Alternatively, on the top right, click on the downward triangle "Select Run/Debug Configuration" button and
-        select the same "Edit Configurations..." option.<br>
+        Alternatively, on the top right, click on the downward triangle "Select Run/Debug Configuration" button
+        and select the "Edit Configurations..." option from there:<br>
         <img src="images/IntelliJ/IjDebug1Button.png" width="216" height="71"></li>
         <li>On the top left of the new pane that appears, click the + sign (Add New Configuration).<br>
         <img src="images/IntelliJ/IjDebug2Plus.png" width="134" height="91"><br>
         Or simply type Command + N.<br>
-        Select "Application" in the list.<br>
-        <img src="images/IntelliJ/IjDebug2aApplication.png" width="215" height="117"></li>
+        Select "JAR Application" in the list.</li>
         <li>This opens the "Run/Debug Configurations" pane:<br>
-        <img src="images/IntelliJ/IjDebug3ConfigPane.png" width="735" height="630"><br>
-        As the Name of this Configuration, enter "JMRI debug".<br>
-        Make sure "Build" is visible in the "Before launch:" table, and "Activate tool window" is checked near the
-        bottom of the pane.</li>
-        <li>In the "Run/Debug Configurations" pane that opens, as the "Main class" enter <b>"WE DONT KNOW YET"</b>.<br>
-        Check the prefilled "Working directory:" showing your local path to JMRI (see example).<br>
-        JMRI should already be selected after "Use classpath of module:".<br>
-        Click "OK".</li>
-        <li>To run a debug session, first set some Breakpoint in your code by clicking in the left margin:<br>
+        <img src="images/IntelliJ/IjDebug3ConfigPane.png" width="734" height="611"><br>
+          <ul>
+          <li>As the Name of this Configuration, enter "JMRI DP debug".</li>
+          <li>Make sure "Build" is visible in the "Before launch:" table, select "Run Ant target"  and choose
+          "jar-resources" from the build.xml list</li>
+          <li>Check "Activate tool window" near the bottom of the pane.</li>
+          <li>Enter <b>"jmri.jar"</b> as the "Path to JAR" or use the "..." button to navigate to the freshly built
+          jmri.jar in your Project.</li>
+          <li>Make sure the prefilled "Working directory:" is showing your local path to JMRI (see example).<br>
+          Set "Default" as the "JRE:" choice.</li>
+          <li>Select "JMRI" using the "Search sources using module's classpath:" drop down.</li>
+          <li>Click "OK" to complete the configuration set-up.</li>
+          </ul>
+        <li>To run your first debug session, start by opening a .java file and setting a Breakpoint on a line in your
+        code by clicking in the left margin of the central edit pane:<br>
         <img src="images/IntelliJ/IjDebug5Breakpoint.png" width="302" height="184"></li>
         <li>We're now ready to start a Debug session by clicking the Bug button at the top right, making sure our
         "JMRI debug" configuration is selected in the drop down to the left of it:<br>
-        <img src="images/IntelliJ/IjDebug4StartDebug.png" width="256" height="51">
+        <img src="images/IntelliJ/IjDebug4StartDebug.png" width="272" height="79">
         </li>
         <li>After a short while, at the bottom of the main IntelliJ IDE interface, the Debug pane appears, stopping
         just before your Breakpoint (or some previous error):<br>

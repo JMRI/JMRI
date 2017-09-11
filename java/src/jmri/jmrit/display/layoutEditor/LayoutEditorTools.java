@@ -62,14 +62,13 @@ import org.slf4j.LoggerFactory;
  * available in Layout Editor panels.
  * <P>
  * The tools in this module are accessed via the Tools menu in Layout Editor.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2007
  */
 public class LayoutEditorTools {
 
-    // Defined text resource
+    // Defined text resource, should be called by Bundle.getMessage() to allow reuse of shared keys via path
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-    //static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     // constants
     private int NONE = 0;  // Signal at Turnout Positions
@@ -13248,7 +13247,7 @@ public class LayoutEditorTools {
             addInfoToMenu("D " + continuing, layoutTurnout.getSignalD1Name(), inMenu);
             addInfoToMenu("D " + diverging, layoutTurnout.getSignalD2Name(), inMenu);
         } else if (linkType == LayoutTurnout.NO_LINK) {
-            JMenuItem jmi = inMenu.add(rb.getString("Turnout"));
+            JMenuItem jmi = inMenu.add(Bundle.getMessage("BeanNameTurnout"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());
             before_mcc += 2;
@@ -13258,7 +13257,7 @@ public class LayoutEditorTools {
             addInfoToMenu(diverging, layoutTurnout.getSignalC1Name(), inMenu);
         } else if (linkType == LayoutTurnout.THROAT_TO_THROAT) {
             String text = rb.getString("ThroatToThroat") + " (";
-            text += rb.getString("Turnout") + ", " + rb.getString("Route");
+            text += Bundle.getMessage("BeanNameTurnout") + ", " + Bundle.getMessage("BeanNameRoute");
             text += ", " + rb.getString("Signal") + ":)";
             JMenuItem jmi = inMenu.add(text);
             jmi.setEnabled(false);
