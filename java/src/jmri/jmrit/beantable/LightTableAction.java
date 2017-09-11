@@ -189,11 +189,11 @@ public class LightTableAction extends AbstractTableAction {
                 int val = l.getState();
                 switch (val) {
                     case Light.ON:
-                        return Bundle.getMessage("LightStateOn");
+                        return Bundle.getMessage("StateOn");
                     case Light.INTERMEDIATE:
                         return Bundle.getMessage("LightStateIntermediate");
                     case Light.OFF:
-                        return Bundle.getMessage("LightStateOff");
+                        return Bundle.getMessage("StateOff");
                     case Light.TRANSITIONINGTOFULLON:
                         return Bundle.getMessage("LightStateTransitioningToFullOn");
                     case Light.TRANSITIONINGHIGHER:
@@ -340,7 +340,7 @@ public class LightTableAction extends AbstractTableAction {
 
             @Override
             public JButton configureButton() {
-                return new JButton(" " + Bundle.getMessage("LightStateOff") + " ");
+                return new JButton(" " + Bundle.getMessage("StateOff") + " ");
             }
 
             @Override
@@ -422,11 +422,11 @@ public class LightTableAction extends AbstractTableAction {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Lights
                     }
-                    if (value.equals(Bundle.getMessage("LightStateOff")) && offIcon != null) {
+                    if (value.equals(Bundle.getMessage("StateOff")) && offIcon != null) {
                         label = new JLabel(offIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("offIcon set");
-                    } else if (value.equals(Bundle.getMessage("LightStateOn")) && onIcon != null) {
+                    } else if (value.equals(Bundle.getMessage("StateOn")) && onIcon != null) {
                         label = new JLabel(onIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("onIcon set");
@@ -1050,7 +1050,7 @@ public class LightTableAction extends AbstractTableAction {
         status2.setVisible(false);
         if (g.isIntensityVariable()) {
             if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
-                log.debug("minInt value entered: {}", (Double) minIntensity.getValue());
+                log.debug("minInt value entered: {}", minIntensity.getValue());
                 // do not set intensity
                 status2.setText(Bundle.getMessage("LightWarn9"));
                 status2.setVisible(true);

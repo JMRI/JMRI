@@ -9,16 +9,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for ConnectionConfig class.
+ * Tests for RaspberryPiConnectionConfig class.
  *
  * @author Paul Bender Copyright (C) 2016
- *
  */
-public class ConnectionConfigTest {
+public class RaspberryPiConnectionConfigTest {
 
     @Test
     public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor", new ConnectionConfig());
+        Assert.assertNotNull("ConnectionConfig constructor", new RaspberryPiConnectionConfig());
     }
 
     @Before

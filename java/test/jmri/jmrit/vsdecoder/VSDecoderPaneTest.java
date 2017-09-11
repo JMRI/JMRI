@@ -36,6 +36,6 @@ public class VSDecoderPaneTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderPaneTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(VSDecoderPaneTest.class);
 
 }

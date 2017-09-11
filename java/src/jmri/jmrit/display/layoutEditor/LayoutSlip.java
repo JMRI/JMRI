@@ -37,6 +37,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.Path;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
@@ -118,16 +119,18 @@ public class LayoutSlip extends LayoutTurnout {
     public void setSlipType(int slipType) {
         if (type != slipType) {
             type = slipType;
-            if (type == DOUBLE_SLIP) {
+            if (type == SINGLE_SLIP) {
+                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+                turnoutStates.remove(STATE_BC);
+            } else if (type == DOUBLE_SLIP) {
                 turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
                 turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
                 turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
-                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-                turnoutStates.remove(STATE_BC);
+                log.error("Invalid slip Type " + slipType); //I18IN
             }
         }
     }
@@ -1954,7 +1957,7 @@ public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
                 lc = new LayoutConnectivity(lbA, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsC()));
+                lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
                 results.add(lc);
             }
             if ((type == DOUBLE_SLIP) && (lbB != lbD)) {
@@ -1962,7 +1965,7 @@ public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
                 lc = new LayoutConnectivity(lbB, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsD()));
+                lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
                 results.add(lc);
             }
             if (lbA != lbD) {
@@ -1970,7 +1973,7 @@ public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
                 lc = new LayoutConnectivity(lbA, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AD);
-                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsA(), getCoordsD()));
+                lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
                 results.add(lc);
             }
             if (lbB != lbC) {
@@ -1978,7 +1981,7 @@ public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BC);
-                lc.setDirection(LayoutEditorAuxTools.computeDirection(getCoordsB(), getCoordsC()));
+                lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsC()));
                 results.add(lc);
             }
         }

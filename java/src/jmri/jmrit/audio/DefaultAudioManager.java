@@ -184,7 +184,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     public synchronized void deregister(Audio s) {
         super.deregister(s);
         // Decrement the relevant Audio object counter
-        switch (((Audio) s).getSubType()) {
+        switch (s.getSubType()) {
             case (Audio.BUFFER): {
                 countBuffers--;
                 break;

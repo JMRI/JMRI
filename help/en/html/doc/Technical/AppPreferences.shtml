@@ -100,7 +100,9 @@ In addition to creating the directory structure, there are two files with conten
 profile.id=NewEmptyProfile.3d854083
 profile.name=NewEmptyProfile
 </pre>
-<p>
+
+and
+
 <pre style="font-family: monospace;">
 % cat /Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/jmri-784F4398C983-3d854083/user-interface.xml
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -155,11 +157,7 @@ In that example, the ProfileID was created as <code>NewEmptyProfile.3d854083</co
 
       </ul>
 
-
-
-
-
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

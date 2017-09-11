@@ -68,7 +68,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
-            element.setAttribute("linkedpanel", p.getLinkEditorName());
+            element.setAttribute("linkedpanel", p.getLinkedEditorName());
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 

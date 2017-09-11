@@ -248,7 +248,7 @@ public class OptionsMenu extends JMenu {
 
             JPanel p15 = new JPanel();
             p15.setLayout(new FlowLayout());
-            p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + " :"));
+            p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + ":"));
             minThrottleIntervalSpinner.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
             p15.add(minThrottleIntervalSpinner);
             p15.add(new JLabel(Bundle.getMessage("ms")));
@@ -257,7 +257,7 @@ public class OptionsMenu extends JMenu {
             JPanel p17 = new JPanel();
             p17.setLayout(new FlowLayout());
             p17.add(new JLabel(Bundle.getMessage("fullRampTime") + " :"));
-            fullRampTimeSpinner.setToolTipText(Bundle.getMessage("fullRampTimeHint"));
+            fullRampTimeSpinner.setToolTipText(Bundle.getMessage("fullRampTimeHint", Bundle.getMessage("RAMP_FAST")));
             p17.add(fullRampTimeSpinner);
             p17.add(new JLabel(Bundle.getMessage("ms")));
             optionsPane.add(p17);

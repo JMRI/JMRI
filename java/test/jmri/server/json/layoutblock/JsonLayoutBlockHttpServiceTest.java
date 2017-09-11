@@ -33,6 +33,6 @@ public class JsonLayoutBlockHttpServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockHttpServiceTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockHttpServiceTest.class);
 
 }

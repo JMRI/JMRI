@@ -77,8 +77,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     @CheckReturnValue
     public String describeState(int state) {
         switch (state) {
-            case ON: return Bundle.getMessage("LightStateOn");
-            case OFF: return Bundle.getMessage("LightStateOff");
+            case ON: return Bundle.getMessage("StateOn");
+            case OFF: return Bundle.getMessage("StateOff");
             case INTERMEDIATE: return Bundle.getMessage("LightStateIntermediate");
             case TRANSITIONINGTOFULLON: return Bundle.getMessage("LightStateTransitioningToFullOn");
             case TRANSITIONINGHIGHER: return Bundle.getMessage("LightStateTransitioningHigher");

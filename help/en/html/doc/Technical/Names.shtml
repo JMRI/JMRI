@@ -771,13 +771,12 @@
       object in the program that implements the sensor group.
       Instead, when the user creates sensor group "my group", a
       series of routes with system names like:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 SENSOR GROUP:my group:LS1
 SENSOR GROUP:my group:LS2
-</code>
-</pre>are created which implements the group. The sensor group tool
-knows to look for routes of this name.
+</pre>
+    are created which implements the group. The sensor group tool
+    knows to look for routes of this name.
 
       <p>To make this possible, two informal rules are used:</p>
 
@@ -847,14 +846,16 @@ knows to look for routes of this name.
       
           The code to make sure that names are in normal form 
           has been localized to a single routine for user names:
-          <br><pre><code>
+          <br>
+<pre style="font-family: monospace;">
           String userName = NamedBean.normalizeUserName(input);
-          </code></pre><br>
+</pre><br>
           Because system names may vary from type to type 
           and manager to manager, this is manager-specific for them:
-          <br><pre><code>
+          <br>
+<pre style="font-family: monospace;">
           String systemName = manager.normalizeSystemName(input);
-          </code></pre><br>
+</pre><br>
           For more information, see the Javadoc for
             <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>
             and
@@ -867,7 +868,7 @@ knows to look for routes of this name.
         <li>JComboBox format:
             <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
             
-            <code><pre>
+<pre style="font-family: monospace;">
         import jmri.util.swing.JmriBeanComboBox;
 
         // the first argument is the manager, the 2nd is a bean to select or null
@@ -881,11 +882,11 @@ knows to look for routes of this name.
         selectComboBox.getSystemName()                                       
         selectComboBox.getUserName()                                        
         selectComboBox.getDisplayName()                                       
-            </pre></code>
+</pre>
 
         <li>Table format:
             <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
-            <code><pre>
+<pre style="font-family: monospace;">
 
         import jmri.jmrit.picker.*;
         <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
@@ -900,7 +901,7 @@ knows to look for routes of this name.
         public void valueChanged(ListSelectionEvent e) {
             System.out.println("  Selected: "+panel.getSelectedBeanHandle());
         }
-            </pre></code>
+</pre>
         This allows the user to select either the system name or (non-blank) user name in a row,
         which then becomes the preferred name for the resulting 
         <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.

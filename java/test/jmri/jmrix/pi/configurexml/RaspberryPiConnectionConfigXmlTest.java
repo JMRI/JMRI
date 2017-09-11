@@ -1,4 +1,4 @@
-package jmri.jmrix.roco.z21.simulator.configurexml;
+package jmri.jmrix.pi.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -8,16 +8,16 @@ import org.junit.Test;
 
 /**
  * ConnectionConfigXmlTest.java
-
- Description: tests for the Z21SimulatorConnectionConfigXml class
+ * <p>
+ * Description: tests for the RaspberryPiConnectionConfigXml class
  *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
+public class RaspberryPiConnectionConfigXmlTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new Z21SimulatorConnectionConfigXml());
+    public void testCtor() {
+        Assert.assertNotNull("RaspberryPiConnectionConfigXml constructor", new RaspberryPiConnectionConfigXml());
     }
 
     // The minimal setup for log4J
@@ -32,4 +32,3 @@ public class ConnectionConfigXmlTest {
     }
 
 }
-

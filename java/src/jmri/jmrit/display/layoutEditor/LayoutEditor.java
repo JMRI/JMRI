@@ -1087,7 +1087,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-
         if (cm != null) {
             cm.registerUser(this);
         }
@@ -4957,7 +4956,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 (inColor != null) && (inColor == turnoutCircleColor), a);
     } //addTurnoutCircleColorMenuEntry
 
-    private void addTurnoutCircleSizeMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, @Nonnull final int inSize) {
+    private void addTurnoutCircleSizeMenuEntry(@Nonnull JMenu inMenu, @Nonnull String inName, final int inSize) {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -5578,7 +5577,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * @return the coordinates for the connection type of the specified object
      */
     public Point2D getCoords(@Nonnull Object o, int connectionType) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         if (o != null) {
             result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
         } else {
@@ -7024,8 +7023,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         newPoint = new Point2D.Double(pm.getOriginalX(), pm.getOriginalY());
                     }
                     newPoint = MathUtil.add(newPoint, delta);
-                    newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
-                    c.setLocation(MathUtil.pointForPoint2D(newPoint));
+                    newPoint = MathUtil.max(MathUtil.zeroPoint2D, newPoint);
+                    c.setLocation(MathUtil.point2DToPoint(newPoint));
                 }
             }
 
@@ -7054,7 +7053,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (List<LayoutTrack> l : listOfLists) {
                 for (LayoutTrack lt : l) {
                     Point2D newPoint = MathUtil.add(lt.getCoordsCenter(), delta);
-                    newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
+                    newPoint = MathUtil.max(MathUtil.zeroPoint2D, newPoint);
                     lt.setCoordsCenter(newPoint);
                 }
             }

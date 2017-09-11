@@ -31,7 +31,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
-public class TransitManager extends AbstractManager implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class TransitManager extends AbstractManager<Transit> implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public TransitManager() {
         super();

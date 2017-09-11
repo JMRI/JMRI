@@ -58,6 +58,6 @@ public class LokProgImporterTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LokProgImporterTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(LokProgImporterTest.class);
 
 }

@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -102,7 +103,22 @@ public class PositionablePoint extends LayoutTrack {
 
     // this should only be used for debugging...
     public String toString() {
-        return "PositionablePoint " + ident;
+        String result = "PositionalablePoint";
+        switch (type) {
+            case ANCHOR: {
+                result = "Anchor";
+                break;
+            }
+            case END_BUMPER: {
+                result = "End Bumper";
+                break;
+            }
+            case EDGE_CONNECTOR: {
+                result = "Edge Connector";
+                break;
+            }
+        }
+        return result + " '" + ident + "'";
     }
 
     /**
@@ -110,40 +126,6 @@ public class PositionablePoint extends LayoutTrack {
      */
     public int getType() {
         return type;
-    }
-
-    /**
-     * get coordinates
-     *
-     * @return the coordinates
-     *
-     * @deprecated replaced by
-     * @see #getCoordsCenter()
-     * @since 4.9.2
-     *
-     * note: done for Polymorphism so all LayoutTrack sub-classes use same
-     * method
-     */
-    @Deprecated
-    public Point2D getCoords() {
-        return getCoordsCenter();
-    }
-
-    /**
-     * set the coordinates
-     *
-     * @param p the coordinates
-     *
-     * @deprecated replaced by
-     * @see #setCoordsCenter(Point2D)
-     * @since 4.9.2
-     *
-     * note: done for Polymorphism so all LayoutTrack sub-classes use same
-     * method
-     */
-    @Deprecated
-    public void setCoords(Point2D p) {
-        setCoordsCenter(p);
     }
 
     public TrackSegment getConnect1() {
@@ -190,7 +172,16 @@ public class PositionablePoint extends LayoutTrack {
 
     private PositionablePoint linkedPoint;
 
+    /**
+     * @return the name of the linked editor
+     * @deprecated since 4.9.4 use @link{getLinkedEditorName()} instead.
+     */
+    @Deprecated
     public String getLinkEditorName() {
+        return getLinkedEditorName();
+    }
+
+    public String getLinkedEditorName() {
         if (getLinkedEditor() != null) {
             return getLinkedEditor().getLayoutName();
         }
@@ -269,7 +260,7 @@ public class PositionablePoint extends LayoutTrack {
     public SignalHead getEastBoundSignalHead() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH + Path.EAST) {
+            if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH_EAST) {
                 if (signalEastHeadNamed != null) {
                     return signalEastHeadNamed.getBean();
                 }
@@ -277,7 +268,7 @@ public class PositionablePoint extends LayoutTrack {
             } else if (getLinkedPoint() != null) {
                 // Do some checks to find where the connection is here.
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH + Path.EAST) {
+                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH_EAST) {
                     return getLinkedPoint().getEastBoundSignalHead();
                 }
             }
@@ -292,11 +283,11 @@ public class PositionablePoint extends LayoutTrack {
     public void setEastBoundSignal(String signalName) {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH + Path.EAST) {
+            if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH_EAST) {
                 setEastBoundSignalName(signalName);
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH + Path.EAST) {
+                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH_EAST) {
                     getLinkedPoint().setEastBoundSignal(signalName);
                 } else {
                     setEastBoundSignalName(signalName);
@@ -338,7 +329,7 @@ public class PositionablePoint extends LayoutTrack {
     public SignalHead getWestBoundSignalHead() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH + Path.WEST) {
+            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH_WEST) {
                 if (signalWestHeadNamed != null) {
                     return signalWestHeadNamed.getBean();
                 }
@@ -346,7 +337,7 @@ public class PositionablePoint extends LayoutTrack {
             } else if (getLinkedPoint() != null) {
                 // Do some checks to find where the connection is here.
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH + Path.WEST) {
+                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH_WEST) {
                     return getLinkedPoint().getWestBoundSignalHead();
                 }
             }
@@ -361,11 +352,11 @@ public class PositionablePoint extends LayoutTrack {
     public void setWestBoundSignal(String signalName) {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH + Path.WEST) {
+            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH_WEST) {
                 setWestBoundSignalName(signalName);
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH + Path.WEST) {
+                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH_WEST) {
                     getLinkedPoint().setWestBoundSignal(signalName);
                 } else {
                     setWestBoundSignalName(signalName);
@@ -474,11 +465,11 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<SignalMast> getEastBoundSignalMastNamed() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.SOUTH || dir == Path.EAST || dir == Path.SOUTH + Path.EAST) {
+            if (dir == Path.SOUTH || dir == Path.EAST || dir == Path.SOUTH_EAST) {
                 return eastBoundSignalMastNamed;
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH + Path.EAST) {
+                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH_EAST) {
                     return getLinkedPoint().getEastBoundSignalMastNamed();
                 }
             }
@@ -500,11 +491,11 @@ public class PositionablePoint extends LayoutTrack {
         }
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH + Path.EAST) {
+            if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH_EAST) {
                 eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH + Path.EAST) {
+                if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH_EAST) {
                     getLinkedPoint().setEastBoundSignalMast(signalMast);
                 } else {
                     eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
@@ -538,11 +529,11 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<SignalMast> getWestBoundSignalMastNamed() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH + Path.WEST) {
+            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH_WEST) {
                 return westBoundSignalMastNamed;
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH + Path.WEST) {
+                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH_WEST) {
                     return getLinkedPoint().getWestBoundSignalMastNamed();
                 }
             }
@@ -564,11 +555,11 @@ public class PositionablePoint extends LayoutTrack {
         }
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
-            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH + Path.WEST) {
+            if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH_WEST) {
                 westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
-                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH + Path.WEST) {
+                if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH_WEST) {
                     getLinkedPoint().setWestBoundSignalMast(signalMast);
                 } else {
                     westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
@@ -816,7 +807,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
-                    jmi = popup.add(getLinkEditorName());
+                    jmi = popup.add(getLinkedEditorName());
                 } else {
                     jmi = popup.add(rb.getString("EdgeNotLinked"));
                 }
@@ -893,37 +884,36 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("A", 1);
                 type = ANCHOR;
+                layoutEditor.repaint();
             }
         }));
         jmi.setSelected(getType() == ANCHOR);
+
+        // you can't set it to an anchor if it has a 2nd connection
+        // TODO: add error dialog if you try?
+        if ((getType() == EDGE_CONNECTOR) && (getConnect2() != null)) {
+            jmi.setEnabled(false);
+        }
 
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EndBumper")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EB", 1);
                 type = END_BUMPER;
+                layoutEditor.repaint();
             }
         }));
         jmi.setSelected(getType() == END_BUMPER);
-        if (getType() == ANCHOR) {
-            if (getConnect2() != null) {
-                jmi.setEnabled(false);
-            }
-        }
 
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EdgeConnector")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EC", 1);
                 type = EDGE_CONNECTOR;
+                layoutEditor.repaint();
             }
         }));
         jmi.setSelected(getType() == EDGE_CONNECTOR);
-        if (getType() == ANCHOR) {
-            if (getConnect2() != null) {
-                jmi.setEnabled(false);
-            }
-        }
 
         popup.add(lineType);
 
@@ -1051,55 +1041,19 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     protected int getConnect1Dir() {
-        Point2D p1;
-        if (getConnect1() == null) {
-            return Path.NONE;
-        }
-        if (getConnect1().getConnect1() == this) {
-            p1 = layoutEditor.getCoords(getConnect1().getConnect2(), getConnect1().getType2());
-        } else {
-            p1 = layoutEditor.getCoords(getConnect1().getConnect1(), getConnect1().getType1());
-        }
+        int result = Path.NONE;
 
-        double dh = getCoordsCenter().getX() - p1.getX();
-        double dv = getCoordsCenter().getY() - p1.getY();
-        int dir = Path.NORTH;
-        double tanA;
-        if (dv != 0.0) {
-            tanA = Math.abs(dh) / Math.abs(dv);
-        } else {
-            tanA = 10.0;
-        }
-        if (tanA < 0.38268) {
-            // track is mostly vertical
-            if (dv < 0.0) {
-                dir = Path.NORTH;
+        TrackSegment ts1 = getConnect1();
+        if (ts1 != null) {
+            Point2D p1;
+            if (ts1.getConnect1() == this) {
+                p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
             } else {
-                dir = Path.SOUTH;
+                p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
             }
-        } else if (tanA > 2.4142) {
-            // track is mostly horizontal
-            if (dh > 0.0) {
-                dir = Path.EAST;
-            } else {
-                dir = Path.WEST;
-            }
-        } else {
-            // track is between horizontal and vertical
-            if ((dv > 0.0) && (dh > 0.0)) {
-                dir = Path.SOUTH + Path.EAST;
-            } else if ((dv > 0.0) && (dh < 0.0)) {
-                dir = Path.SOUTH + Path.WEST;
-            } else if ((dv < 0.0) && (dh < 0.0)) {
-                dir = Path.NORTH + Path.WEST;
-            } else {
-                dir = Path.NORTH + Path.EAST;
-            }
+            result = Path.computeDirection(getCoordsCenter(), p1);
         }
-        if (dir != LayoutEditorAuxTools.computeDirection(getCoordsCenter(), p1)) {
-            log.warn("computeDirection invalid");
-        }
-        return dir;
+        return result;
     }
 
     JDialog editLink = null;
@@ -1249,7 +1203,7 @@ public class PositionablePoint extends LayoutTrack {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected || (getConnect1() == null)
-                || ((getType() == PositionablePoint.ANCHOR) && (getConnect2() == null))) {
+                || ((getType() == ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
             Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
             if (r.contains(p)) {
@@ -1338,7 +1292,9 @@ public class PositionablePoint extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     public void draw(Graphics2D g2) {
-        if (getType() != PositionablePoint.ANCHOR) {
+        if (getType() != ANCHOR) {
+            Stroke originalStroke = g2.getStroke();
+
             Point2D pt = getCoordsCenter();
             boolean mainline = false;
             Point2D ep1 = pt, ep2 = pt;
@@ -1352,37 +1308,40 @@ public class PositionablePoint extends LayoutTrack {
                 ep2 = getConnect2().getCentre();
             }
 
+            float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
+            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+
             if (!ep1.equals(ep2)) {
-                float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
-                layoutEditor.setTrackStrokeWidth(g2, false);
                 setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
                 double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                if (mainline) {
-                    float quarterWidth = Math.max(1.F, trackWidth / 4.F);
-                    Point2D p1 = new Point2D.Double(-quarterWidth, -trackWidth);
-                    Point2D p2 = new Point2D.Double(-quarterWidth, +trackWidth);
-                    Point2D p3 = new Point2D.Double(+quarterWidth, +trackWidth);
-                    Point2D p4 = new Point2D.Double(+quarterWidth, -trackWidth);
+                Point2D p1, p2, p3, p4;
+                if (getType() == END_BUMPER) {
+                    // draw a cross tie
+                    p1 = new Point2D.Double(0.0, -trackWidth);
+                    p2 = new Point2D.Double(0.0, +trackWidth);
 
                     p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
                     p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                    g2.setStroke(drawingStroke);
+                    g2.draw(new Line2D.Double(p1, p2));
+                } else if (getType() == EDGE_CONNECTOR) {
+                    // draw an arrow
+                    p1 = new Point2D.Double(0.0, -trackWidth);
+                    p2 = new Point2D.Double(-trackWidth, 0.0);
+                    p3 = new Point2D.Double(0.0, +trackWidth);
+                    g2.setStroke(drawingStroke1);
+                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
                     p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-                    p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), pt);
 
                     g2.draw(new Line2D.Double(p1, p2));
                     g2.draw(new Line2D.Double(p2, p3));
-                    g2.draw(new Line2D.Double(p3, p4));
-                    g2.draw(new Line2D.Double(p4, p1));
-                } else {
-                    Point2D end1 = new Point2D.Double(0.0, -trackWidth);
-                    Point2D end2 = new Point2D.Double(0.0, +trackWidth);
-
-                    end1 = MathUtil.add(MathUtil.rotateRAD(end1, angleRAD), pt);
-                    end2 = MathUtil.add(MathUtil.rotateRAD(end2, angleRAD), pt);
-                    g2.draw(new Line2D.Double(end1, end2));
+                    g2.draw(new Line2D.Double(p3, p1));
                 }
             }
-        }
+            g2.setStroke(originalStroke);
+        }   // if (getType() != ANCHOR)
     }
 
     /**
@@ -1393,34 +1352,14 @@ public class PositionablePoint extends LayoutTrack {
     public void drawControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-        switch (getType()) {
-            case PositionablePoint.ANCHOR:
-            case PositionablePoint.EDGE_CONNECTOR: {
-                if (getConnect1() == null) {
-                    g2.setColor(Color.red);
-                } else if (getConnect2() == null) {
-                    g2.setColor(Color.blue);
-                } else {
-                    g2.setColor(Color.green);
-                }
-                break;
-            }
-            case PositionablePoint.END_BUMPER: {
-                if (getConnect1() == null) {
-                    g2.setColor(Color.red);
-                } else {
-                    g2.setColor(Color.green);
-                }
-                break;
-            }
-            default: {
-                log.error("Illegal type of Positionable Point");
-                break;
-            }
-        }   //switch
-
-        Point2D pt = getCoordsCenter();
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        if (getConnect1() == null) {
+            g2.setColor(Color.red);
+        } else if ((getType() != END_BUMPER) && getConnect2() == null) {
+            g2.setColor(Color.yellow);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
     }   // drawControls
 
     /*
@@ -1433,7 +1372,7 @@ public class PositionablePoint extends LayoutTrack {
         TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
         Point2D p1, p2;
 
-        if (getType() == PositionablePoint.ANCHOR) {
+        if (getType() == ANCHOR) {
             if ((ts1 != null) && (ts2 != null)) {
                 blk1 = ts1.getLayoutBlock();
                 blk2 = ts2.getLayoutBlock();
@@ -1452,13 +1391,13 @@ public class PositionablePoint extends LayoutTrack {
                     } else {
                         p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
                     }
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, p2));
+                    lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
                     lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);
                 }
             }
-        } else if (getType() == PositionablePoint.EDGE_CONNECTOR) {
+        } else if (getType() == EDGE_CONNECTOR) {
             if ((ts1 != null) && (ts2 != null)) {
                 blk1 = ts1.getLayoutBlock();
                 blk2 = ts2.getLayoutBlock();
@@ -1476,7 +1415,7 @@ public class PositionablePoint extends LayoutTrack {
 
                     //Need to find a way to compute the direction for this for a split over the panel
                     //In this instance work out the direction of the first track relative to the positionable poin.
-                    lc.setDirection(LayoutEditorAuxTools.computeDirection(p1, getCoordsCenter()));
+                    lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
                     // save Connections
                     lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);

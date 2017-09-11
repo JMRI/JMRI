@@ -393,7 +393,7 @@ public class SpeedUtil {
                 signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph -> mm/ms
                 float trackSpeed = getTrackSpeed(throttleSpeed, isForward);
                 if (signalSpeed < trackSpeed) {
-                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed);
+                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed, _throttle.getIsForward());
                     if (throttleSpeed <= 0.0f) {
                         return signalSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
                     }
@@ -405,7 +405,7 @@ public class SpeedUtil {
                 signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms -> kmph
                 trackSpeed = getTrackSpeed(throttleSpeed, isForward);
                 if (signalSpeed < trackSpeed) {
-                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed);
+                    throttleSpeed = getThrottleSettingForSpeed(signalSpeed, _throttle.getIsForward());
                     if (throttleSpeed <= 0.0f) {
                         return signalSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
                     }
@@ -455,11 +455,12 @@ public class SpeedUtil {
      * track speed is mm/ms.  SpeedProfile wants mm/s
      * SpeedProfile returns 0 if it has no speed information
      * @param trackSpeed in millimeters per millisecond (m/s)
+     * @param isForward direction
      * @return throttle setting or 0
      */
-    private float getThrottleSettingForSpeed(float trackSpeed) {
+    protected float getThrottleSettingForSpeed(float trackSpeed, boolean isForward) {
         RosterSpeedProfile speedProfile = getSpeedProfile();
-        return speedProfile.getThrottleSetting(trackSpeed * 1000, _throttle.getIsForward());
+        return speedProfile.getThrottleSetting(trackSpeed * 1000, isForward);
     }
 
     /**
@@ -497,7 +498,7 @@ public class SpeedUtil {
 
     /**
      * Get ramp length needed to change speed using the WarrantPreference deltas for 
-     * throttle increment and time increment
+     * throttle increment and time increment.  This should only be used for ramping down.
      * @param curSetting current throttle setting
      * @param curSpeedType current speed type
      * @param toSpeedType Speed type change
@@ -510,7 +511,7 @@ public class SpeedUtil {
         }
         float fromSpeed = modifySpeed(curSetting, curSpeedType, isForward);
         float toSpeed = modifySpeed(curSetting, toSpeedType, isForward);
-        if (toSpeed > fromSpeed) {
+        if (toSpeed > fromSpeed) {      // insure it is ramp down regardless of speedType order
             float tmp = fromSpeed;
             fromSpeed = toSpeed;
             toSpeed = tmp;
@@ -519,8 +520,14 @@ public class SpeedUtil {
         int deltaTime = getRampTimeIncrement();
         float deltaThrottle = getRampThrottleIncrement();
         float mf = getMomentumFactor();
-        float speed = fromSpeed;
-        int steps = 0;
+        float speed = toSpeed;
+        int numSteps = 0;
+        while (speed + deltaThrottle <= fromSpeed) {
+            speed += deltaThrottle;
+            deltaThrottle *= NXFrame.INCRE_RATE;
+            numSteps++;
+        }
+        speed = fromSpeed;
         while (speed >= toSpeed) {
             float dist = getTrackSpeed(speed - deltaThrottle*mf, isForward) * deltaTime;
             if (dist <= 0.0f) {
@@ -532,9 +539,10 @@ public class SpeedUtil {
             } else {
                 rampLength += (speed + deltaThrottle - toSpeed) * dist / deltaThrottle;
             }
-            steps++;
+            deltaThrottle /= NXFrame.INCRE_RATE;
+            numSteps++;
         }
-        int rampTime = deltaTime*steps;
+        int rampTime = deltaTime*numSteps;
         if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {}",
                 rampLength, rampTime, fromSpeed, curSpeedType, toSpeedType, toSpeed);
         return rampLength;   // add 1cm for safety (all scales)

@@ -33,6 +33,6 @@ public class JsonTimeHttpServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonTimeHttpServiceTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(JsonTimeHttpServiceTest.class);
 
 }
