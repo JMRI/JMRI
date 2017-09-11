@@ -171,8 +171,6 @@ public class PanelEditor extends Editor implements ItemListener {
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
-            PanelEditor panelEd;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
@@ -180,11 +178,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 ii.setVisible(true);
             }
 
-            ActionListener init(PanelEditor pe) {
-                panelEd = pe;
-                return this;
-            }
-        }.init(this));
+        });
         fileMenu.add(editItem);
 
         editItem = new JMenuItem(Bundle.getMessage("CPEView"));
@@ -500,10 +494,6 @@ public class PanelEditor extends Editor implements ItemListener {
             return Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
-
-    private int locationX = 0;
-    private int locationY = 0;
-    private static final int DELTA = 20;
 
     /*
      *  itemListener for JComboBox

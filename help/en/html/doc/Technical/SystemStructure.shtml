@@ -115,8 +115,6 @@
       This makes sense because the type of the connection is really specified
       via the type of that link and what's on the other end of it.
 
-      <p>
-
       <h3>"Simple" Initialization Sequence</h3>
 
       This section describes the
@@ -367,7 +365,7 @@
 
     </ul>
 
-    <h3>More Complex Initialization: C/MRI</h2>
+    <h3>More Complex Initialization: C/MRI</h3>
     For a more complex example, consider C/MRI, which has more content
     in it's <code>&lt;connection&gt;</code>element:
 <pre>
@@ -426,7 +424,7 @@
       for links to configuration elements.
       (Is there another place that the configuration process and preferences support is described? If so, it should
       be linked from here.)
-      <p/>
+      <p>
       Any particular system connection is included in the preferences by
       being listed in the <code>java/src/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is normally
       generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code> class-level annotations.
@@ -511,7 +509,7 @@ jmri.jmrix.loconet.LnConnectionTypeList
 
       </ul>
 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

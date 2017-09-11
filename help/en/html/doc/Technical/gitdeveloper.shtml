@@ -289,8 +289,9 @@ To push the current branch and set the remote as upstream, use
         the main repository (more often). You are automatically signed up for
         notifications when things happens.</li>
         
-        <a id="labels" name="labels"></a>
-        <li>Sometimes, a maintainer will put a label on your PR
+        <li>
+            <a id="labels" name="labels"></a>
+        Sometimes, a maintainer will put a label on your PR
         to indicate its status. Some of the more interesting ones are:
           <ul>
             <li>"WIP" - this is a "blue flag" indicating Work In Progress - 
