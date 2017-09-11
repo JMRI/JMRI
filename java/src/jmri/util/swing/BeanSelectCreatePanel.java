@@ -226,7 +226,8 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
         if (nBean == null) {
             throw new jmri.JmriException("Unable to create bean");
         }
-        if ((_reference != null && !_reference.equals("")) && (nBean.getComment() == null || nBean.getComment().equals(""))) {
+        // Update comment if there's content, and there's not already a comment
+        if ((_reference != null && !_reference.isEmpty()) && (nBean.getComment() == null || nBean.getComment().isEmpty())) {
             nBean.setComment(_reference);
         }
         setDefaultNamedBean(nBean);
