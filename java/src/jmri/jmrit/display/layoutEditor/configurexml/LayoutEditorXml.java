@@ -366,12 +366,10 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         panel.setTurnoutCircleSize(turnoutCircleSize);
 
-        boolean value = true;
         try {
-            value = shared.getAttribute("turnoutdrawunselectedleg").getBooleanValue();
+            panel.setTurnoutDrawUnselectedLeg(shared.getAttribute("turnoutdrawunselectedleg").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setTurnoutDrawUnselectedLeg(value);
 
         // turnout size parameters
         double sz = 20.0;
@@ -456,75 +454,55 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        value = true;
         try {
-            value = shared.getAttribute("positionable").getBooleanValue();
+            panel.setAllPositionable(shared.getAttribute("positionable").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setAllPositionable(value);
 
-        value = true;
         try {
-            value = shared.getAttribute("controlling").getBooleanValue();
+            panel.setAllControlling(shared.getAttribute("controlling").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setAllControlling(value);
 
-        value = true;
         try {
-            value = shared.getAttribute("animating").getBooleanValue();
+            panel.setTurnoutAnimation(shared.getAttribute("animating").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setTurnoutAnimation(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("drawgrid").getBooleanValue();
+            panel.setDrawGrid(shared.getAttribute("drawgrid").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setDrawGrid(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("snaponadd").getBooleanValue();
+            panel.setSnapOnAdd(shared.getAttribute("snaponadd").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setSnapOnAdd(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("snaponmove").getBooleanValue();
+            panel.setSnapOnMove(shared.getAttribute("snaponmove").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setSnapOnMove(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("turnoutcircles").getBooleanValue();
+            panel.setTurnoutCircles(shared.getAttribute("turnoutcircles").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setTurnoutCircles(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("tooltipsnotedit").getBooleanValue();
+            panel.setTooltipsNotEdit(shared.getAttribute("tooltipsnotedit").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setTooltipsNotEdit(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("autoblkgenerate").getBooleanValue();
+            panel.setAutoBlockAssignment(shared.getAttribute("autoblkgenerate").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setAutoBlockAssignment(value);
 
-        value = true;
         try {
-            value = shared.getAttribute("tooltipsinedit").getBooleanValue();
+            panel.setTooltipsInEdit(shared.getAttribute("tooltipsinedit").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setTooltipsInEdit(value);
 
         // set default track color
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
@@ -550,12 +528,12 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        value = false;
         try {
-            value = shared.getAttribute("useDirectTurnoutControl").getBooleanValue();
+            panel.setDirectTurnoutControl(shared.getAttribute("useDirectTurnoutControl").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert Layout Editor useDirectTurnoutControl attribute");
         } catch (Exception e) {
         }
-        panel.setDirectTurnoutControl(value);
 
         // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
@@ -595,31 +573,26 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setConnections();
 
         // display the results
-        value = true;
         try {
-            value = shared.getAttribute("editable").getBooleanValue();
+            // set first since other attribute use this setting
+            panel.setAllEditable(shared.getAttribute("editable").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setAllEditable(value);  // set first since other attribute use this setting
 
-        value = true;
         try {
-            value = shared.getAttribute("showhelpbar").getBooleanValue();
+            panel.setShowHelpBar(shared.getAttribute("showhelpbar").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setShowHelpBar(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("antialiasing").getBooleanValue();
+            panel.setAntialiasingOn(shared.getAttribute("antialiasing").getBooleanValue());
         } catch (Exception e) {
         }
-        panel.setAntialiasingOn(value);
 
         // set contents state
         String slValue = "both";
         try {
-            value = shared.getAttribute("sliders").getBooleanValue();
+            boolean value = shared.getAttribute("sliders").getBooleanValue();
             slValue = value ? "both" : "none";
         } catch (Exception e) {
         }
@@ -641,7 +614,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
         if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
             try {
-                value = shared.getAttribute("openDispatcher").getBooleanValue();
+                boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);
                 if (value) {
                     DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);

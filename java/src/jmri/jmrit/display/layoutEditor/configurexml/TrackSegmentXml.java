@@ -7,6 +7,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +61,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("bezier", "yes");
         }
         element.setAttribute("class", getClass().getName());
-        
+
         if (p.getBezier()) {
             // add control points
             Element elementControlpoints = new Element("controlpoints");
@@ -107,45 +108,57 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert tracksegment attribute");
         }
+
         boolean dash = true;
-        if (element.getAttribute("dashed").getValue().equals("no")) {
-            dash = false;
+        try {
+            dash = element.getAttribute("dashed").getBooleanValue();
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert track segment dashed attribute");
+        } catch (Exception e) {
         }
+
         boolean main = true;
-        if (element.getAttribute("mainline").getValue().equals("no")) {
-            main = false;
+        try {
+            main = element.getAttribute("mainline").getBooleanValue();
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert track segment mainline attribute");
+        } catch (Exception e) {
         }
-        boolean hide = true;
-        if (element.getAttribute("hidden").getValue().equals("no")) {
-            hide = false;
+
+        boolean hide = false;
+        try {
+            hide = element.getAttribute("hidden").getBooleanValue();
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert track segment hidden attribute");
+        } catch (Exception e) {
         }
+
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
         // create the new TrackSegment
-        TrackSegment l = new TrackSegment(name, con1Name, type1, con2Name, type2,
+        TrackSegment l = new TrackSegment(name,
+                con1Name, type1, con2Name, type2,
                 dash, main, hide, p);
         try {
-            if (element.getAttribute("arc").getValue().equals("yes")) {
-                l.setArc(true);
-            }
-        } catch (NullPointerException e) {
-        }//considered normal if the attribute is not present }
+            l.setArc(element.getAttribute("arc").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert track segment arc attribute");
+        } catch (Exception e) {
+        }
 
         if (l.getArc()) {
-            //int angle = 0;
-            //int startangle = 0;
             try {
-                if (element.getAttribute("flip").getValue().equals("yes")) {
-                    l.setFlip(true);
-                }
-            } catch (NullPointerException e) {
-            }//considered normal if the attribute is not present }
+                l.setFlip(element.getAttribute("flip").getBooleanValue());
+            } catch (DataConversionException e1) {
+                log.warn("unable to convert track segment flip attribute");
+            } catch (Exception e) {
+            }
             try {
-                if (element.getAttribute("circle").getValue().equals("yes")) {
-                    l.setCircle(true);
-                }
-            } catch (NullPointerException e) {
+                l.setCircle(element.getAttribute("circle").getBooleanValue());
+            } catch (DataConversionException e1) {
+                log.warn("unable to convert track segment circle attribute");
+            } catch (Exception e) {
             }
             if (l.getCircle()) {
                 try {
@@ -156,15 +169,17 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 }
             }
             try {
-                if (element.getAttribute("hideConLines").getValue().equals("yes")) {
+                if (element.getAttribute("hideConLines").getBooleanValue()) {
                     l.hideConstructionLines(TrackSegment.HIDECON);
                 }
-            } catch (NullPointerException e) {
-            }//considered normal if the attribute is not present }
+            } catch (DataConversionException e1) {
+                log.warn("unable to convert track segment hideConLines attribute");
+            } catch (Exception e) {
+            }
         }
 
         try {
-            if (element.getAttribute("bezier").getValue().equals("yes")) {
+            if (element.getAttribute("bezier").getBooleanValue()) {
                 // load control points
                 Element controlpointsElement = element.getChild("controlpoints");
                 if (null != controlpointsElement) {
@@ -197,8 +212,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 // NOTE: do this LAST (so reCenter won't be called yet)
                 l.setBezier(true);
             }
-        } catch (NullPointerException e) {
-        }//considered normal if the attribute is not present }
+        } catch (org.jdom2.DataConversionException e) {
+            log.error("failed to convert tracksegment attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute not present
+        }
 
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
