@@ -34,7 +34,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light getLight(String name) {
-        return (Light) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light provideLight(String name) throws IllegalArgumentException {
-        return (Light) super.provideNamedBean(name);
+        return super.provideNamedBean(name);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light getBySystemName(String systemName) {
-        return (Light) super.getBeanBySystemName(systemName);
+        return super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -74,7 +74,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light getByUserName(String userName) {
-        return (Light) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light newLight(String systemName, String userName) {
-        return (Light) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     /**

@@ -41,7 +41,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected String systemPrefix;
     protected String connectionName;
 
-    protected JPanel _details;
+    protected JPanel _details = null;
 
     protected final HashMap<String, Option> options = new HashMap<>();
 

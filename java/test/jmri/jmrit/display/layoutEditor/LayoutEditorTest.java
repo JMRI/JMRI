@@ -717,5 +717,5 @@ public class LayoutEditorTest {
     }
 
     //initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

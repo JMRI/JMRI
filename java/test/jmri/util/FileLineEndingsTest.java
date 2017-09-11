@@ -36,62 +36,76 @@ public class FileLineEndingsTest {
 
     @Parameters(name = "{0}")
     public static Iterable<Object[]> data() {
-        return getFiles(new File("."), new String[]{
-            "**/*.csh",
-            "**/*.css",
-            "**/*.df",
-            "**/*.dtd",
-            "**/*htm",
-            "**/*html",
-            "**/*.java",
-            "**/*.js",
-            "**/*.json",
-            "**/*.jsp",
-            "**/*.jspf",
-            "**/*.lcf",
-            "**/*.md",
-            "**/*.php",
-            "**/*.pl",
-            "**/*.plist",
-            "**/*.policy",
-            "**/*.prefs",
-            "**/*.properties",
-            "**/*.project",
-            "**/*.py",
-            "**/*.sh",
-            "**/*.svg",
-            "**/*.tld",
-            "**/*.txt",
-            "**/*.xml",
-            "**/*.xsd",
-            "**/*.xsl",
-            "**/COPYING",
-            "**/Footer",
-            "**/Header",
-            "**/README*",
-            "**/Sidebar",
-            "**/TODO",
-            "**/.classpath"
-        });
+        return getFiles(new File("."),
+                new String[]{ // patterns to match
+                    "**/*.csh",
+                    "**/*.css",
+                    "**/*.df",
+                    "**/*.dtd",
+                    "**/*htm",
+                    "**/*html",
+                    "**/*.java",
+                    "**/*.js",
+                    "**/*.json",
+                    "**/*.jsp",
+                    "**/*.jspf",
+                    "**/*.lcf",
+                    "**/*.md",
+                    "**/*.php",
+                    "**/*.pl",
+                    "**/*.plist",
+                    "**/*.policy",
+                    "**/*.prefs",
+                    "**/*.properties",
+                    "**/*.project",
+                    "**/*.py",
+                    "**/*.sh",
+                    "**/*.svg",
+                    "**/*.tld",
+                    "**/*.txt",
+                    "**/*.xml",
+                    "**/*.xsd",
+                    "**/*.xsl",
+                    "**/COPYING",
+                    "**/Footer",
+                    "**/Header",
+                    "**/README*",
+                    "**/Sidebar",
+                    "**/TODO",
+                    "**/.classpath"
+                }, new String[]{ // patterns not to match
+                    "./target/**", // ignore the build directory if immediately under the passed in directory
+                    "**/node_modules/**" // ignore node_modules directories anywhere as those are from external sources
+                });
     }
 
     /**
      * Get all files with the given prefixes in a directory and validate them.
      *
-     * @param directory the directory containing the files
-     * @param patterns  glob patterns of files to match
+     * @param directory    the directory containing the files
+     * @param patterns     glob patterns of files to match
+     * @param antiPatterns glob patterns of files not to match
      * @return a collection of files to validate
      */
-    public static Collection<Object[]> getFiles(File directory, String[] patterns) {
+    public static Collection<Object[]> getFiles(File directory, String[] patterns, String[] antiPatterns) {
         Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
+        ArrayList<PathMatcher> antiMatchers = new ArrayList<>();
+        for (String antiPattern : antiPatterns) {
+            antiMatchers.add(FileSystems.getDefault().getPathMatcher("glob:" + antiPattern));
+        }
         try {
             for (String pattern : patterns) {
                 PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
-                // ignore the build directory if immediately under the passed in directory
-                PathMatcher target = FileSystems.getDefault().getPathMatcher("glob:./target/**");
                 Files.walk(directory.toPath())
-                        .filter(path -> !target.matches(path))
+                        .filter(path -> {
+                            for (PathMatcher antiMatcher : antiMatchers) {
+                                if (antiMatcher.matches(path)) {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        })
                         .filter(matcher::matches)
                         .forEach((path) -> {
                             if (path.toFile().isFile()) {
@@ -126,5 +140,7 @@ public class FileLineEndingsTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

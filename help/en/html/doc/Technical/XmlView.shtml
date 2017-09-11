@@ -84,10 +84,10 @@
         If the XML file you wish to view is within the JMRI distribution
         directory, click on the "/dist" link at bottom right. If it's within
         the preferences directory, click on the "/prefs" link.</li>
+        <li>
         <a href="images/Webstartxml.png">
-          <img src="images/Webstartxml.png"
-               align="center" height="286" width="410"></a>
-        <li>Finally, click on any needed directory names to get to
+          <img src="images/Webstartxml.png" height="286" width="410"></a>
+        Finally, click on any needed directory names to get to
         your file, then click on your file.</li>
       </ul>You can then use your browser to view, print, save, etc.
       as desired.

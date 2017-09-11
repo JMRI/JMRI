@@ -21,8 +21,27 @@ dist/docs/img
 dist/docs/index.html
 
 
-/docs
+docs
 node_modules
 npm-debug.log
 lib
 .bower
+
+
+.openshift
+/misc
+/scripts
+/src
+/styles
+test
+.bowerrc
+.editorconfig
+.gitattributes
+.htmlhintrc
+.travis.yml
+bower.json
+deploy_key.enc
+eslint.yaml
+grunt-ngdocs-index.tmpl
+Gruntfile.js
+/server.js

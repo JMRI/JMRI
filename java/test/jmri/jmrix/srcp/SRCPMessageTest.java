@@ -126,7 +126,7 @@ public class SRCPMessageTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkGetReadRegisterIlegalArgument(){
-      SRCPMessage m = SRCPMessage.getReadRegister(2,10);
+      SRCPMessage.getReadRegister(2,10);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class SRCPMessageTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkGetConfirmRegisterIlegalArgument(){
-      SRCPMessage m = SRCPMessage.getConfirmRegister(2,10,5);
+      SRCPMessage.getConfirmRegister(2,10,5);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class SRCPMessageTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkGetWriteRegisterIlegalArgument(){
-      SRCPMessage m = SRCPMessage.getWriteRegister(2,10,5);
+      SRCPMessage.getWriteRegister(2,10,5);
     }
 
     @Test

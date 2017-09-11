@@ -36,7 +36,9 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static int countBuffers = 0;
 
     /**
-     * Reference to the currently active AudioFactory
+     * Reference to the currently active AudioFactory. 
+     * Because of underlying (external to Java) implementation details,
+     * JMRI only ever has one AudioFactory, so we make this static.
      */
     private static AudioFactory activeAudioFactory = null;
 
@@ -184,7 +186,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     public synchronized void deregister(Audio s) {
         super.deregister(s);
         // Decrement the relevant Audio object counter
-        switch (((Audio) s).getSubType()) {
+        switch (s.getSubType()) {
             case (Audio.BUFFER): {
                 countBuffers--;
                 break;

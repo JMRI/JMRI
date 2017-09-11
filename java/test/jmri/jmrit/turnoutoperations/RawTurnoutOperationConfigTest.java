@@ -32,6 +32,6 @@ public class RawTurnoutOperationConfigTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationConfigTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationConfigTest.class);
 
 }

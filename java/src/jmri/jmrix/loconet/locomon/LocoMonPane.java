@@ -70,7 +70,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     }
 
     @Override
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
+    public synchronized void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
         if (memo.getLnTrafficController() == null) {

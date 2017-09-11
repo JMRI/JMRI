@@ -594,7 +594,7 @@ public class ActivateTrainFrame {
         int delayRestartMinutes = 0;
         delayRestartMinutes = (Integer) delayMinSpinner.getValue();
         if ((delayRestartMinutes < 0)) {
-            JOptionPane.showMessageDialog(initiateFrame, (Integer) delayMinSpinner.getValue(),
+            JOptionPane.showMessageDialog(initiateFrame, delayMinSpinner.getValue(),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             log.warn("Range error in Delay Restart Time Minutes field");
             return;
@@ -718,7 +718,7 @@ public class ActivateTrainFrame {
     }
 
     private void initializeFreeTransitsCombo(ArrayList<Transit> transitList) {
-        ArrayList<String> allTransits = (ArrayList<String>) _TransitManager.getSystemNameList();
+        List<String> allTransits = _TransitManager.getSystemNameList();
         transitSelectBox.removeAllItems();
         transitBoxList.clear();
         if (transitList.isEmpty()) {

@@ -44,6 +44,6 @@ public class DetectionPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DetectionPanelTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DetectionPanelTest.class);
 
 }

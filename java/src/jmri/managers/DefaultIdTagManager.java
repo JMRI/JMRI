@@ -155,7 +155,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (!initialised && !loading) {
             init();
         }
-        return (IdTag) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
@@ -163,7 +163,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (!initialised && !loading) {
             init();
         }
-        return (IdTag) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -283,7 +283,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         // First create a list of all tags seen by specified reporter
         // and record the time most recently seen
         for (IdTag n : _tsys.values()) {
-            IdTag t = (IdTag) n;
+            IdTag t = n;
             if (t.getWhereLastSeen() == reporter) {
                 out.add(t);
                 Date tagLastSeen = t.getWhenLastSeen();

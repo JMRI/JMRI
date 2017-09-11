@@ -54,12 +54,12 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     @Override
     public SignalHead getBySystemName(String name) {
-        return (SignalHead) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public SignalHead getByUserName(String key) {
-        return (SignalHead) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
