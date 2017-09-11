@@ -19,7 +19,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Sensor> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getSensorManager();
     }
 

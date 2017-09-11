@@ -16,7 +16,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Reporter> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 

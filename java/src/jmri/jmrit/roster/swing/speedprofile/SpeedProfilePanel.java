@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.Block;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -87,14 +88,14 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JLabel warrentScaleLabel = new JLabel();
 
     // Start or finish sensor
-    BeanSelectCreatePanel sensorAPanel = new BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
+    BeanSelectCreatePanel<Sensor> sensorAPanel = new BeanSelectCreatePanel<>(InstanceManager.sensorManagerInstance(), null);
 
     // Finish or start sensor
-    BeanSelectCreatePanel sensorBPanel = new BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
+    BeanSelectCreatePanel<Sensor> sensorBPanel = new BeanSelectCreatePanel<>(InstanceManager.sensorManagerInstance(), null);
 
     // Block sensor
-    BeanSelectCreatePanel blockCPanel = new BeanSelectCreatePanel(InstanceManager.getDefault(jmri.BlockManager.class), null);
-    BeanSelectCreatePanel sensorCPanel = new BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
+    BeanSelectCreatePanel<Block> blockCPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(jmri.BlockManager.class), null);
+    BeanSelectCreatePanel<Sensor> sensorCPanel = new BeanSelectCreatePanel<>(InstanceManager.sensorManagerInstance(), null);
 
     RosterEntryComboBox reBox = new RosterEntryComboBox();
     SpeedProfileTable table = null;

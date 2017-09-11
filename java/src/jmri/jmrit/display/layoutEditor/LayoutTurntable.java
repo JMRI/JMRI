@@ -933,7 +933,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         JPanel panel;
         JPanel turnoutPanel;
-        BeanSelectCreatePanel beanBox;
+        BeanSelectCreatePanel<Turnout> beanBox;
         TitledBorder border;
         JComboBox<String> turnoutStateCombo;
         JLabel turnoutStateLabel;
@@ -971,7 +971,7 @@ public class LayoutTurntable extends LayoutTrack {
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 panel.add(top);
 
-                beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), getTurnout());
+                beanBox = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), getTurnout());
                 String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
                 String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
                 String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};
