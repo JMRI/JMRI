@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TransferableObjectTest {
 
+    @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test

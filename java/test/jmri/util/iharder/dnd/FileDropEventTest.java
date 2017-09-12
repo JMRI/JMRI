@@ -17,6 +17,7 @@ import java.io.File;
  */
 public class FileDropEventTest {
 
+    @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
@@ -25,7 +26,7 @@ public class FileDropEventTest {
         fl[0]=folder.newFile();
         fl[1]=folder.newFile();
         fl[2]=folder.newFile();
-        FileDropEvent t = new FileDropEvent(fl,null);
+        FileDropEvent t = new FileDropEvent(fl,this);
         Assert.assertNotNull("exists",t);
     }
 
