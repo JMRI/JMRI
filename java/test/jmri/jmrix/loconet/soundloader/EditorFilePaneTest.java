@@ -1,22 +1,23 @@
-package jmri.jmrit.symbolicprog.tabbedframe;
+package jmri.jmrix.loconet.soundloader;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.loconet.spjfile.SpjFile;
+import java.io.File;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ProgCheckActionTest {
+public class EditorFilePaneTest {
 
     @Test
-    public void testCTor() {
-        ProgCheckAction t = new ProgCheckAction("Test Action",new javax.swing.JPanel());
+    public void testCTor() throws java.io.IOException {
+        File testFile = new File("java/test/jmri/jmrix/loconet/spjfile/test.spj");
+        EditorFilePane t = new EditorFilePane(testFile);
         Assert.assertNotNull("exists",t);
     }
 
@@ -30,7 +31,5 @@ public class ProgCheckActionTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ProgCheckActionTest.class.getName());
 
 }
