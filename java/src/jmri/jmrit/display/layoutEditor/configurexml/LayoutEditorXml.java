@@ -285,7 +285,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
             mainlinetrackwidth = shared.getAttribute("mainlinetrackwidth").getIntValue();
             sidetrackwidth = shared.getAttribute("sidetrackwidth").getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (DataConversionException e) {
             log.error("failed to convert LayoutEditor attribute");
             result = false;
         }
@@ -295,16 +295,16 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("xscale")) != null) {
             try {
                 xScale = (Float.parseFloat(a.getValue()));
-            } catch (Exception e) {
-                log.error("failed to convert to float - " + a.getValue());
+            } catch (NumberFormatException e) {
+                log.error("failed to convert xscale attribute to float - " + a.getValue());
                 result = false;
             }
         }
         if ((a = shared.getAttribute("yscale")) != null) {
             try {
                 yScale = (Float.parseFloat(a.getValue()));
-            } catch (Exception e) {
-                log.error("failed to convert to float - " + a.getValue());
+            } catch (NumberFormatException e) {
+                log.error("failed to convert yscale attribute to float - " + a.getValue());
                 result = false;
             }
         }
@@ -355,29 +355,26 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         panel.setTurnoutCircleColor(turnoutCircleColor);
 
-        int turnoutCircleSize = 2;
         if ((a = shared.getAttribute("turnoutcirclesize")) != null) {
             try {
-                turnoutCircleSize = a.getIntValue();
-            } catch (DataConversionException e1) {
-                //leave at default if cannot convert
+                panel.setTurnoutCircleSize(a.getIntValue());
+            } catch (DataConversionException e) {
                 log.warn("unable to convert turnoutcirclesize");
             }
         }
-        panel.setTurnoutCircleSize(turnoutCircleSize);
 
         try {
             panel.setTurnoutDrawUnselectedLeg(shared.getAttribute("turnoutdrawunselectedleg").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert turnoutdrawunselectedleg attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         // turnout size parameters
-        double sz = 20.0;
         if ((a = shared.getAttribute("turnoutbx")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setTurnoutBX(sz);
-            } catch (Exception e) {
+                panel.setTurnoutBX(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert turnoutbx to float - " + a.getValue());
                 result = false;
             }
@@ -385,9 +382,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if ((a = shared.getAttribute("turnoutcx")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setTurnoutCX(sz);
-            } catch (Exception e) {
+                panel.setTurnoutCX(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert turnoutcx to float - " + a.getValue());
                 result = false;
             }
@@ -395,9 +391,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if ((a = shared.getAttribute("turnoutwid")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setTurnoutWid(sz);
-            } catch (Exception e) {
+                panel.setTurnoutWid(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert turnoutwid to float - " + a.getValue());
                 result = false;
             }
@@ -405,50 +400,43 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if ((a = shared.getAttribute("xoverlong")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setXOverLong(sz);
-            } catch (Exception e) {
+                panel.setXOverLong(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert xoverlong to float - " + a.getValue());
                 result = false;
             }
         }
         if ((a = shared.getAttribute("xoverhwid")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setXOverHWid(sz);
-            } catch (Exception e) {
+                panel.setXOverHWid(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert xoverhwid to float - " + a.getValue());
                 result = false;
             }
         }
         if ((a = shared.getAttribute("xovershort")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setXOverShort(sz);
-            } catch (Exception e) {
+                panel.setXOverShort(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert xovershort to float - " + a.getValue());
                 result = false;
             }
         }
         // grid size parameter
-        int iz = 10; // this value is never used but it's the default
         if ((a = shared.getAttribute("gridSize")) != null) {
             try {
-                iz = (Integer.parseInt(a.getValue()));
-                panel.setGridSize(iz);
-            } catch (Exception e) {
+                panel.setGridSize(Integer.parseInt(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert gridSize to int - " + a.getValue());
                 result = false;
             }
         }
 
         // second grid size parameter
-        iz = 10; // this value is never used but it's the default
         if ((a = shared.getAttribute("gridSize2nd")) != null) {
             try {
-                iz = (Integer.parseInt(a.getValue()));
-                panel.setGridSize2nd(iz);
-            } catch (Exception e) {
+                panel.setGridSize2nd(Integer.parseInt(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert gridSize2nd to int - " + a.getValue());
                 result = false;
             }
@@ -456,52 +444,72 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         try {
             panel.setAllPositionable(shared.getAttribute("positionable").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setAllControlling(shared.getAttribute("controlling").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert controlling attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setTurnoutAnimation(shared.getAttribute("animating").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert animating attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setDrawGrid(shared.getAttribute("drawgrid").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert drawgrid attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setSnapOnAdd(shared.getAttribute("snaponadd").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert snaponadd attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setSnapOnMove(shared.getAttribute("snaponmove").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert snaponmove attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setTurnoutCircles(shared.getAttribute("turnoutcircles").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert turnoutcircles attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setTooltipsNotEdit(shared.getAttribute("tooltipsnotedit").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert tooltipsnotedit attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setAutoBlockAssignment(shared.getAttribute("autoblkgenerate").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert autoblkgenerate attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setTooltipsInEdit(shared.getAttribute("tooltipsinedit").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert tooltipsinedit attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         // set default track color
@@ -523,16 +531,16 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             Color backgroundColor = new Color(red, green, blue);
             panel.setDefaultBackgroundColor(ColorUtil.colorToColorName(backgroundColor));
             panel.setBackgroundColor(backgroundColor);
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
         try {
             panel.setDirectTurnoutControl(shared.getAttribute("useDirectTurnoutControl").getBooleanValue());
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert Layout Editor useDirectTurnoutControl attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         // Set editor's option flags, load content after
@@ -576,17 +584,23 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         try {
             // set first since other attribute use this setting
             panel.setAllEditable(shared.getAttribute("editable").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert editable attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setShowHelpBar(shared.getAttribute("showhelpbar").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert showhelpbar attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         try {
             panel.setAntialiasingOn(shared.getAttribute("antialiasing").getBooleanValue());
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert antialiasing attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         // set contents state
@@ -594,7 +608,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         try {
             boolean value = shared.getAttribute("sliders").getBooleanValue();
             slValue = value ? "both" : "none";
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert sliders attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         if ((a = shared.getAttribute("scrollable")) != null) {
             slValue = a.getValue();
@@ -620,7 +636,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                     DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
                     df.loadAtStartup();
                 }
-            } catch (Exception e) {
+            } catch (DataConversionException e) {
+                log.warn("unable to convert openDispatcher attribute");
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
         }
         return result;

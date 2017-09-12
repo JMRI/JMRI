@@ -104,7 +104,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
             l.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout turnoutControlled attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         // load ray tracks 

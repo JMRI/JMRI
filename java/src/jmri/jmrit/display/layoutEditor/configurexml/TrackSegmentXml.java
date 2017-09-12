@@ -105,32 +105,32 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         try {
             type1 = element.getAttribute("type1").getIntValue();
             type2 = element.getAttribute("type2").getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (DataConversionException e) {
             log.error("failed to convert tracksegment attribute");
         }
 
         boolean dash = true;
         try {
             dash = element.getAttribute("dashed").getBooleanValue();
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert track segment dashed attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         boolean main = true;
         try {
             main = element.getAttribute("mainline").getBooleanValue();
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert track segment mainline attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         boolean hide = false;
         try {
             hide = element.getAttribute("hidden").getBooleanValue();
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert track segment hidden attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         String con1Name = element.getAttribute("connect1name").getValue();
@@ -142,39 +142,39 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 dash, main, hide, p);
         try {
             l.setArc(element.getAttribute("arc").getBooleanValue());
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert track segment arc attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         if (l.getArc()) {
             try {
                 l.setFlip(element.getAttribute("flip").getBooleanValue());
-            } catch (DataConversionException e1) {
+            } catch (DataConversionException e) {
                 log.warn("unable to convert track segment flip attribute");
-            } catch (Exception e) {
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
             try {
                 l.setCircle(element.getAttribute("circle").getBooleanValue());
-            } catch (DataConversionException e1) {
+            } catch (DataConversionException e) {
                 log.warn("unable to convert track segment circle attribute");
-            } catch (Exception e) {
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
             if (l.getCircle()) {
                 try {
                     l.setAngle(element.getAttribute("angle").getDoubleValue());
-                } catch (org.jdom2.DataConversionException e) {
+                } catch (DataConversionException e) {
                     log.error("failed to convert tracksegment attribute");
-                } catch (NullPointerException e) {  // considered normal if the attribute not present
+                } catch (NullPointerException e) {  // considered normal if the attribute is not present
                 }
             }
             try {
                 if (element.getAttribute("hideConLines").getBooleanValue()) {
                     l.hideConstructionLines(TrackSegment.HIDECON);
                 }
-            } catch (DataConversionException e1) {
+            } catch (DataConversionException e) {
                 log.warn("unable to convert track segment hideConLines attribute");
-            } catch (Exception e) {
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
         }
 
@@ -195,7 +195,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                     index = (relem.getAttribute("index")).getIntValue();
                                     x = (relem.getAttribute("x")).getFloatValue();
                                     y = (relem.getAttribute("y")).getFloatValue();
-                                } catch (org.jdom2.DataConversionException e) {
+                                } catch (DataConversionException e) {
                                     log.error("failed to convert controlpoint coordinates or index attributes");
                                 }
                                 l.setBezierControlPoint(new Point2D.Double(x, y), index);
@@ -212,9 +212,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 // NOTE: do this LAST (so reCenter won't be called yet)
                 l.setBezier(true);
             }
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (DataConversionException e) {
             log.error("failed to convert tracksegment attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute not present
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         // get remaining attribute

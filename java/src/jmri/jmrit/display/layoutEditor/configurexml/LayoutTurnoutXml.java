@@ -230,7 +230,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
                 l.setSecondTurnoutInverted(element.getAttribute("secondturnoutinverted").getBooleanValue());
             } catch (DataConversionException e1) {
                 log.warn("unable to convert layout turnout secondturnoutinverted attribute");
-            } catch (Exception e) {
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
         }
 
@@ -309,19 +309,19 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             l.setDisabled(element.getAttribute("disabled").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout disabled attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
             l.setDisableWhenOccupied(element.getAttribute("disableWhenOccupied").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout disableWhenOccupied attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         try {
             l.setHidden(element.getAttribute("hidden").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout turnout hidden attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         if (version==2){

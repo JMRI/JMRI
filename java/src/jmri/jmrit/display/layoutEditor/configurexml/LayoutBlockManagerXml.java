@@ -119,13 +119,12 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             tm.enableAdvancedRouting(layoutblocks.getAttribute("blockrouting").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert layout block manager blockrouting attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         if (layoutblocks.getAttribute("routingStablisedSensor") != null) {
             try {
                 tm.setStabilisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
             } catch (jmri.JmriException e) {
-
             }
         }
 

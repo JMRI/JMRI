@@ -205,7 +205,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             l.setHidden(element.getAttribute("hidden").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert levelxing hidden attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
         if (element.getChild("signalAMast") != null) {
