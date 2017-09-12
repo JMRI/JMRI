@@ -62,7 +62,7 @@ public class NXFrame extends WarrantRoute {
     private JButton _destUnits;
     private JRadioButton _forward = new JRadioButton();
     private JRadioButton _reverse = new JRadioButton();
-    private JRadioButton _noRamp = new JRadioButton();
+    private JCheckBox _noRamp = new JCheckBox();
     private JCheckBox _stageEStop = new JCheckBox();
     private JCheckBox _shareRouteBox = new JCheckBox();
     private JCheckBox _haltStartBox = new JCheckBox();
@@ -76,7 +76,8 @@ public class NXFrame extends WarrantRoute {
     private JPanel _trainPanel;
     java.awt.Point _location;
     
-    private float _mf = 0.8f;    // momentum factor (guess) for speed change
+    private float _mf;    // momentum factor (guess) for speed change
+    public static float INCRE_RATE = 1.08f;  // multiplier to increase throttle increments
 
     /**
      * Get the default instance of an NXFrame.
@@ -731,21 +732,22 @@ public class NXFrame extends WarrantRoute {
         float speed = 0.0f;     // throttle setting
         float rampLength = 0.0f;
         int numSteps = 0;
+        float incre = _throttleIncr;
         while (speed < _maxThrottle) {
-           float dist = _speedUtil.getDistanceTraveled(speed + _throttleIncr*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
+           float dist = _speedUtil.getDistanceTraveled(speed + incre*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
             if (rampLength + dist <= _totalLen / 2) {
-                if ((speed + _throttleIncr) > _maxThrottle) {
-                    dist = dist * (_maxThrottle - speed) / _throttleIncr;
+                if ((speed + incre) > _maxThrottle) {
+                    dist = dist * (_maxThrottle - speed) / incre;
                     speed = _maxThrottle;
                 } else {
-                    speed += _throttleIncr;
+                    speed += incre;
                 }
                 rampLength += dist;
                 numSteps++;
-/*                if (log.isDebugEnabled()) {
-                    log.debug("step " + numSteps + " dist= " + dist + " speed= " + speed
-                            + " upRampLength = " + rampLength);
-                }*/
+                if (log.isDebugEnabled()) {
+                    log.debug("step {} incr= {}, dist= {} upRampLength= {} ", numSteps, incre, dist, rampLength);
+                }
+                incre *= INCRE_RATE;
             } else {
                 if (log.isDebugEnabled()) {
                     log.debug("cannot reach max Speed and have enough length to decelerate. _maxThrottle set to {}",
@@ -763,41 +765,51 @@ public class NXFrame extends WarrantRoute {
     }
 
     private float getDownRampLength() {
-        float speed = _maxThrottle;     // throttle setting
+        float speed = 0;     // throttle setting
         float rampLength = 0.0f;
         int numSteps = 0;
+        float incre = _throttleIncr;
+        while (speed + incre <= _maxThrottle) {
+            speed += incre;
+            incre *= INCRE_RATE;
+            numSteps++;
+        }
+        speed = _maxThrottle;     // throttle setting
+        numSteps = 0;
+        float maxIncre = incre;
         while (speed > 0.0f) {
-           float dist = _speedUtil.getDistanceTraveled(speed - _throttleIncr*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
+           float dist = _speedUtil.getDistanceTraveled(speed - incre*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
            if (dist <= 0.0f) {
                break;
            }
            if (rampLength + dist >= _totalLen / 2) {
                // remove first step's distance
-                float d = _speedUtil.getDistanceTraveled(_maxThrottle - _throttleIncr*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
-                if (rampLength >= d) {
-                    rampLength -= d;                    
-                } else {
-                    rampLength = 0f;
-                }
-               _maxThrottle -= _throttleIncr;      // modify
-               numSteps--;
-               if (log.isDebugEnabled()) {
-                   log.debug("cannot reach max Speed and have enough length to decelerate. _maxThrottle set to {}",
-                           _maxThrottle);
+               float d = _speedUtil.getDistanceTraveled(_maxThrottle - incre*_mf, Warrant.Normal, _intervalTime, _forward.isSelected());
+               if (rampLength >= d) {
+                   rampLength -= d;                    
+               } else {
+                   rampLength = 0f;
                }
+              _maxThrottle -= maxIncre;      // modify
+              maxIncre /= INCRE_RATE;
+              numSteps--;
+              if (log.isDebugEnabled()) {
+                  log.debug("cannot reach max Speed and have enough length to decelerate. _maxThrottle set to {}",
+                          _maxThrottle);
+              }
            }
-           speed -= _throttleIncr;
            if (speed >= 0.0f) {
                rampLength += dist;
            } else {
-               rampLength += (speed + _throttleIncr) * dist / _throttleIncr;
+               rampLength += (speed + incre) * dist / incre;
                speed = 0.0f;
            }
+           speed -= incre;
            numSteps++;            
-/*           if (log.isDebugEnabled()) {
-               log.debug("step " + numSteps + " dist= " + dist + " speed= " + speed
-                       + " dnRampLength = " + rampLength);
-           }*/
+           if (log.isDebugEnabled()) {
+                    log.debug("step {} incr= {}, dist= {} dnRampLength= {} ", numSteps, incre, dist, rampLength);
+           }
+           incre /= INCRE_RATE; 
         }
         if (log.isDebugEnabled()) {
             log.debug("{} speed steps of delta= {} for dnRampLength= {} from maxThrottle= {}",
@@ -872,18 +884,19 @@ public class NXFrame extends WarrantRoute {
             log.debug("Start Ramp Up in block \"" + blockName + "\" in "
                     + (int) speedTime + "ms, remRamp= " + remRamp + ", blockLen= " + blockLen);
         }
+        float increment = _throttleIncr;
 
         while (remRamp > 0.0f) {       // ramp up loop
 
             curDistance = _speedUtil.getDistanceTraveled(curThrottle, Warrant.Normal, speedTime, isForward);
             while (curDistance < blockLen && curThrottle < _maxThrottle) {
-                float dist = _speedUtil.getDistanceTraveled(curThrottle + _throttleIncr*_mf, Warrant.Normal, _intervalTime, isForward);
+                float dist = _speedUtil.getDistanceTraveled(curThrottle + increment*_mf, Warrant.Normal, _intervalTime, isForward);
                 float prevSpeed = curThrottle;
-                if ((curThrottle + _throttleIncr) > _maxThrottle) {
-                    dist = dist * (_maxThrottle - curThrottle) / _throttleIncr;
+                if ((curThrottle + increment) > _maxThrottle) {
+                    dist = dist * (_maxThrottle - curThrottle) / increment;
                     curThrottle = _maxThrottle;
                 } else {
-                    curThrottle += _throttleIncr;
+                    curThrottle += increment;
                 }
                 if (curDistance + dist <= blockLen && remRamp > 0.0f) {
                     curDistance += dist;
@@ -896,6 +909,7 @@ public class NXFrame extends WarrantRoute {
                                 cmdNum++, blockName, curThrottle, (int) speedTime, curDistance, remRamp);
                     }
                     speedTime = _intervalTime;
+                    increment *= INCRE_RATE;
                 } else {
                     curThrottle = prevSpeed;
                     break;
@@ -976,7 +990,7 @@ public class NXFrame extends WarrantRoute {
                  }
                 blockName = bo.getBlock().getDisplayName();
                 if (nextIdx == orders.size()) {
-                    blockLen /= 2;
+                    blockLen = _stopDist;
                 }
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
@@ -1000,9 +1014,10 @@ public class NXFrame extends WarrantRoute {
         while (curThrottle > 0) {
             if (nextIdx == orders.size()) { // at last block
                 if (_stageEStop.isSelected()) {
-                    w.addThrottleCommand(new ThrottleSetting(0, "Speed", "-0.5", blockName,
+                    w.addThrottleCommand(new ThrottleSetting(50, "Speed", "-0.5", blockName,
                             (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                     _intervalTime = 0;
+                    curThrottle = -0.5f;
                     if (log.isDebugEnabled()) {
                         log.debug("{}. At block \"{}\" set speed= {}", cmdNum++, blockName, -0.5);
                     }
@@ -1011,9 +1026,9 @@ public class NXFrame extends WarrantRoute {
             }
 
             do {
-                float dist = _speedUtil.getDistanceTraveled(curThrottle - _throttleIncr*_mf, Warrant.Normal, _intervalTime, isForward);
+                float dist = _speedUtil.getDistanceTraveled(curThrottle - increment*_mf, Warrant.Normal, _intervalTime, isForward);
                 curDistance += dist;
-                curThrottle -= _throttleIncr;
+                curThrottle -= increment;
                 if (curThrottle <.002) {   // fraction less than 1/4 step
                     curThrottle = 0.0f;
                 }
@@ -1029,8 +1044,9 @@ public class NXFrame extends WarrantRoute {
                 } else {
                     speedTime = _intervalTime;
                 }
+                increment /= INCRE_RATE;
                 noopTime = _intervalTime - speedTime;
-            } while (curDistance < blockLen && curThrottle > 0);
+            } while (curDistance < blockLen && curThrottle >= _throttleIncr);
 
             if (nextIdx < orders.size()) {
                 _totalLen -= blockLen;

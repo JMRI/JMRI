@@ -108,8 +108,8 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
         AcelaTrafficController control = new AcelaTrafficController();
         control.connectPort(this);
 
-        ((AcelaSystemConnectionMemo)getSystemConnectionMemo()).setAcelaTrafficController(control);
-        ((AcelaSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
+        getSystemConnectionMemo().setAcelaTrafficController(control);
+        getSystemConnectionMemo().configureManagers();
     }
 
     // base class methods for the AcelaPortController interface

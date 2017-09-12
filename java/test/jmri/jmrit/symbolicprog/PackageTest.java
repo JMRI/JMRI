@@ -57,7 +57,11 @@ import org.junit.runners.Suite;
     LokProgImporterTest.class,
     ComboOffRadioButtonTest.class,
     ComboOnRadioButtonTest.class,
-    DccAddressVarHandlerTest.class
+    DccAddressVarHandlerTest.class,
+    DecVarSliderTest.class,
+    DccAddressPanelTest.class,
+    PrintActionTest.class,
+    PrintCvActionTest.class
 })
 
 /**

@@ -24,7 +24,7 @@
 <!-- /Style -->
 </head>
 
-
+<body>
 <!--#include virtual="/Header" -->
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
@@ -202,14 +202,14 @@ Add the word "Includes" to the last line so it looks like
 LoadModule include_module libexec/apache2/mod_include.so
 </PRE>
         By default, that's commented out with a leading # character.
-<p>          
+          
     <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to provide redirects</a>.  
         We use this to allow people with old URLs in bookmarks to reach the right current pages.
         <p>
         Find a section that looks like:
 <PRE>
 DocumentRoot "/Library/WebServer/Documents"
-<Directory "/Library/WebServer/Documents">
+Directory "/Library/WebServer/Documents"
 </PRE>
         There's an indented section directly below that.  Find the part that looks like:
 <PRE>

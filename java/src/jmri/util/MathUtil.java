@@ -19,14 +19,14 @@ import javax.annotation.CheckReturnValue;
 @CheckReturnValue
 public final class MathUtil {
 
-    public static Point2D zeroPoint2D = new Point2D.Double(0, 0);
-    public static Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
+    public static final Point2D zeroPoint2D = zeroPoint2D();
+    public static final Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
 
     /**
      * @return the point {0, 0}
      */
     public static Point2D zeroPoint2D() {
-        return zeroPoint2D;
+        return new Point2D.Double(0, 0);
     }
 
     /**
@@ -41,35 +41,9 @@ public final class MathUtil {
      *
      * @param p the Point
      * @return the Point2D
-     * @deprecated since 4.9.4; use {@link #pointToPoint2D(java.awt.Point)}
-     * instead
-     */
-    @Deprecated
-    public static Point2D point2DForPoint(Point p) {
-        return pointToPoint2D(p);
-    }
-
-    /**
-     * Convert Point to Point2D
-     *
-     * @param p the Point
-     * @return the Point2D
      */
     public static Point2D pointToPoint2D(Point p) {
         return new Point2D.Double(p.x, p.y);
-    }
-
-    /**
-     * Convert Point2D to Point
-     *
-     * @param p the Point
-     * @return the Point2D
-     * @deprecated since 4.9.4; use
-     * {@link #point2DToPoint(java.awt.geom.Point2D)} instead
-     */
-    @Deprecated
-    public static Point pointForPoint2D(Point2D p) {
-        return point2DToPoint(p);
     }
 
     /**
@@ -150,6 +124,18 @@ public final class MathUtil {
     }
 
     /**
+     * multiply a point times two scalar
+     *
+     * @param p the point
+     * @param x the X scalar
+     * @param y the Y scalar
+     * @return the point multiplied by the two scalars
+     */
+    public static Point2D multiply(Point2D p, double x, double y) {
+        return new Point2D.Double(p.getX() * x, p.getY() * y);
+    }
+
+    /**
      * multiply a scalar times a point
      *
      * @param s the scalar
@@ -169,11 +155,11 @@ public final class MathUtil {
      * @return the first point multiplied by the second
      */
     public static Point2D multiply(Point2D p1, Point2D p2) {
-        return new Point2D.Double(p1.getX() * p2.getX(), p1.getY() * p2.getY());
+        return multiply(p1, p2.getX(), p2.getY());
     }
 
     /**
-     * divide a point times a scalar
+     * divide a point by a scalar
      *
      * @param p the point
      * @param s the scalar
@@ -181,6 +167,18 @@ public final class MathUtil {
      */
     public static Point2D divide(Point2D p, double s) {
         return new Point2D.Double(p.getX() / s, p.getY() / s);
+    }
+
+    /**
+     * divide a point by two scalars
+     *
+     * @param p the point
+     * @param x the X scalar
+     * @param y the Y scalar
+     * @return the point divided by the scalar
+     */
+    public static Point2D divide(Point2D p, double x, double y) {
+        return new Point2D.Double(p.getX() / x, p.getY() / y);
     }
 
     /**
@@ -221,7 +219,6 @@ public final class MathUtil {
     }
 
     /**
-     * <p>
      * rotate a point (by radians)
      *
      * @param p the point

@@ -172,6 +172,12 @@
       <ul>
         <li>Radio buttons <b>Forward</b> and <b>Reverse</b> Set the
         direction of the locomotive.</li>
+        <li>A checkbox <b>Don't Ramp Speed changes</b> Sets an
+        option on how to change the speed when a signal or rogue
+        occupation is detected ahead. The default is to incrementally 
+        slow the train before reaching the end of the approach block. 
+        Selecting the option will make an immediate speed change upon 
+        entering the approach block.</li>
       </ul>
 
       Lastly, there some options for running.
@@ -270,7 +276,7 @@
       regulate the smoothness and prototypical look of speed changes.
       For locos with no momentum, short times and smaller throttle
       increments make smoother ramps. For locomotives/consists 
-      with lots of momentum, longer periods can
+      with lots of momentum, longer periods should
       be used. Note: The throttle increment for one step of a
       128 step throttle is 0.00794. The defaults are set for 
       a modest amount of

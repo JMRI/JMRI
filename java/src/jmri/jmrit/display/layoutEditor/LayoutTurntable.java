@@ -260,7 +260,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public Point2D getRayCoordsIndexed(int index) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
                 double angle = Math.toRadians(rt.getAngle());
@@ -275,7 +275,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public Point2D getRayCoordsOrdered(int i) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         RayTrack rt = rayList.get(i);
         if (rt != null) {
             double angle = Math.toRadians(rt.getAngle());
@@ -933,7 +933,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         JPanel panel;
         JPanel turnoutPanel;
-        BeanSelectCreatePanel beanBox;
+        BeanSelectCreatePanel<Turnout> beanBox;
         TitledBorder border;
         JComboBox<String> turnoutStateCombo;
         JLabel turnoutStateLabel;
@@ -971,7 +971,7 @@ public class LayoutTurntable extends LayoutTrack {
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 panel.add(top);
 
-                beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), getTurnout());
+                beanBox = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), getTurnout());
                 String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
                 String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
                 String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};

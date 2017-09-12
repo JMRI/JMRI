@@ -22,7 +22,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -144,9 +145,8 @@
       Installed</code>, where you should see something like this
       (versions might differ):</p>
 
-      <p><a href=
-      "images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png"
-      align="center" height="102" width="224"></a></p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png">
+        <img src="images/NetbeansChangeLineEndingsPluginInstalled.png" height="102" width="224"></a></p>
 
       <p>Once the plug-in has been installed and activated, it is
       necessary to configure it for the desired line ending
@@ -156,30 +156,24 @@
       <p>For JMRI, we want to use the Unix-style line ending
       character, <code>LF</code>.</p>
 
-      <p><a href=
-      "images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png"
-      align="center" height="168" width="237"></a></p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png">
+        <img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" height="168" width="237"></a></p>
 
       <p>The plug-in may be enabled via a button in the toolbar.
-      <a href=
-      "images/NetbeansChangeLineEndingsPluginEnabled.png"><img src=
-      "images/NetbeansChangeLineEndingsPluginEnabled.png" align=
-      "center" height="19" width="55"></a></p>
+      <a href="images/NetbeansChangeLineEndingsPluginEnabled.png">
+        <img src="images/NetbeansChangeLineEndingsPluginEnabled.png" height="19" width="55"></a></p>
 
-      <p>And the plug-in may be disabled via that button. <a href=
-      "images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png"
-      align="center" height="19" width="55"></a></p>
+      <p>And the plug-in may be disabled via that button. 
+      <a href="images/NetbeansChangeLineEndingsPluginDisabled.png">
+        <img src="images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55"></a></p>
 
       <p>When a file is saved (assuming the the plug-in is
       configured and is enabled) and that file has line-endings
       which do not match the type configured for the plug-in, the
       following message pops up.</p>
 
-      <p><a href=
-      "images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png">
-      <img src=
-      "images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"
-      align="center" height="50" width="174"></a></p>
+      <p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png">
+        <img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" height="50" width="174"></a></p>
 
       <p>When "OK" is selected, the plug-in updates the
       line-endings to the configured form and saves the file. If

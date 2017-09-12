@@ -40,6 +40,6 @@ public class DrawRectangleTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DrawRectangleTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DrawRectangleTest.class);
 
 }

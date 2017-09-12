@@ -51,12 +51,12 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     @Override
     public Memory getBySystemName(String name) {
-        return (Memory) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Memory getByUserName(String key) {
-        return (Memory) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override

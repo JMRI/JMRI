@@ -38,6 +38,6 @@ public class TamsNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsNamedPaneActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TamsNamedPaneActionTest.class);
 
 }
