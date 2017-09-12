@@ -21,7 +21,7 @@ public class EditorFilePaneTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException {
         EditorFilePane t = new EditorFilePane(folder.newFile("testFile"));
         Assert.assertNotNull("exists",t);
     }
@@ -29,14 +29,12 @@ public class EditorFilePaneTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EditorFilePaneTest.class.getName());
