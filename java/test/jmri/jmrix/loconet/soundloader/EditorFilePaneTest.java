@@ -5,11 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import jmri.jmrix.loconet.spjfile.SpjFile;
+import java.io.File;
 
 /**
  *
@@ -17,12 +14,10 @@ import org.slf4j.LoggerFactory;
  */
 public class EditorFilePaneTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
     public void testCTor() throws java.io.IOException {
-        EditorFilePane t = new EditorFilePane(folder.newFile("testFile"));
+        File testFile = new File("java/test/jmri/jmrix/loconet/spjfile/test.spj");
+        EditorFilePane t = new EditorFilePane(testFile);
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,7 +31,5 @@ public class EditorFilePaneTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(EditorFilePaneTest.class.getName());
 
 }
