@@ -1333,26 +1333,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getCentre() {
-        Point2D result = new Point2D.Double(centreX, centreY);
-
-        if (false) {
-            Point2D ep1 = result;
-            Object c1 = getConnect1();
-            if (c1 != null) {
-                ep1 = layoutEditor.getCoords(getConnect1(), getType1());
-            }
-
-            Point2D ep2 = result;
-            Object c2 = getConnect2();
-            if (c2 != null) {
-                ep2 = layoutEditor.getCoords(getConnect2(), getType2());
-            }
-            result = MathUtil.midPoint(ep1, ep2);
-            centreX = result.getX();
-            centreY = result.getY();
-        }
-
-        return result;
+        return new Point2D.Double(centreX, centreY);
     }
 
     private double tmpangle;
