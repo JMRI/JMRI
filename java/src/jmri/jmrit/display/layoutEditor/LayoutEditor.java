@@ -3396,31 +3396,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPos2D));
         } else {
             JScrollPane scrollPane = getPanelScrollPane();
-            if (scrollPane.getVerticalScrollBar().isVisible()) {
-                // Redispatch the event to the original MouseWheelListeners
-                for (MouseWheelListener mwl : mouseWheelListeners) {
-                    mwl.mouseWheelMoved(e);
+            if (scrollPane != null) {
+                if (scrollPane.getVerticalScrollBar().isVisible()) {
+                    // Redispatch the event to the original MouseWheelListeners
+                    for (MouseWheelListener mwl : mouseWheelListeners) {
+                        mwl.mouseWheelMoved(e);
+                    }
+                } else {
+                    // proprogate event to ancestor
+                    Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
+                    if (ancestor != null) {
+                        MouseWheelEvent mwe = new MouseWheelEvent(
+                                ancestor,
+                                e.getID(),
+                                e.getWhen(),
+                                e.getModifiers(),
+                                e.getX(),
+                                e.getY(),
+                                e.getXOnScreen(),
+                                e.getYOnScreen(),
+                                e.getClickCount(),
+                                e.isPopupTrigger(),
+                                e.getScrollType(),
+                                e.getScrollAmount(),
+                                e.getWheelRotation());
+
+                        ancestor.dispatchEvent(mwe);
+                    }
                 }
-            } else {
-                // proprogate event to ancestor
-                Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
-
-                MouseWheelEvent mwe = new MouseWheelEvent(
-                        ancestor,
-                        e.getID(),
-                        e.getWhen(),
-                        e.getModifiers(),
-                        e.getX(),
-                        e.getY(),
-                        e.getXOnScreen(),
-                        e.getYOnScreen(),
-                        e.getClickCount(),
-                        e.isPopupTrigger(),
-                        e.getScrollType(),
-                        e.getScrollAmount(),
-                        e.getWheelRotation());
-
-                ancestor.dispatchEvent(mwe);
             }
         }
     } // mouseWheelMoved
