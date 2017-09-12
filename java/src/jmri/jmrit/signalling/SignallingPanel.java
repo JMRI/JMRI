@@ -1546,15 +1546,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 // a new NamedBean is available in the manager
                 fireTableDataChanged();
             }
-            if (e.getPropertyName().indexOf("Inconsistent") < 0 || e.getPropertyName().indexOf("Unknown") >= 0 || e.getPropertyName().indexOf("ValidStatesChanged") >= 0) {  // NOI18N
-                if (e.getSource() instanceof NamedBean) {
-                    String name = ((NamedBean) e.getSource()).getSystemName();
-                    // since we can add columns, the entire row is marked as updated
-                    //int row = 0; // look up row by SNAME_COLUMN TODO for each extended class (turnout/sensor/block)
-                    //this.fireTableRowsUpdated(row, row);
-                    //clearStateVector(row); // activate this method below
-                }
-            }
         }
 
         /**

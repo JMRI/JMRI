@@ -119,16 +119,18 @@ public class LayoutSlip extends LayoutTurnout {
     public void setSlipType(int slipType) {
         if (type != slipType) {
             type = slipType;
-            if (type == DOUBLE_SLIP) {
+            if (type == SINGLE_SLIP) {
+                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+                turnoutStates.remove(STATE_BC);
+            } else if (type == DOUBLE_SLIP) {
                 turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
                 turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
                 turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
-                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-                turnoutStates.remove(STATE_BC);
+                log.error("Invalid slip Type " + slipType); //I18IN
             }
         }
     }

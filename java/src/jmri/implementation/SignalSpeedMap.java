@@ -226,7 +226,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
         return new Vector<>(this._table.keySet());
     }
 
-    public float getSpeed(@Nonnull String name) {
+    public float getSpeed(@Nonnull String name) throws IllegalArgumentException {
         if (!checkSpeed(name)) {
             // not a valid aspect
             log.warn("attempting to get speed for invalid name: '{}'", name);

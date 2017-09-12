@@ -412,7 +412,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.setLayout(new BorderLayout());
         p.setToolTipText(Bundle.getMessage(tooltip));
         box.setToolTipText(Bundle.getMessage(tooltip));
-        p.add(new JLabel(PAD + Bundle.getMessage(title) + PAD), BorderLayout.NORTH);
+        JLabel l = new JLabel(PAD + Bundle.getMessage(title) + PAD);
+        p.add(l, BorderLayout.NORTH);
+        l.setLabelFor(box);
         p.add(box, BorderLayout.CENTER);
         box.setBackground(Color.white);
         box.addActionListener(this);
@@ -494,7 +496,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             p.setLayout(new BorderLayout());
             p.setToolTipText(Bundle.getMessage(tooltip));
             blockBox.setToolTipText(Bundle.getMessage(tooltip));
-            p.add(new JLabel(Bundle.getMessage("BlockName")), BorderLayout.NORTH);
+            JLabel l = new JLabel(Bundle.getMessage("BlockName"));
+            p.add(l, BorderLayout.NORTH);
+            l.setLabelFor(blockBox);
             p.add(blockBox, BorderLayout.CENTER);
             return p;
         }
@@ -583,7 +587,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             blockBox.setText(text);
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
             if (block == null && text.length() > 0) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("BlockNotFound", text),
+                JOptionPane.showMessageDialog(blockBox.getParent(), Bundle.getMessage("BlockNotFound", text),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
             return block;

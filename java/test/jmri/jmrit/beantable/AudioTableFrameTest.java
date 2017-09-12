@@ -37,6 +37,6 @@ public class AudioTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AudioTableFrameTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(AudioTableFrameTest.class);
 
 }

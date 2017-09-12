@@ -185,12 +185,12 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     @Override
     public Logix getBySystemName(String name) {
-        return (Logix) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Logix getByUserName(String key) {
-        return (Logix) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**

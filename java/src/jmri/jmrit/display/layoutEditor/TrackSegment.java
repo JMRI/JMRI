@@ -1260,7 +1260,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getCentreSeg() {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
 
         if ((null != connect1) && (null != connect2)) {
             // get the end points

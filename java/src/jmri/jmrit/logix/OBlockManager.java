@@ -28,7 +28,7 @@ import jmri.managers.AbstractManager;
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
  */
-public class OBlockManager extends AbstractManager
+public class OBlockManager extends AbstractManager<OBlock>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
@@ -100,14 +100,14 @@ public class OBlockManager extends AbstractManager
             return null;
         }
         String key = name.toUpperCase();
-        return (OBlock) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public OBlock getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (OBlock) _tuser.get(key);
+        return  _tuser.get(key);
     }
 
     @Nonnull public OBlock provideOBlock(String name) throws IllegalArgumentException {

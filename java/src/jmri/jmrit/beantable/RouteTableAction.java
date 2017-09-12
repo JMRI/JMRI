@@ -1225,7 +1225,7 @@ public class RouteTableAction extends AbstractTableAction {
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
         // set up additional Delay
-        timeDelay.setValue((Integer) g.getRouteCommandDelay());
+        timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts   
         // set up buttons and notes
         status1.setText(updateInst);

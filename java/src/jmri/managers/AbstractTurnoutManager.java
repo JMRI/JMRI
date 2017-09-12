@@ -59,12 +59,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     @Override
     public Turnout getBySystemName(String name) {
-        return (Turnout) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Turnout getByUserName(String key) {
-        return (Turnout) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override

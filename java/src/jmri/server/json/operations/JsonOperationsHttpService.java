@@ -7,6 +7,7 @@ import static jmri.server.json.operations.JsonOperations.CARS;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.operations.JsonOperations.LOCATIONS;
+import static jmri.server.json.operations.JsonOperations.TRACK;
 import static jmri.server.json.operations.JsonOperations.TRAIN;
 import static jmri.server.json.operations.JsonOperations.TRAINS;
 
@@ -15,8 +16,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
@@ -62,6 +66,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 this.setTrain(locale, name, data);
                 return this.utilities.getTrain(locale, name);
             case CAR:
+                this.setCar(locale, name, data);
+                return this.utilities.getCar(locale, name);
             case ENGINE:
             case LOCATION:
             case TRAINS:
@@ -91,7 +97,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        CarManager.instance().getByIdList().forEach((rs) -> {
+        InstanceManager.getDefault(CarManager.class).getByIdList().forEach((rs) -> {
             root.add(this.utilities.getCar(locale, rs.getId()));
         });
         return root;
@@ -99,7 +105,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getEngines(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        EngineManager.instance().getByIdList().forEach((rs) -> {
+        InstanceManager.getDefault(EngineManager.class).getByIdList().forEach((rs) -> {
             root.add(this.utilities.getEngine(locale, rs.getId()));
         });
         return root;
@@ -107,15 +113,14 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     public ArrayNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (Location location : LocationManager.instance().getLocationsByIdList()) {
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByIdList()) {
             root.add(this.utilities.getLocation(locale, location.getId()));
         }
         return root;
     }
 
     /**
-     * Sets the properties in the data parameter for the train with the given
-     * id.
+     * Set the properties in the data parameter for the train with the given id.
      * <p>
      * Currently only moves the train to the location given with the key
      * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
@@ -128,13 +133,37 @@ public class JsonOperationsHttpService extends JsonHttpService {
      *                                        location in data.
      */
     public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
-        Train train = TrainManager.instance().getTrainById(id);
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
         if (!data.path(LOCATION).isMissingNode()) {
             String location = data.path(LOCATION).asText();
             if (location.equals(NULL)) {
                 train.terminate();
             } else if (!train.move(location)) {
                 throw new JsonException(428, Bundle.getMessage(locale, "ErrorTrainMovement", id, location));
+            }
+        }
+    }
+
+    /**
+     * Set the properties in the data parameter for the car with the given id.
+     * <p>
+     * Currently only sets the location of the car.
+     *
+     * @param locale locale to throw exceptions in
+     * @param id     id of the car
+     * @param data   car data to change
+     * @throws jmri.server.json.JsonException if the car cannot be set to the
+     *                                        location in data
+     */
+    public void setCar(Locale locale, String id, JsonNode data) throws JsonException {
+        Car car = InstanceManager.getDefault(CarManager.class).getById(id);
+        if (!data.path(LOCATION).isMissingNode()) {
+            String locationId = data.path(LOCATION).asText();
+            String trackId = data.path(TRACK).asText();
+            Location location = InstanceManager.getDefault(LocationManager.class).getLocationById(locationId);
+            Track track = (trackId != null) ? location.getTrackById(trackId) : null;
+            if (!car.setLocation(location, track, true).equals(Track.OKAY)) {
+                throw new JsonException(428, Bundle.getMessage(locale, "ErrorMovingCar", id, locationId, trackId));
             }
         }
     }
