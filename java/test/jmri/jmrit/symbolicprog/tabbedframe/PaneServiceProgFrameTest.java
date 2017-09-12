@@ -2,6 +2,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -18,6 +20,7 @@ public class PaneServiceProgFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         DecoderFile df = new DecoderFile();
         RosterEntry re = new RosterEntry();

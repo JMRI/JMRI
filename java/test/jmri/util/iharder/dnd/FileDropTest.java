@@ -2,12 +2,14 @@ package jmri.util.iharder.dnd;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.JPanel;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -17,6 +19,7 @@ public class FileDropTest {
 
     @Test
     public void testCTor() throws java.io.IOException {
+      Assume.assumeFalse(GraphicsEnvironment.isHeadless());
       // this came was modifed from the FileDrop website's example at
       // http://iharder.sourceforge.net/current/java/filedrop/ 
       JPanel  myPanel = new JPanel();
