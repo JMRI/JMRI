@@ -248,7 +248,8 @@ public class TrackSegment extends LayoutTrack {
         if (bezier != boo) {
             bezier = boo;
             if (bezier) {
-                arc = circle = false;
+                arc = false;
+                circle = false;
             }
             changed = true;
         }
