@@ -18,6 +18,8 @@ public class HomeServletAcceptanceSteps implements En {
       
    public HomeServletAcceptanceSteps() {
 
+      System.setProperty("webdriver.gecko.driver", "/home/Paul/JMRI/geckodriver");
+
       webDriver = new EventFiringWebDriver(new FirefoxDriver());
 
       When("^I ask for the /index\\.html$", () -> {
