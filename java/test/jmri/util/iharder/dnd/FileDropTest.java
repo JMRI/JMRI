@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class FileDropTest {
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException {
       // this came was modifed from the FileDrop website's example at
       // http://iharder.sourceforge.net/current/java/filedrop/ 
       JPanel  myPanel = new JPanel();

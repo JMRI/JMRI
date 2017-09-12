@@ -19,7 +19,7 @@ public class TransferableObjectTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException  {
         TransferableObject t = new TransferableObject(folder.newFile());
         Assert.assertNotNull("exists",t);
     }

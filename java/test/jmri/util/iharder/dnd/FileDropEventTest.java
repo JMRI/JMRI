@@ -20,7 +20,7 @@ public class FileDropEventTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException  {
         File fl[] = new File[3];
         fl[0]=folder.newFile();
         fl[1]=folder.newFile();
