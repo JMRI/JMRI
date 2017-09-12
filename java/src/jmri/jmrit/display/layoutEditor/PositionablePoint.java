@@ -1301,11 +1301,11 @@ public class PositionablePoint extends LayoutTrack {
 
             if (getConnect1() != null) {
                 mainline = getConnect1().getMainline();
-                ep1 = getConnect1().getCentre();
+                ep1 = getConnect1().getCentreSeg();
             }
             if (getConnect2() != null) {
                 mainline |= getConnect2().getMainline();
-                ep2 = getConnect2().getCentre();
+                ep2 = getConnect2().getCentreSeg();
             }
 
             float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
