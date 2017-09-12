@@ -10,18 +10,18 @@ package jmri.jmrit.withrottle;
  * Thread with input and output streams for each connected device. Creates an
  * invisible throttle window for each.
  *
- * Sorting codes: 
- *  'T'hrottle - sends to throttleController 
+ * Sorting codes:
+ *  'T'hrottle - sends to throttleController
  *  'S'econdThrottle - sends to secondThrottleController
- *  'C' - Not used anymore except to provide backward compliance, same as 'T' 
- *  'N'ame of device 
+ *  'C' - Not used anymore except to provide backward compliance, same as 'T'
+ *  'N'ame of device
  *  'H' hardware info - followed by:
- *      'U' UDID - unique device identifier 
- *  'P' panel - followed by: 
+ *      'U' UDID - unique device identifier
+ *  'P' panel - followed by:
  *      'P' track power
- *      'T' turnouts 
+ *      'T' turnouts
  *      'R' routes
- *  'R' roster - followed by: 
+ *  'R' roster - followed by:
  *      'C' consists
  *  'Q'uit - device has quit, close its throttleWindow
  *  '*' - heartbeat from client device ('*+' starts, '*-' stops)
@@ -85,6 +85,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.web.server.WebServerPreferences;
@@ -116,14 +117,14 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private int stopEKGCount;
 
     private TrackPowerController trackPower = null;
-    final boolean isTrackPowerAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTrackPower();
+    final boolean isTrackPowerAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowTrackPower();
     private TurnoutController turnoutC = null;
     private RouteController routeC = null;
-    final boolean isTurnoutAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTurnout();
-    final boolean isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute();
+    final boolean isTurnoutAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowTurnout();
+    final boolean isRouteAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
-    
+
     private DeviceManager manager;
 
     DeviceServer(Socket socket, DeviceManager manager) {
@@ -272,8 +273,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             deviceName = inPackage.substring(1);
                             log.info("Received Name: " + deviceName);
 
-                            if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()) {
-                                pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
+                            if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseEStop()) {
+                                pulseInterval = InstanceManager.getDefault(WiThrottlePreferences.class).getEStopDelay();
                                 sendPacketToDevice("*" + pulseInterval); //  Turn on heartbeat, if used
                             }
                             break;
@@ -364,8 +365,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
             if (consecutiveErrors > 0) { //a read error was encountered
                 if (consecutiveErrors < 25) { //pause thread to give time for reconnection
-                    try{  
-                        Thread.sleep(200); 
+                    try{
+                        Thread.sleep(200);
                     } catch (java.lang.InterruptedException ex){}
                 } else {
                     keepReading = false;
@@ -496,7 +497,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     private void addControllers() {
         if (isTrackPowerAllowed) {
-            trackPower = WiThrottleManager.trackPowerControllerInstance();
+            trackPower = InstanceManager.getDefault(WiThrottleManager.class).getTrackPowerController();
             if (trackPower.isValid) {
                 if (log.isDebugEnabled()) {
                     log.debug("Track Power valid.");
@@ -506,7 +507,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
         }
         if (isTurnoutAllowed) {
-            turnoutC = WiThrottleManager.turnoutControllerInstance();
+            turnoutC = InstanceManager.getDefault(WiThrottleManager.class).getTurnoutController();
             if (turnoutC.verifyCreation()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Turnout Controller valid.");
@@ -517,7 +518,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
         }
         if (isRouteAllowed) {
-            routeC = WiThrottleManager.routeControllerInstance();
+            routeC = InstanceManager.getDefault(WiThrottleManager.class).getRouteController();
             if (routeC.verifyCreation()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Route Controller valid.");
@@ -529,12 +530,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
 
         //  Consists can be selected regardless of pref, as long as there is a ConsistManager.
-        consistC = WiThrottleManager.consistControllerInstance();
+        consistC = InstanceManager.getDefault(WiThrottleManager.class).getConsistController();
         if (consistC.verifyCreation()) {
             if (log.isDebugEnabled()) {
                 log.debug("Consist Controller valid.");
             }
-            isConsistAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowConsist();
+            isConsistAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowConsist();
             consistC.addControllerListener(this);
             consistC.setIsConsistAllowed(isConsistAllowed);
             consistC.sendConsistListType();
@@ -654,7 +655,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
 
     }
-        
+
     /**
      * System has declined the address request, may be an in-use address.
      * Need to clear the address from the proper multiThrottle.

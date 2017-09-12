@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 //  WiThrottle
 //
-//  
+//
 /**
  * ThrottleController.java Sends commands to appropriate throttle component.
  *
@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -56,7 +57,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     boolean useLeadLocoF;
     ConsistFunctionController leadLocoF = null;
 
-    final boolean isMomF2 = WiThrottleManager.withrottlePreferencesInstance().isUseMomF2();
+    final boolean isMomF2 = InstanceManager.getDefault(WiThrottlePreferences.class).isUseMomF2();
 
     public ThrottleController() {
         speedMultiplier = 1.0f / 126.0f;
@@ -216,7 +217,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     @Override
     public void notifyStealThrottleRequired(DccLocoAddress address){
         notifyFailedThrottleRequest(address, "Steal Required");
-        
+
         // this is an automatically stealing impelementation.
 //        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
