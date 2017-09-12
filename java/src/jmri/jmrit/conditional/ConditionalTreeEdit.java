@@ -486,7 +486,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _detailFooter.setVisible(false);
                 break;
 
-            // ------------ Conditional Edit Grids ------------ 
+            // ------------ Conditional Edit Grids ------------
             case "Conditional":  // NOI18N
                 makeConditionalGrid(c);
                 break;
@@ -868,7 +868,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Apply the updates to the current node
      */
     void updatePressed() {
-        _curLogix.deActivateLogix();
         switch (_curNodeType) {
             case "Conditional":     // NOI18N
                 userNameChanged(_editConditionalUserName.getText().trim());
@@ -894,7 +893,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 log.warn("Invalid update button press");  // NOI18N
         }
         setEditMode(false);
-        _curLogix.activateLogix();
         _cdlTree.setSelectionPath(_curTreePath);
         _cdlTree.grabFocus();
     }
@@ -1523,6 +1521,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
+        closeSinglePanelPickList();
         if (_pickTables != null) {
             _pickTables.dispose();
             _pickTables = null;
@@ -1942,8 +1941,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         if (active) {
+            _curLogix.deActivateLogix();
             setPickWindow("Activate", 0);  // NOI18N
         } else {
+            _curLogix.activateLogix();
             setPickWindow("Deactivate", 0);  // NOI18N
         }
     }
@@ -2471,7 +2472,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             _comboNameBox.removeFocusListener(detailFocusEvent);
         }
         setPickWindow("Variable", itemType);  // NOI18N
-        
+
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
         _variableNegated.setSelected(_curVariable.isNegated());
         _variableTriggerActions.setSelected(_curVariable.doTriggerActions());

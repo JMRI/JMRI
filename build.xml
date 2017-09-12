@@ -722,16 +722,6 @@
     </target>
 
 
-    <target name="rmic"
-            description="build RMI stubs and compile">
-        <!-- Run rmic on specified classes -->
-        <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
-              base="${target}"
-              stubversion="compat">
-            <classpath refid="project.class.path"/>
-        </rmic>
-    </target>
-
     <!-- end of program build targets -->
 
     <!-- ============================================================================= -->
@@ -1526,7 +1516,7 @@
 
     <target name="jar"
             description="create working jar file with current contents"
-            depends="debug, rmic">
+            depends="debug">
         <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
           <classpath refid="project.class.path" />
         </manifestclasspath>
@@ -1559,7 +1549,7 @@
 
     <target name="jar-resources"
             description="package all resources as a jar file"
-            depends="debug, rmic">
+            depends="debug">
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
              compress="true"
@@ -1888,11 +1878,11 @@
 
     <target name="dist"
             description="create a distribution jar file without tests"
-            depends="clean, init, debug, rmic, jar"/>
+            depends="clean, init, debug, jar"/>
 
     <target name="dist-debug"
             description="create a distribution jar file including tests"
-            depends="clean, init, debug, rmic, jar"/>
+            depends="clean, init, debug, jar"/>
 
     <taskdef name="findbugs"
              classname="edu.umd.cs.findbugs.anttask.FindBugsTask"

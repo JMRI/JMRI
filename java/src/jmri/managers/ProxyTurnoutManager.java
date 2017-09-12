@@ -23,7 +23,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Turnout> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
     }
 
@@ -31,7 +31,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Revise superclass behavior: support TurnoutOperations
      */
     @Override
-    public void addManager(Manager m) {
+    public void addManager(Manager<Turnout> m) {
         super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
     }

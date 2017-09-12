@@ -112,14 +112,14 @@ public class WarrantManager extends AbstractManager<Warrant>
             return null;
         }
         String key = name.toUpperCase();
-        return (Warrant) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public Warrant getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (Warrant) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     public Warrant provideWarrant(String name) {

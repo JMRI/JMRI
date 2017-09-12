@@ -339,7 +339,7 @@ public class TrainInfo {
     //
     // Access methods for automatic operation instance variables
     //
-    protected void setSpeedFactor(Float f) {
+    protected void setSpeedFactor(float f) {
         speedFactor = f;
     }
 
@@ -347,7 +347,7 @@ public class TrainInfo {
         return speedFactor;
     }
 
-    protected void setMaxSpeed(Float f) {
+    protected void setMaxSpeed(float f) {
         maxSpeed = f;
     }
 

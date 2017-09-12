@@ -119,8 +119,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         if (key == null) {
             return false;
         }
-        if (key.equals(rbean.getString("SignalHeadStateDark"))
-                || key.equals(rbean.getString("SignalHeadStateHeld"))) {
+        if (key.equals(Bundle.getMessage("SignalHeadStateDark"))
+                || key.equals(Bundle.getMessage("SignalHeadStateHeld"))) {
             if (log.isDebugEnabled()) {
                 log.debug(key + " is a valid state. ");
             }
@@ -357,7 +357,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                     super.setText(Bundle.getMessage("Held"));
                 }
                 if (isIcon()) {
-                    super.setIcon(_iconMap.get(rbean.getString("SignalHeadStateHeld")));
+                    super.setIcon(_iconMap.get(Bundle.getMessage("SignalHeadStateHeld")));
                 }
                 return;
             } else if (getLitMode() && !getSignalHead().getLit()) {
@@ -365,7 +365,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                     super.setText(Bundle.getMessage("Dark"));
                 }
                 if (isIcon()) {
-                    super.setIcon(_iconMap.get(rbean.getString("SignalHeadStateDark")));
+                    super.setIcon(_iconMap.get(Bundle.getMessage("SignalHeadStateDark")));
                 }
                 return;
             }

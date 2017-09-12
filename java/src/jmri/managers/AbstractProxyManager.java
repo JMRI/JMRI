@@ -40,7 +40,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return mgrs.size();
     }
 
-    protected Manager getMgr(int index) {
+    protected Manager<E> getMgr(int index) {
         // make sure internal present
         initInternal();
 
@@ -57,14 +57,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
      *
      * @return the list of managers
      */
-    public List<Manager> getManagerList() {
+    public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
 
         return new ArrayList<>(mgrs);
     }
 
-    public void addManager(Manager m) {
+    public void addManager(Manager<E> m) {
         // check for already present
         if (mgrs.contains(m)) {
             // already present, complain and skip
@@ -83,7 +83,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         }
     }
 
-    private Manager initInternal() {
+    private Manager<E> initInternal() {
         if (internalManager == null) {
             log.debug("create internal manager when first requested");
             internalManager = makeInternalManager();
@@ -91,15 +91,15 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
         return internalManager;
     }
 
-    private final java.util.ArrayList<Manager> mgrs = new java.util.ArrayList<>();
-    private Manager internalManager = null;
+    private final java.util.ArrayList<Manager<E>> mgrs = new java.util.ArrayList<>();
+    private Manager<E> internalManager = null;
 
     /**
      * Create specific internal manager as needed for concrete type.
      *
      * @return an internal manager
      */
-    abstract protected Manager makeInternalManager();
+    abstract protected Manager<E> makeInternalManager();
 
     /**
      * Locate via user name, then system name if needed. Subclasses use this to

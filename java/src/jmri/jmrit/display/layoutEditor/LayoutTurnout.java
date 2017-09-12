@@ -198,7 +198,7 @@ public class LayoutTurnout extends LayoutTrack {
     public String turnoutName = "";   // should be the name (system or user) of
     //  an existing physical turnout
     public String secondTurnoutName = "";
-    /* should be the name (system or user) of an existing physical turnout. 
+    /* should be the name (system or user) of an existing physical turnout.
         Second turnout is used to allow the throwing of two different turnout
         to control one cross-over
      */
@@ -3117,7 +3117,6 @@ public class LayoutTurnout extends LayoutTrack {
             if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                     // turnout has changed
-                    newName = newName;
                     if (layoutEditor.validatePhysicalTurnout(newName,
                             editLayoutTurnoutFrame)) {
                         setSecondTurnout(newName);

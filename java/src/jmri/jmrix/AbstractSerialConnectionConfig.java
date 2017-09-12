@@ -12,7 +12,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -242,10 +241,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         log.debug("getting fresh list of available Serial Ports");
 
         if (v.isEmpty()) {
-            v.add(0, rb.getString("noPortsFound"));
+            v.add(0, Bundle.getMessage("noPortsFound"));
         }
         String portName = adapter.getCurrentPortName();
-        if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))) {
+        if (portName != null && !portName.equals(Bundle.getMessage("noneSelected")) && !portName.equals(Bundle.getMessage("noPortsFound"))) {
             if (!v.contains(portName)) {
                 v.add(0, portName);
                 invalidPort = portName;
@@ -255,16 +254,16 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         } else {
             if (!v.contains(portName)) {
-                v.add(0, rb.getString("noneSelected"));
+                v.add(0, Bundle.getMessage("noneSelected"));
             } else if (p.getComboBoxLastSelection(adapter.getClass().getName() + ".port") == null) {
-                v.add(0, rb.getString("noneSelected"));
+                v.add(0, Bundle.getMessage("noneSelected"));
             }
         }
         updateSerialPortNames(portName, portBox, v);
 
         // If there's no name selected, select one that seems most likely
         boolean didSetName = false;
-        if (portName == null || portName.equals(rb.getString("noneSelected")) || portName.equals(rb.getString("noPortsFound"))) {
+        if (portName == null || portName.equals(Bundle.getMessage("noneSelected")) || portName.equals(Bundle.getMessage("noPortsFound"))) {
             for (int i = 0; i < portBox.getItemCount(); i++) {
                 for (String friendlyName : getPortFriendlyNames()) {
                     if ((portBox.getItemAt(i)).contains(friendlyName)) {
@@ -282,12 +281,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
         // finally, insist on synchronization of selected port name with underlying port
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        
+
         // add a listener for later changes
         portBox.addActionListener((ActionEvent e) -> {
             String port = PortNameMapper.getPortFromName((String) portBox.getSelectedItem());
             adapter.setPort(port);
-        });  
+        });
     }
 
     String value;
@@ -300,7 +299,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (!init) {
             //Build up list of options
             String[] optionsAvailable = adapter.getOptions();
-            options = new Hashtable<>();
+            options.clear();
             for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
@@ -591,10 +590,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Handle friendly port names. Note that this 
-     * changes the selection in portCombo, so 
+     * Handle friendly port names. Note that this
+     * changes the selection in portCombo, so
      * that should be tracked after this returns.
-     * 
+     *
      * @param portName The currently-selected port name
      * @param portCombo The combo box that's displaying the available ports
      * @param portList The list of valid (unfriendly) port names
@@ -628,7 +627,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());

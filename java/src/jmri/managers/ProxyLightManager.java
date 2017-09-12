@@ -23,7 +23,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Light> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getLightManager();
     }
 
