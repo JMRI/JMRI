@@ -34,7 +34,12 @@ public class IconEditorWindowTest {
     public TestRule watcher = new TestWatcher() {
         @Override
         protected void starting(Description description) {
-            System.out.println("Starting test: " + description.getMethodName());
+            if (Boolean.valueOf(System.getenv("TRAVIS_PULL_REQUEST"))) {
+                // use System.out.println instead of logging to avoid using
+                // warning or error while still providing this output on PRs
+                // in Travis CI (and blocking elsewhere)
+                System.out.println("Starting test: " + description.getMethodName());
+            }
         }
     };
 
