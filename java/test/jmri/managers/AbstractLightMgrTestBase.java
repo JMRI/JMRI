@@ -75,7 +75,7 @@ public abstract class AbstractLightMgrTestBase {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            Light t = l.provideLight("");
+            l.provideLight("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;

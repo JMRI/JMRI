@@ -40,6 +40,6 @@ public class JsonLayoutBlockSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockSocketServiceTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(JsonLayoutBlockSocketServiceTest.class);
 
 }

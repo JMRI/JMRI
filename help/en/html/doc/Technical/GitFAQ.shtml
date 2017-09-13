@@ -644,7 +644,7 @@
           </ol>
         </dd>
 
-        <dt id="share">Resolving a Merge Conflict</dt>
+        <dt id="resolve">Resolving a Merge Conflict</dt>
 
         <dd>
           It's not uncommon for two or more people to have ideas

@@ -87,13 +87,16 @@
           When clicked the following commands can be sent:
 
           <ul>
-            <li><b>Halt</b> - Temporarily ramps the train down
-            to a stop and
-            suspends execution of the throttle command script</li>
+            <li><b>Halt</b> - Set the throttle to stop and
+            suspend execution of the throttle command script</li>
 
-            <li><b>Resume</b> - Ramps up the speed of the train to
-            its former setting and restarts the throttle command
+            <li><b>Resume</b> - Ramp the speed of the train up to
+            its former setting and restart the throttle command
             script</li>
+
+            <li><b>Ramp to Stop</b> - Ramp the train down
+            to a stop and
+            suspend execution of the throttle command script</li>
 
             <li><b>Move into Next Block</b> - Repeats the test for
             whether a signal aspect has changed or an occupied
@@ -104,8 +107,8 @@
             due to a short or other hardware malfunction. This
             reset may allow a stopped train to continue.)</li>
 
-			<li><b>E-Stop</b> - Issues an emergency stop to the train
-			and suspends execution of the throttle command script.
+			<li><b>E-Stop</b> - Issue an emergency stop to the train
+			and suspend execution of the throttle command script.
 			</li>
             <li><b>Abort</b> - Abort the script and deallocate the
             warrant.</li>
@@ -168,10 +171,11 @@
       <h2>Running Automated Trains</h2>The throttle 
       commands recorded in a warrant are played back to run the
       train, but additional control of the train can be 
-      done through five choices: <b>Halt</b>, <b>Resume</b>,
-      <b>Move into Next Block</b> and <b>Abort</b>. The first two
-      commands halt a running train and restart it, keeping the 
-      warrant in effect. <b>Move into Next Block</b> is "repair" command
+      done through the choices provided by the <b>Control/Status</b>
+      down down combobox. Note there are there ways to stop the
+      train: Emergency stop, halt(stop), or ramp down to a stop and one
+      command to restart it, keeping the warrant in effect.
+       <b>Move into Next Block</b> is "repair" command
       should the train overrun a block and become "Lost". This
       command aligns the warrant to the next block and restarts the
       train. The <b>Abort</b> command does an emergency stop and 

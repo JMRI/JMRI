@@ -74,7 +74,7 @@ public class WebServerPreferences extends PreferencesBean {
      */
     @Deprecated
     public static final String Simple = SIMPLE;
-    public static final String RAILROAD_NAME = "railRoadName"; // NOI18N
+    public static final String RAILROAD_NAME = "railroadName"; // NOI18N
     /**
      * @deprecated since 4.7.1; use {@link #RAILROAD_NAME} instead
      */
@@ -432,13 +432,26 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     /**
-     * @return the railroadName
+     * Get the name of the railroad.
+     *
+     * @return the railroad name
      */
     public String getRailroadName() {
         return railroadName;
     }
 
     /**
+     * @return the railroadName
+     * @deprecated since 4.9.1; use {@link #getRailroadName()} instead
+     */
+    @Deprecated
+    public String getRailRoadName() {
+        return this.getRailroadName();
+    }
+
+    /**
+     * Set the railroad name.
+     *
      * @param railroadName the railroadName to set
      */
     public void setRailroadName(String railroadName) {
@@ -451,6 +464,16 @@ public class WebServerPreferences extends PreferencesBean {
             }
             this.firePropertyChange(RAILROAD_NAME, old, this.railroadName);
         }
+    }
+
+    /**
+     * @param railroadName the railroadName to set
+     * @deprecated since 4.9.1; use {@link #setRailroadName(java.lang.String)}
+     * instead
+     */
+    @Deprecated
+    public void setRailRoadName(String railroadName) {
+        this.setRailroadName(railroadName);
     }
 
     /**

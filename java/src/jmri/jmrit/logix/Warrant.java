@@ -2047,6 +2047,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     _curSpeedType = currentType;
                 }
             }
+            if (log.isTraceEnabled()) {
+                log.trace("Exit setMovement due to no ramping. warrant= {}", getDisplayName());
+            }
             return true;
         }
 
@@ -2239,7 +2242,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         aveThrottleSpeed = throttleSpeed;
                     } else {
                         aveThrottleSpeed = prevThrottleSpeed + (throttleSpeed - prevThrottleSpeed) * mf;
-                        ;
                     }
                     dist = _speedUtil.getDistanceTraveled(aveThrottleSpeed, _curSpeedType, waitTime, isForward);
                     if ((waitDist + dist + rampLen) > availDist) {
@@ -2300,6 +2302,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _delayCommand = new CommandDelay(speedType, waitTime, rampDelay);
             //            _delayCommand.start();
             _delayCommand.execute();
+        }
+        if (log.isTraceEnabled()) {
+            log.trace("Exit setMovement after DelayCommand executed. warrant= {}", getDisplayName());
         }
         return true;
     }

@@ -40,6 +40,6 @@ public class DrawPolygonTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DrawPolygonTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DrawPolygonTest.class);
 
 }

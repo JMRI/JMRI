@@ -1237,7 +1237,7 @@ public class AddSignalMastPanel extends JPanel {
     String[] turnoutStates = new String[]{stateClosed, stateThrown};
     int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
 
-    BeanSelectCreatePanel turnoutUnLitBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutUnLitBox = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
     JComboBox<String> turnoutUnLitState = new JComboBox<>(turnoutStates);
 
     void turnoutUnLitPanel() {
@@ -1262,7 +1262,7 @@ public class AddSignalMastPanel extends JPanel {
      */
     class TurnoutAspectPanel {
 
-        BeanSelectCreatePanel beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+        BeanSelectCreatePanel<Turnout> beanBox = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
         JCheckBox disabledCheck = new JCheckBox(Bundle.getMessage("DisableAspect"));
         JLabel turnoutStateLabel = new JLabel(Bundle.getMessage("SetState"));
         JComboBox<String> turnoutState = new JComboBox<>(turnoutStates);
@@ -1666,12 +1666,12 @@ public class AddSignalMastPanel extends JPanel {
     /**
      * on = thrown, off = closed, no turnout states asked
      */
-    BeanSelectCreatePanel turnoutBox1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnoutBox2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnoutBox3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnoutBox4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnoutBox5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-    BeanSelectCreatePanel turnoutBox6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox1 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox2 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox3 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox4 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox5 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox6 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
     // repeat in order to set MAXMATRIXBITS > 6
 
     /**

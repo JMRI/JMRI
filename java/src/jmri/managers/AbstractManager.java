@@ -7,7 +7,6 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
@@ -29,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * It does include, with AbstractNamedBean, the implementation of the normalized
  * user name.
  *
+ * @param <E> the class this manager supports
  * @see jmri.NamedBean#normalizeUserName
  *
  * @author Bob Jacobsen Copyright (C) 2003
@@ -42,16 +42,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
-     *
      */
     @OverridingMethodsMustInvokeSuper
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
             cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
-        }
+        });
     }
 
     @Override
@@ -66,10 +64,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
             cm.deregister(this);
-        }
+        });
         _tsys.clear();
         _tuser.clear();
     }
@@ -100,7 +97,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return requested Turnout object or null if none exists
      */
     protected E getInstanceByUserName(String userName) {
-        return _tuser.get(NamedBean.normalizeUserName(userName));
+        String normalizedUserName = NamedBean.normalizeUserName(userName);
+        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /**
@@ -124,7 +122,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @Override
     public E getBeanByUserName(String userName) {
-        return _tuser.get(NamedBean.normalizeUserName(userName));
+        String normalizedUserName = NamedBean.normalizeUserName(userName);
+        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
 
     /**
@@ -136,9 +135,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @Override
     public E getNamedBean(String name) {
-        E b = getBeanByUserName(NamedBean.normalizeUserName(name));
-        if (b != null) {
-            return b;
+        String normalizedUserName = NamedBean.normalizeUserName(name);
+        if (normalizedUserName != null) {
+            E b = getBeanByUserName(normalizedUserName);
+            if (b != null) {
+                return b;
+            }
         }
         return getBeanBySystemName(name);
     }
@@ -282,31 +284,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     @Override
     public String[] getSystemNameArray() {
-        String[] arr = new String[_tsys.size()];
-        Enumeration<String> en = _tsys.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
+        return this.getSystemNameList().toArray(new String[_tsys.size()]);
     }
 
     @Override
     public List<String> getSystemNameList() {
-        String[] arr = new String[_tsys.size()];
-        List<String> out = new ArrayList<>();
-        Enumeration<String> en = _tsys.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i] = en.nextElement();
-            i++;
-        }
-        jmri.util.StringUtil.sort(arr);
-        for (i = 0; i < arr.length; i++) {
-            out.add(arr[i]);
-        }
+        List<String> out = new ArrayList<>(_tsys.keySet());
+        out.sort(null);
         return out;
     }
 
@@ -443,8 +427,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return A system name in standard normalized form
      */
     @CheckReturnValue
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+    @Override
+    @Nonnull
+    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName;
     }
 

@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigTest.class,
+   RaspberryPiConnectionConfigTest.class,
    RaspberryPiAdapterTest.class,
    RaspberryPiSystemConnectionMemoTest.class,
    RaspberryPiSensorManagerTest.class,

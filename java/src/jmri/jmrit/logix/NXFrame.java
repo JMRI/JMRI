@@ -62,7 +62,7 @@ public class NXFrame extends WarrantRoute {
     private JButton _destUnits;
     private JRadioButton _forward = new JRadioButton();
     private JRadioButton _reverse = new JRadioButton();
-    private JRadioButton _noRamp = new JRadioButton();
+    private JCheckBox _noRamp = new JCheckBox();
     private JCheckBox _stageEStop = new JCheckBox();
     private JCheckBox _shareRouteBox = new JCheckBox();
     private JCheckBox _haltStartBox = new JCheckBox();
@@ -1014,9 +1014,10 @@ public class NXFrame extends WarrantRoute {
         while (curThrottle > 0) {
             if (nextIdx == orders.size()) { // at last block
                 if (_stageEStop.isSelected()) {
-                    w.addThrottleCommand(new ThrottleSetting(0, "Speed", "-0.5", blockName,
+                    w.addThrottleCommand(new ThrottleSetting(50, "Speed", "-0.5", blockName,
                             (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                     _intervalTime = 0;
+                    curThrottle = -0.5f;
                     if (log.isDebugEnabled()) {
                         log.debug("{}. At block \"{}\" set speed= {}", cmdNum++, blockName, -0.5);
                     }

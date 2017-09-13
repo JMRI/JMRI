@@ -236,7 +236,7 @@ public class SCWarrant extends Warrant {
                 speed = _speedMap.getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
                 log.debug("SignalMast "+((SignalMast) _nextSignal).getDisplayName()+" shows aspect "+aspect+" which maps to speed "+speed);
             }
-            float speed_f = _speedMap.getSpeed(speed) / (float) 125;
+            float speed_f = (float) (_speedMap.getSpeed(speed) / 125.);
             // Ease the speed, if we are approaching the destination block
             if ((_idxCurrentOrder == getBlockOrders().size()-2) && (speed_f > SPEED_UNSIGNALLED)) {
                 speed_f = SPEED_UNSIGNALLED;
