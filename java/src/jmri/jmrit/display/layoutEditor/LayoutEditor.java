@@ -2043,6 +2043,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * @param inEnable       boolean to enable / disable the JmriBeanComboBox
      */
     public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
+        setupComboBox(inComboBox, inValidateMode, inEnable, !inValidateMode);
+    }
+
+    /**
+     * Set up editable JmriBeanComboBoxes
+     *
+     * @param inComboBox     the editable JmriBeanComboBoxes to set up
+     * @param inValidateMode boolean: if true, valid text == green, invalid text
+     *                       == red background; if false, valid text == green,
+     *                       invalid text == yellow background
+     * @param inEnable       boolean to enable / disable the JmriBeanComboBox
+     * @param inFirstBlank   boolean to enable / disable the first item being
+     *                       blank
+     */
+    public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
@@ -2076,6 +2091,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             c /= 2; // keeps this a even division of the number of items
         };
         inComboBox.setMaximumRowCount(c);
+        inComboBox.setFirstItemBlank(inFirstBlank);
         inComboBox.setSelectedIndex(-1);
     } //setupComboBox
 
@@ -5181,7 +5197,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                     }
                 }
-            } else if (event.isShiftDown() && trackButton.isSelected() && (!event.isPopupTrigger())) {
+            } else if (event.isShiftDown() && trackButton.isSelected() && !event.isPopupTrigger()) {
                 //starting a Track Segment, check for free connection point
                 selectedObject = null;
 
@@ -5197,7 +5213,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     foundObject = null;
                     beginObject = null;
                 }
-            } else if ((!event.isShiftDown()) && (!event.isControlDown()) && (!event.isPopupTrigger())) {
+            } else if (!event.isShiftDown() && !event.isControlDown() && !event.isPopupTrigger()) {
                 //check if controlling a turnout in edit mode
                 selectedObject = null;
 
@@ -5218,15 +5234,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (prevSelectionActive) {
                 redrawPanel();
             }
-        } else if (allControlling() && (!event.isMetaDown()) && (!event.isPopupTrigger())
-                && (!event.isAltDown()) && (!event.isShiftDown()) && (!event.isControlDown())) {
+        } else if (allControlling() && !event.isMetaDown() && !event.isPopupTrigger()
+                && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             if (checkControls(true)) {
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             }
         } else if ((event.isMetaDown() || event.isAltDown())
-                && (!event.isShiftDown()) && (!event.isControlDown())) {
+                && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
             if (selectedObject != null) {
@@ -5235,7 +5251,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 startDelta.setLocation((((LocoIcon) selectedObject).getX() - dLoc.getX()),
                         (((LocoIcon) selectedObject).getY() - dLoc.getY()));
             }
-        } else if (event.isPopupTrigger() && (!event.isShiftDown())) {
+        } else if (event.isPopupTrigger() && !event.isShiftDown()) {
             //not in edit mode - check if a marker popup menu is being requested
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
@@ -5541,7 +5557,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yLabel.setText(Integer.toString(yLoc));
 
             // released the mouse with shift down... see what we're adding
-            if ((!event.isPopupTrigger()) && (!event.isMetaDown()) && event.isShiftDown()) {
+            if (!event.isPopupTrigger() && !event.isMetaDown() && event.isShiftDown()) {
                 layoutEditorMode = LayoutEditorMode.ADDING_OBJECT;
 
                 currentPoint = new Point2D.Double(xLoc, yLoc);
@@ -5616,23 +5632,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 whenReleased = event.getWhen();
                 showEditPopUps(event);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
-                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && (!event.isPopupTrigger())
-                    && (!event.isShiftDown()) && (!event.isControlDown())) {
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turnouts, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
             } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
                     || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && (!event.isPopupTrigger())
-                    && (!event.isShiftDown()) && (!event.isControlDown())) {
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling slips, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedPointType);
             } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
-                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && (!event.isPopupTrigger())
-                    && (!event.isShiftDown()) && (!event.isControlDown())) {
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
                 layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
@@ -5642,13 +5658,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || (selectedPointType == LayoutTrack.SLIP_LEFT)
                     || (selectedPointType == LayoutTrack.SLIP_RIGHT))
                     && allControlling() && (event.isMetaDown() && !event.isAltDown())
-                    && (!event.isShiftDown()) && (!event.isControlDown()) && isDragging) {
+                    && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a turnout (or slip)... see if it will connect to anything
                 layoutEditorMode = LayoutEditorMode.DROPPED_TURNOUT;
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.POS_POINT)
-                    && allControlling() && (event.isMetaDown() && !event.isAltDown())
-                    && (!event.isShiftDown()) && (!event.isControlDown()) && isDragging) {
+                    && allControlling() && (event.isMetaDown())
+                    && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a PositionablePoint... see if it will connect to anything
                 layoutEditorMode = LayoutEditorMode.DROPPED_POSITIONABLE_POINT;
                 PositionablePoint p = (PositionablePoint) selectedObject;
@@ -5667,8 +5683,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             createSelectionGroups();
         } else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
-                && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
-                && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && !event.isShiftDown() && (!delayedPopupTrigger)) {
             //controlling turnout out of edit mode
             layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutTurnout t = (LayoutTurnout) selectedObject;
@@ -5679,15 +5695,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT)
                 || (selectedPointType == LayoutTrack.SLIP_RIGHT))
-                && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
-                && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling slip out of edit mode
             layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedPointType);
         } else if ((selectedObject != null) && (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
-                && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
-                && (!event.isShiftDown()) && (!delayedPopupTrigger)) {
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             layoutEditorMode = LayoutEditorMode.CONTROLLING_TURNOUT;
             LayoutTurntable t = (LayoutTurntable) selectedObject;
@@ -5972,13 +5988,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void mouseClicked(@Nonnull MouseEvent event) {
+        //initialize mouse position
+        calcLocation(event);
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
-        if ((!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown())
-                && (!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown())) {
-            calcLocation(event);
+        if (!event.isMetaDown() && !event.isPopupTrigger() && !event.isAltDown()
+                && !awaitingIconChange && !event.isShiftDown() && !event.isControlDown()) {
             List<Positionable> selections = getSelectedItems(event);
 
             if (selections.size() > 0) {
@@ -5986,7 +6003,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 selections.get(0).doMouseClicked(event);
             }
         } else if (event.isPopupTrigger() && (whenReleased != event.getWhen())) {
-            calcLocation(event);
 
             if (isEditable()) {
                 selectedObject = null;
@@ -6723,6 +6739,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     @Override
     public void mouseMoved(@Nonnull MouseEvent event) {
+        //initialize mouse position
         calcLocation(event);
 
         // if alt modifier is down invert the snap to grid behaviour
@@ -6777,7 +6794,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //don't allow negative placement, objects could become unreachable
         currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
 
-        if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown() || event.isAltDown()) && (selectedPointType == LayoutTrack.MARKER)) {
+        if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown())
+                && (selectedPointType == LayoutTrack.MARKER)) {
             //marker moves regardless of editMode or positionable
             PositionableLabel pl = (PositionableLabel) selectedObject;
             pl.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
@@ -6973,33 +6991,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                     } //switch (selectedPointType)
                 } // if moving selection else
-            }   // moving selected object
-            redrawPanel();
-        } else if ((beginObject != null)
-                && event.isShiftDown()
-                && trackButton.isSelected()) {
-            //dragging from first end of Track Segment
-            currentLocation.setLocation(xLoc, yLoc);
-            boolean needResetCursor = (foundObject != null);
+            } else if ((beginObject != null)
+                    && event.isShiftDown()
+                    && trackButton.isSelected()) {
+                //dragging from first end of Track Segment
+                currentLocation.setLocation(xLoc, yLoc);
+                boolean needResetCursor = (foundObject != null);
 
-            if (hitPointCheckLayoutTracks(currentLocation, true)) {
-                //have match to free connection point, change cursor
-                setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-            } else if (needResetCursor) {
-                setCursor(Cursor.getDefaultCursor());
+                if (hitPointCheckLayoutTracks(currentLocation, true)) {
+                    //have match to free connection point, change cursor
+                    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                } else if (needResetCursor) {
+                    setCursor(Cursor.getDefaultCursor());
+                }
+            } else if (selectionActive && !event.isShiftDown() && !event.isMetaDown()) {
+                selectionWidth = xLoc - selectionX;
+                selectionHeight = yLoc - selectionY;
             }
-            redrawPanel();
-        } else if (selectionActive
-                && !event.isShiftDown()
-                && !event.isAltDown()
-                && !event.isMetaDown()) {
-            selectionWidth = xLoc - selectionX;
-            selectionHeight = yLoc - selectionY;
             redrawPanel();
         } else {
             Rectangle r = new Rectangle(event.getX(), event.getY(), 1, 1);
             ((JComponent) event.getSource()).scrollRectToVisible(r);
-        }
+        }   // if (isEditable())
     } //mouseDragged
 
     // @SuppressWarnings("unused")
