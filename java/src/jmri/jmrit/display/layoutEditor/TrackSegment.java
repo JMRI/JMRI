@@ -299,6 +299,17 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
+    // These two methods should never be called…
+    // only implemented here to supress "does not override abstract method " error in compiler
+    public Object getConnection(int connectionType) throws jmri.JmriException {
+        // nothing to do here… move along…
+        return null;
+    }
+
+    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+        // nothing to do here… move along…
+}
+
     public int getNumberOfBezierControlPoints() {
         return bezierControlPoints.size();
     }
@@ -362,6 +373,23 @@ public class TrackSegment extends LayoutTrack {
      */
     public void translateCoords(float xFactor, float yFactor) {
         // Nothing to do here, move along
+    }
+
+    /**
+     * set center coordinates
+     *
+     * @param p the coordinates to set
+     */
+    public void setCoordsCenter(Point2D newCenterPoint) {
+        if (center != newCenterPoint) {
+            if (getBezier()) {
+                Point2D delta = MathUtil.subtract(newCenterPoint, center);
+                for (Point2D p : bezierControlPoints) {
+                    p.setLocation(MathUtil.add(p, delta));
+                }
+            }
+            center = newCenterPoint;
+        }
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
