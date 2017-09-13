@@ -250,12 +250,11 @@ public class LayoutEditorTools {
 
             JPanel panel1 = new JPanel(new FlowLayout());
             if (turnoutFromMenu) {
-                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
+                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+                        + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutNameLabel);
             } else {
-                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + Bundle.getMessage("Name"));
+                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout"));
                 panel1.add(turnoutNameLabel);
                 panel1.add(turnoutComboBox);
                 turnoutComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -376,7 +375,7 @@ public class LayoutEditorTools {
             setSignalsDone.addActionListener((ActionEvent e) -> {
                 setSignalsDonePressed(e);
             });
-            setSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -2123,7 +2122,7 @@ public class LayoutEditorTools {
             setSignalsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalsAtBoundaryDonePressed(e);
             });
-            setSignalsAtBoundaryDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSignalsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -2843,7 +2842,7 @@ public class LayoutEditorTools {
             setXoverSignalsDone.addActionListener((ActionEvent e) -> {
                 setXoverSignalsDonePressed(e);
             });
-            setXoverSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setXoverSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -3660,13 +3659,12 @@ public class LayoutEditorTools {
 
             JPanel panel11 = new JPanel(new FlowLayout());
             if (xingFromMenu) {
-                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 1"))
+                        + " " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
             } else {
-                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : ");
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 1")));
                 panel11.add(blockANameLabel);
                 panel11.add(blockAComboBox);
                 blockAComboBox.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -3675,13 +3673,12 @@ public class LayoutEditorTools {
 
             JPanel panel12 = new JPanel(new FlowLayout());
             if (xingFromMenu) {
-                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 2"))
+                        + " " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
-                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : ");
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 2")));
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCComboBox);
                 blockCComboBox.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -3802,7 +3799,7 @@ public class LayoutEditorTools {
             setXingSignalsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalsDonePressed(e);
             });
-            setXingSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setXingSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -4718,7 +4715,7 @@ public class LayoutEditorTools {
             setTToTSignalsDone.addActionListener((ActionEvent e) -> {
                 setTToTSignalsDonePressed(e);
             });
-            setTToTSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setTToTSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -5879,14 +5876,14 @@ public class LayoutEditorTools {
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
-            JLabel turnoutANameLabel = new JLabel(rb.getString("TurnoutAName"));
+            JLabel turnoutANameLabel = new JLabel(Bundle.getMessage("MakeLabel", rb.getString("TurnoutAName")));
             panel1.add(turnoutANameLabel);
             panel1.add(turnoutAComboBox);
             turnoutAComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
             theContentPane.add(panel1);
 
             JPanel panel11 = new JPanel(new FlowLayout());
-            JLabel turnoutBNameLabel = new JLabel(rb.getString("TurnoutBName"));
+            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("MakeLabel", rb.getString("TurnoutBName")));
             panel11.add(turnoutBNameLabel);
             panel11.add(turnoutBComboBox);
             turnoutBComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -6053,7 +6050,7 @@ public class LayoutEditorTools {
             set3WaySignalsDone.addActionListener((ActionEvent e) -> {
                 set3WaySignalsDonePressed(e);
             });
-            set3WaySignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            set3WaySignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -7134,7 +7131,7 @@ public class LayoutEditorTools {
             setSensorsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSensorsAtBoundaryDonePressed(e);
             });
-            setSensorsAtBoundaryDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setSensorsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -7664,7 +7661,7 @@ public class LayoutEditorTools {
             setSignalMastsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsAtBoundaryDonePressed(e);
             });
-            setSignalMastsAtBoundaryDone.setToolTipText(rb.getString("SignalMastDoneHint"));
+            setSignalMastsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -8796,7 +8793,7 @@ public class LayoutEditorTools {
             setSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsDonePressed(e);
             });
-            setSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -9353,7 +9350,7 @@ public class LayoutEditorTools {
             setSlipSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsDonePressed(e);
             });
-            setSlipSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSlipSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSlipSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsCancelPressed(e);
@@ -9850,7 +9847,7 @@ public class LayoutEditorTools {
             setXingSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsDonePressed(e);
             });
-            setXingSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setXingSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setXingSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsCancelPressed(e);
@@ -10347,7 +10344,7 @@ public class LayoutEditorTools {
             setSensorsDone.addActionListener((ActionEvent e) -> {
                 setSensorsDonePressed(e);
             });
-            setSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setSensorsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsCancel.addActionListener((ActionEvent e) -> {
                 setSensorsCancelPressed(e);
@@ -10884,7 +10881,7 @@ public class LayoutEditorTools {
             setXingSensorsDone.addActionListener((ActionEvent e) -> {
                 setXingSensorsDonePressed(e);
             });
-            setXingSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setXingSensorsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setXingSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSensorsCancel.addActionListener((ActionEvent e) -> {
                 setXingSensorsCancelPressed(e);
@@ -11415,7 +11412,7 @@ public class LayoutEditorTools {
             setSlipSensorsDone.addActionListener((ActionEvent e) -> {
                 setSlipSensorsDonePressed(e);
             });
-            setSlipSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setSlipSensorsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSlipSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSensorsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSensorsCancelPressed(e);
@@ -12211,7 +12208,7 @@ public class LayoutEditorTools {
             setSlipSignalsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalsDonePressed(e);
             });
-            setSlipSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSlipSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSlipSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSignalsCancelPressed(e);
