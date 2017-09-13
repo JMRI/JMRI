@@ -6856,160 +6856,160 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         newPoint = MathUtil.max(newPoint, MathUtil.zeroPoint2D);
                         lt.setCoordsCenter(newPoint);
                     }
-                }
 
-                _lastX = xLoc;
-                _lastY = yLoc;
-            } else {
-                LayoutTurnout o;
-                LevelXing x;
-                LayoutSlip sl;
+                    _lastX = xLoc;
+                    _lastY = yLoc;
+                } else {
+                    LayoutTurnout o;
+                    LevelXing x;
+                    LayoutSlip sl;
 
-                switch (selectedPointType) {
-                    case LayoutTrack.POS_POINT: {
-                        ((PositionablePoint) selectedObject).setCoordsCenter(currentPoint);
-                        isDragging = true;
-                        break;
-                    }
-
-                    case LayoutTrack.TURNOUT_CENTER: {
-                        ((LayoutTurnout) selectedObject).setCoordsCenter(currentPoint);
-                        isDragging = true;
-                        break;
-                    }
-
-                    case LayoutTrack.TURNOUT_A: {
-                        ((LayoutTurnout) selectedObject).setCoordsA(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.TURNOUT_B: {
-                        ((LayoutTurnout) selectedObject).setCoordsB(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.TURNOUT_C: {
-                        ((LayoutTurnout) selectedObject).setCoordsC(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.TURNOUT_D: {
-                        ((LayoutTurnout) selectedObject).setCoordsD(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.LEVEL_XING_CENTER: {
-                        ((LevelXing) selectedObject).setCoordsCenter(currentPoint);
-                        isDragging = true;
-                        break;
-                    }
-
-                    case LayoutTrack.LEVEL_XING_A: {
-                        ((LevelXing) selectedObject).setCoordsA(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.LEVEL_XING_B: {
-                        ((LevelXing) selectedObject).setCoordsB(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.LEVEL_XING_C: {
-                        ((LevelXing) selectedObject).setCoordsC(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.LEVEL_XING_D: {
-                        ((LevelXing) selectedObject).setCoordsD(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.SLIP_LEFT:
-                    case LayoutTrack.SLIP_RIGHT: {
-                        ((LayoutSlip) selectedObject).setCoordsCenter(currentPoint);
-                        isDragging = true;
-                        break;
-                    }
-
-                    case LayoutTrack.SLIP_A: {
-                        ((LayoutSlip) selectedObject).setCoordsA(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.SLIP_B: {
-                        ((LayoutSlip) selectedObject).setCoordsB(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.SLIP_C: {
-                        ((LayoutSlip) selectedObject).setCoordsC(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.SLIP_D: {
-                        ((LayoutSlip) selectedObject).setCoordsD(currentPoint);
-                        break;
-                    }
-
-                    case LayoutTrack.TURNTABLE_CENTER: {
-                        ((LayoutTurntable) selectedObject).setCoordsCenter(currentPoint);
-                        isDragging = true;
-                        break;
-                    }
-
-                    case LayoutTrack.LAYOUT_POS_LABEL: {
-                        PositionableLabel l = (PositionableLabel) selectedObject;
-
-                        if (l.isPositionable()) {
-                            l.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
+                    switch (selectedPointType) {
+                        case LayoutTrack.POS_POINT: {
+                            ((PositionablePoint) selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
+                            break;
                         }
-                        break;
-                    }
 
-                    case LayoutTrack.LAYOUT_POS_JCOMP: {
-                        PositionableJComponent c = (PositionableJComponent) selectedObject;
-
-                        if (c.isPositionable()) {
-                            c.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
+                        case LayoutTrack.TURNOUT_CENTER: {
+                            ((LayoutTurnout) selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
+                            break;
                         }
-                        break;
-                    }
 
-                    case LayoutTrack.MULTI_SENSOR: {
-                        PositionableLabel pl = (PositionableLabel) selectedObject;
+                        case LayoutTrack.TURNOUT_A: {
+                            ((LayoutTurnout) selectedObject).setCoordsA(currentPoint);
+                            break;
+                        }
 
-                        if (pl.isPositionable()) {
-                            pl.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
+                        case LayoutTrack.TURNOUT_B: {
+                            ((LayoutTurnout) selectedObject).setCoordsB(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.TURNOUT_C: {
+                            ((LayoutTurnout) selectedObject).setCoordsC(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.TURNOUT_D: {
+                            ((LayoutTurnout) selectedObject).setCoordsD(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.LEVEL_XING_CENTER: {
+                            ((LevelXing) selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
+                            break;
                         }
-                        break;
-                    }
 
-                    case LayoutTrack.TRACK_CIRCLE_CENTRE: {
-                        TrackSegment t = (TrackSegment) selectedObject;
-                        t.reCalculateTrackSegmentAngle(currentPoint.getX(), currentPoint.getY());
-                        break;
-                    }
-
-                    default: {
-                        if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
-                                && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
-                            int index = selectedPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
-                            ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
-                        } else if (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
-                            LayoutTurntable turn = (LayoutTurntable) selectedObject;
-                            turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
-                                    selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                        case LayoutTrack.LEVEL_XING_A: {
+                            ((LevelXing) selectedObject).setCoordsA(currentPoint);
+                            break;
                         }
-                        break;
-                    }
-                } //switch (selectedPointType)
-            }
+
+                        case LayoutTrack.LEVEL_XING_B: {
+                            ((LevelXing) selectedObject).setCoordsB(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.LEVEL_XING_C: {
+                            ((LevelXing) selectedObject).setCoordsC(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.LEVEL_XING_D: {
+                            ((LevelXing) selectedObject).setCoordsD(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.SLIP_LEFT:
+                        case LayoutTrack.SLIP_RIGHT: {
+                            ((LayoutSlip) selectedObject).setCoordsCenter(currentPoint);
+                            isDragging = true;
+                            break;
+                        }
+
+                        case LayoutTrack.SLIP_A: {
+                            ((LayoutSlip) selectedObject).setCoordsA(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.SLIP_B: {
+                            ((LayoutSlip) selectedObject).setCoordsB(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.SLIP_C: {
+                            ((LayoutSlip) selectedObject).setCoordsC(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.SLIP_D: {
+                            ((LayoutSlip) selectedObject).setCoordsD(currentPoint);
+                            break;
+                        }
+
+                        case LayoutTrack.TURNTABLE_CENTER: {
+                            ((LayoutTurntable) selectedObject).setCoordsCenter(currentPoint);
+                            isDragging = true;
+                            break;
+                        }
+
+                        case LayoutTrack.LAYOUT_POS_LABEL: {
+                            PositionableLabel l = (PositionableLabel) selectedObject;
+
+                            if (l.isPositionable()) {
+                                l.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
+                                isDragging = true;
+                            }
+                            break;
+                        }
+
+                        case LayoutTrack.LAYOUT_POS_JCOMP: {
+                            PositionableJComponent c = (PositionableJComponent) selectedObject;
+
+                            if (c.isPositionable()) {
+                                c.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
+                                isDragging = true;
+                            }
+                            break;
+                        }
+
+                        case LayoutTrack.MULTI_SENSOR: {
+                            PositionableLabel pl = (PositionableLabel) selectedObject;
+
+                            if (pl.isPositionable()) {
+                                pl.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
+                                isDragging = true;
+                            }
+                            break;
+                        }
+
+                        case LayoutTrack.TRACK_CIRCLE_CENTRE: {
+                            TrackSegment t = (TrackSegment) selectedObject;
+                            t.reCalculateTrackSegmentAngle(currentPoint.getX(), currentPoint.getY());
+                            break;
+                        }
+
+                        default: {
+                            if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
+                                    && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+                                int index = selectedPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
+                                ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
+                            } else if (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                                LayoutTurntable turn = (LayoutTurntable) selectedObject;
+                                turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
+                                        selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                            }
+                            break;
+                        }
+                    } //switch (selectedPointType)
+                } // if moving selection else
+            }   // moving selected object
             redrawPanel();
-        } else if ((beginObject
-                != null) && event.isShiftDown()
+        } else if ((beginObject != null) 
+                && event.isShiftDown() 
                 && trackButton.isSelected()) {
             //dragging from first end of Track Segment
             currentLocation.setLocation(xLoc, yLoc);
@@ -7024,7 +7024,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             redrawPanel();
         } else if (selectionActive
                 && !event.isShiftDown()
-                && !event.isAltDown() && !event.isMetaDown()) {
+                && !event.isAltDown() 
+                && !event.isMetaDown()) {
             selectionWidth = xLoc - selectionX;
             selectionHeight = yLoc - selectionY;
             redrawPanel();
@@ -7034,7 +7035,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     } //mouseDragged
 
-// @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     private void updateLocation(@Nonnull Object o, int pointType, @Nonnull Point2D newPos) {
         switch (pointType) {
             case LayoutTrack.TURNOUT_A: {
