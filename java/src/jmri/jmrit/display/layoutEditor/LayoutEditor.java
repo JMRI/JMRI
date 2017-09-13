@@ -451,26 +451,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //Lists of items that describe the Layout, and allow it to be drawn
     //Each of the items must be saved to disk over sessions
-    public ArrayList<PositionableLabel> backgroundImage = new ArrayList();    //background images
-    public ArrayList<SensorIcon> sensorImage = new ArrayList();               //sensor images
-    public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList();       //signal head images
-    public ArrayList<LocoIcon> markerImage = new ArrayList();                 //marker images
-    public ArrayList<PositionableLabel> labelImage = new ArrayList();         //positionable label images
-    public ArrayList<AnalogClock2Display> clocks = new ArrayList();           //fast clocks
-    public ArrayList<MultiSensorIcon> multiSensors = new ArrayList();         //multi-sensor images
+    public ArrayList<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
+    public ArrayList<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
+    public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
+    public ArrayList<LocoIcon> markerImage = new ArrayList<>();                 //marker images
+    public ArrayList<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
+    public ArrayList<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
+    public ArrayList<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
 
-    public ArrayList<LayoutTurnout> turnoutList = new ArrayList();        //LayoutTurnout list
-    public ArrayList<TrackSegment> trackList = new ArrayList();           //TrackSegment list
-    public ArrayList<PositionablePoint> pointList = new ArrayList();      //PositionablePoint list
-    public ArrayList<LevelXing> xingList = new ArrayList();               //LevelXing list
-    public ArrayList<LayoutSlip> slipList = new ArrayList();              //LayoutSlip list
-    public ArrayList<LayoutTurntable> turntableList = new ArrayList();    //LayoutTurntable list
+    public ArrayList<LayoutTurnout> turnoutList = new ArrayList<>();        //LayoutTurnout list
+    public ArrayList<TrackSegment> trackList = new ArrayList<>();           //TrackSegment list
+    public ArrayList<PositionablePoint> pointList = new ArrayList<>();      //PositionablePoint list
+    public ArrayList<LevelXing> xingList = new ArrayList<>();               //LevelXing list
+    public ArrayList<LayoutSlip> slipList = new ArrayList<>();              //LayoutSlip list
+    public ArrayList<LayoutTurntable> turntableList = new ArrayList<>();    //LayoutTurntable list
 
-    public ArrayList<SignalHeadIcon> signalList = new ArrayList();                //Signal Head Icons
-    public ArrayList<MemoryIcon> memoryLabelList = new ArrayList();               //Memory Label List
-    public ArrayList<BlockContentsIcon> blockContentsLabelList = new ArrayList(); //BlockContentsIcon Label List
-    public ArrayList<SensorIcon> sensorList = new ArrayList();                    //Sensor Icons
-    public ArrayList<SignalMastIcon> signalMastList = new ArrayList();            //Signal Mast Icons
+    public ArrayList<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
+    public ArrayList<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
+    public ArrayList<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
+    public ArrayList<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
+    public ArrayList<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
     //counts used to determine unique internal names
     private int numAnchors = 0;
@@ -3511,7 +3511,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Rectangle2D result = new Rectangle2D.Double();
 
         // combine all (onscreen) Components into a list of list of Components
-        List<List> listOfListsOfComponents = new ArrayList();
+        List<List> listOfListsOfComponents = new ArrayList<>();
         listOfListsOfComponents.add(backgroundImage);
         listOfListsOfComponents.add(sensorImage);
         listOfListsOfComponents.add(signalHeadImage);
@@ -3536,7 +3536,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         // combine all (onscreen) LayoutTracks into a list of list of LayoutTracks
-        List<List> listOflistOfLayoutTracks = new ArrayList();
+        List<List> listOflistOfLayoutTracks = new ArrayList<>();
         listOflistOfLayoutTracks.add(turnoutList);
         listOflistOfLayoutTracks.add(trackList);
         listOflistOfLayoutTracks.add(pointList);
@@ -4472,7 +4472,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     } //scaleTrackDiagramCancelPressed
 
     boolean translateTrack(float xDel, float yDel) {
-        List<List> listOfLists = new ArrayList();
+        List<List> listOfLists = new ArrayList<>();
         listOfLists.add(turnoutList);
         listOfLists.add(xingList);
         listOfLists.add(slipList);
@@ -4497,7 +4497,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * @param yFactor the amount to scale Y coordinates
      */
     boolean scaleTrack(float xFactor, float yFactor) {
-        List<List> listOfLists = new ArrayList();
+        List<List> listOfLists = new ArrayList<>();
         listOfLists.add(turnoutList);
         listOfLists.add(xingList);
         listOfLists.add(slipList);
@@ -4676,7 +4676,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
 
-            List<List> listOfLists = new ArrayList();
+            List<List> listOfLists = new ArrayList<>();
             listOfLists.add(turnoutList);
             listOfLists.add(xingList);
             listOfLists.add(slipList);
@@ -4731,7 +4731,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
 
-            List<List> listOfLists = new ArrayList();
+            List<List> listOfLists = new ArrayList<>();
             listOfLists.add(turnoutList);
             listOfLists.add(xingList);
             listOfLists.add(slipList);
@@ -5281,7 +5281,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private static List testEachItemInListOfLists(
             @Nonnull List<List> listOfListsOfObjects,
             @Nonnull Predicate<Object> tester) {
-        List result = new ArrayList();
+        List result = new ArrayList<>();
         for (List<Object> listOfObjects : listOfListsOfObjects) {
             List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
             result.addAll(l);
@@ -5308,7 +5308,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private boolean checkControls(boolean useRectangles) {
-        List<List> listOfLists = new ArrayList();
+        List<List> listOfLists = new ArrayList<>();
         listOfLists.add(turnoutList);
         listOfLists.add(slipList);
         listOfLists.add(turntableList);
@@ -5357,7 +5357,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         boolean result = false; // assume failure (pessimist!)
 
         // these are all the types of objects we want to check
-        List<List> listOfLists = new ArrayList();
+        List<List> listOfLists = new ArrayList<>();
         listOfLists.add(pointList);
         listOfLists.add(turnoutList);
         listOfLists.add(xingList);
@@ -6442,8 +6442,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
-    private ArrayList<Positionable> _positionableSelection = new ArrayList();
-    private ArrayList<LayoutTrack> _layoutTrackSelection = new ArrayList();
+    private ArrayList<Positionable> _positionableSelection = new ArrayList<>();
+    private ArrayList<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
 
     private void highLightSelection(@Nonnull Graphics2D g) {
         java.awt.Stroke stroke = g.getStroke();
@@ -6480,7 +6480,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        List<List> listOfListOfLayoutTracks = new ArrayList();
+        List<List> listOfListOfLayoutTracks = new ArrayList<>();
         listOfListOfLayoutTracks.add(pointList);
         listOfListOfLayoutTracks.add(turnoutList);
         listOfListOfLayoutTracks.add(xingList);
@@ -9625,7 +9625,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //final initialization routine for loading a LayoutEditor
     public void setConnections() {
-        List<List> listOfLists = new ArrayList();
+        List<List> listOfLists = new ArrayList<>();
         listOfLists.add(trackList);
         listOfLists.add(pointList);
         listOfLists.add(xingList);
