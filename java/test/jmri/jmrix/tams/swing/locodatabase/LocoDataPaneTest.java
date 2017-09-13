@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.tams.TamsSystemConnectionMemo;
 
 /**
  * Test simple functioning of LocoDataPane
@@ -18,6 +19,15 @@ public class LocoDataPaneTest {
     public void testCtor() {
         LocoDataPane action = new LocoDataPane();
         Assert.assertNotNull("exists", action);
+    }
+
+    @Test
+    public void testInit() {
+        // this test currently just makes sure we don't throw any exceptions
+        // initializing the panel
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo();
+        LocoDataPane action = new LocoDataPane();
+        action.initComponents(memo);
     }
 
     @Before
