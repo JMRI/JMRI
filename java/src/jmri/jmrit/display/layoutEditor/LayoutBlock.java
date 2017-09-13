@@ -232,6 +232,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         blockExtraColor = color;
     }
 
+    //TODO: @Deprecated // Java standard pattern for boolean getters is "UseExtraColor()"
     public boolean getUseExtraColor() {
         return useExtraColor;
     }
@@ -4140,6 +4141,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     /**
      * Is the route to the destination potentially valid from our block.
      */
+    //TODO: @Deprecated // Java standard pattern for boolean getters is "isRouteValid()"
     public boolean getRouteValid(int i) {
         return routes.get(i).isRouteCurrentlyValid();
     }

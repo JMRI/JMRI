@@ -421,7 +421,7 @@ public class LayoutTurnout extends LayoutTrack {
         return secondTurnoutName;
     }
 
-    public boolean getSecondTurnoutInverted() {
+    public boolean isSecondTurnoutInverted() {
         return secondTurnoutInverted;
     }
 
