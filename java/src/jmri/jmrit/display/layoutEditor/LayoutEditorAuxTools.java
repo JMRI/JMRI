@@ -1,13 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Turnout;
-import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -375,13 +373,13 @@ public class LayoutEditorAuxTools {
                     } else {
                         //note: I'm adding these logs as a prequel to adding the correct code for (single &double) slips
                         if (lc.getConnectedType() == LayoutTrack.SLIP_A) {
-                            log.info("At connection A of a double slip which could go in two different directions");
+                            log.debug("At connection A of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_B) {
-                            log.info("At connection B of a double slip which could go in two different directions");
+                            log.debug("At connection B of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_C) {
-                            log.info("At connection C of a double slip which could go in two different directions");
+                            log.debug("At connection C of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_D) {
-                            log.info("At connection D of a double slip which could go in two different directions");
+                            log.debug("At connection D of a double slip which could go in two different directions");
                         } else {    // this should NEVER happen (it should always be SLIP_A, _B, _C or _D.
                             log.info("At a double slip we could go in two different directions");
                         }
@@ -486,6 +484,7 @@ public class LayoutEditorAuxTools {
                     } // must be RH, LH, or WYE turnout
                     else if (typeCurConnection == LayoutTrack.TURNOUT_A) {
                         // turnout throat, no bean setting needed and cannot follow Path any further
+                        log.debug("At connection A of a turnout which could go in two different directions");
                         curConnection = null;
                     } else if (typeCurConnection == LayoutTrack.TURNOUT_B) {
                         // continuing track of turnout

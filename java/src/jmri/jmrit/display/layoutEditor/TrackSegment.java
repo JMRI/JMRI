@@ -14,6 +14,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -87,8 +89,11 @@ public class TrackSegment extends LayoutTrack {
     // for Bezier
     private ArrayList<Point2D> bezierControlPoints = new ArrayList<Point2D>(); // list of control point displacements
 
-    public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
-            boolean main, LayoutEditor layoutEditor) {
+    public TrackSegment(@Nonnull String id,
+            @Nullable Object c1, int t1,
+            @Nullable Object c2, int t2,
+            boolean dash, boolean main,
+            @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
 
         // validate input
@@ -100,13 +105,13 @@ public class TrackSegment extends LayoutTrack {
             connect1 = c1;
             type1 = t1;
         } else {
-            log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
+            log.error("Invalid connect type 1 ('" + t1 + "') in TrackSegment constructor - " + id);
         }
         if (isConnectionType(t2)) {
             connect2 = c2;
             type2 = t2;
         } else {
-            log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
+            log.error("Invalid connect type 2 ('" + t2 + "') in TrackSegment constructor - " + id);
         }
 
         mainline = main;
@@ -120,8 +125,11 @@ public class TrackSegment extends LayoutTrack {
     }
 
     // alternate constructor for loading layout editor panels
-    public TrackSegment(String id, String c1Name, int t1, String c2Name, int t2, boolean dash,
-            boolean main, boolean hide, LayoutEditor layoutEditor) {
+    public TrackSegment(@Nonnull String id,
+            @Nullable String c1Name, int t1,
+            @Nullable String c2Name, int t2,
+            boolean dash, boolean main, boolean hide,
+            @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
 
         tConnect1Name = c1Name;
@@ -169,12 +177,12 @@ public class TrackSegment extends LayoutTrack {
         return connect2;
     }
 
-    protected void setNewConnect1(Object o, int type) {
+    protected void setNewConnect1(@Nullable Object o, int type) {
         connect1 = o;
         type1 = type;
     }
 
-    protected void setNewConnect2(Object o, int type) {
+    protected void setNewConnect2(@Nullable Object o, int type) {
         connect2 = o;
         type2 = type;
     }
@@ -291,7 +299,7 @@ public class TrackSegment extends LayoutTrack {
         return getConnectName(connect2, type2);
     }
 
-    private String getConnectName(Object o, int type) {
+    private String getConnectName(@Nullable Object o, int type) {
         String result = null;
         if (null != o) {
             result = ((LayoutTrack) o).getName();
@@ -306,9 +314,9 @@ public class TrackSegment extends LayoutTrack {
         return null;
     }
 
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, @Nullable Object o, int type) throws jmri.JmriException {
         // nothing to do here… move along…
-}
+    }
 
     public int getNumberOfBezierControlPoints() {
         return bezierControlPoints.size();
@@ -325,7 +333,7 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    public void setBezierControlPoint(Point2D p, int index) {
+    public void setBezierControlPoint(@Nullable Point2D p, int index) {
         if (index < 0) {
             index += bezierControlPoints.size();
         }
@@ -341,14 +349,14 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Set Up a Layout Block for a Track Segment.
      */
-    public void setLayoutBlock(LayoutBlock b) {
+    public void setLayoutBlock(@Nullable LayoutBlock b) {
         block = b;
         if (b != null) {
             blockName = b.getId();
         }
     }
 
-    public void setLayoutBlockByName(String name) {
+    public void setLayoutBlockByName(@Nullable String name) {
         blockName = name;
     }
 
@@ -380,9 +388,9 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param newCenterPoint the coordinates to set
      */
-    public void setCoordsCenter(Point2D newCenterPoint) {
+    public void setCoordsCenter(@Nullable Point2D newCenterPoint) {
         if (center != newCenterPoint) {
-            if (getBezier()) {
+            if ((newCenterPoint != null) && getBezier()) {
                 Point2D delta = MathUtil.subtract(newCenterPoint, center);
                 for (Point2D p : bezierControlPoints) {
                     p.setLocation(MathUtil.add(p, delta));
@@ -1522,14 +1530,14 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    public void drawHidden(Graphics2D g2) {
+    public void drawHidden(@Nonnull Graphics2D g2) {
         setColorForTrackBlock(g2, getLayoutBlock());
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
                 layoutEditor.getCoords(getConnect2(), getType2())));
-    }   // drawHidden(Graphics2D g2)
+    }   // drawHidden
 
-    public void drawDashed(Graphics2D g2, boolean mainline) {
+    public void drawDashed(@Nonnull Graphics2D g2, boolean mainline) {
         if ((!isHidden()) && getDashed() && (mainline == getMainline())) {
             setColorForTrackBlock(g2, getLayoutBlock());
             float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
@@ -1585,9 +1593,9 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }
-    }   // drawDashed(Graphics2D g2, boolean mainline)
+    }   // drawDashed
 
-    public void drawSolid(Graphics2D g2, boolean isMainline) {
+    public void drawSolid(@Nonnull Graphics2D g2, boolean isMainline) {
         if (!isHidden() && !getDashed() && (isMainline == getMainline())) {
             setColorForTrackBlock(g2, getLayoutBlock());
 
@@ -1608,9 +1616,9 @@ public class TrackSegment extends LayoutTrack {
             }
             trackRedrawn();
         }
-    }   // drawSolid(Graphics2D g2, boolean isMainline)
+    }   // drawSolid
 
-    public void drawEditControls(Graphics2D g2) {
+    public void drawEditControls(@Nonnull Graphics2D g2) {
         //setColorForTrackBlock(g2, getLayoutBlock());
         g2.setColor(Color.black);
 
@@ -1646,7 +1654,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
         g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
-    }   // drawEditControls(Graphics2D g2)
+    }   // drawEditControls
 
     public void reCheckBlockBoundary() {
         // nothing to do here... move along...

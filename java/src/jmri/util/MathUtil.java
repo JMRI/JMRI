@@ -9,6 +9,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  *
@@ -42,7 +43,7 @@ public final class MathUtil {
      * @param p the Point
      * @return the Point2D
      */
-    public static Point2D pointToPoint2D(Point p) {
+    public static Point2D pointToPoint2D(@Nonnull Point p) {
         return new Point2D.Double(p.x, p.y);
     }
 
@@ -52,7 +53,7 @@ public final class MathUtil {
      * @param p the Point
      * @return the Point2D
      */
-    public static Point point2DToPoint(Point2D p) {
+    public static Point point2DToPoint(@Nonnull Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
     }
 
@@ -63,7 +64,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the minimum coordinates
      */
-    public static Point2D min(Point2D pA, Point2D pB) {
+    public static Point2D min(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return new Point2D.Double(Math.min(pA.getX(), pB.getX()), Math.min(pA.getY(), pB.getY()));
     }
 
@@ -74,7 +75,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the maximum coordinates
      */
-    public static Point2D max(Point2D pA, Point2D pB) {
+    public static Point2D max(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return new Point2D.Double(Math.max(pA.getX(), pB.getX()), Math.max(pA.getY(), pB.getY()));
     }
 
@@ -86,7 +87,7 @@ public final class MathUtil {
      * @param pC the third point
      * @return the coordinated of pA pined between pB and pC
      */
-    public static Point2D pin(Point2D pA, Point2D pB, Point2D pC) {
+    public static Point2D pin(@Nonnull Point2D pA, @Nonnull Point2D pB, @Nonnull Point2D pC) {
         return min(max(pA, min(pB, pC)), max(pB, pC));
     }
 
@@ -97,7 +98,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the sum of the two points
      */
-    public static Point2D add(Point2D pA, Point2D pB) {
+    public static Point2D add(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return new Point2D.Double(pA.getX() + pB.getX(), pA.getY() + pB.getY());
     }
 
@@ -108,7 +109,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the difference of the two points
      */
-    public static Point2D subtract(Point2D pA, Point2D pB) {
+    public static Point2D subtract(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return new Point2D.Double(pA.getX() - pB.getX(), pA.getY() - pB.getY());
     }
 
@@ -119,7 +120,7 @@ public final class MathUtil {
      * @param s the scalar
      * @return the point multiplied by the scalar
      */
-    public static Point2D multiply(Point2D p, double s) {
+    public static Point2D multiply(@Nonnull Point2D p, double s) {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
     }
 
@@ -131,7 +132,7 @@ public final class MathUtil {
      * @param y the Y scalar
      * @return the point multiplied by the two scalars
      */
-    public static Point2D multiply(Point2D p, double x, double y) {
+    public static Point2D multiply(@Nonnull Point2D p, double x, double y) {
         return new Point2D.Double(p.getX() * x, p.getY() * y);
     }
 
@@ -143,7 +144,7 @@ public final class MathUtil {
      * @return the point multiplied by the scalar
      */
     // (again just so parameter order doesn't matter...)
-    public static Point2D multiply(double s, Point2D p) {
+    public static Point2D multiply(double s, @Nonnull Point2D p) {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
     }
 
@@ -154,7 +155,7 @@ public final class MathUtil {
      * @param p2 the second point
      * @return the first point multiplied by the second
      */
-    public static Point2D multiply(Point2D p1, Point2D p2) {
+    public static Point2D multiply(@Nonnull Point2D p1, @Nonnull Point2D p2) {
         return multiply(p1, p2.getX(), p2.getY());
     }
 
@@ -165,7 +166,7 @@ public final class MathUtil {
      * @param s the scalar
      * @return the point divided by the scalar
      */
-    public static Point2D divide(Point2D p, double s) {
+    public static Point2D divide(@Nonnull Point2D p, double s) {
         return new Point2D.Double(p.getX() / s, p.getY() / s);
     }
 
@@ -177,7 +178,7 @@ public final class MathUtil {
      * @param y the Y scalar
      * @return the point divided by the scalar
      */
-    public static Point2D divide(Point2D p, double x, double y) {
+    public static Point2D divide(@Nonnull Point2D p, double x, double y) {
         return new Point2D.Double(p.getX() / x, p.getY() / y);
     }
 
@@ -189,7 +190,7 @@ public final class MathUtil {
      * @param y the y scalar
      * @return the point offset by the scalars
      */
-    public static Point2D offset(Point2D p, double x, double y) {
+    public static Point2D offset(@Nonnull Point2D p, double x, double y) {
         return new Point2D.Double(p.getX() + x, p.getY() + y);
     }
 
@@ -225,7 +226,7 @@ public final class MathUtil {
      * @param a the angle (in radians)
      * @return the point rotated by the angle
      */
-    public static Point2D rotateRAD(Point2D p, double a) {
+    public static Point2D rotateRAD(@Nonnull Point2D p, double a) {
         return rotateRAD(p.getX(), p.getY(), a);
     }
 
@@ -236,7 +237,7 @@ public final class MathUtil {
      * @param a the angle (in radians)
      * @return the point rotated by the angle
      */
-    public static Point2D rotateDEG(Point2D p, double a) {
+    public static Point2D rotateDEG(@Nonnull Point2D p, double a) {
         return rotateRAD(p, Math.toRadians(a));
     }
 
@@ -248,7 +249,7 @@ public final class MathUtil {
      * @return the dot product of the two points note: Arccos(x) (inverse
      *         cosine) of dot product is the angle between the vectors
      */
-    public static double dot(Point2D pA, Point2D pB) {
+    public static double dot(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return (pA.getX() * pB.getX() + pA.getY() * pB.getY());
     }
 
@@ -258,7 +259,7 @@ public final class MathUtil {
      * @param p the point (vector)
      * @return the length squared of the point (vector)
      */
-    public static double lengthSquared(Point2D p) {
+    public static double lengthSquared(@Nonnull Point2D p) {
         return dot(p, p);
     }
 
@@ -268,7 +269,7 @@ public final class MathUtil {
      * @param p the point (vector)
      * @return the length of the point (vector)
      */
-    public static double length(Point2D p) {
+    public static double length(@Nonnull Point2D p) {
         return Math.hypot(p.getX(), p.getY());
     }
 
@@ -279,7 +280,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the distance between the two points
      */
-    public static double distance(Point2D pA, Point2D pB) {
+    public static double distance(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return pA.distance(pB);
     }
 
@@ -289,7 +290,7 @@ public final class MathUtil {
      * @param p the point
      * @return the normalized point
      */
-    public static Point2D normalize(Point2D p) {
+    public static Point2D normalize(@Nonnull Point2D p) {
         Point2D result = p;
         double length = length(p);
         if (length >= 0.001) {
@@ -305,7 +306,7 @@ public final class MathUtil {
      * @param p2 the second Point2D
      * @return the angle in radians
      */
-    public static double computeAngleRAD(Point2D p1, Point2D p2) {
+    public static double computeAngleRAD(@Nonnull Point2D p1, @Nonnull Point2D p2) {
         Point2D delta = subtract(p1, p2);
         return Math.atan2(delta.getX(), delta.getY());
     }
@@ -317,7 +318,7 @@ public final class MathUtil {
      * @param p2 the second Point2D
      * @return the angle in degrees
      */
-    public static double computeAngleDEG(Point2D p1, Point2D p2) {
+    public static double computeAngleDEG(@Nonnull Point2D p1, @Nonnull Point2D p2) {
         return Math.toDegrees(computeAngleRAD(p1, p2));
     }
 
@@ -341,7 +342,7 @@ public final class MathUtil {
      * @param t the fraction (between 0 and 1)
      * @return the linear interpolation between a and b for t
      */
-    public static Double lerp(Double a, Double b, Double t) {
+    public static Double lerp(@Nonnull Double a, @Nonnull Double b, @Nonnull Double t) {
         return ((1.0 - t) * a) + (t * b);
     }
 
@@ -353,7 +354,7 @@ public final class MathUtil {
      * @param t  the fraction (between 0 and 1)
      * @return the linear interpolation between a and b for t
      */
-    public static Point2D lerp(Point2D pA, Point2D pB, double t) {
+    public static Point2D lerp(@Nonnull Point2D pA, @Nonnull Point2D pB, double t) {
         return new Point2D.Double(
                 lerp(pA.getX(), pB.getX(), t),
                 lerp(pA.getY(), pB.getY(), t));
@@ -378,7 +379,7 @@ public final class MathUtil {
      * @param gV the vertical granularity
      * @return the point granulized to the granularity
      */
-    public static Point2D granulize(Point2D p, double gH, double gV) {
+    public static Point2D granulize(@Nonnull Point2D p, double gH, double gV) {
         return new Point2D.Double(granulize(p.getX(), gH), granulize(p.getY(), gV));
     }
 
@@ -389,7 +390,7 @@ public final class MathUtil {
      * @param g the granularity
      * @return the point granulized to the granularity
      */
-    public static Point2D granulize(Point2D p, double g) {
+    public static Point2D granulize(@Nonnull Point2D p, double g) {
         return granulize(p, g, g);
     }
 
@@ -400,7 +401,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the midpoint between the two points
      */
-    public static Point2D midPoint(Point2D pA, Point2D pB) {
+    public static Point2D midPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return lerp(pA, pB, 0.5);
     }
 
@@ -411,7 +412,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the point one third of the way from pA to pB
      */
-    public static Point2D oneThirdPoint(Point2D pA, Point2D pB) {
+    public static Point2D oneThirdPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return lerp(pA, pB, 1.0 / 3.0);
     }
 
@@ -422,7 +423,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the point two thirds of the way from pA to pB
      */
-    public static Point2D twoThirdPoint(Point2D pA, Point2D pB) {
+    public static Point2D twoThirdPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return lerp(pA, pB, 1.0 / 3.0);
     }
 
@@ -433,7 +434,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the point one fourth of the way from pA to pB
      */
-    public static Point2D oneFourthPoint(Point2D pA, Point2D pB) {
+    public static Point2D oneFourthPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return lerp(pA, pB, 1.0 / 4.0);
     }
 
@@ -444,7 +445,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the point three fourths of the way from pA to pB
      */
-    public static Point2D threeFourthsPoint(Point2D pA, Point2D pB) {
+    public static Point2D threeFourthsPoint(@Nonnull Point2D pA, @Nonnull Point2D pB) {
         return lerp(pA, pB, 3.0 / 4.0);
     }
 
@@ -561,7 +562,7 @@ public final class MathUtil {
      * {@link #rectangleToRectangle2D(java.awt.Rectangle)} instead
      */
     @Deprecated
-    public static Rectangle2D rectangle2DForRectangle(Rectangle r) {
+    public static Rectangle2D rectangle2DForRectangle(@Nonnull Rectangle r) {
         return rectangleToRectangle2D(r);
     }
 
@@ -571,7 +572,7 @@ public final class MathUtil {
      * @param r the Rectangle
      * @return the Rectangle2D
      */
-    public static Rectangle2D rectangleToRectangle2D(Rectangle r) {
+    public static Rectangle2D rectangleToRectangle2D(@Nonnull Rectangle r) {
         return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
     }
 
@@ -584,7 +585,7 @@ public final class MathUtil {
      * {@link #rectangle2DToRectangle(java.awt.geom.Rectangle2D)} instead
      */
     @Deprecated
-    public static Rectangle rectangleForRectangle2D(Rectangle2D r) {
+    public static Rectangle rectangleForRectangle2D(@Nonnull Rectangle2D r) {
         return rectangle2DToRectangle(r);
     }
 
@@ -594,7 +595,7 @@ public final class MathUtil {
      * @param r the Rectangle
      * @return the Rectangle2D
      */
-    public static Rectangle rectangle2DToRectangle(Rectangle2D r) {
+    public static Rectangle rectangle2DToRectangle(@Nonnull Rectangle2D r) {
         return new Rectangle((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
     }
 
@@ -604,7 +605,7 @@ public final class MathUtil {
      * @param r the rectangle
      * @return the origin of the rectangle
      */
-    public static Point2D origin(Rectangle2D r) {
+    public static Point2D origin(@Nonnull Rectangle2D r) {
         return new Point2D.Double(r.getX(), r.getY());
     }
 
@@ -614,7 +615,7 @@ public final class MathUtil {
      * @param r the rectangle
      * @return the size of the rectangle
      */
-    public static Point2D size(Rectangle2D r) {
+    public static Point2D size(@Nonnull Rectangle2D r) {
         return new Point2D.Double(r.getWidth(), r.getHeight());
     }
 
@@ -624,16 +625,17 @@ public final class MathUtil {
      * @param r the rectangle
      * @return the center of the rectangle
      */
-    public static Point2D center(Rectangle2D r) {
+    public static Point2D center(@Nonnull Rectangle2D r) {
         return new Point2D.Double(r.getCenterX(), r.getCenterY());
     }
 
     /**
      * calculate the midpoint of the rectangle
+     *
      * @param r the rectangle
      * @return the midpoint of the rectangle
      */
-    public static Point2D midPoint(Rectangle2D r) {
+    public static Point2D midPoint(@Nonnull Rectangle2D r) {
         return center(r);
     }
 
@@ -645,7 +647,7 @@ public final class MathUtil {
      * @param y the vertical offset
      * @return the offset rectangle
      */
-    public static Rectangle2D offset(Rectangle2D r, double x, double y) {
+    public static Rectangle2D offset(@Nonnull Rectangle2D r, double x, double y) {
         return new Rectangle2D.Double(r.getX() + x, r.getY() + y, r.getWidth(), r.getHeight());
     }
 
@@ -656,7 +658,7 @@ public final class MathUtil {
      * @param o the offset
      * @return the offset rectangle
      */
-    public static Rectangle2D offset(Rectangle2D r, Point2D o) {
+    public static Rectangle2D offset(@Nonnull Rectangle2D r, @Nonnull Point2D o) {
         return offset(r, o.getX(), o.getY());
     }
 
@@ -667,7 +669,7 @@ public final class MathUtil {
      * @param i the inset (positive make it smaller, negative, bigger)
      * @return the inset rectangle
      */
-    public static Rectangle2D inset(Rectangle2D r, double i) {
+    public static Rectangle2D inset(@Nonnull Rectangle2D r, double i) {
         return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
     }
 
@@ -679,7 +681,7 @@ public final class MathUtil {
      * @return the scaled rectangle
      */
     //TODO: add test case
-    public static Rectangle2D scale(Rectangle2D r, double s) {
+    public static Rectangle2D scale(@Nonnull Rectangle2D r, double s) {
         return new Rectangle2D.Double(r.getX() * s, r.getY() * s, r.getWidth() * s, r.getHeight() * s);
     }
 
@@ -690,7 +692,7 @@ public final class MathUtil {
      * @param p the point
      * @return the Point2D
      */
-    public static Rectangle2D centerRectangleOnPoint(Rectangle2D r, Point2D p) {
+    public static Rectangle2D centerRectangleOnPoint(@Nonnull Rectangle2D r, @Nonnull Point2D p) {
         Rectangle2D result = r.getBounds2D();
         result = offset(r, subtract(p, center(result)));
         return result;
@@ -703,13 +705,15 @@ public final class MathUtil {
      * @param r2 the second rectangle
      * @return the first rectangle centered on the second
      */
-    public static Rectangle2D centerRectangleOnRectangle(Rectangle2D r1, Rectangle2D r2) {
+    public static Rectangle2D centerRectangleOnRectangle(@Nonnull Rectangle2D r1, @Nonnull Rectangle2D r2) {
         return offset(r1, subtract(center(r2), center(r1)));
     }
 
     // recursive routine to draw a cubic Bezier...
     // (also returns distance!)
-    private static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {
+    private static double drawBezier(@Nonnull Graphics2D g2,
+            @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2,
+            @Nonnull Point2D p3, int depth) {
         double result;
 
         // calculate flatness to determine if we need to recurse...
@@ -757,13 +761,13 @@ public final class MathUtil {
      * @param p3 terminating control point
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
+    public static double drawBezier(@Nonnull Graphics2D g2, @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2, @Nonnull Point2D p3) {
         return drawBezier(g2, p0, p1, p2, p3, 0);
     }
 
     // recursive routine to draw a Bezier curve...
     // (also returns distance!)
-    private static double drawBezier(Graphics2D g2, Point2D points[], int depth) {
+    private static double drawBezier(@Nonnull Graphics2D g2, @Nonnull Point2D points[], int depth) {
         int len = points.length, idx, jdx;
         double result;
 
@@ -826,7 +830,7 @@ public final class MathUtil {
      * @param p[] control points
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(Graphics2D g2, Point2D p[]) {
+    public static double drawBezier(@Nonnull Graphics2D g2, @Nonnull Point2D p[]) {
         if (p.length == 4) {    // draw cubic bezier?
             return drawBezier(g2, p[0], p[1], p[2], p[3], 0);
         } else {    // (nope)
