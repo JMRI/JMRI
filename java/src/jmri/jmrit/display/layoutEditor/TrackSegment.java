@@ -378,7 +378,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set center coordinates
      *
-     * @param p the coordinates to set
+     * @param newCenterPoint the coordinates to set
      */
     public void setCoordsCenter(Point2D newCenterPoint) {
         if (center != newCenterPoint) {

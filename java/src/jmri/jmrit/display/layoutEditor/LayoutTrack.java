@@ -168,7 +168,7 @@ public abstract class LayoutTrack {
      * 
      * @param le the layout editor
      */
-    public abstract void setObjects(@Nonnull LayoutEditor p);
+    public abstract void setObjects(@Nonnull LayoutEditor le);
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
