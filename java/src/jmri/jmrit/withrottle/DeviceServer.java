@@ -102,7 +102,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
-    ArrayList<DeviceListener> listeners;
+    private final ArrayList<DeviceListener> listeners = new ArrayList<>();
     String deviceName = "Unknown";
     String deviceUDID;
 
@@ -130,9 +130,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     DeviceServer(Socket socket, DeviceManager manager) {
         this.device = socket;
         this.manager = manager;
-        if (listeners == null) {
-            listeners = new ArrayList<DeviceListener>(2);
-        }
 
         try {
             if (log.isDebugEnabled()) {
@@ -609,9 +606,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      *
      */
     public void addDeviceListener(DeviceListener l) {
-        if (listeners == null) {
-            listeners = new ArrayList<DeviceListener>(2);
-        }
         if (!listeners.contains(l)) {
             listeners.add(l);
         }
@@ -623,9 +617,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      *
      */
     public void removeDeviceListener(DeviceListener l) {
-        if (listeners == null) {
-            return;
-        }
         if (listeners.contains(l)) {
             listeners.remove(l);
         }
