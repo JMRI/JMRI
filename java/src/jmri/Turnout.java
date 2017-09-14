@@ -280,6 +280,19 @@ public interface Turnout extends NamedBean {
     public void setTurnoutOperation(@Nullable TurnoutOperation toper);
 
     /**
+     * return the inverted state of the specified state
+     * @param inState the specified state
+     * @return the inverted state
+     */
+    public static int invertTurnoutState(int inState) {
+        int result = CLOSED;
+        if (result == inState) {
+            result = THROWN;
+        }
+        return result;
+    }
+
+    /**
      * Provide Sensor objects needed for some feedback types.
      *
      * Since we defined two feedback methods that require monitoring, we provide

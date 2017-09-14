@@ -24,11 +24,10 @@ public class BeanItemPanel extends JPanel {
         if (reset != null) {
             reset.actionPerformed(null);
         }
-
     }
 
     /**
-     * Set the action to be performed when the save button is pressed.
+     * Set the action to be performed when the Save button is pressed.
      *
      * @param save the new save action
      */
@@ -37,7 +36,7 @@ public class BeanItemPanel extends JPanel {
     }
 
     /**
-     * Set the action to be performed when the cancel button is pressed.
+     * Set the action to be performed when the Cancel button is pressed.
      *
      * @param reset the new reset action
      */

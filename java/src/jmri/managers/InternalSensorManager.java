@@ -59,8 +59,13 @@ public class InternalSensorManager extends AbstractSensorManager {
     protected String prefix = "I";
 
     @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
         if (s == null) {
@@ -100,4 +105,5 @@ public class InternalSensorManager extends AbstractSensorManager {
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class);
+
 }

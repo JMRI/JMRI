@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -228,6 +229,15 @@ public interface TurnoutManager extends Manager<Turnout> {
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @param systemName the system name
+     * @return true if formatted correctly; false otherwise
+     */
+    @CheckReturnValue
+    public boolean validSystemNameFormat(@Nonnull String systemName);
+
+    /**
      * Determine if the address supplied is valid and free, if not then it shall
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
@@ -264,15 +274,5 @@ public interface TurnoutManager extends Manager<Turnout> {
     public String getDefaultThrownSpeed();
 
     public String getDefaultClosedSpeed();
-
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
-    public String getEntryToolTip();
-
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    public String getEntryRegex();
 
 }

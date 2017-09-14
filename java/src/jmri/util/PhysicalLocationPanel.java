@@ -159,6 +159,6 @@ public class PhysicalLocationPanel extends JPanel {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PhysicalLocationPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(PhysicalLocationPanel.class);
 
 }

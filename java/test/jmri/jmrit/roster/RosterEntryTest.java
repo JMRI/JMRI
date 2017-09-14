@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -409,7 +410,7 @@ public class RosterEntryTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

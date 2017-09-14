@@ -353,7 +353,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
         @Override
         public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
+            Set<Class<?>> set = super.getInitalizes();
             set.add(ImageIndexEditor.class);
             return set;
         }

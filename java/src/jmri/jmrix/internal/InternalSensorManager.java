@@ -21,6 +21,15 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
         return true;
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
 }
 
 

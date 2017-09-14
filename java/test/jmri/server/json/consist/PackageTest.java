@@ -13,7 +13,9 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     JsonConsistManagerTest.class,
     JsonConsistServiceFactoryTest.class,
-    JsonConsistTest.class
+    JsonConsistTest.class,
+    JsonConsistSocketServiceTest.class,
+    JsonConsistHttpServiceTest.class
 })
 public class PackageTest {
 }

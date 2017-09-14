@@ -1,7 +1,7 @@
 package jmri.jmrix.marklin;
 
-import org.openide.util.lookup.ServiceProvider;
 import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns list of valid ESU Marklin Connection Types

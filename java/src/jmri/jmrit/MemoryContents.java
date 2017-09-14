@@ -1491,5 +1491,5 @@ public class MemoryContents {
         
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryContents.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryContents.class);
 }

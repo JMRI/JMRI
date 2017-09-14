@@ -37,7 +37,7 @@
       and patterns, and point to examples of current best
       practices. <a id="namedbeans" name="namedbeans"></a></p>
 
-      <a id="NamedBean" name="minApp"></a>
+      <a id="NamedBean" name="NamedBean"></a>
       <h2>Names, NamedBeans, and Managers</h2>
       The "NamedBean"
       concept is basic to JMRI. A <a href=
@@ -96,7 +96,7 @@
       right reference.
       
 
-      <a id="SPI" name="minApp"></a>
+      <a id="SPI" name="SPI"></a>
       <h2>Service Providers</h2>
       Java provides a capability, using a 
       "Service Provider Interface", 
@@ -104,7 +104,7 @@
       code by having the code itself discover what pieces
       are available and need to be installed. 
       For background on this, see the 
-      <a href="">Java Tutorial</a>
+      tutorial
       sections on
       "<a href="https://docs.oracle.com/javase/tutorial/ext/basics/spi.html">Creating Extensible Applications</a>"
       and
@@ -126,18 +126,18 @@
       Available patterns (links are to the JavaDoc for the interface or class 
       specifying the functionality):
       <dl>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">ConnectionTypeList</a></dt>
       <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServlet.html">HttpServlet</a></dt>
         <dd>(Note this is a Java-defined class, not a JMRI-defined interface)</dd>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
         <dd>Provides a way for the JMRI InstanceManager to create an instance of the class when one is requested</dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt><dd></dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt><dd></dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt><dd></dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt><dd></dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt><dd></dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt><dd></dd>
-      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt><dd></dd>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
       </dl>
 
       <p>

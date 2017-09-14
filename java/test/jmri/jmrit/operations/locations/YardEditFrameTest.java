@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,7 +68,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         // clean up the frame
         f.setVisible(false);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -99,7 +100,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         // clean up the frame
         f.setVisible(false);
-        f.dispose();
+        JUnitUtil.dispose(f);
 
     }
 
@@ -138,7 +139,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         // clean up the frame
         f.setVisible(false);
-        f.dispose();
+        JUnitUtil.dispose(f);
 
         // now reload
         Location l2 = lManager.getLocationByName("Test Loc C");
@@ -155,7 +156,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         // clean up the frame
         fl.setVisible(false);
-        fl.dispose();
+        JUnitUtil.dispose(fl);
     }
 
     private void loadLocations() {

@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
  * add/remove PropertyChangeListener methods are provided. At a minimum,
  * subclasses must notify of changes to the list of available NamedBeans; they
  * may have other properties that will also notify.
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -240,13 +239,25 @@ public interface Manager<E extends NamedBean> {
     public String getBeanTypeHandled();
 
     /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager.
+     * Enforces, and as a user convenience converts to, the standard form for a
+     * system name for the NamedBeans handled by this manager.
      *
      * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @throws NamedBean.BadSystemNameException If the inputName can't be
+     *                                          converted to normalized form
+     * @return A system name in standard normalized form
      */
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
+
+    /**
+     * Get a manager-specific tool tip for adding an entry to the manager.
+     *
+     * @return the tool tip or null to disable the tool tip
+     */
+    public default String getEntryToolTip() {
+        return null;
+    }
+
 }

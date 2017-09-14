@@ -54,7 +54,7 @@ public class AboutDialog extends JDialog {
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         if (log.isDebugEnabled()) {
-            log.debug("Fetch main logo: {} ", logo, getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)));
+            log.debug("Fetch main logo: {} ({})", logo, FileUtil.findURL(logo, FileUtil.Location.INSTALLED));
         }
         addCenteredComponent(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)), "JMRI logo"), JLabel.CENTER), pane);
         pane.add(Box.createRigidArea(new Dimension(0, 15)));
@@ -104,5 +104,5 @@ public class AboutDialog extends JDialog {
         p.add(c);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class);
 }

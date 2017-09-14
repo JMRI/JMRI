@@ -1,7 +1,6 @@
 package jmri.jmrit.ussctc;
 
 import jmri.*;
-import java.util.*;
 
 /**
  * Drive a single Maintainer Call section on a USS CTC panel.
@@ -92,5 +91,5 @@ public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroup
     }
 
      
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MaintainerCallSection.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MaintainerCallSection.class);
 }

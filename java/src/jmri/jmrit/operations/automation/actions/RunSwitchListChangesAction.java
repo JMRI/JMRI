@@ -41,7 +41,9 @@ public class RunSwitchListChangesAction extends Action {
      * there's new work for that location.
      * <p>
      * common code see RunSwitchListAction.java
-     * @param isChanged if set true only locations with changes will get a custom switch list.
+     *
+     * @param isChanged if set true only locations with changes will get a
+     *                  custom switch list.
      */
     @SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
@@ -75,14 +77,14 @@ public class RunSwitchListChangesAction extends Action {
             if (!InstanceManager.getDefault(TrainCustomSwitchList.class).checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel switch list program to complete previous operation, timeout value: {} seconds",
-                        Control.excelWaitTime);                
+                        Control.excelWaitTime);
             }
             if (InstanceManager.getDefault(TrainCustomSwitchList.class).doesCommonFileExist()) {
                 log.warn("Switch List CSV common file exists!");
             }
             for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                if (location.isSwitchListEnabled() &&
-                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
+                if (location.isSwitchListEnabled()
+                        && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     // also build the regular switch lists so they can be used
                     if (!Setup.isSwitchListRealTime()) {
                         trainSwitchLists.buildSwitchList(location);
@@ -116,9 +118,9 @@ public class RunSwitchListChangesAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RunSwitchListChangesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunSwitchListChangesAction.class);
 
 }

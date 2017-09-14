@@ -122,7 +122,7 @@ public class PositionablePopupUtil {
 
     public void setFixedTextMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditFixed"));
-        JMenuItem jmi = null;
+        JMenuItem jmi;
         if (getFixedWidth() == 0) {
             jmi = edit.add("Width = Auto");
         } else {
@@ -354,7 +354,7 @@ public class PositionablePopupUtil {
             // add to button group
             fontButtonGroup.add(fontMenuItem);
             // set (de)selected
-            fontMenuItem.setSelected(defaultFontFamilyName == fontFamilyName);
+            fontMenuItem.setSelected(defaultFontFamilyName.equals(fontFamilyName));
             // add to font menu
             fontMenu.add(fontMenuItem);
         }
@@ -442,7 +442,7 @@ public class PositionablePopupUtil {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) { // Avoid action lookup unless needed
-                    log.debug("When style item selected {} italic state is {}", ((String) getValue(NAME)), italic.isSelected());
+                    log.debug("When style item selected {} italic state is {}", getValue(NAME), italic.isSelected());
                 }
                 if (italic.isSelected()) {
                     setFontStyle(Font.ITALIC, 0);
@@ -457,7 +457,7 @@ public class PositionablePopupUtil {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) { // Avoid action lookup unless needed
                     log.debug("When style item selected {} bold state is {}",
-                            ((String) getValue(NAME)), bold.isSelected());
+                            getValue(NAME), bold.isSelected());
                 }
                 if (bold.isSelected()) {
                     setFontStyle(Font.BOLD, 0);
@@ -499,7 +499,7 @@ public class PositionablePopupUtil {
         c.addActionListener(a);
         if (log.isDebugEnabled()) { // Avoid action lookup unless needed
             log.debug("When creating style item {} mask was {} state was {}",
-                    ((String) a.getValue(AbstractAction.NAME)), mask, getFontStyle());
+                     a.getValue(AbstractAction.NAME), mask, getFontStyle());
         }
         if ((mask & getFontStyle()) == mask) {
             c.setSelected(true);
@@ -632,14 +632,14 @@ public class PositionablePopupUtil {
     private int justification = CENTRE; //Default is always Centre
 
     public void setJustification(int just) {
-        log.debug("setJustification: justification=" + just);
+        log.debug("setJustification: justification={}", just);
         justification = just;
         setHorizontalAlignment(justification);
         _parent.updateSize();
     }
 
     public void setJustification(String just) {
-        log.debug("setJustification: justification =" + just);
+        log.debug("setJustification: justification ={}", just);
         switch (just) {
             case "right":
                 justification = RIGHT;
@@ -658,7 +658,7 @@ public class PositionablePopupUtil {
     }
 
     public int getJustification() {
-        log.debug("getJustification: justification =" + justification);
+        log.debug("getJustification: justification ={}", justification);
         return justification;
     }
 
@@ -852,5 +852,5 @@ public class PositionablePopupUtil {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class);
 }

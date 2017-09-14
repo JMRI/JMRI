@@ -179,6 +179,6 @@ abstract public class AbstractMRReply extends AbstractMessage {
     // contents (private)
     private boolean unsolicited;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
 
 }

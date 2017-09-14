@@ -279,6 +279,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         temp.programmingOpReply(value, status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceProgrammer.class);
 
 }

@@ -1,7 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html> <head>
-<title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
     <TITLE>
@@ -26,6 +25,7 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
@@ -46,25 +46,21 @@ for more information on maintaining JMRI code.</p>
 In general, we keep everything in SVN revision control, so there's no
 need for the various properties lines we used to need in CVS.  These
 looked like 
-<code>
 <pre>
 # The next line is maintained by CVS, please don't change it
 # $Revision$
 </pre>
-</code>
 
-<p.
+<p>
 But there are certain files, like decoder XML, properties files, etc,
 that users are likely to edit and submit back for inclusion.  It is
 very helpful if we can identify the specific content that they started with.
 <p>
 Therefore, for html, XML, python and properties files, we do:
 
-<code>
 <pre>
 svn propset svn:keywords "Date Revision Version Id Author" {}
 </pre>
-</code>
 
 That way SVN will fill in those tags if/when they're present and the file is changed.
 
@@ -74,15 +70,3 @@ That way SVN will fill in those tags if/when they're present and the file is cha
 </div> <!-- closes #mBody-->
 </body>
 </html>
-
-</title>
-</head>
-
-<body>
-<h1></h1>
-
-
-
-<hr>
-<address></address>
-</body> </html>

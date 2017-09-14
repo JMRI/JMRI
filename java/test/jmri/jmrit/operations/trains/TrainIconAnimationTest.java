@@ -15,14 +15,13 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -43,7 +42,7 @@ public class TrainIconAnimationTest {
         r1.register(rl1);
         TrainIconAnimation t = new TrainIconAnimation(ti, rl1, null);
         Assert.assertNotNull("exists", t);
-        es.dispose();
+        JUnitUtil.dispose(es);
     }
 
     // This test tests that the train icon actually follows movement
@@ -60,7 +59,7 @@ public class TrainIconAnimationTest {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        PanelMenu.instance().addEditorPanel(editor);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
@@ -378,18 +377,15 @@ public class TrainIconAnimationTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);
 
 }

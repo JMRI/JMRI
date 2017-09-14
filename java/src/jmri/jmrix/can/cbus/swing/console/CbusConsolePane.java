@@ -639,7 +639,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         log.debug("_filterFrame: " + _filterFrame + " filter: " + filter);
         if (filterIndex >= 0) {
             final Color filterColor = _filterFrame.getColor(filter);
-            cbusHighlightPainter = new cbusHighlightPainter(filterColor);
+            cbusHighlightPainter = new CbusHighlightPainter(filterColor);
         }
 
         // display the timestamp if requested
@@ -1058,9 +1058,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     Highlighter.HighlightPainter cbusHighlightPainter;
 
     // A private subclass of the default highlight painter
-    class cbusHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
+    class CbusHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
 
-        public cbusHighlightPainter(Color color) {
+        public CbusHighlightPainter(Color color) {
             super(color);
         }
     }
@@ -1083,5 +1083,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusConsolePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusConsolePane.class);
 }

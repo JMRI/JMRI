@@ -97,6 +97,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(WindowMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.usb.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(FileChooserFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JTreeWithPopupTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MenuScrollerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExternalLinkContentViewerUITest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PipeListenerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IterableEnumerationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BusyGlassPaneTest.class));
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
@@ -107,12 +113,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -9,7 +9,7 @@ import jmri.jmrit.display.Positionable;
 
 /**
  * PositionableRoundRect adds corner radii to PositionableShapes.
- * <P>
+ *
  * @author Pete cresman Copyright (c) 2012
  */
 public class PositionableRoundRect extends PositionableRectangle {
@@ -18,7 +18,6 @@ public class PositionableRoundRect extends PositionableRectangle {
 
     public PositionableRoundRect(Editor editor) {
         super(editor);
-        makeShape();
     }
 
     public PositionableRoundRect(Editor editor, Shape shape) {
@@ -27,19 +26,16 @@ public class PositionableRoundRect extends PositionableRectangle {
 
     public void setCornerRadius(int r) {
         _radius = r;
+        invalidateShape();
     }
 
     public int getCornerRadius() {
         return _radius;
     }
 
-    /**
-     * this class must be overridden by its subclasses and executed only after
-     * its parameters have been set
-     */
     @Override
-    public void makeShape() {
-        setShape(new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius));
+    protected Shape makeShape() {
+        return new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius);
     }
 
     @Override
@@ -50,7 +46,10 @@ public class PositionableRoundRect extends PositionableRectangle {
 
     @Override
     protected Positionable finishClone(PositionableShape pos) {
-        ((PositionableRoundRect)pos)._radius = _radius;
+        if (!(pos instanceof PositionableRoundRect)) {
+            throw new IllegalArgumentException("parameter is not a PositionableRoundRect");
+        }
+        ((PositionableRoundRect) pos)._radius = _radius;
         return super.finishClone(pos);
     }
 
@@ -64,7 +63,7 @@ public class PositionableRoundRect extends PositionableRectangle {
                     _editFrame = new DrawRoundRect("editShape", "roundRect", null);
                     setEditParams();
                 }
-             }
+            }
         });
         return true;
     }

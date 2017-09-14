@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    private final static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -250,7 +250,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     }
 
     public void listen() {
-        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
+        int socketPort = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
 
         try { //Create socket on available port
             socket = new ServerSocket(socketPort);
@@ -451,6 +451,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             log.debug("Leaving serverThread.run()");
         }
 
-    private final static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ServerThread.class);
     }
 }

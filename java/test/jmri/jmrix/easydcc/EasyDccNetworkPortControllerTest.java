@@ -15,8 +15,7 @@ public class EasyDccNetworkPortControllerTest extends jmri.jmrix.AbstractNetwork
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo();
        apc = new EasyDccNetworkPortController(memo){
             @Override
@@ -28,7 +27,6 @@ public class EasyDccNetworkPortControllerTest extends jmri.jmrix.AbstractNetwork
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 }

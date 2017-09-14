@@ -4,14 +4,10 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Light;
-import jmri.LightManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.SystemConnectionMemo;
-//import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.*;
 
 /**
@@ -66,8 +62,10 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Public static method to parse a C/MRI system name and return the bit
-     * number. Notes: Bits are numbered from 1. If an error is found, 0 is
-     * returned. Does not check whether that node is defined on current system.
+     * number. Notes: Bits are numbered from 1.
+     *
+     * @return 0 if an error is found.
+     * Does not check whether that node is defined on current system.
      */
     public int getBitFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -127,10 +125,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to test if a C/MRI output bit is free for assignment
-     * @return "" (null string) if the specified output bit is free for
-     * assignment, else returns the system name of the conflicting assignment.
+     * Public static method to test if a C/MRI output bit is free for assignment.
      * Test is not performed if the node address or bit number are illegal.
+     *
+     * @return "" (empty string) if the specified output bit is free for
+     * assignment, else returns the system name of the conflicting assignment.
      */
     public String isOutputBitFree(int nAddress, int bitNum) {
         if ((nAddress < 0) || (nAddress > 127)) {
@@ -193,10 +192,9 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
-     * <P>
-     * If the supplied system name does not have a valid format, an empty string
-     * is returned. Otherwise a normalized name is returned in the same format
-     * as the input name.
+     *
+     * @return "" (empty string) if the supplied system name does not have a valid format.
+     * Otherwise a normalized name is returned in the same format as the input name.
      */
     public String normalizeSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -233,9 +231,10 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Public static method to convert one format C/MRI system name for the
-     * alternate format. If the supplied system name does not have a valid
-     * format, or if there is no representation in the alternate naming scheme,
-     * an empty string is returned.
+     * alternate format.
+     *
+     * @return "" (empty string) if the supplied system name does not have a valid
+     * format, or if there is no representation in the alternate naming scheme
      */
     public String convertSystemNameToAlternate(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -275,9 +274,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to validate system name format returns 'true' if
-     * system name has a valid format, else returns 'false'.
+     * Public static method to validate system name format.
      * Does not check whether that node is defined on current system.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'.
      */
     public boolean validSystemNameFormat(String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
@@ -310,37 +311,37 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 return false;
             }
             if ((num < 1) || (num >= 128000)) {
-                log.error("number field out of range in CMRI system name: " + systemName);
+                log.warn("number field out of range in CMRI system name: " + systemName);
                 return false;
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.error("bit number not in range 1 - 999 in CMRI system name: " + systemName);
+                log.warn("bit number not in range 1 - 999 in CMRI system name: " + systemName);
                 return false;
             }
         } else {
             if (s.length() == 0) {
-                log.error("no node address before 'B' in CMRI system name: " + systemName);
+                log.warn("no node address before 'B' in CMRI system name: " + systemName);
                 return false;
             }
             int num;
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.error("illegal character in node address field of CMRI system name: " + systemName);
+                log.warn("illegal character in node address field of CMRI system name: " + systemName);
                 return false;
             }
             if ((num < 0) || (num >= 128)) {
-                log.error("node address field out of range in CMRI system name: " + systemName);
+                log.warn("node address field out of range in CMRI system name: " + systemName);
                 return false;
             }
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field of CMRI system name: " + systemName);
+                log.warn("illegal character in bit number field of CMRI system name: " + systemName);
                 return false;
             }
             if ((num < 1) || (num > 2048)) {
-                log.error("bit number field out of range in CMRI system name: " + systemName);
+                log.warn("bit number field out of range in CMRI system name: " + systemName);
                 return false;
             }
         }
@@ -352,7 +353,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * Test is not performed if the node address is illegal or bit number is
      * greater than 2048.
      *
-     * @return "" (null string) if the specified input bit is free for
+     * @return "" (empty string) if the specified input bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      */
     public String isInputBitFree(int nAddress, int bitNum) {
@@ -667,6 +668,6 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class);
 
 }

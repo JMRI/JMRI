@@ -19,6 +19,7 @@ import static jmri.server.json.JSON.MFG;
 import static jmri.server.json.JSON.MODEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.OWNER;
 import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.SELECTED_ICON;
 import static jmri.server.json.JSON.SHUNTING_FUNCTION;
@@ -104,7 +105,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     public ArrayNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) throws JsonException {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
-        if (Roster.ALLENTRIES.equals(group) || Roster.AllEntries(locale).equals(group)) {
+        if (Roster.ALLENTRIES.equals(group) || Roster.allEntries(locale).equals(group)) {
             group = null;
         }
         String roadName = (!data.path(ROAD).isMissingNode()) ? data.path(ROAD).asText() : null;
@@ -183,6 +184,7 @@ public class JsonRosterHttpService extends JsonHttpService {
                 ? entryPath + ICON
                 : null);
         data.put(SHUNTING_FUNCTION, entry.getShuntingFunction());
+        data.put(OWNER, entry.getOwner());
         data.put(JsonRoster.DATE_MODIFIED, (entry.getDateModified() != null)
                 ? new ISO8601DateFormat().format(entry.getDateModified())
                 : null);
@@ -229,7 +231,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, JsonRoster.ROSTER_GROUP);
             ObjectNode data = root.putObject(DATA);
-            data.put(NAME, name.isEmpty() ? Roster.AllEntries(locale) : name);
+            data.put(NAME, name.isEmpty() ? Roster.allEntries(locale) : name);
             data.put(LENGTH, size);
             return root;
         } else {

@@ -38,11 +38,11 @@ import org.slf4j.LoggerFactory;
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     LocationManager manager;
-    String Empty = "            ";
+    static final String EMPTY = "            ";
 
     // checkboxes have the location id or track id as the checkbox name
-    ArrayList<JCheckBox> locationCheckBoxList = new ArrayList<JCheckBox>();
-    ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<JCheckBox>();
+    ArrayList<JCheckBox> locationCheckBoxList = new ArrayList<>();
+    ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<>();
     JPanel locationCheckBoxes = new JPanel();
 
     // panels
@@ -57,7 +57,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
 
     // text field
-    JLabel textCarType = new JLabel(Empty);
+    JLabel textCarType = new JLabel(EMPTY);
 
     // combo boxes
     JComboBox<String> typeComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
@@ -287,7 +287,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
             if (copyCheckBox.isSelected()) {
                 textCarType.setText((String) typeComboBox.getSelectedItem());
             } else {
-                textCarType.setText(Empty);
+                textCarType.setText(EMPTY);
                 updateLocations();
             }
         } else {
@@ -368,5 +368,5 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
 }

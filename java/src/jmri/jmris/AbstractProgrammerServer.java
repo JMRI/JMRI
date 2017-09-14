@@ -115,6 +115,6 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammerServer.class);
 
 }

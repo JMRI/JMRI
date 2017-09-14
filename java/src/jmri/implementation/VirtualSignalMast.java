@@ -80,5 +80,5 @@ public class VirtualSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class);
 }

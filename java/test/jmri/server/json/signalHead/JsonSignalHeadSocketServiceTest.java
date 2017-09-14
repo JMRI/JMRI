@@ -1,6 +1,5 @@
 package jmri.server.json.signalHead;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -110,15 +109,12 @@ public class JsonSignalHeadSocketServiceTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+
         JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
 }

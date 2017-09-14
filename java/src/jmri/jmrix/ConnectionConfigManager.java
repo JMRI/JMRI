@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.configurexml.ClassMigrationManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.ErrorHandler;
 import jmri.configurexml.ErrorMemo;
@@ -29,9 +30,9 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Manager for ConnectionConfig objects.
@@ -91,6 +92,11 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                                 log.debug("Read perNode connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                             }
                         }
+                    }
+                    String newClassName = InstanceManager.getDefault(ClassMigrationManager.class).getClassName(className);
+                    if (!className.equals(newClassName)) {
+                        log.info("Class {} will be used for connection {} instead of {} if preferences are saved", newClassName, userName, className);
+                        className = newClassName;
                     }
                     try {
                         log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);

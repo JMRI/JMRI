@@ -56,33 +56,30 @@
       <p>If FindBugs is finding a false positive, a bug that's not
       really a bug, you can turn it off with an annotation such
       as:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
-</code>
-</pre>Note that this should be all on one line. Although Java
-itself considers it optional, we require the second "justification"
-argument. Explaining why you've added this annotation to suppress a
-message will help whoever comes after you and is trying to
-understand the code. It will also help make sure you properly
-understand the cause of the underlying bug report: Sometimes what
-seems a false positive really isn't. Annotations without a
-justification clause will periodically be removed.
+</pre>
+      Note that this should be all on one line. Although Java
+      itself considers it optional, we require the second "justification"
+      argument. Explaining why you've added this annotation to suppress a
+      message will help whoever comes after you and is trying to
+      understand the code. It will also help make sure you properly
+      understand the cause of the underlying bug report: Sometimes what
+      seems a false positive really isn't. Annotations without a
+      justification clause will periodically be removed.
 
       <p>For clarity, this annotation also supports the form:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floats, as even tiny differences should trigger update")
-</code>
-</pre>This can make it easier to see what is what when quickly
+
+</pre>
+    This can make it easier to see what is what when quickly
 scanning through the code.
 
       <p>If you need to put more than one message type in an
       annotation, use array syntax:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
-</code>
 </pre>
 
       <p>There are also Java and FindBugs annotations that can help
@@ -292,11 +289,12 @@ scanning through the code.
         to the java/lib directory</li>
 
         <li>either run
-          <pre>
+<pre style="font-family: monospace;">
 ant -Dfindbugs.home=C:/findbugs-1.3.8 findbugs  (replacing the parameter with your install location)
-</pre>or edit the build.xml and modified the current commented out
-parameter findbugs.home to your install location and then run
-          <pre>
+</pre>
+      or edit the build.xml and modified the current commented out
+      parameter findbugs.home to your install location and then run
+<pre style="font-family: monospace;">
 ant findbugs
 </pre>
         </li>

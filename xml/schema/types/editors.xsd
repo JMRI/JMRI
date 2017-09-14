@@ -1077,6 +1077,7 @@
 
     </xs:complexType>
 
+
     <xs:complexType name="EditorLayoutTurnoutType">
       <xs:annotation>
         <xs:documentation>
@@ -1141,8 +1142,8 @@
       <xs:attribute name="signald2name" type="beanNameType"></xs:attribute>
       <xs:attribute name="linkedturnoutname" type="beanNameType"></xs:attribute>
       <xs:attribute name="secondturnoutname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
       <xs:attribute name="linktype" type="xs:string"></xs:attribute>
-
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutSlipType">
@@ -1261,6 +1262,37 @@
       <xs:attribute name="dockY" type="xs:string"></xs:attribute>
       <xs:attribute name="text" type="xs:string"></xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorTrainIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a TrainIcon.
+          Persistence class inherits from jmri.jmrit.display.configurexml.LocoIconXml
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.operations.trains.configurexml.TrainIconXml
+          jmri.jmrit.display.configurexml.LocoIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="train" type="xs:string"></xs:attribute>
+      <xs:attribute name="trainName" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="icon" type="yesNoType"></xs:attribute>
+      <xs:attribute name="dockX" type="xs:string"></xs:attribute>
+      <xs:attribute name="dockY" type="xs:string"></xs:attribute>
+      <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+
     </xs:complexType>
 
     <xs:complexType name="EditorLocoLabelType">
@@ -1398,6 +1430,7 @@
       <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectcname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectdname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="xb" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="xc" type="xs:float"></xs:attribute>    <!-- required in DTD, missing from some files -->
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>

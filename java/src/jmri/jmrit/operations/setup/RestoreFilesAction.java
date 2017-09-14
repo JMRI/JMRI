@@ -21,7 +21,7 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class RestoreFilesAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);
 
     public RestoreFilesAction(String s) {
         super(s);
@@ -53,7 +53,7 @@ public class RestoreFilesAction extends AbstractAction {
 
         // get file to write to
         JFileChooser fc = new JFileChooser(backup.getBackupRoot());
-        fc.addChoosableFileFilter(new fileFilter());
+        fc.addChoosableFileFilter(new FileFilter());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         int retVal = fc.showOpenDialog(null);
@@ -95,7 +95,7 @@ public class RestoreFilesAction extends AbstractAction {
         }
     }
 
-    private static class fileFilter extends javax.swing.filechooser.FileFilter {
+    private static class FileFilter extends javax.swing.filechooser.FileFilter {
 
         @Override
         public boolean accept(File f) {

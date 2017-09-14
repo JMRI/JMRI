@@ -197,5 +197,5 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class);
 }

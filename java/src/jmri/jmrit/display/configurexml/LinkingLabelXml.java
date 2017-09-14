@@ -47,7 +47,7 @@ public class LinkingLabelXml extends PositionableLabelXml {
             element.addContent(storeIcon("icon", (NamedIcon) p.getIcon()));
         }
 
-        element.addContent(new Element("url").addContent(p.getUrl()));
+        element.addContent(new Element("url").addContent(p.getURL()));
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LinkingLabelXml");
         return element;
@@ -62,14 +62,14 @@ public class LinkingLabelXml extends PositionableLabelXml {
     @Override
     public void load(Element element, Object o) {
         // create the objects
-        LinkingLabel l = null;
+        LinkingLabel l;
 
         String url = element.getChild("url").getText();
 
         // get object class and determine editor being used
         Editor editor = (Editor) o;
         if (element.getAttribute("icon") != null) {
-            NamedIcon icon = null;
+            NamedIcon icon;
             String name = element.getAttribute("icon").getValue();
 //            if (log.isDebugEnabled()) log.debug("icon attribute= "+name);
             if (name.equals("yes")) {
@@ -79,14 +79,14 @@ public class LinkingLabelXml extends PositionableLabelXml {
                 if (icon == null) {
                     icon = editor.loadFailed("LinkingLabel", name);
                     if (icon == null) {
-                        log.info("LinkingLabel icon removed for url= " + name);
+                        log.info("LinkingLabel icon removed for url= {}", name);
                         return;
                     }
                 }
             }
             // abort if name != yes and have null icon
             if (icon == null && !name.equals("yes")) {
-                log.info("LinkingLabel icon removed for url= " + name);
+                log.info("LinkingLabel icon removed for url= {}", name);
                 return;
             }
             l = new LinkingLabel(icon, editor, url);
@@ -105,7 +105,7 @@ public class LinkingLabelXml extends PositionableLabelXml {
                 if (nIcon != null) {
                     l.updateIcon(nIcon);
                 } else {
-                    log.info("LinkingLabel icon removed for url= " + name);
+                    log.info("LinkingLabel icon removed for url= {}", name);
                     return;
                 }
             } else {
@@ -141,5 +141,5 @@ public class LinkingLabelXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LABELS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LinkingLabelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LinkingLabelXml.class);
 }

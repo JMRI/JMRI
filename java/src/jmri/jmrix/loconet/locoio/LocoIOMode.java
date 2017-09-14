@@ -41,7 +41,7 @@ public class LocoIOMode {
         return isOutput;
     }
 
-    public int getOpcode() {
+    public int getOpCode() {
         return opcode;
     }
 

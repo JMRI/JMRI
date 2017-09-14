@@ -25,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Modifying Warrant Speeds</h1>
+      <h1>When Warrant Speeds Are Modified</h1>
 
       Regardless of the throttle setting and intended track
       speed in the command script of a warrant, track conditions
@@ -102,8 +102,11 @@
        order for it to done smoothly in prototypical fashion, it
        depends on the following parameters:
       <ul>
-        <li><b>Ramp Step Time</b></li>
-        <li><b>Ramp Step Throttle Increment</b></li> 
+        <li><b>Ramp Step Time</b> The number of milliseconds 
+        between making throttle setting changes.</li>
+        <li><b>Ramp Step Throttle Increment</b> The initial
+        throttle increment when increasing speed, or last
+        increment when decreasing speed.</li> 
       </ul>
       These are configured in Warrant Preferences. See <a href=
       "../../../apps/TabbedPreferences.shtml#Warrants">Warrant
@@ -183,7 +186,7 @@
       range is quite sufficient.
 
       <a name="autoSpeedProfile" id="autoSpeedProfile"></a>
-      <h4>Automatic Speed Profiling</h4>Since Release 4.9.2
+      <h2>Automatic Speed Profiling</h2>Since <b><i>Release 4.9.2</i></b>
       track speed of an engine/consist is measured when that address
       is used for running a warrant. A data point is recorded whenever
       a path with known length is traversed with a known throttle
@@ -196,6 +199,38 @@
       Preferences</a> for how you want to manage the end of session
       behavior.  The default is you are prompted for how you want
       to treat each Session Speed Profile.
+      
+      <h3>Track Speeds for Throttle Settings</h3>
+      If you used the Roster Speed Profiling tool most likely you ran
+      an engine running light over a straight level track. With 
+      warrant dynamic speed profiling, measurements are made over
+      straight level track, but also upgrade, down grade, curved
+      gently or severely, running light or pulling 30+ cars. 
+      <i>The track speeds are not going to be all the same for a
+      given throttle setting.</i>  When merging, new values are 
+      averaged with the old, with the intention of a composite
+      speed profile that reflects average use.
+       
+      <p>At some point, merging this data
+      may make a speed profile that is not monotonic increasing.
+      (Certainly increasing throttle setting increases speed). When
+      this anomaly occurs the speed profile is displayed and the
+      cells where the profile is not monotonic are marked in red.
+      You may edit the table to correct it. Whether to do this
+      editing is your choice.  Perhaps it is best to let the
+      anomalies remain and have the profile resolve itself - or
+      do the editing after letting more values accumulate.
+      Of course, a value resulting when the train was shorted
+      or was dragging a derailed car should be deleted.</p>
+      
+      <h4>Editing a Speed Profile</h4>
+      When given the opportunity to edit, either the value of
+      a single cell can be changed or an entire row deleted.
+      Replacing a value with 0.0, causes that speed step to be
+      ignored. When a track speed is needed for a throttle setting
+      there, an interpolated value is used.  If
+      values in both directions are 0.0, the row might as
+      well be deleted.
 
       <h2>Aspect Speed Table and its Interpretation</h2>Speeds are
       named in the aspects.xml files that signal masts use in the

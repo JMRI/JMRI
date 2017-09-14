@@ -20,9 +20,9 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.util.swing.SwingSettings;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  *

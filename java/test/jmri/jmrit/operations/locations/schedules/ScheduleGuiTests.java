@@ -6,6 +6,7 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -26,7 +27,7 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         Assert.assertNotNull(f);
 
         // TODO improve test
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -42,8 +43,8 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         // TODO improve test
         ScheduleOptionsFrame sf = new ScheduleOptionsFrame(f);
         Assert.assertNotNull(sf);
-        sf.dispose();
-        f.dispose();
+        JUnitUtil.dispose(sf);
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         Assert.assertNotNull(f);
 
         // TODO improve test
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -63,7 +64,7 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         Assert.assertNotNull(f);
 
         // TODO improve test
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadLocations() {

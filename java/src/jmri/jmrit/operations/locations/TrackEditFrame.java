@@ -1280,5 +1280,5 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackEditFrame.class);
 }

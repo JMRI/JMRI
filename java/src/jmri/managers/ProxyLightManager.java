@@ -2,7 +2,6 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
-import jmri.NamedBean;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
@@ -24,7 +23,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Light> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getLightManager();
     }
 
@@ -35,7 +34,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light getLight(String name) {
-        return (Light) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light provideLight(String name) throws IllegalArgumentException {
-        return (Light) super.provideNamedBean(name);
+        return super.provideNamedBean(name);
     }
 
     /**
@@ -64,7 +63,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light getBySystemName(String systemName) {
-        return (Light) super.getBeanBySystemName(systemName);
+        return super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -75,7 +74,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light getByUserName(String userName) {
-        return (Light) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -108,13 +107,15 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      */
     @Override
     public Light newLight(String systemName, String userName) {
-        return (Light) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     /**
-     * Validate system name format Locate a system specfic LightManager based on
-     * a system name. Returns false if no manager exists. If a manager is found,
-     * return its determination of validity of system name format
+     * Validate system name format. Locate a system specfic LightManager based on
+     * a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
@@ -127,9 +128,11 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
 
     /**
      * Validate system name against the hardware configuration Locate a system
-     * specfic LightManager based on a system name. Returns false if no manager
-     * exists. If a manager is found, return its determination of validity of
-     * system name relative to the hardware configuration
+     * specfic LightManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name formatrelative to the hardware configuration.
+     * Return false if no manager exists.
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -214,14 +217,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
         return entryToolTip;
-    }
-
-    /**
-     * Provide a connection system agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
     }
 
     @Override

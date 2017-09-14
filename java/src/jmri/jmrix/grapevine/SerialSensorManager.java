@@ -1,11 +1,9 @@
 package jmri.jmrix.grapevine;
 
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Sensor;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.NamedBean;
+import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +28,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * <P>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
-     *
      */
     static final int SENSORSPERNODE = 1000;
 
@@ -121,21 +118,23 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'S'));
+    }
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
         return entryToolTip;
-    }
-
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{2,6}[aAmMpPsS]{0,1}[0-9]{1,3}$"; // Grapevine examples 56m5, 502
-        // see tooltip
     }
 
     /**
@@ -146,7 +145,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process a reply to a poll of Sensors of one node
+     * Process a reply to a poll of Sensors of one node.
      */
     @Override
     public void reply(SerialReply r) {
@@ -158,7 +157,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Serial Node is created
+     * Method to register any orphan Sensors when a new Serial Node is created.
      */
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
@@ -186,7 +185,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * static function returning the SerialSensorManager instance to use.
+     * Static function returning the SerialSensorManager instance to use.
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
@@ -200,5 +199,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     static SerialSensorManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+
 }

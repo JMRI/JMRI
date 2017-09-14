@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    JmrixConfigPaneXmlTest.class
+    JmrixConfigPaneXmlTest.class,
+    BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.configurexml package.
@@ -30,6 +31,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

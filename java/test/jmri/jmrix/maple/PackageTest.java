@@ -1,9 +1,9 @@
 package jmri.jmrix.maple;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.maple package.
@@ -55,6 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialReplyTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

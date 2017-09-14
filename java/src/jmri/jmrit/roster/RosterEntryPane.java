@@ -42,7 +42,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextField id = new JTextField(30);
     JTextField roadName = new JTextField(30);
     JTextField maxSpeed = new JTextField(3);
-    JSpinner maxSpeedSpinner = new JSpinner(new SpinnerNumberModel(100, 1, 100, 1));
+    JSpinner maxSpeedSpinner = new JSpinner(); // percentage stored as fraction
 
     JTextField roadNumber = new JTextField(30);
     JTextField mfg = new JTextField(30);
@@ -70,6 +70,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
     public RosterEntryPane(RosterEntry r) {
 
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Double.valueOf(1.00d), Double.valueOf(0.00d), Double.valueOf(1.00d), Double.valueOf(0.01d)));
+        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         id.setText(r.getId());
 
         if (r.getDccAddress().equals("")) {
@@ -108,14 +110,14 @@ public class RosterEntryPane extends javax.swing.JPanel {
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
                 List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, r.getDecoderFamily(), null, null, null, r.getDecoderModel());
                 if (log.isDebugEnabled()) {
-                    log.debug("found " + l.size() + " matches");
+                    log.debug("found {} matched", l.size());
                 }
                 if (l.size() == 0) {
-                    log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+                    log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
                     // fall back to use just the decoder name, not family
                     l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, r.getDecoderModel());
                     if (log.isDebugEnabled()) {
-                        log.debug("found " + l.size() + " matches without family key");
+                        log.debug("found {} matches without family key", l.size());
                     }
                 }
                 DecoderFile d = null;
@@ -250,13 +252,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         gbLayout.setConstraints(row7Label, cL);
         add(row7Label);
 
-        cR.gridy = cL.gridy;
-        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "#"));
-        /*
-         * Code below can disables editing of field (commented out for now)
-         JSpinner.DefaultEditor editor = ((JSpinner.DefaultEditor)maxSpeedSpinner.getEditor());
-         editor.getTextField().setEditable(false);
-         */
+        cR.gridy = cL.gridy; // JSpinner is initialised in RosterEntryPane()
         gbLayout.setConstraints(maxSpeedSpinner, cR);
         add(maxSpeedSpinner);
 
@@ -311,6 +307,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         add(dateUpdated);
     }
 
+    double maxSet;
     /**
      * Does the GUI contents agree with a RosterEntry?
      */
@@ -345,10 +342,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
         if (!r.getId().equals(id.getText())) {
             return true;
         }
-        if (r.getMaxSpeedPCT() != ((Integer) maxSpeedSpinner.getValue()).intValue()) {
+        maxSet = (Double) maxSpeedSpinner.getValue();
+        if (r.getMaxSpeedPCT() != (int) Math.round(100 * maxSet)) {
+            log.debug("check: {}|{}", r.getMaxSpeedPCT(), (int) Math.round(100 * maxSet));
             return true;
         }
-
         DccLocoAddress a = addrSel.getAddress();
         if (a == null) {
             if (!r.getDccAddress().equals("")) {
@@ -372,7 +370,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
      *         other RosterEntry in the roster
      */
     public boolean checkDuplicate() {
-        // check its not a duplicate
+        // check it's not a duplicate
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id.getText());
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
@@ -384,8 +382,9 @@ public class RosterEntryPane extends javax.swing.JPanel {
     }
 
     /**
-     * Fill a RosterEntry object from GUI contents
+     * Fill a RosterEntry object from GUI contents.
      *
+     * @param r the roster entry to display
      */
     public void update(RosterEntry r) {
         r.setId(id.getText());
@@ -401,8 +400,10 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
         r.setComment(comment.getText());
 
-        JComponent editor = maxSpeedSpinner.getEditor();
-        r.setMaxSpeedPCT(Integer.parseInt(((JSpinner.DefaultEditor) editor).getTextField().getText()));
+        maxSet = (Double) maxSpeedSpinner.getValue();
+        log.debug("maxSet saved: {}", maxSet);
+        r.setMaxSpeedPCT((int) Math.round(100 * maxSet));
+        log.debug("maxSet read from config: {}", r.getMaxSpeedPCT());
         r.setDecoderFamily(decoderFamily.getText());
         r.setDecoderModel(decoderModel.getText());
         r.setDecoderComment(decoderComment.getText());
@@ -427,7 +428,12 @@ public class RosterEntryPane extends javax.swing.JPanel {
         dateUpdated.setText((r.getDateModified() != null)
                 ? DateFormat.getDateTimeInstance().format(r.getDateModified())
                 : r.getDateUpdated());
-        maxSpeedSpinner.setValue(r.getMaxSpeedPCT());
+        // retrieve MaxSpeed from r
+        Double msp = new Double(r.getMaxSpeedPCT() / 100d); // why resets to 100?
+        double maxSpeedSet = msp.doubleValue();
+        log.debug("Max Speed set to: {}", maxSpeedSet);
+        maxSpeedSpinner.setValue(maxSpeedSet);
+        log.debug("Max Speed in spinner: {}", maxSpeedSpinner.getValue());
     }
 
     public void setDccAddress(String a) {
@@ -452,11 +458,9 @@ public class RosterEntryPane extends javax.swing.JPanel {
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryPane.class);
 
 }

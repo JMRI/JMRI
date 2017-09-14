@@ -3,22 +3,27 @@
   <enumChoice choice="(Disabled)">
     <choice>Disabled</choice>
     <choice xml:lang="it">Disabile</choice>
+    <choice xml:lang="de">Deaktiviert</choice>
   </enumChoice>
   <enumChoice choice="Dimmable headlight">
     <choice>Dimmable headlight</choice>
     <choice xml:lang="it">Luce di testa regolabile</choice>
+    <choice xml:lang="de">Dimmbares Licht</choice>
   </enumChoice>
   <enumChoice choice="Dimmable headlight (fade in/out)">
     <choice>Dimmable headlight (fade in/out)</choice>
     <choice xml:lang="it">Luce di testa regolabile (sfumata in/out)</choice>
+    <choice xml:lang="de">Dimmbares Licht (Ein- und Ausblenden)</choice>
   </enumChoice>
   <enumChoice choice="Fire box">
     <choice>Fire box</choice>
     <choice xml:lang="it">Fuoco Caldaia</choice>
+    <choice xml:lang="de">Feuerbüchse</choice>
   </enumChoice>
   <enumChoice choice="Intelligent fire box">
     <choice>Intelligent fire box</choice>
     <choice xml:lang="it">Caldaia intelligente</choice>
+    <choice xml:lang="de">Intelligente Feuerbüchse</choice>
   </enumChoice>
   <enumChoice choice="Single strobe">
     <choice>Single strobe</choice>
@@ -51,6 +56,7 @@
   <enumChoice choice="Flash light">
     <choice>Flash light</choice>
     <choice xml:lang="it">Luce a Flash</choice>
+    <choice xml:lang="de">Blinklicht</choice>
   </enumChoice>
   <enumChoice choice="Mars light">
     <choice>Mars light</choice>
@@ -67,25 +73,31 @@
   <enumChoice choice="Flourescent light">
     <choice>Flourescent light</choice>
     <choice xml:lang="it">Luce Fluorescente</choice>
+    <choice xml:lang="de">Neonlicht</choice>
   </enumChoice>
   <enumChoice choice="Energy saving light">
     <choice>Energy saving light</choice>
     <choice xml:lang="it">Luce a risparmio Energetico</choice>
+    <choice xml:lang="de">Energiesparlampe</choice>
   </enumChoice>
   <enumChoice choice="Single strobe random">
     <choice>Single strobe random</choice>
   </enumChoice>
   <enumChoice choice="Sound controlled smoke unit" value="22">
     <choice xml:lang="it">Gener.Fumo sonoro</choice>
+    <choice xml:lang="de">Raucheinheit (Soundgesteuert)</choice>
   </enumChoice>
   <enumChoice choice="Fan control" value="23">
     <choice xml:lang="it">Controllo Ventole</choice>
+    <choice xml:lang="de">Ventilator</choice>
   </enumChoice>
   <enumChoice choice="Seuthe smoke unit" value="24">
     <choice xml:lang="it">Gener.Fumo Seuthe</choice>
+    <choice xml:lang="de">Seuthe Rauchgenerator</choice>
   </enumChoice>
   <enumChoice choice="Trigger smoke chuff" value="25">
     <choice xml:lang="it">Chuff fumo Trigger</choice>
+    <choice xml:lang="de">Dampfstoß-Trigger</choice>
   </enumChoice>
   <enumChoice choice="Servo" value="27">
     <choice xml:lang="it">Servo</choice>
@@ -94,8 +106,10 @@
     <choice xml:lang="it">Gancio</choice>
     <choice>Coupler</choice>
     <choice xml:lang="it">Gancio</choice>
+    <choice xml:lang="de">Kupplung</choice>
   </enumChoice>
   <enumChoice choice="Roco coupler" value="29">
     <choice xml:lang="it">Gancio Roco</choice>
+    <choice xml:lang="de">Roco Kupplung</choice>
   </enumChoice>
 </enumVal>

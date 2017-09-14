@@ -146,15 +146,6 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         return entryToolTip;
     }
 
-    /**
-     * Provide a connection system agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$";
-        // Initially accepts a 4 digit number + ":" + another 4 digit number
-    }
-
     @Deprecated
     static public XNetTurnoutManager instance() {
         //if (_instance == null) _instance = new XNetTurnoutManager();
@@ -162,6 +153,6 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
     static XNetTurnoutManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManager.class);
 
 }

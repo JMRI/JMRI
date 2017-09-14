@@ -55,7 +55,7 @@
 
         <dt>preference:</dt>
         <dd>Treats the path as a relative path below the user files (or preferences)
-          directory. In JMRI 2.13.1 and earlier, thie was the <code>file:</cde> prefix.</dd>
+          directory. In JMRI 2.13.1 and earlier, thie was the <code>file:</code> prefix.</dd>
           
         <dt>profile:</dt>
         <dd>Treats the path as a relative path below the configuration profile directory.</dd>

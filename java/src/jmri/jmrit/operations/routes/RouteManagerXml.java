@@ -99,7 +99,7 @@ public class RouteManagerXml extends OperationsXml implements InstanceManagerAut
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class);
 
     @Override
     public void initialize() {

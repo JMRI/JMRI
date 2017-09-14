@@ -6,6 +6,7 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.managers.TurnoutManagerScaffold;
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -56,6 +57,16 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
         Assert.assertTrue("2nd global programmer manager is default", InstanceManager.getDefault(GlobalProgrammerManager.class) == m2);
         Assert.assertTrue("2nd addressed programmer manager is default", InstanceManager.getDefault(AddressedProgrammerManager.class) == m2);
+    }
+
+    // the following test was moved from jmri.jmrit.symbolicprog.PackageTet when    
+    // it was converted to JUnit4 format.  It seemed out of place there.
+    // check configuring the programmer
+    public void testConfigProgrammer() {
+        // initialize the system
+        Programmer p = new jmri.progdebugger.ProgDebugger();
+        InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
+        assertTrue(InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() == p);
     }
 
     // Testing new load store
@@ -116,7 +127,6 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     public static class OkAutoCreate implements InstanceManagerAutoDefault {
 
         public OkAutoCreate() {
-            System.out.println();
         }
     }
 
@@ -129,7 +139,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertTrue("same object", obj1 == obj2);
     }
 
-    public class NoAutoCreate {
+    public static class NoAutoCreate {
     }
 
     public void testAutoCreateNotOK() {
@@ -141,6 +151,23 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         }
     }
 
+    static boolean avoidLoopAutoCreateCycle = true;
+    public static class AutoCreateCycle implements InstanceManagerAutoDefault {
+        public AutoCreateCycle() {
+            if (avoidLoopAutoCreateCycle) {
+                avoidLoopAutoCreateCycle = false;
+                InstanceManager.getDefault(AutoCreateCycle.class);
+            }
+        }        
+    }
+
+    public void testAutoCreateCycle() {
+        avoidLoopAutoCreateCycle = true;
+        InstanceManager.getDefault(AutoCreateCycle.class);
+        JUnitAppender.assertErrorMessage("Proceeding to initialize class jmri.InstanceManagerTest$AutoCreateCycle while already in initialization");
+        JUnitAppender.assertErrorMessage("    Prior initialization:");
+    }
+    
     public static class OkToDispose implements Disposable {
 
         public static String message = "dispose called";
@@ -278,6 +305,18 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
     }
 
+    public void testContainsDefault() {
+        // verify not OkAutoCreate instances exist
+        InstanceManager.reset(OkAutoCreate.class);
+        Assert.assertFalse("Should be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        // create a OkAutoCreate instance
+        Assert.assertNotNull(InstanceManager.getDefault(OkAutoCreate.class));
+        Assert.assertTrue("Should not be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        // remote OkAutoCreate instance
+        InstanceManager.reset(OkAutoCreate.class);
+        Assert.assertFalse("Should be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+    }
+
     // from here down is testing infrastructure
     public InstanceManagerTest(String s) {
         super(s);
@@ -299,13 +338,12 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class);

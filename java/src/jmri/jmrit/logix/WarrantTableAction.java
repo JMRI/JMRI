@@ -290,7 +290,7 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         if (_trackerTable != null) {
-            TrackerTableAction.mouseClickedOnBlock(block);
+            InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
         }
     }
 
@@ -689,5 +689,5 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class);
 }

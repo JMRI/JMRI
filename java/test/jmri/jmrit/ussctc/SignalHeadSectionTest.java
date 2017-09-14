@@ -1,12 +1,10 @@
 package jmri.jmrit.ussctc;
 
-import org.junit.*;
-
-import jmri.util.*;
-import jmri.*;
 import java.beans.*;
-
 import java.util.*;
+import jmri.*;
+import jmri.util.*;
+import org.junit.*;
 
 /**
  * Tests for SignalHeadSection class in the jmri.jmrit.ussctc package
@@ -320,8 +318,7 @@ public class SignalHeadSectionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -347,8 +344,7 @@ public class SignalHeadSectionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

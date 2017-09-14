@@ -4,6 +4,8 @@ import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CAN CBUS implementation of a TurnoutManager.
@@ -38,6 +40,21 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
+        // first, check validity
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+            throw e;
+        }
+        try {
+            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
+                // accept unsigned positive integer, prefix "+"
+                addr = "+" + addr;
+            }
+        } catch (NumberFormatException ex) {
+            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+        }
         Turnout t = new CbusTurnout(getSystemPrefix(), addr, memo.getTrafficController());
         t.setUserName(userName);
         return t;
@@ -50,10 +67,21 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
+        // first, check validity
         try {
             validateSystemNameFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
+        }
+        // prefix + as service to user
+        int unsigned = 0;
+        try {
+            unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
+        } catch (NumberFormatException ex) {
+            // already warned
+        }
+        if (unsigned > 0 && !curAddress.startsWith("+")) {
+            curAddress = "+" + curAddress;
         }
         return getSystemPrefix() + typeLetter() + curAddress;
     }
@@ -69,18 +97,36 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return curAddress;
     }
 
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e){
+            log.debug("Warning: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Cbus turnout address");
+            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus turnout address");
         }
         switch (v.length) {
             case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
+                int unsigned = 0;
+                try {
+                    unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
+                } catch (NumberFormatException ex) {
+                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                }
+                if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
+                throw new IllegalArgumentException("can't make 2nd event from address " + address);
             case 2:
                 break;
             default:
@@ -111,13 +157,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
-    /**
-     * Provide a manager-specific regex for the Add new item beantable pane.
-     * @see jmri.jmrix.can.cbus.CbusAddress
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[NX]{0,1}[+-]{0,1}[0-9]{1,5}[;]{0,1}[EX]{0,1}[+-]{0,1}[0-9]{1,5}[M]{0,1}[0-9a-fA-F]{0,2}$"; // examples N14E4, see tooltip
-    }
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);
 
 }

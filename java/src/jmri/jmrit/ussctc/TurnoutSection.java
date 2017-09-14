@@ -1,7 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
 import java.util.*;
+import jmri.*;
 
 /**
  * Drive a single Turnout section on a USS CTC panel.
@@ -362,5 +362,5 @@ public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBit
         }
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSection.class);
 }

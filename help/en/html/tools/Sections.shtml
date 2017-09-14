@@ -30,7 +30,7 @@
       given direction. Sections were created to solve the direction
       problem that can occur when using Blocks directly. A Section
       has only two directions, "forward" or "reverse". Sections can
-      be traversed by a train in either direction. Section
+      be traversed by a Train in either direction. Section
       direction is independent of the direction set for the
       locomotive by a throttle. In addition to solving the
       direction problem, Sections offer the user other useful
@@ -214,7 +214,7 @@
 
       <p>To use the Sections that have been built this way you will
       next need to setup <a href=
-      "../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>,
+      "Transits.shtml">Transits</a>.
       Following that, you will also need to set the <a href=
       "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>
       to use SignalMast Logic via the Dispatcher's <a href=
@@ -301,7 +301,7 @@
       <h3>Creating a new Section</h3>
 
       <p>To Create a new Section, click the "<a href=
-      "../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Add.."
+      "../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Add..."
       button</a>. A window will be brought up that will allow you
       to define the blocks included in the new Section, and if
       necessary, designate which entry points to the section result

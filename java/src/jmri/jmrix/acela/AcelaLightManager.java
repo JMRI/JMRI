@@ -60,7 +60,7 @@ public class AcelaLightManager extends AbstractLightManager {
          }
          */
         // Validate the systemName
-        if (AcelaAddress.validSystemNameFormat(systemName, 'L',getSystemPrefix())) {
+        if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
             lgt = new AcelaLight(systemName, userName,_memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'L',_memo)) {
                 log.warn("Light system Name does not refer to configured hardware: "
@@ -74,18 +74,20 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
-        return (AcelaAddress.validSystemNameFormat(systemName, 'L',getSystemPrefix()));
+        return (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -95,8 +97,8 @@ public class AcelaLightManager extends AbstractLightManager {
     /**
      * Public method to normalize a system name
      * <P>
-     * Returns a normalized system name if system name has a valid format, else
-     * returns "".
+     * Returns a normalized system name if system name has a valid format,
+     * else returns "".
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -106,8 +108,8 @@ public class AcelaLightManager extends AbstractLightManager {
     /**
      * Public method to convert system name to its alternate format
      * <P>
-     * Returns a normalized system name if system name is valid and has a valid
-     * alternate representation, else return "".
+     * @return a normalized system name if system name is valid and has a valid
+     * alternate representation, else return ""
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
@@ -123,6 +125,6 @@ public class AcelaLightManager extends AbstractLightManager {
         return null; 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);
 
 }

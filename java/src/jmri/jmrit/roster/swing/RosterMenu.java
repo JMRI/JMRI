@@ -169,6 +169,6 @@ public class RosterMenu extends JMenu {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterMenu.class);
 
 }

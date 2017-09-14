@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
@@ -24,7 +23,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Turnout> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
     }
 
@@ -32,7 +31,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Revise superclass behavior: support TurnoutOperations
      */
     @Override
-    public void addManager(Manager m) {
+    public void addManager(Manager<Turnout> m) {
         super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
     }
@@ -44,7 +43,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getTurnout(String name) {
-        return (Turnout) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -54,7 +53,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public Turnout provideTurnout(String name) throws IllegalArgumentException {
-        return (Turnout) super.provideNamedBean(name);
+        return super.provideNamedBean(name);
     }
 
     /**
@@ -65,7 +64,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getBySystemName(String systemName) {
-        return (Turnout) super.getBeanBySystemName(systemName);
+        return super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -76,7 +75,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getByUserName(String userName) {
-        return (Turnout) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -109,7 +108,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout newTurnout(String systemName, String userName) {
-        return (Turnout) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     /**
@@ -233,6 +232,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         throw new jmri.JmriException("Turnout Manager could not be found for System Prefix " + prefix);
     }
 
+    /**
+     * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return false if no manager exists.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((TurnoutManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return false;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
@@ -291,14 +305,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         return entryToolTip;
     }
 
-    /**
-     * Provide a connection system agnostic regex for the Add new item beantable pane.
-     */
-    @Override
-    public String getEntryRegex() {
-        return "^[0-9]{1,4}$"; // Initially accepts a 4 digit number
-    }
-
     @Override
     public int getXMLOrder() {
         return jmri.Manager.TURNOUTS;
@@ -310,6 +316,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class);
 
 }

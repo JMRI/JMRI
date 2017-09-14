@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -66,7 +65,7 @@ import org.slf4j.LoggerFactory;
  * actual source of the sensors can be anything useful, for example a
  * microswitch on a local turnout, etc.
  * <P>
- * There are several varients to how a next signal is protected. In the simplest
+ * There are several variants to how a next signal is protected. In the simplest
  * form, the controlled signal provides a warning to the engineer of what the
  * signal being protected will show when it becomes visible:
  * <UL>
@@ -75,7 +74,7 @@ import org.slf4j.LoggerFactory;
  * <LI>If the next signal is green, the engineer can proceed at track speed;
  * this signal will be set to green.
  * </UL>
- * If the next signal is yellow, there are two possible varients that can be
+ * If the next signal is yellow, there are two possible variants that can be
  * configured:
  * <UL>
  * <LI>For the common "three-aspect" signaling system, an engineer doesn't need
@@ -133,7 +132,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * Create a default object, without contents.
      * Used when registering a dummy with the configuration system.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
                 justification = "Private ctor used to create dummy object for registration; object never asked to do anything")
         private BlockBossLogic() {
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
@@ -574,7 +573,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public boolean getDistantSignal() {
         return distantSignal;
     }
-   
+
     boolean mHold = false;
 
     /**
@@ -593,7 +592,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     /**
      * Set the current value of the "hold" parameter.
      * If true, the output is forced to a RED "stop" aspect.
-     * This allows CTC and other higher-level functions to 
+     * This allows CTC and other higher-level functions to
      * control permission to enter this section of track.
      *
      * @param m true to set Logic to Held
@@ -604,9 +603,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     String name;
-    
+
     @Nonnull NamedBeanHandle<SignalHead> driveSignal;
-    
+
     NamedBeanHandle<Sensor> watchSensor1 = null;
     NamedBeanHandle<Sensor> watchSensor2 = null;
     NamedBeanHandle<Sensor> watchSensor3 = null;
@@ -733,8 +732,8 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         outputs = new NamedBean[]{driveSignal.getBean()};
 
         // also need to act if the _signal's_ "held"
-        // parameter changes, but we don't want to 
-        // act if the signals appearance changes (to 
+        // parameter changes, but we don't want to
+        // act if the signals appearance changes (to
         // avoid a loop, or avoid somebody changing appearance
         // manually and having it instantly recomputed & changed back
         driveSignal.getBean().addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -1182,7 +1181,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
         }
     }
-    
+
     /**
      * Ensure that this BlockBossLogic object is available for later retrieval
      */
@@ -1420,5 +1419,5 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
 }

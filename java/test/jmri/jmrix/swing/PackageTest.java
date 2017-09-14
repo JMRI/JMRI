@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ConnectionsPreferencesPanelTest.class,
-    BundleTest.class
+    BundleTest.class,
+    SystemConnectionComboBoxTest.class
 })
 /**
  * Tests for the jmri.jmrix.swing package

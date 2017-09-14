@@ -60,5 +60,5 @@ public class SignalSystemTestUtil {
         path = null;
     }
 
-    static protected Logger log = LoggerFactory.getLogger(SignalSystemTestUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalSystemTestUtil.class);
 }

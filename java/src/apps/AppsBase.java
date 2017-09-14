@@ -13,14 +13,11 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.ShutDownManager;
-import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.managers.DefaultShutDownManager;
-import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
@@ -52,7 +49,7 @@ public abstract class AppsBase {
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
     static boolean preInit = false;
-    private final static Logger log = LoggerFactory.getLogger(AppsBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsBase.class);
 
     /**
      * Initial actions before frame is created, invoked in the applications
@@ -180,7 +177,7 @@ public abstract class AppsBase {
         }
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
-        // a system property jmri.profile as a profile id.
+        // a system property org.jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
@@ -225,18 +222,12 @@ public abstract class AppsBase {
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", Application.getApplicationName(), null);
 
-        // Install a user preferences manager
-        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
-
         // install the abstract action model that allows items to be added to the, both
         // CreateButton and Perform Action Model use a common Abstract class
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
-
-        //Install Entry Exit Pairs Manager
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
     }
 

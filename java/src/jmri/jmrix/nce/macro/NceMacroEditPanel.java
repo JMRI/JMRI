@@ -92,7 +92,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private static final String LINK = Bundle.getMessage("LinkMacro");// Line 10 alternative to Delete
 
-    Thread NceMemoryThread;
+    Thread nceMemoryThread;
     private boolean readRequested = false;
     private boolean writeRequested = false;
 
@@ -765,10 +765,10 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             }
         }
         // Set up a separate thread to access CS memory
-        if (NceMemoryThread != null && NceMemoryThread.isAlive()) {
+        if (nceMemoryThread != null && nceMemoryThread.isAlive()) {
             return; // thread is already running
         }
-        NceMemoryThread = new Thread(new Runnable() {
+        nceMemoryThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (readRequested) {
@@ -823,9 +823,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         });
-        NceMemoryThread.setName(Bundle.getMessage("ThreadTitle"));
-        NceMemoryThread.setPriority(Thread.MIN_PRIORITY);
-        NceMemoryThread.start();
+        nceMemoryThread.setName(Bundle.getMessage("ThreadTitle"));
+        nceMemoryThread.setPriority(Thread.MIN_PRIORITY);
+        nceMemoryThread.start();
     }
 
     // Reads 16/20 bytes of NCE macro memory
@@ -1647,5 +1647,5 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class);
 }

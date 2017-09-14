@@ -359,10 +359,10 @@ public class LRouteTableAction extends AbstractTableAction {
     JTextField soundFile = new JTextField(30);
     JTextField scriptFile = new JTextField(30);
 
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
     boolean routeDirty = false;  // true to fire reminder to save work
 
@@ -541,7 +541,8 @@ public class LRouteTableAction extends AbstractTableAction {
             _newRouteButton.doClick();
         }
         createButton.setVisible(false);
-    }   // setupEdit
+        _addFrame.setTitle(rbx.getString("LRouteEditTitle"));
+    }
 
     /**
      * Get the type letter from the possible LRoute conditional.
@@ -860,9 +861,11 @@ public class LRouteTableAction extends AbstractTableAction {
      * @param e the action event
      */
     void cancelPressed(ActionEvent e) {
-        Logix logix = checkNamesOK();
-        if (logix != null) {
-            logix.activateLogix();
+        if (_addFrame.getTitle().equals(rbx.getString("LRouteEditTitle"))) { // Warnings shown are useless when cancelling Add New LRoute
+            Logix logix = checkNamesOK();
+            if (logix != null) {
+                logix.activateLogix();
+            }
         }
         clearPage();
     }
@@ -876,13 +879,16 @@ public class LRouteTableAction extends AbstractTableAction {
         _addFrame.setVisible(true);
         _systemName.setEnabled(true);
         _userName.setEnabled(true);
+        _addFrame.setTitle(rbx.getString("LRouteAddTitle"));
     }
 
-    // Set up window
+    /**
+     * Set up Create/Edit LRoute pane
+     */
     void makeEditWindow() {
         if (_addFrame == null) {
             buildLists();
-            _addFrame = new JmriJFrame(rbx.getString("AddTitle"), false, false);
+            _addFrame = new JmriJFrame(rbx.getString("LRouteAddTitle"), false, false);
             _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100, 30);
 
@@ -942,14 +948,19 @@ public class LRouteTableAction extends AbstractTableAction {
             tab1.add(_typePanel);
             tab1.add(Box.createVerticalGlue());
 
-            // add buttons - Add Route button
+            // add buttons
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout());
+            // Cancel button
+            pb.add(cancelButton);
+            cancelButton.addActionListener(this::cancelPressed);
+            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
+            cancelButton.setName("CancelButton");
+            // Add Route button
             pb.add(createButton);
             createButton.addActionListener(this::createPressed);
             createButton.setToolTipText(rbx.getString("CreateHint"));
             createButton.setName("CreateButton");
-
             // Delete Route button
             pb.add(deleteButton);
             deleteButton.addActionListener(this::deletePressed);
@@ -961,12 +972,6 @@ public class LRouteTableAction extends AbstractTableAction {
             });
             updateButton.setToolTipText(rbx.getString("UpdateHint"));
             updateButton.setName("UpdateButton");
-
-            // Cancel button
-            pb.add(cancelButton);
-            cancelButton.addActionListener(this::cancelPressed);
-            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
-            cancelButton.setName("CancelButton");
 
             // Show the initial buttons, and hide the others
             cancelButton.setVisible(true);
@@ -1349,7 +1354,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
+                soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting sound file: " + e);
             }
@@ -1370,7 +1375,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
+                scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting script file: " + e);
             }
@@ -1794,7 +1799,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create a new route conditional.
+     * Create a new Route conditional.
      *
      * @param numConds number of existing route conditionals
      * @param actionList actions to take in conditional
@@ -2432,8 +2437,8 @@ public class LRouteTableAction extends AbstractTableAction {
     private static final String SET_TO_CLOSED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateClosed")); //rbx.getString("xSetClosed");
     private static final String SET_TO_THROWN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateThrown")); //rbx.getString("xSetThrown");
     private static final String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle")); //rbx.getString("xSetToggle");
-    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOn")); //rbx.getString("xSetLightOn");
-    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOff")); //rbx.getString("xSetLightOff");
+    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOn")); //rbx.getString("xSetLightOn");
+    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOff")); //rbx.getString("xSetLightOff");
     private static final String SET_TO_DARK = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateDark")); //rbx.getString("xSetDark");
     private static final String SET_TO_LIT = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("ColumnHeadLit")); //rbx.getString("xSetLit");
     private static final String SET_TO_HELD = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateHeld")); //rbx.getString("xSetHeld");
@@ -3015,5 +3020,5 @@ public class LRouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
 }

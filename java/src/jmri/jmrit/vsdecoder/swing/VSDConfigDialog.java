@@ -514,6 +514,6 @@ public class VSDConfigDialog extends JDialog {
         return true;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class);
 
 }

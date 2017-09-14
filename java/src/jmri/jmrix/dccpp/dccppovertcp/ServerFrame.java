@@ -1,8 +1,7 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -11,7 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Frame displaying and programming a DCCpp clock monitor.
@@ -23,9 +25,9 @@ import javax.swing.event.ChangeListener;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004
- * @author      Alex Shepherd Copyright (C) 2006
- * @author      Mark Underwood Copyright (C) 2015
-  */
+ * @author Alex Shepherd Copyright (C) 2006
+ * @author Mark Underwood Copyright (C) 2015
+ */
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
     private ServerFrame() {
@@ -60,55 +62,38 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         panel.add(clientStatus);
         getContentPane().add(panel);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                Server.getInstance().enable();
-            }
+        startButton.addActionListener((ActionEvent a) -> {
+            InstanceManager.getDefault(Server.class).enable();
         });
 
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                Server.getInstance().disable();
-            }
+        stopButton.addActionListener((ActionEvent a) -> {
+            InstanceManager.getDefault(Server.class).disable();
         });
 
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                Server.getInstance().setAutoStart(autoStartCheckBox.isSelected());
-                Server.getInstance().setPortNumber(((Integer) portNumber.getValue()).intValue());
-                Server.getInstance().saveSettings();
-            }
+        saveButton.addActionListener((ActionEvent a) -> {
+            InstanceManager.getDefault(Server.class).setAutoStart(autoStartCheckBox.isSelected());
+            InstanceManager.getDefault(Server.class).setPortNumber(((Integer) portNumber.getValue()));
+            InstanceManager.getDefault(Server.class).saveSettings();
         });
 
-        autoStartCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                saveButton.setEnabled(true);
-            }
+        autoStartCheckBox.addActionListener((ActionEvent a) -> {
+            saveButton.setEnabled(true);
         });
 
         if (portNumber != null) {
-            portNumber.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    saveButton.setEnabled(true);
-                }
+            portNumber.addChangeListener((ChangeEvent e) -> {
+                saveButton.setEnabled(true);
             });
         }
 
         pack();
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
-        self = null;
-        Server.getInstance().setStateListner(null);
+        InstanceManager.getDefault(Server.class).setStateListner(null);
+        InstanceManager.deregister(this, ServerFrame.class);
         dispose();
         super.windowClosing(e);
     }
@@ -118,24 +103,23 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         super.dispose();
     }
 
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public synchronized ServerFrame getInstance() {
-        if (self == null) {
-            self = new ServerFrame();
-            Server server = Server.getInstance();
-            server.setStateListner(self);
-            server.updateServerStateListener();
-            server.updateClinetStateListener();
-        }
-
-        return self;
+        return InstanceManager.getDefault(ServerFrame.class);
     }
 
     private void updateServerStatus() {
-        Server server = Server.getInstance();
+        Server server = InstanceManager.getDefault(Server.class);
         autoStartCheckBox.setSelected(server.getAutoStart());
         autoStartCheckBox.setEnabled(!server.isEnabled());
         if (portNumber != null) {
-            portNumber.setValue(Integer.valueOf(server.getPortNumber()));
+            portNumber.setValue(server.getPortNumber());
             portNumber.setEnabled(!server.isEnabled());
             portNumberLabel.setEnabled(!server.isEnabled());
         }
@@ -146,26 +130,20 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     }
 
     private void updateClientStatus() {
-        clientStatus.setText("   Client Count: " + Integer.toString(Server.getInstance().getClientCount()));
+        clientStatus.setText("   Client Count: " + Integer.toString(InstanceManager.getDefault(Server.class).getClientCount()));
     }
 
     @Override
     public void notifyServerStateChanged(Server s) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                updateServerStatus();
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            updateServerStatus();
         });
     }
 
     @Override
     public void notifyClientStateChanged(Server s) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                updateClientStatus();
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            updateClientStatus();
         });
     }
 
@@ -181,5 +159,27 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     JButton stopButton = new JButton("Stop Server");
     JButton saveButton = new JButton("Save Settings");
 
-    static ServerFrame self;
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(ServerFrame.class)) {
+                ServerFrame instance = new ServerFrame();
+                Server server = InstanceManager.getDefault(Server.class);
+                server.setStateListner(instance);
+                server.updateServerStateListener();
+                server.updateClinetStateListener();
+                return instance;
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(ServerFrame.class);
+            return set;
+        }
+    }
 }

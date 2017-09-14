@@ -16,6 +16,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
+    // must be null until first use to allow app initialization before construction
+    static TabbedPreferencesFrame f = null;
+    String preferencesItem = null;
+    String preferenceSubCat = null;
+    static boolean inWait = false;
+
     /**
      * Create an action with a specific title.
      * <P>
@@ -64,11 +70,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         preferencesItem = category;
     }
 
-    static TabbedPreferencesFrame f;
-    String preferencesItem = null;
-    String preferenceSubCat = null;
-    static boolean inWait = false;
-
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         // create the frame
@@ -79,7 +80,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
 
         if (f == null) {
             f = new TabbedPreferencesFrame();
-            new Thread(() -> {
+            Thread preferencesInitThread = new Thread(() -> {
                 final Object waiter = new Object();
                 try {
                     setWait(true);
@@ -94,7 +95,9 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                     Thread.currentThread().interrupt();
                     setWait(false);
                 }
-            }).start();
+            });
+            preferencesInitThread.setName("TabbedPreferencesAction actionPerformed");
+            preferencesInitThread.start();
         } else {
             showPreferences();
         }
@@ -105,7 +108,10 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         // This is needed as certain controls are instantiated
         // prior to the setup of the Look and Feel
         setWait(false);
-        f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
+        
+        // might not be a preferences item set yet
+        if (preferencesItem != null) f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
+        
         f.pack();
 
         f.setVisible(true);
@@ -133,6 +139,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class);
 
 }

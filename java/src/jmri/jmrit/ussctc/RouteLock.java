@@ -1,10 +1,8 @@
 package jmri.jmrit.ussctc;
 
-import jmri.*;
-
 import java.util.*;
-
 import javax.annotation.Nonnull;
+import jmri.*;
 
 /**
  * Lock if any of the SignalHeads controlling traffic over a turnout are not at stop.

@@ -62,5 +62,5 @@ public class TurnoutOperationConfig extends JPanel {
         }
         return config;
     }
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationConfig.class);
 }

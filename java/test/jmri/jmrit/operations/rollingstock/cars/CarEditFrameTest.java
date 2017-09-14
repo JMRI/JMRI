@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -108,7 +109,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // should have 6 cars now
         Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -147,7 +148,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         // should have 5 cars now
         Assert.assertEquals("number of cars", 4, cManager.getNumEntries());
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     private void loadCars() {

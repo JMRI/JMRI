@@ -109,13 +109,13 @@ public class PaneSet {
         }
         if (log.isDebugEnabled()) {
             log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFilename());
+                    + " " + df.getFileName());
         }
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (Exception e) {
-            log.error("Exception while loading decoder XML file: " + df.getFilename(), e);
+            log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
         }
         // load variables from decoder tree
         df.getProductID();
@@ -199,5 +199,5 @@ public class PaneSet {
         re.writeFile(cvModel, variableModel);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneSet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneSet.class);
 }

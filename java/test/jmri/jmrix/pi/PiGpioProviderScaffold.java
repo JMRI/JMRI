@@ -1,10 +1,10 @@
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.WiringPiGpioProviderBase;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinMode;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.WiringPiGpioProviderBase;
 
 /**
  * <P>

@@ -62,7 +62,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
          }
          */
         // Validate the systemName
-        if (AcelaAddress.validSystemNameFormat(systemName, 'T',getSystemPrefix())) {
+        if (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix())) {
             trn = new AcelaTurnout(systemName, userName,_memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'T',_memo)) {
                 log.warn("Turnout system Name does not refer to configured hardware: "
@@ -85,20 +85,22 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
-        return (AcelaAddress.validSystemNameFormat(systemName, 'T',getSystemPrefix()));
+        return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * Public method to validate system name for configuration.
+     *
+     * @return 'true' if system name has a valid meaning in the current
+     * configuration, else return 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'T',_memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'T', _memo));
     }
 
     /**
@@ -135,6 +137,6 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class);
 
 }

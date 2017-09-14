@@ -339,17 +339,21 @@ SetCompressor /SOLID /FINAL lzma
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME ""
 
 ; -------------------------------------------------------------------------
-; - Defines for log saving
-; -------------------------------------------------------------------------
-!define LVM_GETITEMCOUNT 0x1004
-!define LVM_GETITEMTEXT 0x102D
-
-; -------------------------------------------------------------------------
 ; - Includes
 ; -------------------------------------------------------------------------
 !include "MultiUser.nsh" ; MultiUser installation
 !include "WordFunc.nsh" ; add header for word manipulation
 !insertmacro VersionCompare ; add function to compare versions
+
+; -------------------------------------------------------------------------
+; - Defines for log saving
+; -------------------------------------------------------------------------
+!ifndef LVM_GETITEMCOUNT
+!define LVM_GETITEMCOUNT 0x1004
+!endif
+!ifndef LVM_GETITEMTEXT
+!define LVM_GETITEMTEXT 0x102D
+!endif
 
 ; -------------------------------------------------------------------------
 ; - Runtime Switches
@@ -429,9 +433,9 @@ InstType "Full"
 ; - actual installation itself should be stored in the first data block -
 ; - this will ensure that the installer starts faster
 ; -------------------------------------------------------------------------
-ReserveFile "${NSISDIR}\Plugins\System.dll"
-ReserveFile "${NSISDIR}\Plugins\NSISdl.dll"
-ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
+ReserveFile /plugin "System.dll"
+ReserveFile /plugin "NSISdl.dll"
+ReserveFile /plugin "UserInfo.dll"
 
 ; -------------------------------------------------------------------------
 ; - Set version information

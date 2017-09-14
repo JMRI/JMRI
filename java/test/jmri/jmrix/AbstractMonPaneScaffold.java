@@ -2,8 +2,8 @@ package jmri.jmrix;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JToggleButtonOperator;
 
 /*
  *  Helper class for operating the Speedometer Frame.
