@@ -73,7 +73,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             @Override
             public void keyReleased(KeyEvent event) {
                 JTextComponent c = (JTextComponent) event.getSource();
-                JmriBeanComboBox cb = (JmriBeanComboBox) c.getParent();
                 validateText();
             }
         });
@@ -148,11 +147,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     public String[] getDisplayList() {
         ArrayList<String> nameList = new ArrayList<>(Arrays.asList(_manager.getSystemNameArray()));
 
-        for (NamedBean bean : exclude) {
-            if (bean != null) {
-                nameList.remove(bean.getSystemName());
-            }
-        }
+        exclude.stream().filter((bean) -> (bean != null)).forEachOrdered((bean) -> {
+            nameList.remove(bean.getSystemName());
+        });
 
         String[] displayList = new String[nameList.size()];
 
@@ -166,10 +163,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 if (nBean != null) {
                     String uname = nBean.getUserName();
                     switch (_displayOrder) {
-                        case DISPLAYNAME:
-                            displayList[i] = nBean.getDisplayName();
-                            break;
-
                         case USERNAME:
                             if (uname != null && !uname.equals("")) {
                                 displayList[i] = uname;
@@ -194,6 +187,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             }
                             break;
 
+                        case DISPLAYNAME:
                         default:
                             displayList[i] = nBean.getDisplayName();
                     }
@@ -271,8 +265,10 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         NamedBean b;
 
         if (isEditable()) {
-            result = getText();
-            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
+            result = NamedBean.normalizeUserName(getText());
+            if (result == null) {
+                result = "";
+            }
 
             b = getNamedBean();
         } else {
@@ -295,9 +291,10 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         NamedBean b;
 
         if (isEditable()) {
-            result = getText();
-            result = (null != result) ? NamedBean.normalizeUserName(result) : "";
-
+            result = NamedBean.normalizeUserName(getText());
+            if (result == null) {
+                result = "";
+            }
             b = getNamedBean();
         } else {
             b = getSelectedBean();
@@ -767,7 +764,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     private EnabledComboBoxRenderer _enableRenderer = new EnabledComboBoxRenderer();
 
-    class EnabledComboBoxRenderer extends BasicComboBoxRenderer {
+    static class EnabledComboBoxRenderer extends BasicComboBoxRenderer {
 
         private ListSelectionModel _enabledItems;
         private Color _enabledColor = super.getForeground();

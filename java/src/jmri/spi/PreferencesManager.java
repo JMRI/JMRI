@@ -27,7 +27,7 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
     /**
      * Initialize the PreferencesManager with preferences associated with the
      * provided Profile.
-     *
+     * <p>
      * Implementing classes should throw an InitializationException with a user
      * readable localized message, since it most likely be displayed to the
      * user. Implementing classes will still want to ensure that
@@ -90,8 +90,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * @return A set or list of classes. If there are no dependencies, return an
      *         empty set instead of null.
      */
-    @Nonnull public
-    Iterable<Class<? extends PreferencesManager>> getRequires();
+    @Nonnull
+    public Iterable<Class<? extends PreferencesManager>> getRequires();
 
     /**
      * Get the set of Classes that this PreferencesManager can be registered as
@@ -101,8 +101,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      *         instance of no other Interfaces or abstract Classes than
      *         PreferencesManager, return an empty set instead of null.
      */
-    @Nonnull public
-    Iterable<Class<?>> getProvides();
+    @Nonnull
+    public Iterable<Class<?>> getProvides();
 
     /**
      * Save the preferences that this provider manages for the provided Profile.

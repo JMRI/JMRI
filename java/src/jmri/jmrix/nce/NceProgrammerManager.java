@@ -1,11 +1,13 @@
 package jmri.jmrix.nce;
 
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers for NCE systems
+ * Extend DefaultProgrammerManager to provide ops mode programmers for NCE
+ * systems
  *
  * @see jmri.GlobalProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002, 2016
@@ -15,11 +17,12 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
 
     NceTrafficController tc;
 
-    public NceProgrammerManager(NceSystemConnectionMemo memo) {
+    public NceProgrammerManager(@Nonnull NceSystemConnectionMemo memo) {
         super(
-             checkGlobalProgrammerAvailable(memo.getNceTrafficController()) ?
-                new NceProgrammer(memo.getNceTrafficController()) : null, 
-             memo);
+                checkGlobalProgrammerAvailable(memo.getNceTrafficController())
+                ? new NceProgrammer(memo.getNceTrafficController())
+                : null,
+                memo);
         this.tc = memo.getNceTrafficController();
     }
 
@@ -55,16 +58,19 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
             return true;
         }
     }
-    
+
     /**
      * Provides a service mode programmer
-     *<p>
-     * Note: The NCE service mode programmer might exist, but not be able to function.
-     * Not a great situation, but there it is.  We therefore check before returning it.
+     * <p>
+     * Note: The NCE service mode programmer might exist, but not be able to
+     * function. Not a great situation, but there it is. We therefore check
+     * before returning it.
      */
     @Override
     public Programmer getGlobalProgrammer() {
-        if ( ! isGlobalProgrammerAvailable() ) return null;
+        if (!isGlobalProgrammerAvailable()) {
+            return null;
+        }
         return super.getGlobalProgrammer();
     }
 
