@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-class TamsInterfaceScaffold extends TamsTrafficController {
+public class TamsInterfaceScaffold extends TamsTrafficController {
 
     public TamsInterfaceScaffold() {
     }
