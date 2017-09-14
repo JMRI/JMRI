@@ -257,7 +257,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             /**
              * Delete the bean after all the checking has been done.
              * <P>
-             * (Deactivate the Signal Group), then use the superclass to delete it.
+             * (Deactivate the Signal Group), then use the superclass to delete
+             * it.
              */
             @Override
             void doDelete(NamedBean bean) {
@@ -295,7 +296,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return 0x00;/*return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnDeleteSignalGroup();*/ }
 
             @Override
-            public void setDisplayDeleteMsg(int boo) { /*InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnDeleteSignalGroup(boo); */
+            public void setDisplayDeleteMsg(int boo) {
+                /*InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnDeleteSignalGroup(boo); */
 
             }
 
@@ -314,10 +316,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return "Set";
             }
 
-/*            public JButton configureButton() {
+            /*            public JButton configureButton() {
                 return new JButton(" Set ");
             }*/
-
             @Override
             protected String getBeanType() {
                 return "Signal Group";
@@ -355,10 +356,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Set Appearance in a Signal Group Signal Head state comboBox.
-     * Called from SignalGroupSubTableAction
+     * Set Appearance in a Signal Group Signal Head state comboBox. Called from
+     * SignalGroupSubTableAction
+     *
      * @param mode Value to be set
-     * @param box in which to enter mode
+     * @param box  in which to enter mode
      */
     void setSignalStateBox(int mode, JComboBox<String> box) {
         String result = jmri.util.StringUtil.getNameFromState(mode, signalStatesValues, signalStates);
@@ -402,7 +404,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * Respond to click on Add... button below Signal Group Table.
      * <p>
      * Create JPanel with options for configuration.
-     * @param e Event from origin; null when called from Edit button in Signal Group Table row
+     *
+     * @param e Event from origin; null when called from Edit button in Signal
+     *          Group Table row
      */
     @Override
     protected void addPressed(ActionEvent e) {
@@ -411,7 +415,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             // add user warning that a 2nd session not allowed (cf. Logix)
             // Already editing a Signal Group, ask for completion of that edit first
             String workingTitle = _systemName.getText();
-            if (workingTitle.isEmpty() || workingTitle == null) {
+            if (workingTitle == null || workingTitle.isEmpty()) {
                 workingTitle = Bundle.getMessage("NONE");
                 _systemName.setText(workingTitle);
             }
@@ -563,25 +567,25 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p3xsi.setVisible(true);
 
             mainSignalComboBox.addActionListener(// respond to comboBox selection
-                new ActionListener() {
-                    //public void focusGained(FocusEvent e) {
-                    //}
+                    new ActionListener() {
+                //public void focusGained(FocusEvent e) {
+                //}
                 @Override
-                    public void actionPerformed(ActionEvent event) {
-                        if (mainSignalComboBox.getSelectedBean() == null) { // ie. empty first row was selected or set
-                            log.debug("Empty line in mainSignal comboBox");
-                            //setValidSignalMastAspects(); // clears the Aspect table
+                public void actionPerformed(ActionEvent event) {
+                    if (mainSignalComboBox.getSelectedBean() == null) { // ie. empty first row was selected or set
+                        log.debug("Empty line in mainSignal comboBox");
+                        //setValidSignalMastAspects(); // clears the Aspect table
+                    } else {
+                        if (curSignalGroup == null
+                                || mainSignalComboBox.getSelectedBean() != curSignalGroup.getSignalMast()) {
+                            log.debug("comboBox closed, choice: {}", mainSignalComboBox.getSelectedItem());
+                            setValidSignalMastAspects(); // refresh table with signal mast aspects
                         } else {
-                            if (curSignalGroup == null ||
-                                    mainSignalComboBox.getSelectedBean() != curSignalGroup.getSignalMast()) {
-                                log.debug("comboBox closed, choice: {}", mainSignalComboBox.getSelectedItem());
-                                setValidSignalMastAspects(); // refresh table with signal mast aspects
-                            } else {
-                                log.debug("Mast {} picked in mainSignal comboBox", mainSignalComboBox.getSelectedItem());
-                            }
+                            log.debug("Mast {} picked in mainSignal comboBox", mainSignalComboBox.getSelectedItem());
                         }
                     }
                 }
+            }
             );
 
             // complete this panel
@@ -713,7 +717,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     signalGroupDirty = false;
                 }
                 // hide addFrame
-                if (addFrame != null) {addFrame.setVisible(false);} // hide first, could be gone by the time of the close event,
+                if (addFrame != null) {
+                    addFrame.setVisible(false);
+                } // hide first, could be gone by the time of the close event,
                 // so prevent NPE
                 inEditMode = false; // release editing soon, as long as NPEs occor in the following methods
                 finishUpdate();
@@ -738,7 +744,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Initialize list of included signal head appearances for when "Included" is selected
+     * Initialize list of included signal head appearances for when "Included"
+     * is selected
      */
     void initializeIncludedList() {
         _includedMastAspectsList = new ArrayList<SignalMastAspect>();
@@ -757,7 +764,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Check name for a new SignalGroup object using the _systemName field on the addFrame pane
+     * Check name for a new SignalGroup object using the _systemName field on
+     * the addFrame pane
+     *
      * @return Whether name is allowed
      */
     boolean checkNewNamesOK() {
@@ -803,7 +812,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Check selection in Main Mast comboBox and store object as mMast for further calculations.
+     * Check selection in Main Mast comboBox and store object as mMast for
+     * further calculations.
+     *
      * @return The new/updated SignalGroup object
      */
     boolean checkValidSignalMast() {
@@ -820,8 +831,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Check name and return a new or existing SignalGroup object
-     * with the name as entered in the _systemName field on the addFrame pane.
+     * Check name and return a new or existing SignalGroup object with the name
+     * as entered in the _systemName field on the addFrame pane.
+     *
      * @return The new/updated SignalGroup object
      */
     SignalGroup checkNamesOK() {
@@ -847,8 +859,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Check all available Single Output Signal Heads against the list of signal head items registered with the group.
-     * Updates the list, which is stored in the field _includedSignalHeadsList.
+     * Check all available Single Output Signal Heads against the list of signal
+     * head items registered with the group. Updates the list, which is stored
+     * in the field _includedSignalHeadsList.
+     *
      * @param g Signal Group object
      * @return The number of Signal Heads included in the group
      */
@@ -880,7 +894,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Store included Aspects for the selected main Signal Mast in the Signal Group
+     * Store included Aspects for the selected main Signal Mast in the Signal
+     * Group
+     *
      * @param g Signal Group object
      */
     void setMastAspectInformation(SignalGroup g) {
@@ -891,8 +907,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Look up the list of valid Aspects for the selected main Signal Mast in the comboBox
-     * and store them in a table on the addFrame using _AspectModel
+     * Look up the list of valid Aspects for the selected main Signal Mast in
+     * the comboBox and store them in a table on the addFrame using _AspectModel
      */
     void setValidSignalMastAspects() {
         jmri.SignalMast sm = (SignalMast) mainSignalComboBox.getSelectedBean();
@@ -911,13 +927,16 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * When user clicks Cancel during editing a Signal Group, closes the Add/Edit pane
-     * and reset default entries
+     * When user clicks Cancel during editing a Signal Group, closes the
+     * Add/Edit pane and reset default entries
+     *
      * @param e Event from origin
      */
     void cancelPressed(ActionEvent e) {
         log.debug("Cancelled; addFrame exists = {}", (addFrame != null));
-        if (addFrame != null) {addFrame.setVisible(false);} // hide first, may cause NPE uncheked
+        if (addFrame != null) {
+            addFrame.setVisible(false);
+        } // hide first, may cause NPE uncheked
         inEditMode = false; // release editing soon, as NPEs may occur in the following methods
         finishUpdate();
         _SignalGroupHeadModel.dispose();
@@ -926,10 +945,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Respond to the Edit button in the Signal Group Table
-     * after creating the Add/Edit pane with AddPressed supplying _SystemName.
-     * Hides the editable _systemName field on the Add Group pane and displays the value as a label instead.
-     * @param e Event from origin, null if invoked by clicking the Edit button in a Signal Group Table row
+     * Respond to the Edit button in the Signal Group Table after creating the
+     * Add/Edit pane with AddPressed supplying _SystemName. Hides the editable
+     * _systemName field on the Add Group pane and displays the value as a label
+     * instead.
+     *
+     * @param e Event from origin, null if invoked by clicking the Edit button
+     *          in a Signal Group Table row
      */
     void editPressed(ActionEvent e) {
         // identify the Signal Group with this name if it already exists
@@ -946,7 +968,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         log.debug("curSignalGroup was set");
 
         jmri.SignalMast sm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(g.getSignalMastName());
-        if (sm != null ) {
+        if (sm != null) {
             java.util.Vector<String> aspects = sm.getValidAspects();
             _mastAspectsList = new ArrayList<SignalMastAspect>(aspects.size());
 
@@ -1016,10 +1038,14 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Respond to the Update button on the Edit Signal Group pane - store new properties in the Signal Group.
-     * @param e Event from origin, null if invoked by clicking the Edit button in a Signal Group Table row
-     * @param newSignalGroup False when called as Update, True after editing Signal Head details
-     * @param close True if the pane is closing, False if it stays open
+     * Respond to the Update button on the Edit Signal Group pane - store new
+     * properties in the Signal Group.
+     *
+     * @param e              Event from origin, null if invoked by clicking the
+     *                       Edit button in a Signal Group Table row
+     * @param newSignalGroup False when called as Update, True after editing
+     *                       Signal Head details
+     * @param close          True if the pane is closing, False if it stays open
      */
     void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
         log.debug("Update found Signal Group system name: {}/{}", _systemName.getText(), fixedSystemName.getText());
@@ -1092,7 +1118,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         showAll = true;
         curSignalGroup = null;
         log.debug("FinishUpdate; curSignalGroup set to null. Hiding addFrame next");
-        if (addFrame != null) {addFrame.setVisible(false);}
+        if (addFrame != null) {
+            addFrame.setVisible(false);
+        }
     }
 
     /**
@@ -1317,7 +1345,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Fill in info cells of the Signal Head table on the Add/Edit Group Edit pane.
+         * Fill in info cells of the Signal Head table on the Add/Edit Group
+         * Edit pane.
          *
          * @param r Index of the cell row
          * @param c Index of the cell column
@@ -1354,7 +1383,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Fetch User Name (System Name if User Name is empty) for a row in the Signal Head table.
+         * Fetch User Name (System Name if User Name is empty) for a row in the
+         * Signal Head table.
          *
          * @param r index in the signal head table of head to be edited
          * @return name of signal head
@@ -1378,11 +1408,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Store info from the cells of the Signal Head table of the Add/Edit Group Edit pane.
+         * Store info from the cells of the Signal Head table of the Add/Edit
+         * Group Edit pane.
          *
          * @param type The contents from the table
-         * @param r Index of the cell row of the entry
-         * @param c Index of the cell column of the entry
+         * @param r    Index of the cell row of the entry
+         * @param c    Index of the cell column of the entry
          */
         @Override
         public void setValueAt(Object type, int r, int c) {
@@ -1426,8 +1457,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Remove listener from Signal Head in group.
-         * Called on Delete.
+         * Remove listener from Signal Head in group. Called on Delete.
          */
         public void dispose() {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).removePropertyChangeListener(this);
@@ -1437,10 +1467,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     JmriJFrame signalHeadEditFrame = null;
 
     /**
-     * Open an editor to set the details of a Signal Head as part of a Signal Group
-     * when user clicks the Edit button in the Signal Head table in the lower half of the Edit Signal Group pane.
-     * (renamed from signalEditPressed in 4.7.1 to explain what's in here)
-     * @see SignalGroupSubTableAction#editHead(SignalGroup, String) SignalGroupSubTableAction.editHead
+     * Open an editor to set the details of a Signal Head as part of a Signal
+     * Group when user clicks the Edit button in the Signal Head table in the
+     * lower half of the Edit Signal Group pane. (renamed from signalEditPressed
+     * in 4.7.1 to explain what's in here)
+     *
+     * @see SignalGroupSubTableAction#editHead(SignalGroup, String)
+     * SignalGroupSubTableAction.editHead
      *
      * @param row Index of line clicked in the displayed Signal Head table
      */
@@ -1472,18 +1505,18 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     private static int ROW_HEIGHT;
 
     private static String[] COLUMN_NAMES = { // used in class SignalGroupOutputModel (Turnouts and Sensors)
-            Bundle.getMessage("ColumnSystemName"),
-            Bundle.getMessage("ColumnUserName"),
-            Bundle.getMessage("Include"),
-            Bundle.getMessage("ColumnLabelSetState")
+        Bundle.getMessage("ColumnSystemName"),
+        Bundle.getMessage("ColumnUserName"),
+        Bundle.getMessage("Include"),
+        Bundle.getMessage("ColumnLabelSetState")
     };
     private static String[] COLUMN_SIG_NAMES = { // used in class SignalGroupSignalHeadModel
-            Bundle.getMessage("ColumnSystemName"),
-            Bundle.getMessage("ColumnUserName"),
-            Bundle.getMessage("Include"),
-            Bundle.getMessage("OnAppearance"),
-            Bundle.getMessage("OffAppearance"),
-            "" // No label above last (Edit) column
+        Bundle.getMessage("ColumnSystemName"),
+        Bundle.getMessage("ColumnUserName"),
+        Bundle.getMessage("Include"),
+        Bundle.getMessage("OnAppearance"),
+        Bundle.getMessage("OffAppearance"),
+        "" // No label above last (Edit) column
     };
 
     private static String[] signalStates = new String[]{Bundle.getMessage("SignalHeadStateDark"), Bundle.getMessage("SignalHeadStateRed"), Bundle.getMessage("SignalHeadStateYellow"), Bundle.getMessage("SignalHeadStateGreen"), Bundle.getMessage("SignalHeadStateLunar")};
@@ -1497,8 +1530,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Class to store definition of a Signal Head as part of a Signal Group.
-     * Includes properties for what to display
-     * (renamed from SignalGroupSignal in 4.7.1 to explain what's in here)
+     * Includes properties for what to display (renamed from SignalGroupSignal
+     * in 4.7.1 to explain what's in here)
      */
     private static class SignalGroupSignalHead {
 
@@ -1506,11 +1539,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         boolean _included;
 
         /**
-         * Create an object to hold name and configuration of a Signal Head as part of a Signal Group
-         * Filters only existing Single Turnout Signal Heads from the loaded configuration
-         * Used while editing Signal Groups
-         * Contains whether it is included in a group, the On state and Off state
-         * @param sysName System Name of the grouphead
+         * Create an object to hold name and configuration of a Signal Head as
+         * part of a Signal Group Filters only existing Single Turnout Signal
+         * Heads from the loaded configuration Used while editing Signal Groups
+         * Contains whether it is included in a group, the On state and Off
+         * state
+         *
+         * @param sysName  System Name of the grouphead
          * @param userName Optional User Name
          */
         SignalGroupSignalHead(String sysName, String userName) {
@@ -1554,10 +1589,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Retrieve On setting for Signal Head in Signal Group.
-         * Should match entries in setOnState()
+         * Retrieve On setting for Signal Head in Signal Group. Should match
+         * entries in setOnState()
          *
-         * @return localized string as the name for the Signal Head Appearance when this head is On
+         * @return localized string as the name for the Signal Head Appearance
+         *         when this head is On
          */
         String getOnState() {
             switch (_onState) {
@@ -1587,10 +1623,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Retrieve Off setting for Signal Head in Signal Group.
-         * Should match entries in setOffState()
+         * Retrieve Off setting for Signal Head in Signal Group. Should match
+         * entries in setOffState()
          *
-         * @return localized string as the name for the Signal Head Appearance when this head is Off
+         * @return localized string as the name for the Signal Head Appearance
+         *         when this head is Off
          */
         String getOffState() {
             switch (_offState) {
@@ -1628,10 +1665,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Store On setting for Signal Head in Signal Group.
-         * Should match entries in getOnState()
+         * Store On setting for Signal Head in Signal Group. Should match
+         * entries in getOnState()
          *
-         * @param localized name for the Signal Head Appearance when this head is On
+         * @param localized name for the Signal Head Appearance when this head
+         *                  is On
          */
         void setSetOnState(String state) {
             if (state.equals(Bundle.getMessage("SignalHeadStateDark"))) {
@@ -1656,10 +1694,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Store Off setting for Signal Head in Signal Group.
-         * Should match entries in getOffState()
+         * Store Off setting for Signal Head in Signal Group. Should match
+         * entries in getOffState()
          *
-         * @param localized name for the Signal Head Appearance when this head is Off
+         * @param localized name for the Signal Head Appearance when this head
+         *                  is Off
          */
         void setSetOffState(String state) {
             if (state.equals(Bundle.getMessage("SignalHeadStateDark"))) {
@@ -1696,8 +1735,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Class to store definition of main Signal Mast in a Signal Group
-     * (renamed from SignalMastAppearance in 4.7.1 to explain what's in here).
+     * Definition of main Signal Mast in a Signal Group.
      */
     private static class SignalMastAspect {
 
