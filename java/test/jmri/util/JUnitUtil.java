@@ -285,6 +285,22 @@ public class JUnitUtil {
         }
     }
 
+    /**
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
+     * a thread-safe way, including waiting for the state to appear.
+     *
+     * You can't assume that all the consequences of that setting will have
+     * propagated through when this returns; those might take a long time. But
+     * the set operation itself will be complete.
+     *
+     * @param bean  the bean
+     * @param state the desired state
+     */
+    static public void setBeanStateAndWait(NamedBean bean, int state) {
+        setBeanState(bean, state);
+        JUnitUtil.waitFor(()->{return state == bean.getState();}, "setAndWait "+bean.getSystemName()+": "+state);
+    }
+
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();

@@ -259,8 +259,8 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             lastIndication = CODE_STOP;
             setListHeldState(hRightHeads, true);
             setListHeldState(hLeftHeads, true);
-            log.debug("Layout signals set LEFT");
             lastIndication = CODE_LEFT;
+            log.debug("Layout signals set LEFT");
             setListHeldState(hLeftHeads, false);
         } else if (value == CODE_RIGHT && checkLockPermitted(rightwardLocks)) {
             lastIndication = CODE_STOP;
@@ -370,7 +370,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         log.debug("    found leftClear {}, leftRestricting {}, rightClear {}, rightRestricting {}", leftClear, leftRestricting, rightClear, rightRestricting);
         if (leftClear && rightClear) log.error("Found both left and right clear: {}", this);
         if (leftClear && rightRestricting) log.warn("Found left clear and right at restricting: {}", this);
-        if (leftRestricting && rightClear) log.warn("Found left at restricting and right clear {}", this);
+        if (leftRestricting && rightClear) log.warn("Found left at restricting and right clear: {}", this);
 
         
         CodeGroupThreeBits retval;
@@ -380,9 +380,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
             retval = CODE_OFF;
         } else if ((!leftClear) && (!rightClear)) {
             retval = CODE_STOP;
-        } else if ((!leftClear) && rightClear) {
+        } else if ((!leftClear) && rightClear && (lastIndication == CODE_RIGHT  )) {
             retval = CODE_RIGHT;
-        } else if (leftClear && (!rightClear)) {
+        } else if (leftClear && (!rightClear) && (lastIndication == CODE_LEFT)) {
             retval = CODE_LEFT;
         } else {
             log.debug("not individually cleared, set OFF");

@@ -640,10 +640,15 @@ public final class InstanceManager {
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
-        ((jmri.managers.AbstractProxyManager<Turnout>) getDefault(TurnoutManager.class)).addManager(p);
-        //store(p, TurnoutManager.class);
+        TurnoutManager apm = getDefault(TurnoutManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Turnout>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: TurnoutManager default isn't an AbstractProxyManager<Turnout>");
+        }
     }
 
     static public void setThrottleManager(ThrottleManager p) {
@@ -704,10 +709,15 @@ public final class InstanceManager {
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
-        ((jmri.managers.AbstractProxyManager<Light>) getDefault(LightManager.class)).addManager(p);
-        //store(p, LightManager.class);
+        LightManager apm = getDefault(LightManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Light>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
+        }
     }
 
     //
@@ -743,20 +753,30 @@ public final class InstanceManager {
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, ReporterManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
-        ((jmri.managers.AbstractProxyManager<Reporter>) getDefault(ReporterManager.class)).addManager(p);
-        //store(p, ReporterManager.class);
+        ReporterManager apm = getDefault(ReporterManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Reporter>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: ReporterManager default isn't an AbstractProxyManager<Reporter>");
+        }
     }
 
     // Needs to have proxy manager converted to work
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
     // store(p, SensorManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
-        ((jmri.managers.AbstractProxyManager<Sensor>) getDefault(SensorManager.class)).addManager(p);
-        //store(p, SensorManager.class);
+        SensorManager apm = getDefault(SensorManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<Sensor>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
+        }
     }
 
     /* *************************************************************************** */
