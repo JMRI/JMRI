@@ -9988,7 +9988,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 .collect(Collectors.toList());
     }
 
-    protected List<LayoutTrack> getLayoutTracks() {
+    public List<LayoutTrack> getLayoutTracks() {
         return layoutTrackList;
     }
 
