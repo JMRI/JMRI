@@ -2529,20 +2529,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
             JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
             editItem.addActionListener(new ActionListener() {
-                Editor editor;
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                     ii.pack();
                     ii.setVisible(true);
                 }
-
-                ActionListener init(Editor ed) {
-                    editor = ed;
-                    return this;
-                }
-            }.init(this));
+            });
             findIcon.add(editItem);
             findIcon.addSeparator();
 

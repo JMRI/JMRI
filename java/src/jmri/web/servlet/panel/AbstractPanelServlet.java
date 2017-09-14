@@ -80,7 +80,6 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * other formats not listed are treated as {@code xml}.
      * </li>
      * </ol>
-     * <p>
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
