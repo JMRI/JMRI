@@ -8,6 +8,7 @@ import jmri.AddressedProgrammer;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
@@ -25,7 +26,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     public ConsistController() {
         //  writeFile needs to be separate method
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+        if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
             manager = new WiFiConsistManager();
             jmri.InstanceManager.store(manager,jmri.ConsistManager.class);
             log.debug("Using WiFiConsisting");
@@ -38,7 +39,7 @@ public class ConsistController extends AbstractController implements ProgListene
             log.info("No consist manager instance.");
             isValid = false;
         } else {
-            if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+            if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
                 file = new WiFiConsistFile(manager);
             } else {
                 file = new ConsistFile();
@@ -104,10 +105,10 @@ public class ConsistController extends AbstractController implements ProgListene
      list.append("}|{");
      list.append(con.getConsistNumber());  //address
      list.append("(S)}|{");  //consist address is always short
-     if (con.getId().length() > 0){  
+     if (con.getId().length() > 0){
      list.append(con.getId());   //id
      }
-        
+
      //append entries for each loco (if set)
      list.append("]\\[");
      list.append(con.getLoco1DccAddress());  //loco address
@@ -242,7 +243,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
         try {
             List<String> headerData = Arrays.asList(headerAndLocos.get(0).split("<;>"));
-            //  
+            //
             consist = manager.getConsist(stringToDcc(headerData.get(1)));
 
             List<String> locoData = Arrays.asList(headerAndLocos.get(1).split("<;>"));
@@ -380,7 +381,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     private void writeFile() {
         try {
-            if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+            if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
                 file.writeFile(manager.getConsistList(), WiFiConsistFile.getFileLocation() + "wifiConsist.xml");
             } else {
                 file.writeFile(manager.getConsistList());

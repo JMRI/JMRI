@@ -272,6 +272,14 @@ angular.module('jmri.app').controller('RosterCtrl', function RosterCtrl($scope, 
         }
         $scope.items = $scope.allItems;
         filterChange($scope.toolbarConfig.filterConfig.appliedFilters);
+      } else {
+        var entry = response.data;
+        if (entry.type === 'rosterEntry') {
+          $scope.allItems.push(entry.data);
+          $scope.toolbarConfig.filterConfig.totalCount = $scope.allItems.length;
+          $scope.items = $scope.allItems;
+          filterChange($scope.toolbarConfig.filterConfig.appliedFilters);
+        }
       }
       jmriWebSocket.get('roster', {});
       $scope.loading = false;

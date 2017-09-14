@@ -250,7 +250,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     }
 
     public void listen() {
-        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
+        int socketPort = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
 
         try { //Create socket on available port
             socket = new ServerSocket(socketPort);
