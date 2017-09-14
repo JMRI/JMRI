@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class MultiThrottle {
     private ThrottleControllerListener parentTCL = null;
     private ControllerInterface parentController = null;
     char whichThrottle;
-    Hashtable<String, MultiThrottleController> throttles;
+    HashMap<String, MultiThrottleController> throttles;
 
     public MultiThrottle(char id, ThrottleControllerListener tcl, ControllerInterface ci) {
         if (log.isDebugEnabled()) {
@@ -87,7 +87,7 @@ public class MultiThrottle {
 
     protected boolean addThrottleController(String key, String action) {   //  key is address format L#### or S##
         if (throttles == null) {
-            throttles = new Hashtable<>(1);
+            throttles = new HashMap<>(1);
         }
 
         if (throttles.containsKey(key)) {
@@ -162,7 +162,7 @@ public class MultiThrottle {
     
     protected void stealThrottleController(String key, String action) {
         if (throttles == null) {
-            throttles = new Hashtable<>(1);
+            throttles = new HashMap<>(1);
         }
 
         if (throttles.containsKey(key)) {

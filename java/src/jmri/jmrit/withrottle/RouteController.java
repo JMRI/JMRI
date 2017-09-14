@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Route;
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class RouteController extends AbstractController implements PropertyChangeListener {
 
     private RouteManager manager = null;
-    private Hashtable<NamedBeanHandle<Sensor>, Route> indication;    //  Monitor turnouts for aligned status
+    private HashMap<NamedBeanHandle<Sensor>, Route> indication;    //  Monitor turnouts for aligned status
 
     public RouteController() {
         manager = InstanceManager.getNullableDefault(jmri.RouteManager.class);
@@ -29,7 +29,7 @@ public class RouteController extends AbstractController implements PropertyChang
             log.info("No route manager instance.");
             isValid = false;
         } else {
-            indication = new Hashtable<>();
+            indication = new HashMap<>();
             isValid = true;
         }
     }
@@ -210,7 +210,7 @@ public class RouteController extends AbstractController implements PropertyChang
                 log.debug("Removing listener from Sensor: " + namedSensor.getName() + " for Route: " + (indication.get(namedSensor)).getSystemName());
             }
         }
-        indication = new Hashtable<>();
+        indication = new HashMap<>();
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteController.class);
