@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LocoDataPaneTest.class
+    LocoDataPaneTest.class,
+    LocoDataModelTest.class
 })
 
 /**
