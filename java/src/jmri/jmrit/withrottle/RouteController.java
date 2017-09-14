@@ -29,7 +29,7 @@ public class RouteController extends AbstractController implements PropertyChang
             log.info("No route manager instance.");
             isValid = false;
         } else {
-            indication = new Hashtable<NamedBeanHandle<Sensor>, Route>();
+            indication = new Hashtable<>();
             isValid = true;
         }
     }
@@ -42,13 +42,15 @@ public class RouteController extends AbstractController implements PropertyChang
 
     @Override
     public void filterList() {
-        ArrayList<String> tempList = new ArrayList<String>(0);
+        ArrayList<String> tempList = new ArrayList<>(0);
         for (String sysName : sysNameList) {
             Route r = manager.getBySystemName(sysName);
-            Object o = r.getProperty("WifiControllable");
-            if ((o == null) || (!o.toString().equalsIgnoreCase("false"))) {
-                //  Only skip if 'false'
-                tempList.add(sysName);
+            if (r != null) {
+                Object o = r.getProperty("WifiControllable");
+                if (o == null || Boolean.getBoolean(o.toString())) {
+                    //  Only skip if 'false'
+                    tempList.add(sysName);
+                }
             }
         }
         sysNameList = tempList;
@@ -66,17 +68,17 @@ public class RouteController extends AbstractController implements PropertyChang
                         log.warn("Message \"{}\" contained invalid system name.", message);
                     }
                 } else {
-                    log.warn("Message \"" + message + "\" does not match a route.");
+                    log.warn("Message \"{}\" does not match a route.", message);
                 }
             }
         } catch (NullPointerException exb) {
-            log.warn("Message \"" + message + "\" does not match a route.");
+            log.warn("Message \"{}\" does not match a route.", message);
         }
     }
 
     /**
      * Send Info on routes to devices, not specific to any one route.
-     *
+     * <p>
      * Format: PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey
      */
     public void sendTitles() {
@@ -86,9 +88,9 @@ public class RouteController extends AbstractController implements PropertyChang
 
         StringBuilder labels = new StringBuilder("PRT");    //  Panel Turnout Titles
 
-        labels.append("]\\[" + Bundle.getMessage("MenuItemRouteTable") + "}|{Route");
-        labels.append("]\\[" + "Active" + "}|{2");
-        labels.append("]\\[" + "Inactive" + "}|{4");
+        labels.append("]\\[").append(Bundle.getMessage("MenuItemRouteTable")).append("}|{Route"); // should Route be translated?
+        labels.append("]\\[").append("Active").append("}|{2"); // should Active be translated?
+        labels.append("]\\[").append("Inactive").append("}|{4"); // should Inctive be translated?
 
         String message = labels.toString();
 
@@ -103,7 +105,7 @@ public class RouteController extends AbstractController implements PropertyChang
     /**
      * Send list of routes Format:
      * PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
-     *
+     * <p>
      * States: 1 - UNKNOWN, 2 - ACTIVE, 4 - INACTIVE (based on turnoutsAligned
      * sensor, if used)
      */
@@ -122,22 +124,23 @@ public class RouteController extends AbstractController implements PropertyChang
 
         for (String sysName : sysNameList) {
             Route r = manager.getBySystemName(sysName);
-            list.append("]\\[" + sysName);
-            list.append("}|{");
-            if (r.getUserName() != null) {
-                list.append(r.getUserName());
-            }
-            list.append("}|{");
-            String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-            if (!turnoutsAlignedSensor.equals("")) {  //only set if found
-                try {
-                    Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
-                    list.append(routeAligned.getKnownState());
-                } catch (IllegalArgumentException ex) {
-                    log.warn("Failed to provide turnoutsAlignedSensor \"{}\" in sendList", turnoutsAlignedSensor);
+            if (r != null) {
+                list.append("]\\[").append(sysName);
+                list.append("}|{");
+                if (r.getUserName() != null) {
+                    list.append(r.getUserName());
+                }
+                list.append("}|{");
+                String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+                if (!turnoutsAlignedSensor.equals("")) {  //only set if found
+                    try {
+                        Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+                        list.append(routeAligned.getKnownState());
+                    } catch (IllegalArgumentException ex) {
+                        log.warn("Failed to provide turnoutsAlignedSensor \"{}\" in sendList", turnoutsAlignedSensor);
+                    }
                 }
             }
-
         }
         String message = list.toString();
 
@@ -148,7 +151,7 @@ public class RouteController extends AbstractController implements PropertyChang
 
     /**
      * This is on the aligned sensor, not the route itself.
-     *
+     * <p>
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -177,19 +180,16 @@ public class RouteController extends AbstractController implements PropertyChang
     public void register() {
         for (String sysName : sysNameList) {
             Route r = manager.getBySystemName(sysName);
-            String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-            if (!turnoutsAlignedSensor.equals("")) {  //only set if found
-                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
-                NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(turnoutsAlignedSensor, sensor);
-                if (routeAligned != null) {
+            if (r != null) {
+                String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+                if (!turnoutsAlignedSensor.equals("")) {  //only set if found
+                    Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+                    NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(turnoutsAlignedSensor, sensor);
                     indication.put(routeAligned, r);
                     sensor.addPropertyChangeListener(this, routeAligned.getName(), "Wi Throttle Route Controller");
-                    if (log.isDebugEnabled()) {
-                        log.debug("Add listener to Sensor: " + routeAligned.getName() + " for Route: " + r.getSystemName());
-                    }
+                    log.debug("Add listener to Sensor: {} for Route: {}", routeAligned.getName(), r.getSystemName());
                 }
             }
-
         }
     }
 
@@ -210,7 +210,7 @@ public class RouteController extends AbstractController implements PropertyChang
                 log.debug("Removing listener from Sensor: " + namedSensor.getName() + " for Route: " + (indication.get(namedSensor)).getSystemName());
             }
         }
-        indication = new Hashtable<NamedBeanHandle<Sensor>, Route>();
+        indication = new Hashtable<>();
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteController.class);
