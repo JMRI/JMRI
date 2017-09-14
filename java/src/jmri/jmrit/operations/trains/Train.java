@@ -3390,7 +3390,7 @@ public class Train implements java.beans.PropertyChangeListener {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);
                 if (getIconName().length() > 9) {
-                    _trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
+                    _trainIcon.setFont(_trainIcon.getFont().deriveFont(8.f));
                 }
                 if (rl != null) {
                     _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
