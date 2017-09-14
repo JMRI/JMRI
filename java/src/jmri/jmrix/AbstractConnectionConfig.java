@@ -38,8 +38,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
     protected JTextField systemPrefixField = new JTextField(10);
     protected JTextField connectionNameField = new JTextField(15);
-    protected String systemPrefix;
-    protected String connectionName;
 
     protected JPanel _details = null;
 

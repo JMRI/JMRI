@@ -183,18 +183,18 @@ public class WebAppServlet extends HttpServlet {
             ObjectMapper mapper = new ObjectMapper();
             ObjectNode translation = mapper.createObjectNode();
             for (URI url : manager.getPreloadedTranslations(profile, locale)) {
-                log.debug("Reading {}", url.toString());
+                log.debug("Reading {}", url);
                 JsonNode translations = mapper.readTree(url.toURL());
-                log.debug("Read {}", translations.toString());
+                log.debug("Read {}", translations);
                 if (translations.isObject()) {
-                    log.debug("Adding {}", translations.toString());
+                    log.debug("Adding {}", translations);
                     Iterator<Entry<String, JsonNode>> fields = translations.fields();
                     fields.forEachRemaining((field) -> {
                         translation.set(field.getKey(), field.getValue());
                     });
                 }
             }
-            log.debug("Writing {}", translation.toString());
+            log.debug("Writing {}", translation);
             mapper.writeValue(file, translation);
         }
         response.getWriter().print(FileUtil.readFile(file));
