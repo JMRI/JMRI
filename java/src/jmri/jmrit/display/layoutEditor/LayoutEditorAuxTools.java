@@ -94,7 +94,7 @@ public class LayoutEditorAuxTools {
         ArrayList<LayoutConnectivity> lcs = null;
 
         // Check for block boundaries at positionable points.
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             lcs = p.getLayoutConnectivity();
             if (lcs != null) {
                 cList.addAll(lcs); // append to list
@@ -102,7 +102,7 @@ public class LayoutEditorAuxTools {
         }
 
         // Check for block boundaries at layout turnouts and level crossings
-        for (TrackSegment ts : layoutEditor.trackList) {
+        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
             lcs = ts.getLayoutConnectivity();
             if (lcs != null) {
                 cList.addAll(lcs); // append to list
@@ -110,7 +110,7 @@ public class LayoutEditorAuxTools {
         }
 
         // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             lcs = lt.getLayoutConnectivity();
             if (lcs != null) {
                 cList.addAll(lcs); // append to list
@@ -118,7 +118,7 @@ public class LayoutEditorAuxTools {
         }
 
         // check for block boundaries internal to slips
-        for (LayoutSlip ls : layoutEditor.slipList) {
+        for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
             lcs = ls.getLayoutConnectivity();
             if (lcs != null) {
                 cList.addAll(lcs); // append to list
@@ -139,7 +139,7 @@ public class LayoutEditorAuxTools {
         ArrayList<LayoutConnectivity> lcs = null;
 
         // Check for block boundaries at positionable points.
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             lcs = p.getLayoutConnectivity();
             if (lcs != null) {
                 for (LayoutConnectivity lc : lcs) {
@@ -150,7 +150,7 @@ public class LayoutEditorAuxTools {
         }
 
         // Check for block boundaries at layout turnouts and level crossings
-        for (TrackSegment ts : layoutEditor.trackList) {
+        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
             lcs = ts.getLayoutConnectivity();
             if (lcs != null) {
                 for (LayoutConnectivity lc : lcs) {
@@ -161,7 +161,7 @@ public class LayoutEditorAuxTools {
         }
 
         // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             lcs = lt.getLayoutConnectivity();
             if (lcs != null) {
                 for (LayoutConnectivity lc : lcs) {
@@ -172,7 +172,7 @@ public class LayoutEditorAuxTools {
         }
 
         // check for block boundaries internal to slips
-        for (LayoutSlip ls : layoutEditor.slipList) {
+        for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
             lcs = ls.getLayoutConnectivity();
             if (lcs != null) {
                 for (LayoutConnectivity lc : lcs) {

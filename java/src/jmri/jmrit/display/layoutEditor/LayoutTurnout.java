@@ -2534,7 +2534,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
-        //ArrayList<String> boundaryBetween = new ArrayList<String>(4);
         if ((type == WYE_TURNOUT) || (type == RH_TURNOUT) || (type == LH_TURNOUT)) {
             //This should only be needed where we are looking at a single turnout.
             if (block != null) {
@@ -2578,16 +2577,6 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             }
         } else {
-            /*ArrayList<LayoutBlock> localblks = new ArrayList<LayoutBlock>(4);
-             if(block!=null)
-             localblks.add(block);
-             if(blockB!=null)
-             localblks.add(blockB);
-             if(blockC!=null)
-             localblks.add(blockC);
-             if(blockD!=null)
-             localblks.add(blockD);*/
-
             LayoutBlock aLBlock = null;
             LayoutBlock bLBlock = null;
             LayoutBlock cLBlock = null;
@@ -2931,7 +2920,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (secondNamedTurnout != null) {
             additionalTurnout.setSelected(true);
             additionalTurnoutInvert.setEnabled(true);
-            additionalTurnoutInvert.setSelected(getSecondTurnoutInverted());
+            additionalTurnoutInvert.setSelected(isSecondTurnoutInverted());
             secondTurnoutLabel.setEnabled(true);
             secondTurnoutComboBox.setEnabled(true);
             secondTurnoutComboBox.setText(getSecondTurnoutName());

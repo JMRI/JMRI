@@ -459,14 +459,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public ArrayList<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
     public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    public ArrayList<LayoutTrack> layoutTrackList = new ArrayList<>();           // LayoutTrack list
-
-    public ArrayList<PositionablePoint> pointList = new ArrayList<>();      //PositionablePoint list
-    public ArrayList<LayoutSlip> slipList = new ArrayList<>();              //LayoutSlip list
-    public ArrayList<TrackSegment> trackList = new ArrayList<>();           //TrackSegment list
-    public ArrayList<LayoutTurnout> turnoutList = new ArrayList<>();        //LayoutTurnout list
-    public ArrayList<LayoutTurntable> turntableList = new ArrayList<>();    //LayoutTurntable list
-    public ArrayList<LevelXing> xingList = new ArrayList<>();               //LevelXing list
+    private List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
     public ArrayList<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
@@ -475,7 +468,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public ArrayList<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
     public ArrayList<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
-    //counts used to determine unique internal names
+    // counts used to determine unique internal names
     private int numAnchors = 0;
     private int numEndBumpers = 0;
     private int numEdgeConnectors = 0;
@@ -2997,7 +2990,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 show = TrackSegment.HIDECONALL;
             }
 
-            for (TrackSegment ts : trackList) {
+            for (TrackSegment ts : getTrackSegments()) {
                 ts.hideConstructionLines(show);
             }
             redrawPanel();
@@ -5002,7 +4995,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String name = finder.uniqueName("TUR", numLayoutTurntables++);
         LayoutTurntable lt = new LayoutTurntable(name, pt, this);
 
-        turntableList.add(lt);
         layoutTrackList.add(lt);
 
         lt.addRay(0.0);
@@ -5387,7 +5379,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Rectangle2D r = trackControlCircleRectAt(loc);
 
         //check Track Segments, if any
-        for (TrackSegment ts : trackList) {
+        for (TrackSegment ts : getTrackSegments()) {
             if (r.contains(ts.getCentreSeg())) {
                 result = ts;
                 break;
@@ -7111,13 +7103,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.ANCHOR, p, this);
 
-        //if (o!=null) {
-        pointList.add(o);
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
 
-        //}
         return o;
     } //addAnchor
 
@@ -7132,13 +7121,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.END_BUMPER, currentPoint, this);
 
-        //if (o!=null) {
-        pointList.add(o);
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
-
-        //}
     } //addEndBumper
 
     /**
@@ -7152,13 +7137,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         PositionablePoint o = new PositionablePoint(name,
                 PositionablePoint.EDGE_CONNECTOR, currentPoint, this);
 
-        //if (o!=null) {
-        pointList.add(o);
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
-
-        //}
     } //addEdgeConnector
 
     /**
@@ -7173,7 +7154,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 foundObject, foundPointType, dashedLine.isSelected(),
                 mainlineTrack.isSelected(), this);
 
-        trackList.add(newTrack);
         layoutTrackList.add(newTrack);
         unionToPanelBounds(newTrack.getBounds());
         setDirty();
@@ -7214,8 +7194,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //create object
         LevelXing o = new LevelXing(name, currentPoint, this);
 
-        //if (o!=null) {
-        xingList.add(o);
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
@@ -7268,7 +7246,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //create object
         LayoutSlip o = new LayoutSlip(name, currentPoint, rot, this, type);
-        slipList.add(o);
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
@@ -7349,7 +7326,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //create object
         LayoutTurnout o = new LayoutTurnout(name, type, currentPoint, rot, xScale, yScale, this);
-        turnoutList.add(o);
         layoutTrackList.add(o);
         unionToPanelBounds(o.getBounds());
         setDirty();
@@ -7428,7 +7404,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         boolean result = true;  // assume success (optimist!)
 
         //ensure that this turnout is unique among Layout Turnouts in this Layout
-        for (LayoutTurnout lt : turnoutList) {
+        for (LayoutTurnout lt : getLayoutTurnouts()) {
             t = lt.getTurnout();
             if (t != null) {
                 String sname = t.getSystemName();
@@ -7461,7 +7437,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (result) {   // only need to test slips if we haven't failed yet...
             //ensure that this turnout is unique among Layout slips in this Layout
-            for (LayoutSlip sl : slipList) {
+            for (LayoutSlip sl : getLayoutSlips()) {
                 t = sl.getTurnout();
                 if (t != null) {
                     String sname = t.getSystemName();
@@ -7949,11 +7925,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //delete from array
         }
 
-        if (pointList.contains(o)) {
-            if (layoutTrackList.contains(o)) {
-                layoutTrackList.remove(o);
-            }
-            pointList.remove(o);
+        if (layoutTrackList.contains(o)) {
+            layoutTrackList.remove(o);
             setDirty();
             redrawPanel();
             return true;
@@ -8047,11 +8020,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //delete from array
-        if (turnoutList.contains(o)) {
-            if (layoutTrackList.contains(o)) {
-                layoutTrackList.remove(o);
-            }
-            turnoutList.remove(o);
+        if (layoutTrackList.contains(o)) {
+            layoutTrackList.remove(o);
             setDirty();
             redrawPanel();
             return true;
@@ -8143,11 +8113,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //delete from array
-        if (xingList.contains(o)) {
-            if (layoutTrackList.contains(o)) {
-                layoutTrackList.remove(o);
-            }
-            xingList.remove(o);
+        if (layoutTrackList.contains(o)) {
+            layoutTrackList.remove(o);
             o.remove();
             setDirty();
             redrawPanel();
@@ -8222,11 +8189,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //delete from array
-        if (slipList.contains(o)) {
-            if (layoutTrackList.contains(o)) {
-                layoutTrackList.remove(o);
-            }
-            slipList.remove(o);
+        if (layoutTrackList.contains(o)) {
+            layoutTrackList.remove(o);
             o.remove();
             setDirty();
             redrawPanel();
@@ -8280,11 +8244,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //delete from array
-        if (turntableList.contains(o)) {
-            if (layoutTrackList.contains(o)) {
-                layoutTrackList.remove(o);
-            }
-            turntableList.remove(o);
+        if (layoutTrackList.contains(o)) {
+            layoutTrackList.remove(o);
             o.remove();
             setDirty();
             redrawPanel();
@@ -8341,11 +8302,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //delete from array
-        if (trackList.contains(o)) {
-            if (layoutTrackList.contains(o)) {
-                layoutTrackList.remove(o);
-            }
-            trackList.remove(o);
+        if (layoutTrackList.contains(o)) {
+            layoutTrackList.remove(o);
         }
 
         //update affected blocks
@@ -8983,13 +8941,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             return false; //return without deleting if "No" response
         }
         layoutTrackList.clear();
-        pointList.clear();
-        slipList.clear();
-        trackList.clear();
-        turnoutList.clear();
-        turntableList.clear();
-        xingList.clear();
-
         return true;
     } //deletePanel
 
@@ -9168,7 +9119,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return turnoutCircleSize;
     }
 
-    public boolean isTurnoutDrawUnselectedLeg() {
+    //TODO: @Deprecated // Java standard pattern for boolean getters is "isTurnoutDrawUnselectedLeg()"
+    public boolean getTurnoutDrawUnselectedLeg() {
         return turnoutDrawUnselectedLeg;
     }
 
@@ -9587,13 +9539,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //final initialization routine for loading a LayoutEditor
     public void setConnections() {
-        layoutTrackList.clear();
-        layoutTrackList.addAll(pointList);
-        layoutTrackList.addAll(slipList);
-        layoutTrackList.addAll(trackList);
-        layoutTrackList.addAll(turnoutList);
-        layoutTrackList.addAll(turntableList);
-        layoutTrackList.addAll(xingList);
         for (LayoutTrack lt : layoutTrackList) {
             lt.setObjects(this);
         }
@@ -9709,7 +9654,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawTurnouts(@Nonnull Graphics2D g2) {
         // loop over all turnouts
-        for (LayoutTurnout t : turnoutList) {
+        for (LayoutTurnout t : getLayoutTurnouts()) {
             if (!t.isHidden() || isEditable()) {
                 t.draw(g2);
             }
@@ -9718,7 +9663,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawXings(@Nonnull Graphics2D g2) {
         // loop over all level crossings
-        for (LevelXing x : xingList) {
+        for (LevelXing x : getLevelXings()) {
             if (!(x.isHidden() && !isEditable())) {
                 x.draw(g2);
             }
@@ -9726,7 +9671,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     } //drawXings
 
     private void drawSlips(@Nonnull Graphics2D g2) {
-        for (LayoutSlip sl : slipList) {
+        for (LayoutSlip sl : getLayoutSlips()) {
             sl.draw(g2);
         }
     } //drawSlips
@@ -9736,7 +9681,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setColor(turnoutCircleColor);
         // loop over all turnouts
         boolean editable = isEditable();
-        for (LayoutTurnout t : turnoutList) {
+        for (LayoutTurnout t : getLayoutTurnouts()) {
             if (editable || !(t.isHidden() || t.isDisabled())) {
                 t.drawControls(g2);
             }
@@ -9748,7 +9693,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         g2.setColor(turnoutCircleColor);
         // loop over all slips
         boolean editable = isEditable();
-        for (LayoutSlip sl : slipList) {
+        for (LayoutSlip sl : getLayoutSlips()) {
             if (editable || !(sl.isHidden() || sl.isDisabled())) {
                 sl.drawControls(g2);
             }
@@ -9757,7 +9702,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawTurnoutEditControls(@Nonnull Graphics2D g2) {
         // loop over all turnouts
-        for (LayoutTurnout t : turnoutList) {
+        for (LayoutTurnout t : getLayoutTurnouts()) {
             g2.setColor(turnoutCircleColor);
             t.drawEditControls(g2);
         }
@@ -9765,28 +9710,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawTurntables(@Nonnull Graphics2D g2) {
         // loop over all layout turntables
-        for (LayoutTurntable lt : turntableList) {
+        for (LayoutTurntable lt : getLayoutTurntables()) {
             lt.draw(g2);
         }
     } //drawTurntables
 
     private void drawTurntableControls(@Nonnull Graphics2D g2) {
         // loop over all layout turntables
-        for (LayoutTurntable lt : turntableList) {
+        for (LayoutTurntable lt : getLayoutTurntables()) {
             lt.drawControls(g2);
         }
     } //drawTurntableControls
 
     private void drawXingEditControls(@Nonnull Graphics2D g2) {
         // loop over all level crossings
-        for (LevelXing x : xingList) {
+        for (LevelXing x : getLevelXings()) {
             x.drawEditControls(g2);
         }
     } //drawXingEditControls
 
     private void drawSlipEditControls(@Nonnull Graphics2D g2) {
         // loop over all slips
-        for (LayoutSlip sl : slipList) {
+        for (LayoutSlip sl : getLayoutSlips()) {
             if (!(sl.isHidden() && !isEditable())) {
                 g2.setColor(turnoutCircleColor);
                 sl.drawEditControls(g2);
@@ -9796,7 +9741,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawTurntableEditControls(@Nonnull Graphics2D g2) {
         // loop over all turntables
-        for (LayoutTurntable x : turntableList) {
+        for (LayoutTurntable x : getLayoutTurntables()) {
             x.drawEditControls(g2);
         }
     } //drawTurntableEditControls
@@ -9804,7 +9749,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawHiddenTrackSegments(@Nonnull Graphics2D g2) {
         g2.setColor(defaultTrackColor);
         setTrackStrokeWidth(g2, false);
-        for (TrackSegment ts : trackList) {
+        for (TrackSegment ts : getTrackSegments()) {
             if (ts.isHidden()) {
                 ts.drawHidden(g2);
             }
@@ -9813,7 +9758,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawDashedTrackSegments(@Nonnull Graphics2D g2, boolean mainline) {
         setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment ts : trackList) {
+        for (TrackSegment ts : getTrackSegments()) {
             ts.drawDashed(g2, mainline);
         }
     } //drawDashedTrackSegments
@@ -9821,7 +9766,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // drawHidden all track segments which are not hidden, not dashed, and that match the mainline parm
     private void drawSolidTrackSegments(@Nonnull Graphics2D g2, boolean mainline) {
         setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment ts : trackList) {
+        for (TrackSegment ts : getTrackSegments()) {
             ts.drawSolid(g2, mainline);
         }
     } //drawSolidTrackSegments
@@ -9837,21 +9782,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawTrackSegmentEditControls(@Nonnull Graphics2D g2) {
         // loop over all track segments
-        for (TrackSegment ts : trackList) {
+        for (TrackSegment ts : getTrackSegments()) {
             ts.drawEditControls(g2);
         }
     } //drawTrackSegmentEditControls
 
     private void drawPoints(@Nonnull Graphics2D g2) {
-        for (PositionablePoint p : pointList) {
+        for (PositionablePoint p : getPositionablePoints()) {
             p.draw(g2);
-        } // for (PositionablePoint p : pointList)
+        }
     } //drawPoints
 
     private void drawPointsEditControls(@Nonnull Graphics2D g2) {
-        for (PositionablePoint p : pointList) {
+        for (PositionablePoint p : getPositionablePoints()) {
             p.drawControls(g2);
-        } // for (PositionablePoint p : pointList)
+        }
     } //drawPointsEditControls
 
     private Rectangle2D getSelectionRect() {
@@ -9959,6 +9904,78 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             pix += gridSize1st;
         }
     } //drawPanelGrid
+
+    /*
+    //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
+    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof PositionablePoint)
+                .filter(layoutTrackClass::isInstance)
+                //.map(layoutTrackClass::cast)  // TODO: Do we need this? if not dead-code-strip
+                .collect(Collectors.toList());
+    }
+
+    //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
+    public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
+        return layoutTrackList.stream()
+                .filter(o -> layoutTrackClasses.contains(o.getClass()))
+                .collect(Collectors.toList());
+    }
+
+    //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
+    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
+        return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
+    }
+
+    public List<PositionablePoint> getPositionablePoints() {
+        return getLayoutTracksOfClass(PositionablePoint);
+    }
+     */
+    public List<PositionablePoint> getPositionablePoints() {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof PositionablePoint)
+                .map(item -> (PositionablePoint) item)
+                .collect(Collectors.toList());
+    }
+
+    public List<LayoutSlip> getLayoutSlips() {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof LayoutSlip)
+                .map(item -> (LayoutSlip) item)
+                .collect(Collectors.toList());
+    }
+
+    public List<TrackSegment> getTrackSegments() {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof TrackSegment)
+                .map(item -> (TrackSegment) item)
+                .collect(Collectors.toList());
+    }
+
+    public List<LayoutTurnout> getLayoutTurnouts() {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof LayoutTurnout)
+                .map(item -> (LayoutTurnout) item)
+                .collect(Collectors.toList());
+    }
+
+    public List<LayoutTurntable> getLayoutTurntables() {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof LayoutTurntable)
+                .map(item -> (LayoutTurntable) item)
+                .collect(Collectors.toList());
+    }
+
+    public List<LevelXing> getLevelXings() {
+        return layoutTrackList.stream()
+                .filter(item -> item instanceof LevelXing)
+                .map(item -> (LevelXing) item)
+                .collect(Collectors.toList());
+    }
+
+    public List<LayoutTrack> getLayoutTracks() {
+        return layoutTrackList;
+    }
 
     @Override
     protected boolean showAlignPopup(@Nonnull Positionable l) {
@@ -10085,7 +10102,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         } else if (nb instanceof Turnout) {
-            for (LayoutTurnout ti : turnoutList) {
+            for (LayoutTurnout ti : getLayoutTurnouts()) {
                 if (ti.getTurnout().equals(nb)) {
                     switch (menu) {
                         case Editor.VIEWPOPUPONLY: {
@@ -10106,7 +10123,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
 
-            for (LayoutSlip sl : slipList) {
+            for (LayoutSlip sl : getLayoutSlips()) {
                 if ((sl.getTurnout() == nb) || (sl.getTurnoutB() == nb)) {
                     switch (menu) {
                         case Editor.VIEWPOPUPONLY: {
@@ -10193,7 +10210,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     message.append("</li>");
                 }
 
-                for (LayoutTurnout t : turnoutList) {
+                for (LayoutTurnout t : getLayoutTurnouts()) {
                     if (t.getLinkedTurnoutName() != null) {
                         String uname = nb.getUserName();
 
@@ -10222,7 +10239,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     message.append("</li>");
                 }
 
-                for (LayoutTurntable lx : turntableList) {
+                for (LayoutTurntable lx : getLayoutTurntables()) {
                     if (lx.isTurnoutControlled()) {
                         for (int i = 0; i < lx.getNumberRays(); i++) {
                             if (nb.equals(lx.getRayTurnout(i))) {
@@ -10304,7 +10321,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     lt.setTurnout(null);
                 }
 
-                for (LayoutTurnout t : turnoutList) {
+                for (LayoutTurnout t : getLayoutTurnouts()) {
                     if (t.getLinkedTurnoutName() != null) {
                         if (t.getLinkedTurnoutName().equals(nb.getSystemName())
                                 || ((nb.getUserName() != null) && t.getLinkedTurnoutName().equals(nb.getUserName()))) {
@@ -10317,7 +10334,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                 }
 
-                for (LayoutSlip sl : slipList) {
+                for (LayoutSlip sl : getLayoutSlips()) {
                     if (nb.equals(sl.getTurnout())) {
                         sl.setTurnout(null);
                     }
@@ -10327,7 +10344,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                 }
 
-                for (LayoutTurntable lx : turntableList) {
+                for (LayoutTurntable lx : getLayoutTurntables()) {
                     if (lx.isTurnoutControlled()) {
                         for (int i = 0; i < lx.getNumberRays(); i++) {
                             if (nb.equals(lx.getRayTurnout(i))) {

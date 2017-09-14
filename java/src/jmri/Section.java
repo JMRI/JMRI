@@ -2323,9 +2323,7 @@ public class Section extends AbstractNamedBean {
         if (t == null) {
             return null;
         }
-        LayoutTurnout lt = null;
-        for (int i = 0; i < panel.turnoutList.size(); i++) {
-            lt = panel.turnoutList.get(i);
+        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
             if (lt.getTurnout() == t) {
                 return lt;
             }

@@ -208,25 +208,26 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         panel = panels.get(selectPanel.getSelectedIndex());
         fromPoint.removeAllItems();
         toPoint.removeAllItems();
-        for (PositionablePoint pp : panel.pointList) {
+        for (PositionablePoint pp : panel.getPositionablePoints()) {
             addPointToCombo(pp.getWestBoundSignalMastName(), pp.getWestBoundSensorName());
             addPointToCombo(pp.getEastBoundSignalMastName(), pp.getEastBoundSensorName());
         }
 
-        for (LayoutTurnout t : panel.turnoutList) {
+        for (LayoutTurnout t : panel.getLayoutTurnouts()) {
             addPointToCombo(t.getSignalAMastName(), t.getSensorAName());
             addPointToCombo(t.getSignalBMastName(), t.getSensorBName());
             addPointToCombo(t.getSignalCMastName(), t.getSensorCName());
             addPointToCombo(t.getSignalDMastName(), t.getSensorDName());
         }
 
-        for (LevelXing xing : panel.xingList) {
+        for (LevelXing xing : panel.getLevelXings()) {
             addPointToCombo(xing.getSignalAMastName(), xing.getSensorAName());
             addPointToCombo(xing.getSignalBMastName(), xing.getSensorBName());
             addPointToCombo(xing.getSignalCMastName(), xing.getSensorCName());
             addPointToCombo(xing.getSignalDMastName(), xing.getSensorDName());
         }
-        for (LayoutSlip slip : panel.slipList) {
+
+        for (LayoutSlip slip : panel.getLayoutSlips()) {
             addPointToCombo(slip.getSignalAMastName(), slip.getSensorAName());
             addPointToCombo(slip.getSignalBMastName(), slip.getSensorBName());
             addPointToCombo(slip.getSignalCMastName(), slip.getSensorCName());

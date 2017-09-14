@@ -685,11 +685,12 @@ public class LayoutBlockConnectivityTools {
 
     private boolean checkForLevelCrossing(LayoutBlock curBlock) {
         LayoutEditor lay = curBlock.getMaxConnectedPanel();
-        for (int j = 0; j < lay.xingList.size(); j++) {
-            //Looking for a crossing that both layout blocks defined and they are individual.
-            LevelXing lx = lay.xingList.get(j);
-            if (lx.getLayoutBlockAC() == curBlock || lx.getLayoutBlockBD() == curBlock) {
-                if ((lx.getLayoutBlockAC() != null) && (lx.getLayoutBlockBD() != null) && (lx.getLayoutBlockAC() != lx.getLayoutBlockBD())) {
+        for (LevelXing lx : lay.getLevelXings()) {
+            if (lx.getLayoutBlockAC() == curBlock
+                    || lx.getLayoutBlockBD() == curBlock) {
+                if ((lx.getLayoutBlockAC() != null)
+                        && (lx.getLayoutBlockBD() != null)
+                        && (lx.getLayoutBlockAC() != lx.getLayoutBlockBD())) {
                     if (lx.getLayoutBlockAC() == curBlock) {
                         return canLBlockBeUsed(lx.getLayoutBlockBD());
                     } else if (lx.getLayoutBlockBD() == curBlock) {

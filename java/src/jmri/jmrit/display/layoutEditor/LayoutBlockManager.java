@@ -1273,11 +1273,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (t == null) {
             return null;
         }
-        LayoutTurnout lt = null;
-
-        for (int i = 0; i < panel.turnoutList.size(); i++) {
-            lt = panel.turnoutList.get(i);
-
+        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
             if (lt.getTurnout() == t) {
                 return lt;
             }
@@ -1323,9 +1319,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
 
-        for (int i = 0; i < panel.trackList.size(); i++) {
-            TrackSegment t = panel.trackList.get(i);
-
+        for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
@@ -1383,9 +1377,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
 
-        for (int i = 0; i < panel.trackList.size(); i++) {
-            TrackSegment t = panel.trackList.get(i);
-
+        for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 

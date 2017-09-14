@@ -13,6 +13,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -124,13 +125,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        // include LayoutTurnouts
-        num = p.turnoutList.size();
+        // include LayoutTracks
+        List<LayoutTrack> layoutTracks = p.getLayoutTracks();
+        num = layoutTracks.size();
         if (log.isDebugEnabled()) {
-            log.debug("N layoutturnout elements: " + num);
+            log.debug("N LayoutTrack elements: " + num);
         }
 
-        for (Object sub : p.turnoutList) {
+        for (Object sub : layoutTracks) {
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {
@@ -138,91 +140,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 }
             } catch (Exception e) {
                 log.error("Error storing layoutturnout element: " + e);
-            }
-        }
-
-        // include TrackSegments
-        num = p.trackList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N tracksegment elements: " + num);
-        }
-
-        for (Object sub : p.trackList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing tracksegment element: " + e);
-            }
-        }
-
-        // include PositionablePoints
-        num = p.pointList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N positionablepoint elements: " + num);
-        }
-
-        for (Object sub : p.pointList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing positionalpoint element: " + e);
-            }
-        }
-
-        // include LevelXings
-        num = p.xingList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N levelxing elements: " + num);
-        }
-
-        for (Object sub : p.xingList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing levelxing element: " + e);
-            }
-        }
-
-        // include LayoutSlips
-        num = p.slipList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N layoutSlip elements: " + num);
-        }
-
-        for (Object sub : p.slipList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing layoutSlip element: " + e);
-            }
-        }
-
-        // include LayoutTurntables
-        num = p.turntableList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N turntable elements: " + num);
-        }
-
-        for (Object sub : p.turntableList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing turntable element: " + e);
             }
         }
         return panel;

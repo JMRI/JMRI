@@ -2141,19 +2141,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 }
                 blockInXings = new ArrayList<LevelXing>(0);
                 xingAutoBlocks = new ArrayList<Block>(0);
-                for (int i = 0; i < layout.size(); i++) {
-                    LayoutEditor lay = layout.get(i);
-                    for (int j = 0; j < lay.xingList.size(); j++) {
+                for (LayoutEditor lay : layout) {
+                    for (LevelXing levelXing : lay.getLevelXings()) {
                         //Looking for a crossing that both layout blocks defined and they are individual.
-                        if ((lay.xingList.get(j).getLayoutBlockAC() != null) && (lay.xingList.get(j).getLayoutBlockBD() != null) && (lay.xingList.get(j).getLayoutBlockAC() != lay.xingList.get(j).getLayoutBlockBD())) {
-                            if (lblks.contains(lay.xingList.get(j).getLayoutBlockAC())) {
-                                block.put(lay.xingList.get(j).getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
-                                xingAutoBlocks.add(lay.xingList.get(j).getLayoutBlockBD().getBlock());
-                                blockInXings.add(lay.xingList.get(j));
-                            } else if (lblks.contains(lay.xingList.get(j).getLayoutBlockBD())) {
-                                block.put(lay.xingList.get(j).getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
-                                xingAutoBlocks.add(lay.xingList.get(j).getLayoutBlockAC().getBlock());
-                                blockInXings.add(lay.xingList.get(j));
+                        if ((levelXing.getLayoutBlockAC() != null)
+                                && (levelXing.getLayoutBlockBD() != null)
+                                && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
+                            if (lblks.contains(levelXing.getLayoutBlockAC())) {
+                                block.put(levelXing.getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
+                                xingAutoBlocks.add(levelXing.getLayoutBlockBD().getBlock());
+                                blockInXings.add(levelXing);
+                            } else if (lblks.contains(levelXing.getLayoutBlockBD())) {
+                                block.put(levelXing.getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
+                                xingAutoBlocks.add(levelXing.getLayoutBlockAC().getBlock());
+                                blockInXings.add(levelXing);
                             }
                         }
                     }

@@ -541,7 +541,7 @@ public class ConnectivityUtil {
     public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
         ArrayList<PositionablePoint> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if ((p.getConnect2() != null) && (p.getConnect1() != null)) {
                 if ((p.getConnect2().getLayoutBlock() != null) && (p.getConnect1().getLayoutBlock() != null)) {
                     if ((((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock))
@@ -567,7 +567,7 @@ public class ConnectivityUtil {
     public ArrayList<LevelXing> getLevelCrossingsThisBlock(Block block) {
         ArrayList<LevelXing> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        layoutEditor.xingList.forEach((x) -> {
+        layoutEditor.getLevelXings().forEach((x) -> {
             boolean found = false;
             if ((x.getLayoutBlockAC() == lBlock) || (x.getLayoutBlockBD() == lBlock)) {
                 found = true;
@@ -605,7 +605,7 @@ public class ConnectivityUtil {
         ArrayList<LayoutTurnout> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         String lBlockName = block.getUserName();
-        layoutEditor.turnoutList.forEach((t) -> {
+        layoutEditor.getLayoutTurnouts().forEach((t) -> {
             if ((t.getBlockName().equals(lBlockName)) || (t.getBlockBName().equals(lBlockName))
                     || (t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName))) {
                 list.add(t);
@@ -619,7 +619,7 @@ public class ConnectivityUtil {
                 list.add(t);
             }
         });
-        layoutEditor.slipList.forEach((ls) -> {
+        layoutEditor.getLayoutSlips().forEach((ls) -> {
             if (ls.getBlockName().equals(lBlockName)) {
                 list.add(ls);
             } else if ((ls.getConnectA() != null) && (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lBlock)) {
@@ -2689,13 +2689,13 @@ public class ConnectivityUtil {
 
     public ArrayList<LayoutTurnout> getAllTurnoutsThisBlock(LayoutBlock currLayoutBlock) {
         ArrayList<LayoutTurnout> list = new ArrayList<>();
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             if ((lt.getLayoutBlock() == currLayoutBlock) || (lt.getLayoutBlockB() == currLayoutBlock)
                     || (lt.getLayoutBlockC() == currLayoutBlock) || (lt.getLayoutBlockD() == currLayoutBlock)) {
                 list.add(lt);
             }
         }
-        for (LayoutTurnout lt : layoutEditor.slipList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutSlips()) {
             if (lt.getLayoutBlock() == currLayoutBlock) {
                 list.add(lt);
             }
