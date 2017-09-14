@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.util.ArrayList;
 import jmri.jmrix.AbstractMRListener;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the necessary state in each
+ * This handles the state transitions, based on the necessary state in each
  * message.
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
@@ -30,12 +29,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
-
     public SerialTrafficController() {
         super();
 
         // set node range
-        init(0, 127);
+        super.init(0, 127);
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 5;  // default = 25
@@ -54,7 +52,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node
+     * Initialize a CMRI node.
+     *
+     * @param node the node to initialize
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -82,7 +82,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Forward a SerialMessage to all registered SerialInterface listeners.
+     * Forward a message to all registered listeners.
+     *
+     * @param client the listener to receive the message; may throw an uncaught
+     *               exception if not a
+     *               {@link jmri.jmrix.cmri.serial.SerialListener}
+     * @param m      the message to forward; may throw an uncaught exception if
+     *               not a {@link jmri.jmrix.cmri.serial.SerialMessage}
      */
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
@@ -90,7 +96,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Forward a SerialReply to all registered SerialInterface listeners.
+     * Forward a reply to all registered listeners.
+     *
+     * @param client the listener to receive the reply; may throw an uncaught
+     *               exception if not a
+     *               {@link jmri.jmrix.cmri.serial.SerialListener}
+     * @param m      the reply to forward; may throw an uncaught exception if
+     *               not a {@link jmri.jmrix.cmri.serial.SerialMessage}
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
@@ -102,8 +114,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     public void setSensorManager(SerialSensorManager m) {
         mSensorManager = m;
     }
-    
-    int curSerialNodeIndex     = 0;     // cycles over defined nodes when pollMessage is called
+
     public boolean pollNetwork = true;  // true if network polling enabled
 
     // For later enhancements to network manager
@@ -111,22 +122,39 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     private int initTimeout = 500;
     private int xmitTimeout = 2;
     private int pollTimeout = 2;
-    
-    // cpNode poll list 
-    public ArrayList<Integer> cmriNetPollList = new ArrayList<Integer>();
-   
-    public void setPollNetwork( boolean OnOff ) { pollNetwork = OnOff; }
-    public boolean getPollNetwork() { return pollNetwork; }
 
-    public void setInitTimeout( int init_Timeout ) { initTimeout = init_Timeout; }
-    public int getInitTimeout() { return initTimeout; }
-    public void setXmitTimeout( int init_XmitTimeout ) { xmitTimeout = init_XmitTimeout; }
-    public int getXmitTimeout() { return xmitTimeout; }
-    
+    // cpNode poll list
+    public ArrayList<Integer> cmriNetPollList = new ArrayList<>();
+
+    public void setPollNetwork(boolean OnOff) {
+        pollNetwork = OnOff;
+    }
+
+    public boolean getPollNetwork() {
+        return pollNetwork;
+    }
+
+    public void setInitTimeout(int init_Timeout) {
+        initTimeout = init_Timeout;
+    }
+
+    public int getInitTimeout() {
+        return initTimeout;
+    }
+
+    public void setXmitTimeout(int init_XmitTimeout) {
+        xmitTimeout = init_XmitTimeout;
+    }
+
+    public int getXmitTimeout() {
+        return xmitTimeout;
+    }
 
     /**
      * Handles initialization, output and polling for C/MRI Serial Nodes from
-     * within the running thread
+     * within the running thread.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {
@@ -134,22 +162,24 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         if (getNumNodes() <= 0) {
             return null;
         }
-        
-        // If total network polling not enabled, exit  c2
-        if (!getPollNetwork()) return null;
+
+        // If total network polling not enabled, exit
+        if (!getPollNetwork()) {
+            return null;
+        }
 
         int previousPollPointer = curSerialNodeIndex;
         updatePollPointer(); // service next node next
 
-        // ensure that each node is initialized        
+        // ensure that each node is initialized
         SerialNode n = (SerialNode) getNode(curSerialNodeIndex);
 
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
-            log.debug("send init message: " + m);
+            log.debug("send init message: {}", m);
             m.setTimeout(500);  // wait for init to finish (milliseconds)
-         // m.setTimeout( getInitTimeout() );  //c2
+            // m.setTimeout( getInitTimeout() );  //c2
             n.setPollStatus(SerialNode.POLLSTATUS_INIT); //c2
 
             return m;
@@ -160,14 +190,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             getNode(curSerialNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curSerialNodeIndex).createOutPacket();
             m.setTimeout(2);  // no need to wait for output to answer
-         // m.setTimeout( getXmitTimeout() );  // no need to wait for output to answer
+            // m.setTimeout( getXmitTimeout() );  // no need to wait for output to answer
 
             // reset poll pointer update, so next increment will poll from here
             curSerialNodeIndex = previousPollPointer;
             return m;
         }
-        
-        
+
         // poll for Sensor input
         //-------------------------------------
         // Poll node if polling enabled for this node  //c2
@@ -175,14 +204,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         //-------------------------------------
 //        SerialNode n = (SerialNode) SerialTrafficController.instance().getNode(curSerialNodeIndex);
         if (!n.getPollingEnabled()) {
-             n.setPollStatus(SerialNode.POLLSTATUS_IDLE);
-              return null;
-         }
-        else 
-        if (getNode(curSerialNodeIndex).getSensorsActive()) {
-           if (n.getPollStatus() != SerialNode.POLLSTATUS_POLLING)
-               n.setPollStatus(SerialNode.POLLSTATUS_POLLING);
-           
+            n.setPollStatus(SerialNode.POLLSTATUS_IDLE);
+            return null;
+        } else if (getNode(curSerialNodeIndex).getSensorsActive()) {
+            if (n.getPollStatus() != SerialNode.POLLSTATUS_POLLING) {
+                n.setPollStatus(SerialNode.POLLSTATUS_POLLING);
+            }
+
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
                     getNode(curSerialNodeIndex).getNodeAddress());
@@ -208,13 +236,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // don't use super behavior, as timeout to init, transmit message is normal
         SerialNode n = (SerialNode) getNode(curSerialNodeIndex);
 
-        // inform node, and if it resets then reinitialize        
+        // inform node, and if it resets then reinitialize
         if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
-         if (n.getPollingEnabled())  //c2 
-         {
-             n.setPollStatus(SerialNode.POLLSTATUS_TIMEOUT);
+            if (n.getPollingEnabled()) //c2
+            {
+                n.setPollStatus(SerialNode.POLLSTATUS_TIMEOUT);
 //             CMRInetMetricsData.incMetricErrValue(CMRInetMetricsData.CMRInetMetricTimeout);
-         }
+            }
             setMustInit(curSerialNodeIndex, true);
         }
 
@@ -235,7 +263,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Forward a preformatted message to the actual interface.
+     * Forward a pre-formatted message to the actual interface.
+     *
+     * @param m     the message to forward
+     * @param reply the listener for the response to m
      */
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
@@ -243,12 +274,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, converted to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, converted to
+     * JMRI multi-system support structure
      */
     @Override
     @Deprecated
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         log.debug("deprecated setInstance should not have been called");
     }
@@ -290,7 +320,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Add header to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg the output byte stream
+     * @param m   the message in msg
      * @return next location in the stream to fill
      */
     @Override
@@ -304,8 +335,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Add trailer to the outgoing byte stream.
      *
-     * @param msg    The output byte stream
+     * @param msg    the output byte stream
      * @param offset the first byte not yet used
+     * @param m      the message in msg
      */
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {

@@ -31,6 +31,6 @@ public class ClassMigrationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClassMigrationManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ClassMigrationManagerTest.class);
 
 }

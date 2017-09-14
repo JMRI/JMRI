@@ -72,7 +72,7 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        Sensor t = l.provideSensor("");
+        l.provideSensor("");
     }
 
     @Test

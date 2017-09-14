@@ -45,6 +45,6 @@ public class MultiSensorIconDialogTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialogTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialogTest.class);
 
 }

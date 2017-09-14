@@ -59,7 +59,7 @@ public class Metadata {
         } else if (name.equalsIgnoreCase(JVMVENDOR)) {
             return System.getProperty("java.vendor", "<unknown>"); // NOI18N
         } else if (name.equalsIgnoreCase(ACTIVEPROFILE)) {
-            return ProfileManager.getDefault().getActiveProfile().getName();
+            return ProfileManager.getDefault().getActiveProfileName();
         } else if (name.equalsIgnoreCase(COPYRIGHT)) {
             return jmri.Version.getCopyright();
         }

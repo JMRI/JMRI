@@ -261,7 +261,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             et = System.currentTimeMillis() - et;
             _idxCurrentCommand++;
-            if (log.isDebugEnabled()) log.debug("Cmd #{}: {} et={} warrant {}", _idxCurrentCommand, ts.toString(), et, _warrant.getDisplayName());
+            if (log.isDebugEnabled()) log.debug("Cmd #{} done: {} et={} warrant {}", _idxCurrentCommand, ts.toString(), et, _warrant.getDisplayName());
 
         }
         // shut down
@@ -335,12 +335,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * sharing of turnouts, this call will free the wait.
      */
     synchronized protected void clearWaitForSync() {
+        if (log.isDebugEnabled()) log.debug("clearWaitForSync() _waitForSync= {}",
+                _waitForSync);
         if (_waitForSync) {
             if (log.isDebugEnabled()) log.debug("clearWaitForSync calls notifyAll()");
             notifyAll();   // if wait is cleared, this sets _waitForSync= false
         }
-        if (log.isDebugEnabled()) log.debug("clearWaitForSync() _waitForClear= {}",
-                _waitForClear);
     }
 
     /**
@@ -359,10 +359,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 endSpeedType, _warrant.getDisplayName());
 
         synchronized (this) {
+            // Either plain thread or SwingWorker thread, performance is identical
             _ramp = new ThrottleRamp(endSpeedType, rampDelay);
-//            Thread t= new Thread(_ramp);
+//            Thread t= new Thread(_ramp);r
             _ramp.execute();
-//            t.setPriority(Thread.MAX_PRIORITY);
 //            t.start();
         }
     }
@@ -1097,7 +1097,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
             }
             rampDone(stop, _endSpeedType);
-            return Boolean.valueOf(true);
+            return Boolean.valueOf(true); // if SwingWorker
         }
     }
 

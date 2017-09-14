@@ -442,7 +442,7 @@ public class PositionablePopupUtil {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) { // Avoid action lookup unless needed
-                    log.debug("When style item selected {} italic state is {}", ((String) getValue(NAME)), italic.isSelected());
+                    log.debug("When style item selected {} italic state is {}", getValue(NAME), italic.isSelected());
                 }
                 if (italic.isSelected()) {
                     setFontStyle(Font.ITALIC, 0);
@@ -457,7 +457,7 @@ public class PositionablePopupUtil {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) { // Avoid action lookup unless needed
                     log.debug("When style item selected {} bold state is {}",
-                            ((String) getValue(NAME)), bold.isSelected());
+                            getValue(NAME), bold.isSelected());
                 }
                 if (bold.isSelected()) {
                     setFontStyle(Font.BOLD, 0);
@@ -499,7 +499,7 @@ public class PositionablePopupUtil {
         c.addActionListener(a);
         if (log.isDebugEnabled()) { // Avoid action lookup unless needed
             log.debug("When creating style item {} mask was {} state was {}",
-                    ((String) a.getValue(AbstractAction.NAME)), mask, getFontStyle());
+                     a.getValue(AbstractAction.NAME), mask, getFontStyle());
         }
         if ((mask & getFontStyle()) == mask) {
             c.setSelected(true);

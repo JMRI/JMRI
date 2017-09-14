@@ -2045,9 +2045,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addLightEditor() {
         IconAdder editor = new IconAdder("Light");
-        editor.setIcon(3, "LightStateOff",
+        editor.setIcon(3, "StateOff",
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-        editor.setIcon(2, "LightStateOn",
+        editor.setIcon(2, "StateOn",
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
         editor.setIcon(0, "BeanStateInconsistent",
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
@@ -2336,8 +2336,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected LightIcon addLight() {
         LightIcon result = new LightIcon(this);
         IconAdder editor = getIconEditor("Light");
-        result.setOffIcon(editor.getIcon("LightStateOff"));
-        result.setOnIcon(editor.getIcon("LightStateOn"));
+        result.setOffIcon(editor.getIcon("StateOff"));
+        result.setOnIcon(editor.getIcon("StateOn"));
         result.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         result.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         result.setLight((Light) editor.getTableSelection());

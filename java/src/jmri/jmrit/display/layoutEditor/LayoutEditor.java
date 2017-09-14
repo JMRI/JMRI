@@ -1087,7 +1087,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-
         if (cm != null) {
             cm.registerUser(this);
         }
@@ -3397,31 +3396,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPos2D));
         } else {
             JScrollPane scrollPane = getPanelScrollPane();
-            if (scrollPane.getVerticalScrollBar().isVisible()) {
-                // Redispatch the event to the original MouseWheelListeners
-                for (MouseWheelListener mwl : mouseWheelListeners) {
-                    mwl.mouseWheelMoved(e);
+            if (scrollPane != null) {
+                if (scrollPane.getVerticalScrollBar().isVisible()) {
+                    // Redispatch the event to the original MouseWheelListeners
+                    for (MouseWheelListener mwl : mouseWheelListeners) {
+                        mwl.mouseWheelMoved(e);
+                    }
+                } else {
+                    // proprogate event to ancestor
+                    Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
+                    if (ancestor != null) {
+                        MouseWheelEvent mwe = new MouseWheelEvent(
+                                ancestor,
+                                e.getID(),
+                                e.getWhen(),
+                                e.getModifiers(),
+                                e.getX(),
+                                e.getY(),
+                                e.getXOnScreen(),
+                                e.getYOnScreen(),
+                                e.getClickCount(),
+                                e.isPopupTrigger(),
+                                e.getScrollType(),
+                                e.getScrollAmount(),
+                                e.getWheelRotation());
+
+                        ancestor.dispatchEvent(mwe);
+                    }
                 }
-            } else {
-                // proprogate event to ancestor
-                Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
-
-                MouseWheelEvent mwe = new MouseWheelEvent(
-                        ancestor,
-                        e.getID(),
-                        e.getWhen(),
-                        e.getModifiers(),
-                        e.getX(),
-                        e.getY(),
-                        e.getXOnScreen(),
-                        e.getYOnScreen(),
-                        e.getClickCount(),
-                        e.isPopupTrigger(),
-                        e.getScrollType(),
-                        e.getScrollAmount(),
-                        e.getWheelRotation());
-
-                ancestor.dispatchEvent(mwe);
             }
         }
     } // mouseWheelMoved
@@ -5578,7 +5580,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * @return the coordinates for the connection type of the specified object
      */
     public Point2D getCoords(@Nonnull Object o, int connectionType) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         if (o != null) {
             result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
         } else {
@@ -7024,8 +7026,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         newPoint = new Point2D.Double(pm.getOriginalX(), pm.getOriginalY());
                     }
                     newPoint = MathUtil.add(newPoint, delta);
-                    newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
-                    c.setLocation(MathUtil.pointForPoint2D(newPoint));
+                    newPoint = MathUtil.max(MathUtil.zeroPoint2D, newPoint);
+                    c.setLocation(MathUtil.point2DToPoint(newPoint));
                 }
             }
 
@@ -7054,7 +7056,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             for (List<LayoutTrack> l : listOfLists) {
                 for (LayoutTrack lt : l) {
                     Point2D newPoint = MathUtil.add(lt.getCoordsCenter(), delta);
-                    newPoint = MathUtil.max(MathUtil.zeroPoint2D(), newPoint);
+                    newPoint = MathUtil.max(MathUtil.zeroPoint2D, newPoint);
                     lt.setCoordsCenter(newPoint);
                 }
             }

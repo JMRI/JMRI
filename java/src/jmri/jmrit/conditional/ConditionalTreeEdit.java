@@ -486,7 +486,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _detailFooter.setVisible(false);
                 break;
 
-            // ------------ Conditional Edit Grids ------------ 
+            // ------------ Conditional Edit Grids ------------
             case "Conditional":  // NOI18N
                 makeConditionalGrid(c);
                 break;
@@ -868,7 +868,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Apply the updates to the current node
      */
     void updatePressed() {
-        _curLogix.deActivateLogix();
         switch (_curNodeType) {
             case "Conditional":     // NOI18N
                 userNameChanged(_editConditionalUserName.getText().trim());
@@ -894,7 +893,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 log.warn("Invalid update button press");  // NOI18N
         }
         setEditMode(false);
-        _curLogix.activateLogix();
         _cdlTree.setSelectionPath(_curTreePath);
         _cdlTree.grabFocus();
     }
@@ -1523,6 +1521,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done
      */
     void donePressed() {
+        closeSinglePanelPickList();
         if (_pickTables != null) {
             _pickTables.dispose();
             _pickTables = null;
@@ -1619,7 +1618,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Actions Level 3 contains the detail Variable and Action entries
      */
     void createConditionalContent() {
-        String nodeText;
         int _numConditionals = _curLogix.getNumConditionals();
         for (int i = 0; i < _numConditionals; i++) {
             String csName = _curLogix.getConditionalByNumberOrder(i);
@@ -1943,8 +1941,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         if (active) {
+            _curLogix.deActivateLogix();
             setPickWindow("Activate", 0);  // NOI18N
         } else {
+            _curLogix.activateLogix();
             setPickWindow("Deactivate", 0);  // NOI18N
         }
     }
@@ -2029,7 +2029,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
         _variableTypeBox.addItemListener(new ItemListener() {
-            ;
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -2473,7 +2472,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             _comboNameBox.removeFocusListener(detailFocusEvent);
         }
         setPickWindow("Variable", itemType);  // NOI18N
-        
+
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
         _variableNegated.setSelected(_curVariable.isNegated());
         _variableTriggerActions.setSelected(_curVariable.doTriggerActions());
@@ -2925,10 +2924,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (c == null) {
                     return false;
                 }
-                if (c.getUserName() != null && !c.getUserName().isEmpty()) {
-                    _curVariable.setGuiName(c.getUserName());
-                } else {
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
                     _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:

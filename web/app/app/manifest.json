@@ -1,0 +1,68 @@
+{
+  "navigation":[
+    {
+      "path": "help/about",
+      "href": "ng-click:openAboutModal()",
+      "title": "translate:HELP.ABOUT"
+    },
+    {
+      "path": "panel",
+      "iconClass": "fa fa-map-o",
+      "title": "translate:NAVIGATION.PANELS"
+    },
+    {
+      "path": "layout",
+      "iconClass": "fa fa-map-signs",
+      "title": "translate:NAVIGATION.LAYOUT"
+    }
+  ],
+  "scripts":[
+    "/app/node_modules/angular-patternfly/node_modules/jquery/dist/jquery.min.js",
+    "/app/node_modules/datatables.net/js/jquery.dataTables.js",
+    "/app/node_modules/angularjs-datatables/vendor/datatables-select/js/dataTables.select.js",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/node_modules/bootstrap/dist/js/bootstrap.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/js/patternfly-settings.min.js",
+    "/app/node_modules/angular/angular.min.js",
+    "/app/node_modules/angular-resource/angular-resource.min.js",
+    "/app/node_modules/angular-route/angular-route.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-sanitize/angular-sanitize.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
+    "/app/node_modules/angularjs-datatables/dist/angular-datatables.min.js",
+    "/app/node_modules/angularjs-datatables/dist/plugins/select/angular-datatables.select.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/c3/c3.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/d3/d3.min.js",
+    "/app/node_modules/lodash/lodash.min.js",
+    "/app/node_modules/moment/min/moment-with-locales.min.js",
+    "/app/node_modules/angular-patternfly/dist/angular-patternfly.min.js",
+    "/app/node_modules/angular-websocket/dist/angular-websocket.min.js",
+    "/app/node_modules/angular-translate/dist/angular-translate.min.js",
+    "/app/node_modules/angular-translate-handler-log/angular-translate-handler-log.min.js",
+    "/app/node_modules/angular-translate-loader-partial/angular-translate-loader-partial.min.js",
+    "/app/script"
+  ],
+  "styles":[
+    "/app/node_modules/datatables.net-dt/css/jquery.dataTables.css",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly-additions.min.css",
+    "/app/node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css"
+  ],
+  "dependencies":[
+    "ngResource",
+    "ngRoute",
+    "ui.bootstrap",
+    "patternfly",
+    "dndLists",
+    "angular-websocket",
+    "pascalprecht.translate",
+    "patternfly.charts",
+    "patternfly.table",
+    "patternfly.toolbars"
+  ],
+  "sources":[
+    "web/app/app/websocket.js"
+  ],
+  "translations":[
+    "web/app/app/navigation-*.json"
+  ]
+}

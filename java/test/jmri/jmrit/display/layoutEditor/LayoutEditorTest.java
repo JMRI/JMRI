@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of LayoutEditor
@@ -717,5 +715,5 @@ public class LayoutEditorTest {
     }
 
     //initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

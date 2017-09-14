@@ -322,8 +322,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                     return s;
                 } else if (_itemType.equals("Light")) {
                     LightIcon l = new LightIcon(_editor);
-                    l.setOffIcon(iMap.get("LightStateOff"));
-                    l.setOnIcon(iMap.get("LightStateOn"));
+                    l.setOffIcon(iMap.get("StateOff"));
+                    l.setOnIcon(iMap.get("StateOn"));
                     l.setInconsistentIcon(iMap.get("BeanStateInconsistent"));
                     l.setUnknownIcon(iMap.get("BeanStateUnknown"));
                     l.setLight((jmri.Light) bean);

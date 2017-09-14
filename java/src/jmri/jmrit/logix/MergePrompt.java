@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2017
  */
 public class MergePrompt extends JDialog {
-    
+
     HashMap<String, Boolean> _candidates;   // merge candidate choices
     HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
     HashMap<String, RosterSpeedProfile> _sessionProfiles;  // candidate's speedprofile
@@ -136,18 +136,18 @@ public class MergePrompt extends JDialog {
         p.add(mainPanel);
         p.add(Box.createHorizontalGlue());
         p.add(Box.createHorizontalStrut(STRUT));
-        
+
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.add(p);
         setContentPane(contentPane);
         pack();
         Dimension screen = getToolkit().getScreenSize();
-        setLocation(screen.width/3, screen.height/4);
+        setLocation(screen.width / 3, screen.height / 4);
         setAlwaysOnTop(true);
         setVisible(true);
     }
-    
+
     private void noMerge() {
         for (Map.Entry<String, Boolean> ent : _candidates.entrySet()) {
             _candidates.put(ent.getKey(), Boolean.valueOf(false));
@@ -164,7 +164,7 @@ public class MergePrompt extends JDialog {
         JPanel panel = new JPanel();
         panel.add(new JLabel(Bundle.getMessage("viewTitle", id)));
         _viewFrame.add(panel);
-        
+
         HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
         if (anomalies != null && anomalies.size() > 0) {
             panel = new JPanel();
@@ -180,9 +180,9 @@ public class MergePrompt extends JDialog {
             label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             panel.add(label);
             _viewFrame.add(panel);
-            
+
         }
- 
+
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
         spPanel.add(Box.createGlue());
@@ -192,17 +192,17 @@ public class MergePrompt extends JDialog {
         panel.add(new JLabel(Bundle.getMessage("rosterSpeedProfile")));
         RosterEntry re = Roster.getDefault().entryFromTitle(id);
         RosterSpeedProfile speedProfile = null;
-        if (re!=null) {
+        if (re != null) {
             speedProfile = re.getSpeedProfile();
         }
         if (speedProfile == null) {
-            speedProfile = new RosterSpeedProfile(null);            
+            speedProfile = new RosterSpeedProfile(null);
         }
         JPanel speedPanel = new SpeedProfilePanel(speedProfile, null);
         panel.add(speedPanel);
         spPanel.add(panel);
         spPanel.add(Box.createGlue());
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage("mergedSpeedProfile")));
@@ -210,7 +210,7 @@ public class MergePrompt extends JDialog {
         panel.add(speedPanel);
         spPanel.add(panel);
         spPanel.add(Box.createGlue());
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage("sessionSpeedProfile")));
@@ -218,28 +218,29 @@ public class MergePrompt extends JDialog {
         panel.add(speedPanel);
         spPanel.add(panel);
         spPanel.add(Box.createGlue());
-        
+
         _viewFrame.add(spPanel);
         getContentPane().add(_viewFrame);
         pack();
     }
 
     /**
-     * Check that non zero value are ascending for both forward and reverse speeds.
-     * Omit anomalies.
+     * Check that non zero value are ascending for both forward and reverse
+     * speeds. Omit anomalies.
+     *
      * @param speedProfile speedProfile
-     * @param id roster id
+     * @param id           roster id
      * @return HashMap of Key and direction of possible errors
      */
     static protected HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
         // do forward speeds, then reverse
-        HashMap<Integer, Boolean> anomalies =  new HashMap<Integer, Boolean>();
+        HashMap<Integer, Boolean> anomalies = new HashMap<Integer, Boolean>();
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
         float lastForward = 0;
         Integer lastKey = Integer.valueOf(0);
         Iterator<Map.Entry<Integer, SpeedStep>> iter = rosterTree.entrySet().iterator();
         while (iter.hasNext()) {
-            Map.Entry<Integer, SpeedStep> entry = iter.next(); 
+            Map.Entry<Integer, SpeedStep> entry = iter.next();
             float forward = entry.getValue().getForwardSpeed();
             Integer key = entry.getKey();
             if (forward > 0.0f) {
@@ -273,7 +274,7 @@ public class MergePrompt extends JDialog {
         lastKey = Integer.valueOf(0);
         iter = rosterTree.entrySet().iterator();
         while (iter.hasNext()) {
-            Map.Entry<Integer, SpeedStep> entry = iter.next(); 
+            Map.Entry<Integer, SpeedStep> entry = iter.next();
             float reverse = entry.getValue().getReverseSpeed();
             Integer key = entry.getKey();
             if (reverse > 0.0f) {
@@ -299,29 +300,31 @@ public class MergePrompt extends JDialog {
                 }
                 lastReverse = reverse;
                 lastKey = key;
-            }           
+            }
         }
         return anomalies;
     }
 
     class MergeTableModel extends javax.swing.table.AbstractTableModel {
+
         static final int MERGE_COL = 0;
         static final int ID_COL = 1;
         static final int VIEW_COL = 2;
         static final int NUMCOLS = 3;
- 
-        ArrayList<Map.Entry<String, Boolean>> candidateArray = new  ArrayList<Map.Entry<String, Boolean>>();
-        
-        MergeTableModel (HashMap<String, Boolean> map) {
-            Iterator <java.util.Map.Entry <String, Boolean>> iter = map.entrySet().iterator(); 
+
+        ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<Map.Entry<String, Boolean>>();
+
+        MergeTableModel(HashMap<String, Boolean> map) {
+            Iterator<java.util.Map.Entry<String, Boolean>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 candidateArray.add(iter.next());
             }
         }
+
         boolean hasAnomaly(int row) {
             Map.Entry<String, Boolean> entry = candidateArray.get(row);
             HashMap<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
-            if (anomaly!=null && anomaly.size() > 0) {                
+            if (anomaly != null && anomaly.size() > 0) {
                 return true;
             }
             return false;
@@ -336,6 +339,7 @@ public class MergePrompt extends JDialog {
         public int getRowCount() {
             return candidateArray.size();
         }
+
         @Override
         public String getColumnName(int col) {
             switch (col) {
@@ -351,6 +355,7 @@ public class MergePrompt extends JDialog {
             }
             return "";
         }
+
         @Override
         public Class<?> getColumnClass(int col) {
             switch (col) {
@@ -370,7 +375,7 @@ public class MergePrompt extends JDialog {
         public int getPreferredWidth(int col) {
             switch (col) {
                 case MERGE_COL:
-                    return new JTextField(3).getPreferredSize().width;                
+                    return new JTextField(3).getPreferredSize().width;
                 case ID_COL:
                     return new JTextField(16).getPreferredSize().width;
                 case VIEW_COL:
@@ -380,7 +385,7 @@ public class MergePrompt extends JDialog {
             }
             return new JTextField(12).getPreferredSize().width;
         }
-        
+
         @Override
         public boolean isCellEditable(int row, int col) {
             if (col == ID_COL) {
@@ -411,7 +416,7 @@ public class MergePrompt extends JDialog {
             Map.Entry<String, Boolean> entry = candidateArray.get(row);
             switch (col) {
                 case MERGE_COL:
-                    _candidates.put(entry.getKey(), (Boolean)value);
+                    _candidates.put(entry.getKey(), (Boolean) value);
                     break;
                 case ID_COL:
                     break;
@@ -422,10 +427,11 @@ public class MergePrompt extends JDialog {
                     // fall out
                     break;
             }
-       }
+        }
     }
 
     public static class ButtonCellRenderer extends ButtonRenderer {
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             Component b = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
@@ -434,7 +440,7 @@ public class MergePrompt extends JDialog {
             if (tableModel.hasAnomaly(row)) {
                 b.setBackground(java.awt.Color.RED);
             } else {
-                b.setBackground(table.getBackground());                
+                b.setBackground(table.getBackground());
             }
             return b;
         }
