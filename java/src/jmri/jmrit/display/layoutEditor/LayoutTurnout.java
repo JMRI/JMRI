@@ -241,10 +241,10 @@ public class LayoutTurnout extends LayoutTrack {
 
     public int type = RH_TURNOUT;
 
-    public Object connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
-    public Object connectB = null;      // straight leg of LH and RH turnouts
-    public Object connectC = null;
-    public Object connectD = null;      // double xover, RH Xover, LH Xover only
+    public LayoutTrack connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
+    public LayoutTrack connectB = null;      // straight leg of LH and RH turnouts
+    public LayoutTrack connectC = null;
+    public LayoutTrack connectD = null;      // double xover, RH Xover, LH Xover only
 
     public int continuingSense = Turnout.CLOSED;
 
@@ -996,19 +996,19 @@ public class LayoutTurnout extends LayoutTrack {
         return type;
     }
 
-    public Object getConnectA() {
+    public LayoutTrack getConnectA() {
         return connectA;
     }
 
-    public Object getConnectB() {
+    public LayoutTrack getConnectB() {
         return connectB;
     }
 
-    public Object getConnectC() {
+    public LayoutTrack getConnectC() {
         return connectC;
     }
 
-    public Object getConnectD() {
+    public LayoutTrack getConnectD() {
         return connectD;
     }
 
@@ -1137,15 +1137,11 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     *
-     * @param connectionType the specified connection type
-     * @return the object connected for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
-        Object result = null;
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+        LayoutTrack result = null;
         switch (connectionType) {
             case TURNOUT_A: {
                 result = connectA;
@@ -1172,16 +1168,10 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * set the object connected for the specified connection type
-     *
-     * @param connectionType the connection type (where it is connected to us)
-     * @param o              the object that is being connected
-     * @param type           the type of object that we're being connected to
-     *                       (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutturnout - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
@@ -1205,28 +1195,28 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectA(Object o, int type) {
+    public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of A connection to layoutturnout - " + type);
         }
     }
 
-    public void setConnectB(Object o, int type) {
+    public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of B connection to layoutturnout - " + type);
         }
     }
 
-    public void setConnectC(Object o, int type) {
+    public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of C connection to layoutturnout - " + type);
         }
     }
 
-    public void setConnectD(Object o, int type) {
+    public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of D connection to layoutturnout - " + type);

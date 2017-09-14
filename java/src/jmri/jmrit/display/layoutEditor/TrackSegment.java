@@ -41,7 +41,6 @@ import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
  * layout. A node may be a LayoutTurnout, a LevelXing or a PositionablePoint.
@@ -73,9 +72,9 @@ public class TrackSegment extends LayoutTrack {
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
-    private Object connect1 = null;
+    private LayoutTrack connect1 = null;
     private int type1 = 0;
-    private Object connect2 = null;
+    private LayoutTrack connect2 = null;
     private int type2 = 0;
     private boolean dashed = false;
     private boolean mainline = false;
@@ -90,8 +89,8 @@ public class TrackSegment extends LayoutTrack {
     private ArrayList<Point2D> bezierControlPoints = new ArrayList<Point2D>(); // list of control point displacements
 
     public TrackSegment(@Nonnull String id,
-            @Nullable Object c1, int t1,
-            @Nullable Object c2, int t2,
+            @Nullable LayoutTrack c1, int t1,
+            @Nullable LayoutTrack c2, int t2,
             boolean dash, boolean main,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -169,20 +168,20 @@ public class TrackSegment extends LayoutTrack {
         return type2;
     }
 
-    public Object getConnect1() {
+    public LayoutTrack getConnect1() {
         return connect1;
     }
 
-    public Object getConnect2() {
+    public LayoutTrack getConnect2() {
         return connect2;
     }
 
-    protected void setNewConnect1(@Nullable Object o, int type) {
+    protected void setNewConnect1(@Nullable LayoutTrack o, int type) {
         connect1 = o;
         type1 = type;
     }
 
-    protected void setNewConnect2(@Nullable Object o, int type) {
+    protected void setNewConnect2(@Nullable LayoutTrack o, int type) {
         connect2 = o;
         type2 = type;
     }
@@ -371,7 +370,7 @@ public class TrackSegment extends LayoutTrack {
         return getConnectName(connect2, type2);
     }
 
-    private String getConnectName(@Nullable Object o, int type) {
+    private String getConnectName(@Nullable LayoutTrack o, int type) {
         String result = null;
         if (null != o) {
             result = ((LayoutTrack) o).getName();
@@ -379,14 +378,26 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    // These two methods should never be called…
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation returns null because {@link #getConnect1()} and 
+     * {@link #getConnect2()} should be used instead.
+     */
     // only implemented here to supress "does not override abstract method " error in compiler
-    public Object getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to do here… move along…
         return null;
     }
 
-    public void setConnection(int connectionType, @Nullable Object o, int type) throws jmri.JmriException {
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation does nothing because {@link #setNewConnect1()} and 
+     * {@link #setNewConnect2()} should be used instead.
+     */
+    // only implemented here to supress "does not override abstract method " error in compiler
+    public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to do here… move along…
     }
 
@@ -498,15 +509,15 @@ public class TrackSegment extends LayoutTrack {
 
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
-        connect1 = p.getFinder().findObjectByName(tConnect1Name);
+        connect1 = (LayoutTrack) p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
             log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
-            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+            connect1 = (LayoutTrack) p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
-        connect2 = p.getFinder().findObjectByName(tConnect2Name);
+        connect2 = (LayoutTrack) p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
             log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
-            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+            connect2 = (LayoutTrack) p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
 
@@ -522,28 +533,12 @@ public class TrackSegment extends LayoutTrack {
         if ((b2 != null) && (b2 != block) && (b2 != b1)) {
             b2.updatePaths();
         }
-        if (getConnect1() instanceof PositionablePoint) {
-            ((PositionablePoint) getConnect1()).reCheckBlockBoundary();
-        } else if (getConnect1() instanceof LayoutTurnout) {
-            ((LayoutTurnout) getConnect1()).reCheckBlockBoundary();
-        } else if (getConnect1() instanceof LevelXing) {
-            ((LevelXing) getConnect1()).reCheckBlockBoundary();
-        } else if (getConnect1() instanceof LayoutSlip) {
-            ((LayoutSlip) getConnect1()).reCheckBlockBoundary();
-        }
 
-        if (getConnect2() instanceof PositionablePoint) {
-            ((PositionablePoint) getConnect2()).reCheckBlockBoundary();
-        } else if (getConnect2() instanceof LayoutTurnout) {
-            ((LayoutTurnout) getConnect2()).reCheckBlockBoundary();
-        } else if (getConnect2() instanceof LevelXing) {
-            ((LevelXing) getConnect2()).reCheckBlockBoundary();
-        } else if (getConnect2() instanceof LayoutSlip) {
-            ((LayoutSlip) getConnect2()).reCheckBlockBoundary();
-        }
+        getConnect1().reCheckBlockBoundary();
+        getConnect2().reCheckBlockBoundary();
     }
 
-    private LayoutBlock getBlock(Object connect, int type) {
+    private LayoutBlock getBlock(LayoutTrack connect, int type) {
         if (connect == null) {
             return null;
         }

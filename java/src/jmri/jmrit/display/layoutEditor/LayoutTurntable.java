@@ -324,14 +324,11 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
-        Object result = null;
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+        LayoutTrack result = null;
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
@@ -342,15 +339,10 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set the object connected to this turnout for the specified connection type.
-     *
-     * @param connectionType the connection type (where it is connected to the us)
-     * @param o the object that is being connected
-     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to LevelXing - " + type);
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);

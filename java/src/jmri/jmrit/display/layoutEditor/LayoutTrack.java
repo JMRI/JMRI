@@ -332,26 +332,23 @@ public abstract class LayoutTrack {
     protected abstract void showPopup(MouseEvent e);
 
     /**
-     * get the object connected to this track for the specified connection type
+     * get the LayoutTrack connected at the specified connection type
      *
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection
-     *         type
+     * @param connectionType where on us to get the connection
+     * @return the LayoutTrack connected at the specified connection type
      * @throws jmri.JmriException - if the connectionType is invalid
      */
-    public abstract Object getConnection(int connectionType) throws jmri.JmriException;
+    public abstract LayoutTrack getConnection(int connectionType) throws jmri.JmriException;
 
     /**
-     * set the object connected to this turnout for the specified connection
-     * type
+     * set the LayoutTrack connected at the specified connection type
      *
-     * @param connectionType the connection type (where it is connected to us)
-     * @param o              the object that is being connected
-     * @param type           the type of object that we're being connected to
-     *                       (Should always be "NONE" or "TRACK")
+     * @param connectionType where on us to set the connection
+     * @param o              the LayoutTrack that is to be connected
+     * @param type           where on the LayoutTrack we are connected
      * @throws jmri.JmriException - if connectionType or type are invalid
      */
-    public abstract void setConnection(int connectionType, Object o, int type) throws jmri.JmriException;
+    public abstract void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException;
 
     /**
      * return true if this connection type is disconnected

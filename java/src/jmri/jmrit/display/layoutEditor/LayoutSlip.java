@@ -177,15 +177,10 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     *
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection
-     *         type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case SLIP_A:
                 return connectA;
@@ -200,8 +195,11 @@ public class LayoutSlip extends LayoutTurnout {
         throw new jmri.JmriException("Invalid Connection Type " + connectionType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
@@ -758,67 +756,6 @@ public class LayoutSlip extends LayoutTurnout {
         pointD = MathUtil.add(pointD, factor);
     }
 
-    /**
-     * Initialization method The above variables are initialized by
-     * LayoutSlipXml, then the following method is called after the entire
-     * LayoutEditor is loaded to set the specific LayoutSlip objects.
-     */
-    /*
-    @Override
-    public void setObjects(LayoutEditor p) {
-        connectA = p.getFinder().findTrackSegmentByName(connectAName);
-        connectB = p.getFinder().findTrackSegmentByName(connectBName);
-        connectC = p.getFinder().findTrackSegmentByName(connectCName);
-        connectD = p.getFinder().findTrackSegmentByName(connectDName);
-
-        if (!tBlockName.isEmpty()) {
-            block = p.getLayoutBlock(tBlockName);
-            if (block != null) {
-                blockName = tBlockName;
-                block.incrementUse();
-            } else {
-                log.error("bad blockname '" + tBlockName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        if (!tBlockBName.isEmpty()) {
-            blockB = p.getLayoutBlock(tBlockBName);
-            if (blockB != null) {
-                blockBName = tBlockBName;
-                if (block != blockB) {
-                    blockB.incrementUse();
-                }
-            } else {
-                log.error("bad blockname '" + tBlockBName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        if (!tBlockCName.isEmpty()) {
-            blockC = p.getLayoutBlock(tBlockCName);
-            if (blockC != null) {
-                blockCName = tBlockCName;
-                if ((block != blockC) && (blockB != blockC)) {
-                    blockC.incrementUse();
-                }
-            } else {
-                log.error("bad blockname '" + tBlockCName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        if (!tBlockDName.isEmpty()) {
-            blockD = p.getLayoutBlock(tBlockDName);
-            if (blockD != null) {
-                blockDName = tBlockDName;
-                if ((block != blockD) && (blockB != blockD)
-                        && (blockC != blockD)) {
-                    blockD.incrementUse();
-                }
-            } else {
-                log.error("bad blockname '" + tBlockDName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-    }
-     */
     JPopupMenu popup = null;
     LayoutEditorTools tools = null;
 

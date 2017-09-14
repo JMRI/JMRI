@@ -102,10 +102,10 @@ public class LevelXing extends LayoutTrack {
     private NamedBeanHandle<Sensor> sensorCNamed = null; // sensor at C track junction
     private NamedBeanHandle<Sensor> sensorDNamed = null; // sensor at D track junction
 
-    private Object connectA = null;
-    private Object connectB = null;
-    private Object connectC = null;
-    private Object connectD = null;
+    private LayoutTrack connectA = null;
+    private LayoutTrack connectB = null;
+    private LayoutTrack connectC = null;
+    private LayoutTrack connectD = null;
 
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
@@ -582,13 +582,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case LEVEL_XING_A:
                 return connectA;
@@ -607,14 +604,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
-     * @param connectionType the connection type (where it is connected to the us)
-     * @param o the object that is being connected
-     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to LevelXing - " + type);
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
@@ -638,44 +631,44 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    public Object getConnectA() {
+    public LayoutTrack getConnectA() {
         return connectA;
     }
 
-    public Object getConnectB() {
+    public LayoutTrack getConnectB() {
         return connectB;
     }
 
-    public Object getConnectC() {
+    public LayoutTrack getConnectC() {
         return connectC;
     }
 
-    public Object getConnectD() {
+    public LayoutTrack getConnectD() {
         return connectD;
     }
 
-    public void setConnectA(Object o, int type) {
+    public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
         if ((connectA != null) && (type != TRACK)) {
             log.error("unexpected type of A connection to levelXing - " + type);
         }
     }
 
-    public void setConnectB(Object o, int type) {
+    public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
         if ((connectB != null) && (type != TRACK)) {
             log.error("unexpected type of B connection to levelXing - " + type);
         }
     }
 
-    public void setConnectC(Object o, int type) {
+    public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
         if ((connectC != null) && (type != TRACK)) {
             log.error("unexpected type of C connection to levelXing - " + type);
         }
     }
 
-    public void setConnectD(Object o, int type) {
+    public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
         if ((connectD != null) && (type != TRACK)) {
             log.error("unexpected type of D connection to levelXing - " + type);
