@@ -2625,8 +2625,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionB"),
                 Bundle.getMessage("DeleteVerifyTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonNoCancel")},
-                Bundle.getMessage("ButtonNoCancel"));
+                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
+                Bundle.getMessage("ButtonCancel"));
         // return without deleting if "No" response
         return (selectedValue == JOptionPane.YES_OPTION);
     }

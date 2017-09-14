@@ -873,7 +873,7 @@ public class LayoutSlip extends LayoutTurnout {
             // if there are any track connections
             if ((connectA != null) || (connectB != null)
                     || (connectC != null) || (connectD != null)) {
-                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName()) {
                         @Override
