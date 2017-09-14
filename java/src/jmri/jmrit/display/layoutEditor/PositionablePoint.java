@@ -1190,24 +1190,17 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      whether to use (larger) rectangles or (smaller)
-     *                           circles for hit testing
-     * @param requireUnconnected whether to only return free connection hit
-     *                           types
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
             Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
-            if (r.contains(p)) {
+            if (r.contains(hitPoint)) {
                 result = POS_POINT;
             }
         }

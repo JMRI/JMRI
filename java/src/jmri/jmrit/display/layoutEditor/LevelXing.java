@@ -961,17 +961,13 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
 
         if (!requireUnconnected) {
             //check the center point

@@ -1623,21 +1623,15 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      whether to use (larger) rectangles or (smaller)
-     *                           circles for hit testing
-     * @param requireUnconnected only return free connection hit types
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (useRectangles) {
             // calculate points control rectangle
-            Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
 
             if (!requireUnconnected) {
                 if (r.contains(center)) {
@@ -1687,7 +1681,7 @@ public class LayoutTurnout extends LayoutTrack {
 
             if (!requireUnconnected) {
                 // calculate the distance to the center point of this turnout
-                Double distance = p.distance(getCoordsCenter());
+                Double distance = hitPoint.distance(getCoordsCenter());
                 if (distance <= circleRadius) {
                     result = TURNOUT_CENTER;
                 }
@@ -1696,7 +1690,7 @@ public class LayoutTurnout extends LayoutTrack {
             //check the A connection point
             if (NONE == result) {
                 if (!requireUnconnected || (getConnectA() == null)) {
-                    Double distance = p.distance(getCoordsA());
+                    Double distance = hitPoint.distance(getCoordsA());
                     if (distance <= circleRadius) {
                         result = LayoutTrack.TURNOUT_A;
                     }
@@ -1706,7 +1700,7 @@ public class LayoutTurnout extends LayoutTrack {
             //check the B connection point
             if (NONE == result) {
                 if (!requireUnconnected || (getConnectB() == null)) {
-                    Double distance = p.distance(getCoordsB());
+                    Double distance = hitPoint.distance(getCoordsB());
                     if (distance <= circleRadius) {
                         result = LayoutTrack.TURNOUT_B;
                     }
@@ -1716,7 +1710,7 @@ public class LayoutTurnout extends LayoutTrack {
             //check the C connection point
             if (NONE == result) {
                 if (!requireUnconnected || (getConnectC() == null)) {
-                    Double distance = p.distance(getCoordsC());
+                    Double distance = hitPoint.distance(getCoordsC());
                     if (distance <= circleRadius) {
                         result = LayoutTrack.TURNOUT_C;
                     }
@@ -1727,7 +1721,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (NONE == result) {
                 if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
                     if (!requireUnconnected || (getConnectD() == null)) {
-                        Double distance = p.distance(getCoordsD());
+                        Double distance = hitPoint.distance(getCoordsD());
                         if (distance <= circleRadius) {
                             result = LayoutTrack.TURNOUT_D;
                         }
@@ -3976,9 +3970,9 @@ public class LayoutTurnout extends LayoutTrack {
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
     protected int getConnectivityStateForLayoutBlocks(
-            LayoutBlock currLayoutBlock, 
-            LayoutBlock prevLayoutBlock, 
-            LayoutBlock nextLayoutBlock, 
+            LayoutBlock currLayoutBlock,
+            LayoutBlock prevLayoutBlock,
+            LayoutBlock nextLayoutBlock,
             boolean suppress) {
         int result = Turnout.UNKNOWN;
 

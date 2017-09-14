@@ -82,7 +82,6 @@ public class LayoutTurntable extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-
     private boolean dccControlledTurnTable = false;
 
     // persistent instance variables (saved between sessions)
@@ -106,7 +105,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Accessor methods
      */
-
     public double getRadius() {
         return radius;
     }
@@ -358,8 +356,8 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Test if ray is a mainline track or not.
      * <p>
-     * Defaults to false (not mainline) if
-     * connecting track segment is missing.
+     * Defaults to false (not mainline) if connecting track segment is missing.
+     *
      * @return true if connecting track segment is mainline
      */
     public boolean isMainlineIndexed(int index) {
@@ -394,9 +392,9 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -407,6 +405,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -417,17 +416,13 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
 
         if (!requireUnconnected) {
             //check the center point
@@ -1092,6 +1087,7 @@ public class LayoutTurntable extends LayoutTrack {
                     pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */)), pt));
         }
     }
+
     /**
      * draw this turntable's edit controls
      *

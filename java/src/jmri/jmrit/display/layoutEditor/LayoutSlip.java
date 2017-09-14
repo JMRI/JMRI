@@ -595,17 +595,10 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * find the hit (location) type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      - whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free
-     *                           connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected) {
@@ -619,19 +612,19 @@ public class LayoutSlip extends LayoutTurnout {
             if (useRectangles) {
                 // calculate turnout's left control rectangle
                 Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
-                if (leftRectangle.contains(p)) {
+                if (leftRectangle.contains(hitPoint)) {
                     //point is in this turnout's left control rectangle
                     result = SLIP_LEFT;
                 }
                 Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
-                if (rightRectangle.contains(p)) {
+                if (rightRectangle.contains(hitPoint)) {
                     //point is in this turnout's right control rectangle
                     result = SLIP_RIGHT;
                 }
             } else {
                 //check east/west turnout control circles
-                double leftDistance = p.distance(leftCenter);
-                double rightDistance = p.distance(rightCenter);
+                double leftDistance = hitPoint.distance(leftCenter);
+                double rightDistance = hitPoint.distance(rightCenter);
 
                 if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                     //mouse was pressed on this slip
@@ -646,7 +639,7 @@ public class LayoutSlip extends LayoutTurnout {
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(hitPoint);
 
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point

@@ -208,7 +208,7 @@ public abstract class LayoutTrack {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    protected abstract int findHitPointType(@Nonnull Point2D p, boolean useRectangles, boolean requireUnconnected);
+    protected abstract int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     protected int findHitPointType(@Nonnull Point2D p) {
