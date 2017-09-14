@@ -9922,7 +9922,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /*
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
-    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
+    protected List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof PositionablePoint)
                 .filter(layoutTrackClass::isInstance)
@@ -9931,64 +9931,64 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
-    public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
+    protected List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
         return layoutTrackList.stream()
                 .filter(o -> layoutTrackClasses.contains(o.getClass()))
                 .collect(Collectors.toList());
     }
 
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
-    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
+    protected List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
         return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
     }
 
-    public List<PositionablePoint> getPositionablePoints() {
+    protected List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint);
     }
      */
-    public List<PositionablePoint> getPositionablePoints() {
+    protected List<PositionablePoint> getPositionablePoints() {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof PositionablePoint)
                 .map(item -> (PositionablePoint) item)
                 .collect(Collectors.toList());
     }
 
-    public List<LayoutSlip> getLayoutSlips() {
+    protected List<LayoutSlip> getLayoutSlips() {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof LayoutSlip)
                 .map(item -> (LayoutSlip) item)
                 .collect(Collectors.toList());
     }
 
-    public List<TrackSegment> getTrackSegments() {
+    protected List<TrackSegment> getTrackSegments() {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof TrackSegment)
                 .map(item -> (TrackSegment) item)
                 .collect(Collectors.toList());
     }
 
-    public List<LayoutTurnout> getLayoutTurnouts() {
+    protected List<LayoutTurnout> getLayoutTurnouts() {
         return layoutTrackList.stream()
-                .filter(item -> item instanceof LayoutTurnout)
+                .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
                 .map(item -> (LayoutTurnout) item)
                 .collect(Collectors.toList());
     }
 
-    public List<LayoutTurntable> getLayoutTurntables() {
+    protected List<LayoutTurntable> getLayoutTurntables() {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof LayoutTurntable)
                 .map(item -> (LayoutTurntable) item)
                 .collect(Collectors.toList());
     }
 
-    public List<LevelXing> getLevelXings() {
+    protected List<LevelXing> getLevelXings() {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof LevelXing)
                 .map(item -> (LevelXing) item)
                 .collect(Collectors.toList());
     }
 
-    public List<LayoutTrack> getLayoutTracks() {
+    protected List<LayoutTrack> getLayoutTracks() {
         return layoutTrackList;
     }
 

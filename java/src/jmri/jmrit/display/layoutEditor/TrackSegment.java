@@ -176,14 +176,24 @@ public class TrackSegment extends LayoutTrack {
         return connect2;
     }
 
-    protected void setNewConnect1(@Nullable LayoutTrack o, int type) {
-        connect1 = o;
-        type1 = type;
+    /**
+     * set a new connection 1
+     * @param connectTrack - the track we want to connect to
+     * @param connectionType - where on that track we want to be connected
+     */
+    protected void setNewConnect1(@Nullable LayoutTrack connectTrack, int connectionType) {
+        connect1 = connectTrack;
+        type1 = connectionType;
     }
 
-    protected void setNewConnect2(@Nullable LayoutTrack o, int type) {
-        connect2 = o;
-        type2 = type;
+    /**
+     * set a new connection 2
+     * @param connectTrack - the track we want to connect to
+     * @param connectionType - where on that track we want to be connected
+     */
+    protected void setNewConnect2(@Nullable LayoutTrack connectTrack, int connectionType) {
+        connect2 = connectTrack;
+        type2 = connectionType;
     }
 
     /**
@@ -381,8 +391,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation returns null because {@link #getConnect1()} and 
-     * {@link #getConnect2()} should be used instead.
+     * This implementation returns null because {@link #getConnect1} and 
+     * {@link #getConnect2} should be used instead.
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
@@ -393,8 +403,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation does nothing because {@link #setNewConnect1()} and 
-     * {@link #setNewConnect2()} should be used instead.
+     * This implementation does nothing because {@link #setNewConnect1} and 
+     * {@link #setNewConnect2} should be used instead.
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
