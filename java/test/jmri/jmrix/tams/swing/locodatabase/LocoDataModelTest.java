@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import jmri.jmrix.tams.TamsInterfaceScaffold;
+import jmri.jmrix.tams.TamsTrafficController;
 
 /**
  *
@@ -15,9 +17,10 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
  */
 public class LocoDataModelTest {
 
+    private TamsSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo();
         LocoDataModel t = new LocoDataModel(128,16,memo);
         Assert.assertNotNull("exists",t);
     }
@@ -26,10 +29,13 @@ public class LocoDataModelTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
+        memo = new TamsSystemConnectionMemo(tc);
     }
 
     @After
     public void tearDown() {
+        memo = null;
         jmri.util.JUnitUtil.tearDown();
     }
 
