@@ -121,23 +121,22 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     @Override
     public ArrayList<Object> getInstanceList(Class<?> c) {
+        ArrayList<Object> result = new ArrayList<>();
+
         ArrayList<Object> temp = new ArrayList<>(plist);
-        ArrayList<Object> returnlist = new ArrayList<>();
         temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
         temp.addAll(uplist);
-        for (int i = 0; i < temp.size(); i++) {
-            if (c.isInstance(temp.get(i))) {
-                returnlist.add(temp.get(i));
-                //if (index-- == 0) return temp.get(i);
+        for (Object o : temp) {
+            if (c.isInstance(o)) {
+                result.add(o);
             }
         }
-        if (returnlist.isEmpty()) {
-            return null;
+        if (result.isEmpty()) {
+            result = null;
         }
-        return returnlist;
-
+        return result;
     }
 
     @Override
@@ -304,8 +303,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected boolean addToolsStore(Element root) {
         boolean result = true;
-        for (int i = 0; i < tlist.size(); i++) {
-            Object o = tlist.get(i);
+        for (Object o : tlist) {
             try {
                 Element e = elementFromObject(o);
                 if (e != null) {
@@ -322,8 +320,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected boolean addUserStore(Element root) {
         boolean result = true;
-        for (int i = 0; i < ulist.size(); i++) {
-            Object o = ulist.get(i);
+        for (Object o : ulist) {
             try {
                 Element e = elementFromObject(o);
                 if (e != null) {
@@ -339,8 +336,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     protected void addUserPrefsStore(Element root) {
-        for (int i = 0; i < uplist.size(); i++) {
-            Object o = uplist.get(i);
+        for (Object o : uplist) {
             Element e = elementFromObject(o);
             if (e != null) {
                 root.addContent(e);

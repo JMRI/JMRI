@@ -7166,8 +7166,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         String name = finder.uniqueName("T", numTrackSegments++);
 
         //create object
-        newTrack = new TrackSegment(name, beginObject, beginPointType,
-                foundObject, foundPointType, dashedLine.isSelected(),
+        newTrack = new TrackSegment(name, (LayoutTrack) beginObject, beginPointType,
+                (LayoutTrack) foundObject, foundPointType, dashedLine.isSelected(),
                 mainlineTrack.isSelected(), this);
 
         layoutTrackList.add(newTrack);
@@ -7491,13 +7491,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     /**
      * Adds a link in the 'to' object to the 'from' object
      */
-    private void setLink(@Nonnull Object fromObject, int fromPointType,
+    private void setLink(@Nonnull LayoutTrack fromObject, int fromPointType,
             @Nonnull Object toObject, int toPointType) {
         switch (toPointType) {
             case LayoutTrack.POS_POINT: {
                 if (fromPointType == LayoutTrack.TRACK) {
-                    ((PositionablePoint) toObject).setTrackConnection(
-                            (TrackSegment) fromObject);
+                    ((PositionablePoint) toObject).setTrackConnection((TrackSegment) fromObject);
                 } else {
                     log.error("Attempt to set a non-TRACK connection to a Positionable Point");
                 }

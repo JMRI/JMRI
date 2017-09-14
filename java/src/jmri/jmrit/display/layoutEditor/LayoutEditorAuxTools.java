@@ -572,19 +572,20 @@ public class LayoutEditorAuxTools {
         // follow path through this block - done when reaching another block, or a branching of Path
         while (curConnection != null) {
             if (typeCurConnection == LayoutTrack.TRACK) {
+                TrackSegment curTS = (TrackSegment) curConnection;
                 // track segment is current connection
-                if (((TrackSegment) curConnection).getLayoutBlock() != layoutBlock) {
+                if (curTS.getLayoutBlock() != layoutBlock) {
                     curConnection = null;
                 } else {
                     // skip over to other end of Track Segment
-                    if (((TrackSegment) curConnection).getConnect1() == prevConnection) {
+                    if (curTS.getConnect1() == prevConnection) {
                         prevConnection = curConnection;
-                        typeCurConnection = ((TrackSegment) curConnection).getType2();
-                        curConnection = ((TrackSegment) curConnection).getConnect2();
+                        typeCurConnection = curTS.getType2();
+                        curConnection = curTS.getConnect2();
                     } else {
                         prevConnection = curConnection;
-                        typeCurConnection = ((TrackSegment) curConnection).getType1();
-                        curConnection = ((TrackSegment) curConnection).getConnect1();
+                        typeCurConnection = curTS.getType1();
+                        curConnection = curTS.getConnect1();
                     }
                     // skip further if positionable point (possible anchor point)
                     if (typeCurConnection == LayoutTrack.POS_POINT) {
