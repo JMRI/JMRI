@@ -3,7 +3,6 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -157,9 +156,7 @@ public class RouteController extends AbstractController implements PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
             Sensor s = (Sensor) evt.getSource();
-            Enumeration<NamedBeanHandle<Sensor>> en = indication.keys();
-            while (en.hasMoreElements()) {
-                NamedBeanHandle<Sensor> namedSensor = en.nextElement();
+            for (NamedBeanHandle<Sensor> namedSensor : indication.keySet()) {
                 if (namedSensor.getBean() == s) {
                     Route r = indication.get(namedSensor);
                     String message = "PRA" + s.getKnownState() + r.getSystemName();
@@ -202,14 +199,12 @@ public class RouteController extends AbstractController implements PropertyChang
             return;
         }
 
-        Enumeration<NamedBeanHandle<Sensor>> en = indication.keys();
-        while (en.hasMoreElements()) {
-            NamedBeanHandle<Sensor> namedSensor = en.nextElement();
+        indication.keySet().forEach((namedSensor) -> {
             namedSensor.getBean().removePropertyChangeListener(this);
             if (log.isDebugEnabled()) {
-                log.debug("Removing listener from Sensor: " + namedSensor.getName() + " for Route: " + (indication.get(namedSensor)).getSystemName());
+                log.debug("Removing listener from Sensor: {} for Route: {}", namedSensor.getName(), indication.get(namedSensor).getSystemName());
             }
-        }
+        });
         indication = new HashMap<>();
     }
 

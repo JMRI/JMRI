@@ -1,7 +1,6 @@
 package jmri.jmrit.withrottle;
 
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import org.slf4j.Logger;
@@ -57,7 +56,7 @@ public class MultiThrottle {
      *                the MultiThrottleController.
      */
     public void handleMessage(String message) {
-        log.debug("MT handleMessage: " + message);
+        log.debug("MT handleMessage: {}", message);
         List<String> unit = Arrays.asList(message.substring(1).split("<;>"));
         String key = unit.get(0);
         String action = unit.get(1);
@@ -111,14 +110,14 @@ public class MultiThrottle {
     protected boolean removeThrottleController(String key, String action) {
 
         if (throttles == null) {
-            log.debug("No MultiThrottle to remove " + key + " from.");
+            log.debug("No MultiThrottle to remove {} from.", key);
             return false;
         }
         if (key.equals("*")) {
-            for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-                removeThrottleController(e.nextElement(), action);
+            throttles.keySet().forEach((throttle) -> {
+                removeThrottleController(throttle, action);
                 //  Runs each loco through this method individually
-            }
+            });
             return true;
         }
         if (!throttles.containsKey(key)) {
@@ -149,17 +148,17 @@ public class MultiThrottle {
         }
 
         if (key.equals("*")) {
-            for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-                passActionsToControllers(e.nextElement(), action);
+            throttles.keySet().forEach((throttle) -> {
+                passActionsToControllers(throttle, action);
                 //  Runs each loco through this method individually
-            }
+            });
             return;
         }
         if (throttles.containsKey(key)) {
             throttles.get(key).sort(action);
         }
     }
-    
+
     protected void stealThrottleController(String key, String action) {
         if (throttles == null) {
             throttles = new HashMap<>(1);
@@ -186,25 +185,26 @@ public class MultiThrottle {
         if (throttles == null) {
             return;
         }
-        for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-            removeThrottleController(e.nextElement(), "r");
-        }
+        throttles.keySet().forEach((throttle) -> {
+            removeThrottleController(throttle, "r");
+        });
     }
 
     public void eStop() {
         if (throttles == null) {
             return;
         }
-        for (Enumeration<String> e = throttles.keys(); e.hasMoreElements();) {
-            passActionsToControllers(e.nextElement(), "X");
-        }
+        throttles.keySet().forEach((throttle) -> {
+            passActionsToControllers(throttle, "X");
+        });
     }
-    
+
     /**
      * A request for a this address has been cancelled, clean up the waiting
      * ThrottleController
-     * @param key The string to use as a key to remove the proper 
-     *                MultiThrottleController
+     *
+     * @param key The string to use as a key to remove the proper
+     *            MultiThrottleController
      */
     public void canceledThrottleRequest(String key) {
         if (throttles == null) {
