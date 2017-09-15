@@ -436,11 +436,11 @@ public abstract class LayoutTrack {
      * @param connectionType - the connection type to test
      * @return true if the connection for this connection type is free
      */
-    public boolean isDisconnected(int hitType) {
+    public boolean isDisconnected(int connectionType) {
         boolean result = false;
-        if (isConnectionHitType(hitType)) {
+        if (isConnectionHitType(connectionType)) {
             try {
-                result = (null == getConnection(hitType));
+                result = (null == getConnection(connectionType));
             } catch (jmri.JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
