@@ -61,7 +61,8 @@ import org.junit.runners.Suite;
     DccAddressPanelTest.class,
     PrintActionTest.class,
     PrintCvActionTest.class,
-    ShortAddrVariableValueTest.class
+    ShortAddrVariableValueTest.class,
+    FnMapPanelESUTest.class
 })
 
 /**
