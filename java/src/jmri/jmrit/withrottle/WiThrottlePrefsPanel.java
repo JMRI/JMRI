@@ -12,7 +12,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -49,7 +48,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JRadioButton dccRB;
 
     WiThrottlePreferences localPrefs;
-    JFrame parentFrame = null;
 
     public WiThrottlePrefsPanel() {
         if (InstanceManager.getNullableDefault(WiThrottlePreferences.class) == null) {
@@ -58,11 +56,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
         initGUI();
         setGUI();
-    }
-
-    public WiThrottlePrefsPanel(JFrame f) {
-        this();
-        parentFrame = f;
     }
 
     public void initGUI() {
@@ -131,23 +124,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setUseWiFiConsist(wifiRB.isSelected());
 
         return didSet;
-    }
-
-    public void storeValues() {
-        if (setValues()) {
-            this.localPrefs.save();
-
-            if (parentFrame != null) {
-                parentFrame.dispose();
-            }
-        }
-
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
-        }
     }
 
     private JPanel eStopDelayPanel() {
@@ -283,7 +259,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        this.storeValues();
+        if (setValues()) {
+            this.localPrefs.save();
+        }
     }
 
     @Override

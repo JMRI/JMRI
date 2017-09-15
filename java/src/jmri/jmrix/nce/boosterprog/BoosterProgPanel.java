@@ -129,7 +129,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         int val = Integer.parseInt(start.getText());
 
         try {
-            p.writeCV(255, val, new ProgListener() {
+            p.writeCV("255", val, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
                     status.setText(rb.getString("StatusOK"));
@@ -146,7 +146,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         getProgrammer();
 
         try {
-            p.writeCV(255, val, new ProgListener() {
+            p.writeCV("255", val, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
                 }
@@ -161,7 +161,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         getProgrammer();
 
         try {
-            p.writeCV(253, val / 256, new ProgListener() {
+            p.writeCV("253", val / 256, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
                     synchronized (this) {
@@ -172,7 +172,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                         }
                     }
                     try {
-                        p.writeCV(254, val % 256, new ProgListener() {
+                        p.writeCV("254", val % 256, new ProgListener() {
                             @Override
                             public void programmingOpReply(int value, int retval) {
                             }
@@ -194,7 +194,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         int val = Integer.parseInt(length.getText()) / 256;
 
         try {
-            p.writeCV(253, val, new ProgListener() {
+            p.writeCV("253", val, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
                     synchronized (this) {
@@ -217,7 +217,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         int val = Integer.parseInt(length.getText()) % 256;
 
         try {
-            p.writeCV(254, val, new ProgListener() {
+            p.writeCV("254", val, new ProgListener() {
                 @Override
                 public void programmingOpReply(int value, int retval) {
                     status.setText(rb.getString("StatusOK"));

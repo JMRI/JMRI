@@ -62,6 +62,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(FunctionPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantShutdownTaskTest.class));
         suite.addTest(new JUnit4TestAdapter(SpeedProfilePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(RouteFinderTest.class));
         return suite;
     }
 

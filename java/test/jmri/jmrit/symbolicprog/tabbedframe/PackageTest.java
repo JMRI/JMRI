@@ -16,7 +16,9 @@ import org.junit.runners.Suite;
         PaneProgActionTest.class,
         BundleTest.class,
         ProgCheckActionTest.class,
-        WatchingLabelTest.class
+        WatchingLabelTest.class,
+        PaneOpsProgFrameTest.class,
+        PaneServiceProgFrameTest.class,
 })
 
 /**
