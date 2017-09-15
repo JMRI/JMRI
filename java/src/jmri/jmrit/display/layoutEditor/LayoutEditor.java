@@ -9581,10 +9581,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             drawHiddenLayoutTracks(g2);
         }
 
-        drawTrackSegments(g2, true, false);     //dashed, non-mainline
-        drawTrackSegments(g2, true, true);      //dashed, mainline
-        drawTrackSegments(g2, false, false);    //non-dashed, non-mainline
-        drawTrackSegments(g2, false, true);     //non-dashed, mainline
+        List<TrackSegment> trackSegments = getTrackSegments();
+        drawTrackSegments(g2, trackSegments, true, false);     //dashed, non-mainline
+        drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
+        drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
+        drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
 
         drawLayoutTracks(g2);
 
@@ -9645,9 +9646,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //drawLayoutTracks
 
-    private void drawTrackSegments(Graphics2D g2, boolean dashed, boolean mainline) {
+    private void drawTrackSegments(Graphics2D g2, List<TrackSegment> trackSegments, boolean dashed, boolean mainline) {
         setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment ts : getTrackSegments()) {
+        for (TrackSegment ts : trackSegments) {
             if ((ts.isDashed() == dashed) && (ts.isMainline() == mainline)) {
                 ts.draw(g2);
             }

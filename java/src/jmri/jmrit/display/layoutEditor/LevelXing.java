@@ -843,7 +843,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-
     public void setCoordsA(Point2D p) {
         dispA = MathUtil.subtract(p, center);
     }
@@ -862,6 +861,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -874,6 +874,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -1623,12 +1624,14 @@ public class LevelXing extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        if (isMainlineBD() && (!isMainlineAC())) {
-            drawXingAC(g2);
-            drawXingBD(g2);
-        } else {
-            drawXingBD(g2);
-            drawXingAC(g2);
+        if (!isHidden() || layoutEditor.isEditable()) {
+            if (isMainlineBD() && (!isMainlineAC())) {
+                drawXingAC(g2);
+                drawXingBD(g2);
+            } else {
+                drawXingBD(g2);
+                drawXingAC(g2);
+            }
         }
     }   // drawHidden(Graphics2D g2)
 
@@ -1687,7 +1690,7 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
-    
+
     protected void drawTurnoutControls(Graphics2D g2) {
         // LevelXings don't have turnout controls...
         // nothing to do here... move along...

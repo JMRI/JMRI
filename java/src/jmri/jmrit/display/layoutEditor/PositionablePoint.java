@@ -1241,56 +1241,58 @@ public class PositionablePoint extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        if (getType() != ANCHOR) {
-            Stroke originalStroke = g2.getStroke();
+        if (!isHidden() || layoutEditor.isEditable()) {
+            if (getType() != ANCHOR) {
+                Stroke originalStroke = g2.getStroke();
 
-            Point2D pt = getCoordsCenter();
-            boolean mainline = false;
-            Point2D ep1 = pt, ep2 = pt;
+                Point2D pt = getCoordsCenter();
+                boolean mainline = false;
+                Point2D ep1 = pt, ep2 = pt;
 
-            if (getConnect1() != null) {
-                mainline = getConnect1().getMainline();
-                ep1 = getConnect1().getCentreSeg();
-            }
-            if (getConnect2() != null) {
-                mainline |= getConnect2().getMainline();
-                ep2 = getConnect2().getCentreSeg();
-            }
-
-            float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-            Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-
-            if (!ep1.equals(ep2)) {
-                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
-                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                Point2D p1, p2, p3, p4;
-                if (getType() == END_BUMPER) {
-                    // draw a cross tie
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(0.0, +trackWidth);
-
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    g2.setStroke(drawingStroke);
-                    g2.draw(new Line2D.Double(p1, p2));
-                } else if (getType() == EDGE_CONNECTOR) {
-                    // draw an arrow
-                    p1 = new Point2D.Double(0.0, -trackWidth);
-                    p2 = new Point2D.Double(-trackWidth, 0.0);
-                    p3 = new Point2D.Double(0.0, +trackWidth);
-                    g2.setStroke(drawingStroke1);
-                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
-
-                    g2.draw(new Line2D.Double(p1, p2));
-                    g2.draw(new Line2D.Double(p2, p3));
-                    g2.draw(new Line2D.Double(p3, p1));
+                if (getConnect1() != null) {
+                    mainline = getConnect1().getMainline();
+                    ep1 = getConnect1().getCentreSeg();
                 }
-            }
-            g2.setStroke(originalStroke);
-        }   // if (getType() != ANCHOR)
+                if (getConnect2() != null) {
+                    mainline |= getConnect2().getMainline();
+                    ep2 = getConnect2().getCentreSeg();
+                }
+
+                float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
+                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+                Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+
+                if (!ep1.equals(ep2)) {
+                    setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
+                    double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
+                    Point2D p1, p2, p3, p4;
+                    if (getType() == END_BUMPER) {
+                        // draw a cross tie
+                        p1 = new Point2D.Double(0.0, -trackWidth);
+                        p2 = new Point2D.Double(0.0, +trackWidth);
+
+                        p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                        p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                        g2.setStroke(drawingStroke);
+                        g2.draw(new Line2D.Double(p1, p2));
+                    } else if (getType() == EDGE_CONNECTOR) {
+                        // draw an arrow
+                        p1 = new Point2D.Double(0.0, -trackWidth);
+                        p2 = new Point2D.Double(-trackWidth, 0.0);
+                        p3 = new Point2D.Double(0.0, +trackWidth);
+                        g2.setStroke(drawingStroke1);
+                        p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                        p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                        p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+
+                        g2.draw(new Line2D.Double(p1, p2));
+                        g2.draw(new Line2D.Double(p2, p3));
+                        g2.draw(new Line2D.Double(p3, p1));
+                    }
+                }
+                g2.setStroke(originalStroke);
+            }   // if (getType() != ANCHOR)
+        }   // if (!isHidden() || layoutEditor.isEditable())
     }
 
     /**
