@@ -849,6 +849,8 @@ public class AbstractAutomaton implements Runnable {
             }
             if (prompt != null) {
                 log.trace("waitChange continues from {}", prompt.getSource());
+            } else {
+                log.trace("waitChange continues")
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
