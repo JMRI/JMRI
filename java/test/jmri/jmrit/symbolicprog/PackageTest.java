@@ -60,7 +60,8 @@ import org.junit.runners.Suite;
     DecVarSliderTest.class,
     DccAddressPanelTest.class,
     PrintActionTest.class,
-    PrintCvActionTest.class
+    PrintCvActionTest.class,
+    ShortAddrVariableValueTest.class
 })
 
 /**
