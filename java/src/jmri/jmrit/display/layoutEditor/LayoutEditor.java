@@ -469,22 +469,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     //Lists of items that describe the Layout, and allow it to be drawn
     //Each of the items must be saved to disk over sessions
-    public ArrayList<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
-    public ArrayList<LocoIcon> markerImage = new ArrayList<>();                 //marker images
-    public ArrayList<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
-    public ArrayList<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
-    public ArrayList<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
-    public ArrayList<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
-    public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
+    public List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
+    public List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
+    public List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
+    public List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
+    public List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
+    public List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
+    public List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
     private List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
-    public ArrayList<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
-    public ArrayList<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
-    public ArrayList<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
-    public ArrayList<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
-    public ArrayList<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
+    public List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
+    public List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
+    public List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
+    public List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
+    public List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
     // counts used to determine unique internal names
     private int numAnchors = 0;
@@ -5280,7 +5280,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     // this is a method to iterate over a list of lists of items
     // calling the predicate tester.test on each one
-    // all matching items are then added to the resulting ArrayList
+    // all matching items are then added to the resulting List
     private static List testEachItemInListOfLists(
             @Nonnull List<List> listOfListsOfObjects,
             @Nonnull Predicate<Object> tester) {
@@ -6417,8 +6417,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     }
 
-    private ArrayList<Positionable> _positionableSelection = new ArrayList<>();
-    private ArrayList<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    private List<Positionable> _positionableSelection = new ArrayList<>();
+    private List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
 
     private void highLightSelection(Graphics2D g) {
         Stroke stroke = g.getStroke();
@@ -9839,7 +9839,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
-    public ArrayList<LayoutSlip> getLayoutSlips() {
+    public List<LayoutSlip> getLayoutSlips() {
         Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutSlip.class);
         return solt.map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
