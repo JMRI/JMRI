@@ -21,27 +21,35 @@
       <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="13">
         <output name="1" label="Pad A">
             <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
         </output>
 		<output name="2" label="Pad B">
             <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
         </output>
 		<output name="3" label="Pad C">
             <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
         </output>
         <output name="4" label="Pad D">
             <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
         </output>
         <output name="5" label="E/Whistle">
             <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
         </output>
         <output name="6" label="F/Sound">
             <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">E/Geluid</label>
         </output>
         <output name="7" label="Signal">
             <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
         </output>
         <output name="8" label="Main Sw">
             <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschak.</label>
         </output>
         <output name="9" label="Vmid">
             <label xml:lang="de">Vmid</label>
@@ -578,7 +586,7 @@
           </enumChoice>
         </enumVal>
         <label>Exponential brake curve</label>
-		<label xml:lang="de">exponentielle Abbremskurve</label>
+		<label xml:lang="de">Exponentielle Abbremskurve</label>
       </variable>      
       <variable CV="49" mask="XXXVXXXX" item="ATL1-E">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
@@ -615,7 +623,7 @@
           </enumChoice>
         </enumVal>
         <label>Signal Mode Direction Change</label>
-		<label xml:lang="de">Not stopp bei Umschaltbefehl</label>
+		<label xml:lang="de">Not Stopp bei Umschaltbefehl</label>
       </variable>
       <variable CV="50" mask="XXXXXXXV" item="ATL2-A">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -717,7 +725,7 @@
           </enumChoice>
         </enumVal>
         <label>Sound Dependency</label>
-		<label xml:lang="de">lastabhängige Soundsteuerung</label>
+		<label xml:lang="de">Lastabhängige Soundsteuerung</label>
       </variable>
       <variable CV="51" mask="XXXXXXXV" item="ATL3-A">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
