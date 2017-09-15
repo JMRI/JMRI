@@ -167,7 +167,7 @@ public class ActiveTrain {
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
-    private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
+    private List<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
     private jmri.Section mLastAllocatedSection = null;
     private jmri.Section mSecondAllocatedSection = null;
     private int mNextAllocationNumber = 1;
@@ -683,7 +683,7 @@ public class ActiveTrain {
     public void allocateAFresh() {
         setStatus(WAITING);
         setTransitReversed(false);
-        ArrayList<AllocatedSection> sectionsToRelease = new ArrayList<AllocatedSection>();
+        List<AllocatedSection> sectionsToRelease = new ArrayList<AllocatedSection>();
         for (AllocatedSection as : InstanceManager.getDefault(DispatcherFrame.class).getAllocatedSectionsList()) {
             if (as.getActiveTrain() == this) {
                 sectionsToRelease.add(as);
@@ -710,8 +710,8 @@ public class ActiveTrain {
         }
     }
 
-    public ArrayList<AllocatedSection> getAllocatedSectionList() {
-        ArrayList<AllocatedSection> list = new ArrayList<>();
+    public List<AllocatedSection> getAllocatedSectionList() {
+        List<AllocatedSection> list = new ArrayList<>();
         for (int i = 0; i < mAllocatedSections.size(); i++) {
             list.add(mAllocatedSections.get(i));
         }
@@ -728,11 +728,11 @@ public class ActiveTrain {
      *
      * @return the list of blocks order of occupation
      */
-    public ArrayList<Block> getBlockList() {
-        ArrayList<Block> list = new ArrayList<>();
+    public List<Block> getBlockList() {
+        List<Block> list = new ArrayList<>();
         for (int i = 0; i < mAllocatedSections.size(); i++) { // loop thru allocated sections, then all blocks for each section
             Section s = mAllocatedSections.get(i).getSection();
-            ArrayList<Block> bl = s.getBlockList();
+            List<Block> bl = s.getBlockList();
             if (bl.size() > 1) { //sections with multiple blocks need extra logic
 
                 boolean blocksConnected = true;

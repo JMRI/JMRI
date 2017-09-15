@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -50,7 +51,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     String[] interlockTypes = {Bundle.getMessage("SetTurnoutsOnly"), Bundle.getMessage("SetTurnoutsAndSignalMasts"), Bundle.getMessage("FullInterlock")};  // NOI18N
     JComboBox<String> typeBox = new JComboBox<>(interlockTypes);
 
-    ArrayList<LayoutEditor> panels;
+    List<LayoutEditor> panels;
 
     EntryExitPairs nxPairs = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
@@ -196,7 +197,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         return null;
     }
 
-    ArrayList<ValidPoints> validPoints = new ArrayList<>();
+    List<ValidPoints> validPoints = new ArrayList<>();
 
     private void selectPointsFromPanel() {
         if (selectPanel.getSelectedIndex() == -1) {
@@ -208,25 +209,26 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         panel = panels.get(selectPanel.getSelectedIndex());
         fromPoint.removeAllItems();
         toPoint.removeAllItems();
-        for (PositionablePoint pp : panel.pointList) {
+        for (PositionablePoint pp : panel.getPositionablePoints()) {
             addPointToCombo(pp.getWestBoundSignalMastName(), pp.getWestBoundSensorName());
             addPointToCombo(pp.getEastBoundSignalMastName(), pp.getEastBoundSensorName());
         }
 
-        for (LayoutTurnout t : panel.turnoutList) {
+        for (LayoutTurnout t : panel.getLayoutTurnouts()) {
             addPointToCombo(t.getSignalAMastName(), t.getSensorAName());
             addPointToCombo(t.getSignalBMastName(), t.getSensorBName());
             addPointToCombo(t.getSignalCMastName(), t.getSensorCName());
             addPointToCombo(t.getSignalDMastName(), t.getSensorDName());
         }
 
-        for (LevelXing xing : panel.xingList) {
+        for (LevelXing xing : panel.getLevelXings()) {
             addPointToCombo(xing.getSignalAMastName(), xing.getSensorAName());
             addPointToCombo(xing.getSignalBMastName(), xing.getSensorBName());
             addPointToCombo(xing.getSignalCMastName(), xing.getSensorCName());
             addPointToCombo(xing.getSignalDMastName(), xing.getSensorDName());
         }
-        for (LayoutSlip slip : panel.slipList) {
+
+        for (LayoutSlip slip : panel.getLayoutSlips()) {
             addPointToCombo(slip.getSignalAMastName(), slip.getSensorAName());
             addPointToCombo(slip.getSignalBMastName(), slip.getSensorBName());
             addPointToCombo(slip.getSignalCMastName(), slip.getSensorCName());
@@ -289,8 +291,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         LayoutEditor panel;
 
-        ArrayList<Object> source = null;
-        ArrayList<Object> dest = null;
+        List<Object> source = null;
+        List<Object> dest = null;
 
         void updateNameList() {
             source = nxPairs.getNxSource(panel);
