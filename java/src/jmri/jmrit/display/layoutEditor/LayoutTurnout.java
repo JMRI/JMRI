@@ -190,25 +190,22 @@ public class LayoutTurnout extends LayoutTrack {
 
     protected LayoutBlock block = null;
     protected LayoutBlock blockB = null;  // Xover - second block, if there is one
-    protected LayoutBlock blockC = null;  // Xover - oneThirdPoint block, if there is one
-    protected LayoutBlock blockD = null;  // Xover - oneFourthPoint block, if there is one
+    protected LayoutBlock blockC = null;  // Xover - third block, if there is one
+    protected LayoutBlock blockD = null;  // Xover - forth block, if there is one
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)
-    public String turnoutName = "";   // should be the name (system or user) of
-    //  an existing physical turnout
-    public String secondTurnoutName = "";
-    /* should be the name (system or user) of an existing physical turnout.
-        Second turnout is used to allow the throwing of two different turnout
-        to control one cross-over
-     */
+
+    // these should be the system or user name of an existing physical turnout
+    protected String turnoutName = "";
+    protected String secondTurnoutName = "";
     private boolean secondTurnoutInverted = false;
 
-    public String blockName = "";  // name for block, if there is one
-    public String blockBName = "";  // Xover/slip - name for second block, if there is one
-    public String blockCName = "";  // Xover/slip - name for oneThirdPoint block, if there is one
-    public String blockDName = "";  // Xover/slip - name for oneFourthPoint block, if there is one
+    protected String blockName = "";  // name for block, if there is one
+    protected String blockBName = "";  // Xover/slip - name for second block, if there is one
+    protected String blockCName = "";  // Xover/slip - name for third block, if there is one
+    protected String blockDName = "";  // Xover/slip - name for forth block, if there is one
 
     protected NamedBeanHandle<SignalHead> signalA1HeadNamed = null; // signal 1 (continuing) (throat for RH, LH, WYE)
     protected NamedBeanHandle<SignalHead> signalA2HeadNamed = null; // signal 2 (diverging) (throat for RH, LH, WYE)

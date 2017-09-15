@@ -448,7 +448,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
     private Object selectedObject = null;       //selected object, null if nothing selected
     private Object prevSelectedObject = null;   //previous selected object, for undo
-    private int selectedPointType = 0;          //connection type within the selected object
+    private int selectedPointType = 0;          //hit point type within the selected object
 
     @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
     private Object foundObject = null; //found object, null if nothing found

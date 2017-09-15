@@ -84,7 +84,6 @@ public class LayoutEditorAuxTools {
      * 2) and 3) above. For case 1), two track segments, the direction reflects
      * an "average" over the two track segments. See LayoutConnectivity for the
      * allowed values of direction.
-     * <p>
      */
     public void initializeBlockConnectivity() {
         if (initialized) {

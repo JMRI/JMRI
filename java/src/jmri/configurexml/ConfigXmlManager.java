@@ -120,10 +120,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     @Override
-    public ArrayList<Object> getInstanceList(Class<?> c) {
-        ArrayList<Object> result = new ArrayList<>();
+    public List<Object> getInstanceList(Class<?> c) {
+        List<Object> result = new ArrayList<>();
 
-        ArrayList<Object> temp = new ArrayList<>(plist);
+        List<Object> temp = new ArrayList<>(plist);
         temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
@@ -132,9 +132,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (c.isInstance(o)) {
                 result.add(o);
             }
-        }
-        if (result.isEmpty()) {
-            result = null;
         }
         return result;
     }
@@ -151,7 +148,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
 
         // and add to list
-        //clist.add(o);
         clist.put(o, x);
     }
 

@@ -5,17 +5,21 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
- * LayoutTurntable, LevelXing, TrackSegment &amp; PositionablePoint)
+ * Abstract base class for all layout track objects (PositionablePoint,
+ * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  *
+ * @author Dave Duchamp Copyright (C) 2009
  * @author George Warner Copyright (c) 2017
  */
 public abstract class LayoutTrack {
@@ -23,7 +27,7 @@ public abstract class LayoutTrack {
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
-    // hit location (& connection) types
+    // hit point types
     public static final int NONE = 0;
     public static final int POS_POINT = 1;
     public static final int TURNOUT_A = 2;  // throat for RH, LH, and WYE turnouts
@@ -131,19 +135,19 @@ public abstract class LayoutTrack {
 
     /**
      * one draw routine to rule them all...
-     * @param g2 
+     * @param g2 the graphics context
      */
     protected abstract void draw(Graphics2D g2);
 
     /**
      * draw the edit controls
-     * @param g2 
+     * @param g2 the graphics context
      */
     protected abstract void drawEditControls(Graphics2D g2);
 
     /**
      * draw the turnout controls
-     * @param g2 
+     * @param g2 the graphics context
      */
     protected abstract void drawTurnoutControls(Graphics2D g2);
     
@@ -216,8 +220,7 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point (abstract: should be overridden
-     * by ALL subclasses)
+     * find the hit (location) type for a point
      *
      * @param hitPoint           - the point
      * @param useRectangles      - whether to use (larger) rectangles or
@@ -239,8 +242,10 @@ public abstract class LayoutTrack {
         return findHitPointType(p, useRectangles, false);
     }
 
-    // some connection types aren't actually connections
-    // they're only used for hit testing (to determine what is at a location)
+    /**
+     * @param hitType the hit point type
+     * @return true if this int is for a connection to a LayoutTrack
+     */
     protected static boolean isConnectionHitType(int hitType) {
         boolean result = false; // assume failure (pessimist!)
         switch (hitType) {
@@ -282,8 +287,12 @@ public abstract class LayoutTrack {
             result = true;  // these are all connection types
         }
         return result;
-    }
+    }   // isConnectionHitType
 
+    /**
+     * @param hitType the hit point type
+     * @return true if this int is for a layout control
+     */
     protected static boolean isControlHitType(int hitType) {
         boolean result = false; // assume failure (pessimist!)
         switch (hitType) {
@@ -325,8 +334,12 @@ public abstract class LayoutTrack {
             result = true;  // these are all control types
         }
         return result;
-    }
+    }   // isControlHitType
 
+    /**
+     * @param hitType the hit point type
+     * @return true if this int is for a popup menu
+     */
     protected static boolean isPopupHitType(int hitType) {
         boolean result = false; // assume failure (pessimist!)
         switch (hitType) {
@@ -368,7 +381,7 @@ public abstract class LayoutTrack {
             result = true;  // these are all popup hit types
         }
         return result;
-    }
+    }   // isPopupHitType
 
     /**
      * return the coordinates for a specified connection type (abstract: should
@@ -380,8 +393,7 @@ public abstract class LayoutTrack {
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
-     * @return the bounds of this track (abstract: should be overridden by ALL
-     *         subclasses)
+     * @return the bounds of this track 
      */
     public abstract Rectangle2D getBounds();
 
@@ -424,11 +436,11 @@ public abstract class LayoutTrack {
      * @param connectionType - the connection type to test
      * @return true if the connection for this connection type is free
      */
-    public boolean isDisconnected(int connectionType) {
+    public boolean isDisconnected(int hitType) {
         boolean result = false;
-        if (isConnectionHitType(connectionType)) {
+        if (isConnectionHitType(hitType)) {
             try {
-                result = (null == getConnection(connectionType));
+                result = (null == getConnection(hitType));
             } catch (jmri.JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
