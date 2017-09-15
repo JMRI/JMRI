@@ -579,7 +579,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         if (tce != null) {
             tce.stopCellEditing();
         }
-        if (preferences.getAppeaancesSize() != _appearanceMap.size()) {
+        if (preferences.getAppearances().size() != _appearanceMap.size()) {
             different = true;
         } else {
             for (int i = 0; i < _appearanceMap.size(); i++) {

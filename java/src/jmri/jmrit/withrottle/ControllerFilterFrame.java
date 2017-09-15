@@ -23,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Route;
 import jmri.RouteManager;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -266,17 +267,20 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                 log.debug("row is greater than turnout list size");
                 return null;
             }
+            Turnout t = mgr.getBySystemName(sysNameList.get(r));
             switch (c) {
                 case INCLUDECOL:
-                    Object o = mgr.getBySystemName(sysNameList.get(r)).getProperty("WifiControllable");
-                    if ((o != null) && (o.toString().equalsIgnoreCase("false"))) {
-                        return false;
+                    if (t != null) {
+                        Object o = t.getProperty("WifiControllable");
+                        if (o != null) {
+                            return Boolean.getBoolean(o.toString());
+                        }
                     }
                     return true;
                 case SNAMECOL:
                     return sysNameList.get(r);
                 case UNAMECOL:
-                    return mgr.getBySystemName(sysNameList.get(r)).getUserName();
+                    return t != null ? t.getUserName() : null;
                 default:
                     return null;
             }
@@ -284,25 +288,30 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         @Override
         public void setValueAt(Object type, int r, int c) {
-
-            switch (c) {
-                case INCLUDECOL:
-                    mgr.getBySystemName(sysNameList.get(r)).setProperty("WifiControllable", type);
-                    if (!isDirty) {
-                        this.fireTableChanged(new TableModelEvent(this));
-                        isDirty = true;
-                    }
-                    break;
-                default:
-                    log.warn("Unhandled col: {}", c);
-                    break;
+            Turnout t = mgr.getBySystemName(sysNameList.get(r));
+            if (t != null) {
+                switch (c) {
+                    case INCLUDECOL:
+                        t.setProperty("WifiControllable", type);
+                        if (!isDirty) {
+                            this.fireTableChanged(new TableModelEvent(this));
+                            isDirty = true;
+                        }
+                        break;
+                    default:
+                        log.warn("Unhandled col: {}", c);
+                        break;
+                }
             }
         }
 
         @Override
         public void setIncludeColToValue(boolean value) {
             for (String sysName : sysNameList) {
-                mgr.getBySystemName(sysName).setProperty("WifiControllable", value);
+                Turnout t = mgr.getBySystemName(sysName);
+                if (t != null) {
+                    t.setProperty("WifiControllable", value);
+                }
             }
             fireTableDataChanged();
         }
@@ -310,12 +319,14 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         @Override
         public void setIncludeToUserNamed() {
             for (String sysName : sysNameList) {
-                NamedBean bean = mgr.getBySystemName(sysName);
-                String uname = bean.getUserName();
-                if ((uname != null) && (uname.length() > 0)) {
-                    bean.setProperty("WifiControllable", true);
-                } else {
-                    bean.setProperty("WifiControllable", false);
+                Turnout t = mgr.getBySystemName(sysName);
+                if (t != null) {
+                    String uname = t.getUserName();
+                    if ((uname != null) && (uname.length() > 0)) {
+                        t.setProperty("WifiControllable", true);
+                    } else {
+                        t.setProperty("WifiControllable", false);
+                    }
                 }
             }
             fireTableDataChanged();
@@ -347,8 +358,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                         return null;
                     }
                     Object o = rt.getProperty("WifiControllable");
-                    if ((o != null) && (o.toString().equalsIgnoreCase("false"))) {
-                        return false;
+                    if (o != null) {
+                        return Boolean.getBoolean(o.toString());
                     }
                     return true;
                 case SNAMECOL:

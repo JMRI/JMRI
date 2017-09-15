@@ -754,7 +754,7 @@ public class Track {
         if (types.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(types);
+        java.util.Arrays.sort(types);
         for (String type : types) {
             if (!_typeList.contains(type)) {
                 _typeList.add(type);
@@ -835,7 +835,7 @@ public class Track {
         if (_roadList.size() == 0) {
             return roads;
         }
-        jmri.util.StringUtil.sort(roads);
+        java.util.Arrays.sort(roads);
         return roads;
     }
 
@@ -843,7 +843,7 @@ public class Track {
         if (roads.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(roads);
+        java.util.Arrays.sort(roads);
         for (String roadName : roads) {
             if (!roadName.equals(NONE)) {
                 _roadList.add(roadName);
@@ -1030,7 +1030,7 @@ public class Track {
         if (loads.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         for (String shipLoadName : loads) {
             if (!shipLoadName.equals(NONE)) {
                 _shipLoadList.add(shipLoadName);
@@ -1052,7 +1052,7 @@ public class Track {
         if (_shipLoadList.size() == 0) {
             return loads;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         return loads;
     }
 
