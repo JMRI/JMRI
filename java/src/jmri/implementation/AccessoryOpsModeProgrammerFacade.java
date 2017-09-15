@@ -139,11 +139,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     }
 
     @Override
-    synchronized public void confirmCV(String cv, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(cv, p);
-    }
-
-    @Override
     synchronized public void readCV(String cv, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         state = ProgState.PROGRAMMING;

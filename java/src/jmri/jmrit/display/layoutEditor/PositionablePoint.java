@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionablePoint extends LayoutTrack {
 
-    // Defined text resource
+    // Defined text resource, should be called using Bundle.getMessage() to allow reuse of shared keys upstream
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
@@ -837,7 +837,7 @@ public class PositionablePoint extends LayoutTrack {
 
         // if there are any track connections
         if ((connect1 != null) || (connect2 != null)) {
-            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
                 //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName());
                 //jmi.setEnabled(false);
@@ -1117,11 +1117,11 @@ public class PositionablePoint extends LayoutTrack {
 
         editorCombo.addActionListener(selectPanelListener);
         JPanel selectorPanel = new JPanel();
-        selectorPanel.add(new JLabel("Select Panel"));
+        selectorPanel.add(new JLabel(rb.getString("Select Panel")));
         selectorPanel.add(editorCombo);
         linkPointsBox = new JComboBox<String>();
         updatePointBox();
-        selectorPanel.add(new JLabel("Connecting Block"));
+        selectorPanel.add(new JLabel(rb.getString("ConnectingBlock")));
         selectorPanel.add(linkPointsBox);
         return selectorPanel;
     }
@@ -1426,4 +1426,5 @@ public class PositionablePoint extends LayoutTrack {
     }   // getLayoutConnectivity()
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }
