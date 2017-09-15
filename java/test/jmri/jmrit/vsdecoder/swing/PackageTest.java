@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
     VSDPreferencesActionTest.class,
     VSDControlTest.class,
     VSDManagerFrameTest.class,
-    VSDOptionsDialogTest.class
+    VSDOptionsDialogTest.class,
+    VSDConfigDialogTest.class
 })
 
 
