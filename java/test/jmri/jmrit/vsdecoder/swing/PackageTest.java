@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
     VSDControlTest.class,
     VSDManagerFrameTest.class,
     VSDOptionsDialogTest.class,
-    VSDConfigDialogTest.class
+    VSDConfigDialogTest.class,
+    ManageLocationsFrameTest.class
 })
 
 
