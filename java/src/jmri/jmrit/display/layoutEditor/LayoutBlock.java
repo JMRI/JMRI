@@ -612,7 +612,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //a block is attached and this LayoutBlock is used
             //initialize connectivity as defined in first Layout Editor panel
             panel = panels.get(0);
-            ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+            List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
             //if more than one panel, find panel with the highest connectivity
             if (panels.size() > 1) {
                 for (int i = 1; i < panels.size(); i++) {
@@ -639,7 +639,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //a block is attached and this LayoutBlock is used
             //initialize connectivity as defined in first Layout Editor panel
             LayoutEditor panel = panels.get(0);
-            ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+            List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
             //if more than one panel, find panel with the highest connectivity
             if (panels.size() > 1) {
                 for (int i = 1; i < panels.size(); i++) {
@@ -690,12 +690,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             log.error("Null panel in call to updatePathsUsingPanel");
             return;
         }
-        ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
         updateBlockPaths(c, panel);
 
     }
 
-    private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
+    private void updateBlockPaths(List<LayoutConnectivity> c, LayoutEditor panel) {
         if (enableAddRouteLogging) {
             log.info("From " + this.getDisplayName() + " updateBlockPaths Called");
         }
@@ -790,7 +790,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 //end debugging
     }   // updateBlockPaths
 
-    private boolean compareConnectivity(ArrayList<LayoutConnectivity> main, ArrayList<LayoutConnectivity> test) {
+    private boolean compareConnectivity(List<LayoutConnectivity> main, List<LayoutConnectivity> test) {
         //loop over connectivities in test list
         for (LayoutConnectivity lc : test) {
             //loop over main list to make sure the same blocks are connected
@@ -1400,7 +1400,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //a block is attached and this LayoutBlock is used
             //initialize connectivity as defined in first Layout Editor panel
             LayoutEditor panel = panels.get(0);
-            ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+            List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 
             //if more than one panel, find panel with the highest connectivity
             if (panels.size() > 1) {
@@ -1433,7 +1433,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
             LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
-            ArrayList<LayoutConnectivity> d = auxTools.getConnectivityList(_instance);
+            List<LayoutConnectivity> d = auxTools.getConnectivityList(_instance);
             ArrayList<LayoutBlock> attachedBlocks = new ArrayList<LayoutBlock>();
 
             for (int i = 0; i < d.size(); i++) {
@@ -2378,7 +2378,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //a block is attached and this LayoutBlock is used
             //initialize connectivity as defined in first Layout Editor panel
             LayoutEditor panel = panels.get(0);
-            ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+            List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 
             //if more than one panel, find panel with the highest connectivity
             if (panels.size() > 1) {

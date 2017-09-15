@@ -12,6 +12,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -663,42 +664,6 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    public void reCheckBlockBoundary() {
-        if (type == END_BUMPER) {
-            return;
-        }
-        if (getConnect1() == null && getConnect2() == null) {
-            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if (westBoundSignalMastNamed != null) {
-                removeSML(getWestBoundSignalMast());
-            }
-            if (eastBoundSignalMastNamed != null) {
-                removeSML(getEastBoundSignalMast());
-            }
-            westBoundSignalMastNamed = null;
-            eastBoundSignalMastNamed = null;
-            setWestBoundSensor("");
-            setEastBoundSensor("");
-            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
-        } else if (getConnect1() == null || getConnect2() == null) {
-            //could still be in the process of rebuilding the point details
-            return;
-        } else if (getConnect1().getLayoutBlock() == getConnect2().getLayoutBlock()) {
-            //We are no longer a block bounardy
-            if (westBoundSignalMastNamed != null) {
-                removeSML(getWestBoundSignalMast());
-            }
-            if (eastBoundSignalMastNamed != null) {
-                removeSML(getEastBoundSignalMast());
-            }
-            westBoundSignalMastNamed = null;
-            eastBoundSignalMastNamed = null;
-            setWestBoundSensor("");
-            setEastBoundSensor("");
-            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
-        }
-    }
-
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
@@ -1345,17 +1310,58 @@ public class PositionablePoint extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
     }   // drawEditControls
-    
+
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
         // nothing to do here... move along...
     }
 
     /*
-        return the layout connectivity for this PositionablePoint
+     * {@inheritDoc}
      */
-    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+    @Override
+    public void reCheckBlockBoundary() {
+        if (type == END_BUMPER) {
+            return;
+        }
+        if (getConnect1() == null && getConnect2() == null) {
+            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
+            if (westBoundSignalMastNamed != null) {
+                removeSML(getWestBoundSignalMast());
+            }
+            if (eastBoundSignalMastNamed != null) {
+                removeSML(getEastBoundSignalMast());
+            }
+            westBoundSignalMastNamed = null;
+            eastBoundSignalMastNamed = null;
+            setWestBoundSensor("");
+            setEastBoundSensor("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+        } else if (getConnect1() == null || getConnect2() == null) {
+            //could still be in the process of rebuilding the point details
+            return;
+        } else if (getConnect1().getLayoutBlock() == getConnect2().getLayoutBlock()) {
+            //We are no longer a block bounardy
+            if (westBoundSignalMastNamed != null) {
+                removeSML(getWestBoundSignalMast());
+            }
+            if (eastBoundSignalMastNamed != null) {
+                removeSML(getEastBoundSignalMast());
+            }
+            westBoundSignalMastNamed = null;
+            eastBoundSignalMastNamed = null;
+            setWestBoundSensor("");
+            setEastBoundSensor("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+        }
+    }   // reCheckBlockBoundary
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        List<LayoutConnectivity> results = new ArrayList<>();
         LayoutConnectivity lc = null;
         LayoutBlock blk1 = null, blk2 = null;
         TrackSegment ts1 = getConnect1(), ts2 = getConnect2();

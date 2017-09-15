@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -379,12 +380,6 @@ public abstract class LayoutTrack {
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
-     * abstract method... subclasses should implement _IF_ they need to recheck
-     * their block boundaries
-     */
-    public abstract void reCheckBlockBoundary();
-
-    /**
      * @return the bounds of this track (abstract: should be overridden by ALL
      *         subclasses)
      */
@@ -410,6 +405,18 @@ public abstract class LayoutTrack {
      * @throws jmri.JmriException - if connectionType or type are invalid
      */
     public abstract void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException;
+
+    /**
+     * abstract method... subclasses should implement _IF_ they need to recheck
+     * their block boundaries
+     */
+    protected abstract void reCheckBlockBoundary();
+
+    /**
+     * get the layout connectivity for this track
+     * @return the list of Layout Connectivity objects
+     */
+    protected abstract List<LayoutConnectivity> getLayoutConnectivity();
 
     /**
      * return true if this connection type is disconnected

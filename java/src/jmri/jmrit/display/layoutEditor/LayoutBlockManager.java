@@ -364,7 +364,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         //input has corresponding LayoutBlocks - does it correspond to a block boundary?
         LayoutEditor panel = fLayoutBlock.getMaxConnectedPanel();
-        ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
         LayoutConnectivity lc = null;
         int i = 0;
         boolean facingIsBlock1 = true;
@@ -1506,7 +1506,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (panel == null) {
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
-        ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
         LayoutConnectivity lc = null;
         int i = 0;
         boolean facingIsBlock1 = true;

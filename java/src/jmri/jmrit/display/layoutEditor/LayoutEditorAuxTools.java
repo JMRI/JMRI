@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.Path;
@@ -28,7 +29,7 @@ public class LayoutEditorAuxTools {
     // constants
     // operational instance variables
     private LayoutEditor layoutEditor = null;
-    private ArrayList<LayoutConnectivity> cList = new ArrayList<LayoutConnectivity>(); //LayoutConnectivity list
+    private List<LayoutConnectivity> cList = new ArrayList<>(); //LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
     private boolean initialized = false;
 
@@ -48,14 +49,14 @@ public class LayoutEditorAuxTools {
      * This routine returns an ArrayList of BlockConnectivity objects involving
      * the specified LayoutBlock.
      */
-    public ArrayList<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
+    public List<LayoutConnectivity> getConnectivityList(LayoutBlock blk) {
         if (!initialized) {
             initializeBlockConnectivity();
         }
         if (blockConnectivityChanged) {
             updateBlockConnectivity();
         }
-        ArrayList<LayoutConnectivity> retList = new ArrayList<LayoutConnectivity>();
+        List<LayoutConnectivity> retList = new ArrayList<>();
         for (LayoutConnectivity lc : cList) {
             if ((lc.getBlock1() == blk) || (lc.getBlock2() == blk)) {
                 retList.add(lc);
@@ -83,45 +84,24 @@ public class LayoutEditorAuxTools {
      * 2) and 3) above. For case 1), two track segments, the direction reflects
      * an "average" over the two track segments. See LayoutConnectivity for the
      * allowed values of direction.
-     *
+     * <p>
      */
     public void initializeBlockConnectivity() {
         if (initialized) {
             log.error("Call to initialize a connectivity list that has already been initialized");
             return;
         }
-        cList = new ArrayList<LayoutConnectivity>();
-        ArrayList<LayoutConnectivity> lcs = null;
+        cList = new ArrayList<>();
+        List<LayoutConnectivity> lcs = null;
 
-        // Check for block boundaries at positionable points.
-        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-            lcs = p.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
-            }
-        }
-
-        // Check for block boundaries at layout turnouts and level crossings
-        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
-            lcs = ts.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
-            }
-        }
-
-        // check for block boundaries internal to crossover turnouts
-        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
-            lcs = lt.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
-            }
-        }
-
-        // check for block boundaries internal to slips
-        for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
-            lcs = ls.getLayoutConnectivity();
-            if (lcs != null) {
-                cList.addAll(lcs); // append to list
+        for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
+            if ((lt instanceof PositionablePoint)
+                    || (lt instanceof TrackSegment)
+                    || (lt instanceof LayoutTurnout)) { // <== includes LayoutSlips
+                lcs = lt.getLayoutConnectivity();
+                if (lcs != null) {
+                    cList.addAll(lcs); // append to list
+                }
             }
         }
         initialized = true;
@@ -136,7 +116,7 @@ public class LayoutEditorAuxTools {
         boolean[] found = new boolean[sz];
         Arrays.fill(found, false);
 
-        ArrayList<LayoutConnectivity> lcs = null;
+        List<LayoutConnectivity> lcs = null;
 
         // Check for block boundaries at positionable points.
         for (PositionablePoint p : layoutEditor.getPositionablePoints()) {

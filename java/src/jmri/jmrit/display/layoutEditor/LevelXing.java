@@ -808,83 +808,6 @@ public class LevelXing extends LayoutTrack {
         reCheckBlockBoundary();
     }
 
-    public void reCheckBlockBoundary() {
-        if (connectA == null && connectB == null && connectC == null && connectD == null) {
-            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if (signalAMastNamed != null) {
-                removeSML(getSignalAMast());
-            }
-            if (signalBMastNamed != null) {
-                removeSML(getSignalBMast());
-            }
-            if (signalCMastNamed != null) {
-                removeSML(getSignalCMast());
-            }
-            if (signalDMastNamed != null) {
-                removeSML(getSignalDMast());
-            }
-            signalAMastNamed = null;
-            signalBMastNamed = null;
-            signalCMastNamed = null;
-            signalDMastNamed = null;
-            sensorANamed = null;
-            sensorBNamed = null;
-            sensorCNamed = null;
-            sensorDNamed = null;
-            //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
-        } else if (connectA == null || connectB == null || connectC == null || connectD == null) {
-            //could still be in the process of rebuilding the point details
-            return;
-        }
-
-        TrackSegment trkA;
-        TrackSegment trkB;
-        TrackSegment trkC;
-        TrackSegment trkD;
-
-        if (connectA instanceof TrackSegment) {
-            trkA = (TrackSegment) connectA;
-            if (trkA.getLayoutBlock() == blockAC) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                signalAMastNamed = null;
-                sensorANamed = null;
-            }
-        }
-        if (connectC instanceof TrackSegment) {
-            trkC = (TrackSegment) connectC;
-            if (trkC.getLayoutBlock() == blockAC) {
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                signalCMastNamed = null;
-                sensorCNamed = null;
-            }
-        }
-        if (connectB instanceof TrackSegment) {
-            trkB = (TrackSegment) connectB;
-            if (trkB.getLayoutBlock() == blockBD) {
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                signalBMastNamed = null;
-                sensorBNamed = null;
-            }
-        }
-
-        if (connectD instanceof TrackSegment) {
-            trkD = (TrackSegment) connectC;
-            if (trkD.getLayoutBlock() == blockBD) {
-                if (signalDMastNamed != null) {
-                    removeSML(getSignalDMast());
-                }
-                signalDMastNamed = null;
-                sensorDNamed = null;
-            }
-        }
-    }
-
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
@@ -1768,6 +1691,23 @@ public class LevelXing extends LayoutTrack {
     protected void drawTurnoutControls(Graphics2D g2) {
         // LevelXings don't have turnout controls...
         // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public void reCheckBlockBoundary() {
+        // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        // nothing to do here... move along...
+        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);

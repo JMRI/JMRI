@@ -131,7 +131,7 @@ public class ConnectivityUtil {
             return list;
         }
 
-        ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
+        List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
         int cType;
         // initialize the connectivity search, processing a turnout in this block if it is present
         boolean notFound = true;
@@ -520,7 +520,7 @@ public class ConnectivityUtil {
     public ArrayList<Block> getConnectedBlocks(Block block) {
         ArrayList<Block> list = new ArrayList<>();
         currLayoutBlock = layoutBlockManager.getByUserName(block.getUserName());
-        ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
+        List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
         for (int i = 0; i < cList.size(); i++) {
             LayoutConnectivity lc = cList.get(i);
             if (lc.getBlock1().getBlock() == block) {

@@ -16,6 +16,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -1110,8 +1111,21 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    public void reCheckBlockBoundary() {
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected void reCheckBlockBoundary() {
         // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        // nothing to do here... move along...
+        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);

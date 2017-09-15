@@ -13,6 +13,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -1751,15 +1752,20 @@ public class TrackSegment extends LayoutTrack {
         // nothing to do here... move along...
     }
 
+    /*
+     * {@inheritDoc}
+     */
+    @Override
     public void reCheckBlockBoundary() {
         // nothing to do here... move along...
     }
 
     /*
-        return the layout connectivity for this PositionablePoint
+     * {@inheritDoc}
      */
-    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        List<LayoutConnectivity> results = new ArrayList<>();
 
         LayoutConnectivity lc = null;
         LayoutBlock lb1 = getLayoutBlock(), lb2 = null;

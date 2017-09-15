@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -3241,109 +3242,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    //@todo on the cross-overs check the internal boundary details.
-    public void reCheckBlockBoundary() {
-        if (connectA == null && connectB == null && connectC == null) {
-            if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                signalAMastNamed = null;
-                signalBMastNamed = null;
-                signalCMastNamed = null;
-                sensorANamed = null;
-                sensorBNamed = null;
-                sensorCNamed = null;
-                return;
-            } else if (((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) && connectD == null) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                if (signalDMastNamed != null) {
-                    removeSML(getSignalDMast());
-                }
-                signalAMastNamed = null;
-                signalBMastNamed = null;
-                signalCMastNamed = null;
-                signalDMastNamed = null;
-                sensorANamed = null;
-                sensorBNamed = null;
-                sensorCNamed = null;
-                sensorDNamed = null;
-                return;
-            }
-        }
-
-        if (connectA == null || connectB == null || connectC == null) {
-            //could still be in the process of rebuilding.
-            return;
-        } else if ((connectD == null) && ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER))) {
-            //could still be in the process of rebuilding.
-            return;
-        }
-
-        TrackSegment trkA;
-        TrackSegment trkB;
-        TrackSegment trkC;
-        TrackSegment trkD;
-
-        if (connectA instanceof TrackSegment) {
-            trkA = (TrackSegment) connectA;
-            if (trkA.getLayoutBlock() == block) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                signalAMastNamed = null;
-                sensorANamed = null;
-            }
-        }
-        if (connectB instanceof TrackSegment) {
-            trkB = (TrackSegment) connectB;
-            if (trkB.getLayoutBlock() == block || trkB.getLayoutBlock() == blockB) {
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                signalBMastNamed = null;
-                sensorBNamed = null;
-
-            }
-        }
-        if (connectC instanceof TrackSegment) {
-            trkC = (TrackSegment) connectC;
-            if (trkC.getLayoutBlock() == block || trkC.getLayoutBlock() == blockB || trkC.getLayoutBlock() == blockC) {
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                signalCMastNamed = null;
-                sensorCNamed = null;
-
-            }
-        }
-        if (connectD != null && connectD instanceof TrackSegment
-                && ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER))) {
-            trkD = (TrackSegment) connectD;
-            if (trkD.getLayoutBlock() == block || trkD.getLayoutBlock() == blockB || trkD.getLayoutBlock() == blockC || trkD.getLayoutBlock() == blockD) {
-                if (signalDMastNamed != null) {
-                    removeSML(getSignalDMast());
-                }
-                signalDMastNamed = null;
-                sensorDNamed = null;
-            }
-        }
-    }   // reCheckBlockBoundary
-
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<LayoutBlock>(2);
         if (block == null) {
@@ -4084,11 +3982,120 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }   // getConnectivityStateForLayoutBlocks
 
+
     /*
-        return the layout connectivity for this Layout Turnout
+     * {@inheritDoc}
      */
-    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+    //TODO: on the cross-overs check the internal boundary details.
+    @Override
+    public void reCheckBlockBoundary() {
+        if (connectA == null && connectB == null && connectC == null) {
+            if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
+                if (signalAMastNamed != null) {
+                    removeSML(getSignalAMast());
+                }
+                if (signalBMastNamed != null) {
+                    removeSML(getSignalBMast());
+                }
+                if (signalCMastNamed != null) {
+                    removeSML(getSignalCMast());
+                }
+                signalAMastNamed = null;
+                signalBMastNamed = null;
+                signalCMastNamed = null;
+                sensorANamed = null;
+                sensorBNamed = null;
+                sensorCNamed = null;
+                return;
+            } else if (((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) && connectD == null) {
+                if (signalAMastNamed != null) {
+                    removeSML(getSignalAMast());
+                }
+                if (signalBMastNamed != null) {
+                    removeSML(getSignalBMast());
+                }
+                if (signalCMastNamed != null) {
+                    removeSML(getSignalCMast());
+                }
+                if (signalDMastNamed != null) {
+                    removeSML(getSignalDMast());
+                }
+                signalAMastNamed = null;
+                signalBMastNamed = null;
+                signalCMastNamed = null;
+                signalDMastNamed = null;
+                sensorANamed = null;
+                sensorBNamed = null;
+                sensorCNamed = null;
+                sensorDNamed = null;
+                return;
+            }
+        }
+
+        if (connectA == null || connectB == null || connectC == null) {
+            //could still be in the process of rebuilding.
+            return;
+        } else if ((connectD == null) && ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER))) {
+            //could still be in the process of rebuilding.
+            return;
+        }
+
+        TrackSegment trkA;
+        TrackSegment trkB;
+        TrackSegment trkC;
+        TrackSegment trkD;
+
+        if (connectA instanceof TrackSegment) {
+            trkA = (TrackSegment) connectA;
+            if (trkA.getLayoutBlock() == block) {
+                if (signalAMastNamed != null) {
+                    removeSML(getSignalAMast());
+                }
+                signalAMastNamed = null;
+                sensorANamed = null;
+            }
+        }
+        if (connectB instanceof TrackSegment) {
+            trkB = (TrackSegment) connectB;
+            if (trkB.getLayoutBlock() == block || trkB.getLayoutBlock() == blockB) {
+                if (signalBMastNamed != null) {
+                    removeSML(getSignalBMast());
+                }
+                signalBMastNamed = null;
+                sensorBNamed = null;
+
+            }
+        }
+        if (connectC instanceof TrackSegment) {
+            trkC = (TrackSegment) connectC;
+            if (trkC.getLayoutBlock() == block || trkC.getLayoutBlock() == blockB || trkC.getLayoutBlock() == blockC) {
+                if (signalCMastNamed != null) {
+                    removeSML(getSignalCMast());
+                }
+                signalCMastNamed = null;
+                sensorCNamed = null;
+
+            }
+        }
+        if (connectD != null && connectD instanceof TrackSegment
+                && ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER))) {
+            trkD = (TrackSegment) connectD;
+            if (trkD.getLayoutBlock() == block || trkD.getLayoutBlock() == blockB || trkD.getLayoutBlock() == blockC || trkD.getLayoutBlock() == blockD) {
+                if (signalDMastNamed != null) {
+                    removeSML(getSignalDMast());
+                }
+                signalDMastNamed = null;
+                sensorDNamed = null;
+            }
+        }
+    }   // reCheckBlockBoundary
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        List<LayoutConnectivity> results = new ArrayList<>();
 
         LayoutConnectivity lc = null;
 
