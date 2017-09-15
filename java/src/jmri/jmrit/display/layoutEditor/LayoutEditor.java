@@ -52,6 +52,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
@@ -9630,14 +9631,18 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         g2.setColor(defaultTrackColor);
         setTrackStrokeWidth(g2, false);
         for (LayoutTrack tr : layoutTrackList) {
-            if (tr.isHidden()) {
-                tr.draw(g2);
+            // TrackSegments drawn seperately
+            if (!(tr instanceof TrackSegment)) {
+                if (tr.isHidden()) {
+                    tr.draw(g2);
+                }
             }
         }
     } //drawHiddenLayoutTracks
 
     private void drawLayoutTracks(Graphics2D g2) {
         for (LayoutTrack tr : layoutTrackList) {
+            // TrackSegments drawn seperately
             if (!(tr instanceof TrackSegment)) {
                 if (!tr.isHidden()) {
                     tr.draw(g2);
@@ -9822,49 +9827,47 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return getLayoutTracksOfClass(PositionablePoint);
     }
      */
-    private List<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
+    private Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
                 .filter(layoutTrackClass::isInstance)
-                .map(layoutTrackClass::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutTrack>::new));
+                .map(layoutTrackClass::cast);
     }
 
     public List<PositionablePoint> getPositionablePoints() {
-        List<LayoutTrack> lolt = getLayoutTracksOfClass(PositionablePoint.class);
-        return lolt.stream().map(PositionablePoint.class::cast)
+        Stream<LayoutTrack> solt = getLayoutTracksOfClass(PositionablePoint.class);
+        return solt.map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
     public ArrayList<LayoutSlip> getLayoutSlips() {
-        List<LayoutTrack> lolt = getLayoutTracksOfClass(LayoutSlip.class);
-        return lolt.stream().map(LayoutSlip.class::cast)
+        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutSlip.class);
+        return solt.map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
     }
 
     public List<TrackSegment> getTrackSegments() {
-        List<LayoutTrack> lolt = getLayoutTracksOfClass(TrackSegment.class);
-        return lolt.stream().map(TrackSegment.class::cast)
+        Stream<LayoutTrack> solt = getLayoutTracksOfClass(TrackSegment.class);
+        return solt.map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
 
     public List<LayoutTurnout> getLayoutTurnouts() {
-        List<LayoutTrack> lolt = layoutTrackList.stream() // next line excludes LayoutSlips
+        Stream<LayoutTrack> solt = layoutTrackList.stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
-                .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList<LayoutTrack>::new));
-        return lolt.stream().map(LayoutTurnout.class::cast)
+                .map(LayoutTurnout.class::cast);
+        return solt.map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
     public List<LayoutTurntable> getLayoutTurntables() {
-        List<LayoutTrack> lolt = getLayoutTracksOfClass(LayoutTurntable.class);
-        return lolt.stream().map(LayoutTurntable.class::cast)
+        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutTurntable.class);
+        return solt.map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
     }
 
     public List<LevelXing> getLevelXings() {
-        List<LayoutTrack> lolt = getLayoutTracksOfClass(LevelXing.class);
-        return lolt.stream().map(LevelXing.class::cast)
+        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LevelXing.class);
+        return solt.map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
     }
 
@@ -9873,8 +9876,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        List<LayoutTrack> lolt = getLayoutTracksOfClass(LayoutTurnout.class);
-        return lolt.stream().map(LayoutTurnout.class::cast)
+        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutTurnout.class);
+        return solt.map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
