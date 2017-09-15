@@ -1699,7 +1699,7 @@ public class LevelXing extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         if (isMainlineBD() && (!isMainlineAC())) {
             drawXingAC(g2);
             drawXingBD(g2);
@@ -1727,7 +1727,7 @@ public class LevelXing extends LayoutTrack {
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
@@ -1764,5 +1764,11 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
+    
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // LevelXings don't have turnout controls...
+        // nothing to do here... move along...
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
 }

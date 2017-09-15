@@ -144,7 +144,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // storing them. Note: No other order is effected; They should exist
         // in the saved file in the order that they were created (ether at
         // panel file load time or later by the users in the editor).
-        List<LayoutTrack> orderedList = layoutTracks.stream()
+        List<LayoutTrack> orderedList = layoutTracks.stream()   // next line excludes LayoutSlips
                 .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
                 .map(item -> (LayoutTurnout) item)
                 .collect(Collectors.toList());

@@ -41,6 +41,7 @@ import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
  * layout. A node may be a LayoutTurnout, a LevelXing or a PositionablePoint.
@@ -100,13 +101,13 @@ public class TrackSegment extends LayoutTrack {
             log.error("Invalid object in TrackSegment constructor call - " + id);
         }
 
-        if (isConnectionType(t1)) {
+        if (isConnectionHitType(t1)) {
             connect1 = c1;
             type1 = t1;
         } else {
             log.error("Invalid connect type 1 ('" + t1 + "') in TrackSegment constructor - " + id);
         }
-        if (isConnectionType(t2)) {
+        if (isConnectionHitType(t2)) {
             connect2 = c2;
             type2 = t2;
         } else {
@@ -178,7 +179,8 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * set a new connection 1
-     * @param connectTrack - the track we want to connect to
+     *
+     * @param connectTrack   - the track we want to connect to
      * @param connectionType - where on that track we want to be connected
      */
     protected void setNewConnect1(@Nullable LayoutTrack connectTrack, int connectionType) {
@@ -188,7 +190,8 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * set a new connection 2
-     * @param connectTrack - the track we want to connect to
+     *
+     * @param connectTrack   - the track we want to connect to
      * @param connectionType - where on that track we want to be connected
      */
     protected void setNewConnect2(@Nullable LayoutTrack connectTrack, int connectionType) {
@@ -391,7 +394,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation returns null because {@link #getConnect1} and 
+     * This implementation returns null because {@link #getConnect1} and
      * {@link #getConnect2} should be used instead.
      */
     // only implemented here to supress "does not override abstract method " error in compiler
@@ -403,7 +406,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation does nothing because {@link #setNewConnect1} and 
+     * This implementation does nothing because {@link #setNewConnect1} and
      * {@link #setNewConnect2} should be used instead.
      */
     // only implemented here to supress "does not override abstract method " error in compiler
@@ -589,9 +592,7 @@ public class TrackSegment extends LayoutTrack {
                 if (r.contains(getCoordsCenterCircle())) {
                     result = LayoutTrack.TRACK_CIRCLE_CENTRE;
                 }
-            }
-
-            if (isBezier()) {
+            } else if (isBezier()) {
                 // hit testing for the control points
                 // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
@@ -599,6 +600,11 @@ public class TrackSegment extends LayoutTrack {
                         result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                         break;
                     }
+                }
+            }
+            if (result == NONE) {
+                if (r.contains(getCentreSeg())) {
+                    result = LayoutTrack.TRACK;
                 }
             }
         }
@@ -1600,22 +1606,28 @@ public class TrackSegment extends LayoutTrack {
         }
     }   // calculateTrackSegmentAngle
 
-    protected void draw(@Nonnull Graphics2D g2) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw(Graphics2D g2) {
         if (layoutEditor.isEditable() && isHidden()) {
             drawHidden(g2);
         } else if (isDashed()) {
-
+            drawDashed(g2, isMainline());
+        } else if (!isHidden()) {
+            drawSolid(g2, isMainline());
         }
     }
 
-    protected void drawHidden(@Nonnull Graphics2D g2) {
+    private void drawHidden(Graphics2D g2) {
         setColorForTrackBlock(g2, getLayoutBlock());
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
                 layoutEditor.getCoords(getConnect2(), getType2())));
     }   // drawHidden
 
-    protected void drawDashed(@Nonnull Graphics2D g2, boolean mainline) {
+    private void drawDashed(Graphics2D g2, boolean mainline) {
         if ((!isHidden()) && isDashed() && (mainline == isMainline())) {
             setColorForTrackBlock(g2, getLayoutBlock());
             float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
@@ -1673,7 +1685,7 @@ public class TrackSegment extends LayoutTrack {
         }
     }   // drawDashed
 
-    protected void drawSolid(@Nonnull Graphics2D g2, boolean isMainline) {
+    private void drawSolid(Graphics2D g2, boolean isMainline) {
         if (!isHidden() && !isDashed() && (isMainline == isMainline())) {
             setColorForTrackBlock(g2, getLayoutBlock());
 
@@ -1696,7 +1708,7 @@ public class TrackSegment extends LayoutTrack {
         }
     }   // drawSolid
 
-    protected void drawEditControls(@Nonnull Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         //setColorForTrackBlock(g2, getLayoutBlock());
         g2.setColor(Color.black);
 
@@ -1733,6 +1745,11 @@ public class TrackSegment extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
     }   // drawEditControls
+
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // TrackSegments don't have turnout controls...
+        // nothing to do here... move along...
+    }
 
     public void reCheckBlockBoundary() {
         // nothing to do here... move along...

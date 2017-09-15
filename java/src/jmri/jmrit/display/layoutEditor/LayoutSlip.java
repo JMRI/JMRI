@@ -1550,7 +1550,7 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
             LayoutBlock b = getLayoutBlock();
             Color mainColourA = defaultTrackColor;
@@ -1665,16 +1665,16 @@ public class LayoutSlip extends LayoutTurnout {
         }   // if (!(getHidden() && !layoutEditor.isEditable()))
     }   // draw(Graphics2D g2)
 
-    public void drawControls(Graphics2D g2) {
+    protected void drawTurnoutControls(Graphics2D g2) {
         // drawHidden left/right turnout control circles
         Point2D leftCircleCenter = getCoordsLeft();
         g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
 
         Point2D rightCircleCenter = getCoordsRight();
         g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
-    }   // drawControls(Graphics2D g2)
+    }   // drawTurnoutControls(Graphics2D g2)
 
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {

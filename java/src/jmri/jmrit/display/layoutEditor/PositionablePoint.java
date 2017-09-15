@@ -1275,7 +1275,7 @@ public class PositionablePoint extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         if (getType() != ANCHOR) {
             Stroke originalStroke = g2.getStroke();
 
@@ -1329,11 +1329,11 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * draw this PositionablePoint's controls
+     * draw this PositionablePoint's edit controls
      *
      * @param g2 the graphics port to draw to
      */
-    public void drawControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
         if (getConnect1() == null) {
@@ -1344,7 +1344,12 @@ public class PositionablePoint extends LayoutTrack {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
-    }   // drawControls
+    }   // drawEditControls
+    
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // PositionablePoints don't have turnout controls...
+        // nothing to do here... move along...
+    }
 
     /*
         return the layout connectivity for this PositionablePoint

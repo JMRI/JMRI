@@ -711,7 +711,7 @@ public final class MathUtil {
 
     // recursive routine to draw a cubic Bezier...
     // (also returns distance!)
-    private static double drawBezier(@Nonnull Graphics2D g2,
+    private static double drawBezier(Graphics2D g2,
             @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2,
             @Nonnull Point2D p3, int depth) {
         double result;
@@ -761,13 +761,13 @@ public final class MathUtil {
      * @param p3 terminating control point
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(@Nonnull Graphics2D g2, @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2, @Nonnull Point2D p3) {
+    public static double drawBezier(Graphics2D g2, @Nonnull Point2D p0, @Nonnull Point2D p1, @Nonnull Point2D p2, @Nonnull Point2D p3) {
         return drawBezier(g2, p0, p1, p2, p3, 0);
     }
 
     // recursive routine to draw a Bezier curve...
     // (also returns distance!)
-    private static double drawBezier(@Nonnull Graphics2D g2, @Nonnull Point2D points[], int depth) {
+    private static double drawBezier(Graphics2D g2, @Nonnull Point2D points[], int depth) {
         int len = points.length, idx, jdx;
         double result;
 
@@ -830,7 +830,7 @@ public final class MathUtil {
      * @param p[] control points
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(@Nonnull Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double drawBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         if (p.length == 4) {    // draw cubic bezier?
             return drawBezier(g2, p[0], p[1], p[2], p[3], 0);
         } else {    // (nope)

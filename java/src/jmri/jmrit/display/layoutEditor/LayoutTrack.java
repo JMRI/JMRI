@@ -110,7 +110,7 @@ public abstract class LayoutTrack {
         defaultTrackColor = color;
     }
 
-    protected Color setColorForTrackBlock(@Nonnull Graphics2D g2, @Nullable LayoutBlock lb, boolean forceBlockTrackColor) {
+    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb, boolean forceBlockTrackColor) {
         Color result = defaultTrackColor;
         if (lb != null) {
             if (forceBlockTrackColor) {
@@ -124,10 +124,28 @@ public abstract class LayoutTrack {
     }
 
     // optional prameter forceTrack = false
-    protected Color setColorForTrackBlock(@Nonnull Graphics2D g2, @Nullable LayoutBlock lb) {
+    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
 
+    /**
+     * one draw routine to rule them all...
+     * @param g2 
+     */
+    protected abstract void draw(Graphics2D g2);
+
+    /**
+     * draw the edit controls
+     * @param g2 
+     */
+    protected abstract void drawEditControls(Graphics2D g2);
+
+    /**
+     * draw the turnout controls
+     * @param g2 
+     */
+    protected abstract void drawTurnoutControls(Graphics2D g2);
+    
     /**
      * Get the hidden state of the track element.
      *
@@ -222,9 +240,9 @@ public abstract class LayoutTrack {
 
     // some connection types aren't actually connections
     // they're only used for hit testing (to determine what is at a location)
-    protected static boolean isConnectionType(int connectionType) {
+    protected static boolean isConnectionHitType(int hitType) {
         boolean result = false; // assume failure (pessimist!)
-        switch (connectionType) {
+        switch (hitType) {
             case POS_POINT:
             case TURNOUT_A:
             case TURNOUT_B:
@@ -257,17 +275,17 @@ public abstract class LayoutTrack {
                 result = false; // these are not
                 break;
         }
-        if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+        if ((hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
             result = false; // these are not
-        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
+        } else if (hitType >= TURNTABLE_RAY_OFFSET) {
             result = true;  // these are all connection types
         }
         return result;
     }
 
-    protected static boolean isControlType(int connectionType) {
+    protected static boolean isControlHitType(int hitType) {
         boolean result = false; // assume failure (pessimist!)
-        switch (connectionType) {
+        switch (hitType) {
             case TURNOUT_CENTER:
             case SLIP_CENTER:
             case SLIP_LEFT:
@@ -300,10 +318,53 @@ public abstract class LayoutTrack {
                 result = false; // these are not
                 break;
         }
-        if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+        if ((hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
             result = false; // these are not control types
-        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
+        } else if (hitType >= TURNTABLE_RAY_OFFSET) {
             result = true;  // these are all control types
+        }
+        return result;
+    }
+
+    protected static boolean isPopupHitType(int hitType) {
+        boolean result = false; // assume failure (pessimist!)
+        switch (hitType) {
+            case LEVEL_XING_CENTER:
+            case POS_POINT:
+            case SLIP_CENTER:
+            case SLIP_LEFT:
+            case SLIP_RIGHT:
+            case TRACK:
+            case TRACK_CIRCLE_CENTRE:
+            case TURNOUT_CENTER:
+            case TURNTABLE_CENTER:
+                result = true;  // these are all popup hit types
+                break;
+            case LAYOUT_POS_JCOMP:
+            case LAYOUT_POS_LABEL:
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D:
+            case MARKER:
+            case MULTI_SENSOR:
+            case NONE:
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D:
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D:
+            default:
+                result = false; // these are not
+                break;
+        }
+        if ((hitType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (hitType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+            result = true; // these are all popup hit types
+        } else if (hitType >= TURNTABLE_RAY_OFFSET) {
+            result = true;  // these are all popup hit types
         }
         return result;
     }
@@ -358,7 +419,7 @@ public abstract class LayoutTrack {
      */
     public boolean isDisconnected(int connectionType) {
         boolean result = false;
-        if (isConnectionType(connectionType)) {
+        if (isConnectionHitType(connectionType)) {
             try {
                 result = (null == getConnection(connectionType));
             } catch (jmri.JmriException e) {

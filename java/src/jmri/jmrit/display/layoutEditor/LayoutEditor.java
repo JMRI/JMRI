@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.Editor.rbean;
-
 import apps.gui.GuiLafPreferencesManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
@@ -5140,7 +5138,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 selectedObject = null;
                 selectedPointType = LayoutTrack.NONE;
 
-                if (hitPointCheckLayoutTracks(dLoc)) {
+                if (findLayoutTracksHitPoint(dLoc)) {
                     selectedObject = foundObject;
                     selectedPointType = foundPointType;
                     startDelta.setLocation(MathUtil.subtract(foundLocation, dLoc));
@@ -5210,7 +5208,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 //starting a Track Segment, check for free connection point
                 selectedObject = null;
 
-                if (hitPointCheckLayoutTracks(dLoc, true)) {
+                if (findLayoutTracksHitPoint(dLoc, true)) {
                     //match to a free connection point
                     beginObject = foundObject;
                     beginPointType = foundPointType;
@@ -5315,7 +5313,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
             LayoutTrack layoutTrack = (LayoutTrack) o;
             selectedPointType = layoutTrack.findHitPointType(dLoc, useRectangles);
-            if (!LayoutTrack.isControlType(selectedPointType)) {
+            if (!LayoutTrack.isControlHitType(selectedPointType)) {
                 selectedPointType = LayoutTrack.NONE;
             }
             return (LayoutTrack.NONE != selectedPointType);
@@ -5329,7 +5327,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         if (null != obj) {
             if (obj instanceof LayoutTurntable) {
                 LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
-                if (LayoutTrack.isConnectionType(selectedPointType)) {
+                if (LayoutTrack.isConnectionHitType(selectedPointType)) {
                     try {
                         selectedObject = layoutTurntable.getConnection(selectedPointType);
                     } catch (JmriException e) {
@@ -5347,17 +5345,17 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     // optional parameter avoid
-    private boolean hitPointCheckLayoutTracks(
+    private boolean findLayoutTracksHitPoint(
             @Nonnull Point2D loc, boolean requireUnconnected) {
-        return hitPointCheckLayoutTracks(loc, requireUnconnected, null);
+        return findLayoutTracksHitPoint(loc, requireUnconnected, null);
     }
 
     // optional parameter requireUnconnected
-    private boolean hitPointCheckLayoutTracks(@Nonnull Point2D loc) {
-        return hitPointCheckLayoutTracks(loc, false, null);
+    private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc) {
+        return findLayoutTracksHitPoint(loc, false, null);
     }
 
-    private boolean hitPointCheckLayoutTracks(@Nonnull Point2D loc,
+    private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc,
             boolean requireUnconnected, @Nullable Object avoid) {
         boolean result = false; // assume failure (pessimist!)
 
@@ -5724,7 +5722,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             if (lo != null) {
                 showPopUp(lo, event);
             } else {
-                if (hitPointCheckLayoutTracks(dLoc)) {
+                if (findLayoutTracksHitPoint(dLoc)) {
                     //show popup menu
                     switch (foundPointType) {
                         case LayoutTrack.TURNOUT_CENTER: {
@@ -5800,35 +5798,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //mouseReleased
 
     private void showEditPopUps(MouseEvent event) {
-        if (hitPointCheckLayoutTracks(dLoc)) {
-            switch (foundPointType) {
-                case LayoutTrack.POS_POINT: {
-                    ((PositionablePoint) foundObject).showPopup(event);
-                    break;
-                }
-
-                case LayoutTrack.TURNOUT_CENTER: {
-                    ((LayoutTurnout) foundObject).showPopup(event);
-                    break;
-                }
-
-                case LayoutTrack.LEVEL_XING_CENTER: {
-                    ((LevelXing) foundObject).showPopup(event);
-                    break;
-                }
-
-                case LayoutTrack.SLIP_LEFT:
-                case LayoutTrack.SLIP_RIGHT: {
-                    ((LayoutSlip) foundObject).showPopup(event);
-                    break;
-                }
-
-                case LayoutTrack.TURNTABLE_CENTER: {
-                    ((LayoutTurntable) foundObject).showPopup(event);
-                    break;
-                }
-            } //switch
-
+        if (findLayoutTracksHitPoint(dLoc)) {
             if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
                     && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
                 ((TrackSegment) foundObject).showBezierPopUp(event, foundPointType);
@@ -5837,6 +5807,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 if (t.isTurnoutControlled()) {
                     ((LayoutTurntable) foundObject).showRayPopUp(event, foundPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
+            } else if (LayoutTrack.isPopupHitType(foundPointType)) {
+                ((LayoutTrack) foundObject).showPopup(event);
+            } else {
+                log.warn("Unknown foundPointType:" + foundPointType);
             }
         } else {
             do {
@@ -6027,7 +6001,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
 
         if (event.isControlDown() && !event.isPopupTrigger()) {
-            if (hitPointCheckLayoutTracks(dLoc)) {
+            if (findLayoutTracksHitPoint(dLoc)) {
                 switch (foundPointType) {
                     case LayoutTrack.POS_POINT:
                     case LayoutTrack.TURNOUT_CENTER:
@@ -6095,7 +6069,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         beginPointType = LayoutTrack.POS_POINT;
         Point2D loc = p.getCoordsCenter();
 
-        if (hitPointCheckLayoutTracks(loc, true, p)) {
+        if (findLayoutTracksHitPoint(loc, true, p)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
                     PositionablePoint p2 = (PositionablePoint) foundObject;
@@ -6236,7 +6210,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //hitPointCheckLayoutTurnouts
 
     private void hitPointCheckLayoutTurnoutSubs(@Nonnull Point2D dLoc) {
-        if (hitPointCheckLayoutTracks(dLoc, true)) {
+        if (findLayoutTracksHitPoint(dLoc, true)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
                     PositionablePoint p2 = (PositionablePoint) foundObject;
@@ -6544,7 +6518,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 noWarnTurntable = true;
                 removeTurntable((LayoutTurntable) lt);
                 noWarnTurntable = oldWarning;
-            } else if (lt instanceof LayoutTurnout) {
+            } else if (lt instanceof LayoutTurnout) {  //<== this includes LayoutSlips
                 boolean oldWarning = noWarnLayoutTurnout;
                 noWarnLayoutTurnout = true;
                 removeLayoutTurnout((LayoutTurnout) lt);
@@ -7007,7 +6981,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 currentLocation.setLocation(xLoc, yLoc);
                 boolean needResetCursor = (foundObject != null);
 
-                if (hitPointCheckLayoutTracks(currentLocation, true)) {
+                if (findLayoutTracksHitPoint(currentLocation, true)) {
                     //have match to free connection point, change cursor
                     setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (needResetCursor) {
@@ -9604,49 +9578,33 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             if (getDrawGrid()) {
                 drawPanelGrid(g2);
             }
-            drawHiddenTrackSegments(g2);
+            drawHiddenLayoutTracks(g2);
         }
 
-        drawDashedTrackSegments(g2, false); //non-mainline
-        drawDashedTrackSegments(g2, true); //mainline
+        drawTrackSegments(g2, true, false);     //dashed, non-mainline
+        drawTrackSegments(g2, true, true);      //dashed, mainline
+        drawTrackSegments(g2, false, false);    //non-dashed, non-mainline
+        drawTrackSegments(g2, false, true);     //non-dashed, mainline
 
-        drawSolidTrackSegments(g2, false); //non-mainline
-        drawSolidTrackSegments(g2, true); //mainline
-        drawPoints(g2);
-
-        drawTurnouts(g2);
-        drawXings(g2);
-        drawSlips(g2);
-        drawTurntables(g2);
-
-        drawTrackInProgress(g2);
+        drawLayoutTracks(g2);
 
         // things that only get drawn in edit mode
         if (isEditable()) {
-            drawPointsEditControls(g2);
-
-            drawTurnoutEditControls(g2);
-            drawXingEditControls(g2);
-            drawSlipEditControls(g2);
-            drawTurntableEditControls(g2);
-            drawTrackSegmentEditControls(g2);
-
-            drawSelectionRect(g2);
+            drawLayoutTrackEditControls(g2);
 
             drawMemoryRects(g2);
             drawBlockContentsRects(g2);
 
             if (allControlling()) {
                 drawTurnoutControls(g2);
-                drawSlipControls(g2);
-                drawTurntableControls(g2);
             }
+            drawSelectionRect(g2);
             highLightSelection(g2);
+
+            drawTrackSegmentInProgress(g2);
         } else if (turnoutCirclesWithoutEditMode) {
             if (allControlling()) {
                 drawTurnoutControls(g2);
-                drawSlipControls(g2);
-                drawTurntableControls(g2);
             }
         }
     } //paintTargetPanel
@@ -9667,126 +9625,36 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return trackWidth;
     } //setTrackStrokeWidth
 
-    private void drawTurnouts(Graphics2D g2) {
-        // loop over all turnouts
-        for (LayoutTurnout t : getLayoutTurnouts()) {
-            if (!t.isHidden() || isEditable()) {
-                t.draw(g2);
-            }
-        }
-    } //drawTurnouts
-
-    private void drawXings(Graphics2D g2) {
-        // loop over all level crossings
-        for (LevelXing x : getLevelXings()) {
-            if (!(x.isHidden() && !isEditable())) {
-                x.draw(g2);
-            }
-        }
-    } //drawXings
-
-    private void drawSlips(Graphics2D g2) {
-        for (LayoutSlip sl : getLayoutSlips()) {
-            sl.draw(g2);
-        }
-    } //drawSlips
-
-    private void drawTurnoutControls(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        g2.setColor(turnoutCircleColor);
-        // loop over all turnouts
-        boolean editable = isEditable();
-        for (LayoutTurnout t : getLayoutTurnouts()) {
-            if (editable || !(t.isHidden() || t.isDisabled())) {
-                t.drawControls(g2);
-            }
-        }
-    } //drawTurnoutControls
-
-    private void drawSlipControls(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        g2.setColor(turnoutCircleColor);
-        // loop over all slips
-        boolean editable = isEditable();
-        for (LayoutSlip sl : getLayoutSlips()) {
-            if (editable || !(sl.isHidden() || sl.isDisabled())) {
-                sl.drawControls(g2);
-            }
-        }
-    } //drawSlipControls
-
-    private void drawTurnoutEditControls(Graphics2D g2) {
-        // loop over all turnouts
-        for (LayoutTurnout t : getLayoutTurnouts()) {
-            g2.setColor(turnoutCircleColor);
-            t.drawEditControls(g2);
-        }
-    } //drawTurnoutEditControls
-
-    private void drawTurntables(Graphics2D g2) {
-        // loop over all layout turntables
-        for (LayoutTurntable lt : getLayoutTurntables()) {
-            lt.draw(g2);
-        }
-    } //drawTurntables
-
-    private void drawTurntableControls(Graphics2D g2) {
-        // loop over all layout turntables
-        for (LayoutTurntable lt : getLayoutTurntables()) {
-            lt.drawControls(g2);
-        }
-    } //drawTurntableControls
-
-    private void drawXingEditControls(Graphics2D g2) {
-        // loop over all level crossings
-        for (LevelXing x : getLevelXings()) {
-            x.drawEditControls(g2);
-        }
-    } //drawXingEditControls
-
-    private void drawSlipEditControls(Graphics2D g2) {
-        // loop over all slips
-        for (LayoutSlip sl : getLayoutSlips()) {
-            if (!(sl.isHidden() && !isEditable())) {
-                g2.setColor(turnoutCircleColor);
-                sl.drawEditControls(g2);
-            }
-        }
-    } //drawSlipEditControls
-
-    private void drawTurntableEditControls(Graphics2D g2) {
-        // loop over all turntables
-        for (LayoutTurntable x : getLayoutTurntables()) {
-            x.drawEditControls(g2);
-        }
-    } //drawTurntableEditControls
-
-    private void drawHiddenTrackSegments(Graphics2D g2) {
+    private void drawHiddenLayoutTracks(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
         setTrackStrokeWidth(g2, false);
-        for (TrackSegment ts : getTrackSegments()) {
-            if (ts.isHidden()) {
-                ts.drawHidden(g2);
+        for (LayoutTrack tr : layoutTrackList) {
+            if (tr.isHidden()) {
+                tr.draw(g2);
             }
         }
-    } //drawHiddenTrackSegments
+    } //drawHiddenLayoutTracks
 
-    private void drawDashedTrackSegments(Graphics2D g2, boolean mainline) {
+    private void drawLayoutTracks(Graphics2D g2) {
+        for (LayoutTrack tr : layoutTrackList) {
+            if (!(tr instanceof TrackSegment)) {
+                if (!tr.isHidden()) {
+                    tr.draw(g2);
+                }
+            }
+        }
+    } //drawLayoutTracks
+
+    private void drawTrackSegments(Graphics2D g2, boolean dashed, boolean mainline) {
         setTrackStrokeWidth(g2, mainline);
         for (TrackSegment ts : getTrackSegments()) {
-            ts.drawDashed(g2, mainline);
+            if ((ts.isDashed() == dashed) && (ts.isMainline() == mainline)) {
+                ts.draw(g2);
+            }
         }
-    } //drawDashedTrackSegments
+    } //drawTrackSegments
 
-    // drawHidden all track segments which are not hidden, not dashed, and that match the mainline parm
-    private void drawSolidTrackSegments(Graphics2D g2, boolean mainline) {
-        setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment ts : getTrackSegments()) {
-            ts.drawSolid(g2, mainline);
-        }
-    } //drawSolidTrackSegments
-
-    private void drawTrackInProgress(Graphics2D g2) {
+    private void drawTrackSegmentInProgress(Graphics2D g2) {
         //check for segment in progress
         if (isEditable() && (beginObject != null) && trackButton.isSelected()) {
             g2.setColor(defaultTrackColor);
@@ -9795,24 +9663,31 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //drawTrackInProgress
 
-    private void drawTrackSegmentEditControls(Graphics2D g2) {
-        // loop over all track segments
-        for (TrackSegment ts : getTrackSegments()) {
-            ts.drawEditControls(g2);
+    private void drawLayoutTrackEditControls(Graphics2D g2) {
+        for (LayoutTrack tr : layoutTrackList) {
+            tr.drawEditControls(g2);
         }
-    } //drawTrackSegmentEditControls
+    }
 
-    private void drawPoints(Graphics2D g2) {
-        for (PositionablePoint p : getPositionablePoints()) {
-            p.draw(g2);
+    private void drawTurnoutControls(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        g2.setColor(turnoutCircleColor);
+        // loop over all turnouts
+        boolean editable = isEditable();
+        for (LayoutTrack tr : layoutTrackList) {
+            if (tr instanceof LayoutTurnout) {  //<== this includes LayoutSlips
+                LayoutTurnout lt = (LayoutTurnout) tr;
+                if (editable || !(lt.isHidden() || lt.isDisabled())) {
+                    lt.drawTurnoutControls(g2);
+                }
+            } else if (tr instanceof LayoutTurntable) {
+                LayoutTurntable lt = (LayoutTurntable) tr;
+                if (editable || !lt.isHidden()) {
+                    lt.drawTurnoutControls(g2);
+                }
+            }
         }
-    } //drawPoints
-
-    private void drawPointsEditControls(Graphics2D g2) {
-        for (PositionablePoint p : getPositionablePoints()) {
-            p.drawControls(g2);
-        }
-    } //drawPointsEditControls
+    }   // drawTurnoutControls
 
     private Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
@@ -9922,7 +9797,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     /*
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
-    protected List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
+    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
                 .filter(item -> item instanceof PositionablePoint)
                 .filter(layoutTrackClass::isInstance)
@@ -9931,65 +9806,75 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //TODO: This compiles but I can't get the syntax correct to pass the array of (sub-)classes
-    protected List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
+    public List<LayoutTrack> getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>> layoutTrackClasses) {
         return layoutTrackList.stream()
                 .filter(o -> layoutTrackClasses.contains(o.getClass()))
                 .collect(Collectors.toList());
     }
 
     //TODO: This compiles but I can't get the syntax correct to pass the (sub-)class
-    protected List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
+    public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull Class<? extends LayoutTrack> layoutTrackClass) {
         return getLayoutTracksOfClasses(new ArrayList<>(Arrays.asList(layoutTrackClass)));
     }
 
-    protected List<PositionablePoint> getPositionablePoints() {
+    public List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint);
     }
      */
-    protected List<PositionablePoint> getPositionablePoints() {
+    private List<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
-                .filter(item -> item instanceof PositionablePoint)
-                .map(item -> (PositionablePoint) item)
-                .collect(Collectors.toList());
+                .filter(layoutTrackClass::isInstance)
+                .map(layoutTrackClass::cast)
+                .collect(Collectors.toCollection(ArrayList<LayoutTrack>::new));
     }
 
-    protected List<LayoutSlip> getLayoutSlips() {
-        return layoutTrackList.stream()
-                .filter(item -> item instanceof LayoutSlip)
-                .map(item -> (LayoutSlip) item)
-                .collect(Collectors.toList());
+    public List<PositionablePoint> getPositionablePoints() {
+        List<LayoutTrack> lolt = getLayoutTracksOfClass(PositionablePoint.class);
+        return lolt.stream().map(PositionablePoint.class::cast)
+                .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
-    protected List<TrackSegment> getTrackSegments() {
-        return layoutTrackList.stream()
-                .filter(item -> item instanceof TrackSegment)
-                .map(item -> (TrackSegment) item)
-                .collect(Collectors.toList());
+    public ArrayList<LayoutSlip> getLayoutSlips() {
+        List<LayoutTrack> lolt = getLayoutTracksOfClass(LayoutSlip.class);
+        return lolt.stream().map(LayoutSlip.class::cast)
+                .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
     }
 
-    protected List<LayoutTurnout> getLayoutTurnouts() {
-        return layoutTrackList.stream()
-                .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
-                .map(item -> (LayoutTurnout) item)
-                .collect(Collectors.toList());
+    public List<TrackSegment> getTrackSegments() {
+        List<LayoutTrack> lolt = getLayoutTracksOfClass(TrackSegment.class);
+        return lolt.stream().map(TrackSegment.class::cast)
+                .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
 
-    protected List<LayoutTurntable> getLayoutTurntables() {
-        return layoutTrackList.stream()
-                .filter(item -> item instanceof LayoutTurntable)
-                .map(item -> (LayoutTurntable) item)
-                .collect(Collectors.toList());
+    public List<LayoutTurnout> getLayoutTurnouts() {
+        List<LayoutTrack> lolt = layoutTrackList.stream() // next line excludes LayoutSlips
+                .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
+                .map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList<LayoutTrack>::new));
+        return lolt.stream().map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
-    protected List<LevelXing> getLevelXings() {
-        return layoutTrackList.stream()
-                .filter(item -> item instanceof LevelXing)
-                .map(item -> (LevelXing) item)
-                .collect(Collectors.toList());
+    public List<LayoutTurntable> getLayoutTurntables() {
+        List<LayoutTrack> lolt = getLayoutTracksOfClass(LayoutTurntable.class);
+        return lolt.stream().map(LayoutTurntable.class::cast)
+                .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
+    }
+
+    public List<LevelXing> getLevelXings() {
+        List<LayoutTrack> lolt = getLayoutTracksOfClass(LevelXing.class);
+        return lolt.stream().map(LevelXing.class::cast)
+                .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
     }
 
     public List<LayoutTrack> getLayoutTracks() {
         return layoutTrackList;
+    }
+
+    public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+        List<LayoutTrack> lolt = getLayoutTracksOfClass(LayoutTurnout.class);
+        return lolt.stream().map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
     @Override
@@ -10117,43 +10002,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 }
             }
         } else if (nb instanceof Turnout) {
-            for (LayoutTurnout ti : getLayoutTurnouts()) {
-                if (ti.getTurnout().equals(nb)) {
+            for (LayoutTurnout lt : getLayoutTurnoutsAndSlips()) {
+                if (lt.getTurnout().equals(nb)) {
                     switch (menu) {
                         case Editor.VIEWPOPUPONLY: {
-                            ti.addViewPopUpMenu(item);
+                            lt.addViewPopUpMenu(item);
                             break;
                         }
 
                         case Editor.EDITPOPUPONLY: {
-                            ti.addEditPopUpMenu(item);
+                            lt.addEditPopUpMenu(item);
                             break;
                         }
 
                         default:
-                            ti.addEditPopUpMenu(item);
-                            ti.addViewPopUpMenu(item);
-                    } //switch
-                    break;
-                }
-            }
-
-            for (LayoutSlip sl : getLayoutSlips()) {
-                if ((sl.getTurnout() == nb) || (sl.getTurnoutB() == nb)) {
-                    switch (menu) {
-                        case Editor.VIEWPOPUPONLY: {
-                            sl.addViewPopUpMenu(item);
-                            break;
-                        }
-
-                        case Editor.EDITPOPUPONLY: {
-                            sl.addEditPopUpMenu(item);
-                            break;
-                        }
-
-                        default:
-                            sl.addEditPopUpMenu(item);
-                            sl.addViewPopUpMenu(item);
+                            lt.addEditPopUpMenu(item);
+                            lt.addViewPopUpMenu(item);
                     } //switch
                     break;
                 }

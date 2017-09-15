@@ -3556,7 +3556,7 @@ public class LayoutTurnout extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         Turnout to = getTurnout();
 
         Point2D pointA = getCoordsA();
@@ -3918,11 +3918,11 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }   // draw
 
-    public void drawControls(Graphics2D g2) {
+    protected void drawTurnoutControls(Graphics2D g2) {
         g2.draw(layoutEditor.trackControlCircleAt(center));
     }
 
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsA();
         if (type >= DOUBLE_XOVER && type <= LH_XOVER) {
             if (getConnectA() == null) {

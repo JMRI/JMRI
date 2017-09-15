@@ -1050,7 +1050,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         // draw turntable circle - default track color, side track width
         layoutEditor.setTrackStrokeWidth(g2, false);
         double r = getRadius(), d = r + r;
@@ -1079,7 +1079,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void drawControls(Graphics2D g2) {
+    protected void drawTurnoutControls(Graphics2D g2) {
         if (isTurnoutControlled() && getPosition() != -1) {
             Point2D pt = getRayCoordsIndexed(getPosition());
             g2.draw(new Line2D.Double(new Point2D.Double(
@@ -1093,7 +1093,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
