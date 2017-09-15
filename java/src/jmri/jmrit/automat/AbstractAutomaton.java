@@ -1080,7 +1080,7 @@ public class AbstractAutomaton implements Runnable {
      * @param value Value 0-255 to be written
      * @return true if completed OK
      */
-    public boolean writeServiceModeCV(int CV, int value) {
+    public boolean writeServiceModeCV(String CV, int value) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getGlobalProgrammer();
@@ -1115,7 +1115,7 @@ public class AbstractAutomaton implements Runnable {
      * @param CV Number 1 through 512
      * @return -1 if error, else value
      */
-    public int readServiceModeCV(int CV) {
+    public int readServiceModeCV(String CV) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getGlobalProgrammer();
@@ -1152,7 +1152,7 @@ public class AbstractAutomaton implements Runnable {
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */
-    public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
+    public boolean writeOpsModeCV(String CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(longAddress, loco);

@@ -2529,20 +2529,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
             JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
             editItem.addActionListener(new ActionListener() {
-                Editor editor;
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                     ii.pack();
                     ii.setVisible(true);
                 }
-
-                ActionListener init(Editor ed) {
-                    editor = ed;
-                    return this;
-                }
-            }.init(this));
+            });
             findIcon.add(editItem);
             findIcon.addSeparator();
 
@@ -2625,8 +2618,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionB"),
                 Bundle.getMessage("DeleteVerifyTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonNoCancel")},
-                Bundle.getMessage("ButtonNoCancel"));
+                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
+                Bundle.getMessage("ButtonCancel"));
         // return without deleting if "No" response
         return (selectedValue == JOptionPane.YES_OPTION);
     }

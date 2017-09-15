@@ -637,7 +637,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if (types.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(types);
+        java.util.Arrays.sort(types);
         for (String type : types) {
             _listTypes.add(type);
         }
@@ -769,7 +769,7 @@ public class Location implements java.beans.PropertyChangeListener {
             arr[i] = en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(arr[i]);
         }

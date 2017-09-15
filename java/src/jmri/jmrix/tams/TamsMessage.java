@@ -278,7 +278,6 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         m.setReplyType('C');
         return m;
     }
-    private final static Logger log = LoggerFactory.getLogger(TamsMessage.class);
 }
 
 
