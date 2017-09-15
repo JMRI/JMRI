@@ -4,6 +4,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
+import jmri.jmrix.cmri.serial.SerialNode;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
