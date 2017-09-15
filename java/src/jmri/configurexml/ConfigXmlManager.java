@@ -104,7 +104,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     @Override
     public Object findInstance(Class<?> c, int index) {
-        ArrayList<Object> temp = new ArrayList<>(plist);
+        List<Object> temp = new ArrayList<>(plist);
         temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
@@ -213,12 +213,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         uplist.remove(o);
     }
 
-    ArrayList<Object> plist = new ArrayList<>();
+    List<Object> plist = new ArrayList<>();
     Map<Object, Integer> clist = Collections.synchronizedMap(new LinkedHashMap<>());
-    ArrayList<Object> tlist = new ArrayList<>();
-    ArrayList<Object> ulist = new ArrayList<>();
-    ArrayList<Object> uplist = new ArrayList<>();
-    private final ArrayList<Element> loadDeferredList = new ArrayList<>();
+    List<Object> tlist = new ArrayList<>();
+    List<Object> ulist = new ArrayList<>();
+    List<Object> uplist = new ArrayList<>();
+    private final List<Element> loadDeferredList = new ArrayList<>();
 
     /**
      * Find the name of the adapter class for an object.
@@ -279,7 +279,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected boolean addConfigStore(Element root) {
         boolean result = true;
-        ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<>(clist.entrySet());
+        List<Map.Entry<Object, Integer>> l = new ArrayList<>(clist.entrySet());
         Collections.sort(l, (Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
         for (int i = 0; i < l.size(); i++) {
             try {
@@ -671,7 +671,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 loadlist.put(item, order);
             }
 
-            ArrayList<Map.Entry<Element, Integer>> l = new ArrayList<>(loadlist.entrySet());
+            List<Map.Entry<Element, Integer>> l = new ArrayList<>(loadlist.entrySet());
             Collections.sort(l, (Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
@@ -921,7 +921,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * @return the loadDeferredList
      */
-    protected ArrayList<Element> getLoadDeferredList() {
+    protected List<Element> getLoadDeferredList() {
         return loadDeferredList;
     }
 }
