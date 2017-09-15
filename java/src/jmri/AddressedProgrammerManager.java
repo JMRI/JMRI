@@ -55,7 +55,7 @@ public interface AddressedProgrammerManager {
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     @CheckForNull
-    public default AddressedProgrammer getAddressedProgrammer(DccLocoAddress address) {
+    public default AddressedProgrammer getAddressedProgrammer(@Nonnull DccLocoAddress address) {
         return this.getAddressedProgrammer(address.isLongAddress(), address.getNumber());
     }
 
@@ -78,7 +78,7 @@ public interface AddressedProgrammerManager {
      * @return null if the address is in use by a reserved programmer
      */
     @CheckForNull
-    public default AddressedProgrammer reserveAddressedProgrammer(DccLocoAddress address) {
+    public default AddressedProgrammer reserveAddressedProgrammer(@Nonnull DccLocoAddress address) {
         return this.reserveAddressedProgrammer(address.isLongAddress(), address.getNumber());
     }
 
