@@ -21,6 +21,7 @@ import org.junit.runners.Suite;
         PaneServiceProgFrameTest.class,
         PaneSetTest.class,
         JComponentQualifierTest.class,
+        PaneQualifierTest.class,
 })
 
 /**
