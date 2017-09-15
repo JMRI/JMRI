@@ -1268,7 +1268,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.add(turnoutGroup5);
 
         floatEditTurnout.add(blockPropertiesPanel);
-        floatEditTabsPane.addTab(Bundle.getMessage("TabTurnout"), null, floatEditTurnout, null);
+        floatEditTabsPane.addTab(Bundle.getMessage("Turnouts"), null, floatEditTurnout, null);
 
         //Tab 1 - Track
         JPanel floatEditTrack = new JPanel();
@@ -2417,8 +2417,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         ButtonGroup dropDownListsDisplayOrderGroup = new ButtonGroup();
 
-        String[] ddldoChoices = {"DropDownListsDisplayOrderDisplayName", "DropDownListsDisplayOrderUserName",
-            "DropDownListsDisplayOrderSystemName", "DropDownListsDisplayOrderUserNameSystemName",
+        String[] ddldoChoices = {"DropDownListsDisplayOrderDisplayName", "ColumnUserName",
+            "ColumnSystemName", "DropDownListsDisplayOrderUserNameSystemName",
             "DropDownListsDisplayOrderSystemNameUserName"};
 
         for (String ddldoChoice : ddldoChoices) {

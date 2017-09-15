@@ -113,7 +113,7 @@ public class PositionablePopupUtil {
     JMenuItem bold = null;
 
     public void propertyUtil(JPopupMenu popup) {
-        JMenuItem edit = new JMenuItem("Properties");
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("MenuItemProperties") + "...");
         edit.addActionListener((ActionEvent e) -> {
             _propertiesUtil.display();
         });
