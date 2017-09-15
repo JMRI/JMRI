@@ -222,7 +222,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         if (a != null) {
             l.tBlockName = a.getValue();
         }
-        p.trackList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);

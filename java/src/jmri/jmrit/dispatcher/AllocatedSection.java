@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.Block;
 import jmri.EntryPoint;
@@ -177,9 +178,9 @@ public class AllocatedSection {
     // instance variables used with automatic running of trains
     private int mIndex = 0;
     private PropertyChangeListener mExitSignalListener = null;
-    private final ArrayList<PropertyChangeListener> mBlockListeners = new ArrayList<>();
-    private ArrayList<Block> mBlockList = null;
-    private final ArrayList<Block> mActiveBlockList = new ArrayList<>();
+    private final List<PropertyChangeListener> mBlockListeners = new ArrayList<>();
+    private List<Block> mBlockList = null;
+    private final List<Block> mActiveBlockList = new ArrayList<>();
 
     //
     // Access methods for automatic running instance variables
