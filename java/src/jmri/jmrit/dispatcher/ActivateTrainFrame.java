@@ -55,6 +55,28 @@ public class ActivateTrainFrame {
         _tiFile = new TrainInfoFile();
     }
 
+    protected class ComboBoxAllocateMethodItem {
+        private int value;
+        private String description;
+
+        public ComboBoxAllocateMethodItem(int inValue, String inDescription) {
+            this.value = inValue;
+            this.description = inDescription;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String toString() {
+            return description;
+        }
+    }
+
     // operational instance variables
     private DispatcherFrame _dispatcher = null;
     private TrainInfoFile _tiFile = null;
@@ -93,6 +115,9 @@ public class ActivateTrainFrame {
     private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
     private JCheckBox allocateAllTheWayBox = new JCheckBox(Bundle.getMessage("AllocateAllTheWay"));
+    private JLabel allocateMethodLabel = new JLabel(Bundle.getMessage("AllocateMethodLabel") + ":");
+    private JComboBox<ComboBoxAllocateMethodItem> allocateMethodBox = new JComboBox<ComboBoxAllocateMethodItem>();
+    private JSpinner allocateCustonSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
     private JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
@@ -269,6 +294,20 @@ public class ActivateTrainFrame {
             p4a.add(allocateAllTheWayBox);
             allocateAllTheWayBox.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
             initiatePane.add(p4a);
+            JPanel p4b = new JPanel();
+            p4b.setLayout(new FlowLayout());
+            p4b.add(allocateMethodLabel);
+            initializeAllocateMethod();
+            p4b.add(allocateMethodBox);
+            allocateMethodBox.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
+            allocateMethodBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleAllocateMethodBoxChanged(e);
+                }
+            });
+            p4b.add(allocateCustonSpinner);
+            initiatePane.add(p4b);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(resetWhenDoneBox);
@@ -543,6 +582,17 @@ public class ActivateTrainFrame {
         initiateFrame.pack();
     }
 
+    private void handleAllocateMethodBoxChanged(ActionEvent e) {
+        if (allocateMethodBox.getSelectedIndex() < 0 ) {
+            return;
+        }
+        if (((ComboBoxAllocateMethodItem)allocateMethodBox.getSelectedItem()).getValue() != 3) {
+            allocateCustonSpinner.setVisible(false);
+        } else {
+            allocateCustonSpinner.setVisible(true);
+        }
+    }
+
     private void cancelInitiateTrain(ActionEvent e) {
         initiateFrame.setVisible(false);
         initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
@@ -585,6 +635,7 @@ public class ActivateTrainFrame {
         boolean resetWhenDone = resetWhenDoneBox.isSelected();
         boolean reverseAtEnd = reverseAtEndBox.isSelected();
         boolean allocateAllTheWay = allocateAllTheWayBox.isSelected();
+        int allocateMethod = ((ComboBoxAllocateMethodItem) allocateMethodBox.getSelectedItem()).getValue();
         int delayedStart = delayModeFromBox(delayedStartBox);
         int delayedReStart = delayModeFromBox(delayedReStartBox);
         int departureTimeHours = 8;
@@ -680,7 +731,7 @@ public class ActivateTrainFrame {
         // create a new Active Train
         ActiveTrain at = _dispatcher.createActiveTrain(transitName, trainName, tSource, startBlockName,
                 startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority,
-                resetWhenDone, reverseAtEnd, allocateAllTheWay, true, initiateFrame);
+                resetWhenDone, reverseAtEnd, allocateAllTheWay, true, initiateFrame, allocateMethod);
         if (at == null) {
             return;  // error message sent by createActiveTrain
         }
@@ -1038,6 +1089,7 @@ public class ActivateTrainFrame {
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
         allocateAllTheWayBox.setSelected(info.getAllocateAllTheWay());
+        setallocateMethodBoxItem(info.getAllocationMethod());
         autoTrainInfoToDialog(info);
     }
 
@@ -1083,6 +1135,7 @@ public class ActivateTrainFrame {
         info.setAutoRun(autoRunBox.isSelected());
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
         info.setAllocateAllTheWay(allocateAllTheWayBox.isSelected());
+        info.setAllocationMethod(((ComboBoxAllocateMethodItem) allocateMethodBox.getSelectedItem()).getValue());
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
         info.setRestartDelayMin((Integer) delayMinSpinner.getValue());
@@ -1170,6 +1223,14 @@ public class ActivateTrainFrame {
     private JPanel pa2 = new JPanel();
     private JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private JComboBox<String> rampRateBox = new JComboBox<String>();
+    private JPanel pa2a = new JPanel();
+    private JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
+    private JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
+    private JPanel pa2b = new JPanel();
+    private JLabel stopBySpeedProfile = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
+    private JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
+    private JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
+    private JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
     private JPanel pa3 = new JPanel();
     private JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
@@ -1185,6 +1246,9 @@ public class ActivateTrainFrame {
     boolean _runInReverse = false;
     boolean _soundDecoder = false;
     float _maxTrainLength = 200.0f;
+    boolean _stopBySpeedProfile = false;
+    float _stopBySpeedProfileAdjust = 1.0f;
+    boolean _useSpeedProfile = true;
 
     private void setAutoRunDefaults() {
         _speedFactor = 1.0f;
@@ -1194,6 +1258,10 @@ public class ActivateTrainFrame {
         _runInReverse = false;
         _soundDecoder = false;
         _maxTrainLength = 100.0f;
+        _stopBySpeedProfile = false;
+        _stopBySpeedProfileAdjust = 1.0f;
+        _useSpeedProfile = true;
+
     }
 
     private void initializeAutoRunItems() {
@@ -1215,7 +1283,20 @@ public class ActivateTrainFrame {
         pa2.add(rampRateLabel);
         pa2.add(rampRateBox);
         rampRateBox.setToolTipText(Bundle.getMessage("RampRateBoxHint"));
+        pa2.add(useSpeedProfileLabel);
+        pa2.add(useSpeedProfileCheckBox);
+        useSpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint"));
         initiatePane.add(pa2);
+        pa2a.setLayout(new FlowLayout());
+        pa2a.add(stopBySpeedProfile);
+        pa2a.add(stopBySpeedProfileCheckBox);
+        stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("StopBySpeedProfileHint"));
+        pa2a.add(stopBySpeedProfileAdjustLabel);
+        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
+        pa2a.add(stopBySpeedProfileAdjustSpinner);
+        stopBySpeedProfileAdjustSpinner.setToolTipText(Bundle.getMessage("StopBySpeedProfileAdjustHint"));
+        initiatePane.add(pa2a);
         pa3.setLayout(new FlowLayout());
         pa3.add(soundDecoderBox);
         soundDecoderBox.setToolTipText(Bundle.getMessage("SoundDecoderBoxHint"));
@@ -1246,13 +1327,17 @@ public class ActivateTrainFrame {
         resistanceWheelsBox.setSelected(_resistanceWheels);
         soundDecoderBox.setSelected(_soundDecoder);
         runInReverseBox.setSelected(_runInReverse);
-
+        useSpeedProfileCheckBox.setSelected(_useSpeedProfile);
+        stopBySpeedProfileAdjustSpinner.setValue(_stopBySpeedProfileAdjust);
+        stopBySpeedProfileCheckBox.setSelected(_stopBySpeedProfile);
         maxTrainLengthSpinner.setValue(Math.round(_maxTrainLength * 2) * 0.5f); // set in spinner as 0.5 increments
+
     }
 
     private void hideAutoRunItems() {
         pa1.setVisible(false);
         pa2.setVisible(false);
+        pa2a.setVisible(false);
         pa3.setVisible(false);
         pa4.setVisible(false);
     }
@@ -1260,6 +1345,7 @@ public class ActivateTrainFrame {
     private void showAutoRunItems() {
         pa1.setVisible(true);
         pa2.setVisible(true);
+        pa2a.setVisible(true);
         pa3.setVisible(true);
         pa4.setVisible(true);
     }
@@ -1272,6 +1358,9 @@ public class ActivateTrainFrame {
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
         maxTrainLengthSpinner.setValue(info.getMaxTrainLength());
+        useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
+        stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
+        stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
         if (autoRunBox.isSelected()) {
             showAutoRunItems();
         } else {
@@ -1288,6 +1377,9 @@ public class ActivateTrainFrame {
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
+        info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
+        info.setStopBySpeedProfile(stopBySpeedProfileCheckBox.isSelected());
+        info.setStopBySpeedProfileAdjust((float)stopBySpeedProfileAdjustSpinner.getValue());
     }
 
     private boolean readAutoRunItems() {
@@ -1299,6 +1391,11 @@ public class ActivateTrainFrame {
         _runInReverse = runInReverseBox.isSelected();
         _soundDecoder = soundDecoderBox.isSelected();
         _maxTrainLength = (float) maxTrainLengthSpinner.getValue();
+        _useSpeedProfile = useSpeedProfileCheckBox.isSelected();
+        _stopBySpeedProfile = stopBySpeedProfileCheckBox.isSelected();
+        if (_stopBySpeedProfile) {
+            _stopBySpeedProfileAdjust = (Float) stopBySpeedProfileAdjustSpinner.getValue();
+        }
         return success;
     }
 
@@ -1310,6 +1407,9 @@ public class ActivateTrainFrame {
         aaf.setRunInReverse(_runInReverse);
         aaf.setSoundDecoder(_soundDecoder);
         aaf.setMaxTrainLength(_maxTrainLength);
+        aaf.setStopBySpeedProfile(_stopBySpeedProfile);
+        aaf.setStopBySpeedProfileAdjust(_stopBySpeedProfileAdjust);
+        aaf.setUseSpeedProfile(_useSpeedProfile);
     }
 
     private void initializeRampCombo() {
@@ -1320,6 +1420,24 @@ public class ActivateTrainFrame {
         rampRateBox.addItem(Bundle.getMessage("RAMP_MED_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SLOW"));
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
+    }
+
+    private void initializeAllocateMethod() {
+        allocateMethodBox.removeAllItems();
+        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (3, Bundle.getMessage("3Ahead")));
+        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (999, Bundle.getMessage("AsFarAsPos")));
+        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (0, Bundle.getMessage("ToSafeSections")));
+        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (4, Bundle.getMessage("4Ahead")));
+        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (5, Bundle.getMessage("5Ahead")));
+    }
+
+    private void setallocateMethodBoxItem(int value) {
+        for (int i =0; i < allocateMethodBox.getItemCount(); i++) {
+            if (((ComboBoxAllocateMethodItem) allocateMethodBox.getItemAt(i)).getValue() == value) {
+               allocateMethodBox.setSelectedIndex(i);
+               break;
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class);

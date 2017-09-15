@@ -131,7 +131,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     ActiveTrain at = createActiveTrain(info.getTransitId(), info.getTrainName(), tSource,
                             info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(), info.getDestinationBlockSeq(),
                             info.getAutoRun(), info.getDccAddress(), info.getPriority(),
-                            info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null);
+                            info.getResetWhenDone(), info.getReverseAtEnd(), info.getAllocateAllTheWay(), true, null, info.getAllocationMethod());
                     if (at != null) {
                         if (tSource == ActiveTrain.ROSTER) {
                             RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
@@ -243,6 +243,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected JmriJFrame dispatcherFrame = null;
     private Container contentPane = null;
     private ActiveTrainsTableModel activeTrainsTableModel = null;
+    private JButton addTrainStartupButton = null; //for testing
     private JButton addTrainButton = null;
     private JButton terminateTrainButton = null;
     private JButton cancelRestartButton = null;
@@ -962,7 +963,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
             boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, boolean allocateAllTheWay,
-            boolean showErrorMessages, JmriJFrame frame) {
+            boolean showErrorMessages, JmriJFrame frame, int allocateMethod) {
         log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
                 trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
         // validate input
@@ -1186,6 +1187,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         at.setReverseAtEnd(reverseAtEnd);
         at.setAllocateAllTheWay(allocateAllTheWay);
+        at.setAllocateMethod(allocateMethod);
         at.setPriority(priority);
         at.setDccAddress(dccAddress);
         at.setAutoRun(autoRun);

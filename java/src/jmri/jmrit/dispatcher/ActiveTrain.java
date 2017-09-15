@@ -169,6 +169,7 @@ public class ActiveTrain {
     private AutoActiveTrain mAutoActiveTrain = null;
     private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
     private jmri.Section mLastAllocatedSection = null;
+    private int mLastAllocatedSectionSeqNumber = 0;
     private jmri.Section mSecondAllocatedSection = null;
     private int mNextAllocationNumber = 1;
     private jmri.Section mNextSectionToAllocate = null;
@@ -185,6 +186,7 @@ public class ActiveTrain {
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
     private boolean mAllocateAllTheWay = false;
+    private int mAllocateMethod = 3;
     public final static int NODELAY = 0x00;
     public final static int TIMEDDELAY = 0x01;
     public final static int SENSORDELAY = 0x02;
@@ -604,6 +606,7 @@ public class ActiveTrain {
             if (as.getSection() == mNextSectionToAllocate) {
                 // this  is the next Section in the Transit, update pointers
                 mLastAllocatedSection = as.getSection();
+                mLastAllocatedSectionSeqNumber = mNextSectionSeqNumber;
                 mNextSectionToAllocate = as.getNextSection();
                 mNextSectionSeqNumber = as.getNextSectionSequence();
                 mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(
@@ -673,6 +676,7 @@ public class ActiveTrain {
             if (mAllocatedSections.size() > 0) {
                 mLastAllocatedSection = mAllocatedSections.get(
                         mAllocatedSections.size() - 1).getSection();
+                mLastAllocatedSectionSeqNumber = mAllocatedSections.size() - 1;
             }
         }
     }
@@ -792,6 +796,10 @@ public class ActiveTrain {
 
     public jmri.Section getLastAllocatedSection() {
         return mLastAllocatedSection;
+    }
+
+    public int getLastAllocatedSectionSeqNumber() {
+        return mLastAllocatedSectionSeqNumber;
     }
 
     public String getLastAllocatedSectionName() {
@@ -917,6 +925,13 @@ public class ActiveTrain {
         return mSecondAllocatedSection;
     }
 
+    public int getAllocateMethod() {
+        return mAllocateMethod;
+    }
+    public void setAllocateMethod(int i) {
+        mAllocateMethod = i;
+    }
+
     //
     // Operating methods
     //
@@ -999,6 +1014,33 @@ public class ActiveTrain {
                 aSec.getSection().setState(jmri.Section.FORWARD);
             }
             aSec.setStoppingSensors();
+        }
+        return aSec;
+    }
+    // Reverse a specfic section
+    // as the syncronzed cannot lock the array we try twice in case
+    // of concurrent updates.
+    protected AllocatedSection DONTUSEreverseOneAllocatedSections(String sectionToReverse) {
+        AllocatedSection aSec = null;
+        int iCount = 0;
+        boolean bResetDone = false;
+        while (!bResetDone && iCount < 10) {
+            log.info("Try reset[" + sectionToReverse + "]");
+            for (int i = 0; i < mAllocatedSections.size(); i++) {
+                aSec = mAllocatedSections.get(i);
+                if ( sectionToReverse.equals(aSec.getSectionName() ) ) {
+                    int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
+                    if (dir == jmri.Section.FORWARD) {
+                        aSec.getSection().setState(jmri.Section.REVERSE);
+                    } else {
+                        aSec.getSection().setState(jmri.Section.FORWARD);
+                    }
+                    bResetDone = true;
+                    aSec.setStoppingSensors();
+                }
+            }
+            try { Thread.sleep(200); } catch (Exception e) {};
+            ++iCount;
         }
         return aSec;
     }

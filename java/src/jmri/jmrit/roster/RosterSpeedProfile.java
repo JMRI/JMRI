@@ -486,6 +486,34 @@ public class RosterSpeedProfile {
      * Set speed of a throttle.
      *
      * @param t     the throttle to set
+     * @param blk   the block used for length details
+     * @param speed the speed to set
+     * @param usePercentage the percentage of the block to be used for stopping
+     */
+    public void changeLocoSpeed(DccThrottle t, Block blk, float speed, float usePercentage) {
+        if (blk == referenced && speed == desiredSpeedStep) {
+            //if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
+            return;
+        }
+        float blockLength = blk.getLengthMm() * usePercentage;
+        if (blk == referenced) {
+            distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float) (System.nanoTime() - lastTimeTimerStarted) / 1000000000));
+            blockLength = distanceRemaining;
+            //Not entirely reliable at this stage as the loco could still be running and not completed the calculation of the distance, this could result in an over run
+            log.debug("Block passed is the same as we are currently processing");
+        } else {
+            referenced = blk;
+        }
+        changeLocoSpeed(t, blockLength, speed);
+
+    }
+
+    /**
+     * Set speed of a throttle to a speeed set by a float, using the section for
+     * the length details
+     * Set speed of a throttle.
+     *
+     * @param t     the throttle to set
      * @param sec   the section used for length details
      * @param speed the speed to set
      */
