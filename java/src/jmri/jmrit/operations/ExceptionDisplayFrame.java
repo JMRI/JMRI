@@ -80,7 +80,7 @@ public class ExceptionDisplayFrame extends JDialog {
         }
         this.context = context;
 
-        InitComponents();
+        initComponents();
     }
 
     /**
@@ -92,10 +92,10 @@ public class ExceptionDisplayFrame extends JDialog {
         this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N
                 "Hint unavailable"); // NOI18N
 
-        InitComponents();
+        initComponents();
     }
 
-    private void InitComponents() {
+    private void initComponents() {
         setTitle(context.getTitle());
 
         contentPane = new JPanel();

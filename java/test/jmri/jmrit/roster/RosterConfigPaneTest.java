@@ -30,6 +30,6 @@ public class RosterConfigPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterConfigPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RosterConfigPaneTest.class);
 
 }

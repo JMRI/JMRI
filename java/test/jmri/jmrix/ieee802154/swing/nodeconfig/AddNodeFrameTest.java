@@ -70,6 +70,6 @@ public class AddNodeFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddNodeFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddNodeFrameTest.class);
 
 }

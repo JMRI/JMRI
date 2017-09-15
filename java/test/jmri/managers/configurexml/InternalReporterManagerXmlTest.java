@@ -29,6 +29,6 @@ public class InternalReporterManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InternalReporterManagerXmlTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(InternalReporterManagerXmlTest.class);
 
 }

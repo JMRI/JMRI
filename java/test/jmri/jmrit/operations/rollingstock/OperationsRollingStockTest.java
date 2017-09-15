@@ -234,7 +234,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
 
         // Normally logged message
-        jmri.util.JUnitAppender.assertErrorMessage("Loco (TESTROAD TESTNUMBER1) length () is not valid");
+        jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
 
     }
 

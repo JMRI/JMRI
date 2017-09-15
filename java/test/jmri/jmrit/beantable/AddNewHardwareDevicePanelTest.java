@@ -54,6 +54,6 @@ public class AddNewHardwareDevicePanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
 
 }

@@ -31,6 +31,6 @@ public class LnTcpStartupActionFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTcpStartupActionFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnTcpStartupActionFactoryTest.class);
 
 }

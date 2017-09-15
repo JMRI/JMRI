@@ -48,7 +48,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private static final int REPLY_2 = 2;   // reply length of 2 byte
     private static final int REPLY_4 = 4;   // reply length of 4 byte
 
-    Thread NceCabUpdateThread;
+    Thread nceCabUpdateThread;
     private boolean setRequested = false;
     private int setCabId = -1;
 
@@ -196,10 +196,10 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             setCabId = cabId;
         }
         // Set up a separate thread to access CS memory
-        if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive()) {
+        if (nceCabUpdateThread != null && nceCabUpdateThread.isAlive()) {
             return; // thread is already running
         }
-        NceCabUpdateThread = new Thread(new Runnable() {
+        nceCabUpdateThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
@@ -209,9 +209,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         });
-        NceCabUpdateThread.setName(rb.getString("ThreadTitle"));
-        NceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
-        NceCabUpdateThread.start();
+        nceCabUpdateThread.setName(rb.getString("ThreadTitle"));
+        nceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
+        nceCabUpdateThread.start();
     }
 
     private boolean firstTime = true; // wait for panel to display
@@ -365,5 +365,5 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(UsbInterfacePanel.class.getName());
+            .getLogger(UsbInterfacePanel.class);
 }

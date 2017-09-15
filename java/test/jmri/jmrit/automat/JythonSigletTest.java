@@ -29,6 +29,6 @@ public class JythonSigletTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JythonSigletTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JythonSigletTest.class);
 
 }

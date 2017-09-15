@@ -195,5 +195,5 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
     static java.util.Timer meterTimer = new java.util.Timer(true);
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
 }

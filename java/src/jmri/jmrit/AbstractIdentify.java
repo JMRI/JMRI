@@ -232,7 +232,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      *
      * @param cv the CV to read
      */
-    protected void readCV(int cv) {
+    protected void readCV(String cv) {
         if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -244,7 +244,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         }
     }
 
-    protected void writeCV(int cv, int value) {
+    protected void writeCV(String cv, int value) {
         if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -257,6 +257,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class);
 
 }

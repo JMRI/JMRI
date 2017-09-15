@@ -26,7 +26,6 @@ import org.junit.runners.Suite;
     jmri.jmrit.symbolicprog.tabbedframe.PackageTest.class,
     jmri.jmrit.symbolicprog.configurexml.PackageTest.class,
     jmri.jmrit.symbolicprog.autospeed.PackageTest.class,
-    jmri.jmrit.symbolicprog.symbolicframe.PackageTest.class,
     QualifierCombinerTest.class,
     ConstantValueTest.class,
     LocoSelPaneTest.class,
@@ -57,7 +56,11 @@ import org.junit.runners.Suite;
     LokProgImporterTest.class,
     ComboOffRadioButtonTest.class,
     ComboOnRadioButtonTest.class,
-    DccAddressVarHandlerTest.class
+    DccAddressVarHandlerTest.class,
+    DecVarSliderTest.class,
+    DccAddressPanelTest.class,
+    PrintActionTest.class,
+    PrintCvActionTest.class
 })
 
 /**

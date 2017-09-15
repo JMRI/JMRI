@@ -7,6 +7,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,16 +65,16 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             element.setAttribute("hidden", "yes");
         }
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getID());
+            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getID());
+            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getID());
+            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getID());
+            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
         }
         if (!p.getSignalA1Name().isEmpty()) {
             element.setAttribute("signala1name", p.getSignalA1Name());
@@ -225,14 +226,12 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("secondturnoutname");
         if (a != null) {
             l.tSecondTurnoutName = a.getValue();
-
-            boolean invert2nd = false;
-            if (element.getAttribute("secondturnoutinverted") != null) {
-                if (element.getAttribute("secondturnoutinverted").getValue().equals("true")) {
-                    invert2nd = true;
-                }
+            try {
+                l.setSecondTurnoutInverted(element.getAttribute("secondturnoutinverted").getBooleanValue());
+            } catch (DataConversionException e1) {
+                log.warn("unable to convert layout turnout secondturnoutinverted attribute");
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
-            l.setSecondTurnoutInverted(invert2nd);
         }
 
         a = element.getAttribute("connectaname");
@@ -306,24 +305,26 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             }
             l.setContinuingSense(continuing);
         }
-        boolean value = false;
-        if ((a = element.getAttribute("disabled")) != null && a.getValue().equals("yes")) {
-            value = true;
+        try {
+            l.setDisabled(element.getAttribute("disabled").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout disabled attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        l.setDisabled(value);
-        value = false;
-        if ((a = element.getAttribute("disableWhenOccupied")) != null && a.getValue().equals("yes")) {
-            value = true;
+        try {
+            l.setDisableWhenOccupied(element.getAttribute("disableWhenOccupied").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout disableWhenOccupied attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        l.setDisableWhenOccupied(value);
-        boolean hide = false;
-        if (element.getAttribute("hidden") != null) {
-            if (element.getAttribute("hidden").getValue().equals("yes")) {
-                hide = true;
-            }
+        try {
+            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout hidden attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        l.setHidden(hide);
-        if(version==2){
+
+        if (version==2){
             try {
                 x = element.getAttribute("xa").getFloatValue();
                 y = element.getAttribute("ya").getFloatValue();
@@ -348,7 +349,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutturnout c coords attribute");
         }
         l.setCoordsC(new Point2D.Double(x, y));
-        if(version==2){
+        if (version==2){
             try {
                 x = element.getAttribute("xd").getFloatValue();
                 y = element.getAttribute("yd").getFloatValue();
@@ -418,5 +419,5 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         p.turnoutList.add(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutXml.class);
 }

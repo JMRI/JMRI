@@ -33,6 +33,6 @@ public class CarDeleteAttributeActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarDeleteAttributeActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarDeleteAttributeActionTest.class);
 
 }

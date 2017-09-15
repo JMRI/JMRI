@@ -49,7 +49,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @throws jmri.JmriException if there is an error discovering signaling
      *                            destinations
      */
-    public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
+    public void discoverSignallingDest(@Nonnull SignalMast source, @Nonnull LayoutEditor layout) throws JmriException;
 
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -65,7 +65,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @return a list of logics for destination or an empty list if none
      */
     @Nonnull
-    public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination);
+    public ArrayList<SignalMastLogic> getLogicsByDestination(@Nonnull SignalMast destination);
 
     /**
      * Return the Signal Mast Logic for a specific Source Signal Mast.
@@ -73,13 +73,14 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param source The Source Signal Mast
      * @return The Signal Mast Logic for that mast
      */
-    public SignalMastLogic getSignalMastLogic(SignalMast source);
+    public SignalMastLogic getSignalMastLogic(@Nonnull SignalMast source);
 
     /**
      * Return a list of all existing Signal Mast Logics
      *
      * @return An ArrayList of all Signal Mast Logics
      */
+    @Nonnull
     public ArrayList<SignalMastLogic> getSignalMastLogicList();
 
     /**
@@ -94,9 +95,9 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param source The source Signal Mast
      * @return source The new SML instance
      */
+    @Nonnull
     public SignalMastLogic newSignalMastLogic(SignalMast source);
 
-    //public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
     /**
      * Remove a destination Signal Mast and its settings from a Signal Mast
      * Logic.
@@ -104,21 +105,21 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param sml  The Signal Mast Logic
      * @param dest The destination mast
      */
-    public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest);
+    public void removeSignalMastLogic(@Nonnull SignalMastLogic sml, @Nonnull SignalMast dest);
 
     /**
      * Completely remove a specific Signal Mast Logic by name.
      *
      * @param sml The Signal Mast Logic to be removed
      */
-    public void removeSignalMastLogic(SignalMastLogic sml);
+    public void removeSignalMastLogic(@Nonnull SignalMastLogic sml);
 
     /**
      * Completely remove a Signal Mast from all the SMLs that use it.
      *
      * @param mast The Signal Mast to be removed
      */
-    public void removeSignalMast(SignalMast mast);
+    public void removeSignalMast(@Nonnull SignalMast mast);
 
     /**
      * Disable the use of info from the Layout Editor Panels to configure a
@@ -126,7 +127,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      *
      * @param mast The Signal Mast for which LE info is to be disabled
      */
-    public void disableLayoutEditorUse(SignalMast mast);
+    public void disableLayoutEditorUse(@Nonnull SignalMast mast);
 
     /**
      * Replace the complete Signal Mast Logic configurations between two Source
@@ -135,7 +136,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param mastA Signal Mast A
      * @param mastB Signal Mast B
      */
-    public void swapSignalMasts(SignalMast mastA, SignalMast mastB);
+    public void swapSignalMasts(@Nonnull SignalMast mastA, @Nonnull SignalMast mastB);
 
     /**
      * Check if a Signal Mast is in use as either a Source or Destination mast
@@ -144,10 +145,18 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param mast the signal mast to check
      * @return true if mast is used by at least one Signal Mast Logic
      */
-    public boolean isSignalMastUsed(SignalMast mast);
+    public boolean isSignalMastUsed(@Nonnull SignalMast mast);
 
-    public long getSignalLogicDelay();
+    /**
+     * @return characteristic delay time in msec, used to control roughly
+     *          when signal system computations are done. (Some are half this, some twice)
+     */
+    public int getSignalLogicDelay();
 
-    public void setSignalLogicDelay(long l);
+    /**
+     * @param l characteristic delay time in msec, used to control roughly
+     *          when signal system computations are done. (Some are half this, some twice)
+     */
+    public void setSignalLogicDelay(int l);
 
 }

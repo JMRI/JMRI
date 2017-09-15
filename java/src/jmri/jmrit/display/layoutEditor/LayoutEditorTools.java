@@ -62,14 +62,13 @@ import org.slf4j.LoggerFactory;
  * available in Layout Editor panels.
  * <P>
  * The tools in this module are accessed via the Tools menu in Layout Editor.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2007
  */
 public class LayoutEditorTools {
 
-    // Defined text resource
+    // Defined text resource, should be called by Bundle.getMessage() to allow reuse of shared keys via path
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-    //static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     // constants
     private int NONE = 0;  // Signal at Turnout Positions
@@ -95,79 +94,76 @@ public class LayoutEditorTools {
     public LayoutEditorTools(LayoutEditor thePanel) {
         layoutEditor = thePanel;
 
-        // defer these actions until all these actually exist...
-        SwingUtilities.invokeLater(() -> {
-            LayoutEditor.setupComboBox(turnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutComboBox, true, true);
 
-            LayoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(throatContinuingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(continuingSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(divergingSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(block1IDComboBox, true, true);
-            LayoutEditor.setupComboBox(block2IDComboBox, true, true);
+        LayoutEditor.setupComboBox(block1IDComboBox, true, true);
+        LayoutEditor.setupComboBox(block2IDComboBox, true, true);
 
-            LayoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(eastBoundSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1ComboBox, true, true);
-            LayoutEditor.setupComboBox(a2ComboBox, true, true);
-            LayoutEditor.setupComboBox(b1ComboBox, true, true);
-            LayoutEditor.setupComboBox(b2ComboBox, true, true);
-            LayoutEditor.setupComboBox(c1ComboBox, true, true);
-            LayoutEditor.setupComboBox(c2ComboBox, true, true);
-            LayoutEditor.setupComboBox(d1ComboBox, true, true);
-            LayoutEditor.setupComboBox(d2ComboBox, true, true);
+        LayoutEditor.setupComboBox(a1ComboBox, true, true);
+        LayoutEditor.setupComboBox(a2ComboBox, true, true);
+        LayoutEditor.setupComboBox(b1ComboBox, true, true);
+        LayoutEditor.setupComboBox(b2ComboBox, true, true);
+        LayoutEditor.setupComboBox(c1ComboBox, true, true);
+        LayoutEditor.setupComboBox(c2ComboBox, true, true);
+        LayoutEditor.setupComboBox(d1ComboBox, true, true);
+        LayoutEditor.setupComboBox(d2ComboBox, true, true);
 
-            LayoutEditor.setupComboBox(blockAComboBox, true, true);
-            LayoutEditor.setupComboBox(blockCComboBox, true, true);
+        LayoutEditor.setupComboBox(blockAComboBox, true, true);
+        LayoutEditor.setupComboBox(blockCComboBox, true, true);
 
-            LayoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(aSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(bSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(cSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
-            LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
+        LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
+        LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c2TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d1TToTSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d2TToTSignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
-            LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutAComboBox, true, true);
+        LayoutEditor.setupComboBox(turnoutBComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a1_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a3_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c_3WaySignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d_3WaySignalHeadComboBox, true, true);
 
-            LayoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(signalMastsTurnoutComboBox, true, true);
 
-            LayoutEditor.setupComboBox(xingBlockAComboBox, true, true);
-            LayoutEditor.setupComboBox(xingBlockCComboBox, true, true);
+        LayoutEditor.setupComboBox(xingBlockAComboBox, true, true);
+        LayoutEditor.setupComboBox(xingBlockCComboBox, true, true);
 
-            LayoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
+        LayoutEditor.setupComboBox(sensorsTurnoutComboBox, true, true);
 
-            LayoutEditor.setupComboBox(xingSensorsBlockAComboBox, true, true);
-            LayoutEditor.setupComboBox(xingSensorsBlockCComboBox, true, true);
+        LayoutEditor.setupComboBox(xingSensorsBlockAComboBox, true, true);
+        LayoutEditor.setupComboBox(xingSensorsBlockCComboBox, true, true);
 
-            LayoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
-            LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
-        });
+        LayoutEditor.setupComboBox(a1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(a2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(b2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(c2SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d1SlipSignalHeadComboBox, true, true);
+        LayoutEditor.setupComboBox(d2SlipSignalHeadComboBox, true, true);
     }
 
     /**
@@ -254,12 +250,11 @@ public class LayoutEditorTools {
 
             JPanel panel1 = new JPanel(new FlowLayout());
             if (turnoutFromMenu) {
-                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
+                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
+                        + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutNameLabel);
             } else {
-                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + Bundle.getMessage("Name"));
+                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout"));
                 panel1.add(turnoutNameLabel);
                 panel1.add(turnoutComboBox);
                 turnoutComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -380,7 +375,7 @@ public class LayoutEditorTools {
             setSignalsDone.addActionListener((ActionEvent e) -> {
                 setSignalsDonePressed(e);
             });
-            setSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -2011,8 +2006,8 @@ public class LayoutEditorTools {
         boundaryFromMenu = true;
         boundary = p;
 
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
-        block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
+        block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
 
         setSignalsAtBlockBoundary(theEditor, theFrame);
         return;
@@ -2036,7 +2031,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
@@ -2051,7 +2046,7 @@ public class LayoutEditorTools {
             if (boundaryFromMenu) {
                 if (boundary.getConnect2() != null) {
                     JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                            + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                            + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                     panel12.add(block2NameLabel);
                 }
             } else {
@@ -2127,7 +2122,7 @@ public class LayoutEditorTools {
             setSignalsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalsAtBoundaryDonePressed(e);
             });
-            setSignalsAtBoundaryDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSignalsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -2520,10 +2515,10 @@ public class LayoutEditorTools {
             } else {
                 showEast = false;
             }
-            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         } else {
-            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+            block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
         boundaryFromMenu = true;
 
@@ -2632,7 +2627,7 @@ public class LayoutEditorTools {
         if (!xoverFromMenu) {
             //TODO: convert to use turnout ComboBox
             xoverTurnoutName = JOptionPane.showInputDialog(layoutEditor,
-                Bundle.getMessage("MakeLabel", rb.getString("EnterXOverTurnout")));
+                    Bundle.getMessage("MakeLabel", rb.getString("EnterXOverTurnout")));
             if (xoverTurnoutName.length() < 3) {
                 return;	 // cancelled
             }
@@ -2672,7 +2667,7 @@ public class LayoutEditorTools {
             });
             getSavedXoverSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
-                        
+
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
@@ -2847,7 +2842,7 @@ public class LayoutEditorTools {
             setXoverSignalsDone.addActionListener((ActionEvent e) -> {
                 setXoverSignalsDonePressed(e);
             });
-            setXoverSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setXoverSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -3664,13 +3659,12 @@ public class LayoutEditorTools {
 
             JPanel panel11 = new JPanel(new FlowLayout());
             if (xingFromMenu) {
-                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 1"))
+                        + " " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
             } else {
-                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : ");
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 1")));
                 panel11.add(blockANameLabel);
                 panel11.add(blockAComboBox);
                 blockAComboBox.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -3679,13 +3673,12 @@ public class LayoutEditorTools {
 
             JPanel panel12 = new JPanel(new FlowLayout());
             if (xingFromMenu) {
-                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 2"))
+                        + " " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
-                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : ");
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("MakeLabel", (Bundle.getMessage("BeanNameBlock") + " 2")));
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCComboBox);
                 blockCComboBox.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -3703,7 +3696,7 @@ public class LayoutEditorTools {
             });
             getSavedXingSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
-                        
+
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
@@ -3806,7 +3799,7 @@ public class LayoutEditorTools {
             setXingSignalsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalsDonePressed(e);
             });
-            setXingSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setXingSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -4458,7 +4451,7 @@ public class LayoutEditorTools {
     private SignalHead d1TToTHead = null;
     private SignalHead d2TToTHead = null;
 
-    public void setThroatToThroatFromMenu(LayoutTurnout to, String linkedTurnoutName,
+    public void setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout to, String linkedTurnoutName,
             MultiIconEditor theEditor, JFrame theFrame) {
         ttotFromMenu = true;
         ttotTurnoutName1 = to.getTurnoutName();
@@ -4473,10 +4466,10 @@ public class LayoutEditorTools {
         d1TToTSignalHeadComboBox.setText("");
         d2TToTSignalHeadComboBox.setText("");
 
-        setSignalsAtTToTTurnouts(theEditor, theFrame);
+        setSignalsAtThroatToThroatTurnouts(theEditor, theFrame);
     }
 
-    public void setSignalsAtTToTTurnouts(MultiIconEditor theEditor, JFrame theFrame) {
+    public void setSignalsAtThroatToThroatTurnouts(MultiIconEditor theEditor, JFrame theFrame) {
         signalIconEditor = theEditor;
         signalFrame = theFrame;
         if (setSignalsAtTToTOpen) {
@@ -4532,7 +4525,7 @@ public class LayoutEditorTools {
             getSavedTToTSignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel20);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-                       
+
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
             panel2a.add(setPlaceAllHeads);
@@ -4722,7 +4715,7 @@ public class LayoutEditorTools {
             setTToTSignalsDone.addActionListener((ActionEvent e) -> {
                 setTToTSignalsDonePressed(e);
             });
-            setTToTSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setTToTSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -5854,7 +5847,7 @@ public class LayoutEditorTools {
     private SignalHead c3WayHead = null;	// saved in B1 of Turnout B - at continuing
     private SignalHead d3WayHead = null;	// saved in C1 of Turnout B - at diverging B
 
-    public void set3WayFromMenu(String aName, String bName,
+    public void setSignalsAt3WayTurnoutFromMenu(String aName, String bName,
             MultiIconEditor theEditor, JFrame theFrame) {
         turnoutAComboBox.setText(aName);
         turnoutBComboBox.setText(bName);
@@ -5883,14 +5876,14 @@ public class LayoutEditorTools {
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
-            JLabel turnoutANameLabel = new JLabel(rb.getString("TurnoutAName"));
+            JLabel turnoutANameLabel = new JLabel(Bundle.getMessage("MakeLabel", rb.getString("TurnoutAName")));
             panel1.add(turnoutANameLabel);
             panel1.add(turnoutAComboBox);
             turnoutAComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
             theContentPane.add(panel1);
 
             JPanel panel11 = new JPanel(new FlowLayout());
-            JLabel turnoutBNameLabel = new JLabel(rb.getString("TurnoutBName"));
+            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("MakeLabel", rb.getString("TurnoutBName")));
             panel11.add(turnoutBNameLabel);
             panel11.add(turnoutBComboBox);
             turnoutBComboBox.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -5908,7 +5901,7 @@ public class LayoutEditorTools {
             });
             getSaved3WaySignalHeads.setToolTipText(rb.getString("GetSavedHint"));
             theContentPane.add(panel2);
-                       
+
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
@@ -6057,7 +6050,7 @@ public class LayoutEditorTools {
             set3WaySignalsDone.addActionListener((ActionEvent e) -> {
                 set3WaySignalsDonePressed(e);
             });
-            set3WaySignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            set3WaySignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -7013,11 +7006,11 @@ public class LayoutEditorTools {
             JFrame theFrame) {
         boundaryFromMenu = true;
         boundary = p;
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         if (boundary.getType() != PositionablePoint.ANCHOR) {
-            block2IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+            block2IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         } else {
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
         setSensorsAtBlockBoundary(theEditor, theFrame);
         return;
@@ -7047,7 +7040,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
@@ -7061,7 +7054,7 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel(new FlowLayout());
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                 panel12.add(block2NameLabel);
             } else if (boundary.getType() == PositionablePoint.ANCHOR) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
@@ -7138,7 +7131,7 @@ public class LayoutEditorTools {
             setSensorsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSensorsAtBoundaryDonePressed(e);
             });
-            setSensorsAtBoundaryDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setSensorsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -7554,9 +7547,9 @@ public class LayoutEditorTools {
     public void setSignalMastsAtBlockBoundaryFromMenu(PositionablePoint p) {
         boundaryFromMenu = true;
         boundary = p;
-        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getID());
+        block1IDComboBox.setText(boundary.getConnect1().getLayoutBlock().getId());
         if (boundary.getType() == PositionablePoint.ANCHOR) {
-            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getID());
+            block2IDComboBox.setText(boundary.getConnect2().getLayoutBlock().getId());
         }
         setSignalMastsAtBlockBoundary();
         return;
@@ -7583,7 +7576,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getId());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
@@ -7597,7 +7590,7 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel(new FlowLayout());
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getId());
                 panel12.add(block2NameLabel);
             } else if (boundary.getType() == PositionablePoint.ANCHOR) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
@@ -7668,7 +7661,7 @@ public class LayoutEditorTools {
             setSignalMastsAtBoundaryDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsAtBoundaryDonePressed(e);
             });
-            setSignalMastsAtBoundaryDone.setToolTipText(rb.getString("SignalMastDoneHint"));
+            setSignalMastsAtBoundaryDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -8800,7 +8793,7 @@ public class LayoutEditorTools {
             setSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSignalMastsDonePressed(e);
             });
-            setSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
@@ -9357,7 +9350,7 @@ public class LayoutEditorTools {
             setSlipSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsDonePressed(e);
             });
-            setSlipSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSlipSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSlipSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSignalMastsCancelPressed(e);
@@ -9854,7 +9847,7 @@ public class LayoutEditorTools {
             setXingSignalMastsDone.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsDonePressed(e);
             });
-            setXingSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setXingSignalMastsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setXingSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalMastsCancel.addActionListener((ActionEvent e) -> {
                 setXingSignalMastsCancelPressed(e);
@@ -10351,7 +10344,7 @@ public class LayoutEditorTools {
             setSensorsDone.addActionListener((ActionEvent e) -> {
                 setSensorsDonePressed(e);
             });
-            setSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setSensorsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsCancel.addActionListener((ActionEvent e) -> {
                 setSensorsCancelPressed(e);
@@ -10888,7 +10881,7 @@ public class LayoutEditorTools {
             setXingSensorsDone.addActionListener((ActionEvent e) -> {
                 setXingSensorsDonePressed(e);
             });
-            setXingSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setXingSensorsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setXingSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSensorsCancel.addActionListener((ActionEvent e) -> {
                 setXingSensorsCancelPressed(e);
@@ -11419,7 +11412,7 @@ public class LayoutEditorTools {
             setSlipSensorsDone.addActionListener((ActionEvent e) -> {
                 setSlipSensorsDonePressed(e);
             });
-            setSlipSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
+            setSlipSensorsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSlipSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSensorsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSensorsCancelPressed(e);
@@ -11752,7 +11745,7 @@ public class LayoutEditorTools {
 
     static class BeanDetails {
 
-        String BundleName;
+        String bundleName;
         String beanString;
         JLabel textLabel;
 
@@ -11778,14 +11771,14 @@ public class LayoutEditorTools {
             // I18N translate from type (Sensor) to BeanNameSensor
             // to use NamedBeanBundle property
             if ("Sensor".equals(beanType)) {
-                BundleName = "BeanNameSensor";
+                bundleName = "BeanNameSensor";
             } else if ("SignalMast".equals(beanType)) {
-                BundleName = "BeanNameSignalMast";
+                bundleName = "BeanNameSignalMast";
             } else {
                 log.error("Unexpected value for BeanDetails");
-                BundleName = beanType;
+                bundleName = beanType;
             }
-            beanString = Bundle.getMessage(BundleName);
+            beanString = Bundle.getMessage(bundleName);
             textLabel = new JLabel(beanString);
             this.manager = manager;
             //this.beanType = beanType;
@@ -11950,7 +11943,7 @@ public class LayoutEditorTools {
     private JPanel dblSlipB2SigPanel;
     private boolean slipSignalFromMenu = false;
 
-    public void setSlipFromMenu(LayoutSlip ls,
+    public void setSignalsAtSlipFromMenu(LayoutSlip ls,
             MultiIconEditor theEditor, JFrame theFrame) {
         layoutSlip = ls;
         a1SlipSignalHeadComboBox.setText("");
@@ -12016,7 +12009,7 @@ public class LayoutEditorTools {
             });
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-                     
+
             JPanel panel2a = new JPanel(new FlowLayout());
             panel2a.add(new JLabel("   "));
             panel2a.add(setPlaceAllHeads);
@@ -12215,7 +12208,7 @@ public class LayoutEditorTools {
             setSlipSignalsDone.addActionListener((ActionEvent e) -> {
                 setSlipSignalsDonePressed(e);
             });
-            setSlipSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
+            setSlipSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             panel6.add(setSlipSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalsCancel.addActionListener((ActionEvent e) -> {
                 setSlipSignalsCancelPressed(e);
@@ -13251,7 +13244,7 @@ public class LayoutEditorTools {
             addInfoToMenu("D " + continuing, layoutTurnout.getSignalD1Name(), inMenu);
             addInfoToMenu("D " + diverging, layoutTurnout.getSignalD2Name(), inMenu);
         } else if (linkType == LayoutTurnout.NO_LINK) {
-            JMenuItem jmi = inMenu.add(rb.getString("Turnout"));
+            JMenuItem jmi = inMenu.add(Bundle.getMessage("BeanNameTurnout"));
             jmi.setEnabled(false);
             inMenu.add(new JSeparator());
             before_mcc += 2;
@@ -13261,7 +13254,7 @@ public class LayoutEditorTools {
             addInfoToMenu(diverging, layoutTurnout.getSignalC1Name(), inMenu);
         } else if (linkType == LayoutTurnout.THROAT_TO_THROAT) {
             String text = rb.getString("ThroatToThroat") + " (";
-            text += rb.getString("Turnout") + ", " + rb.getString("Route");
+            text += Bundle.getMessage("BeanNameTurnout") + ", " + Bundle.getMessage("BeanNameRoute");
             text += ", " + rb.getString("Signal") + ":)";
             JMenuItem jmi = inMenu.add(text);
             jmi.setEnabled(false);
@@ -13406,5 +13399,5 @@ public class LayoutEditorTools {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class);
 }

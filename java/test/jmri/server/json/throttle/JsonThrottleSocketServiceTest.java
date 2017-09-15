@@ -40,6 +40,6 @@ public class JsonThrottleSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketServiceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketServiceTest.class);
 
 }

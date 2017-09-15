@@ -31,6 +31,72 @@ public class JUnitAppenderTest extends TestCase {
         JUnitAppender.assertErrorMessage(msg);
     }
 
+    public void testCheckForMessageError() {
+        String msg = "Message for testing to find";
+        log.error("Dummy");
+        Assert.assertNull(JUnitAppender.checkForMessage(msg));
+        log.error(msg);
+        Assert.assertNotNull(JUnitAppender.checkForMessage(msg));
+        // second not match
+        Assert.assertNull(JUnitAppender.checkForMessage(msg));
+    }
+    
+    public void testCheckForMessageWarn() {
+        String msg = "Message for testing to find";
+        log.error("Dummy");
+        Assert.assertNull(JUnitAppender.checkForMessage(msg));
+        log.warn(msg);
+        Assert.assertNotNull(JUnitAppender.checkForMessage(msg));
+        Assert.assertNull(JUnitAppender.checkForMessage(msg));
+    }
+    
+    public void testCheckForMessageInfo() {
+        String msg = "Message for testing to find";
+        log.error("Dummy");
+        Assert.assertNull(JUnitAppender.checkForMessage(msg));
+        log.info(msg);
+        Assert.assertNotNull(JUnitAppender.checkForMessage(msg));
+        Assert.assertNull(JUnitAppender.checkForMessage(msg));
+    }
+
+    public void testCheckForMessageStartError() {
+        String msg = "Message for testing to find";
+        log.error("Dummy");
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+        log.error(msg+" foo");
+        Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
+        // second not match
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+        // check exact match
+        log.warn(msg);
+        Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+    }
+    
+    public void testCheckForMessageStartWarn() {
+        String msg = "Message for testing to find";
+        log.error("Dummy");
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+        log.warn(msg+" foo");
+        Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+        log.warn(msg);
+        Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+    }
+    
+    public void testCheckForMessageStartInfo() {
+        String msg = "Message for testing to find";
+        log.error("Dummy");
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+        log.info(msg+" foo");
+        Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+        log.info(msg);
+        Assert.assertNotNull(JUnitAppender.checkForMessageStartingWith(msg));
+        Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
+    }
+
     // this is testing how the end of a test works, so continues
     // into the tearDown routine
     boolean testingUnexpected = false;
@@ -60,7 +126,7 @@ public class JUnitAppenderTest extends TestCase {
         log.warn(msg);
         JUnitAppender.assertWarnMessage(msg);
 
-        log.info("Unexpected INFO message for testing");
+        log.info("This INFO message was emitted to test the entire logging chain, please don't remove");
     }
 
     public void testExpectedWarnMessage() {
@@ -170,11 +236,8 @@ public class JUnitAppenderTest extends TestCase {
             Assert.assertFalse("post FATAL", JUnitAppender.unexpectedMessageSeen(Level.FATAL));
             Assert.assertFalse("post ERROR", JUnitAppender.unexpectedMessageSeen(Level.ERROR));
             Assert.assertFalse("post WARN",  JUnitAppender.unexpectedMessageSeen(Level.WARN));
-            
-            // It only detects messages that are _logged_. If INFO is suppressed, it's not an 
-            // error. Since that's usually the case, we've commented it out.
-            // (For some reason, JUnitAppender.instance().isAsSevereAsThreshold(Level.INFO) isn't working)
-            //Assert.assertTrue("post INFO",  JUnitAppender.unexpectedMessageSeen(Level.INFO));
+
+            Assert.assertTrue("post INFO",  JUnitAppender.unexpectedMessageSeen(Level.INFO));
 
             JUnitAppender.unexpectedFatalSeen = cacheFatal;
             JUnitAppender.unexpectedErrorSeen = cacheError;
@@ -186,5 +249,5 @@ public class JUnitAppenderTest extends TestCase {
         
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class);
 }

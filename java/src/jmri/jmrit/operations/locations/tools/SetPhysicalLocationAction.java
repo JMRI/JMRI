@@ -216,7 +216,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetPhysicalLocationAction.class.getName());
+            .getLogger(SetPhysicalLocationAction.class);
 }
 
 

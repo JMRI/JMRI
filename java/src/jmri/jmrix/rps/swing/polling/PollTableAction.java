@@ -39,7 +39,7 @@ public class PollTableAction extends AbstractAction {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PollTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollTableAction.class);
 
 }
 

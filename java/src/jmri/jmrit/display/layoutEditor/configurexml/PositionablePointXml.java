@@ -36,16 +36,16 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         Element element = new Element("positionablepoint");
 
         // include attributes
-        element.setAttribute("ident", p.getID());
+        element.setAttribute("ident", p.getId());
         element.setAttribute("type", "" + p.getType());
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("x", "" + coords.getX());
         element.setAttribute("y", "" + coords.getY());
         if (p.getConnect1() != null) {
-            element.setAttribute("connect1name", p.getConnect1().getID());
+            element.setAttribute("connect1name", p.getConnect1().getId());
         }
         if (p.getConnect2() != null) {
-            element.setAttribute("connect2name", p.getConnect2().getID());
+            element.setAttribute("connect2name", p.getConnect2().getId());
         }
         if (!p.getEastBoundSignal().isEmpty()) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
@@ -68,7 +68,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
-            element.setAttribute("linkedpanel", p.getLinkEditorName());
+            element.setAttribute("linkedpanel", p.getLinkedEditorName());
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 
@@ -150,7 +150,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.pointList) {
-                    if (point.getType() == PositionablePoint.EDGE_CONNECTOR && point.getID().equals(linkedPoint)) {
+                    if (point.getType() == PositionablePoint.EDGE_CONNECTOR && point.getId().equals(linkedPoint)) {
                         point.setLinkedPoint(l);
                         l.setLinkedPoint(point);
                         break;
@@ -162,5 +162,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         p.pointList.add(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class);
 }

@@ -139,9 +139,8 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initShutDownManager();
     }
 
@@ -150,5 +149,5 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class);
 }

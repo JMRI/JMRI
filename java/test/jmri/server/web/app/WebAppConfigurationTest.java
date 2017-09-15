@@ -26,9 +26,10 @@ public class WebAppConfigurationTest {
     public void testGetFilePaths() {
         WebAppConfiguration config = new WebAppConfiguration();
         Assert.assertNotNull(config.getFilePaths());
-        Assert.assertEquals(2, config.getFilePaths().size());
+        Assert.assertEquals(3, config.getFilePaths().size());
         Assert.assertTrue(config.getFilePaths().containsKey("/app/node_modules"));
-        Assert.assertTrue(config.getFilePaths().containsKey("/app/scripts"));
+        Assert.assertTrue(config.getFilePaths().containsKey("/app/app"));
+        Assert.assertTrue(config.getFilePaths().containsKey("/app/short-detector"));
     }
 
     @Test

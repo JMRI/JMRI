@@ -34,14 +34,10 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in Mac DIN8; on main connector, this is DTR
-
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
-        activeSerialPort.setFlowControlMode(flow);
-        activeSerialPort.setRTS(true);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         log.debug("Found flow control " + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
@@ -64,5 +60,5 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         return new int[]{57600};
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapter.class);
 }

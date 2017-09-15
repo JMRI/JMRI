@@ -68,7 +68,6 @@ public abstract class AbstractThrottleManagerTestBase {
     @Test
     public void getUserName() {
         Assert.assertNotNull(tm.getUserName());
-        Assert.assertTrue(tm.getUserName() instanceof String);
     }
 
     @Test

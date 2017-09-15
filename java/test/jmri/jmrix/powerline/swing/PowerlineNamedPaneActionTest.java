@@ -46,6 +46,6 @@ public class PowerlineNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneActionTest.class);
 
 }

@@ -29,6 +29,6 @@ public class SignalMastRepeaterPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanelTest.class);
 
 }

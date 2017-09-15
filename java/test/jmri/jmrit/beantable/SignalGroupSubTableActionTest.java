@@ -29,6 +29,6 @@ public class SignalGroupSubTableActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableActionTest.class);
 
 }

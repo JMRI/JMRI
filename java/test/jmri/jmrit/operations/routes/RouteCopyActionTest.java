@@ -29,6 +29,6 @@ public class RouteCopyActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RouteCopyActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RouteCopyActionTest.class);
 
 }

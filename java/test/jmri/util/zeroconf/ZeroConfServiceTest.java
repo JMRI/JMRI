@@ -53,7 +53,7 @@ public class ZeroConfServiceTest {
     public void testCreate_String_int() {
         ZeroConfService result = ZeroConfService.create(HTTP, 9999);
         Assert.assertNotNull(result);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), result.name());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), result.name());
     }
 
     /**
@@ -64,7 +64,7 @@ public class ZeroConfServiceTest {
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, 9999, properties);
         Assert.assertNotNull(result);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), result.name());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), result.name());
     }
 
     /**
@@ -105,7 +105,7 @@ public class ZeroConfServiceTest {
     @Test
     public void testName() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), instance.name());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailroadName(), instance.name());
     }
 
     /**

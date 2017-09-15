@@ -136,25 +136,24 @@
 
       <h2><a name="run" id="run">Running the Tests</a></h2>To run
       the existing tests, say
-      <pre>
-<code>
+<pre style="font-family: monospace;">
    ant alltest
-</code>
-</pre>This will compile the test code, which lives in the "test"
-subdirectory of the "java" directory in our usual code
-distributions, and then run the tests under a GUI. (To make sure
-you've recompiled everything, you may want to do <code>ant
-clean</code> first)<br>
-If you know the name of your test class, or the
-test class for your package, you can run that directly with the
-"runtest" script:
-      <pre>
-<code>
-   ant tests<br>   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
-</code>
-</pre>The first line compiles all the test code, and the second
-runs a specific test or test suite.<br>
-(Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+</pre>
+    This will compile the test code, which lives in the "test"
+    subdirectory of the "java" directory in our usual code
+    distributions, and then run the tests under a GUI. (To make sure
+    you've recompiled everything, you may want to do <code>ant
+    clean</code> first)<br>
+    If you know the name of your test class, or the
+    test class for your package, you can run that directly with the
+    "runtest" script:
+<pre style="font-family: monospace;">
+   ant tests
+   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
+</pre>
+    The first line compiles all the test code, and the second
+    runs a specific test or test suite.<br>
+    (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
       <h2><a name="Continuous" id="Continuous">Continuous
       Integration Test Execution</a></h2>The <a href=
@@ -248,7 +247,7 @@ runs a specific test or test suite.<br>
       <p>If the test suite has been converted to JUnit4, the JUnit4
       conventions require that the test be preceeded by the
       "<code>@Test</code>" annotation:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     @Test
     public void testSomething() {
         ...
@@ -273,7 +272,7 @@ runs a specific test or test suite.<br>
       <p>Assuming that the Foo class has a default constructor named <code>foo()</code>,
       Then the following would be minimal contents for the <code>test/jmri/jmrix/foo/FooTest.java</code> file:
 
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     package jmri.jmrix.foo;
 
     import org.junit.After;
@@ -335,7 +334,7 @@ runs a specific test or test suite.<br>
 
       The following would be minimal contents for the <code>test/jmri/jmrix/foo/PackageTest.java</code> file:
 
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     package jmri.jmrix.foo;
 
     import org.junit.runner.RunWith;
@@ -421,8 +420,8 @@ runs a specific test or test suite.<br>
         their setup() and teardown() code to ensure that log4j is
         properly initiated, and that the custom appender is told
         when a test is beginning and ending.
-          <pre>
-<code>
+
+<pre style="font-family: monospace;">
     // The minimal setup for log4J<br>
     protected void setUp() throws Exception { <br>
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a><br>
@@ -432,7 +431,6 @@ runs a specific test or test suite.<br>
     jmri.util.JUnitUtil.tearDown(); <br>
     super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a><br>
     }<br>
-</code>
 </pre>
         </li>
 
@@ -440,16 +438,14 @@ runs a specific test or test suite.<br>
         should then use the check to see that the message was
         created. For example, if the class under test is expected
         to do<br>
-          <pre>
-<code>
+<pre style="font-family: monospace;">
     log.warn("Provoked message");
-</code>
-</pre>the invoking test case should follow that with the line:<br>
 
-          <pre>
-<code>
+</pre>
+    the invoking test case should follow that with the line:<br>
+
+<pre style="font-family: monospace;">
     jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
-</code>
 </pre>
 
           <p>It will be a JUnit error if a log.warn(...) or
@@ -458,11 +454,10 @@ runs a specific test or test suite.<br>
         </li>
       </ol>In any case, all of your main() routines should start
       with
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     apps.tests.Log4JFixture.initLogging();
-</code>
-</pre>so that they can be run independently.
+</pre>
+    so that they can be run independently.
 
       <p>Note: Our <a href="ContinuousIntegration.shtml">CI
       test</a> executables are configured to fail if any FATAL or
@@ -479,24 +474,22 @@ runs a specific test or test suite.<br>
 
       <p>Depending on what managers your code uses, your
       <code>setUp()</code> implementation should start with:</p>
-      <pre>
-<code>
+
+<pre style="font-family: monospace;">
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
     jmri.util.JUnitUtil.setUp();
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
-</code>
-</pre>(You can omit the initialization managers you don't need) See
-the jmri.util.JUnitUtil class for the full list of available ones,
-and please add more if you need one that's not there yet.
+</pre>
+    (You can omit the initialization managers you don't need) See
+    the jmri.util.JUnitUtil class for the full list of available ones,
+    and please add more if you need one that's not there yet.
 
       <p>Your <code>tearDown()</code> should end with:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     jmri.util.JUnitUtil.tearDown();
     super.tearDown();  // Note: skip this line when using <a href="#super">JUnit4</a>
-</code>
 </pre>
 
       <h3><a name="RunningListeners" id="RunningListeners">Working
@@ -508,23 +501,25 @@ and please add more if you need one that's not there yet.
       <p>If you want to wait for some specific condition to be
       true, e.g. receiving a reply object, you can use a waitFor
       method call which looks like:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     JUnitUtil.waitFor(()-&gt;{reply!=null}, "reply didn't arrive");
-</code>
-</pre>The first argument is a lambda closure, a small piece of code
-that'll be evaluated repeatedly until true. The String second
-argument is the text of the assertion (error message) you'll get if
-the condition doesn't come true in a reasonable length of time.
+</pre>
+    The first argument is a lambda closure, a small piece of code
+    that'll be evaluated repeatedly until true. The String second
+    argument is the text of the assertion (error message) you'll get if
+    the condition doesn't come true in a reasonable length of time.
 
       <p>Waiting for a specific result is fastest and most
       reliable. If you can't do that for some reason, you can do a
       short time-based wait:</p>
-      <pre>
-<code>
+
+<pre style="font-family: monospace;">
     JUnitUtil.releaseThread(this);
-</code>
-</pre>This uses a nominal delay.
+</pre>
+    This uses a nominal delay. But you might want to consider the 
+    structure of either your code (that you're testing) or the 
+    test itself:  If you can't tell whether it succeeded, what's the
+    purpose of the operation?
 
       <p>Note that this should <b>not</b> be used to synchronize
       with Swing threads. See the <a href="#testSwingCode">Testing
@@ -568,15 +563,15 @@ the condition doesn't come true in a reasonable length of time.
       <p>For example, if creating a thread based on <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
       AbstractAutomat</a>, you can check the start with:</p>
-      <pre>
-<code>
-    AbsractAutomat p = new MyThreadClass();<br>    p.start();<br>    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
-</code>
-</pre>and ensure termination with
-      <pre>
-<code>
-    p.stop();<br>    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
-</code>
+<pre style="font-family: monospace;">
+    AbsractAutomat p = new MyThreadClass();<br>
+    p.start();<br>
+    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
+</pre>
+    and ensure termination with
+<pre style="font-family: monospace;">
+    p.stop();<br>
+    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
 </pre>
 
       <p>
@@ -589,9 +584,9 @@ the condition doesn't come true in a reasonable length of time.
       You can check whether you've left any threads running by
       editing the <code>java/test/apps/tests/Log4JFixture.java</code>
       and finding a line like:
-<code><pre>
+<pre style="font-family: monospace;">
         // checkThreads(false);  // true means stop on 1st extra thread
-</pre></code>
+</pre>
       Uncomment that, compile and run your tests.  It will report
       any threads you've left running.
 
@@ -605,7 +600,9 @@ the condition doesn't come true in a reasonable length of time.
 
       <h3><a name="tempFileCreation" id=
       "tempFileCreation">Temporary File Creation in
-      Tests</a></h3>Testcases which create temporary files must be
+      Tests</a></h3>
+      
+      Testcases which create temporary files must be
       carefully created so that there will not be any problems with
       file path, filesystem security, pre-existence of the file,
       etc. These tests must also be written in a way that will
@@ -616,9 +613,37 @@ the condition doesn't come true in a reasonable length of time.
 
       <p>Here are some ideas which can help avoid these types of
       problems.</p>
-
+      
       <ul>
-        <li>Place the temporary file(s) in the the "temp" directory
+        <li>
+        If you need a temporary file or directory, and your test
+        uses JUnit4, you can use a Rule to create a file or directory
+        before each test runs.
+<pre style="font-family: monospace;">
+    import org.junit.Rule;
+    import org.junit.rules.TemporaryFolder;
+
+    ...
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+</pre>
+
+    <p>
+        You then reference "folder" in your test code:
+<pre style="font-family: monospace;">
+        // create a file in "temp"
+        File rosterDir = folder.newFolder();
+        File backupDir = folder.newFolder();
+</pre>
+
+    
+      JUnit will make sure the file or folder is removed afterwards regardless of whether the 
+      test succeeds or fails. For more information on this, see the 
+      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest"</a>.
+     
+
+        <li>(Pre-JUnit4 only; use the above if using JUnit 4)
+        Place the temporary file(s) in the the "temp" directory
         which is a sub- directory of the jmri run-time directory.
         This directory is used by some testcases and is already
         configured as excluded from the JMRI code repository. It
@@ -626,18 +651,19 @@ the condition doesn't come true in a reasonable length of time.
         created by a particular test. Be sure that the directory
         exists before creating files in the directory, and create
         the directory if necessary. An example is shown here:
-          <pre>
-<code>
-    String tempDirectoryName = "temp";<br>    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>        // create the temp directory if it does not exist<br>        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>    }<br></code>
+<pre style="font-family: monospace;">
+        String tempDirectoryName = "temp";<br>
+        if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>
+                // create the temp directory if it does not exist<br>
+                <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>
+        }<br></code>
 </pre>
         </li>
 
         <li>Allow the JRE to define the directory hierarchy
         separator character automatically:
-          <pre>
-<code>
+<pre style="font-family: monospace;">
     String filename = tempDirectoryName + <strong>File.separator</strong> + "testcaseFile.txt";
-</code>
 </pre>
         </li>
 
@@ -647,9 +673,18 @@ the condition doesn't come true in a reasonable length of time.
         the testcase temporary file(s), and delete if necessary,
         before writing to the file(s). The following example will
         delete the previous file if it exists:
-          <pre>
-<code>
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>    File file = new File(filename);<br>    <strong>if (file.exists())</strong> {<br>        <strong> try {<br>            file.delete();<br>        } catch (java.lang.Exception e) {<br>            Assert.fail("Exception while trying to delete the existing file " + <br>                    filename + <br>                    ".\n Exception reported: " + <br>                    e.toString());<br>            // perform some appropriate action in this case<br>        }</strong><br>    }<br></code>
+<pre style="font-family: monospace;">
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>
+    File file = new File(filename);<br>
+    <strong>if (file.exists())</strong> {<br>
+        <strong> try {<br>
+            file.delete();<br>
+        } catch (java.lang.Exception e) {<br>
+            Assert.fail("Exception while trying to delete the existing file " + <br>
+                                    filename + <br>                    ".\n Exception reported: " + <br>
+                                    e.toString());<br>            // perform some appropriate action in this case<br>
+        }</strong><br>
+    }<br></code>
 </pre>
         </li>
 
@@ -662,22 +697,24 @@ the condition doesn't come true in a reasonable length of time.
         path and filename when logging debug messages (without
         deleting the temporary file), and to perform the delete
         only when debug logging is not enabled, such as:
-          <pre>
-<code>
-    <strong>if (log.isDebugEnabled()) {</strong><br>        log.debug("Path to written hex file is: "+filename);<br>    <strong>}<br>    else {<br>        file.delete();<br>    }</strong><br></code>
+<pre style="font-family: monospace;">
+    <strong>if (log.isDebugEnabled()) {</strong><br>
+            log.debug("Path to written hex file is: "+filename);<br>
+    <strong>} else {<br>
+            file.delete();<br>
+    }</strong><br></code>
 </pre>
         </li>
 
         <li>It is unclear whether native Java library routines
         which create temporary files in an
         operating-system-specific way such as:
-          <pre>
-<code>
+<pre style="font-family: monospace;">
     java.io.File.createTempFile("testcasefile","txt")
-</code>
-</pre>will work reliably within the <a href=
-"ContinuousIntegration.shtml">continuous integration build</a>
-environment.
+</pre>
+    will work reliably within the <a href=
+    "ContinuousIntegration.shtml">continuous integration build</a>
+    environment.
         </li>
       </ul>
 
@@ -692,6 +729,8 @@ environment.
       test was modified based on the temporary file recommendations
       shown here, the test became stable over multiple continuous
       integration executions of "headlesstest".</p>
+
+
 
       <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
       Swing Code</h2>AWT and Swing code runs on a separate thread
@@ -723,13 +762,11 @@ environment.
       windows around so you can manipulate them, e.g. for manual
       testing or debugging, you can use the jmri.demo system
       parameter to control that:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         if (!System.getProperty("jmri.demo", "false").equals("false")) {
             myFrame.setVisible(false);
             myFrame.dispose();
         }
-</code>
 </pre>
 
       <p>For many tests, you'll both make testing reliable and
@@ -822,9 +859,11 @@ environment.
       <p><u>As a test only</u>, you can try setting the
       "-noloading" option in the <code>main</code> of whichever
       test class you're having trouble with:</p>
-      <pre>
-<code>
-    static public void main(String[] args) {<br>        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>        junit.swingui.TestRunner.main(testCaseName);<br>    }<br></code>
+<pre style="font-family: monospace;">
+    static public void main(String[] args) {<br>
+            String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>
+            junit.swingui.TestRunner.main(testCaseName);<br>
+    }<br>
 </pre>
 
       <p>Please don't leave "-noloading" in place, as it prevents
@@ -836,7 +875,9 @@ environment.
       and reloading of classes.</p>
 
       <h2><a name="junit4" id="junit4">Migrating to
-      JUnit4</a></h2>JUnit4 is a significant upgrade of the JUnit
+      JUnit4</a></h2>
+      
+      JUnit4 is a significant upgrade of the JUnit
       tool. It brings new capabilities, but also changes how
       tests are structured. As of this writing (Summer 2016), we're
       still supporting the existing test structures described
@@ -903,14 +944,14 @@ environment.
       <ol>
         <li>Change the imports. Typically, these can be
         removed:<br>
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 </pre><br>
           and you'll typically need<br>
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -926,7 +967,7 @@ import org.junit.Test;
 
         <li>Mark test methods with the "<code>@Test</code>"
         annotation:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     @Test
     public void testSomething() {
         ...
@@ -939,7 +980,7 @@ import org.junit.Test;
         testing infrastructure" comment, followed by setup code.
         Some of that can be removed. First, remove the class
         constructor, e.g.
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     public MyClassTest(String s) {
            super(s);
     }
@@ -947,7 +988,7 @@ import org.junit.Test;
         </li>
 
         <li>Next, remove the main method if there is one, e.g.:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     // Main entry point
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
@@ -961,7 +1002,7 @@ import org.junit.Test;
         <code>tearDown()</code> methods. Note: They have to be
         "public" methods, not "protected" or "private". They should
         end up looking like (plus your own content, of course):
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     @Before
     public void setUp() {
           jmri.util.JUnitUtil.setUp();
@@ -972,15 +1013,15 @@ import org.junit.Test;
           jmri.util.JUnitUtil.tearDown();
     }
 </pre>
-            <a name="super">Make sure no more references to the <code>super.</code></a>
-            method remain in either setUp() or tearDown().
-            Just remove those lines.
+        <a name="super">Make sure no more references to the <code>super.</code></a>
+        method remain in either setUp() or tearDown().
+        Just remove those lines.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was
         normally used with "run everything in this class
         automatically" by having a method that looked like this:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(Z21MessageTest.class);
@@ -991,7 +1032,7 @@ import org.junit.Test;
           If you've got more logic in the suite() routine,
           ask for help on the jmri-developers list. An example of
           the result of migrating a more complex case:
-          <pre style="font-family: monospace;">
+<pre style="font-family: monospace;">
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    CMRISystemConnectionMemoTest.class,

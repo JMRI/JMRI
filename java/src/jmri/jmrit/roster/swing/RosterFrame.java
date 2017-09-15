@@ -526,7 +526,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 // nothing to do
             }
         });
-        MouseListener rosterMouseListener = new rosterPopupListener();
+        MouseListener rosterMouseListener = new RosterPopupListener();
         rtable.getTable().addMouseListener(rosterMouseListener);
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
@@ -1676,7 +1676,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Displays a context (right-click) menu for a roster entry.
      */
-    class rosterPopupListener extends MouseAdapter {
+    class RosterPopupListener extends MouseAdapter {
 
         // does clickTimer still actually do anything in this code?
         // it looks like it just starts and stops, without
@@ -1743,5 +1743,5 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             return true;
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class);
 }

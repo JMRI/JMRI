@@ -29,6 +29,6 @@ public class SerialSignalHeadTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadTest.class);
 
 }

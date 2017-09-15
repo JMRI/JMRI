@@ -68,7 +68,7 @@ public class MrcInterfaceScaffold extends MrcTrafficController {
 
 
 
-    private final static Logger log = LoggerFactory.getLogger(MrcInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcInterfaceScaffold.class);
 
 }
 

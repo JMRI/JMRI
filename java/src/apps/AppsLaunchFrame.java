@@ -276,5 +276,5 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     // GUI members
     private JMenuBar menuBar;
 
-    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class);
 }

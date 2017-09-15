@@ -64,7 +64,7 @@ public class ProxySensorManagerTest extends TestCase {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            Sensor t = l.provideSensor("");
+            l.provideSensor("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;

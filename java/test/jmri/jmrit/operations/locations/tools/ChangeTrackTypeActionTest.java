@@ -35,6 +35,6 @@ public class ChangeTrackTypeActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ChangeTrackTypeActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ChangeTrackTypeActionTest.class);
 
 }

@@ -647,15 +647,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
-        if (getFirstSensor() != null) {
-            getFirstSensor().removePropertyChangeListener(this);
+        // remove existing if any
+        Sensor temp = getFirstSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
 
         _firstNamedSensor = s;
 
         // if need be, set listener
-        if (getFirstSensor() != null) {
-            getFirstSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
+        temp = getFirstSensor();  // might have changed
+        if (temp != null) {
+            temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
 
     }
@@ -689,16 +692,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     public void provideSecondFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
-        // if need be, clean listener
-        if (getSecondSensor() != null) {
-            getSecondSensor().removePropertyChangeListener(this);
+        // remove existing if any
+        Sensor temp = getSecondSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
 
         _secondNamedSensor = s;
 
         // if need be, set listener
-        if (getSecondSensor() != null) {
-            getSecondSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
+        temp = getSecondSensor();  // might have changed
+        if (temp != null) {
+            temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
     }
 
@@ -828,12 +833,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void dispose() {
-        if (getFirstSensor() != null) {
-            getFirstSensor().removePropertyChangeListener(this);
+        Sensor temp;
+        temp = getFirstSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
         _firstNamedSensor = null;
-        if (getSecondSensor() != null) {
-            getSecondSensor().removePropertyChangeListener(this);
+        temp = getSecondSensor();
+        if (temp != null) {
+            temp.removePropertyChangeListener(this);
         }
         _secondNamedSensor = null;
         super.dispose();
@@ -984,6 +992,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class);
 
 }

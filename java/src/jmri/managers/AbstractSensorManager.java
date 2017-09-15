@@ -70,7 +70,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             key = makeSystemName(key);
         }
         String name = normalizeSystemName(key);
-        return (Sensor) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
@@ -80,7 +80,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     @Override
     public Sensor getByUserName(String key) {
-        return (Sensor) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -267,7 +267,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         sensorDebounceGoingActive = timer;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
-            Sensor sen = (Sensor) _tsys.get(en.nextElement());
+            Sensor sen = _tsys.get(en.nextElement());
             if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingActiveTimer(timer);
             }
@@ -282,7 +282,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         sensorDebounceGoingInActive = timer;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
-            Sensor sen = (Sensor) _tsys.get(en.nextElement());
+            Sensor sen = _tsys.get(en.nextElement());
             if (sen.getUseDefaultTimerSettings()) {
                 sen.setSensorDebounceGoingInActiveTimer(timer);
             }
@@ -311,6 +311,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);
 
 }

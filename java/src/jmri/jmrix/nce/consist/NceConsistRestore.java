@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.consist;
 
+import jmri.util.swing.TextFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,12 +21,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Restores NCE consists from a text file defined by NCE.
- *
+ * <p>
  * NCE file format:
- *
+ * <p>
  * :F500 (16 bytes per line, grouped as 8 words with space delimiters) :F510 . .
  * :FAF0 :0000
- *
+ * <p>
  * The restore routine checks that each line of the file begins with the
  * appropriate consist address.
  *
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory 
+    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory
     private static final int CONSIST_LNTH = 16;  // 16 bytes per consist line
     private static final int REPLY_1 = 1;   // reply length of 1 byte expected
     private int replyLen = 0;      // expected byte length
@@ -55,7 +56,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
         // Get file to read from
         JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-        fc.addChoosableFileFilter(new textFilter());
+        fc.addChoosableFileFilter(new TextFilter());
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return; // Canceled
@@ -91,7 +92,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         int consistNum = 0;     // for user status messages
         int curConsist = CS_CONSIST_MEM; // load the start address of the NCE consist memory
         byte[] consistData = new byte[CONSIST_LNTH];  // NCE Consist data
-        String line = " ";
+        String line;
 
         while (true) {
             try {
@@ -121,8 +122,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
             if (!consistAddr.equalsIgnoreCase(consistLine[0])) {
                 log.error("Restore file selected is not a vaild backup file");
-                log.error("Consist memory address in restore file should be " + consistAddr
-                        + " Consist address read " + consistLine[0]);
+                log.error("Consist memory address in restore file should be {} Consist address read {}", consistAddr, consistLine[0]);
                 break;
             }
 
@@ -241,27 +241,5 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    private static class textFilter extends javax.swing.filechooser.FileFilter {
-
-        @Override
-        public boolean accept(File f) {
-            if (f.isDirectory()) {
-                return true;
-            }
-            String name = f.getName();
-            if (name.matches(".*\\.txt")) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public String getDescription() {
-            return "Text Documents (*.txt)";
-        }
-    }
-
-    private final static Logger log = LoggerFactory
-            .getLogger(NceConsistRestore.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRestore.class);
 }

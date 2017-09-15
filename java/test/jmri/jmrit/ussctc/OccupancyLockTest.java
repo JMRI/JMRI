@@ -53,10 +53,8 @@ public class OccupancyLockTest {
 
     @Test
     public void testOneFailStringArrayCtor() throws JmriException {
-        ArrayList<NamedBeanHandle<Sensor>> list = new ArrayList<>();
-
+    
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
-        NamedBeanHandle<Sensor> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s);
 
         OccupancyLock lock = new OccupancyLock(new String[]{"IS1"});
 
@@ -65,10 +63,8 @@ public class OccupancyLockTest {
 
     @Test
     public void testOneFailSingleStringCtor() throws JmriException {
-        ArrayList<NamedBeanHandle<Sensor>> list = new ArrayList<>();
 
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
-        NamedBeanHandle<Sensor> h = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s);
 
         OccupancyLock lock = new OccupancyLock("IS1");
 

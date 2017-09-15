@@ -68,12 +68,8 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
@@ -105,7 +101,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (UnsupportedCommOperationException | IOException ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -474,6 +470,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAdapter.class);
 
 }

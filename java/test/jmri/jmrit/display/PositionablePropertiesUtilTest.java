@@ -36,6 +36,6 @@ public class PositionablePropertiesUtilTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtilTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtilTest.class);
 
 }

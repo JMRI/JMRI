@@ -244,7 +244,7 @@ public class ReporterTableAction extends AbstractTableAction {
             };
             if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
                 jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
-                List<Manager> managerList = proxy.getManagerList();
+                List<Manager<Reporter>> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
@@ -264,7 +264,6 @@ public class ReporterTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(reportManager.getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("sysName"); // for jfcUnit test NOI18N
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
@@ -272,6 +271,7 @@ public class ReporterTableAction extends AbstractTableAction {
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.white);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -317,8 +317,7 @@ public class ReporterTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage = new String();
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        String errorMessage = null;
         for (int x = 0; x < numberOfReporters; x++) {
             curAddress = reportManager.getNextValidAddress(curAddress, reporterPrefix);
             if (curAddress == null) {
@@ -329,7 +328,6 @@ public class ReporterTableAction extends AbstractTableAction {
                 break;
             }
 
-            lastSuccessfulAddress = curAddress;
             // Compose the proposed system name from parts:
             rName = reporterPrefix + reportManager.typeLetter() + curAddress;
             // rName = prefix + InstanceManager.reportManagerInstance().typeLetter() + curAddress;
@@ -341,6 +339,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 handleCreateException(rName); // displays message dialog to the user
                 // add to statusBar as well
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
                 return; // without creating
             }
@@ -368,7 +367,7 @@ public class ReporterTableAction extends AbstractTableAction {
             // end of for loop creating range of Reporters
         }
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
@@ -391,7 +390,7 @@ public class ReporterTableAction extends AbstractTableAction {
         }
         if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
             jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Reporter>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.ReporterManager mgr = (jmri.ReporterManager) managerList.get(x);
@@ -545,6 +544,6 @@ public class ReporterTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class);
 
 }

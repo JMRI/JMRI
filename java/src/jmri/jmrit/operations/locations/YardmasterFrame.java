@@ -51,5 +51,5 @@ public class YardmasterFrame extends OperationsFrame {
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
-//    private static final Logger log = LoggerFactory.getLogger(YardmasterFrame.class.getName());
+//    private static final Logger log = LoggerFactory.getLogger(YardmasterFrame.class);
 }

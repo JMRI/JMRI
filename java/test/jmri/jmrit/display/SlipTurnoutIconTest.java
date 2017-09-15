@@ -20,7 +20,7 @@ public class SlipTurnoutIconTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor ef = new EditorScaffold();
         SlipTurnoutIcon iti = new SlipTurnoutIcon(ef);
-        Assert.assertNotNull("SlipTurnoutIcon Constructor",iti);
+        Assert.assertNotNull("SlipTurnoutIcon Constructor", iti);
     }
 
     @Before
@@ -29,7 +29,8 @@ public class SlipTurnoutIconTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

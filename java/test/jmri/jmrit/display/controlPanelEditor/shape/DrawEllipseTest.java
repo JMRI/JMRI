@@ -40,6 +40,6 @@ public class DrawEllipseTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DrawEllipseTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DrawEllipseTest.class);
 
 }

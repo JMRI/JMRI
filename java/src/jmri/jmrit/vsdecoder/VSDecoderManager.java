@@ -137,7 +137,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             path = profiletable.get(profile_name);
             log.debug("Profile " + profile_name + " is in table.  Path = " + path);
             vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
-            decodertable.put(vsd.getID(), vsd);  // poss. broken for duplicate profile names
+            decodertable.put(vsd.getId(), vsd);  // poss. broken for duplicate profile names
             decoderAddressMap.put(vsd.getAddress().toString(), vsd);
             return (vsd);
         } else {
@@ -149,7 +149,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     public VSDecoder getVSDecoder(String profile_name, String path) {
         VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
-        decodertable.put(vsd.getID(), vsd); // poss. broken for duplicate profile names
+        decodertable.put(vsd.getId(), vsd); // poss. broken for duplicate profile names
         if (vsd.getAddress() != null) {
             decoderAddressMap.put(vsd.getAddress().toString(), vsd);
         }
@@ -171,9 +171,9 @@ public class VSDecoderManager implements PropertyChangeListener {
             path = profiletable.get(profile_name);
             log.debug("Profile " + profile_name + " is in table.  Path = " + path);
             config.setVSDPath(path);
-            config.setID(getNextVSDecoderID());
+            config.setId(getNextVSDecoderID());
             VSDecoder vsd = new VSDecoder(config);
-            decodertable.put(vsd.getID(), vsd);
+            decodertable.put(vsd.getId(), vsd);
             decoderAddressMap.put(vsd.getAddress().toString(), vsd);
             //debugPrintDecoderList();
             return (vsd);
@@ -198,7 +198,7 @@ public class VSDecoderManager implements PropertyChangeListener {
      idi = ids.iterator();
      while (idi.hasNext()) {
      Map.Entry<String, VSDecoder> e = idi.next();
-     log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue().getID());
+     log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue().getId());
      }
      }
      */
@@ -506,7 +506,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 VSDecoder d = this.getVSDecoderByAddress(sa);
                 log.debug("Removing Decoder " + sa + " ... " + d.getAddress());
                 d.shutdown();
-                decodertable.remove(d.getID());
+                decodertable.remove(d.getId());
                 decoderAddressMap.remove(sa);
                 //debugPrintDecoderList();
             } else if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.CLOSE_WINDOW))) {
@@ -651,6 +651,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDecoderManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderManager.class);
 
 }

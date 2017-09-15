@@ -32,6 +32,6 @@ public class ProgOpsModePaneTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ProgOpsModePaneTest.class);
 
 }

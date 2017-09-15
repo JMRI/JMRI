@@ -177,7 +177,7 @@ public class GcTrafficController extends TrafficController {
         int i;
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
-            if (i == 0 && char1 != ':') {
+            if (i == 0) {
                 // skip until you find ':'
                 while (char1 != ':') {
                     char1 = readByteProtected(istream);
@@ -205,7 +205,7 @@ public class GcTrafficController extends TrafficController {
 
     private int gcState;
 
-    private final static Logger log = LoggerFactory.getLogger(GcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GcTrafficController.class);
 }
 
 

@@ -182,7 +182,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         SignalMastLogicManager sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         try {
             String logicDelay = signalMastLogic.getChild("logicDelay").getText();
-            sml.setSignalLogicDelay(Long.parseLong(logicDelay));
+            sml.setSignalLogicDelay(Integer.parseInt(logicDelay));
         } catch (java.lang.NullPointerException e) {
             //Considered normal if it doesn't exists
         }
@@ -358,5 +358,5 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class);
 }

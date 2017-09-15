@@ -161,5 +161,5 @@ public class SprogVersion {
         return (s.sprogType.toString() +" v"+ sprogVersion);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersion.class);
 }

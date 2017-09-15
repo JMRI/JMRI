@@ -90,7 +90,7 @@ public class LocoIOModeList {
 
                 log.debug(m.getFullMode() + "=> Address " + Integer.toHexString(i) // NOI18N
                         + " encodes into " // NOI18N
-                        + LnConstants.OPC_NAME(m.getOpcode()) + " "
+                        + LnConstants.OPC_NAME(m.getOpCode()) + " "
                         + Integer.toHexString(svA) + " "
                         + Integer.toHexString(v1A) + " "
                         + Integer.toHexString(v2A));
@@ -108,7 +108,7 @@ public class LocoIOModeList {
                     log.error(err);
                     haderror++;
                 } else {
-                    int decodedaddress = valuesToAddress(lim.getOpcode(), svA, v1A, v2A);
+                    int decodedaddress = valuesToAddress(lim.getOpCode(), svA, v1A, v2A);
                     if ((i) != decodedaddress) {
                         if (haderror == 0) {
                             log.error("Testing " + m.getFullMode() + "      ERROR:"); // NOI18N
@@ -117,7 +117,7 @@ public class LocoIOModeList {
                                 = "    Could Not Match Address: (" // NOI18N
                                 + Integer.toHexString(i - 1) + "=>" // NOI18N
                                 + Integer.toHexString(decodedaddress) + ") from " // NOI18N
-                                + LnConstants.OPC_NAME(lim.getOpcode()) + " "
+                                + LnConstants.OPC_NAME(lim.getOpCode()) + " "
                                 + Integer.toHexString(svA) + " "
                                 + Integer.toHexString(v1A) + " "
                                 + Integer.toHexString(v2A) + "[mask=" + Integer.toHexString(lim.getV2()) + "]\n"; // NOI18N
@@ -165,7 +165,7 @@ public class LocoIOModeList {
         for (int i = 0; i <= modeList.size() - 1; i++) {
             LocoIOMode m = modeList.elementAt(i);
             if (m.getSV() == cv) {
-                if ((m.getOpcode() == LnConstants.OPC_INPUT_REP)
+                if ((m.getOpCode() == LnConstants.OPC_INPUT_REP)
                         && (m.getV2() == (v2 & 0xD0))) {
                     return m;
                 } else if (((cv == 0x6F) || (cv == 0x67) || (cv == 0x2F) || (cv == 0x27))
@@ -190,7 +190,7 @@ public class LocoIOModeList {
         if (lim == null) {
             return 0;
         }
-        return addressToValues(lim.getOpcode(), lim.getSV(), lim.getV2(), address) & 0x7F;
+        return addressToValues(lim.getOpCode(), lim.getSV(), lim.getV2(), address) & 0x7F;
     }
 
     /**
@@ -200,7 +200,7 @@ public class LocoIOModeList {
         if (lim == null) {
             return 0;
         }
-        return (addressToValues(lim.getOpcode(), lim.getSV(), lim.getV2(), address) / 256) & 0x7F;
+        return (addressToValues(lim.getOpCode(), lim.getSV(), lim.getV2(), address) / 256) & 0x7F;
     }
 
     /**
@@ -277,8 +277,8 @@ public class LocoIOModeList {
         if (lim == null) {
             return 0;
         }
-        return valuesToAddress(lim.getOpcode(), sv, v1, v2);
+        return valuesToAddress(lim.getOpCode(), sv, v1, v2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
 }

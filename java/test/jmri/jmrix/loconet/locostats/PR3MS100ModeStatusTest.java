@@ -31,6 +31,6 @@ public class PR3MS100ModeStatusTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR3MS100ModeStatusTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PR3MS100ModeStatusTest.class);
 
 }

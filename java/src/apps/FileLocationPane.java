@@ -3,7 +3,6 @@ package apps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,9 +29,8 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Kevin Dickerson Copyright (C) 2010
  */
 @ServiceProvider(service = PreferencesPanel.class)
-public class FileLocationPane extends JPanel implements PreferencesPanel {
+public final class FileLocationPane extends JPanel implements PreferencesPanel {
 
-    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean restartRequired = false;
     private final JTextField scriptLocation = new JTextField();
     private final JTextField userLocation = new JTextField();
@@ -40,8 +38,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
     public FileLocationPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(PrefLocation());
-        add(ScriptsLocation());
+        add(prefLocation());
+        add(scriptsLocation());
 
         /*p = new JPanel();
          JLabel throttle = new JLabel("Default Throttle Location");
@@ -52,18 +50,18 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
          add(p);*/
     }
 
-    private JPanel ScriptsLocation() {
-        JButton bScript = new JButton(rb.getString("ButtonSetDots"));
+    private JPanel scriptsLocation() {
+        JButton bScript = new JButton(ConfigBundle.getMessage("ButtonSetDots"));
         final JFileChooser fcScript;
         fcScript = new JFileChooser(FileUtil.getScriptsPath());
 
-        fcScript.setDialogTitle(rb.getString("MessageSelectDirectory"));
+        fcScript.setDialogTitle(ConfigBundle.getMessage("MessageSelectDirectory"));
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcScript.setAcceptAllFileFilterUsed(false);
         bScript.addActionListener(new OpenAction(fcScript, scriptLocation));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
-        JLabel scripts = new JLabel(rb.getString("ScriptDir"));
+        JLabel scripts = new JLabel(ConfigBundle.getMessage("ScriptDir"));
         p.add(scripts);
         p.add(scriptLocation);
         p.add(bScript);
@@ -72,19 +70,19 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         return p;
     }
 
-    private JPanel PrefLocation() {
+    private JPanel prefLocation() {
         JPanel p = new JPanel();
-        JLabel users = new JLabel(rb.getString("PrefDir"));
+        JLabel users = new JLabel(ConfigBundle.getMessage("PrefDir"));
         p.add(users);
         p.add(userLocation);
         userLocation.setColumns(30);
         userLocation.setText(FileUtil.getUserFilesPath());
 
-        JButton bUser = new JButton(rb.getString("ButtonSetDots"));
+        JButton bUser = new JButton(ConfigBundle.getMessage("ButtonSetDots"));
         final JFileChooser fcUser;
         fcUser = new JFileChooser(FileUtil.getUserFilesPath());
 
-        fcUser.setDialogTitle(rb.getString("MessageSelectDirectory"));
+        fcUser.setDialogTitle(ConfigBundle.getMessage("MessageSelectDirectory"));
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fcUser.setAcceptAllFileFilterUsed(false);
         bUser.addActionListener(new OpenAction(fcUser, userLocation));
@@ -99,17 +97,17 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        return rb.getString("MenuFileLocation"); // NOI18N
+        return ConfigBundle.getMessage("MenuFileLocation"); // NOI18N
     }
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return rb.getString("TabbedLayoutFileLocations"); // NOI18N
+        return ConfigBundle.getMessage("TabbedLayoutFileLocations"); // NOI18N
     }
 
     @Override
     public String getLabelKey() {
-        return rb.getString("LabelTabbedFileLocations"); // NOI18N
+        return ConfigBundle.getMessage("LabelTabbedFileLocations"); // NOI18N
     }
 
     @Override
@@ -155,7 +153,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
     }
-    
+
     private class OpenAction extends AbstractAction {
         JFileChooser chooser;
         JTextField field;

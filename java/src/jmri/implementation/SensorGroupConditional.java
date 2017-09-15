@@ -70,5 +70,5 @@ public class SensorGroupConditional extends DefaultConditional {
         return currentState;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroupConditional.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroupConditional.class);
 }

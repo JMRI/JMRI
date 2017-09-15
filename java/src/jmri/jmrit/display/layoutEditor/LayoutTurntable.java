@@ -17,6 +17,7 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -81,7 +82,6 @@ public class LayoutTurntable extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-    private LayoutTurntable instance = null;
 
     private boolean dccControlledTurnTable = false;
 
@@ -93,11 +93,8 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * constructor method
      */
-    public LayoutTurntable(String id, Point2D c, LayoutEditor myPanel) {
-        instance = this;
-        layoutEditor = myPanel;
-        ident = id;
-        center = c;
+    public LayoutTurntable(@Nonnull String id, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
+        super(id, c, layoutEditor);
         radius = 25.0;
     }
 
@@ -263,7 +260,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public Point2D getRayCoordsIndexed(int index) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
                 double angle = Math.toRadians(rt.getAngle());
@@ -278,7 +275,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     public Point2D getRayCoordsOrdered(int i) {
-        Point2D result = MathUtil.zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D;
         RayTrack rt = rayList.get(i);
         if (rt != null) {
             double angle = Math.toRadians(rt.getAngle());
@@ -482,25 +479,28 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopup(MouseEvent e) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
-        JMenuItem jmi = popup.add(rb.getString("Turntable"));
+
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + ident);
         jmi.setEnabled(false);
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editTurntable(instance);
+                editTurntable(LayoutTurntable.this);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (layoutEditor.removeTurntable(instance)) {
+                if (layoutEditor.removeTurntable(LayoutTurntable.this)) {
                     // Returned true if user did not cancel
                     remove();
                     dispose();
@@ -933,7 +933,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         JPanel panel;
         JPanel turnoutPanel;
-        BeanSelectCreatePanel beanBox;
+        BeanSelectCreatePanel<Turnout> beanBox;
         TitledBorder border;
         JComboBox<String> turnoutStateCombo;
         JLabel turnoutStateLabel;
@@ -971,7 +971,7 @@ public class LayoutTurntable extends LayoutTrack {
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 panel.add(top);
 
-                beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), getTurnout());
+                beanBox = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), getTurnout());
                 String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
                 String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
                 String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};
@@ -1126,5 +1126,5 @@ public class LayoutTurntable extends LayoutTrack {
         // nothing to do here... move along...
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
 }

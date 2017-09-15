@@ -82,7 +82,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalMast object
      */
     public void setSignalMast(String pName) {
-        SignalMast mMast = (SignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
+        SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
         if (mMast == null) {
             log.warn("did not find a SignalMast named " + pName);
         } else {
@@ -642,5 +642,5 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastIcon.class);
 }

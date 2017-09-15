@@ -255,9 +255,9 @@ public abstract class RowComboBoxPanel
                                              int     col)
     {
         this.renderer.removeAll();  //remove the combobox from the panel
-        JComboBox renderbox = new JComboBox<String>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
+        JComboBox<String> renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
-        renderbox.addItem((String) value); // display (only) the current Value
+        renderbox.addItem(value.toString()); // display (only) the current Value
         renderer.add(renderbox);
         return this.renderer;
     }
@@ -323,12 +323,12 @@ public abstract class RowComboBoxPanel
      *  @param items array (strings) of options to display
      */
     public final void setItems(@Nonnull Object [] items) {
-        JComboBox editorbox = new JComboBox<String> ();
+        JComboBox<String> editorbox = new JComboBox<> ();
         final int n = items.length;
         for  (int i = 0; i < n; i++)
         {
             if (items [i] != null) {
-                editorbox.addItem ((String) items [i]);
+                editorbox.addItem (items[i].toString());
             }
         }
         this.editor.add(editorbox);
@@ -378,6 +378,6 @@ public abstract class RowComboBoxPanel
         return new JComboBox<String> (list);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
 
 }

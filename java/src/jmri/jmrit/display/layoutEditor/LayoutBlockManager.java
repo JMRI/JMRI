@@ -177,11 +177,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     public LayoutBlock getBySystemName(String name) {
         String key = name.toUpperCase();
 
-        return (LayoutBlock) _tsys.get(key);
+        return _tsys.get(key);
     }	//getBySystemName
 
     public LayoutBlock getByUserName(String key) {
-        return (LayoutBlock) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -2361,7 +2361,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         java.util.Enumeration<LayoutBlock> en = _tsys.elements();
 
         while (en.hasMoreElements()) {
-            ((LayoutBlock) en.nextElement()).initializeLayoutBlockRouting();
+            en.nextElement().initializeLayoutBlockRouting();
         }
     }	//initializeLayoutBlockRouting
 
@@ -2545,5 +2545,5 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return layoutBlockList;
     }	//getLayoutBlocksOccupiedByRosterEntry
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);
 }

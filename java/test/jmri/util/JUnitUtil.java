@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * To release the current thread and allow other listeners to execute:  <code><pre>
  * JUnitUtil.releaseThread(this);
  * </pre></code> Note that this is not appropriate for Swing objects; you need
- * to use JFCUnit for that.
+ * to use Jemmy for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
  * with:
@@ -90,7 +90,7 @@ public class JUnitUtil {
 
     static final int DEFAULT_RELEASETHREAD_DELAY = 50;
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
+    static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
 
     static int count = 0;
 
@@ -283,6 +283,22 @@ public class JUnitUtil {
         } catch (InvocationTargetException e) {
             log.warn("Failed during invocation while setting state: ", e);
         }
+    }
+
+    /**
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
+     * a thread-safe way, including waiting for the state to appear.
+     *
+     * You can't assume that all the consequences of that setting will have
+     * propagated through when this returns; those might take a long time. But
+     * the set operation itself will be complete.
+     *
+     * @param bean  the bean
+     * @param state the desired state
+     */
+    static public void setBeanStateAndWait(NamedBean bean, int state) {
+        setBeanState(bean, state);
+        JUnitUtil.waitFor(()->{return state == bean.getState();}, "setAndWait "+bean.getSystemName()+": "+state);
     }
 
     public static void resetInstanceManager() {
@@ -653,5 +669,5 @@ public class JUnitUtil {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
 }

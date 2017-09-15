@@ -3,15 +3,17 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
+import jmri.util.MathUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of LayoutSlip
@@ -20,13 +22,14 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutSlipTest {
 
-    LayoutEditor layoutEditor = null;
-    LayoutSlip lts = null;
-    LayoutSlip ltd = null;
+    private static LayoutEditor layoutEditor = null;
+    private LayoutSlip lts = null;
+    private LayoutSlip ltd = null;
 
     @Test
     public void testNew() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
     }
@@ -34,6 +37,9 @@ public class LayoutSlipTest {
     @Test
     public void testToString() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         String ltsString = lts.toString();
         Assert.assertNotNull("ltsString not null", ltsString);
@@ -47,25 +53,74 @@ public class LayoutSlipTest {
     @Test
     public void testGetDisplayName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertEquals(lts.getDisplayName(), "Slip single");
         Assert.assertEquals(ltd.getDisplayName(), "Slip double");
     }
 
     @Test
-    public void testSlipTypeAndState() {
+    public void testGetSlipType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertTrue("lts.getSlipType() is SINGLE_SLIP", lts.getSlipType() == LayoutTurnout.SINGLE_SLIP);
-        Assert.assertTrue("lts.getSlipState() is UNKNOWN", lts.getSlipState() == LayoutTurnout.UNKNOWN);
-
         Assert.assertTrue("ltd.getSlipType() is DOUBLE_SLIP", ltd.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
+    }
+
+    @Test
+    public void testSetSlipType() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        lts.setSlipType(LayoutTurnout.NONE); // invalid type
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid slip Type 0");
+
+        lts.setSlipType(LayoutTurnout.DOUBLE_SLIP);
+        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
+        ltd.setSlipType(LayoutTurnout.SINGLE_SLIP);
+        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.SINGLE_SLIP);
+    }
+
+    @Test
+    public void testSetTurnoutType() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        lts.setTurnoutType(LayoutTurnout.NONE); // invalid type
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid slip Type 0");
+
+        lts.setTurnoutType(LayoutTurnout.DOUBLE_SLIP);
+        Assert.assertTrue("lts.getSlipType() is DOUBLE_SLIP", lts.getSlipType() == LayoutTurnout.DOUBLE_SLIP);
+        ltd.setTurnoutType(LayoutTurnout.SINGLE_SLIP);
+        Assert.assertTrue("ltd.getSlipType() is SINGLE_SLIP", ltd.getSlipType() == LayoutTurnout.SINGLE_SLIP);
+    }
+
+    @Test
+    public void testGetSlipState() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        Assert.assertTrue("lts.getSlipState() is UNKNOWN", lts.getSlipState() == LayoutTurnout.UNKNOWN);
         Assert.assertTrue("ltd.getSlipState() is UNKNOWN", ltd.getSlipState() == LayoutTurnout.UNKNOWN);
     }
 
     @Test
     public void testTurnoutB() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertTrue("lts.getTurnoutBName() is ''", lts.getTurnoutBName() == "");
         Assert.assertNull("lts.getTurnoutB() is null", lts.getTurnoutB());
@@ -77,6 +132,9 @@ public class LayoutSlipTest {
     @Test
     public void testGetConnectionTypes() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertNull("lts.getConnectionType(SLIP_A) is null", lts.getConnection(LayoutTrack.SLIP_A));
         Assert.assertNull("lts.getConnectionType(SLIP_B) is null", lts.getConnection(LayoutTrack.SLIP_B));
@@ -92,6 +150,9 @@ public class LayoutSlipTest {
     @Test
     public void testGetConnectionTypesFail() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         try {
             // this should throw up (SLIP_CENTER is not a valid connection type)
@@ -112,6 +173,9 @@ public class LayoutSlipTest {
     @Test
     public void testSlipState() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertTrue("Single slip state unknown", lts.getSlipState() == LayoutTurnout.UNKNOWN);
         lts.toggleState(LayoutTrack.SLIP_LEFT);
@@ -150,6 +214,9 @@ public class LayoutSlipTest {
     @Ignore("No Test yet")
     public void testActivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         // nothing to do here until we've assigned physical turnouts
     }
@@ -158,6 +225,9 @@ public class LayoutSlipTest {
     @Ignore("No Test yet")
     public void testDeactivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         // nothing to do here until we've assigned physical turnouts
     }
@@ -165,6 +235,9 @@ public class LayoutSlipTest {
     @Test
     public void testGetCoordsForConnectionType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertEquals("lts.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(50.0, 100.0),
@@ -236,6 +309,9 @@ public class LayoutSlipTest {
     @Test
     public void testGetBounds() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertEquals("lts.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
@@ -250,6 +326,9 @@ public class LayoutSlipTest {
     @Test
     public void testIsMainline() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Assert.assertFalse("lts.isMainline() false", lts.isMainline());
         Assert.assertFalse("ltd.isMainline() false", ltd.isMainline());
@@ -258,6 +337,9 @@ public class LayoutSlipTest {
     @Test
     public void testSetCoordsCenter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         Point2D newCenterPoint = new Point2D.Double(75.0, 150.0);
         lts.setCoordsCenter(newCenterPoint);
@@ -327,6 +409,9 @@ public class LayoutSlipTest {
     @Test
     public void testScaleCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         lts.scaleCoords(1.5F, 2.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
@@ -398,6 +483,9 @@ public class LayoutSlipTest {
     @Test
     public void testTranslateCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
 
         lts.translateCoords(15.5F, 25.5F);
         Assert.assertEquals("lts.getCoordsCenter ",
@@ -466,29 +554,189 @@ public class LayoutSlipTest {
                 ltd.getCoordsRight());
     }
 
+    @Test
+    public void testGetConnectionInvalid() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        try {
+            // test invalid connection type
+            Assert.assertNull("lts.getConnection(invalid type) is null",
+                    lts.getConnection(LayoutEditor.NONE));
+            Assert.fail("No exception thrown on lts.getConnection(invalid type)");
+        } catch (JmriException ex) {
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+
+        try {
+            // test invalid connection type
+            Assert.assertNull("ltd.getConnection(invalid type) is null",
+                    ltd.getConnection(LayoutEditor.NONE));
+            Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
+        } catch (JmriException ex) {
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+    }
+
+    @Test
+    public void testGetConnectionValid() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        try {
+            // test valid connection type (null value)
+            Assert.assertNull("lts.getConnection(valid type) is null",
+                    lts.getConnection(LayoutEditor.SLIP_A));
+        } catch (JmriException ex) {
+            Assert.fail("Exception thrown on lts.getConnection(valid type)");
+        }
+        try {
+            // test valid connection type (null value)
+            Assert.assertNull("ltd.getConnection(valid type) is null",
+                    ltd.getConnection(LayoutEditor.SLIP_B));
+        } catch (JmriException ex) {
+            Assert.fail("Exception thrown on ltd.getConnection(valid type)");
+        }
+        try {
+            // test valid connection type (null value)
+            Assert.assertNull("lts.getConnection(valid type) is null",
+                    lts.getConnection(LayoutEditor.SLIP_C));
+        } catch (JmriException ex) {
+            Assert.fail("Exception thrown on lts.getConnection(valid type)");
+        }
+        try {
+            // test valid connection type (null value)
+            Assert.assertNull("ltd.getConnection(valid type) is null",
+                    ltd.getConnection(LayoutEditor.SLIP_D));
+        } catch (JmriException ex) {
+            Assert.fail("Exception thrown on ltd.getConnection(valid type)");
+        }
+    }
+
+    @Test
+    public void testSetConnection() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        try {
+            // test invalid connection type
+            lts.setConnection(LayoutEditor.NONE, null, LayoutEditor.NONE);
+            Assert.fail("No exception thrown on lts.setConnection(invalid connection type)");
+        } catch (JmriException ex) {
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+        try {
+            // test invalid connection type
+            ltd.setConnection(LayoutEditor.NONE, null, LayoutEditor.NONE);
+            Assert.fail("No exception thrown on ltd.setConnection(invalid connection type)");
+        } catch (JmriException ex) {
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid Connection Type 0");
+
+        try {
+            // test invalid object type
+            lts.setConnection(LayoutEditor.SLIP_A, null, LayoutEditor.POS_POINT);
+            Assert.fail("No exception thrown on lts.setConnection(invalid object type)");
+        } catch (JmriException ex) {
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
+        try {
+            // test invalid object type
+            ltd.setConnection(LayoutEditor.SLIP_B, null, LayoutEditor.POS_POINT);
+            Assert.fail("No exception thrown on ltd.setConnection(invalid object type)");
+        } catch (JmriException ex) {
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("unexpected type of connection to layoutslip - 1");
+
+        try {
+            // test valid types
+            lts.setConnection(LayoutEditor.SLIP_C, null, LayoutEditor.NONE);
+        } catch (JmriException ex) {
+            Assert.fail("Exception thrown on lts.setConnection(valid types)");
+        }
+        try {
+            // test valid types
+            ltd.setConnection(LayoutEditor.SLIP_D, null, LayoutEditor.NONE);
+        } catch (JmriException ex) {
+            Assert.fail("Exception thrown on ltd.setConnection(valid types)");
+        }
+    }
+
+    @Test
+    public void testFindHitPointType() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        Assert.assertNotNull("LayoutSlip single not null", lts);
+        Assert.assertNotNull("LayoutSlip double not null", ltd);
+
+        // First, try miss…
+        int hitType = lts.findHitPointType(MathUtil.zeroPoint2D, true, false);
+        Assert.assertTrue("lts.findHitPointType equals NONE", hitType == LayoutEditor.NONE);
+
+        // now try hit getCoordsLeft -> SLIP_LEFT
+        hitType = lts.findHitPointType(lts.getCoordsLeft(), true, false);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_LEFT", hitType == LayoutEditor.SLIP_LEFT);
+
+        // now try hit getCoordsRight -> SLIP_RIGHT
+        hitType = lts.findHitPointType(lts.getCoordsRight(), false, false);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_RIGHT", hitType == LayoutEditor.SLIP_RIGHT);
+
+        // now try hit getCoordsA -> SLIP_A
+        hitType = lts.findHitPointType(lts.getCoordsA(), false, true);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_A", hitType == LayoutEditor.SLIP_A);
+
+        // now try hit getCoordsB -> SLIP_B
+        hitType = lts.findHitPointType(lts.getCoordsB(), false, true);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_B", hitType == LayoutEditor.SLIP_B);
+
+        // now try hit getCoordsC -> SLIP_C
+        hitType = lts.findHitPointType(lts.getCoordsC(), false, true);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_C", hitType == LayoutEditor.SLIP_C);
+
+        // now try hit getCoordsD -> SLIP_D
+        hitType = lts.findHitPointType(lts.getCoordsD(), false, true);
+        Assert.assertTrue("lts.findHitPointType equals SLIP_D", hitType == LayoutEditor.SLIP_D);
+    }
+
     // from here down is testing infrastructure
+    @BeforeClass
+    public static void beforeClass() {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            layoutEditor = new LayoutEditor();
+        }
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        JUnitUtil.tearDown();
+    }
+
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        if(!GraphicsEnvironment.isHeadless()){
-           layoutEditor = new LayoutEditor();
-           lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
-           ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+        if (!GraphicsEnvironment.isHeadless()) {
+            lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
+            ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
         }
     }
 
     @After
     public void tearDown() throws Exception {
-        // do this to dispose of the sensor, signal and icon frames
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
         lts = null;
         ltd = null;
 
         // reset the instance manager.
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
 }

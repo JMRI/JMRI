@@ -942,7 +942,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (locationIds.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(locationIds);
+        java.util.Arrays.sort(locationIds);
         for (String id : locationIds) {
             _skipLocationsList.add(id);
         }
@@ -1032,7 +1032,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (types.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(types);
+        java.util.Arrays.sort(types);
         for (String type : types) {
             _typeList.add(type);
         }
@@ -1118,7 +1118,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (roads.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(roads);
+        java.util.Arrays.sort(roads);
         for (String road : roads) {
             if (!road.equals("")) {
                 _roadList.add(road);
@@ -1140,7 +1140,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (_roadList.size() == 0) {
             return roads;
         }
-        jmri.util.StringUtil.sort(roads);
+        java.util.Arrays.sort(roads);
         return roads;
     }
 
@@ -1249,7 +1249,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (loads.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         for (String load : loads) {
             if (!load.equals("")) {
                 _loadList.add(load);
@@ -1271,7 +1271,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (_loadList.size() == 0) {
             return loads;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         return loads;
     }
 
@@ -1367,7 +1367,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (owners.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(owners);
+        java.util.Arrays.sort(owners);
         for (String owner : owners) {
             if (!owner.equals("")) {
                 _ownerList.add(owner);
@@ -1389,7 +1389,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (_ownerList.size() == 0) {
             return owners;
         }
-        jmri.util.StringUtil.sort(owners);
+        java.util.Arrays.sort(owners);
         return owners;
     }
 
@@ -3301,7 +3301,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         if (_trainIcon != null && _trainIcon.isActive()) {
             setTrainIconColor();
-            _trainIcon.setShowTooltip(true);
+            _trainIcon.setShowToolTip(true);
             String txt = null;
             if (getCurrentLocationName().equals(NONE)) {
                 txt = getDescription() + " " + Bundle.getMessage("Terminated") + " (" + getTrainTerminatesName() + ")";
@@ -3309,8 +3309,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 txt = MessageFormat.format(Bundle.getMessage("TrainAtNext"), new Object[]{getDescription(),
                         getCurrentLocationName(), getNextLocationName()});
             }
-            _trainIcon.getTooltip().setText(txt);
-            _trainIcon.getTooltip().setBackgroundColor(Color.white);
+            _trainIcon.getToolTip().setText(txt);
+            _trainIcon.getToolTip().setBackgroundColor(Color.white);
             if (rl != null) {
                 if (rl.getTrainIconX() != 0 || rl.getTrainIconY() != 0) {
                     if (animation) {
@@ -3390,7 +3390,7 @@ public class Train implements java.beans.PropertyChangeListener {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);
                 if (getIconName().length() > 9) {
-                    _trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
+                    _trainIcon.setFont(_trainIcon.getFont().deriveFont(8.f));
                 }
                 if (rl != null) {
                     _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
@@ -4266,6 +4266,6 @@ public class Train implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Train.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Train.class);
 
 }

@@ -60,6 +60,6 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
         reply(new SRCPReply(n));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class);
 
 }

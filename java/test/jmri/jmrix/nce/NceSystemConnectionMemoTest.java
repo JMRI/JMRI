@@ -73,6 +73,6 @@ public class NceSystemConnectionMemoTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemoTest.class.getName());
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemoTest.class);
 
 }

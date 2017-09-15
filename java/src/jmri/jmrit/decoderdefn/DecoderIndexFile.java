@@ -663,7 +663,7 @@ public class DecoderIndexFile extends XmlFile {
 
         @Override
         public Set<Class<?>> getInitalizes() {
-            Set set = super.getInitalizes();
+            Set<Class<?>> set = super.getInitalizes();
             set.add(DecoderIndexFile.class);
             return set;
         }

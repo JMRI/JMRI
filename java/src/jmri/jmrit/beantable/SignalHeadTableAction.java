@@ -501,7 +501,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     private String[] turnoutStates = new String[]{stateClosed, stateThrown};
     private int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
 
-    private String signalheadSingle = Bundle.getMessage("StringSignalheadSingle");
     private String signalheadDouble = Bundle.getMessage("StringSignalheadDouble");
     private String signalheadTriple = Bundle.getMessage("StringSignalheadTriple");
     private String signalheadRGB = Bundle.getMessage("StringSignalheadRGB");
@@ -753,13 +752,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
             dccSignalPanel();
 
-            to1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            to7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+            to1 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to2 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to3 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to4 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to5 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to6 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
+            to7 = new BeanSelectCreatePanel<Turnout>(InstanceManager.turnoutManagerInstance(), null);
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSignalHead"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BorderLayout());
@@ -1783,12 +1782,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     private TitledBorder ev7Border = BorderFactory.createTitledBorder(blackline);
 
     private Turnout et1 = null;
-    private Turnout et2 = null;
-    private Turnout et3 = null;
-    private Turnout et4 = null;
-    private Turnout et5 = null;
-    private Turnout et6 = null;
-    private Turnout et7 = null;
 
     private JLabel eSystemNameLabel = new JLabel("");
     private JLabel eUserNameLabel = new JLabel("");
@@ -1852,13 +1845,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
         curS = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(editSysName);
         if (editFrame == null) {
             dccSignalPanelEdt();
-            eto1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto4 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-            eto7 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+            eto1 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto2 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto3 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto4 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto5 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto6 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+            eto7 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
             // set up a new edit window
             editFrame = new JmriJFrame(Bundle.getMessage("TitleEditSignalHead"), false, true);
             editFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
@@ -2835,7 +2828,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 1, 13, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
-            tmp.setValue((Integer) DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
             dccAspect[i] = tmp; // store the whole JSpinner
             dccSignalPanel.add(tmp); // and display that copy on the JPanel
             tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));
@@ -2864,5 +2857,5 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class);
 }

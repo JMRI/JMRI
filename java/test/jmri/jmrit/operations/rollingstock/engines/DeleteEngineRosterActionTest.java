@@ -34,6 +34,6 @@ public class DeleteEngineRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);
 
 }

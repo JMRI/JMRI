@@ -312,6 +312,6 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class);
 
 }

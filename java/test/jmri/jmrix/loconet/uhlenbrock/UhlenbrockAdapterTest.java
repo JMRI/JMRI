@@ -29,6 +29,6 @@ public class UhlenbrockAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockAdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockAdapterTest.class);
 
 }

@@ -242,11 +242,11 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
         int exp = expectedCV;
         expectedCV = -1;
-        setCv(exp, value);
+        setCV(exp, value);
     }
 
     @Override
-    public int getCv(int cv) {
+    public int getCV(int cv) {
         if (cvValues.containsKey(cv)) {
             return cvValues.get(cv);
         }
@@ -254,7 +254,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
     }
 
     @Override
-    public void setCv(int cv, int value) {
+    public void setCV(int cv, int value) {
         if (cvValues.containsKey(cv)) {
             if (cvValues.get(cv) == value) {
                 firePropertyChange("cvvalue", cv, value);
@@ -327,5 +327,5 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return comment;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class);
 }

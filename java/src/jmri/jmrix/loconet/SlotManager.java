@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import static jmri.jmrix.loconet.LnConstants.STAT1_SL_ACTIVE;
+import static jmri.jmrix.loconet.LnConstants.STAT1_SL_BUSY;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -94,7 +97,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
-        if (packet == null) throw new IllegalArgumentException("Packet must be non-null");
         if (repeats > 7) {
             log.error("Too many repeats!"); // NOI18N
         }
@@ -186,7 +188,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param i Specific slot, counted starting from zero.
      * @param l The SlotListener to notify of the answer.
      */
-    public void slotFromLocoAddress(int i, SlotListener l) {
+    public void slotFromLocoAddress (int i, SlotListener l) {
         // store connection between this address and listener for later
         mLocoAddrHash.put(Integer.valueOf(i), l);
 
@@ -587,11 +589,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     protected void respondToAddrRequest(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received.  Note that we do _NOT_ know why a given message happens!
+        
         // if this is OPC_SL_RD_DATA
-        if (m.getOpCode() == 0xE7) {
+        if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // yes, see if request exists
-            // note that slot has already been told, so
-            // slot i has the address of this request
+            // note that the appropriate _slots[] entry has already been updated
+            // to reflect the content of the LocoNet message, so _slots[i]
+            // has the locomotive address of this request 
             int addr = _slots[i].locoAddr();
             log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
@@ -1175,5 +1180,5 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlotManager.class);
 }

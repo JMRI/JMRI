@@ -33,6 +33,6 @@ public class SignalTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalTableModelTest.class);
 
 }
