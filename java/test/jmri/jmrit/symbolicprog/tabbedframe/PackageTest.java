@@ -19,6 +19,9 @@ import org.junit.runners.Suite;
         WatchingLabelTest.class,
         PaneOpsProgFrameTest.class,
         PaneServiceProgFrameTest.class,
+        PaneSetTest.class,
+        JComponentQualifierTest.class,
+        PaneQualifierTest.class,
 })
 
 /**

@@ -16,6 +16,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -177,15 +178,10 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     *
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection
-     *         type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case SLIP_A:
                 return connectA;
@@ -200,8 +196,11 @@ public class LayoutSlip extends LayoutTurnout {
         throw new jmri.JmriException("Invalid Connection Type " + connectionType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
@@ -501,85 +500,6 @@ public class LayoutSlip extends LayoutTurnout {
         reCheckBlockBoundary();
     }
 
-    @Override
-    public void reCheckBlockBoundary() {
-        if (connectA == null && connectB == null && connectC == null && connectD == null) {
-            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if (signalAMastNamed != null) {
-                removeSML(getSignalAMast());
-            }
-            if (signalBMastNamed != null) {
-                removeSML(getSignalBMast());
-            }
-            if (signalCMastNamed != null) {
-                removeSML(getSignalCMast());
-            }
-            if (signalDMastNamed != null) {
-                removeSML(getSignalDMast());
-            }
-            signalAMastNamed = null;
-            signalBMastNamed = null;
-            signalCMastNamed = null;
-            signalDMastNamed = null;
-            sensorANamed = null;
-            sensorBNamed = null;
-            sensorCNamed = null;
-            sensorDNamed = null;
-            return;
-            //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
-        } else if (connectA == null || connectB == null || connectC == null || connectD == null) {
-            //could still be in the process of rebuilding the point details
-            return;
-        }
-
-        TrackSegment trkA;
-        TrackSegment trkB;
-        TrackSegment trkC;
-        TrackSegment trkD;
-
-        if (connectA instanceof TrackSegment) {
-            trkA = (TrackSegment) connectA;
-            if (trkA.getLayoutBlock() == block) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                signalAMastNamed = null;
-                sensorANamed = null;
-            }
-        }
-        if (connectC instanceof TrackSegment) {
-            trkC = (TrackSegment) connectC;
-            if (trkC.getLayoutBlock() == block) {
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                signalCMastNamed = null;
-                sensorCNamed = null;
-            }
-        }
-        if (connectB instanceof TrackSegment) {
-            trkB = (TrackSegment) connectB;
-            if (trkB.getLayoutBlock() == block) {
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                signalBMastNamed = null;
-                sensorBNamed = null;
-            }
-        }
-
-        if (connectD instanceof TrackSegment) {
-            trkD = (TrackSegment) connectC;
-            if (trkD.getLayoutBlock() == block) {
-                if (signalDMastNamed != null) {
-                    removeSML(getSignalDMast());
-                }
-                signalDMastNamed = null;
-                sensorDNamed = null;
-            }
-        }
-    }   // reCheckBlockBoundary()
-
     /**
      * Methods to test if mainline track or not Returns true if either
      * connecting track segment is mainline Defaults to not mainline if
@@ -597,17 +517,10 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * find the hit (location) type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      - whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free
-     *                           connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected) {
@@ -621,19 +534,19 @@ public class LayoutSlip extends LayoutTurnout {
             if (useRectangles) {
                 // calculate turnout's left control rectangle
                 Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
-                if (leftRectangle.contains(p)) {
+                if (leftRectangle.contains(hitPoint)) {
                     //point is in this turnout's left control rectangle
                     result = SLIP_LEFT;
                 }
                 Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
-                if (rightRectangle.contains(p)) {
+                if (rightRectangle.contains(hitPoint)) {
                     //point is in this turnout's right control rectangle
                     result = SLIP_RIGHT;
                 }
             } else {
                 //check east/west turnout control circles
-                double leftDistance = p.distance(leftCenter);
-                double rightDistance = p.distance(rightCenter);
+                double leftDistance = hitPoint.distance(leftCenter);
+                double rightDistance = hitPoint.distance(rightCenter);
 
                 if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                     //mouse was pressed on this slip
@@ -648,7 +561,7 @@ public class LayoutSlip extends LayoutTurnout {
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(hitPoint);
 
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
@@ -758,67 +671,6 @@ public class LayoutSlip extends LayoutTurnout {
         pointD = MathUtil.add(pointD, factor);
     }
 
-    /**
-     * Initialization method The above variables are initialized by
-     * LayoutSlipXml, then the following method is called after the entire
-     * LayoutEditor is loaded to set the specific LayoutSlip objects.
-     */
-    /*
-    @Override
-    public void setObjects(LayoutEditor p) {
-        connectA = p.getFinder().findTrackSegmentByName(connectAName);
-        connectB = p.getFinder().findTrackSegmentByName(connectBName);
-        connectC = p.getFinder().findTrackSegmentByName(connectCName);
-        connectD = p.getFinder().findTrackSegmentByName(connectDName);
-
-        if (!tBlockName.isEmpty()) {
-            block = p.getLayoutBlock(tBlockName);
-            if (block != null) {
-                blockName = tBlockName;
-                block.incrementUse();
-            } else {
-                log.error("bad blockname '" + tBlockName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        if (!tBlockBName.isEmpty()) {
-            blockB = p.getLayoutBlock(tBlockBName);
-            if (blockB != null) {
-                blockBName = tBlockBName;
-                if (block != blockB) {
-                    blockB.incrementUse();
-                }
-            } else {
-                log.error("bad blockname '" + tBlockBName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        if (!tBlockCName.isEmpty()) {
-            blockC = p.getLayoutBlock(tBlockCName);
-            if (blockC != null) {
-                blockCName = tBlockCName;
-                if ((block != blockC) && (blockB != blockC)) {
-                    blockC.incrementUse();
-                }
-            } else {
-                log.error("bad blockname '" + tBlockCName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        if (!tBlockDName.isEmpty()) {
-            blockD = p.getLayoutBlock(tBlockDName);
-            if (blockD != null) {
-                blockDName = tBlockDName;
-                if ((block != blockD) && (blockB != blockD)
-                        && (blockC != blockD)) {
-                    blockD.incrementUse();
-                }
-            } else {
-                log.error("bad blockname '" + tBlockDName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-    }
-     */
     JPopupMenu popup = null;
     LayoutEditorTools tools = null;
 
@@ -1620,7 +1472,7 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
             LayoutBlock b = getLayoutBlock();
             Color mainColourA = defaultTrackColor;
@@ -1735,16 +1587,16 @@ public class LayoutSlip extends LayoutTurnout {
         }   // if (!(getHidden() && !layoutEditor.isEditable()))
     }   // draw(Graphics2D g2)
 
-    public void drawControls(Graphics2D g2) {
+    protected void drawTurnoutControls(Graphics2D g2) {
         // drawHidden left/right turnout control circles
         Point2D leftCircleCenter = getCoordsLeft();
         g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
 
         Point2D rightCircleCenter = getCoordsRight();
         g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
-    }   // drawControls(Graphics2D g2)
+    }   // drawTurnoutControls(Graphics2D g2)
 
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
@@ -1944,10 +1796,93 @@ public class LayoutSlip extends LayoutTurnout {
     }   // getConnectivityStateForLayoutBlocks
 
     /*
-        return the layout connectivity for this Layout Slip
+     * {@inheritDoc}
      */
-    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+    @Override
+    public void reCheckBlockBoundary() {
+        if (connectA == null && connectB == null && connectC == null && connectD == null) {
+            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
+            if (signalAMastNamed != null) {
+                removeSML(getSignalAMast());
+            }
+            if (signalBMastNamed != null) {
+                removeSML(getSignalBMast());
+            }
+            if (signalCMastNamed != null) {
+                removeSML(getSignalCMast());
+            }
+            if (signalDMastNamed != null) {
+                removeSML(getSignalDMast());
+            }
+            signalAMastNamed = null;
+            signalBMastNamed = null;
+            signalCMastNamed = null;
+            signalDMastNamed = null;
+            sensorANamed = null;
+            sensorBNamed = null;
+            sensorCNamed = null;
+            sensorDNamed = null;
+            return;
+            //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
+        } else if (connectA == null || connectB == null || connectC == null || connectD == null) {
+            //could still be in the process of rebuilding the point details
+            return;
+        }
+
+        TrackSegment trkA;
+        TrackSegment trkB;
+        TrackSegment trkC;
+        TrackSegment trkD;
+
+        if (connectA instanceof TrackSegment) {
+            trkA = (TrackSegment) connectA;
+            if (trkA.getLayoutBlock() == block) {
+                if (signalAMastNamed != null) {
+                    removeSML(getSignalAMast());
+                }
+                signalAMastNamed = null;
+                sensorANamed = null;
+            }
+        }
+        if (connectC instanceof TrackSegment) {
+            trkC = (TrackSegment) connectC;
+            if (trkC.getLayoutBlock() == block) {
+                if (signalCMastNamed != null) {
+                    removeSML(getSignalCMast());
+                }
+                signalCMastNamed = null;
+                sensorCNamed = null;
+            }
+        }
+        if (connectB instanceof TrackSegment) {
+            trkB = (TrackSegment) connectB;
+            if (trkB.getLayoutBlock() == block) {
+                if (signalBMastNamed != null) {
+                    removeSML(getSignalBMast());
+                }
+                signalBMastNamed = null;
+                sensorBNamed = null;
+            }
+        }
+
+        if (connectD instanceof TrackSegment) {
+            trkD = (TrackSegment) connectC;
+            if (trkD.getLayoutBlock() == block) {
+                if (signalDMastNamed != null) {
+                    removeSML(getSignalDMast());
+                }
+                signalDMastNamed = null;
+                sensorDNamed = null;
+            }
+        }
+    }   // reCheckBlockBoundary()
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        List<LayoutConnectivity> results = new ArrayList<>();
 
         LayoutConnectivity lc = null;
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();

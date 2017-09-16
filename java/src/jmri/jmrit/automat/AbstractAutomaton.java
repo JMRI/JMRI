@@ -812,8 +812,7 @@ public class AbstractAutomaton implements Runnable {
         waitChangeQueue.clear();
         
         // register listeners
-        PropertyChangeListener[] listeners
-                = new PropertyChangeListener[mInputs.length];
+        PropertyChangeListener[] listeners = new PropertyChangeListener[mInputs.length];
         for (i = 0; i < mInputs.length; i++) {
             mInputs[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 waitChangeQueue.offer(e);
@@ -848,7 +847,11 @@ public class AbstractAutomaton implements Runnable {
             } else {
                 prompt = waitChangeQueue.poll(maxDelay, TimeUnit.MILLISECONDS);
             }
-            log.trace("wantChange continues from {}", prompt.getSource());
+            if (prompt != null) {
+                log.trace("waitChange continues from {}", prompt.getSource());
+            } else {
+                log.trace("waitChange continues");
+            }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("AbstractAutomaton {} waitChange interrupted", getName());

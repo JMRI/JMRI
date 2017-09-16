@@ -1,18 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import jmri.util.JUnitUtil;
 import jmri.jmrit.display.EditorFrameOperator;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 
 /**
  * Swing tests for the LayoutEditor

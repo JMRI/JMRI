@@ -91,7 +91,6 @@ public class TurnoutEditAction extends BeanEditAction {
     private TurnoutOperationConfig config;
     private BeanItemPanel feedback;
     private JPanel turnoutOperation = new JPanel();
-    private String userDefinedOperation = null;  // ERROR: Something here should be setting this to a user-selected value!
 
     private BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
@@ -257,9 +256,6 @@ public class TurnoutEditAction extends BeanEditAction {
     }
 
     private void updateAutomationOptions() {
-        if ((userDefinedOperation != null) && userDefinedOperation.equals(automationBox.getSelectedItem())) {
-            return;
-        }
 
         currentOperation = null;
         automationBox.removeActionListener(automationSelectionListener);
@@ -513,5 +509,5 @@ public class TurnoutEditAction extends BeanEditAction {
 
         bei.add(speed);
         return speed;
-    }   // speed()
-}   // class TurnoutEditAction
+    }
+} 

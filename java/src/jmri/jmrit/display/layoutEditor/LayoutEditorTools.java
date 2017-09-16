@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -643,7 +644,7 @@ public class LayoutEditorTools {
                     }
                 }
             }
-            for (LayoutTurnout t : layoutEditor.turnoutList) {
+            for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
                 if (t.getTurnout() == turnout) {
                     layoutTurnout = t;
                     if (((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
@@ -1061,7 +1062,7 @@ public class LayoutEditorTools {
      */
     public LayoutTurnout getLayoutTurnoutFromTurnout(Turnout turnout, boolean requireDoubleXover,
             String str, JFrame theFrame) {
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
+        for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 // have the layout turnout corresponding to the turnout
                 if ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
@@ -1290,7 +1291,7 @@ public class LayoutEditorTools {
     public boolean isHeadAssignedAnywhere(SignalHead head) {
         String sName = head.getSystemName();
         String uName = head.getUserName();
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSignalA1Name() != null)
                     && (to.getSignalA1Name().equals(sName) || ((uName != null)
                     && (to.getSignalA1Name().equals(uName))))) {
@@ -1337,7 +1338,7 @@ public class LayoutEditorTools {
                 return true;
             }
         }
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if ((po.getEastBoundSignal().equals(sName) || ((uName != null)
                     && (po.getEastBoundSignal().equals(uName))))) {
                 return true;
@@ -1347,7 +1348,7 @@ public class LayoutEditorTools {
                 return true;
             }
         }
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSignalAName() != null)
                     && (x.getSignalAName().equals(sName) || ((uName != null)
                     && (x.getSignalAName().equals(uName))))) {
@@ -1379,7 +1380,7 @@ public class LayoutEditorTools {
     public void removeAssignment(SignalHead head) {
         String sName = head.getSystemName();
         String uName = head.getUserName();
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSignalA1Name() != null)
                     && (to.getSignalA1Name().equals(sName) || ((uName != null)
                     && (to.getSignalA1Name().equals(uName))))) {
@@ -1426,7 +1427,7 @@ public class LayoutEditorTools {
                 to.setSignalD2Name("");
             }
         }
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if (po.getEastBoundSignal().equals(sName) || po.getEastBoundSignal().equals(uName)) {
                 po.setEastBoundSignal("");
             }
@@ -1434,7 +1435,7 @@ public class LayoutEditorTools {
                 po.setWestBoundSignal("");
             }
         }
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSignalAName() != null)
                     && (x.getSignalAName().equals(sName) || ((uName != null)
                     && (x.getSignalAName().equals(uName))))) {
@@ -2277,10 +2278,8 @@ public class LayoutEditorTools {
             if (block2 == null) {
                 return false;
             }
-            PositionablePoint p = null;
             boundary = null;
-            for (int i = 0; (i < layoutEditor.pointList.size()) && (boundary == null); i++) {
-                p = layoutEditor.pointList.get(i);
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getType() == PositionablePoint.ANCHOR) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
@@ -2294,6 +2293,7 @@ public class LayoutEditorTools {
                         if (((bA == block1) && (bB == block2))
                                 || ((bA == block2) && (bB == block1))) {
                             boundary = p;
+                            break;
                         }
                     }
                 }
@@ -4053,13 +4053,14 @@ public class LayoutEditorTools {
     private boolean getLevelCrossingInformation() {
         if (!xingFromMenu) {
             levelXing = null;
-            if (layoutEditor.xingList.size() <= 0) {
+            List<LevelXing> levelXings = layoutEditor.getLevelXings();
+            if (levelXings.size() <= 0) {
                 JOptionPane.showMessageDialog(setSignalsAtXingFrame,
                         rb.getString("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if (layoutEditor.xingList.size() == 1) {
-                levelXing = layoutEditor.xingList.get(0);
+            } else if (levelXings.size() == 1) {
+                levelXing = levelXings.get(0);
             } else {
                 LayoutBlock xingBlockA = null;
                 LayoutBlock xingBlockC = null;
@@ -4077,7 +4078,7 @@ public class LayoutEditorTools {
                 int foundCount = 0;
                 // make two block tests first
                 if (xingBlockC != null) {
-                    for (LevelXing x : layoutEditor.xingList) {
+                    for (LevelXing x : layoutEditor.getLevelXings()) {
                         LayoutBlock xA = null;
                         LayoutBlock xB = null;
                         LayoutBlock xC = null;
@@ -4111,7 +4112,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (LevelXing x : layoutEditor.xingList) {
+                    for (LevelXing x : layoutEditor.getLevelXings()) {
                         if ((xingBlockA == x.getLayoutBlockAC()) || (xingBlockA == x.getLayoutBlockBD())) {
                             levelXing = x;
                             foundCount++;
@@ -7211,7 +7212,7 @@ public class LayoutEditorTools {
      * do allow the same sensor to be allocated in both directions.
      */
     public boolean isSensorAssignedAnywhere(Sensor sensor) {
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             //We allow the same sensor to be allocated in both directions.
             if (po != boundary) {
                 if (po.getEastBoundSensor() == sensor) {
@@ -7227,7 +7228,7 @@ public class LayoutEditorTools {
                 }
             }
         }
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
                 if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                     return true;
@@ -7250,7 +7251,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LayoutSlip to : layoutEditor.slipList) {
+        for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
             if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
                 if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                     return true;
@@ -7273,7 +7274,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSensorA() != null) && x.getSensorA() == sensor) {
                 if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                     return true;
@@ -7318,7 +7319,7 @@ public class LayoutEditorTools {
             return;
         }
 
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if (po.getEastBoundSensor() == sensor) {
                 po.setEastBoundSensor(null);
             }
@@ -7326,7 +7327,7 @@ public class LayoutEditorTools {
                 po.setWestBoundSensor(null);
             }
         }
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if (to.getSensorA() == sensor) {
                 to.setSensorA(null);
             }
@@ -7341,7 +7342,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LayoutSlip to : layoutEditor.slipList) {
+        for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
             if (to.getSensorA() == sensor) {
                 to.setSensorA(null);
             }
@@ -7359,7 +7360,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if (x.getSensorA() == sensor) {
                 x.setSensorAName(null);
             }
@@ -7728,7 +7729,7 @@ public class LayoutEditorTools {
      * panel, regardless of whether an icon is displayed or not
      */
     public boolean isSignalMastAssignedAnywhere(SignalMast signalMast) {
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if ((po.getEastBoundSignalMast() != null) && po.getEastBoundSignalMast() == signalMast) {
                 return true;
             }
@@ -7737,7 +7738,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSignalAMast() != null) && to.getSignalDMast() == signalMast) {
                 return true;
             }
@@ -7752,7 +7753,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LayoutSlip to : layoutEditor.slipList) {
+        for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
             if ((to.getSignalAMast() != null) && to.getSignalDMast() == signalMast) {
                 return true;
             }
@@ -7767,7 +7768,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSignalAMast() != null) && x.getSignalAMast() == signalMast) {
                 return true;
             }
@@ -7794,7 +7795,7 @@ public class LayoutEditorTools {
             return;
         }
 
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if ((po.getEastBoundSignalMast() != null) && po.getEastBoundSignalMast() == signalMast) {
                 po.setEastBoundSignalMast(null);
             }
@@ -7802,7 +7803,7 @@ public class LayoutEditorTools {
                 po.setWestBoundSignalMast(null);
             }
         }
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSignalAMast() != null) && to.getSignalAMast() == signalMast) {
                 to.setSignalAMast(null);
             }
@@ -7817,7 +7818,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LayoutSlip to : layoutEditor.slipList) {
+        for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
             if ((to.getSignalAMast() != null) && to.getSignalAMast() == signalMast) {
                 to.setSignalAMast(null);
             }
@@ -7835,7 +7836,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSignalAMast() != null) && x.getSignalAMast() == signalMast) {
                 x.setSignalAMast(null);
             }
@@ -8635,7 +8636,7 @@ public class LayoutEditorTools {
 
     void createListUsedSignalMasts() {
         usedMasts = new ArrayList<jmri.NamedBean>();
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             //We allow the same sensor to be allocated in both directions.
             if (po != boundary) {
                 if (po.getEastBoundSignalMast() != null) {
@@ -8647,7 +8648,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if (to.getSignalAMast() != null) {
                 usedMasts.add(to.getSignalAMast());
             }
@@ -8661,7 +8662,7 @@ public class LayoutEditorTools {
                 usedMasts.add(to.getSignalDMast());
             }
         }
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if (x.getSignalAMast() != null) {
                 usedMasts.add(x.getSignalAMast());
             }
@@ -8675,7 +8676,7 @@ public class LayoutEditorTools {
                 usedMasts.add(x.getSignalDMast());
             }
         }
-        for (LayoutSlip sl : layoutEditor.slipList) {
+        for (LayoutSlip sl : layoutEditor.getLayoutSlips()) {
             if (sl.getSignalAMast() != null) {
                 usedMasts.add(sl.getSignalAMast());
             }
@@ -8902,7 +8903,7 @@ public class LayoutEditorTools {
     public void removeAssignment(SignalMast mast) {
         String sName = mast.getSystemName();
         String uName = mast.getUserName();
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSignalAMastName() != null)
                     && (to.getSignalAMastName().equals(sName) || ((uName != null)
                     && (to.getSignalAMastName().equals(uName))))) {
@@ -8924,7 +8925,7 @@ public class LayoutEditorTools {
                 to.setSignalDMast("");
             }
         }
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if (po.getEastBoundSignalMastName().equals(sName) || po.getEastBoundSignalMastName().equals(uName)) {
                 po.setEastBoundSignalMast("");
             }
@@ -8932,7 +8933,7 @@ public class LayoutEditorTools {
                 po.setWestBoundSignalMast("");
             }
         }
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSignalAMastName() != null)
                     && (x.getSignalAMastName().equals(sName) || ((uName != null)
                     && (x.getSignalAMastName().equals(uName))))) {
@@ -9168,7 +9169,7 @@ public class LayoutEditorTools {
                 signalMastsTurnoutComboBox.setText(str);
             }
         }
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
+        for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 layoutTurnout = t;
             }
@@ -9434,13 +9435,14 @@ public class LayoutEditorTools {
     private boolean getSlipMastInformation() {
         if (!slipMastFromMenu) {
             layoutSlip = null;
-            if (layoutEditor.slipList.size() <= 0) {
+            List<LayoutSlip> layoutSlips = layoutEditor.getLayoutSlips();
+            if (layoutSlips.size() <= 0) {
                 JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
                         rb.getString("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if (layoutEditor.slipList.size() == 1) {
-                layoutSlip = layoutEditor.slipList.get(0);
+            } else if (layoutSlips.size() == 1) {
+                layoutSlip = layoutSlips.get(0);
             } else {
                 LayoutBlock slipBlockA = null;
                 //LayoutBlock slipBlockC = null;
@@ -9451,7 +9453,7 @@ public class LayoutEditorTools {
 
                 int foundCount = 0;
                 // make two block tests first
-                for (LayoutSlip x : layoutEditor.slipList) {
+                for (LayoutSlip x : layoutEditor.getLayoutSlips()) {
                     LayoutBlock xA = null;
                     LayoutBlock xB = null;
                     LayoutBlock xC = null;
@@ -9483,7 +9485,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (LayoutSlip x : layoutEditor.slipList) {
+                    for (LayoutSlip x : layoutEditor.getLayoutSlips()) {
                         if (slipBlockA == x.getLayoutBlock()) {
                             layoutSlip = x;
                             foundCount++;
@@ -9933,13 +9935,14 @@ public class LayoutEditorTools {
     private boolean getLevelCrossingMastInformation() {
         if (!xingMastFromMenu) {
             levelXing = null;
-            if (layoutEditor.xingList.size() <= 0) {
+            List<LevelXing> levelXings = layoutEditor.getLevelXings();
+            if (levelXings.size() <= 0) {
                 JOptionPane.showMessageDialog(signalMastsAtXingFrame,
                         rb.getString("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if (layoutEditor.xingList.size() == 1) {
-                levelXing = layoutEditor.xingList.get(0);
+            } else if (levelXings.size() == 1) {
+                levelXing = levelXings.get(0);
             } else {
                 LayoutBlock xingBlockA = null;
                 LayoutBlock xingBlockC = null;
@@ -9959,7 +9962,7 @@ public class LayoutEditorTools {
                 int foundCount = 0;
                 // make two block tests first
                 if (xingBlockC != null) {
-                    for (LevelXing x : layoutEditor.xingList) {
+                    for (LevelXing x : layoutEditor.getLevelXings()) {
                         LayoutBlock xA = null;
                         LayoutBlock xB = null;
                         LayoutBlock xC = null;
@@ -9993,7 +9996,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (LevelXing x : layoutEditor.xingList) {
+                    for (LevelXing x : layoutEditor.getLevelXings()) {
                         if ((xingBlockA == x.getLayoutBlockAC()) || (xingBlockA == x.getLayoutBlockBD())) {
                             levelXing = x;
                             foundCount++;
@@ -10442,7 +10445,7 @@ public class LayoutEditorTools {
     }
 
     public void removeAssignment(Sensor sensor) {
-        for (LayoutTurnout to : layoutEditor.turnoutList) {
+        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
                 to.setSensorA(null);
             }
@@ -10456,7 +10459,7 @@ public class LayoutEditorTools {
                 to.setSensorD(null);
             }
         }
-        for (LayoutSlip to : layoutEditor.slipList) {
+        for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
             if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
                 to.setSensorA(null);
             }
@@ -10471,7 +10474,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (PositionablePoint po : layoutEditor.pointList) {
+        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if ((po.getEastBoundSensor() != null) && po.getEastBoundSensor() == sensor) {
                 po.setEastBoundSensor(null);
             }
@@ -10480,7 +10483,7 @@ public class LayoutEditorTools {
             }
         }
 
-        for (LevelXing x : layoutEditor.xingList) {
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             if ((x.getSensorA() != null) && x.getSensorA() == sensor) {
                 x.setSensorAName(null);
             }
@@ -10707,7 +10710,7 @@ public class LayoutEditorTools {
                 sensorsTurnoutComboBox.setText(str);
             }
         }
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
+        for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 layoutTurnout = t;
             }
@@ -10953,13 +10956,14 @@ public class LayoutEditorTools {
     private boolean getLevelCrossingSensorInformation() {
         if (!xingSensorFromMenu) {
             levelXing = null;
-            if (layoutEditor.xingList.size() <= 0) {
+            List<LevelXing> levelXings = layoutEditor.getLevelXings();
+            if (levelXings.size() <= 0) {
                 JOptionPane.showMessageDialog(sensorsAtXingFrame,
                         rb.getString("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if (layoutEditor.xingList.size() == 1) {
-                levelXing = layoutEditor.xingList.get(0);
+            } else if (levelXings.size() == 1) {
+                levelXing = levelXings.get(0);
             } else {
                 LayoutBlock xingSensorBlockA = null;
                 LayoutBlock xingSensorBlockC = null;
@@ -10978,7 +10982,7 @@ public class LayoutEditorTools {
                 int foundCount = 0;
                 // make two block tests first
                 if (xingSensorBlockC != null) {
-                    for (LevelXing x : layoutEditor.xingList) {
+                    for (LevelXing x : layoutEditor.getLevelXings()) {
                         LayoutBlock xA = null;
                         LayoutBlock xB = null;
                         LayoutBlock xC = null;
@@ -11012,7 +11016,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (LevelXing x : layoutEditor.xingList) {
+                    for (LevelXing x : layoutEditor.getLevelXings()) {
                         if ((xingSensorBlockA == x.getLayoutBlockAC()) || (xingSensorBlockA == x.getLayoutBlockBD())) {
                             levelXing = x;
                             foundCount++;
@@ -11233,20 +11237,17 @@ public class LayoutEditorTools {
             }
             block2 = getBlockFromEntry(block2IDComboBox);
             if (block2 == null) {
-                PositionablePoint p = null;
-                for (int i = 0; (i < layoutEditor.pointList.size()) && (boundary == null); i++) {
-                    p = layoutEditor.pointList.get(i);
+                for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                     if (p.getType() == PositionablePoint.END_BUMPER) {
                         boundary = p;
+                        break;
                     } else {
                         return false;
                     }
                 }
             }
-            PositionablePoint p = null;
             boundary = null;
-            for (int i = 0; (i < layoutEditor.pointList.size()) && (boundary == null); i++) {
-                p = layoutEditor.pointList.get(i);
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
                 if (p.getType() == PositionablePoint.ANCHOR) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
@@ -11260,6 +11261,7 @@ public class LayoutEditorTools {
                         if (((bA == block1) && (bB == block2))
                                 || ((bA == block2) && (bB == block1))) {
                             boundary = p;
+                            break;
                         }
                     }
                 }
@@ -11484,13 +11486,14 @@ public class LayoutEditorTools {
     private boolean getSlipSensorInformation() {
         if (!slipSensorFromMenu) {
             layoutSlip = null;
-            if (layoutEditor.slipList.size() <= 0) {
+            List<LayoutSlip> layoutSlips = layoutEditor.getLayoutSlips();
+            if (layoutSlips.size() <= 0) {
                 JOptionPane.showMessageDialog(sensorsAtSlipFrame,
                         rb.getString("SignalsError15"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if (layoutEditor.slipList.size() == 1) {
-                layoutSlip = layoutEditor.slipList.get(0);
+            } else if (layoutSlips.size() == 1) {
+                layoutSlip = layoutSlips.get(0);
             } else {
                 LayoutBlock slipSensorBlockA = null;
                 slipSensorBlockA = getBlockFromEntry(xingSensorsBlockAComboBox);
@@ -11499,7 +11502,7 @@ public class LayoutEditorTools {
                 }
 
                 int foundCount = 0;
-                for (LayoutSlip x : layoutEditor.slipList) {
+                for (LayoutSlip x : layoutEditor.getLayoutSlips()) {
                     LayoutBlock xA = null;
                     LayoutBlock xB = null;
                     LayoutBlock xC = null;
@@ -11531,7 +11534,7 @@ public class LayoutEditorTools {
                 }
                 if (foundCount == 0) {
                     // try one block test
-                    for (LayoutSlip x : layoutEditor.slipList) {
+                    for (LayoutSlip x : layoutEditor.getLayoutSlips()) {
                         if (slipSensorBlockA == x.getLayoutBlock()) {
                             layoutSlip = x;
                             foundCount++;
@@ -11979,7 +11982,7 @@ public class LayoutEditorTools {
                     + Bundle.getMessage("Name"));
             panel1.add(turnout1NameLabel);
             panel1.add(slipNameCombo);
-            for (LayoutSlip slip : layoutEditor.slipList) {
+            for (LayoutSlip slip : layoutEditor.getLayoutSlips()) {
                 slipNameCombo.addItem(slip.getDisplayName());
             }
 
@@ -11992,7 +11995,7 @@ public class LayoutEditorTools {
                 slipNameCombo.setSelectedIndex(0);
             }
             slipNameCombo.addActionListener((ActionEvent e) -> {
-                for (LayoutSlip slip : layoutEditor.slipList) {
+                for (LayoutSlip slip : layoutEditor.getLayoutSlips()) {
                     if (slip.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
                         //slip1NameField.setText(slip.getDisplayName());
                         getSlipTurnoutSignalsGetSaved(e);
@@ -12260,7 +12263,7 @@ public class LayoutEditorTools {
         turnout1 = null;
         turnout2 = null;
         layoutSlip = null;
-        for (LayoutSlip ls : layoutEditor.slipList) {
+        for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
             if (ls.getDisplayName().equals(slipNameCombo.getSelectedItem())) {
                 turnout1 = ls.getTurnout();
                 turnout2 = ls.getTurnoutB();
@@ -13196,7 +13199,7 @@ public class LayoutEditorTools {
         turnout = turnout1 = turnoutA = jmri.InstanceManager.turnoutManagerInstance().getTurnout(inTurnoutNameA);
         turnout2 = turnoutB = jmri.InstanceManager.turnoutManagerInstance().getTurnout(inTurnoutNameB);
         // map those to layout turnouts (if possible)
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             Turnout to = lt.getTurnout();
             if (to != null) {
                 String uname = to.getUserName();

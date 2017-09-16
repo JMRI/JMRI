@@ -102,10 +102,10 @@ public class LevelXing extends LayoutTrack {
     private NamedBeanHandle<Sensor> sensorCNamed = null; // sensor at C track junction
     private NamedBeanHandle<Sensor> sensorDNamed = null; // sensor at D track junction
 
-    private Object connectA = null;
-    private Object connectB = null;
-    private Object connectC = null;
-    private Object connectD = null;
+    private LayoutTrack connectA = null;
+    private LayoutTrack connectB = null;
+    private LayoutTrack connectC = null;
+    private LayoutTrack connectD = null;
 
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
@@ -582,13 +582,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case LEVEL_XING_A:
                 return connectA;
@@ -607,14 +604,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
-     * @param connectionType the connection type (where it is connected to the us)
-     * @param o the object that is being connected
-     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to LevelXing - " + type);
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
@@ -638,44 +631,44 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    public Object getConnectA() {
+    public LayoutTrack getConnectA() {
         return connectA;
     }
 
-    public Object getConnectB() {
+    public LayoutTrack getConnectB() {
         return connectB;
     }
 
-    public Object getConnectC() {
+    public LayoutTrack getConnectC() {
         return connectC;
     }
 
-    public Object getConnectD() {
+    public LayoutTrack getConnectD() {
         return connectD;
     }
 
-    public void setConnectA(Object o, int type) {
+    public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
         if ((connectA != null) && (type != TRACK)) {
             log.error("unexpected type of A connection to levelXing - " + type);
         }
     }
 
-    public void setConnectB(Object o, int type) {
+    public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
         if ((connectB != null) && (type != TRACK)) {
             log.error("unexpected type of B connection to levelXing - " + type);
         }
     }
 
-    public void setConnectC(Object o, int type) {
+    public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
         if ((connectC != null) && (type != TRACK)) {
             log.error("unexpected type of C connection to levelXing - " + type);
         }
     }
 
-    public void setConnectD(Object o, int type) {
+    public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
         if ((connectD != null) && (type != TRACK)) {
             log.error("unexpected type of D connection to levelXing - " + type);
@@ -815,83 +808,6 @@ public class LevelXing extends LayoutTrack {
         reCheckBlockBoundary();
     }
 
-    public void reCheckBlockBoundary() {
-        if (connectA == null && connectB == null && connectC == null && connectD == null) {
-            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if (signalAMastNamed != null) {
-                removeSML(getSignalAMast());
-            }
-            if (signalBMastNamed != null) {
-                removeSML(getSignalBMast());
-            }
-            if (signalCMastNamed != null) {
-                removeSML(getSignalCMast());
-            }
-            if (signalDMastNamed != null) {
-                removeSML(getSignalDMast());
-            }
-            signalAMastNamed = null;
-            signalBMastNamed = null;
-            signalCMastNamed = null;
-            signalDMastNamed = null;
-            sensorANamed = null;
-            sensorBNamed = null;
-            sensorCNamed = null;
-            sensorDNamed = null;
-            //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
-        } else if (connectA == null || connectB == null || connectC == null || connectD == null) {
-            //could still be in the process of rebuilding the point details
-            return;
-        }
-
-        TrackSegment trkA;
-        TrackSegment trkB;
-        TrackSegment trkC;
-        TrackSegment trkD;
-
-        if (connectA instanceof TrackSegment) {
-            trkA = (TrackSegment) connectA;
-            if (trkA.getLayoutBlock() == blockAC) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                signalAMastNamed = null;
-                sensorANamed = null;
-            }
-        }
-        if (connectC instanceof TrackSegment) {
-            trkC = (TrackSegment) connectC;
-            if (trkC.getLayoutBlock() == blockAC) {
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                signalCMastNamed = null;
-                sensorCNamed = null;
-            }
-        }
-        if (connectB instanceof TrackSegment) {
-            trkB = (TrackSegment) connectB;
-            if (trkB.getLayoutBlock() == blockBD) {
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                signalBMastNamed = null;
-                sensorBNamed = null;
-            }
-        }
-
-        if (connectD instanceof TrackSegment) {
-            trkD = (TrackSegment) connectC;
-            if (trkD.getLayoutBlock() == blockBD) {
-                if (signalDMastNamed != null) {
-                    removeSML(getSignalDMast());
-                }
-                signalDMastNamed = null;
-                sensorDNamed = null;
-            }
-        }
-    }
-
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
@@ -927,7 +843,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-
     public void setCoordsA(Point2D p) {
         dispA = MathUtil.subtract(p, center);
     }
@@ -946,6 +861,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -958,6 +874,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -968,17 +885,13 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
 
         if (!requireUnconnected) {
             //check the center point
@@ -1710,13 +1623,15 @@ public class LevelXing extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
-        if (isMainlineBD() && (!isMainlineAC())) {
-            drawXingAC(g2);
-            drawXingBD(g2);
-        } else {
-            drawXingBD(g2);
-            drawXingAC(g2);
+    protected void draw(Graphics2D g2) {
+        if (!isHidden() || layoutEditor.isEditable()) {
+            if (isMainlineBD() && (!isMainlineAC())) {
+                drawXingAC(g2);
+                drawXingBD(g2);
+            } else {
+                drawXingBD(g2);
+                drawXingAC(g2);
+            }
         }
     }   // drawHidden(Graphics2D g2)
 
@@ -1738,7 +1653,7 @@ public class LevelXing extends LayoutTrack {
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
@@ -1775,5 +1690,28 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
+
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // LevelXings don't have turnout controls...
+        // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public void reCheckBlockBoundary() {
+        // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        // nothing to do here... move along...
+        return null;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
 }
