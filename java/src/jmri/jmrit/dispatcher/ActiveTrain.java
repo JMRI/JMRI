@@ -1017,33 +1017,6 @@ public class ActiveTrain {
         }
         return aSec;
     }
-    // Reverse a specfic section
-    // as the syncronzed cannot lock the array we try twice in case
-    // of concurrent updates.
-    protected AllocatedSection DONTUSEreverseOneAllocatedSections(String sectionToReverse) {
-        AllocatedSection aSec = null;
-        int iCount = 0;
-        boolean bResetDone = false;
-        while (!bResetDone && iCount < 10) {
-            log.info("Try reset[" + sectionToReverse + "]");
-            for (int i = 0; i < mAllocatedSections.size(); i++) {
-                aSec = mAllocatedSections.get(i);
-                if ( sectionToReverse.equals(aSec.getSectionName() ) ) {
-                    int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
-                    if (dir == jmri.Section.FORWARD) {
-                        aSec.getSection().setState(jmri.Section.REVERSE);
-                    } else {
-                        aSec.getSection().setState(jmri.Section.FORWARD);
-                    }
-                    bResetDone = true;
-                    aSec.setStoppingSensors();
-                }
-            }
-            try { Thread.sleep(200); } catch (Exception e) {};
-            ++iCount;
-        }
-        return aSec;
-    }
 
     protected void resetAllAllocatedSections() {
         for (int i = 0; i < mAllocatedSections.size(); i++) {

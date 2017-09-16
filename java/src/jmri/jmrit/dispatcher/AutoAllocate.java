@@ -527,7 +527,6 @@ public class AutoAllocate {
             }
             if (allocateBySafeSections &&
                     (curAS != null) &&
-                    (curAS.getSection().getComment() != null) &&
                     ((curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED) &&
                             ar.getActiveTrain().getTransit().getTransitSectionFromSectionAndSeq(curAS.getSection(),
                                     curSeq).isSafe())) {
@@ -565,9 +564,7 @@ public class AutoAllocate {
                         }
                     }
                     if (!allocateBySafeSections &&
-                            (curAS != null) &&
                             (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
-                        // the last two AllocatedSections are not OCCUPIED, don't allocate any more yet
                         return false;
                     }
                 }

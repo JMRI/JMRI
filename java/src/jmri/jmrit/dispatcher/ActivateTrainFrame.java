@@ -6,13 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -55,28 +58,6 @@ public class ActivateTrainFrame {
         _tiFile = new TrainInfoFile();
     }
 
-    protected class ComboBoxAllocateMethodItem {
-        private int value;
-        private String description;
-
-        public ComboBoxAllocateMethodItem(int inValue, String inDescription) {
-            this.value = inValue;
-            this.description = inDescription;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String toString() {
-            return description;
-        }
-    }
-
     // operational instance variables
     private DispatcherFrame _dispatcher = null;
     private TrainInfoFile _tiFile = null;
@@ -114,10 +95,12 @@ public class ActivateTrainFrame {
     private JButton deleteButton = null;
     private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
-    private JCheckBox allocateAllTheWayBox = new JCheckBox(Bundle.getMessage("AllocateAllTheWay"));
-    private JLabel allocateMethodLabel = new JLabel(Bundle.getMessage("AllocateMethodLabel") + ":");
-    private JComboBox<ComboBoxAllocateMethodItem> allocateMethodBox = new JComboBox<ComboBoxAllocateMethodItem>();
-    private JSpinner allocateCustonSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
+    //private JLabel allocateMethodLabel = new JLabel(Bundle.getMessage("AllocateMethodLabel") + ":");
+    private JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
+    private JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
+    private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks"));
+    private ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
+    private JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
     private JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
@@ -289,24 +272,35 @@ public class ActivateTrainFrame {
             p4.add(destinationBlockBox);
             destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
             initiatePane.add(p4);
-            JPanel p4a = new JPanel();
-            p4a.setLayout(new FlowLayout());
-            p4a.add(allocateAllTheWayBox);
-            allocateAllTheWayBox.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
-            initiatePane.add(p4a);
             JPanel p4b = new JPanel();
+            p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel") + ":"));
             p4b.setLayout(new FlowLayout());
-            p4b.add(allocateMethodLabel);
-            initializeAllocateMethod();
-            p4b.add(allocateMethodBox);
-            allocateMethodBox.setToolTipText(Bundle.getMessage("AllocateMethodBoxHint"));
-            allocateMethodBox.addActionListener(new ActionListener() {
+//            p4b.add(allocateMethodLabel);
+            allocateMethodButtonGroup.add(allocateAllTheWayRadioButton);
+            allocateMethodButtonGroup.add(allocateBySafeRadioButton);
+            allocateMethodButtonGroup.add(allocateNumberOfBlocks);
+            p4b.add(allocateAllTheWayRadioButton);
+            p4b.add(allocateBySafeRadioButton);
+            p4b.add(allocateNumberOfBlocks);
+            allocateAllTheWayRadioButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    handleAllocateMethodBoxChanged(e);
+                    handleAllocateAllTheWayButtonChanged(e);
                 }
             });
-            p4b.add(allocateCustonSpinner);
+            allocateBySafeRadioButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleAllocateBySafeButtonChanged(e);
+                }
+            });
+            allocateNumberOfBlocks.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleAllocateNumberOfBlocksButtonChanged(e);
+                }
+            });
+            p4b.add(allocateCustomSpinner);
             initiatePane.add(p4b);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
@@ -462,7 +456,6 @@ public class ActivateTrainFrame {
         setAutoRunDefaults();
         autoRunBox.setSelected(false);
         loadAtStartupBox.setSelected(false);
-        allocateAllTheWayBox.setSelected(false);
         initializeFreeTransitsCombo(new ArrayList<Transit>());
         initializeFreeTrainsCombo();
         initiateFrame.pack();
@@ -582,15 +575,16 @@ public class ActivateTrainFrame {
         initiateFrame.pack();
     }
 
-    private void handleAllocateMethodBoxChanged(ActionEvent e) {
-        if (allocateMethodBox.getSelectedIndex() < 0 ) {
-            return;
-        }
-        if (((ComboBoxAllocateMethodItem)allocateMethodBox.getSelectedItem()).getValue() != 3) {
-            allocateCustonSpinner.setVisible(false);
-        } else {
-            allocateCustonSpinner.setVisible(true);
-        }
+    private void handleAllocateAllTheWayButtonChanged(ActionEvent e) {
+        allocateCustomSpinner.setVisible(false);
+    }
+
+    private void handleAllocateBySafeButtonChanged(ActionEvent e) {
+        allocateCustomSpinner.setVisible(false);
+    }
+
+    private void handleAllocateNumberOfBlocksButtonChanged(ActionEvent e) {
+        allocateCustomSpinner.setVisible(true);
     }
 
     private void cancelInitiateTrain(ActionEvent e) {
@@ -634,8 +628,14 @@ public class ActivateTrainFrame {
         }
         boolean resetWhenDone = resetWhenDoneBox.isSelected();
         boolean reverseAtEnd = reverseAtEndBox.isSelected();
-        boolean allocateAllTheWay = allocateAllTheWayBox.isSelected();
-        int allocateMethod = ((ComboBoxAllocateMethodItem) allocateMethodBox.getSelectedItem()).getValue();
+        int allocateMethod = 3;
+        if (allocateAllTheWayRadioButton.isSelected()) {
+            allocateMethod = 999;
+        } else if (allocateBySafeRadioButton.isSelected()) {
+            allocateMethod = 0;
+        } else {
+            allocateMethod = (Integer) allocateCustomSpinner.getValue();
+        }
         int delayedStart = delayModeFromBox(delayedStartBox);
         int delayedReStart = delayModeFromBox(delayedReStartBox);
         int departureTimeHours = 8;
@@ -731,13 +731,14 @@ public class ActivateTrainFrame {
         // create a new Active Train
         ActiveTrain at = _dispatcher.createActiveTrain(transitName, trainName, tSource, startBlockName,
                 startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority,
-                resetWhenDone, reverseAtEnd, allocateAllTheWay, true, initiateFrame, allocateMethod);
+                resetWhenDone, reverseAtEnd,  true, initiateFrame, allocateMethod);
         if (at == null) {
             return;  // error message sent by createActiveTrain
         }
         if (tSource == ActiveTrain.ROSTER) {
             at.setRosterEntry(trainBoxList.get(trainSelectBox.getSelectedIndex()));
         }
+        at.setAllocateMethod(allocateMethod);
         at.setDelayedStart(delayedStart);
         at.setDelayedRestart(delayedReStart);
         at.setDepartureTimeHr(departureTimeHours);
@@ -1088,8 +1089,7 @@ public class ActivateTrainFrame {
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
-        allocateAllTheWayBox.setSelected(info.getAllocateAllTheWay());
-        setallocateMethodBoxItem(info.getAllocationMethod());
+        setallocateMethodButtons(info.getAllocationMethod());
         autoTrainInfoToDialog(info);
     }
 
@@ -1134,8 +1134,14 @@ public class ActivateTrainFrame {
         info.setTrainType((String) trainTypeBox.getSelectedItem());
         info.setAutoRun(autoRunBox.isSelected());
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
-        info.setAllocateAllTheWay(allocateAllTheWayBox.isSelected());
-        info.setAllocationMethod(((ComboBoxAllocateMethodItem) allocateMethodBox.getSelectedItem()).getValue());
+        info.setAllocateAllTheWay(false); // force to false next field is now used.
+        if (allocateAllTheWayRadioButton.isSelected()) {
+            info.setAllocationMethod(999);
+        } else if (allocateBySafeRadioButton.isSelected()) {
+            info.setAllocationMethod(0);
+        } else {
+            info.setAllocationMethod((Integer) allocateCustomSpinner.getValue());
+        }
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
         info.setRestartDelayMin((Integer) delayMinSpinner.getValue());
@@ -1422,23 +1428,29 @@ public class ActivateTrainFrame {
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
 
-    private void initializeAllocateMethod() {
-        allocateMethodBox.removeAllItems();
-        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (3, Bundle.getMessage("3Ahead")));
-        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (999, Bundle.getMessage("AsFarAsPos")));
-        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (0, Bundle.getMessage("ToSafeSections")));
-        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (4, Bundle.getMessage("4Ahead")));
-        allocateMethodBox.addItem(new ComboBoxAllocateMethodItem (5, Bundle.getMessage("5Ahead")));
-    }
-
-    private void setallocateMethodBoxItem(int value) {
-        for (int i =0; i < allocateMethodBox.getItemCount(); i++) {
-            if (((ComboBoxAllocateMethodItem) allocateMethodBox.getItemAt(i)).getValue() == value) {
-               allocateMethodBox.setSelectedIndex(i);
+    /**
+     * Sets up the RadioButtons and visability of spinner 
+     * for the allocation method
+     * @param value  0, Allocate by Safe spots, 
+     *               999, allocate as far as possible
+     *               Any other value the number of sections to allocate
+     */
+    private void setallocateMethodButtons(int value) {
+        switch (value){
+            case 0:
+                allocateBySafeRadioButton.setSelected(true);
+                allocateCustomSpinner.setVisible(false);;
+                break;
+            case 999:
+                allocateAllTheWayRadioButton.setSelected(true);
+                allocateCustomSpinner.setVisible(false);;
                break;
-            }
+            default:
+                allocateNumberOfBlocks.setSelected(true);
+                allocateCustomSpinner.setVisible(true);;
+                allocateCustomSpinner.setValue(value);
         }
     }
-
+    
     private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class);
 }
