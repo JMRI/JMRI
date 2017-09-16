@@ -1,13 +1,15 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import java.awt.GraphicsEnvironment;
+import java.util.List;
 import jmri.ReporterManager;
 import jmri.BlockManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,6 +24,7 @@ public class ManageLocationsFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ListeningSpot s = new ListeningSpot();
         ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         String[] reporterNameArray = rmgr.getSystemNameArray();
