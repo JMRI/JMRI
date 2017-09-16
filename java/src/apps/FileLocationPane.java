@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.implementation.FileLocationsPreferences;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
@@ -135,7 +136,10 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
             FileUtil.setScriptsPath(this.scriptLocation.getText());
             this.restartRequired = true;
         }
-        InstanceManager.getDefault(FileLocationsPreferences.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            InstanceManager.getDefault(FileLocationsPreferences.class).savePreferences(profile);
+        }
     }
 
     @Override
@@ -155,14 +159,17 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
     }
 
     private class OpenAction extends AbstractAction {
+
         JFileChooser chooser;
         JTextField field;
+
         OpenAction(JFileChooser chooser, JTextField field) {
             this.chooser = chooser;
             this.field = field;
         }
+
         @Override
-        @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="protected by if instanceof")
+        @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "protected by if instanceof")
         public void actionPerformed(ActionEvent e) {
             // get the file
             chooser.showOpenDialog(null);
@@ -172,7 +179,7 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
             field.setText(chooser.getSelectedFile() + File.separator);
             validate();
             if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
-                ((JFrame)getTopLevelAncestor()).pack();
+                ((JFrame) getTopLevelAncestor()).pack();
             }
         }
     }
