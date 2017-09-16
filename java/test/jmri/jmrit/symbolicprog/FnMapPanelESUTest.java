@@ -20,15 +20,15 @@ public class FnMapPanelESUTest {
     @Test
     public void testCTor() {
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        CvTableModel cvtm = new CvTableModel(new JLabel(), p);
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p)
+                cvtm
         );
         List<Integer> varsUsed = new ArrayList();
         RosterEntry re = new RosterEntry();
         Element model = new Element("model");
-        CvTableModel cvtm = new CvTableModel(new JLabel(), null);
 
         FnMapPanelESU t = new FnMapPanelESU(tableModel, varsUsed, model,re,cvtm);
         Assert.assertNotNull("exists",t);
