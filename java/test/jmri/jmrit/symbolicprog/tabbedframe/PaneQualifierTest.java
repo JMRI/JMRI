@@ -1,22 +1,29 @@
-package jmri.jmrit.symbolicprog;
+package jmri.jmrit.symbolicprog.tabbedframe;
 
+import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import javax.swing.JLabel;
-import jmri.progdebugger.ProgDebugger;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.jmrit.symbolicprog.DecVariableValue;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 /**
+ * Some tests in this file are derived from the test for ArthmeticQualifier.
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
+ * @author Paul Bender Copyright (C) 2017	
  */
-public class ArithmeticQualifierTest {
-
-    ProgDebugger p = new ProgDebugger();
+public class PaneQualifierTest {
 
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -25,39 +32,38 @@ public class ArithmeticQualifierTest {
         return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
-    // start of base tests
-    class TestArithmeticQualifier extends ArithmeticQualifier {
-
-        TestArithmeticQualifier(VariableValue watchedVal, int value, String relation) {
-            super(watchedVal, value, relation);
-        }
-
-        @Override
-        public void setWatchedAvailable(boolean t) {
-        }
-
-        @Override
-        public boolean currentAvailableState() {
-            return true;
-        }
-    }
-
     @Test
     public void testVariableNotExistsOk() {
-
-        ArithmeticQualifier aq = new TestArithmeticQualifier(null, 0, "exists");
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
+        PaneQualifier aq = new PaneQualifier(jp,null, 0, "exists",jtp,0);
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
     @Test
     public void testVariableNotExistsNOk() {
-
-        ArithmeticQualifier aq = new TestArithmeticQualifier(null, 1, "exists");
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
+        PaneQualifier aq = new PaneQualifier(jp,null, 1, "exists",jtp,0);
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
     @Test
     public void testVariableExistsOk() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
@@ -66,12 +72,18 @@ public class ArithmeticQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test Exists
-        ArithmeticQualifier aq = new TestArithmeticQualifier(variable, 1, "exists");
+        PaneQualifier aq = new PaneQualifier(jp,variable, 1, "exists",jtp,0);
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
     @Test
     public void testVariableExistsNotOk() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
@@ -80,12 +92,18 @@ public class ArithmeticQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test Exists
-        ArithmeticQualifier aq = new TestArithmeticQualifier(variable, 0, "exists");
+        PaneQualifier aq = new PaneQualifier(jp,variable, 0, "exists",jtp,0);
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
     @Test
     public void testVariableEq() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
@@ -94,7 +112,7 @@ public class ArithmeticQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test "eq"
-        ArithmeticQualifier aq = new TestArithmeticQualifier(variable, 10, "eq");
+        PaneQualifier aq = new PaneQualifier(jp,variable, 10, "eq",jtp,0);
         Assert.assertEquals(false, aq.currentDesiredState());
         cv.setValue(10);
         Assert.assertEquals(true, aq.currentDesiredState());
@@ -105,6 +123,12 @@ public class ArithmeticQualifierTest {
 
     @Test
     public void testVariableGe() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
@@ -113,7 +137,7 @@ public class ArithmeticQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test "ge"
-        ArithmeticQualifier aq = new TestArithmeticQualifier(variable, 10, "ge");
+        PaneQualifier aq = new PaneQualifier(jp,variable, 10, "ge",jtp,0);
         Assert.assertEquals(false, aq.currentDesiredState());
         cv.setValue(10);
         Assert.assertEquals(true, aq.currentDesiredState());
@@ -126,8 +150,14 @@ public class ArithmeticQualifierTest {
 
     @Test
     public void testVariableRefEqNotExist() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        RosterEntry re = new RosterEntry();
+        PaneProgPane jp = new PaneProgPane();
+        JTabbedPane jtp = new JTabbedPane();
+        jtp.add(jp);
         // test arithmetic operation when variable not found
-        ArithmeticQualifier aq = new TestArithmeticQualifier(null, 10, "eq");
+        PaneQualifier aq = new PaneQualifier(jp,null, 10, "eq",jtp,0);
         Assert.assertEquals(true, aq.currentDesiredState()); // chosen default in this case
         jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");
     }
@@ -141,6 +171,7 @@ public class ArithmeticQualifierTest {
     @Before 
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
     @After
