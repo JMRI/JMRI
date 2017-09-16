@@ -41,7 +41,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         EntryExitPairs p = (EntryExitPairs) o;
         Element element = new Element("entryexitpairs");  // NOI18N
         setStoreElementClass(element);
-        ArrayList<LayoutEditor> editors = p.getSourcePanelList();
+        List<LayoutEditor> editors = p.getSourcePanelList();
         if (editors.isEmpty()) {
             return null;    //return element;   // <== don't store empty (unused) element
         }
@@ -80,7 +80,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                 source.setAttribute("type", type);  // NOI18N
                 source.setAttribute("item", item);  // NOI18N
 
-                ArrayList<Object> a = p.getDestinationList(key, panel);
+                List<Object> a = p.getDestinationList(key, panel);
                 for (int i = 0; i < a.size(); i++) {
                     Object keyDest = a.get(i);
                     String typeDest = "";
@@ -166,7 +166,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
         // get attributes
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        ArrayList<Object> loadedPanel;
+        List<Object> loadedPanel;
         if (cm != null) {
             loadedPanel = cm.getInstanceList(LayoutEditor.class);
         } else {

@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import java.util.ArrayList;
 import java.util.List;
 import jmri.Block;
 import jmri.ConfigureManager;
@@ -483,7 +482,7 @@ public class SectionManagerXmlTest extends TestCase {
         for (int testsectionfocus = 0; testsectionfocus < 12; testsectionfocus++) {  // Set to one greater than above
             // check existance of sections
             Section testsection = sectionstotest[testsectionfocus];
-            ArrayList<Block> blockList = testsection.getBlockList();
+            List<Block> blockList = testsection.getBlockList();
             Assert.assertEquals("Section size where Focus was: " + testsectionfocus, expectedsectionblocklistsize[testsectionfocus], blockList.size());
 
             Block entryblock = testsection.getEntryBlock();

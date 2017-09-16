@@ -2798,7 +2798,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-//    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case")
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         Rectangle rect = new Rectangle();
         ArrayList<Positionable> selections = new ArrayList<Positionable>();
@@ -2813,17 +2812,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 // we can test if it is in our objects bounds.
                 double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
-                if (true) {
-                    where = t.transform(where, where);
-//              } else {    //TODO: dead code strip this
-//                    double[] pt = new double[2];
-//                    pt[0] = x - center.getX();
-//                    pt[1] = y - center.getY();
-//                    t.transform(pt, 0, pt, 0, 1);
-//                    x = pt[0] + center.getX();
-//                    y = pt[1] + center.getY();
-//                    where = new Point2D.Double(x, y);
-                }
+                where = t.transform(where, where);
             }
             Rectangle2D rect2D = MathUtil.scale(MathUtil.rectangleToRectangle2D(rect), _paintScale);
             int level = p.getDisplayLevel();

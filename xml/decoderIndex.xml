@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.9.3ish+heap+20170819T0447Z+R47d9f85 on Sat Aug 19 14:47:42 AEST 2017-->
-  <decoderIndex version="838">
+  <!--Written by JMRI version 4.9.4ish+jake+20170916T1636Z+R31784dafc6 on Sat Sep 16 09:37:48 PDT 2017-->
+  <decoderIndex version="840">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5547,52 +5547,63 @@
         </model>
       </family>
       <family name="ESU LokSound V3.0 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" file="ESU_LokSoundV3_0.xml">
-        <model model="ESU_LokSound3" numOuts="6">
+        <model model="LokSound V3.0" numOuts="6">
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="250mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="250mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="250mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="250mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="|" />
           <output name="8" label="|" />
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="|" />
           <output name="15" label="|" />
@@ -5600,61 +5611,75 @@
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="31" width="15.5" height="6.5" units="mm" />
         </model>
-        <model model="LokSoundXL Version 3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+        <model model="LokSoundXL V3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
           <output name="1" label="Front|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="600mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="600mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="600mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="600mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Aux|5" maxcurrent="600mA">
             <label xml:lang="fr">Aux|5</label>
             <label xml:lang="it">Ausil|5</label>
+            <label xml:lang="de">Aux|5</label>
           </output>
           <output name="8" label="Aux|6" maxcurrent="600mA">
             <label xml:lang="fr">Aux|6</label>
             <label xml:lang="it">Ausil|6</label>
+            <label xml:lang="de">Aux|6</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="|" />
           <output name="15" label="|" />
@@ -5662,6 +5687,7 @@
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="51" width="40" height="14" units="mm" />
           <protocols>
@@ -5675,70 +5701,87 @@
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="250mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="250mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="250mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="250mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Notch|up">
             <label xml:lang="fr">Monter|cran</label>
             <label xml:lang="it">Incrementa|velocità</label>
+            <label xml:lang="de">Diesel|auf</label>
           </output>
           <output name="8" label="Notch|down">
             <label xml:lang="fr">Descendre|cran</label>
             <label xml:lang="it">Rallenta|velocità</label>
+            <label xml:lang="de">Diesel|ab</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="Doppler|effect">
             <label xml:lang="fr">Effet|Doppler</label>
             <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
           </output>
           <output name="15" label="Volume|/Mute">
             <label xml:lang="fr">Volume|/Muet</label>
             <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
           </output>
           <output name="16" label="Dynamic|brake">
             <label xml:lang="fr">Frein|dynamique</label>
             <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
           </output>
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="31" width="15.5" height="6.5" units="mm" />
           <protocols>
@@ -5750,70 +5793,87 @@
           <output name="1" label="Front|Light" maxcurrent="180mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="180mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="180mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="180mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="180mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="180mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Notch|up">
             <label xml:lang="fr">Monter|cran</label>
             <label xml:lang="it">Incrementa|velocità</label>
+            <label xml:lang="de">Diesel|auf</label>
           </output>
           <output name="8" label="Notch|down">
             <label xml:lang="fr">Descendre|cran</label>
             <label xml:lang="it">Rallenta|velocità</label>
+            <label xml:lang="de">Diesel|ab</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="Doppler|effect">
             <label xml:lang="fr">Effet|Doppler</label>
             <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
           </output>
           <output name="15" label="Volume|/Mute">
             <label xml:lang="fr">Volume|/Muet</label>
             <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
           </output>
           <output name="16" label="Dynamic|brake">
             <label xml:lang="fr">Frein|dynamique</label>
             <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
           </output>
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="28.5" width="10" height="5" units="mm" />
           <protocols>
@@ -5821,74 +5881,91 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokSoundXL Version 3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
+        <model model="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
           <output name="1" label="Front|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
+            <label xml:lang="de">Licht|vor</label>
           </output>
           <output name="2" label="Rear|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|arrière</label>
             <label xml:lang="it">Luci|Posteriori</label>
+            <label xml:lang="de">Licht|rück</label>
           </output>
           <output name="3" label="Aux|1" maxcurrent="600mA">
             <label xml:lang="fr">Aux|1</label>
             <label xml:lang="it">Ausil|1</label>
+            <label xml:lang="de">Aux|1</label>
           </output>
           <output name="4" label="Aux|2" maxcurrent="600mA">
             <label xml:lang="fr">Aux|2</label>
             <label xml:lang="it">Ausil|2</label>
+            <label xml:lang="de">Aux|2</label>
           </output>
           <output name="5" label="Aux|3" maxcurrent="600mA">
             <label xml:lang="fr">Aux|3</label>
             <label xml:lang="it">Ausil|3</label>
+            <label xml:lang="de">Aux|3</label>
           </output>
           <output name="6" label="Aux|4" maxcurrent="600mA">
             <label xml:lang="fr">Aux|4</label>
             <label xml:lang="it">Ausil|4</label>
+            <label xml:lang="de">Aux|4</label>
           </output>
           <output name="7" label="Aux|5" maxcurrent="600mA">
             <label xml:lang="fr">Aux|5</label>
             <label xml:lang="it">Ausil|5</label>
+            <label xml:lang="de">Aux|5</label>
           </output>
           <output name="8" label="Aux|6" maxcurrent="600mA">
             <label xml:lang="fr">Aux|6</label>
             <label xml:lang="it">Ausil|6</label>
+            <label xml:lang="de">Aux|6</label>
           </output>
           <output name="9" label="Momentum|off">
             <label xml:lang="fr">Inertie|désactivée</label>
             <label xml:lang="it">Inerzia|off</label>
+            <label xml:lang="de">Beschleu-|nigung</label>
           </output>
           <output name="10" label="Shunt|mode">
             <label xml:lang="fr">Mode|manœuvre</label>
             <label xml:lang="it">Velocità|Manovra</label>
+            <label xml:lang="de">Rangier-|gang</label>
           </output>
           <output name="11" label="Sound|on">
             <label xml:lang="fr">Son|allumé</label>
             <label xml:lang="it">Suono|on</label>
+            <label xml:lang="de">Sound|an</label>
           </output>
           <output name="12" label="Shift|mode">
             <label xml:lang="fr">Changement|mode</label>
             <label xml:lang="it">Modo|Modifica</label>
+            <label xml:lang="de">Shift|modus</label>
           </output>
           <output name="13" label="Fan|sound">
             <label xml:lang="fr">Son|ventilateur</label>
             <label xml:lang="it">Suono|Ventole</label>
+            <label xml:lang="de">Lüfter|geräusch</label>
           </output>
           <output name="14" label="Doppler|effect">
             <label xml:lang="fr">Effet|Doppler</label>
             <label xml:lang="it">Effetto |Doppler</label>
+            <label xml:lang="de">Doppler|effekt</label>
           </output>
           <output name="15" label="Volume|/Mute">
             <label xml:lang="fr">Volume|/Muet</label>
             <label xml:lang="it">Volume|/Muto</label>
+            <label xml:lang="de">Lautst./|Mute</label>
           </output>
           <output name="16" label="Dynamic|brake">
             <label xml:lang="fr">Frein|dynamique</label>
             <label xml:lang="it">Freni|Dinamici</label>
+            <label xml:lang="de">Dynam.|Bremse</label>
           </output>
           <output name="17" label="Sound|slot">
             <label xml:lang="fr">Créneau|Son</label>
             <label xml:lang="it">Slot| Suono</label>
+            <label xml:lang="de">Sound|slot</label>
           </output>
           <size length="51" width="40" height="14" units="mm" />
           <protocols>
@@ -24108,6 +24185,74 @@
           <output name="7" label="Signal" />
           <output name="8" label="Main Sw" />
           <output name="9" label="Vmid" />
+        </model>
+      </family>
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2066.xml">
+        <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="13">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">E/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschak.</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+        </model>
+        <model model="ATL2066p" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" numOuts="9" numFns="13">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
         </model>
       </family>
       <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="5" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom" file="Viessmann_45xx_Point_motor.xml">
