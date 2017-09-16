@@ -64,7 +64,7 @@ public class ActivateTrainFrame {
     private boolean _TrainsFromUser = false;
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
-    private ArrayList<ActiveTrain> _ActiveTrainsList = null;
+    private List<ActiveTrain> _ActiveTrainsList = null;
     private final TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
 
@@ -74,21 +74,21 @@ public class ActivateTrainFrame {
     private JmriJFrame initiateFrame = null;
     private Container initiatePane = null;
     private final JComboBox<String> transitSelectBox = new JComboBox<>();
-    private final ArrayList<Transit> transitBoxList = new ArrayList<>();
+    private final List<Transit> transitBoxList = new ArrayList<>();
     private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
     private final JComboBox<String> trainSelectBox = new JComboBox<>();
-    private final ArrayList<RosterEntry> trainBoxList = new ArrayList<>();
+    private final List<RosterEntry> trainBoxList = new ArrayList<>();
     private final JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
     private final JTextField trainNameField = new JTextField(10);
     private final JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
     private final JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
     private final JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
     private final JComboBox<String> startingBlockBox = new JComboBox<>();
-    private ArrayList<Block> startingBlockBoxList = new ArrayList<>();
-    private ArrayList<Integer> startingBlockSeqList = new ArrayList<>();
+    private List<Block> startingBlockBoxList = new ArrayList<>();
+    private List<Integer> startingBlockSeqList = new ArrayList<>();
     private JComboBox<String> destinationBlockBox = new JComboBox<String>();
-    private ArrayList<Block> destinationBlockBoxList = new ArrayList<Block>();
-    private ArrayList<Integer> destinationBlockSeqList = new ArrayList<Integer>();
+    private List<Block> destinationBlockBoxList = new ArrayList<Block>();
+    private List<Integer> destinationBlockSeqList = new ArrayList<Integer>();
     private JButton addNewTrainButton = null;
     private JButton loadButton = null;
     private JButton saveButton = null;
@@ -142,8 +142,8 @@ public class ActivateTrainFrame {
             //Add in some bits of code as some point to filter down the transits that can be used.
         }
         if (b != null && selectedTransit != null) {
-            ArrayList<Transit> transitList = _TransitManager.getListUsingBlock(b);
-            ArrayList<Transit> transitEntryList = _TransitManager.getListEntryBlock(b);
+            List<Transit> transitList = _TransitManager.getListUsingBlock(b);
+            List<Transit> transitEntryList = _TransitManager.getListEntryBlock(b);
             for (Transit t : transitEntryList) {
                 if (!transitList.contains(t)) {
                     transitList.add(t);
@@ -151,7 +151,7 @@ public class ActivateTrainFrame {
             }
             transitsFromSpecificBlock = true;
             initializeFreeTransitsCombo(transitList);
-            ArrayList<Block> tmpBlkList = new ArrayList<Block>();
+            List<Block> tmpBlkList = new ArrayList<Block>();
             if (selectedTransit.getEntryBlocksList().contains(b)) {
                 tmpBlkList = selectedTransit.getEntryBlocksList();
                 inTransitBox.setSelected(false);
@@ -159,7 +159,7 @@ public class ActivateTrainFrame {
                 tmpBlkList = selectedTransit.getInternalBlocksList();
                 inTransitBox.setSelected(true);
             }
-            ArrayList<Integer> tmpSeqList = selectedTransit.getBlockSeqList();
+            List<Integer> tmpSeqList = selectedTransit.getBlockSeqList();
             for (int i = 0; i < tmpBlkList.size(); i++) {
                 if (tmpBlkList.get(i) == b) {
                     setComboBox(startingBlockBox, getBlockName(b) + "-" + tmpSeqList.get(i));
@@ -769,7 +769,7 @@ public class ActivateTrainFrame {
         _dispatcher.newTrainDone(at);
     }
 
-    private void initializeFreeTransitsCombo(ArrayList<Transit> transitList) {
+    private void initializeFreeTransitsCombo(List<Transit> transitList) {
         List<String> allTransits = _TransitManager.getSystemNameList();
         transitSelectBox.removeAllItems();
         transitBoxList.clear();

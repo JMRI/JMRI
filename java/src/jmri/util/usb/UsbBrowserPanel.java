@@ -243,27 +243,25 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
                     break;
                 case -1:
                 case 1:
-                    if (this.device != null) {
-                        try {
-                            switch (rowIndex) {
-                                case 0:
-                                    return this.device.getManufacturerString();
-                                case 1:
-                                    return this.device.getProductString();
-                                case 2:
-                                    return this.device.getSerialNumberString();
-                                case 3:
-                                    return String.format("%04x", this.device.getUsbDeviceDescriptor().idVendor());
-                                case 4:
-                                    return String.format("%04x", this.device.getUsbDeviceDescriptor().idProduct());
-                                default:
-                                    return null;
-                            }
-                        }catch (UsbDisconnectedException ex) {
-                            this.setUsbDevice(null);
-                        } catch (UnsupportedEncodingException | UsbException ex) {
-                            log.error("Unable to get USB device property.", ex);
+                    try {
+                        switch (rowIndex) {
+                            case 0:
+                                return this.device.getManufacturerString();
+                            case 1:
+                                return this.device.getProductString();
+                            case 2:
+                                return this.device.getSerialNumberString();
+                            case 3:
+                                return String.format("%04x", this.device.getUsbDeviceDescriptor().idVendor());
+                            case 4:
+                                return String.format("%04x", this.device.getUsbDeviceDescriptor().idProduct());
+                            default:
+                                return null;
                         }
+                    }catch (UsbDisconnectedException ex) {
+                        this.setUsbDevice(null);
+                    } catch (UnsupportedEncodingException | UsbException ex) {
+                        log.error("Unable to get USB device property.", ex);
                     }
                     break;
                 default:

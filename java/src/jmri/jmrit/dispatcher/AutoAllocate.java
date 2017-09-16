@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Section;
@@ -85,16 +86,16 @@ public class AutoAllocate {
     // operational variables
     private DispatcherFrame _dispatcher = null;
     private ConnectivityUtil _conUtil = null;
-    private ArrayList<AllocationPlan> _planList = new ArrayList<AllocationPlan>();
+    private List<AllocationPlan> _planList = new ArrayList<AllocationPlan>();
     private int nextPlanNum = 1;
-    private ArrayList<AllocationRequest> orderedRequests = new ArrayList<AllocationRequest>();
+    private List<AllocationRequest> orderedRequests = new ArrayList<AllocationRequest>();
 
     /**
      * This is the entry point to AutoAllocate when it is triggered.
      *
      * @param list list to scan
      */
-    protected synchronized void scanAllocationRequestList(ArrayList<AllocationRequest> list) {
+    protected synchronized void scanAllocationRequestList(List<AllocationRequest> list) {
         boolean okToAllocate = false;
         if (list.size() <= 0) {
             return;
@@ -221,7 +222,7 @@ public class AutoAllocate {
                                             _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(),
                                                     ar) == null))) {
                         // requested Section is currently free and not occupied
-                        ArrayList<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
+                        List<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
                         if (activeTrainsList.size() == 1) {
                             // this is the only ActiveTrain
                             if (allocateIfLessThanThreeAhead(ar)) {
@@ -230,7 +231,7 @@ public class AutoAllocate {
                         } else {
                             //check if any other ActiveTrain will need this Section or its alternates, if any
                             okToAllocate = true;
-                            ArrayList<ActiveTrain> neededByTrainList = new ArrayList<ActiveTrain>();
+                            List<ActiveTrain> neededByTrainList = new ArrayList<ActiveTrain>();
                             for (int j = 0; j < activeTrainsList.size(); j++) {
                                 ActiveTrain at = activeTrainsList.get(j);
                                 if (at != ar.getActiveTrain()) {
@@ -312,7 +313,7 @@ public class AutoAllocate {
      * @param ar    the section being allocated when a choice is needed
      * @return the allocated section
      */
-    protected Section autoNextSectionChoice(ArrayList<Section> sList, AllocationRequest ar) {
+    protected Section autoNextSectionChoice(List<Section> sList, AllocationRequest ar) {
         // check if AutoAllocate has prepared for this question
         if ((savedAR != null) && (savedAR == ar)) {
             for (int j = 0; j < sList.size(); j++) {
@@ -364,7 +365,7 @@ public class AutoAllocate {
         }
         // no unoccupied Section available, check for Section allocated in same direction as this request
         int dir = ar.getSectionDirection();
-        ArrayList<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
+        List<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
         for (int m = 0; m < sList.size(); m++) {
             boolean notFound = true;
             for (int k = 0; (k < allocatedSections.size()) && notFound; k++) {
@@ -383,7 +384,7 @@ public class AutoAllocate {
     private Section savedSection = null;
 
     // private implementation methods
-    private void copyAndSortARs(ArrayList<AllocationRequest> list) {
+    private void copyAndSortARs(List<AllocationRequest> list) {
         orderedRequests.clear();
         //        // find highest priority train
         //        int priority = 0;
@@ -502,7 +503,7 @@ public class AutoAllocate {
             return true;
         }
         // test how far ahead of occupied track this requested section is
-        ArrayList<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
+        List<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
         boolean allocateBySafeSections = false;
         // check for allocating by safe section
         if (allocateSectionsAhead == 0) {
@@ -577,7 +578,7 @@ public class AutoAllocate {
     }
 
     private boolean checkForXingPlan(AllocationRequest ar, ActiveTrain nt,
-            ArrayList<ActiveTrain> neededByTrainList) {
+            List<ActiveTrain> neededByTrainList) {
         // returns 'true' if an AllocationPlan has been set up, returns 'false' otherwise
         Section nSec = null;
         Section aSec = null;
@@ -597,7 +598,7 @@ public class AutoAllocate {
                 nSecSeq = apx.getTargetSectionSequenceNum(2);
                 nSec = apx.getTargetSection(2);
             }
-            ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+            List<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
             if (nSections.size() <= 1) {
                 return false;
             }
@@ -621,7 +622,7 @@ public class AutoAllocate {
                 nSecSeq = findPassingSection(nt, nCurrentSeq);
                 if (nSecSeq > 0) {
                     // has passing section ahead, will this train traverse a Section in it
-                    ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+                    List<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
                     for (int i = 0; (i < nSections.size()) && (aSec == null); i++) {
                         aSecSeq = willTraverse(nSections.get(i), at, aSeq);
                         if (aSecSeq > 0) {
@@ -635,7 +636,7 @@ public class AutoAllocate {
                 }
             } else {
                 // will other train go through any of these alternate sections
-                ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
+                List<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
                 int nCurrentSeq = getCurrentSequenceNumber(nt);
                 for (int i = 0; (i < aSections.size()) && (aSec == null); i++) {
                     nSecSeq = willTraverse(aSections.get(i), nt, nCurrentSeq);
@@ -674,7 +675,7 @@ public class AutoAllocate {
     }
 
     private boolean checkForPassingPlan(AllocationRequest ar, ActiveTrain nt,
-            ArrayList<ActiveTrain> neededByTrainList) {
+            List<ActiveTrain> neededByTrainList) {
         // returns 'true' if an AllocationPlan has been set up, returns 'false' otherwise
         Section nSec = null;
         Section aSec = null;
@@ -719,7 +720,7 @@ public class AutoAllocate {
 //                    }
 //                }
 //            }
-            ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+            List<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
             if (nSections.size() <= 1) {
                 return false;
             }
@@ -756,7 +757,7 @@ public class AutoAllocate {
                 nSecSeq = findPassingSection(nt, nCurrentSeq);
                 if (nSecSeq > 0) {
                     // has passing section ahead, will this train traverse a Section in it
-                    ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+                    List<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
                     for (int i = 0; (i < nSections.size()) && (aSec == null); i++) {
                         aSecSeq = willTraverse(nSections.get(i), at, aSeq);
                         if (aSecSeq > 0) {
@@ -770,7 +771,7 @@ public class AutoAllocate {
                 }
             } else {
                 // will the higher priority train go through any of these alternate sections
-                ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
+                List<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
                 int nCurrentSeq = getCurrentSequenceNumber(nt);
                 for (int i = 0; (i < aSections.size()) && (aSec == null); i++) {
                     nSecSeq = willTraverse(aSections.get(i), nt, nCurrentSeq);
@@ -848,7 +849,7 @@ public class AutoAllocate {
                 }
             } else {
                 // different trains, does this plan use the same Passing Section?
-                ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
+                List<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
                 for (int j = 0; j < aSections.size(); j++) {
                     if ((aSections.get(j) == ap.getTargetSection(1))
                             || (aSections.get(j) == ap.getTargetSection(2))) {
@@ -861,7 +862,7 @@ public class AutoAllocate {
         return false;
     }
 
-    private Section getBestOtherSection(ArrayList<Section> sList, Section aSec) {
+    private Section getBestOtherSection(List<Section> sList, Section aSec) {
         // returns the best Section from the list that is not aSec, or else return null
         for (int i = 0; i < sList.size(); i++) {
             if ((sList.get(i) != aSec) && (sList.get(i).getState() == Section.FREE)
@@ -929,7 +930,7 @@ public class AutoAllocate {
             log.error("null argument on entry to 'sectionNeeded'");
             return false;
         }
-        ArrayList<Section> aSectionList = ar.getActiveTrain().getTransit().getSectionListBySeq(
+        List<Section> aSectionList = ar.getActiveTrain().getTransit().getSectionListBySeq(
                 ar.getSectionSeqNumber());
         boolean found = false;
         for (int i = 0; i < aSectionList.size(); i++) {
@@ -944,7 +945,7 @@ public class AutoAllocate {
             return true;
         }
         // this train may need this Section, has it already passed this Section?
-        ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
+        List<TransitSection> tsList = at.getTransit().getTransitSectionList();
         int curSeq = getCurrentSequenceNumber(at);
         if (!at.isAllocationReversed()) {
             for (int i = 0; i < tsList.size(); i++) {
@@ -999,8 +1000,8 @@ public class AutoAllocate {
             log.error("null argument on entry to 'sameDirection'");
             return false;
         }
-        ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
-        ArrayList<TransitSection> rtsList = ar.getActiveTrain().getTransit().getTransitSectionListBySeq(
+        List<TransitSection> tsList = at.getTransit().getTransitSectionList();
+        List<TransitSection> rtsList = ar.getActiveTrain().getTransit().getTransitSectionListBySeq(
                 ar.getSectionSeqNumber());
         int curSeq = getCurrentSequenceNumber(at);
         if (!at.isAllocationReversed()) {
@@ -1034,7 +1035,7 @@ public class AutoAllocate {
         Section aSec = getCurSection();
         int nSeq = getCurrentSequenceNumber(nt);
         Section nSec = getCurSection();
-        ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
+        List<TransitSection> atsList = at.getTransit().getTransitSectionList();
         if (!at.isTransitReversed()) {
             for (int i = 0; i < atsList.size(); i++) {
                 if (atsList.get(i).getSequenceNumber() > aSeq) {
@@ -1054,7 +1055,7 @@ public class AutoAllocate {
                 }
             }
         }
-        ArrayList<TransitSection> ntsList = nt.getTransit().getTransitSectionList();
+        List<TransitSection> ntsList = nt.getTransit().getTransitSectionList();
         if (!nt.isTransitReversed()) {
             for (int i = 0; i < ntsList.size(); i++) {
                 if (ntsList.get(i).getSequenceNumber() > nSeq) {
@@ -1083,7 +1084,7 @@ public class AutoAllocate {
         Section aSec = getCurSection();
         int nSeq = getCurrentSequenceNumber(nt);
         Section nSec = getCurSection();
-        ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
+        List<TransitSection> atsList = at.getTransit().getTransitSectionList();
         boolean found = false;
         if (!at.isTransitReversed()) {
             for (int i = 0; (i < atsList.size()) && (!found); i++) {
@@ -1107,7 +1108,7 @@ public class AutoAllocate {
         if (!found) {
             return false;
         }
-        ArrayList<TransitSection> ntsList = nt.getTransit().getTransitSectionList();
+        List<TransitSection> ntsList = nt.getTransit().getTransitSectionList();
         if (!nt.isTransitReversed()) {
             for (int i = 0; i < ntsList.size(); i++) {
                 if (ntsList.get(i).getSequenceNumber() > nSeq) {
@@ -1133,8 +1134,8 @@ public class AutoAllocate {
     private boolean areTrainsAdjacent(ActiveTrain at, ActiveTrain nt) {
         // returns 'false' if a different ActiveTrain has allocated track between the
         //      two trains, returns 'true' otherwise
-        ArrayList<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
-        ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
+        List<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
+        List<TransitSection> atsList = at.getTransit().getTransitSectionList();
         int aSeq = getCurrentSequenceNumber(at);
         Section nSec = getCurSection();
         if (willTraverse(nSec, at, aSeq) != 0) {
@@ -1237,7 +1238,7 @@ public class AutoAllocate {
             return seq;
         }
         Section temSection = null;
-        ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
+        List<TransitSection> tsList = at.getTransit().getTransitSectionList();
         if (!at.isTransitReversed()) {
             // find the highest numbered occupied section
             for (int i = 0; i < tsList.size(); i++) {
@@ -1299,7 +1300,7 @@ public class AutoAllocate {
             log.error("null argument to isSectionAllocatedToTrain");
             return false;
         }
-        ArrayList<AllocatedSection> asList = at.getAllocatedSectionList();
+        List<AllocatedSection> asList = at.getAllocatedSectionList();
         for (int i = 0; i < asList.size(); i++) {
             if ((asList.get(i).getSection() == s) && asList.get(i).getSequence() == seq) {
                 return true;
@@ -1355,8 +1356,8 @@ public class AutoAllocate {
             log.error("null argument to 'containsLevelCrossing'");
             return false;
         }
-        ArrayList<LevelXing> temLevelXingList = null;
-        ArrayList<Block> blockList = s.getBlockList();
+        List<LevelXing> temLevelXingList = null;
+        List<Block> blockList = s.getBlockList();
         for (int i = 0; i < blockList.size(); i++) {
             temLevelXingList = _conUtil.getLevelCrossingsThisBlock(blockList.get(i));
             if (temLevelXingList.size() > 0) {
@@ -1370,7 +1371,7 @@ public class AutoAllocate {
         }
         return false;
     }
-    ArrayList<LevelXing> _levelXingList = new ArrayList<LevelXing>();
+    List<LevelXing> _levelXingList = new ArrayList<LevelXing>();
 
     private boolean isSignalHeldAtStartOfSection(AllocationRequest ar) {
 

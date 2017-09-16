@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
+import java.util.List;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -210,8 +211,8 @@ public class AutoTurnouts {
             }
         }
 
-        ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
-        ArrayList<Integer> settingsList = new ArrayList<Integer>();
+        List<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
+        List<Integer> settingsList = new ArrayList<Integer>();
         // get turnouts by Block
         boolean turnoutsOK = true;
         while (curBlock != null) {
