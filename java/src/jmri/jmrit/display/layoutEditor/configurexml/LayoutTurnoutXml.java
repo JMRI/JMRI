@@ -43,7 +43,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
         if (!p.getSecondTurnoutName().isEmpty()) {
             element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
-            if (p.getSecondTurnoutInverted()) {
+            if (p.isSecondTurnoutInverted()) {
                 element.setAttribute("secondturnoutinverted", "true");
             }
         }
@@ -416,7 +416,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             }
         }
 
-        p.turnoutList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutXml.class);

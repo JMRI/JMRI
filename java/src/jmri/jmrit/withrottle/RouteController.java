@@ -150,7 +150,6 @@ public class RouteController extends AbstractController implements PropertyChang
 
     /**
      * This is on the aligned sensor, not the route itself.
-     * <p>
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

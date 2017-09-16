@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
-    BufferedReader sFile = null;
+    volatile BufferedReader sFile = null;
 
     public LnHexFilePort() {
         super(new LocoNetSystemConnectionMemo());

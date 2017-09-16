@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import java.awt.Color;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import jmri.ConfigureManager;
@@ -13,6 +14,13 @@ import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -124,105 +132,51 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        // include LayoutTurnouts
-        num = p.turnoutList.size();
+        // include LayoutTracks
+        List<LayoutTrack> layoutTracks = p.getLayoutTracks();
+        num = layoutTracks.size();
         if (log.isDebugEnabled()) {
-            log.debug("N layoutturnout elements: " + num);
+            log.debug("N LayoutTrack elements: " + num);
         }
 
-        for (Object sub : p.turnoutList) {
+        // Because some people (like me) like to edit their panel.xml files
+        // directly we're going to group the layout tracks by class before
+        // storing them. Note: No other order is effected; They should exist
+        // in the saved file in the order that they were created (ether at
+        // panel file load time or later by the users in the editor).
+        List<LayoutTrack> orderedList = layoutTracks.stream()   // next line excludes LayoutSlips
+                .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
+                .map(item -> (LayoutTurnout) item)
+                .collect(Collectors.toList());
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof TrackSegment)
+                .map(item -> (TrackSegment) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof PositionablePoint)
+                .map(item -> (PositionablePoint) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof LevelXing)
+                .map(item -> (LevelXing) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof LayoutSlip)
+                .map(item -> (LayoutSlip) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof LayoutTurntable)
+                .map(item -> (LayoutTurntable) item)
+                .collect(Collectors.toList()));
+
+        for (LayoutTrack lt : orderedList) {
             try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(lt);
                 if (e != null) {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
                 log.error("Error storing layoutturnout element: " + e);
-            }
-        }
-
-        // include TrackSegments
-        num = p.trackList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N tracksegment elements: " + num);
-        }
-
-        for (Object sub : p.trackList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing tracksegment element: " + e);
-            }
-        }
-
-        // include PositionablePoints
-        num = p.pointList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N positionablepoint elements: " + num);
-        }
-
-        for (Object sub : p.pointList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing positionalpoint element: " + e);
-            }
-        }
-
-        // include LevelXings
-        num = p.xingList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N levelxing elements: " + num);
-        }
-
-        for (Object sub : p.xingList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing levelxing element: " + e);
-            }
-        }
-
-        // include LayoutSlips
-        num = p.slipList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N layoutSlip elements: " + num);
-        }
-
-        for (Object sub : p.slipList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing layoutSlip element: " + e);
-            }
-        }
-
-        // include LayoutTurntables
-        num = p.turntableList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N turntable elements: " + num);
-        }
-
-        for (Object sub : p.turntableList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing turntable element: " + e);
             }
         }
         return panel;

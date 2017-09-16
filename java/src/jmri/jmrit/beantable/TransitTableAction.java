@@ -326,18 +326,18 @@ public class TransitTableAction extends AbstractTableAction {
     private SectionManager sectionManager = InstanceManager.getNullableDefault(jmri.SectionManager.class);
     private Transit curTransit = null;
     private SectionTableModel sectionTableModel = null;
-    private ArrayList<Section> sectionList = new ArrayList<>();
+    private List<Section> sectionList = new ArrayList<>();
     private int[] direction = new int[150];
     private int[] sequence = new int[150];
     @SuppressWarnings("unchecked")
-    private ArrayList<TransitSectionAction>[] action = new ArrayList[150];
+    private List<TransitSectionAction>[] action = new ArrayList[150];
     private boolean[] alternate = new boolean[150];
     private int maxSections = 150;  // must be equal to the dimension of the above arrays
-    private ArrayList<Section> primarySectionBoxList = new ArrayList<>();
+    private List<Section> primarySectionBoxList = new ArrayList<>();
     private int[] priSectionDirection = new int[150];
-    private ArrayList<Section> alternateSectionBoxList = new ArrayList<>();
+    private List<Section> alternateSectionBoxList = new ArrayList<>();
     private int[] altSectionDirection = new int[150];
-    private ArrayList<Section> insertAtBeginningBoxList = new ArrayList<>();
+    private List<Section> insertAtBeginningBoxList = new ArrayList<>();
     private int[] insertAtBeginningDirection = new int[150];
     private Section curSection = null;
     private int curSectionDirection = 0;
@@ -661,7 +661,7 @@ public class TransitTableAction extends AbstractTableAction {
         prevSectionDirection = 0;
         if (curTransit != null) {
             userName.setText(curTransit.getUserName());
-            ArrayList<TransitSection> tsList = curTransit.getTransitSectionList();
+            List<TransitSection> tsList = curTransit.getTransitSectionList();
             for (int i = 0; i < tsList.size(); i++) {
                 TransitSection ts = tsList.get(i);
                 if (ts != null) {
@@ -845,7 +845,7 @@ public class TransitTableAction extends AbstractTableAction {
             return;
         }
         Section sOld = null;
-        ArrayList<Section> altOldList = new ArrayList<>();
+        List<Section> altOldList = new ArrayList<>();
         Section beforeSection = null;
         int beforeSectionDirection = 0;
         Section afterSection = null;
@@ -875,9 +875,9 @@ public class TransitTableAction extends AbstractTableAction {
             log.error("Missing primary Section for seq = " + seq);
             return;
         }
-        ArrayList<Section> possibles = new ArrayList<>();
+        List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
-        ArrayList<String> possibleNames = new ArrayList<>();
+        List<String> possibleNames = new ArrayList<>();
         List<String> allSections = sectionManager.getSystemNameList();
         for (int i = 0; i < allSections.size(); i++) {
             Section mayBeSection = null;
@@ -980,7 +980,7 @@ public class TransitTableAction extends AbstractTableAction {
         sectionTableModel.fireTableDataChanged();
     }
 
-    boolean inSectionList(Section s, ArrayList<Section> sList) {
+    boolean inSectionList(Section s, List<Section> sList) {
         for (int i = 0; i < sList.size(); i++) {
             if (sList.get(i) == s) {
                 return true;
@@ -1057,7 +1057,7 @@ public class TransitTableAction extends AbstractTableAction {
             return;
         }
         Section primarySection = null;
-        ArrayList<Section> altOldList = new ArrayList<>();
+        List<Section> altOldList = new ArrayList<>();
         Section beforeSection = null;
         int beforeSectionDirection = 0;
         Section afterSection = null;
@@ -1087,9 +1087,9 @@ public class TransitTableAction extends AbstractTableAction {
             log.error("Missing primary Section for seq = " + seq);
             return;
         }
-        ArrayList<Section> possibles = new ArrayList<>();
+        List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
-        ArrayList<String> possibleNames = new ArrayList<>();
+        List<String> possibleNames = new ArrayList<>();
         List<String> allSections = sectionManager.getSystemNameList();
         for (int i = 0; i < allSections.size(); i++) {
             Section mayBeSection = null;
@@ -1303,7 +1303,7 @@ public class TransitTableAction extends AbstractTableAction {
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
                     sequence[i], direction[i], alternate[i]);
-            ArrayList<TransitSectionAction> list = action[i];
+            List<TransitSectionAction> list = action[i];
             if (list != null) {
                 for (int j = 0; j < list.size(); j++) {
                     ts.addAction(list.get(j));
@@ -1662,7 +1662,7 @@ public class TransitTableAction extends AbstractTableAction {
     private JButton createActionButton = null;
     private JButton cancelAddEditActionButton = null;
     private JComboBox<String> blockBox = new JComboBox<>();
-    private ArrayList<Block> blockList = new ArrayList<>();
+    private List<Block> blockList = new ArrayList<>();
     private JRadioButton onButton = new JRadioButton(Bundle.getMessage("StateOn"));
     private JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
     private JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
@@ -2060,7 +2060,7 @@ public class TransitTableAction extends AbstractTableAction {
         }
         // entered data is OK, create a special action
         curTSA = new TransitSectionAction(tWhen, tWhat, tWhenData, tWhatData1, tWhatData2, tWhenString, tWhatString);
-        ArrayList<TransitSectionAction> list = action[activeRow];
+        List<TransitSectionAction> list = action[activeRow];
         list.add(curTSA);
         actionTableModel.fireTableDataChanged();
         addEditActionFrame.setVisible(false);

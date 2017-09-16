@@ -16,7 +16,6 @@ import javax.annotation.Nonnull;
  * <DT>Aspect<DD>The specific aspect being shown.
  * <p>
  * Aspects are named by a user defined String name.
- * <p>
  * <DT>Lit<DD>Whether the mast's lamps are lit or left dark.
  * This differs from the DARK color defined for the appearance parameter, in
  * that it's independent of that. Lit is intended to allow you to extinquish a

@@ -224,6 +224,40 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testReadCVDirect ...");
     }
 
+    public void testReadCVDirectString() throws jmri.ProgrammerException {
+        log.debug(".... start testReadCVDirect ...");
+        String CV1 = "29";
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        slotmanager.readCV(CV1, lstn);
+        Assert.assertEquals("read message",
+                "EF 0E 7C 2B 00 00 00 00 00 1C 00 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence)
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;
+
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        JUnitUtil.waitFor(()->{return startedLongTimer;},"startedLongTimer not set");
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started long timer", startedLongTimer);
+        Assert.assertFalse("didn't start short timer", startedShortTimer);
+        
+        // read received back (DCS240 sequence)
+        value = 0;
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
+        JUnitUtil.waitFor(()->{return value == 35;},"value == 35 not set");
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", 35, value);
+
+        log.debug(".... end testReadCVDirect ...");
+    }
+
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
         int CV1 = 12;
         ProgListener p2 = null;
@@ -266,6 +300,17 @@ public class SlotManagerTest extends TestCase {
 
     public void testWriteCVRegister() throws jmri.ProgrammerException {
         int CV1 = 2;
+        int val2 = 34;
+        ProgListener p3 = null;
+        slotmanager.setMode(DefaultProgrammerManager.REGISTERMODE);
+        slotmanager.writeCV(CV1, val2, p3);
+        Assert.assertEquals("write message",
+                "EF 0E 7C 53 00 00 00 00 00 01 22 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+    }
+
+    public void testWriteCVRegisterString() throws jmri.ProgrammerException {
+        String CV1 = "2";
         int val2 = 34;
         ProgListener p3 = null;
         slotmanager.setMode(DefaultProgrammerManager.REGISTERMODE);

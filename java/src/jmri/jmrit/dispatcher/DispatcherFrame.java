@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -205,14 +206,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private int _FullRampTime = 10000; //default time (in ms) for RAMP_FAST to go from 0% to 100%
 
     // operational instance variables
-    private final ArrayList<ActiveTrain> activeTrainsList = new ArrayList<>();  // list of ActiveTrain objects
-    private final ArrayList<java.beans.PropertyChangeListener> _atListeners
+    private final List<ActiveTrain> activeTrainsList = new ArrayList<>();  // list of ActiveTrain objects
+    private final List<java.beans.PropertyChangeListener> _atListeners
             = new ArrayList<>();
-    private final ArrayList<ActiveTrain> delayedTrains = new ArrayList<>();  // list of delayed Active Trains
-    private final ArrayList<ActiveTrain> restartingTrainsList = new ArrayList<>();  // list of Active Trains with restart requests
+    private final List<ActiveTrain> delayedTrains = new ArrayList<>();  // list of delayed Active Trains
+    private final List<ActiveTrain> restartingTrainsList = new ArrayList<>();  // list of Active Trains with restart requests
     private final TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
-    private final ArrayList<AllocationRequest> allocationRequests = new ArrayList<>();  // List of AllocatedRequest objects
-    private final ArrayList<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
+    private final List<AllocationRequest> allocationRequests = new ArrayList<>();  // List of AllocatedRequest objects
+    private final List<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
     private AutoTurnouts autoTurnouts = null;
     private AutoAllocate autoAllocate = null;
@@ -525,7 +526,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private Container extraPane = null;
     private final JComboBox<String> atSelectBox = new JComboBox<>();
     private final JComboBox<String> extraBox = new JComboBox<>();
-    private final ArrayList<Section> extraBoxList = new ArrayList<>();
+    private final List<Section> extraBoxList = new ArrayList<>();
     private int atSelectedIndex = -1;
 
     public void allocateExtraSection(ActionEvent e, ActiveTrain at) {
@@ -645,8 +646,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
         //Transit t = at.getTransit();
-        ArrayList<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
-        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
+        List<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
+        List<String> allSections = (List<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
         for (int j = 0; j < allSections.size(); j++) {
             Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(allSections.get(j));
             if (s.getState() == Section.FREE) {
@@ -671,8 +672,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     private boolean connected(Section s1, Section s2) {
         if ((s1 != null) && (s2 != null)) {
-            ArrayList<EntryPoint> s1Entries = (ArrayList<EntryPoint>) s1.getEntryPointList();
-            ArrayList<EntryPoint> s2Entries = (ArrayList<EntryPoint>) s2.getEntryPointList();
+            List<EntryPoint> s1Entries = (List<EntryPoint>) s1.getEntryPointList();
+            List<EntryPoint> s2Entries = (List<EntryPoint>) s2.getEntryPointList();
             for (int i = 0; i < s1Entries.size(); i++) {
                 Block b = s1Entries.get(i).getFromBlock();
                 for (int j = 0; j < s2Entries.size(); j++) {
@@ -720,7 +721,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             } else {
                 // requesting allocation of a section in the Transit, but not the next Section
                 int seq = -99;
-                ArrayList<Integer> seqList = t.getSeqListBySection(s);
+                List<Integer> seqList = t.getSeqListBySection(s);
                 if (seqList.size() > 0) {
                     seq = seqList.get(0);
                 }
@@ -1485,7 +1486,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 } else {
                     seqNum += 1;
                 }
-                ArrayList<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
+                List<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
                 if (secList.size() == 1) {
                     nextSection = secList.get(0);
 
@@ -1502,7 +1503,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 // need to reverse Transit direction when train is in the last Section, set next section.
                 nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
                 at.setAllocationReversed(true);
-                ArrayList<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
+                List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
                 if (secList.size() == 1) {
                     nextSection = secList.get(0);
                 } else if (secList.size() > 1) {
@@ -1529,7 +1530,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             //This might be the location to check to see if we have an intermediate section that we then need to perform extra checks on.
             //Working on the basis that if the nextsection is not null, then we are not at the end of the transit.
-            ArrayList<Section> intermediateSections = new ArrayList<>();
+            List<Section> intermediateSections = new ArrayList<>();
             Section mastHeldAtSection = null;
             if (nextSection != null && ar.getSection().getProperty("intermediateSection") != null && ((Boolean) ar.getSection().getProperty("intermediateSection")).booleanValue()) {
                 String property = "forwardMast";
@@ -1544,7 +1545,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         }
                     }
                 }
-                ArrayList<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
+                List<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
                 boolean found = false;
                 if (at.isAllocationReversed()) {
                     for (int i = tsList.size() - 1; i > 0; i--) {
@@ -1766,7 +1767,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return true;
     }
 
-    ArrayList<HeldMastDetails> heldMasts = new ArrayList<>();
+    List<HeldMastDetails> heldMasts = new ArrayList<>();
 
     static class HeldMastDetails {
 
@@ -1797,7 +1798,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     private void removeHeldMast(SignalMast sm, ActiveTrain at) {
-        ArrayList<HeldMastDetails> toRemove = new ArrayList<>();
+        List<HeldMastDetails> toRemove = new ArrayList<>();
         for (HeldMastDetails hmd : heldMasts) {
             if (hmd.getActiveTrain() == at) {
                 if (sm == null) {
@@ -1820,7 +1821,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
-                ArrayList<Block> blas = as.getSection().getBlockList();
+                List<Block> blas = as.getSection().getBlockList();
                 //
                 // When allocating the initial section for an Active Train,
                 // we need not be concerned with any blocks in the initial section
@@ -1833,7 +1834,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 // the blocklist for the section during the initial allocation.
                 //
 
-                ArrayList<Block> bls = new ArrayList<>();
+                List<Block> bls = new ArrayList<>();
                 if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
                     int j;
                     if (ar.getSectionDirection() == Section.FORWARD) {
@@ -1904,7 +1905,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     // automatically make a choice of next section
-    private Section autoChoice(ArrayList<Section> sList, AllocationRequest ar) {
+    private Section autoChoice(List<Section> sList, AllocationRequest ar) {
         Section tSection = autoAllocate.autoNextSectionChoice(sList, ar);
         if (tSection != null) {
             return tSection;
@@ -1914,7 +1915,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     // manually make a choice of next section
-    private Section dispatcherChoice(ArrayList<Section> sList, AllocationRequest ar) {
+    private Section dispatcherChoice(List<Section> sList, AllocationRequest ar) {
         Object choices[] = new Object[sList.size()];
         for (int i = 0; i < sList.size(); i++) {
             Section s = sList.get(i);
@@ -2317,11 +2318,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         _LayoutScale = sc;
     }
 
-    public ArrayList<ActiveTrain> getActiveTrainsList() {
+    public List<ActiveTrain> getActiveTrainsList() {
         return activeTrainsList;
     }
 
-    protected ArrayList<AllocatedSection> getAllocatedSectionsList() {
+    protected List<AllocatedSection> getAllocatedSectionsList() {
         return allocatedSections;
     }
 
