@@ -1,6 +1,6 @@
 package jmri;
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
@@ -65,7 +65,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @return a list of logics for destination or an empty list if none
      */
     @Nonnull
-    public ArrayList<SignalMastLogic> getLogicsByDestination(@Nonnull SignalMast destination);
+    public List<SignalMastLogic> getLogicsByDestination(@Nonnull SignalMast destination);
 
     /**
      * Return the Signal Mast Logic for a specific Source Signal Mast.
@@ -78,10 +78,10 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
     /**
      * Return a list of all existing Signal Mast Logics
      *
-     * @return An ArrayList of all Signal Mast Logics
+     * @return An List of all Signal Mast Logics
      */
     @Nonnull
-    public ArrayList<SignalMastLogic> getSignalMastLogicList();
+    public List<SignalMastLogic> getSignalMastLogicList();
 
     /**
      * Initialise all the Signal Mast Logics. Primarily used after loading a
