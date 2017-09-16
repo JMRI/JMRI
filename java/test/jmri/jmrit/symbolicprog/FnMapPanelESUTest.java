@@ -1,6 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
 import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import jmri.jmrit.roster.RosterEntry;
 import org.junit.After;
@@ -24,7 +25,7 @@ public class FnMapPanelESUTest {
                 new String[]{"Name", "Value"},
                 new CvTableModel(new JLabel(""), p)
         );
-        List<Integer> varsUsed = null;
+        List<Integer> varsUsed = new ArrayList();
         RosterEntry re = new RosterEntry();
         Element model = new Element("model");
         CvTableModel cvtm = new CvTableModel(new JLabel(), null);
