@@ -264,7 +264,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             }
         }
 
-        p.xingList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXingXml.class);

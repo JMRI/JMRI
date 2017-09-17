@@ -50,6 +50,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     @Override
     public String openPort(String portName, String appName) {
         try {

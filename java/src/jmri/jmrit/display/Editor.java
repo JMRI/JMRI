@@ -2529,20 +2529,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
             JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
             editItem.addActionListener(new ActionListener() {
-                Editor editor;
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                     ii.pack();
                     ii.setVisible(true);
                 }
-
-                ActionListener init(Editor ed) {
-                    editor = ed;
-                    return this;
-                }
-            }.init(this));
+            });
             findIcon.add(editItem);
             findIcon.addSeparator();
 
@@ -2625,8 +2618,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionB"),
                 Bundle.getMessage("DeleteVerifyTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonNoCancel")},
-                Bundle.getMessage("ButtonNoCancel"));
+                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
+                Bundle.getMessage("ButtonCancel"));
         // return without deleting if "No" response
         return (selectedValue == JOptionPane.YES_OPTION);
     }
@@ -2805,7 +2798,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-//    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case")
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         Rectangle rect = new Rectangle();
         ArrayList<Positionable> selections = new ArrayList<Positionable>();
@@ -2820,17 +2812,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 // we can test if it is in our objects bounds.
                 double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
-                if (true) {
-                    where = t.transform(where, where);
-//              } else {    //TODO: dead code strip this
-//                    double[] pt = new double[2];
-//                    pt[0] = x - center.getX();
-//                    pt[1] = y - center.getY();
-//                    t.transform(pt, 0, pt, 0, 1);
-//                    x = pt[0] + center.getX();
-//                    y = pt[1] + center.getY();
-//                    where = new Point2D.Double(x, y);
-                }
+                where = t.transform(where, where);
             }
             Rectangle2D rect2D = MathUtil.scale(MathUtil.rectangleToRectangle2D(rect), _paintScale);
             int level = p.getDisplayLevel();

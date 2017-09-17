@@ -16,6 +16,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -82,7 +83,6 @@ public class LayoutTurntable extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-
     private boolean dccControlledTurnTable = false;
 
     // persistent instance variables (saved between sessions)
@@ -106,7 +106,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Accessor methods
      */
-
     public double getRadius() {
         return radius;
     }
@@ -324,14 +323,11 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
-        Object result = null;
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+        LayoutTrack result = null;
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             result = getRayConnectIndexed(connectionType - TURNTABLE_RAY_OFFSET);
         } else {
@@ -342,15 +338,10 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set the object connected to this turnout for the specified connection type.
-     *
-     * @param connectionType the connection type (where it is connected to the us)
-     * @param o the object that is being connected
-     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to LevelXing - " + type);
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
@@ -366,8 +357,8 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Test if ray is a mainline track or not.
      * <p>
-     * Defaults to false (not mainline) if
-     * connecting track segment is missing.
+     * Defaults to false (not mainline) if connecting track segment is missing.
+     *
      * @return true if connecting track segment is mainline
      */
     public boolean isMainlineIndexed(int index) {
@@ -402,9 +393,9 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -415,6 +406,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -425,17 +417,13 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
 
         if (!requireUnconnected) {
             //check the center point
@@ -1063,28 +1051,30 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
-        // draw turntable circle - default track color, side track width
-        layoutEditor.setTrackStrokeWidth(g2, false);
-        double r = getRadius(), d = r + r;
-        g2.setColor(defaultTrackColor);
-        g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
+    protected void draw(Graphics2D g2) {
+        if (!isHidden() || layoutEditor.isEditable()) {
+            // draw turntable circle - default track color, side track width
+            layoutEditor.setTrackStrokeWidth(g2, false);
+            double r = getRadius(), d = r + r;
+            g2.setColor(defaultTrackColor);
+            g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
 
-        // draw ray tracks
-        for (int j = 0; j < getNumberRays(); j++) {
-            TrackSegment ts = getRayConnectOrdered(j);
-            if (ts != null) {
-                layoutEditor.setTrackStrokeWidth(g2, ts.getMainline());
-                setColorForTrackBlock(g2, ts.getLayoutBlock());
-            } else {
-                layoutEditor.setTrackStrokeWidth(g2, false);
-                g2.setColor(defaultTrackColor);
+            // draw ray tracks
+            for (int j = 0; j < getNumberRays(); j++) {
+                TrackSegment ts = getRayConnectOrdered(j);
+                if (ts != null) {
+                    layoutEditor.setTrackStrokeWidth(g2, ts.getMainline());
+                    setColorForTrackBlock(g2, ts.getLayoutBlock());
+                } else {
+                    layoutEditor.setTrackStrokeWidth(g2, false);
+                    g2.setColor(defaultTrackColor);
+                }
+                Point2D pt = getRayCoordsOrdered(j);
+                g2.draw(new Line2D.Double(new Point2D.Double(
+                        pt.getX() - ((pt.getX() - center.getX()) * 0.2),
+                        pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
             }
-            Point2D pt = getRayCoordsOrdered(j);
-            g2.draw(new Line2D.Double(new Point2D.Double(
-                    pt.getX() - ((pt.getX() - center.getX()) * 0.2),
-                    pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
-        }
+        }   // if (layoutEditor.isEditable() && isHidden()) {
     }
 
     /**
@@ -1092,7 +1082,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void drawControls(Graphics2D g2) {
+    protected void drawTurnoutControls(Graphics2D g2) {
         if (isTurnoutControlled() && getPosition() != -1) {
             Point2D pt = getRayCoordsIndexed(getPosition());
             g2.draw(new Line2D.Double(new Point2D.Double(
@@ -1100,12 +1090,13 @@ public class LayoutTurntable extends LayoutTrack {
                     pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */)), pt));
         }
     }
+
     /**
      * draw this turntable's edit controls
      *
      * @param g2 the graphics port to draw to
      */
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
@@ -1122,8 +1113,21 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    public void reCheckBlockBoundary() {
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected void reCheckBlockBoundary() {
         // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        // nothing to do here... move along...
+        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);

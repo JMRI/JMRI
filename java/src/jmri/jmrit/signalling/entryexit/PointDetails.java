@@ -271,12 +271,10 @@ public class PointDetails {
         if (refLoc != null) {
             if (refLoc instanceof PositionablePoint) {
                 //((PositionablePoint)refLoc).addPropertyChangeListener(this);
-            } else if (refLoc instanceof LayoutTurnout) {
+            } else if (refLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
                 //((LayoutTurnout)refLoc).addPropertyChangeListener(this);
             } else if (refLoc instanceof LevelXing) {
                 //((LevelXing)refLoc).addPropertyChangeListener(this);
-            } else if (refLoc instanceof LayoutSlip) {
-                //((Layoutslip)refLoc).addPropertyChangeListener(this);
             }
         }
         //With this set ref we can probably add a listener to it, so that we can detect when a change to the point details takes place
@@ -462,7 +460,34 @@ public class PointDetails {
                     foundSensor = p.getWestBoundSensor();
                 }
             }
-        } else if (objLoc instanceof LayoutTurnout) {
+        } else if (objLoc instanceof LayoutSlip) {
+            LayoutSlip sl = (LayoutSlip) objLoc;
+            if (mast != null) {
+                if (sl.getSignalAMast() == objRef) {
+                    foundSensor = sl.getSensorA();
+                } else if (sl.getSignalBMast() == objRef) {
+                    foundSensor = sl.getSensorB();
+                } else if (sl.getSignalCMast() == objRef) {
+                    foundSensor = sl.getSensorC();
+                } else if (sl.getSignalDMast() == objRef) {
+                    foundSensor = sl.getSensorD();
+                }
+            }
+            if (head != null) {
+                if ((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorAName());
+                } else if ((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorBName());
+                } else if ((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorCName());
+                } else if ((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname))) {
+                    foundSensor = sm.getSensor(sl.getSensorDName());
+                }
+            }
+        } else //note: you have to do this after LayoutSlip 
+        // because LayoutSlip extends LayoutTurnout
+        // (So a LayoutSlip would be an instance of LayoutTurnout.)
+        if (objLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
             LayoutTurnout t = (LayoutTurnout) objLoc;
             if (mast != null) {
                 if (t.getSignalAMast() == objRef) {
@@ -520,30 +545,6 @@ public class PointDetails {
                     foundSensor = x.getSensorD();
                 }
             }
-        } else if (objLoc instanceof LayoutSlip) {
-            LayoutSlip sl = (LayoutSlip) objLoc;
-            if (mast != null) {
-                if (sl.getSignalAMast() == objRef) {
-                    foundSensor = sl.getSensorA();
-                } else if (sl.getSignalBMast() == objRef) {
-                    foundSensor = sl.getSensorB();
-                } else if (sl.getSignalCMast() == objRef) {
-                    foundSensor = sl.getSensorC();
-                } else if (sl.getSignalDMast() == objRef) {
-                    foundSensor = sl.getSensorD();
-                }
-            }
-            if (head != null) {
-                if ((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorAName());
-                } else if ((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorBName());
-                } else if ((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorCName());
-                } else if ((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname))) {
-                    foundSensor = sm.getSensor(sl.getSensorDName());
-                }
-            }
         }
         setSensor(foundSensor);
         return foundSensor;
@@ -589,7 +590,37 @@ public class PointDetails {
                     signal = sh.getSignalHead(p.getWestBoundSignal());
                 }
             }
-        } else if (getRefLocation() instanceof LayoutTurnout) {
+        } else if (getRefLocation() instanceof LayoutSlip) {
+            LayoutSlip t = (LayoutSlip) getRefLocation();
+            if (t.getSensorA() == sen) {
+                if (t.getSignalAMast() != null) {
+                    signal = t.getSignalAMast();
+                } else if (!t.getSignalA1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalA1Name());
+                }
+            } else if (t.getSensorB() == sen) {
+                if (t.getSignalBMast() != null) {
+                    signal = t.getSignalBMast();
+                } else if (!t.getSignalB1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalB1Name());
+                }
+            } else if (t.getSensorC() == sen) {
+                if (t.getSignalCMast() != null) {
+                    signal = t.getSignalCMast();
+                } else if (!t.getSignalC1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalC1Name());
+                }
+            } else if (t.getSensorD() == sen) {
+                if (t.getSignalDMast() != null) {
+                    signal = t.getSignalDMast();
+                } else if (!t.getSignalD1Name().equals("")) {
+                    signal = sh.getSignalHead(t.getSignalD1Name());
+                }
+            }
+        } else //note: you have to do this after LayoutSlip 
+        // because LayoutSlip extends LayoutTurnout
+        // (So a LayoutSlip would be an instance of LayoutTurnout.)
+        if (getRefLocation() instanceof LayoutTurnout) {  //<== this includes LayoutSlips
             LayoutTurnout t = (LayoutTurnout) getRefLocation();
             if (t.getSensorA() == sen) {
                 if (t.getSignalAMast() != null) {
@@ -641,33 +672,6 @@ public class PointDetails {
                     signal = x.getSignalDMast();
                 } else if (!x.getSignalDName().equals("")) {
                     signal = sh.getSignalHead(x.getSignalDName());
-                }
-            }
-        } else if (getRefLocation() instanceof LayoutSlip) {
-            LayoutSlip t = (LayoutSlip) getRefLocation();
-            if (t.getSensorA() == sen) {
-                if (t.getSignalAMast() != null) {
-                    signal = t.getSignalAMast();
-                } else if (!t.getSignalA1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalA1Name());
-                }
-            } else if (t.getSensorB() == sen) {
-                if (t.getSignalBMast() != null) {
-                    signal = t.getSignalBMast();
-                } else if (!t.getSignalB1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalB1Name());
-                }
-            } else if (t.getSensorC() == sen) {
-                if (t.getSignalCMast() != null) {
-                    signal = t.getSignalCMast();
-                } else if (!t.getSignalC1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalC1Name());
-                }
-            } else if (t.getSensorD() == sen) {
-                if (t.getSignalDMast() != null) {
-                    signal = t.getSignalDMast();
-                } else if (!t.getSignalD1Name().equals("")) {
-                    signal = sh.getSignalHead(t.getSignalD1Name());
                 }
             }
         }

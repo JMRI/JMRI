@@ -499,7 +499,7 @@ public class JmriJFrameServlet extends HttpServlet {
             sendClick(f.getTitle(), c, x, y, f);
 
             //keep looking
-        } else if (Container.class.isAssignableFrom(c.getClass())) {
+        } else if (c instanceof Container) {
             //check this component's children
             for (Component child : ((Container) c).getComponents()) {
                 clickOnEditorPane(child, x, y, f);

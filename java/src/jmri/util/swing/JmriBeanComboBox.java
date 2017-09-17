@@ -72,7 +72,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent event) {
-                JTextComponent c = (JTextComponent) event.getSource();
                 validateText();
             }
         });
