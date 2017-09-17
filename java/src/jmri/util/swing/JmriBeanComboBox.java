@@ -645,18 +645,16 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             return -1;
         }
     }   // BeanSelectionManager
-    
+
     public void setEnabledItems(ListSelectionModel inEnabledItems) {
-        setupEnabledComboBoxRenderer();
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             _enableRenderer.setEnabledItems(inEnabledItems);
         }
     }
 
     public ListSelectionModel getEnabledItems() {
         ListSelectionModel result = null;
-        setupEnabledComboBoxRenderer();
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             result = _enableRenderer.getEnabledItems();
         }
         return result;
@@ -705,56 +703,56 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     public void setEnabledColor(Color inEnabledColor) {
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             _enableRenderer.setEnabledColor(inEnabledColor);
         }
     }
 
     public Color getEnabledColor() {
         Color result = null;
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             result = _enableRenderer.getEnabledColor();
         }
         return result;
     }
 
     public void setDisabledColor(Color inDisabledColor) {
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             _enableRenderer.setDisabledColor(inDisabledColor);
         }
     }
 
     public Color getDisabledColor() {
         Color result = null;
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             result = _enableRenderer.getDisabledColor();
         }
         return result;
     }
 
     public void setEnabledBackgroundColor(Color inEnabledBackgroundColor) {
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             _enableRenderer.setEnabledBackgroundColor(inEnabledBackgroundColor);
         }
     }
 
     public Color getEnabledBackgroundColor() {
         Color result = null;
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             result = _enableRenderer.getEnabledBackgroundColor();
         }
         return result;
     }
 
     public void setDisabledBackgroundColor(Color inDisabledBackgroundColor) {
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             _enableRenderer.setDisabledBackgroundColor(inDisabledBackgroundColor);
         }
     }
 
     public Color getDisabledBackgroundColor() {
         Color result = null;
-        if (_enableRenderer != null) {
+        if (getEnabledComboBoxRenderer() != null) {
             result = _enableRenderer.getDisabledBackgroundColor();
         }
         return result;
