@@ -2185,10 +2185,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem turnoutItem = new JMenuItem(Bundle.getMessage("SignalsAtTurnout") + "...");
         toolsMenu.add(turnoutItem);
         turnoutItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
-
+            LayoutEditor.this.getLETools();
             //bring up signals at turnout tool dialog
             tools.setSignalsAtTurnout(signalIconEditor, signalFrame);
         });
@@ -2197,9 +2194,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem boundaryItem = new JMenuItem(Bundle.getMessage("SignalsAtBoundary") + "...");
         toolsMenu.add(boundaryItem);
         boundaryItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at block boundary tool dialog
             tools.setSignalsAtBlockBoundary(signalIconEditor, signalFrame);
@@ -2209,9 +2204,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem xoverItem = new JMenuItem(Bundle.getMessage("SignalsAtXoverTurnout") + "...");
         toolsMenu.add(xoverItem);
         xoverItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at double crossover tool dialog
             tools.setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
@@ -2221,9 +2214,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem xingItem = new JMenuItem(Bundle.getMessage("SignalsAtLevelXing") + "...");
         toolsMenu.add(xingItem);
         xingItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at level crossing tool dialog
             tools.setSignalsAtLevelXing(signalIconEditor, signalFrame);
@@ -2233,9 +2224,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem tToTItem = new JMenuItem(Bundle.getMessage("SignalsAtTToTTurnout") + "...");
         toolsMenu.add(tToTItem);
         tToTItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at throat-to-throat turnouts tool dialog
             tools.setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
@@ -2245,9 +2234,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem way3Item = new JMenuItem(Bundle.getMessage("SignalsAt3WayTurnout") + "...");
         toolsMenu.add(way3Item);
         way3Item.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at 3-way turnout tool dialog
             tools.setSignalsAt3WayTurnout(signalIconEditor, signalFrame);
@@ -2256,9 +2243,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem slipItem = new JMenuItem(Bundle.getMessage("SignalsAtSlip") + "...");
         toolsMenu.add(slipItem);
         slipItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at throat-to-throat turnouts tool dialog
             tools.setSignalsAtSlip(signalIconEditor, signalFrame);
@@ -5540,12 +5525,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
-    public Point2D getCoords(@Nonnull Object o, int connectionType) {
+    public static Point2D getCoords(@Nonnull LayoutTrack o, int connectionType) {
         Point2D result = MathUtil.zeroPoint2D;
         if (o != null) {
             result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
         } else {
-            log.error("Null connection point of type {} {}", connectionType, getLayoutName());
+            //log.error("Null connection point of type {} {}", connectionType, getLayoutName());
+            log.error("Null connection point of type {}", connectionType);
         }
         return result;
     } //getCoords

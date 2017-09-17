@@ -720,9 +720,7 @@ public class PositionablePoint extends LayoutTrack {
             popup = new JPopupMenu();
         }
 
-        if (tools == null) {
-            tools = new LayoutEditorTools(layoutEditor);
-        }
+        tools = layoutEditor.getLETools();
 
         boolean blockBoundary = false;
         boolean endBumper = false;
@@ -900,7 +898,7 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools = new LayoutEditorTools(layoutEditor);
+                        tools = layoutEditor.getLETools();
                         // bring up signals at level crossing tool dialog
                         tools.setSignalAtEdgeConnector(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
