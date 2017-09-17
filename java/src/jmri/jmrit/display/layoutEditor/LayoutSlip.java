@@ -404,14 +404,14 @@ public class LayoutSlip extends LayoutTurnout {
 
     protected Point2D getCoordsLeft() {
         Point2D leftCenter = MathUtil.midPoint(getCoordsA(), getCoordsB());
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double leftFract = circleRadius / center.distance(leftCenter);
         return MathUtil.lerp(center, leftCenter, leftFract);
     }
 
     protected Point2D getCoordsRight() {
         Point2D rightCenter = MathUtil.midPoint(getCoordsC(), getCoordsD());
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double rightFract = circleRadius / center.distance(rightCenter);
         return MathUtil.lerp(center, rightCenter, rightFract);
     }
@@ -424,7 +424,7 @@ public class LayoutSlip extends LayoutTurnout {
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         switch (connectionType) {
             case SLIP_A:
                 result = getCoordsA();
@@ -506,10 +506,10 @@ public class LayoutSlip extends LayoutTurnout {
      * connecting track segments are missing
      */
     public boolean isMainline() {
-        if (((connectA != null) && (((TrackSegment) connectA).getMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).getMainline()))
-                || ((connectC != null) && (((TrackSegment) connectC).getMainline()))
-                || ((connectD != null) && (((TrackSegment) connectD).getMainline()))) {
+        if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
+                || ((connectB != null) && (((TrackSegment) connectB).isMainline()))
+                || ((connectC != null) && (((TrackSegment) connectC).isMainline()))
+                || ((connectD != null) && (((TrackSegment) connectD).isMainline()))) {
             return true;
         } else {
             return false;
@@ -525,7 +525,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (!requireUnconnected) {
             // calculate radius of turnout control circle
-            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
 
             // get left and right centers
             Point2D leftCenter = getCoordsLeft();
@@ -1473,118 +1473,116 @@ public class LayoutSlip extends LayoutTurnout {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        if (!isHidden() || layoutEditor.isEditable()) {
-            LayoutBlock b = getLayoutBlock();
-            Color mainColourA = defaultTrackColor;
-            Color subColourA = defaultTrackColor;
-            if (b != null) {
-                mainColourA = b.getBlockColor();
-                subColourA = b.getBlockTrackColor();
-            }
+        LayoutBlock b = getLayoutBlock();
+        Color mainColourA = defaultTrackColor;
+        Color subColourA = defaultTrackColor;
+        if (b != null) {
+            mainColourA = b.getBlockColor();
+            subColourA = b.getBlockTrackColor();
+        }
 
-            b = getLayoutBlockB();
-            Color mainColourB = defaultTrackColor;
-            Color subColourB = defaultTrackColor;
-            if (b != null) {
-                mainColourB = b.getBlockColor();
-                subColourB = b.getBlockTrackColor();
-            }
+        b = getLayoutBlockB();
+        Color mainColourB = defaultTrackColor;
+        Color subColourB = defaultTrackColor;
+        if (b != null) {
+            mainColourB = b.getBlockColor();
+            subColourB = b.getBlockTrackColor();
+        }
 
-            b = getLayoutBlockC();
-            Color mainColourC = defaultTrackColor;
-            Color subColourC = defaultTrackColor;
-            if (b != null) {
-                mainColourC = b.getBlockColor();
-                subColourC = b.getBlockTrackColor();
-            }
+        b = getLayoutBlockC();
+        Color mainColourC = defaultTrackColor;
+        Color subColourC = defaultTrackColor;
+        if (b != null) {
+            mainColourC = b.getBlockColor();
+            subColourC = b.getBlockTrackColor();
+        }
 
-            b = getLayoutBlockD();
-            Color mainColourD = defaultTrackColor;
-            Color subColourD = defaultTrackColor;
-            if (b != null) {
-                mainColourD = b.getBlockColor();
-                subColourD = b.getBlockTrackColor();
-            }
+        b = getLayoutBlockD();
+        Color mainColourD = defaultTrackColor;
+        Color subColourD = defaultTrackColor;
+        if (b != null) {
+            mainColourD = b.getBlockColor();
+            subColourD = b.getBlockTrackColor();
+        }
 
-            float w = layoutEditor.setTrackStrokeWidth(g2, isMainline());
+        float w = layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
-            boolean isMainA = (connectA != null) && (((TrackSegment) connectA).getMainline());
-            boolean isMainB = (connectB != null) && (((TrackSegment) connectB).getMainline());
-            boolean isMainC = (connectC != null) && (((TrackSegment) connectC).getMainline());
-            boolean isMainD = (connectD != null) && (((TrackSegment) connectD).getMainline());
+        boolean isMainA = (connectA != null) && (((TrackSegment) connectA).isMainline());
+        boolean isMainB = (connectB != null) && (((TrackSegment) connectB).isMainline());
+        boolean isMainC = (connectC != null) && (((TrackSegment) connectC).isMainline());
+        boolean isMainD = (connectD != null) && (((TrackSegment) connectD).isMainline());
 
-            if (getSlipState() == STATE_AC) {
-                g2.setColor(mainColourA);
-                layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointC)));
+        if (getSlipState() == STATE_AC) {
+            g2.setColor(mainColourA);
+            layoutEditor.setTrackStrokeWidth(g2, isMainA);
+            g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointC)));
 
-                g2.setColor(mainColourC);
-                layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointA)));
-            } else {
-                g2.setColor(subColourA);
-                layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointC)));
+            g2.setColor(mainColourC);
+            layoutEditor.setTrackStrokeWidth(g2, isMainC);
+            g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointA)));
+        } else {
+            g2.setColor(subColourA);
+            layoutEditor.setTrackStrokeWidth(g2, isMainA);
+            g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointC)));
 
-                g2.setColor(subColourC);
-                layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointA)));
-            }
+            g2.setColor(subColourC);
+            layoutEditor.setTrackStrokeWidth(g2, isMainC);
+            g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointA)));
+        }
 
-            if (getSlipState() == STATE_BD) {
-                g2.setColor(mainColourB);
-                layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointD)));
+        if (getSlipState() == STATE_BD) {
+            g2.setColor(mainColourB);
+            layoutEditor.setTrackStrokeWidth(g2, isMainB);
+            g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointD)));
 
-                g2.setColor(mainColourD);
-                layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointB)));
-            } else {
-                g2.setColor(subColourB);
-                layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointD)));
+            g2.setColor(mainColourD);
+            layoutEditor.setTrackStrokeWidth(g2, isMainD);
+            g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointB)));
+        } else {
+            g2.setColor(subColourB);
+            layoutEditor.setTrackStrokeWidth(g2, isMainB);
+            g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointD)));
 
-                g2.setColor(subColourD);
-                layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointB)));
-            }
+            g2.setColor(subColourD);
+            layoutEditor.setTrackStrokeWidth(g2, isMainD);
+            g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointB)));
+        }
 
-            if (getSlipState() == STATE_AD) {
-                g2.setColor(mainColourA);
-                layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointD)));
+        if (getSlipState() == STATE_AD) {
+            g2.setColor(mainColourA);
+            layoutEditor.setTrackStrokeWidth(g2, isMainA);
+            g2.draw(new Line2D.Double(pointA, MathUtil.midPoint(pointA, pointD)));
 
-                g2.setColor(mainColourD);
-                layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointA)));
-            } else {
-                g2.setColor(subColourA);
-                layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointD)));
+            g2.setColor(mainColourD);
+            layoutEditor.setTrackStrokeWidth(g2, isMainD);
+            g2.draw(new Line2D.Double(pointD, MathUtil.midPoint(pointD, pointA)));
+        } else {
+            g2.setColor(subColourA);
+            layoutEditor.setTrackStrokeWidth(g2, isMainA);
+            g2.draw(new Line2D.Double(pointA, MathUtil.oneThirdPoint(pointA, pointD)));
 
-                g2.setColor(subColourD);
-                layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointA)));
-            }
+            g2.setColor(subColourD);
+            layoutEditor.setTrackStrokeWidth(g2, isMainD);
+            g2.draw(new Line2D.Double(pointD, MathUtil.oneThirdPoint(pointD, pointA)));
+        }
 
-            if (getSlipState() == STATE_BC) {
-                g2.setColor(mainColourB);
-                layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointC)));
+        if (getSlipState() == STATE_BC) {
+            g2.setColor(mainColourB);
+            layoutEditor.setTrackStrokeWidth(g2, isMainB);
+            g2.draw(new Line2D.Double(pointB, MathUtil.midPoint(pointB, pointC)));
 
-                g2.setColor(mainColourC);
-                layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointB)));
-            } else if (getSlipType() == DOUBLE_SLIP) {
-                g2.setColor(subColourB);
-                layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointC)));
+            g2.setColor(mainColourC);
+            layoutEditor.setTrackStrokeWidth(g2, isMainC);
+            g2.draw(new Line2D.Double(pointC, MathUtil.midPoint(pointC, pointB)));
+        } else if (getSlipType() == DOUBLE_SLIP) {
+            g2.setColor(subColourB);
+            layoutEditor.setTrackStrokeWidth(g2, isMainB);
+            g2.draw(new Line2D.Double(pointB, MathUtil.oneThirdPoint(pointB, pointC)));
 
-                g2.setColor(subColourC);
-                layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointB)));
-            }
-        }   // if (!(getHidden() && !layoutEditor.isEditable()))
+            g2.setColor(subColourC);
+            layoutEditor.setTrackStrokeWidth(g2, isMainC);
+            g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointB)));
+        }
     }   // draw(Graphics2D g2)
 
     protected void drawTurnoutControls(Graphics2D g2) {

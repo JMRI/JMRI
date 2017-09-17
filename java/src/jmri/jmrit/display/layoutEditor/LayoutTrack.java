@@ -5,11 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
@@ -70,8 +67,8 @@ public abstract class LayoutTrack {
 
     protected static Color defaultTrackColor = Color.black;
 
-    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
-    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;
+//    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
+//    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;
 
     /**
      * constructor method

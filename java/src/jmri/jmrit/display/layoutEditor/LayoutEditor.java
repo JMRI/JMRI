@@ -329,8 +329,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private int gridSize2nd = 10;
 
     //size of point boxes
-    private static final double SIZE = 3.0;
-    private static final double SIZE2 = SIZE * 2.; //must be twice SIZE
+    protected static final double SIZE = 3.0;
+    protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
     //NOTE: although these have been moved to the LayoutTurnout class 
     // I'm leaving a copy of them here so that any external use of these 
@@ -5323,9 +5323,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Object obj = null;
         if (opt.isPresent()) {
             obj = opt.get();
-        }
-
-        if (null != obj) {
+            if (null != obj) {
+                /*  TODO: Dead-code strip this (if not needed)
             if (obj instanceof LayoutTurntable) {
                 LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
                 if (LayoutTrack.isConnectionHitType(selectedPointType)) {
@@ -5338,8 +5337,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 } else {
                     selectedPointType = LayoutTrack.NONE;
                 }
-            } else {
-                selectedObject = obj;
+            } else
+                 */
+                {
+                    selectedObject = obj;
+                }
             }
         }
         return (selectedObject != null);
@@ -9543,10 +9545,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //to do point-in-rect (hit) testing
     //compute the control point rect at inPoint
     public Rectangle2D trackControlPointRectAt(@Nonnull Point2D inPoint) {
-        return new Rectangle2D.Double(
-                inPoint.getX() - LayoutTrack.controlPointSize,
-                inPoint.getY() - LayoutTrack.controlPointSize,
-                LayoutTrack.controlPointSize2, LayoutTrack.controlPointSize2);
+        return new Rectangle2D.Double(inPoint.getX() - SIZE,
+                inPoint.getY() - SIZE, SIZE2, SIZE2);
     } //controlPointRectAt
 
     //compute the turnout circle rect at inPoint
@@ -9670,6 +9670,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //drawTrackInProgress
 
     private void drawLayoutTrackEditControls(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         for (LayoutTrack tr : layoutTrackList) {
             tr.drawEditControls(g2);
         }
