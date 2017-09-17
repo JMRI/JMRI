@@ -1309,12 +1309,23 @@ public class PositionablePoint extends LayoutTrack {
     protected void drawEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-        if (getConnect1() == null) {
+        TrackSegment ts1 = getConnect1();
+        if (ts1 == null) {
             g2.setColor(Color.red);
-        } else if ((getType() != END_BUMPER) && getConnect2() == null) {
-            g2.setColor(Color.yellow);
         } else {
-            g2.setColor(Color.green);
+            TrackSegment ts2 = null;
+            if (getType() == ANCHOR) {
+                ts2 = getConnect2();
+            } else if (getType() == EDGE_CONNECTOR) {
+                if (getLinkedPoint() != null) {
+                    ts2 = getLinkedPoint().getConnect1();
+                }
+            }
+            if ((getType() != END_BUMPER) && (ts2 == null)) {
+                g2.setColor(Color.yellow);
+            } else {
+                g2.setColor(Color.green);
+            }
         }
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
     }   // drawEditControls
@@ -1372,10 +1383,11 @@ public class PositionablePoint extends LayoutTrack {
         List<LayoutConnectivity> results = new ArrayList<>();
         LayoutConnectivity lc = null;
         LayoutBlock blk1 = null, blk2 = null;
-        TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
+        TrackSegment ts1 = getConnect1();
         Point2D p1, p2;
 
         if (getType() == ANCHOR) {
+            TrackSegment ts2 = getConnect2();
             if ((ts1 != null) && (ts2 != null)) {
                 blk1 = ts1.getLayoutBlock();
                 blk2 = ts2.getLayoutBlock();
@@ -1401,6 +1413,10 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
         } else if (getType() == EDGE_CONNECTOR) {
+            TrackSegment ts2 = null;
+            if (getLinkedPoint() != null) {
+                ts2 = getLinkedPoint().getConnect1();
+            }
             if ((ts1 != null) && (ts2 != null)) {
                 blk1 = ts1.getLayoutBlock();
                 blk2 = ts2.getLayoutBlock();
