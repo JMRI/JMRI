@@ -5323,9 +5323,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Object obj = null;
         if (opt.isPresent()) {
             obj = opt.get();
-        }
-
-        if (null != obj) {
+            if (null != obj) {
+                /*  TODO: Dead-code strip this (if not needed)
             if (obj instanceof LayoutTurntable) {
                 LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
                 if (LayoutTrack.isConnectionHitType(selectedPointType)) {
@@ -5338,8 +5337,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 } else {
                     selectedPointType = LayoutTrack.NONE;
                 }
-            } else {
-                selectedObject = obj;
+            } else
+                 */
+                {
+                    selectedObject = obj;
+                }
             }
         }
         return (selectedObject != null);
