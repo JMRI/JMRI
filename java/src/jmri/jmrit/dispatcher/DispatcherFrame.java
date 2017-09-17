@@ -139,6 +139,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             at.setRosterEntry(re);
                             at.setDccAddress(re.getDccAddress());
                         }
+                        at.setAllocateMethod(info.getAllocationMethod());
                         at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
                         at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
                         at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
@@ -161,6 +162,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             aat.setRunInReverse(info.getRunInReverse());
                             aat.setSoundDecoder(info.getSoundDecoder());
                             aat.setMaxTrainLength(info.getMaxTrainLength());
+                            aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
+                            aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
+                            aat.setUseSpeedProfile(info.getUseSpeedProfile());
                             if (!aat.initialize()) {
                                 log.error("ERROR initializing autorunning for train {}", at.getTrainName());
                                 JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
