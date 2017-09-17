@@ -1232,7 +1232,6 @@ public class ActivateTrainFrame {
     private JPanel pa2a = new JPanel();
     private JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
     private JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
-    private JPanel pa2b = new JPanel();
     private JLabel stopBySpeedProfile = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
     private JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
     private JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));

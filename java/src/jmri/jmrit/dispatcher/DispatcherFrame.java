@@ -244,7 +244,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected JmriJFrame dispatcherFrame = null;
     private Container contentPane = null;
     private ActiveTrainsTableModel activeTrainsTableModel = null;
-    private JButton addTrainStartupButton = null; //for testing
     private JButton addTrainButton = null;
     private JButton terminateTrainButton = null;
     private JButton cancelRestartButton = null;
@@ -944,13 +943,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param reverseAtEnd                    true if train should automatically
      *                                        reverse at end of transit; false
      *                                        otherwise
-     * @param allocateAllTheWay               set to "true" to allow Auto
-     *                                        Allocate to allocate as many
-     *                                        sections as possible between the
-     *                                        start section and the end section.
-     *                                        Set to false Auto Allocate
-     *                                        allocates no more than three
-     *                                        sections ahead.
      * @param showErrorMessages               "true" if error message dialogs
      *                                        are to be displayed for detected
      *                                        errors Set to "false" to suppress
@@ -958,7 +950,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *                                        method.
      * @param frame                           window request is from, or "null"
      *                                        if not from a window
-     *
+     * @param allocateMethod                  How allocations will be performed.
+     *                                        999 - Allocate as many section from start to finish as it can
+     *                                        0 - Allocate to the next "Safe" section. If it cannot allocate all the way to
+     *                                        the next "safe" section it does not allocate any sections. It will 
+     *                                        not allocate beyond the next safe section until it arrives there. This
+     *                                        is useful for bidirectional single track running.
+     *                                        Any other positive number (in reality thats 1-150 as the create transit
+     *                                        allows a max of 150 sections) allocate the specified number of sections a head.
      * @return a new ActiveTrain or null on failure
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,

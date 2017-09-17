@@ -565,6 +565,7 @@ public class AutoAllocate {
                         }
                     }
                     if (!allocateBySafeSections &&
+                            curAS != null &&
                             (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
                         return false;
                     }

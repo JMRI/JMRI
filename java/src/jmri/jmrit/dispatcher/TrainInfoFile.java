@@ -464,7 +464,6 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         FileUtil.createDirectory(fileLocation);
         // create an array of file names from roster dir in preferences, count entries
         List<String> names = new ArrayList<>();
-        int np = 0;
         log.debug("directory of TrainInfoFiles is {}", fileLocation);
         File fp = new File(fileLocation);
         if (fp.exists()) {
