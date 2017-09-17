@@ -368,7 +368,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (rt.getConnectionIndex() == index) {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
-                    result = ts.getMainline();
+                    result = ts.isMainline();
                     break;
                 }
             }
@@ -383,7 +383,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (rt != null) {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
-                    result = ts.getMainline();
+                    result = ts.isMainline();
                 }
             }
         }
@@ -1052,29 +1052,27 @@ public class LayoutTurntable extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        if (!isHidden() || layoutEditor.isEditable()) {
-            // draw turntable circle - default track color, side track width
-            layoutEditor.setTrackStrokeWidth(g2, false);
-            double r = getRadius(), d = r + r;
-            g2.setColor(defaultTrackColor);
-            g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
+        // draw turntable circle - default track color, side track width
+        layoutEditor.setTrackStrokeWidth(g2, false);
+        double r = getRadius(), d = r + r;
+        g2.setColor(defaultTrackColor);
+        g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
 
-            // draw ray tracks
-            for (int j = 0; j < getNumberRays(); j++) {
-                TrackSegment ts = getRayConnectOrdered(j);
-                if (ts != null) {
-                    layoutEditor.setTrackStrokeWidth(g2, ts.getMainline());
-                    setColorForTrackBlock(g2, ts.getLayoutBlock());
-                } else {
-                    layoutEditor.setTrackStrokeWidth(g2, false);
-                    g2.setColor(defaultTrackColor);
-                }
-                Point2D pt = getRayCoordsOrdered(j);
-                g2.draw(new Line2D.Double(new Point2D.Double(
-                        pt.getX() - ((pt.getX() - center.getX()) * 0.2),
-                        pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
+        // draw ray tracks
+        for (int j = 0; j < getNumberRays(); j++) {
+            TrackSegment ts = getRayConnectOrdered(j);
+            if (ts != null) {
+                layoutEditor.setTrackStrokeWidth(g2, ts.isMainline());
+                setColorForTrackBlock(g2, ts.getLayoutBlock());
+            } else {
+                layoutEditor.setTrackStrokeWidth(g2, false);
+                g2.setColor(defaultTrackColor);
             }
-        }   // if (layoutEditor.isEditable() && isHidden()) {
+            Point2D pt = getRayCoordsOrdered(j);
+            g2.draw(new Line2D.Double(new Point2D.Double(
+                    pt.getX() - ((pt.getX() - center.getX()) * 0.2),
+                    pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
+        }
     }
 
     /**
