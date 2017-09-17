@@ -331,7 +331,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -347,7 +347,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* Next, send the ops mode programing command for the voltage 
                  we want */
                 try {
-                    opsProg.writeCV(7, validVoltageValues[voltBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validVoltageValues[voltBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -380,7 +380,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -396,7 +396,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* Next, send the ops mode programing command for the E line 
                  Status we want */
                 try {
-                    opsProg.writeCV(7, validELineStatusValues[eLineBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validELineStatusValues[eLineBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -430,7 +430,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -446,7 +446,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* Next, send the ops mode programing command for the RailComm
                  Status we want */
                 try {
-                    opsProg.writeCV(7, validRailComStatusValues[railComBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validRailComStatusValues[railComBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -479,7 +479,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -495,7 +495,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* Next, send the ops mode programing command for the RailCom Mode
                  Status we want */
                 try {
-                    opsProg.writeCV(7, validRailComModeValues[railComModeBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validRailComModeValues[railComModeBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -528,7 +528,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* First, send the ops mode programing command to enter
                  programing mode */
                 try {
-                    opsProg.writeCV(7, 50, progListener);
+                    opsProg.writeCV("7", 50, progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }
@@ -544,7 +544,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 /* Next, send the ops mode programing command for the RailCom 
                  Timing we want */
                 try {
-                    opsProg.writeCV(7, validRailComTimingValues[railComTimingBox.getSelectedIndex()], progListener);
+                    opsProg.writeCV("7", validRailComTimingValues[railComTimingBox.getSelectedIndex()], progListener);
                 } catch (ProgrammerException e) {
                     // Don't do anything with this yet
                 }

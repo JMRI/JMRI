@@ -105,7 +105,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     @Override
-    public ArrayList<Object> getInstanceList(Class<?> c) {
+    public List<Object> getInstanceList(Class<?> c) {
         return this.legacy.getInstanceList(c);
     }
 
@@ -184,7 +184,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
-                        ArrayList<String> errors = new ArrayList<>();
+                        List<String> errors = new ArrayList<>();
                         this.initialized.forEach((provider) -> {
                             List<Exception> exceptions = provider.getInitializationExceptions(profile);
                             if (!exceptions.isEmpty()) {

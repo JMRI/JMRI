@@ -11,15 +11,17 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.netbeans.jemmy.operators.JComponentOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Swing tests for the SensorIcon
@@ -27,6 +29,19 @@ import org.netbeans.jemmy.operators.JComponentOperator;
  * @author	Bob Jacobsen Copyright 2009, 2010
  */
 public class IconEditorWindowTest {
+
+    @Rule
+    public TestRule watcher = new TestWatcher() {
+        @Override
+        protected void starting(Description description) {
+            if (Boolean.valueOf(System.getenv("TRAVIS_PULL_REQUEST"))) {
+                // use System.out.println instead of logging to avoid using
+                // warning or error while still providing this output on PRs
+                // in Travis CI (and blocking elsewhere)
+                System.out.println("Starting test: " + description.getMethodName());
+            }
+        }
+    };
 
     Editor _editor = null;
     JComponent _panel;
@@ -62,9 +77,9 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
-        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+        // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
         // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
         // if it's still false after max wait it throws an assert.
         JUnitUtil.waitFor(() -> {
@@ -72,7 +87,7 @@ public class IconEditorWindowTest {
         }, "state after one click");
 
         // Click icon change state to inactive
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
         JUnitUtil.waitFor(() -> {
             return sensor.getState() == Sensor.ACTIVE;
         }, "state after two clicks");
@@ -111,14 +126,14 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.CLOSED;
         }, "state after one click");
 
         // Click icon change state to inactive
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.THROWN;
         }, "state after two clicks");
@@ -158,14 +173,14 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.CLOSED;
         }, "state after one click");
 
         // Click icon change state to inactive
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
         JUnitUtil.waitFor(() -> {
             return turnout.getState() == Turnout.THROWN;
         }, "state after two clicks");
@@ -202,14 +217,14 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         JUnitUtil.waitFor(() -> {
             return light.getState() == Light.ON;
         }, "state after one click");
 
         // Click icon change state to inactive
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
         JUnitUtil.waitFor(() -> {
             return light.getState() == Light.OFF;
         }, "state after two clicks");
@@ -249,19 +264,19 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         for (int i = 1; i < states.length; i++) {
             //Assert.assertEquals("state after " + i + " click", states[i], signalHead.getState());
             final int state = states[i];
-            // this will wait for WAITFOR_MAX_DELAY (15 seconds) max 
+            // this will wait for WAITFOR_MAX_DELAY (15 seconds) max
             // checking the condition every WAITFOR_DELAY_STEP (5 mSecs)
             // if it's still false after max wait it throws an assert.
             JUnitUtil.waitFor(() -> {
                 return signalHead.getState() == state;
             }, "state after " + i + " click(s)");
 
-            jfo.clickMouse(xloc,yloc,1);
+            jfo.clickMouse(xloc, yloc, 1);
         }
 
         iefo.requestClose();
@@ -291,7 +306,7 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = memIcon.getLocation().x + memIcon.getSize().width / 2;
         int yloc = memIcon.getLocation().y + memIcon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         iconEditor._sysNametext.setText("IM1");
         iconEditor.addToTable();
@@ -308,7 +323,7 @@ public class IconEditorWindowTest {
 
         xloc = memIcon.getLocation().x + memSpinIcon.getSize().width / 2;
         yloc = memIcon.getLocation().y + memSpinIcon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         iconEditor._sysNametext.setText("IM2");
         iconEditor.addToTable();
@@ -325,7 +340,7 @@ public class IconEditorWindowTest {
 
         xloc = memIcon.getLocation().x + memInputIcon.getSize().width / 2;
         yloc = memIcon.getLocation().y + memInputIcon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
+        jfo.clickMouse(xloc, yloc, 1);
 
         iefo.requestClose();
     }
@@ -354,8 +369,7 @@ public class IconEditorWindowTest {
         JComponentOperator jfo = new JComponentOperator(_panel);
         int xloc = icon.getLocation().x + icon.getSize().width / 2;
         int yloc = icon.getLocation().y + icon.getSize().height / 2;
-        jfo.clickMouse(xloc,yloc,1);
-
+        jfo.clickMouse(xloc, yloc, 1);
 
         iefo.requestClose();
     }

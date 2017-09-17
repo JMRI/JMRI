@@ -124,7 +124,7 @@ public class DirectoryResource extends Resource {
                     buf = new StringBuffer(raw.length() << 1);
                     break loop;
                 default:
-                    log.warn("Unhandled code: {}", c);
+                    log.debug("Unhandled code: {}", c);
                     break;
             }
         }
