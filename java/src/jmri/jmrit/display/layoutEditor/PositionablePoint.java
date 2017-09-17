@@ -733,10 +733,10 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
 
                 LayoutBlock block1 = null;
-                LayoutBlock block2 = null;
                 if (connect1 != null) {
                     block1 = connect1.getLayoutBlock();
                 }
+                LayoutBlock block2 = block1;
                 if (connect2 != null) {
                     block2 = connect2.getLayoutBlock();
                 }
@@ -772,27 +772,33 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
-                    jmi = popup.add(getLinkedEditorName());
+                    String linkName = getLinkedEditorName() + ":" + getLinkedPointId();
+                    jmi = popup.add(Bundle.getMessage("LinkedToX", linkName));
                 } else {
                     jmi = popup.add(rb.getString("EdgeNotLinked"));
                 }
                 jmi.setEnabled(false);
 
                 block1 = null;
-                block2 = null;
-                if (connect1 != null) {
-                    block1 = connect1.getLayoutBlock();
+                if (getConnect1() != null) {
+                    block1 = getConnect1().getLayoutBlock();
                 }
-                if (getConnect2() != null) {
-                    block2 = getConnect2().getLayoutBlock();
+                block2 = block1;
+                if (getLinkedPoint() != null) {
+                    if (getLinkedPoint().getConnect1() != null) {
+                        block2 = getLinkedPoint().getConnect1().getLayoutBlock();
+                    }
                 }
-                if ((block1 != null) && (block2 != null) && (block1 != block2)) {
+                if ((block1 != null) && (block1 == block2)) {
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
+                } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     jmi = popup.add(rb.getString("BlockDivider"));
                     jmi.setEnabled(false);
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
                     jmi.setEnabled(false);
+                    blockBoundary = true;
                 }
                 blockBoundary = true;
                 break;
@@ -1082,7 +1088,7 @@ public class PositionablePoint extends LayoutTrack {
 
         editorCombo.addActionListener(selectPanelListener);
         JPanel selectorPanel = new JPanel();
-        selectorPanel.add(new JLabel(rb.getString("Select Panel")));
+        selectorPanel.add(new JLabel(rb.getString("SelectPanel")));
         selectorPanel.add(editorCombo);
         linkPointsBox = new JComboBox<String>();
         updatePointBox();
@@ -1093,7 +1099,7 @@ public class PositionablePoint extends LayoutTrack {
 
     void updatePointBox() {
         linkPointsBox.removeAllItems();
-        pointList = new ArrayList<PositionablePoint>();
+        pointList = new ArrayList<>();
         if (editorCombo.getSelectedIndex() == 0) {
             linkPointsBox.setEnabled(false);
             return;
@@ -1118,7 +1124,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         }
         editLink.pack();
-    }
+    }   // updatePointBox
 
     public void updateLink() {
         if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {
@@ -1241,58 +1247,58 @@ public class PositionablePoint extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        if (!isHidden() || layoutEditor.isEditable()) {
-            if (getType() != ANCHOR) {
-                Stroke originalStroke = g2.getStroke();
+        if (getType() != ANCHOR) {
+            Stroke originalStroke = g2.getStroke();
 
-                Point2D pt = getCoordsCenter();
-                boolean mainline = false;
-                Point2D ep1 = pt, ep2 = pt;
+            Point2D pt = getCoordsCenter();
+            boolean mainline = false;
+            Point2D ep1 = pt, ep2 = pt;
 
-                if (getConnect1() != null) {
-                    mainline = getConnect1().getMainline();
-                    ep1 = getConnect1().getCentreSeg();
-                }
+            if (getConnect1() != null) {
+                mainline = getConnect1().isMainline();
+                ep1 = getConnect1().getCentreSeg();
+            }
+            if (getType() == ANCHOR) {
                 if (getConnect2() != null) {
-                    mainline |= getConnect2().getMainline();
+                    mainline |= getConnect2().isMainline();
                     ep2 = getConnect2().getCentreSeg();
                 }
+            }
 
-                float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
-                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
-                Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
+            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
+            Stroke drawingStroke1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F);
 
-                if (!ep1.equals(ep2)) {
-                    setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
-                    double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
-                    Point2D p1, p2, p3, p4;
-                    if (getType() == END_BUMPER) {
-                        // draw a cross tie
-                        p1 = new Point2D.Double(0.0, -trackWidth);
-                        p2 = new Point2D.Double(0.0, +trackWidth);
+            if (!ep1.equals(ep2)) {
+                setColorForTrackBlock(g2, getConnect1().getLayoutBlock());
+                double angleRAD = (Math.PI / 2.0) - MathUtil.computeAngleRAD(ep1, ep2);
+                Point2D p1, p2, p3, p4;
+                if (getType() == END_BUMPER) {
+                    // draw a cross tie
+                    p1 = new Point2D.Double(0.0, -trackWidth);
+                    p2 = new Point2D.Double(0.0, +trackWidth);
 
-                        p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                        p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                        g2.setStroke(drawingStroke);
-                        g2.draw(new Line2D.Double(p1, p2));
-                    } else if (getType() == EDGE_CONNECTOR) {
-                        // draw an arrow
-                        p1 = new Point2D.Double(0.0, -trackWidth);
-                        p2 = new Point2D.Double(-trackWidth, 0.0);
-                        p3 = new Point2D.Double(0.0, +trackWidth);
-                        g2.setStroke(drawingStroke1);
-                        p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
-                        p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
-                        p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
+                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                    g2.setStroke(drawingStroke);
+                    g2.draw(new Line2D.Double(p1, p2));
+                } else if (getType() == EDGE_CONNECTOR) {
+                    // draw an arrow
+                    p1 = new Point2D.Double(0.0, -trackWidth);
+                    p2 = new Point2D.Double(-trackWidth, 0.0);
+                    p3 = new Point2D.Double(0.0, +trackWidth);
+                    g2.setStroke(drawingStroke1);
+                    p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), pt);
+                    p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), pt);
+                    p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), pt);
 
-                        g2.draw(new Line2D.Double(p1, p2));
-                        g2.draw(new Line2D.Double(p2, p3));
-                        g2.draw(new Line2D.Double(p3, p1));
-                    }
+                    g2.draw(new Line2D.Double(p1, p2));
+                    g2.draw(new Line2D.Double(p2, p3));
+                    g2.draw(new Line2D.Double(p3, p1));
                 }
-                g2.setStroke(originalStroke);
-            }   // if (getType() != ANCHOR)
-        }   // if (!isHidden() || layoutEditor.isEditable())
+            }
+            g2.setStroke(originalStroke);
+        }   // if (getType() != ANCHOR)
     }
 
     /**
