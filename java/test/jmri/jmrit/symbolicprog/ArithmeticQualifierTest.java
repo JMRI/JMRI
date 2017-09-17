@@ -4,16 +4,17 @@ import java.util.HashMap;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
  */
-public class ArithmeticQualifierTest extends TestCase {
+public class ArithmeticQualifierTest {
 
     ProgDebugger p = new ProgDebugger();
 
@@ -41,18 +42,21 @@ public class ArithmeticQualifierTest extends TestCase {
         }
     }
 
+    @Test
     public void testVariableNotExistsOk() {
 
         ArithmeticQualifier aq = new TestArithmeticQualifier(null, 0, "exists");
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableNotExistsNOk() {
 
         ArithmeticQualifier aq = new TestArithmeticQualifier(null, 1, "exists");
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableExistsOk() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -66,6 +70,7 @@ public class ArithmeticQualifierTest extends TestCase {
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableExistsNotOk() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -79,6 +84,7 @@ public class ArithmeticQualifierTest extends TestCase {
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
+    @Test
     public void testVariableEq() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -97,6 +103,7 @@ public class ArithmeticQualifierTest extends TestCase {
 
     }
 
+    @Test
     public void testVariableGe() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -117,6 +124,7 @@ public class ArithmeticQualifierTest extends TestCase {
 
     }
 
+    @Test
     public void testVariableRefEqNotExist() {
         // test arithmetic operation when variable not found
         ArithmeticQualifier aq = new TestArithmeticQualifier(null, 10, "eq");
@@ -129,31 +137,14 @@ public class ArithmeticQualifierTest extends TestCase {
         return m;
     }
 
-    // from here down is testing infrastructure
-    public ArithmeticQualifierTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ArithmeticQualifierTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests, including others in the package
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ArithmeticQualifierTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before 
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
