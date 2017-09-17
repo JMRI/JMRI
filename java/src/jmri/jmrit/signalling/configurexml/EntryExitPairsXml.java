@@ -286,7 +286,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      *
      * @param color Integer value of a color to display on screen
      * @return lower case color name in English; None if color entered is null
-     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToString(color)} instead
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToString(Color)} instead
      */
     // TODO: Dead-code strip this in 4.9.6
     @Deprecated
@@ -322,14 +322,15 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
         log.error("unknown color sent to colorToString");  // NOI18N
         return "black";  // NOI18N
-    }
+    }   // colorToString
 
     /**
      * Get a color value for a color name.
      *
      * @param string String describing a color
      * @return integer representing a screen color
-     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(string)} instead
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(String)} instead
+     * 
      */
     // TODO: Dead-code strip this in 4.9.6
     @Deprecated
@@ -368,7 +369,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
         log.error("unknown color text '{}' sent to stringToColor", string);  // NOI18N
         return Color.black;
-    }
+    }   // stringToColor
 
     @Override
     public int loadOrder() {
