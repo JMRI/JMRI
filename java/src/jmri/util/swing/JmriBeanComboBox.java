@@ -75,9 +75,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 validateText();
             }
         });
-        setRenderer(_enableRenderer);
-        ListSelectionModel lsm = _enableRenderer.getEnabledItems();
-        lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
     }
 
     @Override
@@ -647,9 +644,10 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
             return -1;
         }
-    }
-
+    }   // BeanSelectionManager
+    
     public void setEnabledItems(ListSelectionModel inEnabledItems) {
+        setupEnabledComboBoxRenderer();
         if (_enableRenderer != null) {
             _enableRenderer.setEnabledItems(inEnabledItems);
         }
@@ -657,6 +655,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     public ListSelectionModel getEnabledItems() {
         ListSelectionModel result = null;
+        setupEnabledComboBoxRenderer();
         if (_enableRenderer != null) {
             result = _enableRenderer.getEnabledItems();
         }
@@ -761,7 +760,19 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         return result;
     }
 
-    private EnabledComboBoxRenderer _enableRenderer = new EnabledComboBoxRenderer();
+    private EnabledComboBoxRenderer _enableRenderer = null;
+
+    private EnabledComboBoxRenderer getEnabledComboBoxRenderer() {
+        if (_enableRenderer == null) {
+            _enableRenderer = new EnabledComboBoxRenderer();
+            if (_enableRenderer != null) {
+                setRenderer(_enableRenderer);
+                ListSelectionModel lsm = _enableRenderer.getEnabledItems();
+                lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
+            }
+        }
+        return _enableRenderer;
+    }
 
     static class EnabledComboBoxRenderer extends BasicComboBoxRenderer {
 
