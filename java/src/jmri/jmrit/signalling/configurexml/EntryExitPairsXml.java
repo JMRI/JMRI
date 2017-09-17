@@ -281,92 +281,94 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return true;
     }
 
-   /**
-    * Get a descriptive name for a given color value.
-    *
-    * @param color Integer value of a color to display on screen
-    * @return lower case color name in English; None if color entered is null
-    * @deprecated since 4.9.4; use {@link #ColorUtil.colorToString} instead
-    */
+    /**
+     * Get a descriptive name for a given color value.
+     *
+     * @param color Integer value of a color to display on screen
+     * @return lower case color name in English; None if color entered is null
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#colorToString(color)} instead
+     */
     // TODO: Dead-code strip this in 4.9.6
-   public static String colorToString(Color color) {
-       if (color == Color.black) {
-           return "black";  // NOI18N
-       } else if (color == Color.darkGray) {
-           return "darkGray";  // NOI18N
-       } else if (color == Color.gray) {
-           return "gray";  // NOI18N
-       } else if (color == Color.lightGray) {
-           return "lightGray";  // NOI18N
-       } else if (color == Color.white) {
-           return "white";  // NOI18N
-       } else if (color == Color.red) {
-           return "red";  // NOI18N
-       } else if (color == Color.pink) {
-           return "pink";  // NOI18N
-       } else if (color == Color.orange) {
-           return "orange";  // NOI18N
-       } else if (color == Color.yellow) {
-           return "yellow";  // NOI18N
-       } else if (color == Color.green) {
-           return "green";  // NOI18N
-       } else if (color == Color.blue) {
-           return "blue";  // NOI18N
-       } else if (color == Color.magenta) {
-           return "magenta";  // NOI18N
-       } else if (color == Color.cyan) {
-           return "cyan";
-       } else if (color == null) {
-           return "None";  // NOI18N
-       }
-       log.error("unknown color sent to colorToString");  // NOI18N
-       return "black";  // NOI18N
-   }
+    @Deprecated
+    public static String colorToString(Color color) {
+        if (color == Color.black) {
+            return "black";  // NOI18N
+        } else if (color == Color.darkGray) {
+            return "darkGray";  // NOI18N
+        } else if (color == Color.gray) {
+            return "gray";  // NOI18N
+        } else if (color == Color.lightGray) {
+            return "lightGray";  // NOI18N
+        } else if (color == Color.white) {
+            return "white";  // NOI18N
+        } else if (color == Color.red) {
+            return "red";  // NOI18N
+        } else if (color == Color.pink) {
+            return "pink";  // NOI18N
+        } else if (color == Color.orange) {
+            return "orange";  // NOI18N
+        } else if (color == Color.yellow) {
+            return "yellow";  // NOI18N
+        } else if (color == Color.green) {
+            return "green";  // NOI18N
+        } else if (color == Color.blue) {
+            return "blue";  // NOI18N
+        } else if (color == Color.magenta) {
+            return "magenta";  // NOI18N
+        } else if (color == Color.cyan) {
+            return "cyan";
+        } else if (color == null) {
+            return "None";  // NOI18N
+        }
+        log.error("unknown color sent to colorToString");  // NOI18N
+        return "black";  // NOI18N
+    }
 
-   /**
-    * Get a color value for a color name.
-    *
-    * @param string String describing a color
-    * @return integer representing a screen color
-    * @deprecated since 4.9.4; use {@link #ColorUtil.stringToColor} instead
-    */
+    /**
+     * Get a color value for a color name.
+     *
+     * @param string String describing a color
+     * @return integer representing a screen color
+     * @deprecated since 4.9.4; use {@link jmri.util.ColorUtil#stringToColor(string)} instead
+     */
     // TODO: Dead-code strip this in 4.9.6
-   public static Color stringToColor(String string) {
-       switch (string) {
-           case "black": // NOI18N
-               return Color.black;
-           case "darkGray": // NOI18N
-               return Color.darkGray;
-           case "gray": // NOI18N
-               return Color.gray;
-           case "lightGray": // NOI18N
-               return Color.lightGray;
-           case "white": // NOI18N
-               return Color.white;
-           case "red": // NOI18N
-               return Color.red;
-           case "pink": // NOI18N
-               return Color.pink;
-           case "orange": // NOI18N
-               return Color.orange;
-           case "yellow": // NOI18N
-               return Color.yellow;
-           case "green": // NOI18N
-               return Color.green;
-           case "blue": // NOI18N
-               return Color.blue;
-           case "magenta": // NOI18N
-               return Color.magenta;
-           case "cyan": // NOI18N
-               return Color.cyan;
-           case "None": // NOI18N
-               return null;
-           default:
-               break;
-       }
-       log.error("unknown color text '{}' sent to stringToColor", string);  // NOI18N
-       return Color.black;
-   }
+    @Deprecated
+    public static Color stringToColor(String string) {
+        switch (string) {
+            case "black": // NOI18N
+                return Color.black;
+            case "darkGray": // NOI18N
+                return Color.darkGray;
+            case "gray": // NOI18N
+                return Color.gray;
+            case "lightGray": // NOI18N
+                return Color.lightGray;
+            case "white": // NOI18N
+                return Color.white;
+            case "red": // NOI18N
+                return Color.red;
+            case "pink": // NOI18N
+                return Color.pink;
+            case "orange": // NOI18N
+                return Color.orange;
+            case "yellow": // NOI18N
+                return Color.yellow;
+            case "green": // NOI18N
+                return Color.green;
+            case "blue": // NOI18N
+                return Color.blue;
+            case "magenta": // NOI18N
+                return Color.magenta;
+            case "cyan": // NOI18N
+                return Color.cyan;
+            case "None": // NOI18N
+                return null;
+            default:
+                break;
+        }
+        log.error("unknown color text '{}' sent to stringToColor", string);  // NOI18N
+        return Color.black;
+    }
 
     @Override
     public int loadOrder() {

@@ -8457,10 +8457,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
 
-//l.setActiveIcon(sensorIconEditor.getIcon(0));
-//l.setInactiveIcon(sensorIconEditor.getIcon(1));
-//l.setInconsistentIcon(sensorIconEditor.getIcon(2));
-//l.setUnknownIcon(sensorIconEditor.getIcon(3));
         l.setIcon("SensorStateActive", sensorIconEditor.getIcon(0));
         l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));
         l.setIcon("BeanStateInconsistent", sensorIconEditor.getIcon(2));
