@@ -192,9 +192,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")) {  // NOI18N
-            signalMastLogicFrame.setVisible(false);
-            signalMastLogicFrame.dispose();
-
+            if (signalMastLogicFrame != null) { // this is also called from a LayoutEditorPanel by
+                // jmri.managers.DefaultSignalMastLogicManager#discoverSignallingDest(), without an open signalMastLogicFrame
+                signalMastLogicFrame.setVisible(false);
+                signalMastLogicFrame.dispose();
+            }
             if (sml == null) {
                 updateDetails();
             }
