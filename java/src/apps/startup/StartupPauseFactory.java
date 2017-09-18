@@ -40,7 +40,7 @@ public class StartupPauseFactory implements StartupModelFactory {
 
     @Override
     public void editModel(StartupModel model, Component parent) {
-        if (this.getModelClass().isInstance(model)) {
+        if (model instanceof StartupPauseModel && this.getModelClass().isInstance(model)) {
             int delay = ((StartupPauseModel) model).getDelay();
             SpinnerNumberModel snm = new SpinnerNumberModel(
                     delay >= 0 ? delay : StartupPauseModel.DEFAULT_DELAY,
