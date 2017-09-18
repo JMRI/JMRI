@@ -719,7 +719,7 @@ public class LevelXing extends LayoutTrack {
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         switch (connectionType) {
             case LEVEL_XING_CENTER:
                 break;
@@ -823,8 +823,8 @@ public class LevelXing extends LayoutTrack {
      * connecting track segments are missing
      */
     public boolean isMainlineAC() {
-        if (((connectA != null) && (((TrackSegment) connectA).getMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).getMainline()))) {
+        if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
+                || ((connectB != null) && (((TrackSegment) connectB).isMainline()))) {
             return true;
         } else {
             return false;
@@ -832,8 +832,8 @@ public class LevelXing extends LayoutTrack {
     }
 
     public boolean isMainlineBD() {
-        if (((connectB != null) && (((TrackSegment) connectB).getMainline()))
-                || ((connectD != null) && (((TrackSegment) connectD).getMainline()))) {
+        if (((connectB != null) && (((TrackSegment) connectB).isMainline()))
+                || ((connectD != null) && (((TrackSegment) connectD).isMainline()))) {
             return true;
         } else {
             return false;
@@ -985,9 +985,7 @@ public class LevelXing extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        if (tools == null) {
-            tools = new LayoutEditorTools(layoutEditor);
-        }
+        tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + ident);
             jmi.setEnabled(false);
@@ -1086,9 +1084,7 @@ public class LevelXing extends LayoutTrack {
                 AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
+                        tools = layoutEditor.getLETools();
                         // bring up signals at level crossing tool dialog
                         tools.setSignalsAtLevelXingFromMenu(LevelXing.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
@@ -1153,20 +1149,14 @@ public class LevelXing extends LayoutTrack {
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-
+                        tools = layoutEditor.getLETools();
                         tools.setSignalMastsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-
+                        tools = layoutEditor.getLETools();
                         tools.setSensorsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
@@ -1624,14 +1614,12 @@ public class LevelXing extends LayoutTrack {
      * @param g2 the graphics port to draw to
      */
     protected void draw(Graphics2D g2) {
-        if (!isHidden() || layoutEditor.isEditable()) {
-            if (isMainlineBD() && (!isMainlineAC())) {
-                drawXingAC(g2);
-                drawXingBD(g2);
-            } else {
-                drawXingBD(g2);
-                drawXingAC(g2);
-            }
+        if (isMainlineBD() && (!isMainlineAC())) {
+            drawXingAC(g2);
+            drawXingBD(g2);
+        } else {
+            drawXingBD(g2);
+            drawXingAC(g2);
         }
     }   // drawHidden(Graphics2D g2)
 
@@ -1656,7 +1644,7 @@ public class LevelXing extends LayoutTrack {
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlCircleAt(pt));
 
         pt = getCoordsA();
         if (getConnectA() == null) {
