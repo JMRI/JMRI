@@ -11,13 +11,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Frame for editing Digitrax SPJ files.
- *
+ * <p>
  * This is just an enclosure for the EditorPane, which does the real work.
- *
+ * <p>
  * This handles file read/write.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
@@ -30,7 +29,6 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     ResourceBundle res;
     JButton open;
     JButton save;
-    LocoNetSystemConnectionMemo memo;
 
     @Override
     public String getHelpTarget() {
@@ -49,7 +47,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
 
         // general GUI config
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add file button
         open = new JButton(res.getString("ButtonOpen"));
@@ -67,14 +65,14 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
                 selectSaveFile();
             }
         });
-        add(save);
+        super.add(save);
         save.setEnabled(false);
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(open);
         p.add(save);
-        add(p);
+        super.add(p);
 
         // for now, for debugging, load the file
         // from a fixed name

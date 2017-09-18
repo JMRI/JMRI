@@ -103,6 +103,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(PipeListenerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(IterableEnumerationTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BusyGlassPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MultipartMessageTest.class));
 
         // deliberately at end
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
