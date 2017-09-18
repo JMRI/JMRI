@@ -313,7 +313,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
                 b3.setSelected(true);
                 break;
             default:
-                // fall through
+                // fall out
                 break;
         }
         JPanel panel = new JPanel();
