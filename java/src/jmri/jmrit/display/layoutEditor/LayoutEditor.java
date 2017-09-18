@@ -329,8 +329,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private int gridSize2nd = 10;
 
     //size of point boxes
-    private static final double SIZE = 3.0;
-    private static final double SIZE2 = SIZE * 2.; //must be twice SIZE
+    protected static final double SIZE = 3.0;
+    protected static final double SIZE2 = SIZE * 2.; //must be twice SIZE
 
     //NOTE: although these have been moved to the LayoutTurnout class 
     // I'm leaving a copy of them here so that any external use of these 
@@ -2185,10 +2185,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem turnoutItem = new JMenuItem(Bundle.getMessage("SignalsAtTurnout") + "...");
         toolsMenu.add(turnoutItem);
         turnoutItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
-
+            LayoutEditor.this.getLETools();
             //bring up signals at turnout tool dialog
             tools.setSignalsAtTurnout(signalIconEditor, signalFrame);
         });
@@ -2197,9 +2194,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem boundaryItem = new JMenuItem(Bundle.getMessage("SignalsAtBoundary") + "...");
         toolsMenu.add(boundaryItem);
         boundaryItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at block boundary tool dialog
             tools.setSignalsAtBlockBoundary(signalIconEditor, signalFrame);
@@ -2209,9 +2204,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem xoverItem = new JMenuItem(Bundle.getMessage("SignalsAtXoverTurnout") + "...");
         toolsMenu.add(xoverItem);
         xoverItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at double crossover tool dialog
             tools.setSignalsAtXoverTurnout(signalIconEditor, signalFrame);
@@ -2221,9 +2214,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem xingItem = new JMenuItem(Bundle.getMessage("SignalsAtLevelXing") + "...");
         toolsMenu.add(xingItem);
         xingItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at level crossing tool dialog
             tools.setSignalsAtLevelXing(signalIconEditor, signalFrame);
@@ -2233,9 +2224,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem tToTItem = new JMenuItem(Bundle.getMessage("SignalsAtTToTTurnout") + "...");
         toolsMenu.add(tToTItem);
         tToTItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at throat-to-throat turnouts tool dialog
             tools.setSignalsAtThroatToThroatTurnouts(signalIconEditor, signalFrame);
@@ -2245,9 +2234,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem way3Item = new JMenuItem(Bundle.getMessage("SignalsAt3WayTurnout") + "...");
         toolsMenu.add(way3Item);
         way3Item.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at 3-way turnout tool dialog
             tools.setSignalsAt3WayTurnout(signalIconEditor, signalFrame);
@@ -2256,9 +2243,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JMenuItem slipItem = new JMenuItem(Bundle.getMessage("SignalsAtSlip") + "...");
         toolsMenu.add(slipItem);
         slipItem.addActionListener((ActionEvent event) -> {
-            if (tools == null) {
-                tools = new LayoutEditorTools(LayoutEditor.this);
-            }
+            LayoutEditor.this.getLETools();
 
             //bring up signals at throat-to-throat turnouts tool dialog
             tools.setSignalsAtSlip(signalIconEditor, signalFrame);
@@ -5323,9 +5308,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Object obj = null;
         if (opt.isPresent()) {
             obj = opt.get();
-        }
-
-        if (null != obj) {
+            if (null != obj) {
+                /*  TODO: Dead-code strip this (if not needed)
             if (obj instanceof LayoutTurntable) {
                 LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
                 if (LayoutTrack.isConnectionHitType(selectedPointType)) {
@@ -5338,8 +5322,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 } else {
                     selectedPointType = LayoutTrack.NONE;
                 }
-            } else {
-                selectedObject = obj;
+            } else
+                 */
+                {
+                    selectedObject = obj;
+                }
             }
         }
         return (selectedObject != null);
@@ -5540,12 +5527,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
-    public Point2D getCoords(@Nonnull Object o, int connectionType) {
+    public static Point2D getCoords(@Nonnull LayoutTrack o, int connectionType) {
         Point2D result = MathUtil.zeroPoint2D;
         if (o != null) {
             result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
         } else {
-            log.error("Null connection point of type {} {}", connectionType, getLayoutName());
+            //log.error("Null connection point of type {} {}", connectionType, getLayoutName());
+            log.error("Null connection point of type {}", connectionType);
         }
         return result;
     } //getCoords
@@ -8471,10 +8459,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
 
-//l.setActiveIcon(sensorIconEditor.getIcon(0));
-//l.setInactiveIcon(sensorIconEditor.getIcon(1));
-//l.setInconsistentIcon(sensorIconEditor.getIcon(2));
-//l.setUnknownIcon(sensorIconEditor.getIcon(3));
         l.setIcon("SensorStateActive", sensorIconEditor.getIcon(0));
         l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));
         l.setIcon("BeanStateInconsistent", sensorIconEditor.getIcon(2));
@@ -9543,10 +9527,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //to do point-in-rect (hit) testing
     //compute the control point rect at inPoint
     public Rectangle2D trackControlPointRectAt(@Nonnull Point2D inPoint) {
-        return new Rectangle2D.Double(
-                inPoint.getX() - LayoutTrack.controlPointSize,
-                inPoint.getY() - LayoutTrack.controlPointSize,
-                LayoutTrack.controlPointSize2, LayoutTrack.controlPointSize2);
+        return new Rectangle2D.Double(inPoint.getX() - SIZE,
+                inPoint.getY() - SIZE, SIZE2, SIZE2);
     } //controlPointRectAt
 
     //compute the turnout circle rect at inPoint
@@ -9670,6 +9652,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     } //drawTrackInProgress
 
     private void drawLayoutTrackEditControls(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         for (LayoutTrack tr : layoutTrackList) {
             tr.drawEditControls(g2);
         }
