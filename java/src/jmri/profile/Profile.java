@@ -269,7 +269,7 @@ public class Profile implements Comparable<Profile> {
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is only null if path is not a directory")
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is documented as only null if path is not a directory")
     public static boolean containsProfile(File path) {
         if (path.isDirectory()) {
             if (Profile.isProfile(path)) {

@@ -61,10 +61,10 @@ public class FileUtilSupport extends Bean {
 
     /* User's home directory */
     private static final String HOME_PATH = System.getProperty("user.home") + File.separator; // NOI18N
-    /*
-     * Settable directories
-     */
- /* JMRI program path, defaults to directory JMRI is executed from */
+    //
+    // Settable directories
+    //
+    /* JMRI program path, defaults to directory JMRI is executed from */
     private String programPath = null;
     /* path to jmri.jar */
     private String jarPath = null;
@@ -74,6 +74,7 @@ public class FileUtilSupport extends Bean {
     private String userFilesPath = null;
     /* path to the current profile */
     private String profilePath = null;
+
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
     // default instance
@@ -319,7 +320,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
@@ -334,10 +335,10 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -416,7 +417,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
@@ -430,10 +431,10 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -464,14 +465,13 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Test if the given filename is a portable filename.
-     *
+     * <p>
      * Note that this method may return a false positive if the filename is a
      * file: URL.
      *
      * @param filename the name to test
      * @return true if filename is portable
      */
-    @SuppressWarnings("deprecation")
     public boolean isPortableFilename(String filename) {
         return (filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
@@ -602,11 +602,11 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the JMRI cache location, ensuring its existence.
-     *
+     * <p>
      * This is <strong>not</strong> part of the {@link jmri.util.FileUtil} API
      * since it should generally be accessed using
      * {@link jmri.profile.ProfileUtils#getCacheDirectory(jmri.profile.Profile, java.lang.Class)}.
-     *
+     * <p>
      * Uses the following locations (where [version] is from
      * {@link jmri.Version#getCanonicalVersion()}):
      * <dl>
@@ -676,7 +676,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Set the JMRI program directory.
-     *
+     * <p>
      * Convenience method that calls {@link #setProgramPath(java.io.File)} with
      * the passed in path.
      *
@@ -771,7 +771,6 @@ public class FileUtilSupport extends Bean {
      * @param path the path to find
      * @return URL of portable or absolute path
      */
-    @SuppressWarnings("deprecation")
     public URI findExternalFilename(String path) {
         log.debug("Finding external path {}", path);
         if (this.isPortableFilename(path)) {
@@ -895,7 +894,7 @@ public class FileUtilSupport extends Bean {
      * {@link java.net.URI} for that file. Search order is defined by
      * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
-     *
+     * <p>
      * Note that if the file for path is not found in one of the searchPaths,
      * all standard locations are also be searched through to find the file. If
      * you need to limit the locations where the file can be found use
@@ -1297,8 +1296,7 @@ public class FileUtilSupport extends Bean {
      * @param path path to delete
      * @return true if path was deleted, false otherwise
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "listFiles() is documented to return null only if isDirectory() is false")
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is documented as only null if path is not a directory")
     public boolean delete(File path) {
         if (path.isDirectory()) {
             for (File file : path.listFiles()) {
@@ -1424,7 +1422,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the default instance of a FileUtilSupport object.
-     *
+     * <p>
      * Unlike most implementations of getDefault(), this does not return an
      * object held by {@link jmri.InstanceManager} due to the need for this
      * default instance to be available prior to the creation of an
