@@ -822,6 +822,9 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Activate Add a range option if manager accepts adding more than 1 Light.
+     */
     private boolean canAddRange() {
         String testSysName = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L11";
         return InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(testSysName);

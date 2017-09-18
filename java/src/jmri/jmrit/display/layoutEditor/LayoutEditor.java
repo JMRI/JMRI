@@ -2070,7 +2070,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         inComboBox.setEditable(true);
         inComboBox.setValidateMode(inValidateMode);
         inComboBox.setText("");
-
+        log.debug("LE setupComboBox called");
         // find the max height of all popup items
         BasicComboPopup popup = (BasicComboPopup) inComboBox.getAccessibleContext().getAccessibleChild(0);
         JList list = popup.getList();

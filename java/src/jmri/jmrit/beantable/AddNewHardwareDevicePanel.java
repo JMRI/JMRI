@@ -28,6 +28,8 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         if (statusBar == null) statusBar = new JLabel("");
         _endRange = endRange;
         _range = addRange;
+        _addButton = addButton; // getting the addButton from the table action allows to disable it
+        // from there as long as no valid address is entered TODO
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -85,8 +87,8 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         panelBottom.add(cancel);
         cancel.addActionListener(cancelListener);
 
-        panelBottom.add(addButton);
-        addButton.addActionListener(okListener);
+        panelBottom.add(_addButton);
+        _addButton.addActionListener(okListener);
 
         add(panelBottom);
 
@@ -126,6 +128,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton cancel = new JButton(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Revert/Cancel
+    JButton _addButton;
     JSpinner _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
