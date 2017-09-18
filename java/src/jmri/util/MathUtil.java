@@ -19,6 +19,44 @@ import javax.annotation.Nonnull;
  */
 public final class MathUtil {
 
+    /**
+     * @param a the first float
+     * @param b the second float
+     * @param e the maximum allowed error
+     * @return true if a is equal to b (within e)
+     */
+    public static boolean equals(float a, float b, float e) {
+        return Math.abs(a - b) < e;
+    }
+
+    /**
+     * @param a the first float
+     * @param b the second float
+     * @return true if a is equal to b
+     */
+    public static boolean equals(float a, float b) {
+        return equals(a, b, Math.max(Math.ulp(a), Math.ulp(b)));
+    }
+
+    /**
+     * @param a the first double
+     * @param b the second double
+     * @param e the maximum allowed error
+     * @return true if a is equal to b (within e)
+     */
+    public static boolean equals(double a, double b, double e) {
+        return Math.abs(a - b) < e;
+    }
+
+    /**
+     * @param a the first double
+     * @param b the second double
+     * @return true if a is equal to b
+     */
+    public static boolean equals(double a, double b) {
+        return equals(a, b, Math.max(Math.ulp(a), Math.ulp(b)));
+    }
+
     public static final Point2D zeroPoint2D = zeroPoint2D();
     public static final Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
 
@@ -58,6 +96,23 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point point2DToPoint(@Nonnull Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return true if p1 is equal to p2
+     */
+    public static boolean equals(@Nonnull Point2D p1, @Nonnull Point2D p2) {
+        return equals(p1.getX(), p2.getX()) && equals(p1.getY(), p2.getY());
+    }
+
+    /**
+     * @param p the point
+     * @return true if p1 is equal to zeroPoint2D
+     */
+    public static boolean isEqualToZeroPoint2D(@Nonnull Point2D p) {
+        return p.equals(zeroPoint2D);
     }
 
     /**

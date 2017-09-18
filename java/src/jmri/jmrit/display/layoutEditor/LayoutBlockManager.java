@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.BlockManager;
@@ -19,8 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a Manager to handle LayoutBlocks.
- * Note: the same LayoutBlocks may appear in multiple LayoutEditor panels.
+ * Implementation of a Manager to handle LayoutBlocks. Note: the same
+ * LayoutBlocks may appear in multiple LayoutEditor panels.
  * <P>
  * This manager does not enforce any particular system naming convention.
  * <P>
@@ -198,7 +200,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Method to find a LayoutBlock with a specified Sensor assigned as its
      * occupancy sensor.
      *
-     * @return the block or null if no existing LayoutBlock has the Sensor assigned
+     * @return the block or null if no existing LayoutBlock has the Sensor
+     *         assigned
      */
     public LayoutBlock getBlockWithSensorAssigned(Sensor s) {
         java.util.Iterator<String> iter = getSystemNameList().iterator();
@@ -223,7 +226,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Method to find a LayoutBlock with a specified Memory assigned as its
      * value display.
      *
-     * @return the block or null if no existing LayoutBlock has the memory assigned.
+     * @return the block or null if no existing LayoutBlock has the memory
+     *         assigned.
      */
     public LayoutBlock getBlockWithMemoryAssigned(Memory m) {
         java.util.Iterator<String> iter = getSystemNameList().iterator();
@@ -344,14 +348,24 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         //check input
         if ((facingBlock == null) || (protectedBlock == null)) {
             log.error("null block in call to getFacingSignalHead");
-
             return null;
         }
 
         //non-null - check if input corresponds to Blocks in a Layout Editor panel.
-        LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
-        LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
+        String facingBlockName = facingBlock.getUserName();
+        if ((facingBlockName == null) || facingBlockName.isEmpty()) {
+            log.error("facingBlockName has no user name");
+            return null;
+        }
 
+        String protectedBlockName = protectedBlock.getUserName();
+        if ((protectedBlockName == null) || protectedBlockName.isEmpty()) {
+            log.error("protectedBlockName has no user name");
+            return null;
+        }
+
+        LayoutBlock fLayoutBlock = getByUserName(facingBlockName);
+        LayoutBlock pLayoutBlock = getByUserName(protectedBlockName);
         if ((fLayoutBlock == null) || (pLayoutBlock == null)) {
             if (fLayoutBlock == null) {
                 log.error("Block " + facingBlock.getDisplayName() + "is not on a Layout Editor panel.");
@@ -365,7 +379,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         //input has corresponding LayoutBlocks - does it correspond to a block boundary?
         LayoutEditor panel = fLayoutBlock.getMaxConnectedPanel();
-        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+        List<LayoutConnectivity> c = panel.getLEAuxTools().getConnectivityList(fLayoutBlock);
         LayoutConnectivity lc = null;
         int i = 0;
         boolean facingIsBlock1 = true;
@@ -1308,6 +1322,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
             return null;
         }
+        String facingBlockName = facingBlock.getUserName();
+        if ((facingBlockName == null) || facingBlockName.isEmpty()) {
+            log.error("facing block has no user name");
+            return null;
+        }
+        
         LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
 
         if (fLayoutBlock == null) {
@@ -1360,14 +1380,20 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Method to return a Sensor facing into a specific Block. This is used for
      * Blocks that have an end bumper at one end.
      */
-    public Sensor getSensorAtEndBumper(Block facingBlock, LayoutEditor panel) {
+    public Sensor getSensorAtEndBumper(
+            @Nullable Block facingBlock,
+            @Nullable LayoutEditor panel) {
         if (facingBlock == null) {
             log.error("null block in call to getFacingSensor");
-
             return null;
         }
-        LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
 
+        String facingBlockName = facingBlock.getUserName();
+        if ((facingBlockName == null) || (facingBlockName.isEmpty())) {
+            log.error("Block " + facingBlock.getDisplayName() + " has no user name.");
+            return null;
+        }
+        LayoutBlock fLayoutBlock = getByUserName(facingBlockName);
         if (fLayoutBlock == null) {
             log.error("Block " + facingBlock.getDisplayName() + "is not on a Layout Editor panel.");
 
@@ -1469,11 +1495,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      *              SignalMast or Sensor
      * @return The assigned sensor.
      */
-    public NamedBean getFacingBean(Block facingBlock, Block protectedBlock, LayoutEditor panel, Class< ?> T) {
+    public NamedBean getFacingBean(@Nullable Block facingBlock,
+            @Nullable Block protectedBlock,
+            @Nonnull LayoutEditor panel, Class< ?> T) {
         //check input
         if ((facingBlock == null) || (protectedBlock == null)) {
             log.error("null block in call to getFacingSignalMast");
-
             return null;
         }
 
@@ -1490,9 +1517,10 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //non-null - check if input corresponds to Blocks in a Layout Editor panel.
-        LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
-        LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
-
+        String facingBlockName = facingBlock.getUserName();
+        LayoutBlock fLayoutBlock = getByUserName(facingBlockName);
+        String protectedBlockName = protectedBlock.getUserName();
+        LayoutBlock pLayoutBlock = getByUserName(protectedBlockName);
         if ((fLayoutBlock == null) || (pLayoutBlock == null)) {
             if (fLayoutBlock == null) {
                 log.error("Block " + facingBlock.getDisplayName() + " is not on a Layout Editor panel.");
@@ -1508,7 +1536,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (panel == null) {
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
-        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+        List<LayoutConnectivity> c = panel.getLEAuxTools().getConnectivityList(fLayoutBlock);
         LayoutConnectivity lc = null;
         int i = 0;
         boolean facingIsBlock1 = true;
@@ -2521,21 +2549,20 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * @return list of layout block user names
      */
     public List<LayoutBlock> getLayoutBlocksOccupiedByRosterEntry(RosterEntry re) {
+        List<LayoutBlock> result = new ArrayList<>();
+
         BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
-
         List<Block> blockList = bm.getBlocksOccupiedByRosterEntry(re);
-        List<LayoutBlock> layoutBlockList = new ArrayList<>();
-
         for (Block block : blockList) {
-            if (block.getUserName() != null) {
-                LayoutBlock lb = getByUserName(block.getUserName());
-
+            String uname = block.getUserName();
+            if (uname != null) {
+                LayoutBlock lb = getByUserName(uname);
                 if (lb != null) {
-                    layoutBlockList.add(lb);
+                    result.add(lb);
                 }
             }
         }
-        return layoutBlockList;
+        return result;
     }	//getLayoutBlocksOccupiedByRosterEntry
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);

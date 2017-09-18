@@ -436,7 +436,8 @@ public class LayoutBlockConnectivityTools {
             }
             return returnBlocks;
         }
-        LayoutBlock currentLBlock = protectingLayoutBlock;
+        //TODO: FindBugs says this is a dead store; code-strip it
+        LayoutBlock currentLBlock; // = protectingLayoutBlock;
 
         BlocksTested bt = blocksInRoute.get(blocksInRoute.size() - 1);
 

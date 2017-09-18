@@ -719,7 +719,6 @@ public class LevelXing extends LayoutTrack {
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         switch (connectionType) {
             case LEVEL_XING_CENTER:
                 break;
@@ -1355,7 +1354,7 @@ public class LevelXing extends LayoutTrack {
                 blockNameAC = "";
             }
             needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
         // check if a block exists to edit
@@ -1401,7 +1400,7 @@ public class LevelXing extends LayoutTrack {
                 blockNameBD = "";
             }
             needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
         // check if a block exists to edit
@@ -1442,7 +1441,7 @@ public class LevelXing extends LayoutTrack {
                 blockNameAC = "";
             }
             needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
         newName = block2NameComboBox.getUserName();
@@ -1470,7 +1469,7 @@ public class LevelXing extends LayoutTrack {
                 blockNameBD = "";
             }
             needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
 

@@ -118,6 +118,10 @@ public class PositionablePoint extends LayoutTrack {
                 result = "Edge Connector";
                 break;
             }
+            default: {
+                result = "Unknown type (" + type + ")";
+                break;
+            }
         }
         return result + " '" + ident + "'";
     }
@@ -212,12 +216,12 @@ public class PositionablePoint extends LayoutTrack {
             }
             if (oldLinkedPoint.getConnect1() != null) {
                 TrackSegment ts = oldLinkedPoint.getConnect1();
-                oldLinkedPoint.getLayoutEditor().auxTools.setBlockConnectivityChanged();
+                oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
                 oldLinkedPoint.getLayoutEditor().repaint();
             }
             if (getConnect1() != null) {
-                layoutEditor.auxTools.setBlockConnectivityChanged();
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
                 layoutEditor.repaint();
             }
@@ -226,7 +230,7 @@ public class PositionablePoint extends LayoutTrack {
         if (p != null) {
             p.setLinkedPoint(this);
             if (getConnect1() != null) {
-                layoutEditor.auxTools.setBlockConnectivityChanged();
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
                 layoutEditor.repaint();
             }
@@ -615,7 +619,7 @@ public class PositionablePoint extends LayoutTrack {
             if (getConnect2() != null && getLinkedEditor() != null) {
                 //now that we have a connection we can fire off a change
                 TrackSegment ts = getConnect2();
-                getLinkedEditor().auxTools.setBlockConnectivityChanged();
+                getLinkedEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
             }
         } else {
@@ -898,7 +902,6 @@ public class PositionablePoint extends LayoutTrack {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools = layoutEditor.getLETools();
                         // bring up signals at level crossing tool dialog
                         tools.setSignalAtEdgeConnector(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
@@ -984,7 +987,7 @@ public class PositionablePoint extends LayoutTrack {
                 TrackSegment ts = getConnect2();
                 getLinkedPoint().setLinkedPoint(null);
                 oldLinkedEditor.repaint();
-                oldLinkedEditor.auxTools.setBlockConnectivityChanged();
+                oldLinkedEditor.getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
             }
             linkedPoint = null;

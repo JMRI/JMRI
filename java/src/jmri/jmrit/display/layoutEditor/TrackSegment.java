@@ -1122,7 +1122,7 @@ public class TrackSegment extends LayoutTrack {
                 blockName = "";
             }
             needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             updateBlockInfo();
         }
         // check if a block exists to edit
@@ -1180,7 +1180,7 @@ public class TrackSegment extends LayoutTrack {
                 blockName = "";
             }
             needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             updateBlockInfo();
         }
         editOpen = false;
@@ -1390,7 +1390,8 @@ public class TrackSegment extends LayoutTrack {
                     ep2 = t;
                 }
                 Point2D delta = MathUtil.subtract(ep1, ep2);
-                if (Math.copySign(1.0, delta.getX()) != Math.copySign(1.0, delta.getY())) {
+                // are they of the same sign?
+                if ((delta.getX() >= 0.0) != (delta.getY() >= 0.0)) {
                     delta = MathUtil.divide(delta, +5.0, -5.0);
                 } else {
                     delta = MathUtil.divide(delta, -5.0, +5.0);

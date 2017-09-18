@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
@@ -282,6 +283,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @return the display name or null if no selection
      */
+    @CheckReturnValue
     public String getDisplayName() {
         String result = null;
         NamedBean b;

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jmri.util.ColorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +78,7 @@ public abstract class LayoutTrack {
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;
+        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
     }
 
     /**
@@ -104,7 +106,7 @@ public abstract class LayoutTrack {
      *
      * @param p the coordinates to set
      */
-    public void setCoordsCenter(@Nullable Point2D p) {
+    public void setCoordsCenter(@Nonnull Point2D p) {
         center = p;
     }
 

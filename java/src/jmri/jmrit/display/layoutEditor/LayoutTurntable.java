@@ -347,10 +347,17 @@ public class LayoutTurntable extends LayoutTrack {
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
         }
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
-            setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
+            if ((o == null) || (o instanceof TrackSegment)) {
+                setRayConnect((TrackSegment) o, connectionType - TURNTABLE_RAY_OFFSET);
+            } else {
+                String msg = "Invalid object type " + o.getClass().getName(); // NOI18N
+                log.error(msg);
+                throw new jmri.JmriException(msg);
+            }
         } else {
-            log.error("Invalid Connection Type " + connectionType); // NOI18N
-            throw new jmri.JmriException("Invalid Connection Type " + connectionType);
+            String msg = "Invalid Connection Type " + connectionType; // NOI18N
+            log.error(msg);
+            throw new jmri.JmriException(msg);
         }
     }
 
@@ -1054,6 +1061,7 @@ public class LayoutTurntable extends LayoutTrack {
     protected void draw(Graphics2D g2) {
         // draw turntable circle - default track color, side track width
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, false);
+        float halfTrackWidth = trackWidth / 2.f;
         double r = getRadius(), d = r + r;
         g2.setColor(defaultTrackColor);
         g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
@@ -1073,8 +1081,9 @@ public class LayoutTurntable extends LayoutTrack {
             Point2D pt2 = MathUtil.add(center, delta);
             g2.draw(new Line2D.Double(pt1, pt2));
             if (isTurnoutControlled() && (getPosition() == j)) {
-                delta = MathUtil.multiply(delta, (r - trackWidth) / r);
-                pt1 = MathUtil.subtract(center, MathUtil.subtract(pt2, center));
+                delta = MathUtil.multiply(delta, (r - halfTrackWidth) / r);
+                //pt1 = MathUtil.subtract(center, MathUtil.subtract(pt2, center));
+                pt1 = MathUtil.subtract(center, delta);
                 //g2.setColor(Color.RED); //TODO: remove this
                 g2.draw(new Line2D.Double(pt1, pt2));
             }

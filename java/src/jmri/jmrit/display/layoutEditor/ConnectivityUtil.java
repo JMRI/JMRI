@@ -3,6 +3,9 @@ package jmri.jmrit.display.layoutEditor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -110,12 +113,24 @@ public class ConnectivityUtil {
         List<LayoutTurnout> list = new ArrayList<>();
         companion = new ArrayList<>();
         // initialize
-        currLayoutBlock = layoutBlockManager.getByUserName(currBlock.getUserName());
+        currLayoutBlock = null;
+        String currUserName = currBlock.getUserName();
+        if ((currUserName != null) && !currUserName.isEmpty()) {
+            currLayoutBlock = layoutBlockManager.getByUserName(currUserName);
+        }
         if (prevBlock != null) {
-            prevLayoutBlock = layoutBlockManager.getByUserName(prevBlock.getUserName());
+            prevLayoutBlock = null;
+            String prevUserName = prevBlock.getUserName();
+            if ((prevUserName != null) && !prevUserName.isEmpty()) {
+                prevLayoutBlock = layoutBlockManager.getByUserName(prevUserName);
+            }
         }
         if (nextBlock != null) {
-            nextLayoutBlock = layoutBlockManager.getByUserName(nextBlock.getUserName());
+            nextLayoutBlock = null;
+            String nextUserName = nextBlock.getUserName();
+            if ((nextUserName != null) && !nextUserName.isEmpty()) {
+                nextLayoutBlock = layoutBlockManager.getByUserName(nextUserName);
+            }
         }
         if ((prevLayoutBlock == null) || (nextLayoutBlock == null)) {
             // special search with partial information - not as good, order not assured
@@ -236,10 +251,10 @@ public class ConnectivityUtil {
         if (notFound) {
             if (prevBlock != null) {    // could not initialize the connectivity search
                 if (!suppress) {
-                    log.error("Could not find connection between Blocks {} and {}", currBlock.getUserName(), prevBlock.getUserName());
+                    log.error("Could not find connection between Blocks {} and {}", currUserName, prevBlock.getUserName());
                 }
             } else if (!suppress) {
-                log.error("Could not find connection between Blocks {}, prevBock is null!", currBlock.getUserName());
+                log.error("Could not find connection between Blocks {}, prevBock is null!", currUserName);
             }
             return list;
         }
@@ -519,7 +534,11 @@ public class ConnectivityUtil {
      */
     public List<Block> getConnectedBlocks(Block block) {
         List<Block> list = new ArrayList<>();
-        currLayoutBlock = layoutBlockManager.getByUserName(block.getUserName());
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
         for (int i = 0; i < cList.size(); i++) {
             LayoutConnectivity lc = cList.get(i);
@@ -540,7 +559,11 @@ public class ConnectivityUtil {
      */
     public List<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
         List<PositionablePoint> list = new ArrayList<>();
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if ((p.getConnect2() != null) && (p.getConnect1() != null)) {
                 if ((p.getConnect2().getLayoutBlock() != null) && (p.getConnect1().getLayoutBlock() != null)) {
@@ -566,8 +589,12 @@ public class ConnectivityUtil {
      */
     public List<LevelXing> getLevelCrossingsThisBlock(Block block) {
         List<LevelXing> list = new ArrayList<>();
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        layoutEditor.getLevelXings().forEach((x) -> {
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
+        for (LevelXing x : layoutEditor.getLevelXings()) {
             boolean found = false;
             if ((x.getLayoutBlockAC() == lBlock) || (x.getLayoutBlockBD() == lBlock)) {
                 found = true;
@@ -591,7 +618,7 @@ public class ConnectivityUtil {
                     log.error("Missing connection or block assignment at Level Crossing in Block " + block.getDisplayName());
                 }
             }
-        });
+        }
         return list;
     }
 
@@ -601,53 +628,57 @@ public class ConnectivityUtil {
      * @param block the Block to get layout turnouts for
      * @return the list of associated layout turnouts or an empty list if none
      */
-    public List<LayoutTurnout> getLayoutTurnoutsThisBlock(Block block) {
-        List<LayoutTurnout> list = new ArrayList<>();
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        String lBlockName = block.getUserName();
-        layoutEditor.getLayoutTurnouts().forEach((t) -> {
-            if ((t.getBlockName().equals(lBlockName)) || (t.getBlockBName().equals(lBlockName))
-                    || (t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName))) {
-                list.add(t);
+    @Nonnull
+    public List<LayoutTurnout> getLayoutTurnoutsThisBlock(@Nullable Block block) {
+        List<LayoutTurnout> result = new ArrayList<>();
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
+        for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
+            if ((t.getBlockName().equals(userName)) || (t.getBlockBName().equals(userName))
+                    || (t.getBlockCName().equals(userName)) || (t.getBlockDName().equals(userName))) {
+                result.add(t);
             } else if ((t.getConnectA() != null) && (((TrackSegment) t.getConnectA()).getLayoutBlock() == lBlock)) {
-                list.add(t);
+                result.add(t);
             } else if ((t.getConnectB() != null) && (((TrackSegment) t.getConnectB()).getLayoutBlock() == lBlock)) {
-                list.add(t);
+                result.add(t);
             } else if ((t.getConnectC() != null) && (((TrackSegment) t.getConnectC()).getLayoutBlock() == lBlock)) {
-                list.add(t);
+                result.add(t);
             } else if ((t.getConnectD() != null) && (((TrackSegment) t.getConnectD()).getLayoutBlock() == lBlock)) {
-                list.add(t);
+                result.add(t);
             }
-        });
-        layoutEditor.getLayoutSlips().forEach((ls) -> {
-            if (ls.getBlockName().equals(lBlockName)) {
-                list.add(ls);
+        }
+        for (LayoutTurnout ls : layoutEditor.getLayoutTurnouts()) {
+            if (ls.getBlockName().equals(userName)) {
+                result.add(ls);
             } else if ((ls.getConnectA() != null) && (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lBlock)) {
-                list.add(ls);
+                result.add(ls);
             } else if ((ls.getConnectB() != null) && (((TrackSegment) ls.getConnectB()).getLayoutBlock() == lBlock)) {
-                list.add(ls);
+                result.add(ls);
             } else if ((ls.getConnectC() != null) && (((TrackSegment) ls.getConnectC()).getLayoutBlock() == lBlock)) {
-                list.add(ls);
+                result.add(ls);
             } else if ((ls.getConnectD() != null) && (((TrackSegment) ls.getConnectD()).getLayoutBlock() == lBlock)) {
-                list.add(ls);
+                result.add(ls);
             }
-        });
+        }
         if (log.isTraceEnabled()) {
             StringBuilder txt = new StringBuilder("Turnouts for Block ");
             txt.append(block.getUserName()).append(" - ");
-            for (int k = 0; k < list.size(); k++) {
+            for (int k = 0; k < result.size(); k++) {
                 if (k > 0) {
                     txt.append(", ");
                 }
-                if ((list.get(k)).getTurnout() != null) {
-                    txt.append((list.get(k)).getTurnout().getSystemName());
+                if ((result.get(k)).getTurnout() != null) {
+                    txt.append((result.get(k)).getTurnout().getSystemName());
                 } else {
                     txt.append("???");
                 }
             }
             log.error(txt.toString());
         }
-        return list;
+        return result;
     }
 
     /**
@@ -694,8 +725,6 @@ public class ConnectivityUtil {
                 return (t.getSignalA1Name() != null) && (!t.getSignalA1Name().equals(""))
                         && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
             case LayoutTurnout.SECOND_3_WAY:
-                return (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
-                        && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
             case LayoutTurnout.THROAT_TO_THROAT:
                 return (t.getSignalB1Name() != null) && (!t.getSignalB1Name().equals(""))
                         && (t.getSignalC1Name() != null) && (!t.getSignalC1Name().equals(""));
@@ -716,12 +745,19 @@ public class ConnectivityUtil {
      * @return a SignalHead facing away from or towards block depending on value
      *         of facing; may be null
      */
-    public SignalHead getSignalHeadAtAnchor(PositionablePoint p, Block block, boolean facing) {
+    @CheckReturnValue
+    @Nullable
+    public SignalHead getSignalHeadAtAnchor(@Nullable PositionablePoint p,
+            @Nullable Block block, boolean facing) {
         if ((p == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtAnchor");
             return null;
         }
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
             if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
                     || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
@@ -753,12 +789,19 @@ public class ConnectivityUtil {
      * @return a SignalMast facing away from or towards block depending on value
      *         of facing; may be null
      */
-    public SignalMast getSignalMastAtAnchor(PositionablePoint p, Block block, boolean facing) {
+    @CheckReturnValue
+    @Nullable
+    public SignalMast getSignalMastAtAnchor(@Nullable PositionablePoint p,
+            @Nullable Block block, boolean facing) {
         if ((p == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtAnchor");
             return null;
         }
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
             if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
                     || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
@@ -809,12 +852,19 @@ public class ConnectivityUtil {
      * @return a SignalHead facing away from or towards block depending on value
      *         of facing; may be null
      */
-    public SignalHead getSignalHeadAtLevelXing(LevelXing x, Block block, boolean facing) {
+    @CheckReturnValue
+    @Nullable
+    public SignalHead getSignalHeadAtLevelXing(@Nullable LevelXing x,
+            @Nullable Block block, boolean facing) {
         if ((x == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtLevelXing");
             return null;
         }
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         if ((x.getConnectA() == null) || (x.getConnectB() == null)
                 || (x.getConnectC() == null) || (x.getConnectD() == null)) {
             log.error("Missing track around level crossing near Block {}", block.getUserName());
@@ -859,11 +909,15 @@ public class ConnectivityUtil {
      * @return true if block is internal to x; false if block is external or
      *         contains a connecting track segment
      */
-    public boolean blockInternalToLevelXing(LevelXing x, Block block) {
+    public boolean blockInternalToLevelXing(@Nullable LevelXing x, @Nullable Block block) {
         if ((x == null) || (block == null)) {
             return false;
         }
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         if (lBlock == null) {
             return false;
         }
@@ -933,8 +987,12 @@ public class ConnectivityUtil {
      * @return true if the A and C track segments of LevelXing x is in Block
      *         block; false otherwise
      */
-    public boolean isInternalLevelXingAC(LevelXing x, Block block) {
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+    public boolean isInternalLevelXingAC(@Nonnull LevelXing x, @Nonnull Block block) {
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         if ((((TrackSegment) x.getConnectA()).getLayoutBlock() == lBlock)
                 && (((TrackSegment) x.getConnectC()).getLayoutBlock() == lBlock)) {
             if (x.getLayoutBlockAC() == lBlock) {
@@ -960,8 +1018,12 @@ public class ConnectivityUtil {
      * @return true if the B and D track segments of LevelXing x is in Block
      *         block; false otherwise
      */
-    public boolean isInternalLevelXingBD(LevelXing x, Block block) {
-        LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+    public boolean isInternalLevelXingBD(@Nonnull LevelXing x, @Nonnull Block block) {
+        String userName = block.getUserName();
+        LayoutBlock lBlock = null;
+        if ((userName != null) && !userName.isEmpty()) {
+            lBlock = layoutBlockManager.getByUserName(userName);
+        }
         if ((((TrackSegment) x.getConnectB()).getLayoutBlock() == lBlock)
                 && (((TrackSegment) x.getConnectD()).getLayoutBlock() == lBlock)) {
             if (x.getLayoutBlockBD() == lBlock) {
@@ -1226,7 +1288,7 @@ public class ConnectivityUtil {
                     log.error("Attempt to search beyond end of track");
                     return null;
                 }
-                if (p.getConnect1() == tTrack) {
+                if (p.getConnect1() == null) {
                     tTrack = p.getConnect2();
                 } else {
                     tTrack = p.getConnect1();

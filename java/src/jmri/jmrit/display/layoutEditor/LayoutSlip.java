@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -19,6 +20,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -200,7 +203,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
@@ -350,6 +353,9 @@ public class LayoutSlip extends LayoutTurnout {
                         || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
                 break;
             }
+            default: {
+                log.error("Unknown slip state: {}", currentState);
+            }
         }
         return result;
     }   // isOccupied()
@@ -424,7 +430,6 @@ public class LayoutSlip extends LayoutTurnout {
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         switch (connectionType) {
             case SLIP_A:
                 result = getCoordsA();
@@ -520,7 +525,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected) {
@@ -603,7 +608,7 @@ public class LayoutSlip extends LayoutTurnout {
      * @param p the coordinates to set
      */
     @Override
-    public void setCoordsCenter(Point2D p) {
+    public void setCoordsCenter(@Nonnull Point2D p) {
         center = p;
         pointA = MathUtil.add(center, dispA);
         pointB = MathUtil.add(center, dispB);
@@ -612,28 +617,28 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     @Override
-    public void setCoordsA(Point2D p) {
+    public void setCoordsA(@Nonnull Point2D p) {
         pointA = p;
         dispA = MathUtil.subtract(pointA, center);
         pointC = MathUtil.subtract(center, dispA);
     }
 
     @Override
-    public void setCoordsB(Point2D p) {
+    public void setCoordsB(@Nonnull Point2D p) {
         pointB = p;
         dispB = MathUtil.subtract(pointB, center);
         pointD = MathUtil.subtract(center, dispB);
     }
 
     @Override
-    public void setCoordsC(Point2D p) {
+    public void setCoordsC(@Nonnull Point2D p) {
         pointC = p;
         dispA = MathUtil.subtract(center, pointC);
         pointA = MathUtil.add(center, dispA);
     }
 
     @Override
-    public void setCoordsD(Point2D p) {
+    public void setCoordsD(@Nonnull Point2D p) {
         pointD = p;
         dispB = MathUtil.subtract(center, pointD);
         pointB = MathUtil.add(center, dispB);
@@ -696,8 +701,13 @@ public class LayoutSlip extends LayoutTurnout {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutDoubleSlip")) + ident);
                     break;
                 }
+                default: {
+                    log.error("Unknown slip type: {}", type);
+                }
             }
-            jmi.setEnabled(false);
+            if (jmi != null) {
+                jmi.setEnabled(false);
+            }
 
             if (getTurnout() == null) {
                 jmi = popup.add(rb.getString("NoTurnout"));
@@ -1135,7 +1145,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
+            public void windowClosing(WindowEvent e) {
                 slipEditCancelPressed(null);
             }
         });
@@ -1237,8 +1247,9 @@ public class LayoutSlip extends LayoutTurnout {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);    // paints background
-            Graphics2D g2 = (Graphics2D) g;
-            drawSlipState(g2, state);
+            if (g instanceof Graphics2D) {
+                drawSlipState((Graphics2D) g, state);
+            }
         }
     }
 
@@ -1296,8 +1307,9 @@ public class LayoutSlip extends LayoutTurnout {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            drawSlipState(g2, testState);
+            if (g instanceof Graphics2D) {
+                drawSlipState((Graphics2D) g, testState);
+            }
         }
     }
 
@@ -1342,7 +1354,7 @@ public class LayoutSlip extends LayoutTurnout {
                 blockNameComboBox.setSelectedIndex(-1);
             }
             needRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
         for (TurnoutState ts : turnoutStates.values()) {
@@ -1417,16 +1429,9 @@ public class LayoutSlip extends LayoutTurnout {
         InstanceManager.getDefault(jmri.SignalMastLogicManager.class).disableLayoutEditorUse(signalMast);
     }
 
-// AFAIK this isn't used anywhere
-//    public boolean singleSlipStraightEqual() {
-//        if (type != SINGLE_SLIP) {
-//            return false;
-//        }
-//        return turnoutStates.get(STATE_AC).equals(turnoutStates.get(STATE_BD));
-//    }
     Hashtable<Integer, TurnoutState> turnoutStates = new Hashtable<Integer, TurnoutState>(4);
 
-    public int getTurnoutState(Turnout turn, int state) {
+    public int getTurnoutState(@Nonnull Turnout turn, int state) {
         if (turn == getTurnout()) {
             return getTurnoutState(state);
         }
@@ -1441,7 +1446,7 @@ public class LayoutSlip extends LayoutTurnout {
         return turnoutStates.get(Integer.valueOf(state)).getTurnoutBState();
     }
 
-    public void setTurnoutStates(int state, String turnStateA, String turnStateB) {
+    public void setTurnoutStates(int state, @Nonnull String turnStateA, @Nonnull String turnStateB) {
         if (!turnoutStates.containsKey(state)) {
             log.error("Trying to set invalid state for slip " + getDisplayName());
             return;
@@ -1503,7 +1508,7 @@ public class LayoutSlip extends LayoutTurnout {
             subColourD = b.getBlockTrackColor();
         }
 
-        float w = layoutEditor.setTrackStrokeWidth(g2, isMainline());
+        layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
         boolean isMainA = (connectA != null) && (((TrackSegment) connectA).isMainline());
         boolean isMainB = (connectB != null) && (((TrackSegment) connectB).isMainline());
@@ -1581,7 +1586,7 @@ public class LayoutSlip extends LayoutTurnout {
             layoutEditor.setTrackStrokeWidth(g2, isMainC);
             g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointB)));
         }
-    }   // draw(Graphics2D g2)
+    }   // draw
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // drawHidden left/right turnout control circles
@@ -1590,7 +1595,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         Point2D rightCircleCenter = getCoordsRight();
         g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
-    }   // drawTurnoutControls(Graphics2D g2)
+    }   // drawTurnoutControls
 
     protected void drawEditControls(Graphics2D g2) {
         if (getConnectA() == null) {
@@ -1620,7 +1625,7 @@ public class LayoutSlip extends LayoutTurnout {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
-    }   // drawEditControls(Graphics2D g2)
+    }   // drawEditControls
 
     static class TurnoutState {
 
@@ -1675,46 +1680,37 @@ public class LayoutSlip extends LayoutTurnout {
         }
 
         int getTestTurnoutAState() {
-            if (turnoutABox.getSelectedIndex() == 0) {
-                return Turnout.CLOSED;
+            int result = Turnout.THROWN;
+            if (turnoutABox != null) {
+                if (turnoutABox.getSelectedIndex() == 0) {
+                    result = Turnout.CLOSED;
+                }
             }
-            return Turnout.THROWN;
+            return result;
         }
 
         int getTestTurnoutBState() {
-            if (turnoutBBox.getSelectedIndex() == 0) {
-                return Turnout.CLOSED;
+            int result = Turnout.THROWN;
+            if (turnoutBBox != null) {
+                if (turnoutBBox.getSelectedIndex() == 0) {
+                    result = Turnout.CLOSED;
+                }
             }
-            return Turnout.THROWN;
+            return result;
         }
 
         void updateStatesFromCombo() {
-            if (turnoutABox == null || turnoutBBox == null) {
-                return;
-            }
-            if (turnoutABox.getSelectedIndex() == 0) {
-                turnoutA = Turnout.CLOSED;
-            } else {
-                turnoutA = Turnout.THROWN;
-            }
-            if (turnoutBBox.getSelectedIndex() == 0) {
-                turnoutB = Turnout.CLOSED;
-            } else {
-                turnoutB = Turnout.THROWN;
+            if ((turnoutABox != null) && (turnoutBBox != null)) {
+                turnoutA = getTestTurnoutAState();
+                turnoutB = getTestTurnoutBState();
             }
         }
 
-        boolean equals(TurnoutState ts) {
-            if (ts.getTurnoutAState() != this.getTurnoutAState()) {
-                return false;
-            }
-            if (ts.getTurnoutBState() != this.getTurnoutBState()) {
-                return false;
-            }
-            return true;
+        boolean equals(@Nonnull TurnoutState ts) {
+            return ((this.getTurnoutAState() != ts.getTurnoutAState())
+                    || (this.getTurnoutBState() != ts.getTurnoutBState()));
         }
-
-    }
+    }   // class TurnoutState
 
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
@@ -1877,6 +1873,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
