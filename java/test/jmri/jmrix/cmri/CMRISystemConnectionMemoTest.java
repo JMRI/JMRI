@@ -20,13 +20,17 @@ public class CMRISystemConnectionMemoTest {
     }
 
     @Test
-    public void testNormalizeSystemName() {
+    public void testValidSystemNameFormat() {
         CMRISystemConnectionMemo m = new CMRISystemConnectionMemo();
 
         Assert.assertTrue(m.validSystemNameFormat("CS2",'S'));    
         Assert.assertTrue(m.validSystemNameFormat("CS21",'S'));    
         Assert.assertTrue(m.validSystemNameFormat("CS2001",'S'));    
         Assert.assertTrue(m.validSystemNameFormat("CS21001",'S'));    
+
+        Assert.assertTrue(m.validSystemNameFormat("CS21B1",'S'));    
+        Assert.assertTrue(m.validSystemNameFormat("CS21B001",'S'));    
+        Assert.assertTrue(m.validSystemNameFormat("CS21B1001",'S'));    
           
         Assert.assertFalse(m.validSystemNameFormat("CSx",'S'));  
         jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CSx");
