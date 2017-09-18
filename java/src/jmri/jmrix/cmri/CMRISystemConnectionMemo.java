@@ -62,10 +62,13 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Public static method to parse a C/MRI system name and return the bit
-     * number. Notes: Bits are numbered from 1.
+     * number. Notes:
+     * <ul>
+     * <li>Bits are numbered from 1.</li>
+     * <li>Does not check whether that node is defined on current system.</li>
+     * </ul>
      *
      * @return 0 if an error is found.
-     * Does not check whether that node is defined on current system.
      */
     public int getBitFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -73,7 +76,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             return 0;
         }
         if ((systemName.charAt(offset) != 'L') && (systemName.charAt(offset) != 'S') && (systemName.charAt(offset) != 'T')) {
-            log.error("illegal character in header field of system name: " + systemName);
+            log.error("invalid character in header field of system name: " + systemName);
             return 0;
         }
         // Find the beginning of the bit number field
@@ -90,7 +93,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             try {
                 num = Integer.valueOf(systemName.substring(offset + 1)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field of system name: " + systemName);
+                log.error("invalid character in number field of system name: " + systemName);
                 return 0;
             }
             if (num > 0) {
@@ -103,7 +106,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             try {
                 n = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field of CMRI system name: " + systemName);
+                log.error("invalid character in bit number field of CMRI system name: " + systemName);
                 return 0;
             }
         }
@@ -126,18 +129,18 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Public static method to test if a C/MRI output bit is free for assignment.
-     * Test is not performed if the node address or bit number are illegal.
+     * Test is not performed if the node address or bit number is invalid.
      *
      * @return "" (empty string) if the specified output bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      */
     public String isOutputBitFree(int nAddress, int bitNum) {
         if ((nAddress < 0) || (nAddress > 127)) {
-            log.error("illegal node adddress in free bit test");
+            log.error("invalid node adddress in free bit test");
             return "";
         }
         if ((bitNum < 1) || (bitNum > 2048)) {
-            log.error("illegal bit number in free bit test");
+            log.error("invalid bit number in free bit test");
             return "";
         }
         Turnout t = null;
@@ -276,6 +279,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Public static method to validate system name format.
      * Does not check whether that node is defined on current system.
+     * Format warnings are only logged as debug level.
+     * Warning dialog is presented upon creation, not from this method.
      *
      * @return 'true' if system name has a valid format,
      * else returns 'false'.
@@ -283,12 +288,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public boolean validSystemNameFormat(String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
-            log.error("illegal system prefix in CMRI system name: " + systemName);
+            log.error("invalid system prefix in CMRI system name: " + systemName);
             return false;
         }
 
         if (systemName.charAt(offset) != type) {
-            log.error("illegal type character in CMRI system name: " + systemName);
+            log.error("invalid type character in CMRI system name: " + systemName);
             return false;
         }
         String s = "";
@@ -302,32 +307,33 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         if (noB) {
-            // This is a CLnnnxxx address
+            // This is a CLnnnxxx pattern address
             int num;
             try {
                 num = Integer.valueOf(systemName.substring(offset+1)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field of CMRI system name: " + systemName);
+                log.warn("invalid character in number field of CMRI system name: {}", systemName);
                 return false;
             }
             if ((num < 1) || (num >= 128000)) {
-                log.warn("number field out of range in CMRI system name: " + systemName);
+                log.warn("number field out of range in CMRI system name: {}", systemName);
                 return false;
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.warn("bit number not in range 1 - 999 in CMRI system name: " + systemName);
+                log.warn("bit number not in range 1 - 999 in CMRI system name: {}", systemName);
                 return false;
             }
         } else {
+            // This is a CLnBxxx pattern address
             if (s.length() == 0) {
-                log.warn("no node address before 'B' in CMRI system name: " + systemName);
+                log.error("no node address before 'B' in CMRI system name: " + systemName);
                 return false;
             }
             int num;
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.warn("illegal character in node address field of CMRI system name: " + systemName);
+                log.warn("invalid character in node address field of CMRI system name: " + systemName);
                 return false;
             }
             if ((num < 0) || (num >= 128)) {
@@ -337,7 +343,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.warn("illegal character in bit number field of CMRI system name: " + systemName);
+                log.warn("invalid character in bit number field of CMRI system name: " + systemName);
                 return false;
             }
             if ((num < 1) || (num > 2048)) {
@@ -349,8 +355,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to test if a C/MRI input bit is free for assignment
-     * Test is not performed if the node address is illegal or bit number is
+     * Public static method to test if a C/MRI input bit is free for assignment.
+     * Test is not performed if the node address is invalid or bit number is
      * greater than 2048.
      *
      * @return "" (empty string) if the specified input bit is free for
@@ -358,11 +364,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      */
     public String isInputBitFree(int nAddress, int bitNum) {
         if ((nAddress < 0) || (nAddress > 127)) {
-            log.error("illegal node adddress in free bit test");
+            log.error("invalid node adddress in free bit test");
             return "";
         }
         if ((bitNum < 1) || (bitNum > 2048)) {
-            log.error("illegal bit number in free bit test");
+            log.error("invalid bit number in free bit test");
             return "";
         }
         Sensor s = null;
@@ -398,15 +404,15 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public String makeSystemName(String type, int nAddress, int bitNum) {
         String nName = "";
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
-            log.error("illegal type character proposed for system name");
+            log.error("invalid type character proposed for system name");
             return nName;
         }
         if ((nAddress < 0) || (nAddress > 127)) {
-            log.error("illegal node adddress proposed for system name");
+            log.error("invalid node adddress proposed for system name");
             return nName;
         }
         if ((bitNum < 1) || (bitNum > 2048)) {
-            log.error("illegal bit number proposed for system name");
+            log.error("invalid bit number proposed for system name");
             return nName;
         }
         if (bitNum < 1000) {
@@ -421,7 +427,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to parse a C/MRI system name and return the Serial
      * Node.
      *
-     * @return 'null' if illegal systemName format or if the node is not found
+     * @return 'null' if invalid systemName format or if the node is not found
      */
     public AbstractNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
         // get the node address
@@ -476,7 +482,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * Nodes are numbered from 0 - 127. Does not check
      * whether that node is defined on current system.
      *
-     * @return '-1' if illegal systemName format or if the node is not found.
+     * @return '-1' if invalid systemName format or if the node is not found.
      */
     public int getNodeAddressFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
@@ -484,7 +490,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             return -1;
         }
         if ((systemName.charAt(offset) != 'L') && (systemName.charAt(offset) != 'S') && (systemName.charAt(offset) != 'T')) {
-            log.error("illegal character in header field of system name: " + systemName);
+            log.error("invalid character in header field of system name: " + systemName);
             return -1;
         }
         String s = "";
@@ -512,7 +518,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 try {
                     ua = Integer.parseInt(s);
                 } catch (Exception e) {
-                    log.error("illegal character in CMRI system name: " + systemName);
+                    log.error("invalid character in CMRI system name: " + systemName);
                     return -1;
                 }
             }
