@@ -75,9 +75,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 validateText();
             }
         });
-        setRenderer(_enableRenderer);
-        ListSelectionModel lsm = _enableRenderer.getEnabledItems();
-        lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
     }
 
     @Override
@@ -647,20 +644,14 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
             return -1;
         }
-    }
+    }   // BeanSelectionManager
 
     public void setEnabledItems(ListSelectionModel inEnabledItems) {
-        if (_enableRenderer != null) {
-            _enableRenderer.setEnabledItems(inEnabledItems);
-        }
+        getEnabledComboBoxRenderer().setEnabledItems(inEnabledItems);
     }
 
     public ListSelectionModel getEnabledItems() {
-        ListSelectionModel result = null;
-        if (_enableRenderer != null) {
-            result = _enableRenderer.getEnabledItems();
-        }
-        return result;
+        return getEnabledComboBoxRenderer().getEnabledItems();
     }
 
     public void addSelectionInterval(int inMinIndex, int inMaxIndex) {
@@ -706,62 +697,52 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     public void setEnabledColor(Color inEnabledColor) {
-        if (_enableRenderer != null) {
-            _enableRenderer.setEnabledColor(inEnabledColor);
-        }
+        getEnabledComboBoxRenderer().setEnabledColor(inEnabledColor);
     }
 
     public Color getEnabledColor() {
-        Color result = null;
-        if (_enableRenderer != null) {
-            result = _enableRenderer.getEnabledColor();
-        }
-        return result;
+        return getEnabledComboBoxRenderer().getEnabledColor();
     }
 
     public void setDisabledColor(Color inDisabledColor) {
-        if (_enableRenderer != null) {
-            _enableRenderer.setDisabledColor(inDisabledColor);
-        }
+        getEnabledComboBoxRenderer().setDisabledColor(inDisabledColor);
     }
 
     public Color getDisabledColor() {
-        Color result = null;
-        if (_enableRenderer != null) {
-            result = _enableRenderer.getDisabledColor();
-        }
-        return result;
+        return getEnabledComboBoxRenderer().getDisabledColor();
     }
 
     public void setEnabledBackgroundColor(Color inEnabledBackgroundColor) {
-        if (_enableRenderer != null) {
-            _enableRenderer.setEnabledBackgroundColor(inEnabledBackgroundColor);
-        }
+        getEnabledComboBoxRenderer().setEnabledBackgroundColor(inEnabledBackgroundColor);
     }
 
     public Color getEnabledBackgroundColor() {
-        Color result = null;
-        if (_enableRenderer != null) {
-            result = _enableRenderer.getEnabledBackgroundColor();
-        }
-        return result;
+        return getEnabledComboBoxRenderer().getEnabledBackgroundColor();
     }
 
     public void setDisabledBackgroundColor(Color inDisabledBackgroundColor) {
-        if (_enableRenderer != null) {
-            _enableRenderer.setDisabledBackgroundColor(inDisabledBackgroundColor);
-        }
+        getEnabledComboBoxRenderer().setDisabledBackgroundColor(inDisabledBackgroundColor);
     }
 
     public Color getDisabledBackgroundColor() {
-        Color result = null;
-        if (_enableRenderer != null) {
-            result = _enableRenderer.getDisabledBackgroundColor();
-        }
-        return result;
+        return getEnabledComboBoxRenderer().getDisabledBackgroundColor();
     }
 
-    private EnabledComboBoxRenderer _enableRenderer = new EnabledComboBoxRenderer();
+    /**
+     * Use {@link #getEnabledComboBoxRenderer() } exclusively to access this
+     * object.
+     */
+    private EnabledComboBoxRenderer _enableRenderer = null;
+
+    private EnabledComboBoxRenderer getEnabledComboBoxRenderer() {
+        if (_enableRenderer == null) {
+            _enableRenderer = new EnabledComboBoxRenderer();
+            setRenderer(_enableRenderer);
+            ListSelectionModel lsm = _enableRenderer.getEnabledItems();
+            lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
+        }
+        return _enableRenderer;
+    }
 
     static class EnabledComboBoxRenderer extends BasicComboBoxRenderer {
 

@@ -723,15 +723,15 @@ public class ConnectivityUtil {
         }
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getWestBoundSignal()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getEastBoundSignal()));
             }
         } else if (((p.getConnect1()).getLayoutBlock() != lBlock) && ((p.getConnect2()).getLayoutBlock() == lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getWestBoundSignal()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getEastBoundSignal()));
@@ -760,15 +760,15 @@ public class ConnectivityUtil {
         }
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getWestBoundSignalMastName()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getEastBoundSignalMastName()));
             }
         } else if (((p.getConnect1()).getLayoutBlock() != lBlock) && ((p.getConnect2()).getLayoutBlock() == lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getWestBoundSignalMastName()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getEastBoundSignalMastName()));
