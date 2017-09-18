@@ -1412,7 +1412,7 @@ public class AutoActiveTrain implements ThrottleListener {
             } catch (InterruptedException e) {
                 log.warn("Waiting for train to stop interupted - stop tasks not executing");
             } catch (Exception e) {
-                log.error("Waiting for train to stop crashed - stop tasks not executing [{}] ", e.getMessage());
+                log.error("Waiting for train to stop crashed - stop tasks not executing.", e);
             }
         }
 
@@ -1510,19 +1510,12 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         // operational instance variables and flags
-//        private float _minSpeedStep = 1.0f;
         private boolean _abort = false;
         private volatile boolean _halt = false;  // halt/resume from user's control
         private boolean _halted = false; // true if previously halted
         private boolean _slowToStop = false;
-//        private boolean _ramping = false;  // true if ramping speed to _targetSpeed;
         private float _currentSpeed = 0.0f;
-//        private int _targetCount[] = {0, 1, 2, 3, 4};
-//        private int _rampTargetCount = 0;
-//        private int _rampCount = 0;
         private Block _lastBlock = null;
-//        private int _minInterval = 250;
-//        private int _fullRampTime = 8000;
         private float _speedIncrement = 0.0f; //will be recalculated
 
         @Override
@@ -1546,10 +1539,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 Thread.sleep(dispatcher.getMinThrottleInterval() * 2);
             } catch (InterruptedException ex) {
             }
-
-//            setSpeedStep(_throttle.getSpeedStepMode());
             _throttle.setSpeedSetting(_currentSpeed);
-//            _ramping = false;
             // this is the running loop, which adjusts speeds, including stop
             while (!_abort) {
                 if (_halt && !_halted) {
@@ -1659,7 +1649,7 @@ public class AutoActiveTrain implements ThrottleListener {
          * @return true if stopped; false otherwise
          */
         public synchronized boolean isStopped() {
-            return _currentSpeed <= 0.01f;
+            return _currentSpeed <= 0.005f;
         }
 
         /**

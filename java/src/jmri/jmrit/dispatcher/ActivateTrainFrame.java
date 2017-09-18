@@ -1174,6 +1174,7 @@ public class ActivateTrainFrame {
             if (txt.equals(box.getItemAt(i))) {
                 box.setSelectedIndex(i);
                 found = true;
+                break;
             }
         }
         if (!found) {

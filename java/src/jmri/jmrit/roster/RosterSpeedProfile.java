@@ -410,7 +410,7 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
-        if (spd <= 0.0f) {
+        if (spd <= 0.01f) {
             log.error("Speed not available to compute distance travelled");
             return 0.0f;
         }
