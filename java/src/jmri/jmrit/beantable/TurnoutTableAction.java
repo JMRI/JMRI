@@ -968,7 +968,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton addButton;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
 
@@ -1024,6 +1024,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
                     addButton, createListener, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
@@ -1740,6 +1741,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
 
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+        addButton = null;
     }
 
     private String addEntryToolTip;
