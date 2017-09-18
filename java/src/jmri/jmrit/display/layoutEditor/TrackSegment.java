@@ -370,7 +370,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && (!blockName.isEmpty())) {
+        if ((block == null) && (blockName != null) && !blockName.isEmpty()) {
             block = layoutEditor.provideLayoutBlock(blockName);
         }
         return block;
@@ -1237,11 +1237,12 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public static final int SHOWCON = 0x01;
-    public static final int HIDECON = 0x02; //flag set on a segment basis.
+    public static final int HIDECON = 0x02;     //flag set on a segment basis.
     public static final int HIDECONALL = 0x04;  //Used by layout editor for hiding all
 
     public int showConstructionLine = SHOWCON;
 
+    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowConstructionLinesLE()"
     protected boolean showConstructionLinesLE() {
         if ((showConstructionLine & HIDECON) == HIDECON || (showConstructionLine & HIDECONALL) == HIDECONALL) {
             return false;
@@ -1612,111 +1613,105 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw(Graphics2D g2) {
-        if (layoutEditor.isEditable() && isHidden()) {
-            drawHidden(g2);
+        setColorForTrackBlock(g2, getLayoutBlock());
+
+        if (isHidden()) {
+            if (layoutEditor.isEditable()) {
+                drawHidden(g2);
+            }
         } else if (isDashed()) {
-            drawDashed(g2, isMainline());
+            drawDashed(g2);
         } else if (!isHidden()) {
-            drawSolid(g2, isMainline());
+            drawSolid(g2);
         }
     }
 
     private void drawHidden(Graphics2D g2) {
-        setColorForTrackBlock(g2, getLayoutBlock());
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
                 layoutEditor.getCoords(getConnect2(), getType2())));
     }   // drawHidden
 
-    private void drawDashed(Graphics2D g2, boolean mainline) {
-        if ((!isHidden()) && isDashed() && (mainline == isMainline())) {
-            setColorForTrackBlock(g2, getLayoutBlock());
-            float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
-            if (isArc()) {
-                calculateTrackSegmentAngle();
-                Stroke originalStroke = g2.getStroke();
-                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-                g2.setStroke(drawingStroke);
-                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-                g2.setStroke(originalStroke);
-            } else if (isBezier()) {
-                Stroke originalStroke = g2.getStroke();
-                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-                g2.setStroke(drawingStroke);
+    private void drawDashed(Graphics2D g2) {
+        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
+        if (isArc()) {
+            calculateTrackSegmentAngle();
+            Stroke originalStroke = g2.getStroke();
+            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+            g2.setStroke(drawingStroke);
+            g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+            g2.setStroke(originalStroke);
+        } else if (isBezier()) {
+            Stroke originalStroke = g2.getStroke();
+            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+            g2.setStroke(drawingStroke);
 
-                Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-                Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+            Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                int cnt = bezierControlPoints.size();
-                Point2D[] points = new Point2D[cnt + 2];
-                points[0] = pt1;
-                for (int idx = 0; idx < cnt; idx++) {
-                    points[idx + 1] = bezierControlPoints.get(idx);
-                }
-                points[cnt + 1] = pt2;
+            int cnt = bezierControlPoints.size();
+            Point2D[] points = new Point2D[cnt + 2];
+            points[0] = pt1;
+            for (int idx = 0; idx < cnt; idx++) {
+                points[idx + 1] = bezierControlPoints.get(idx);
+            }
+            points[cnt + 1] = pt2;
 
-                MathUtil.drawBezier(g2, points);
+            MathUtil.drawBezier(g2, points);
 
-                g2.setStroke(originalStroke);
-            } else {
-                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
-                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+            g2.setStroke(originalStroke);
+        } else {
+            Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                double delX = end1.getX() - end2.getX();
-                double delY = end1.getY() - end2.getY();
-                double cLength = Math.hypot(delX, delY);
+            double delX = end1.getX() - end2.getX();
+            double delY = end1.getY() - end2.getY();
+            double cLength = Math.hypot(delX, delY);
 
-                // note: The preferred dimension of a dash (solid + blank space) is
-                //         5 * the track width - about 60% solid and 40% blank.
-                int nDashes = (int) (cLength / ((trackWidth) * 5.0));
-                if (nDashes < 3) {
-                    nDashes = 3;
-                }
-                double delXDash = -delX / ((nDashes) - 0.5);
-                double delYDash = -delY / ((nDashes) - 0.5);
-                double begX = end1.getX();
-                double begY = end1.getY();
-                for (int k = 0; k < nDashes; k++) {
-                    g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
-                            new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
-                    begX += delXDash;
-                    begY += delYDash;
-                }
+            // note: The preferred dimension of a dash (solid + blank space) is
+            //         5 * the track width - about 60% solid and 40% blank.
+            int nDashes = (int) (cLength / ((trackWidth) * 5.0));
+            if (nDashes < 3) {
+                nDashes = 3;
+            }
+            double delXDash = -delX / ((nDashes) - 0.5);
+            double delYDash = -delY / ((nDashes) - 0.5);
+            double begX = end1.getX();
+            double begY = end1.getY();
+            for (int k = 0; k < nDashes; k++) {
+                g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
+                        new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
+                begX += delXDash;
+                begY += delYDash;
             }
         }
     }   // drawDashed
 
-    private void drawSolid(Graphics2D g2, boolean isMainline) {
-        if (!isHidden() && !isDashed() && (isMainline == isMainline())) {
-            setColorForTrackBlock(g2, getLayoutBlock());
+    private void drawSolid(Graphics2D g2) {
+        if (isArc()) {
+            calculateTrackSegmentAngle();
+            g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+        } else if (isBezier()) {
+            Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
 
-            if (isArc()) {
-                calculateTrackSegmentAngle();
-                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-            } else if (isBezier()) {
-                Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
-                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
-
-                Point2D pt1 = getBezierControlPoint(0);
-                Point2D pt2 = getBezierControlPoint(1);
-                MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
-            } else {
-                Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
-                Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
-                g2.draw(new Line2D.Double(end1, end2));
-            }
-            trackRedrawn();
+            Point2D pt1 = getBezierControlPoint(0);
+            Point2D pt2 = getBezierControlPoint(1);
+            MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
+        } else {
+            Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+            g2.draw(new Line2D.Double(end1, end2));
         }
+        trackRedrawn();
     }   // drawSolid
 
     protected void drawEditControls(Graphics2D g2) {
-        //setColorForTrackBlock(g2, getLayoutBlock());
         g2.setColor(Color.black);
-
-        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
-        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
-        if (isCircle()) {
-            if (showConstructionLinesLE()) {
+        if (showConstructionLinesLE()) {
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+            if (isCircle()) {
                 // draw radiuses
                 Point2D circleCenterPoint = getCoordsCenterCircle();
                 g2.draw(new Line2D.Double(circleCenterPoint, ep1));
@@ -1725,11 +1720,8 @@ public class TrackSegment extends LayoutTrack {
                 // allows the user to change the angle by dragging the mouse.
                 g2.draw(layoutEditor.trackControlCircleAt(circleCenterPoint));
                 g2.draw(layoutEditor.trackControlCircleRectAt(circleCenterPoint));
-            }
-        } else if (isBezier()) {
-            //g2.draw(layoutEditor.trackControlPointRectAt(ep1));
-            //draw construction lines and control circles
-            if (showConstructionLinesLE()) {
+            } else if (isBezier()) {
+                //draw construction lines and control circles
                 Point2D lastPt = ep1;
                 for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
@@ -1737,11 +1729,6 @@ public class TrackSegment extends LayoutTrack {
                     g2.draw(layoutEditor.trackControlPointRectAt(bcp));
                 }
                 g2.draw(new Line2D.Double(lastPt, ep2));
-            }
-            //g2.draw(layoutEditor.trackControlPointRectAt(ep2));
-        } else {
-            if (showConstructionLinesLE()) { //draw control circles
-                g2.draw(new Line2D.Double(ep1, ep2));
             }
         }
         g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
