@@ -684,9 +684,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             popup = new JPopupMenu();
         }
-        if (tools == null) {
-            tools = new LayoutEditorTools(layoutEditor);
-        }
+        tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = null;
             switch (type) {

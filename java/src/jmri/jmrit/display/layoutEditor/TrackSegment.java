@@ -400,7 +400,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
-        // nothing to do here… move along…
+        // nothing to do here, move along
         return null;
     }
 
@@ -412,7 +412,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to supress "does not override abstract method " error in compiler
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
-        // nothing to do here… move along…
+        // nothing to do here, move along
     }
 
     public int getNumberOfBezierControlPoints() {

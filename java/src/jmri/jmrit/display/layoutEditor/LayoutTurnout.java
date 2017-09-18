@@ -2192,9 +2192,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        if (tools == null) {
-            tools = new LayoutEditorTools(layoutEditor);
-        }
+        tools = layoutEditor.getLETools();
 
         if (layoutEditor.isEditable()) {
             String label = "";

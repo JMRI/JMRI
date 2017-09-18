@@ -9,9 +9,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -70,7 +70,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
     public RosterEntryPane(RosterEntry r) {
 
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(Double.valueOf(1.00d), Double.valueOf(0.00d), Double.valueOf(1.00d), Double.valueOf(0.01d)));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(1.00d, 0.00d, 1.00d, 0.01d));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         id.setText(r.getId());
 
@@ -85,7 +85,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
 
         // fill contents
-        updateGUI(r);
+        RosterEntryPane.this.updateGUI(r);
 
         pane = this;
         re = r;
@@ -102,9 +102,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
             // and will set the selection box list to match those that are common.
             jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
             List<LocoAddress.Protocol> protocoltypes = new ArrayList<>();
-            for (LocoAddress.Protocol prot : tm.getAddressProtocolTypes()) {
-                protocoltypes.add(prot);
-            }
+            protocoltypes.addAll(Arrays.asList(tm.getAddressProtocolTypes()));
 
             if (!protocoltypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocoltypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
@@ -112,7 +110,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
                 if (log.isDebugEnabled()) {
                     log.debug("found {} matched", l.size());
                 }
-                if (l.size() == 0) {
+                if (l.isEmpty()) {
                     log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
                     // fall back to use just the decoder name, not family
                     l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, r.getDecoderModel());
@@ -120,7 +118,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
                         log.debug("found {} matches without family key", l.size());
                     }
                 }
-                DecoderFile d = null;
+                DecoderFile d;
                 if (l.size() > 0) {
                     d = l.get(0);
                     if (d != null && d.getSupportedProtocols().length > 0) {
@@ -148,20 +146,18 @@ public class RosterEntryPane extends javax.swing.JPanel {
         decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
         decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
         dateUpdated.setToolTipText(rb.getString("ToolTipDateUpdated"));
-        id.addFocusListener(
-                new FocusListener() {
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                    }
+        id.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+            }
 
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (checkDuplicate()) {
-                            JOptionPane.showMessageDialog(pane, rb.getString("ErrorDuplicateID"));
-                        }
-                    }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (checkDuplicate()) {
+                    JOptionPane.showMessageDialog(pane, rb.getString("ErrorDuplicateID"));
                 }
-        );
+            }
+        });
 
         // New GUI to allow multiline Comment and Decoder Comment fields
         //Set up constraints objects for convenience in GridBagLayout alignment
@@ -170,7 +166,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         GridBagConstraints cR = new GridBagConstraints();
         Dimension minFieldDim = new Dimension(150, 20);
         Dimension minScrollerDim = new Dimension(165, 42);
-        setLayout(gbLayout);
+        super.setLayout(gbLayout);
 
         cL.gridx = 0;
         cL.gridy = 0;
@@ -179,137 +175,141 @@ public class RosterEntryPane extends javax.swing.JPanel {
         cL.insets = new Insets(0, 0, 0, 15);
         JLabel row0Label = new JLabel(rb.getString("FieldID") + ":");
         gbLayout.setConstraints(row0Label, cL);
-        add(row0Label);
+        super.add(row0Label);
 
         cR.gridx = 1;
         cR.gridy = 0;
         cR.anchor = GridBagConstraints.WEST;
         id.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(id, cR);
-        add(id);
+        super.add(id);
 
         cL.gridy++;
         JLabel row1Label = new JLabel(rb.getString("FieldRoadName") + ":");
         gbLayout.setConstraints(row1Label, cL);
-        add(row1Label);
+        super.add(row1Label);
 
         cR.gridy = cL.gridy;
         roadName.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(roadName, cR);
-        add(roadName);
+        super.add(roadName);
 
         cL.gridy++;
         JLabel row2Label = new JLabel(rb.getString("FieldRoadNumber") + ":");
         gbLayout.setConstraints(row2Label, cL);
-        add(row2Label);
+        super.add(row2Label);
 
         cR.gridy = cL.gridy;
         roadNumber.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(roadNumber, cR);
-        add(roadNumber);
+        super.add(roadNumber);
 
         cL.gridy++;
         JLabel row3Label = new JLabel(rb.getString("FieldManufacturer") + ":");
         gbLayout.setConstraints(row3Label, cL);
-        add(row3Label);
+        super.add(row3Label);
 
         cR.gridy = cL.gridy;
         mfg.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(mfg, cR);
-        add(mfg);
+        super.add(mfg);
 
         cL.gridy++;
         JLabel row4Label = new JLabel(rb.getString("FieldOwner") + ":");
         gbLayout.setConstraints(row4Label, cL);
-        add(row4Label);
+        super.add(row4Label);
 
         cR.gridy = cL.gridy;
         owner.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(owner, cR);
-        add(owner);
+        super.add(owner);
 
         cL.gridy++;
         JLabel row5Label = new JLabel(rb.getString("FieldModel") + ":");
         gbLayout.setConstraints(row5Label, cL);
-        add(row5Label);
+        super.add(row5Label);
 
         cR.gridy = cL.gridy;
         model.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(model, cR);
-        add(model);
+        super.add(model);
 
         cL.gridy++;
         JLabel row6Label = new JLabel(rb.getString("FieldDCCAddress") + ":");
         gbLayout.setConstraints(row6Label, cL);
-        add(row6Label);
+        super.add(row6Label);
 
         cR.gridy = cL.gridy;
         gbLayout.setConstraints(selPanel, cR);
-        add(selPanel);
+        super.add(selPanel);
 
         cL.gridy++;
         JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit") + ":");
         gbLayout.setConstraints(row7Label, cL);
-        add(row7Label);
+        super.add(row7Label);
 
         cR.gridy = cL.gridy; // JSpinner is initialised in RosterEntryPane()
         gbLayout.setConstraints(maxSpeedSpinner, cR);
-        add(maxSpeedSpinner);
+        super.add(maxSpeedSpinner);
 
         cL.gridy++;
         JLabel row8Label = new JLabel(rb.getString("FieldComment") + ":");
         gbLayout.setConstraints(row8Label, cL);
-        add(row8Label);
+        super.add(row8Label);
 
         cR.gridy = cL.gridy;
         commentScroller.setMinimumSize(minScrollerDim);
         gbLayout.setConstraints(commentScroller, cR);
-        add(commentScroller);
+        super.add(commentScroller);
 
         cL.gridy++;
         JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily") + ":");
         gbLayout.setConstraints(row9Label, cL);
-        add(row9Label);
+        super.add(row9Label);
 
         cR.gridy = cL.gridy;
         decoderFamily.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(decoderFamily, cR);
-        add(decoderFamily);
+        super.add(decoderFamily);
 
         cL.gridy++;
         JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel") + ":");
         gbLayout.setConstraints(row10Label, cL);
-        add(row10Label);
+        super.add(row10Label);
 
         cR.gridy = cL.gridy;
         decoderModel.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(decoderModel, cR);
-        add(decoderModel);
+        super.add(decoderModel);
 
         cL.gridy++;
         JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment") + ":");
         gbLayout.setConstraints(row11Label, cL);
-        add(row11Label);
+        super.add(row11Label);
 
         cR.gridy = cL.gridy;
         decoderCommentScroller.setMinimumSize(minScrollerDim);
         gbLayout.setConstraints(decoderCommentScroller, cR);
-        add(decoderCommentScroller);
+        super.add(decoderCommentScroller);
 
         cL.gridy++;
         JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated") + ":");
         gbLayout.setConstraints(row13Label, cL);
-        add(row13Label);
+        super.add(row13Label);
 
         cR.gridy = cL.gridy;
         dateUpdated.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(dateUpdated, cR);
-        add(dateUpdated);
+        super.add(dateUpdated);
     }
 
     double maxSet;
+
     /**
      * Does the GUI contents agree with a RosterEntry?
+     *
+     * @param r the entry to compare
+     * @return true if entry in GUI does not match r; false otherwise
      */
     public boolean guiChanged(RosterEntry r) {
         if (!r.getRoadName().equals(roadName.getText())) {
@@ -429,8 +429,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
                 ? DateFormat.getDateTimeInstance().format(r.getDateModified())
                 : r.getDateUpdated());
         // retrieve MaxSpeed from r
-        Double msp = new Double(r.getMaxSpeedPCT() / 100d); // why resets to 100?
-        double maxSpeedSet = msp.doubleValue();
+        double maxSpeedSet = r.getMaxSpeedPCT() / 100d; // why resets to 100?
         log.debug("Max Speed set to: {}", maxSpeedSet);
         maxSpeedSpinner.setValue(maxSpeedSet);
         log.debug("Max Speed in spinner: {}", maxSpeedSpinner.getValue());

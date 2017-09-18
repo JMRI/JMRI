@@ -126,8 +126,9 @@ public class LayoutEditorTools {
         LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
 
         LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
+        log.debug("turnout1ComboBox set up, size: {}", turnout1ComboBox.getItemCount());
         LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
-
+        log.debug("turnout2ComboBox set up, size: {}", turnout1ComboBox.getItemCount());
         LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);
@@ -1881,7 +1882,7 @@ public class LayoutEditorTools {
 	 * "track" is a TrackSegment connected to "point".
 	 *	"point" is an anchor point serving as a block boundary.
      */
-    public boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
+    public static boolean isAtWestEndOfAnchor(TrackSegment t, PositionablePoint p) {
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
             if (p.getConnect1() == t) {
                 if (p.getConnect1Dir() == jmri.Path.NORTH || p.getConnect1Dir() == jmri.Path.WEST) {
@@ -1908,23 +1909,23 @@ public class LayoutEditorTools {
 
         Point2D coords1;
         if (t.getConnect1() == p) {
-            coords1 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
+            coords1 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            coords1 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
+            coords1 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
 
         Point2D coords2;
         if (tx != null) {
             if (tx.getConnect1() == p) {
-                coords2 = layoutEditor.getCoords(tx.getConnect2(), tx.getType2());
+                coords2 = LayoutEditor.getCoords(tx.getConnect2(), tx.getType2());
             } else {
-                coords2 = layoutEditor.getCoords(tx.getConnect1(), tx.getType1());
+                coords2 = LayoutEditor.getCoords(tx.getConnect1(), tx.getType1());
             }
         } else {
             if (t.getConnect1() == p) {
-                coords2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
+                coords2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
             } else {
-                coords2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
+                coords2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
             }
         }
 
@@ -2311,9 +2312,9 @@ public class LayoutEditorTools {
         TrackSegment track1 = boundary.getConnect1();
         Point2D coords1;
         if (track1.getConnect1() == boundary) {
-            coords1 = layoutEditor.getCoords(track1.getConnect2(), track1.getType2());
+            coords1 = LayoutEditor.getCoords(track1.getConnect2(), track1.getType2());
         } else {
-            coords1 = layoutEditor.getCoords(track1.getConnect1(), track1.getType1());
+            coords1 = LayoutEditor.getCoords(track1.getConnect1(), track1.getType1());
         }
         TrackSegment track2 = boundary.getConnect2();
 
@@ -2332,9 +2333,9 @@ public class LayoutEditorTools {
         }
         Point2D coords2;
         if (track2.getConnect1() == boundary) {
-            coords2 = layoutEditor.getCoords(track2.getConnect2(), track2.getType2());
+            coords2 = LayoutEditor.getCoords(track2.getConnect2(), track2.getType2());
         } else {
-            coords2 = layoutEditor.getCoords(track2.getConnect1(), track2.getType1());
+            coords2 = LayoutEditor.getCoords(track2.getConnect1(), track2.getType1());
         }
 
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coords2, coords1));
@@ -8147,9 +8148,9 @@ public class LayoutEditorTools {
 
         Point2D pt2;
         if (t.getConnect1() == boundary) {
-            pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
+            pt2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
+            pt2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
     }
@@ -8169,9 +8170,9 @@ public class LayoutEditorTools {
 
         Point2D pt2;
         if (t.getConnect1() == boundary) {
-            pt2 = layoutEditor.getCoords(t.getConnect2(), t.getType2());
+            pt2 = LayoutEditor.getCoords(t.getConnect2(), t.getType2());
         } else {
-            pt2 = layoutEditor.getCoords(t.getConnect1(), t.getType1());
+            pt2 = LayoutEditor.getCoords(t.getConnect1(), t.getType1());
         }
         setIconOnPanel(t, icon, dir, p, pt2, isRightSide, fromPoint);
 
@@ -9192,9 +9193,9 @@ public class LayoutEditorTools {
             TrackSegment ts = (TrackSegment) obj;
             Point2D endPoint;
             if (ts.getConnect1() == layoutTurnout) {
-                endPoint = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+                endPoint = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
             } else {
-                endPoint = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
+                endPoint = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
             }
             boolean isEast = false;
 
