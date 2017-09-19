@@ -1088,7 +1088,7 @@ public class ActivateTrainFrame {
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
-        setallocateMethodButtons(info.getAllocationMethod());
+        setAllocateMethodButtons(info.getAllocationMethod());
         autoTrainInfoToDialog(info);
     }
 
@@ -1428,28 +1428,27 @@ public class ActivateTrainFrame {
     }
 
     /**
-     * Sets up the RadioButtons and visability of spinner 
-     * for the allocation method
-     * @param value  0, Allocate by Safe spots, 
-     *               -1, allocate as far as possible
-     *               Any other value the number of sections to allocate
+     * Sets up the RadioButtons and visability of spinner for the allocation method
+     *
+     * @param value 0, Allocate by Safe spots, -1, allocate as far as possible Any
+     *            other value the number of sections to allocate
      */
-    private void setallocateMethodButtons(int value) {
-        switch (value){
+    private void setAllocateMethodButtons(int value) {
+        switch (value) {
             case ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS:
                 allocateBySafeRadioButton.setSelected(true);
-                allocateCustomSpinner.setVisible(false);;
+                allocateCustomSpinner.setVisible(false);
                 break;
             case ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN:
                 allocateAllTheWayRadioButton.setSelected(true);
-                allocateCustomSpinner.setVisible(false);;
-               break;
+                allocateCustomSpinner.setVisible(false);
+                break;
             default:
                 allocateNumberOfBlocks.setSelected(true);
-                allocateCustomSpinner.setVisible(true);;
+                allocateCustomSpinner.setVisible(true);
                 allocateCustomSpinner.setValue(value);
         }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(ActivateTrainFrame.class);
 }
