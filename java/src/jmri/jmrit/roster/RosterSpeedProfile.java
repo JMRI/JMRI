@@ -451,6 +451,7 @@ public class RosterSpeedProfile {
             distanceTravelled = 0;
             stepQueue = new LinkedList<>();
         }
+        _throttle = null;
     }
 
     public void setExtraInitialDelay(float eDelay) {
