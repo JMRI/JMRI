@@ -793,7 +793,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         protected JButton button;
         private String label;
-        private boolean isPushed;
         private final JTable table;
 
         public ButtonEditor(JCheckBox checkBox, JTable t) {
@@ -818,50 +817,12 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             }
             label = (value == null) ? "" : value.toString();
             button.setText(label);
-            isPushed = true;
             return button;
         }
 
         @Override
         public Object getCellEditorValue() {
-            /*
-            if (isPushed) {
-                int sel = table.getEditingRow();
-                sel = table.convertRowIndexToModel(sel);
-                DCCppTableModel model = (DCCppTableModel) table.getModel();
-                int idx = (int)model.getValueAt(sel,0);
-                log.debug("Editing row {} Index value {}", sel, idx);
-                int value = JOptionPane.showConfirmDialog(null, "Delete Item. Are you sure?",
-                    Bundle.getMessage("FieldMCFSaveDialogTitle"),
-                    JOptionPane.OK_CANCEL_OPTION);
-                /*
-                if (model.isMarkedForDelete(sel)) {
-                    model.markForDelete(sel, false);
-                    log.debug("UnDelete sensor {}", idx);
-                    JOptionPane.showMessageDialog(button, "Sensor " + Integer.toString(idx) +
-                                                " Not Marked for Deletion");
-                } else {
-                if (value == JOptionPane.OK_OPTION) {
-                    model.removeRow(sel);
-                    log.debug("Delete sensor {}", idx);
-                    //JOptionPane.showMessageDialog(button, "Sensor " + Integer.toString(idx) +
-                    //                            " Marked for Deletion");
-                }
-            }
-            isPushed = false;
-             */
             return label;
-        }
-
-        @Override
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
-
-        @Override
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
         }
     }
 

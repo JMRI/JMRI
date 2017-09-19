@@ -812,8 +812,7 @@ public class AbstractAutomaton implements Runnable {
         waitChangeQueue.clear();
         
         // register listeners
-        PropertyChangeListener[] listeners
-                = new PropertyChangeListener[mInputs.length];
+        PropertyChangeListener[] listeners = new PropertyChangeListener[mInputs.length];
         for (i = 0; i < mInputs.length; i++) {
             mInputs[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
                 waitChangeQueue.offer(e);
@@ -848,7 +847,11 @@ public class AbstractAutomaton implements Runnable {
             } else {
                 prompt = waitChangeQueue.poll(maxDelay, TimeUnit.MILLISECONDS);
             }
-            log.trace("wantChange continues from {}", prompt.getSource());
+            if (prompt != null) {
+                log.trace("waitChange continues from {}", prompt.getSource());
+            } else {
+                log.trace("waitChange continues");
+            }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("AbstractAutomaton {} waitChange interrupted", getName());
@@ -1080,7 +1083,7 @@ public class AbstractAutomaton implements Runnable {
      * @param value Value 0-255 to be written
      * @return true if completed OK
      */
-    public boolean writeServiceModeCV(int CV, int value) {
+    public boolean writeServiceModeCV(String CV, int value) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getGlobalProgrammer();
@@ -1115,7 +1118,7 @@ public class AbstractAutomaton implements Runnable {
      * @param CV Number 1 through 512
      * @return -1 if error, else value
      */
-    public int readServiceModeCV(int CV) {
+    public int readServiceModeCV(String CV) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getGlobalProgrammer();
@@ -1152,7 +1155,7 @@ public class AbstractAutomaton implements Runnable {
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */
-    public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
+    public boolean writeOpsModeCV(String CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(longAddress, loco);

@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.ManagerDefaultSelector;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.javaworld.GridLayout2;
@@ -27,7 +28,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since 2.9.5
  */
 @ServiceProvider(service = PreferencesPanel.class)
-public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
+public final class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean dirty = false;
@@ -145,7 +146,10 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        InstanceManager.getDefault(ManagerDefaultSelector.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            InstanceManager.getDefault(ManagerDefaultSelector.class).savePreferences(profile);
+        }
     }
 
     @Override
@@ -166,7 +170,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
     /**
      * Captive class to track changes
      */
-    static class SelectionButton extends JRadioButton {
+    static final class SelectionButton extends JRadioButton {
 
         SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();

@@ -6,6 +6,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,9 @@ public class LevelXingXml extends AbstractXmlAdapter {
         }
         if (p.getConnectD() != null) {
             element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
+        }
+        if (p.isHidden()) {
+            element.setAttribute("hidden", "yes");
         }
         if (!p.getSignalAName().isEmpty()) {
             element.setAttribute("signalaname", p.getSignalAName());
@@ -180,6 +184,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
         if (a != null) {
             l.setSignalDName(a.getValue());
         }
+
         try {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
@@ -187,6 +192,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             log.error("failed to convert levelxing a coords attribute");
         }
         l.setCoordsA(new Point2D.Double(x, y));
+
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
@@ -194,6 +200,13 @@ public class LevelXingXml extends AbstractXmlAdapter {
             log.error("failed to convert levelxing b coords attribute");
         }
         l.setCoordsB(new Point2D.Double(x, y));
+
+        try {
+            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert levelxing hidden attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
 
         if (element.getChild("signalAMast") != null) {
             String mast = element.getChild("signalAMast").getText();
@@ -251,7 +264,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             }
         }
 
-        p.xingList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXingXml.class);

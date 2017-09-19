@@ -285,6 +285,22 @@ public class JUnitUtil {
         }
     }
 
+    /**
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
+     * a thread-safe way, including waiting for the state to appear.
+     *
+     * You can't assume that all the consequences of that setting will have
+     * propagated through when this returns; those might take a long time. But
+     * the set operation itself will be complete.
+     *
+     * @param bean  the bean
+     * @param state the desired state
+     */
+    static public void setBeanStateAndWait(NamedBean bean, int state) {
+        setBeanState(bean, state);
+        JUnitUtil.waitFor(()->{return state == bean.getState();}, "setAndWait "+bean.getSystemName()+": "+state);
+    }
+
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
@@ -537,16 +553,16 @@ public class JUnitUtil {
     public static void resetPreferencesProviders() {
         try {
             // reset UI provider
-            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("providers");
+            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
             ((HashMap<?, ?>) providers.get(null)).clear();
             // reset XML storage provider
-            providers = JmriConfigurationProvider.class.getDeclaredField("providers");
+            providers = JmriConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
             ((HashMap<?, ?>) providers.get(null)).clear();
             // reset java.util.prefs.Preferences storage provider
-            Field shared = JmriPreferencesProvider.class.getDeclaredField("sharedProviders");
-            Field privat = JmriPreferencesProvider.class.getDeclaredField("privateProviders");
+            Field shared = JmriPreferencesProvider.class.getDeclaredField("SHARED_PROVIDERS");
+            Field privat = JmriPreferencesProvider.class.getDeclaredField("PRIVATE_PROVIDERS");
             shared.setAccessible(true);
             ((HashMap<?, ?>) shared.get(null)).clear();
             privat.setAccessible(true);

@@ -222,7 +222,7 @@ public class Llnmon {
         // if we have a 2 digit decoder address, proceed accordingly
         switch (addressHigh) {
             case 0x7d:
-                log.warn("addressLow / 10 = {}", Integer.toString(addressLow / 10));
+                log.debug("addressLow / 10 = {}", addressLow / 10);
                 switch (addressLow) {
                     case 100: case 101: case 102: case 103: case 104: case 105:
                     case 106: case 107: case 108: case 109:

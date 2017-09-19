@@ -9,6 +9,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,16 +115,16 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      */
     public void loadLayoutBlocks(Element layoutblocks) {
         LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
-        if (layoutblocks.getAttribute("blockrouting") != null) {
-            if (layoutblocks.getAttribute("blockrouting").getValue().equals("yes")) {
-                tm.enableAdvancedRouting(true);
-            }
+        try {
+            tm.enableAdvancedRouting(layoutblocks.getAttribute("blockrouting").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout block manager blockrouting attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         if (layoutblocks.getAttribute("routingStablisedSensor") != null) {
             try {
                 tm.setStabilisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
             } catch (jmri.JmriException e) {
-
             }
         }
 
