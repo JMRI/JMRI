@@ -133,6 +133,10 @@ class Steam1Sound extends EngineSound {
 
     @Override
     public void shutdown() {
+        for (VSDSound vs : trigger_sounds.values()) {
+            log.debug(" Stopping trigger sound: {}", vs.getName());
+            vs.stop(); // SoundBite: Stop playing
+        }
         this.stop();
     }
 
