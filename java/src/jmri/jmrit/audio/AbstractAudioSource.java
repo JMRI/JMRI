@@ -84,7 +84,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName, userName);
     }
 
-    boolean audioAlive() {
+    public boolean isAudioAlive() {
         return ((AudioThread) activeAudioFactory.getCommandThread()).alive();
     }
 
