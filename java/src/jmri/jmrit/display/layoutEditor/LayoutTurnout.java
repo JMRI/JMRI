@@ -263,12 +263,15 @@ public class LayoutTurnout extends LayoutTrack {
 
     private boolean useBlockSpeed = false;
 
-    protected LayoutTurnout(@Nullable String id, Point2D c, @Nonnull LayoutEditor layoutEditor) {
+    protected LayoutTurnout(@Nonnull String id, 
+            @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
     }
 
-    public LayoutTurnout(@Nullable String id, int t, Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor) {
+    public LayoutTurnout(@Nonnull String id, int t,
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
         this(id, t, c, rot, xFactor, yFactor, layoutEditor, 1);
     }
 

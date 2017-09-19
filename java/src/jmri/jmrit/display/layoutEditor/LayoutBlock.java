@@ -109,7 +109,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     //Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("LayoutEditorBundle");
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     //constants
     public static final int OCCUPIED = Block.OCCUPIED;

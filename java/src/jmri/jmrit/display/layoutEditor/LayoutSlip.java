@@ -1706,7 +1706,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        boolean equals(@Nonnull TurnoutState ts) {
+        boolean equals(TurnoutState ts) {
             return ((this.getTurnoutAState() != ts.getTurnoutAState())
                     || (this.getTurnoutBState() != ts.getTurnoutBState()));
         }
@@ -1715,7 +1715,11 @@ public class LayoutSlip extends LayoutTurnout {
     /*
         this is used by ConnectivityUtil to determine the turnout state necessary to get from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
      */
-    protected int getConnectivityStateForLayoutBlocks(LayoutBlock thisLayoutBlock, LayoutBlock prevLayoutBlock, LayoutBlock nextLayoutBlock, boolean suppress) {
+    protected int getConnectivityStateForLayoutBlocks(
+            @Nullable LayoutBlock thisLayoutBlock,
+            @Nullable LayoutBlock prevLayoutBlock,
+            @Nullable LayoutBlock nextLayoutBlock,
+            boolean suppress) {
         int result = Turnout.UNKNOWN;
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();
         LayoutBlock layoutBlockB = ((TrackSegment) getConnectB()).getLayoutBlock();
