@@ -39,9 +39,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         element.setAttribute("ident", p.getName());
         element.setAttribute("slipType", "" + p.getSlipType());
 
-        if (p.isHidden()) {
-            element.setAttribute("hidden", "yes");
-        }
+        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 

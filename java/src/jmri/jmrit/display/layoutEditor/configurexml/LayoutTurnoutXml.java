@@ -40,13 +40,11 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         element.setAttribute("ident", p.getName());
         element.setAttribute("type", "" + p.getTurnoutType());
 
-        if (p.isHidden()) {
-            element.setAttribute("hidden", "yes");
-        }
-
-        element.setAttribute("continuing", "" + p.getContinuingSense());
+        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
+
+        element.setAttribute("continuing", "" + p.getContinuingSense());
 
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
