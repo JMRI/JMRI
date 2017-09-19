@@ -126,8 +126,9 @@ public class LayoutEditorTools {
         LayoutEditor.setupComboBox(dSignalHeadComboBox, true, true);
 
         LayoutEditor.setupComboBox(turnout1ComboBox, true, true);
+        log.debug("turnout1ComboBox set up, size: {}", turnout1ComboBox.getItemCount());
         LayoutEditor.setupComboBox(turnout2ComboBox, true, true);
-
+        log.debug("turnout2ComboBox set up, size: {}", turnout1ComboBox.getItemCount());
         LayoutEditor.setupComboBox(a1TToTSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(a2TToTSignalHeadComboBox, true, true);
         LayoutEditor.setupComboBox(b1TToTSignalHeadComboBox, true, true);

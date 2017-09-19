@@ -1,6 +1,5 @@
 package jmri.jmrix.maple.assignment;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Frame for running assignment list.
  *
  * @author Dave Duchamp Copyright (C) 2006
-  */
+ */
 public class ListFrame extends jmri.util.JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.assignment.ListBundle");
@@ -470,18 +469,15 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-        // Only used occasionally, so inefficient String processing not really a problem
-        // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            String lineString = "";
-            String[] spaces = new String[4];
+            StringBuilder lineString = new StringBuilder("");
+            StringBuilder[] spaces = new StringBuilder[4];
             // create base strings the width of each of the columns
             for (int k = 0; k < 4; k++) {
-                spaces[k] = "";
+                spaces[k] = new StringBuilder("");
                 for (int i = 0; i < columnSize[k]; i++) {
-                    spaces[k] = spaces[k] + " ";
+                    spaces[k].append(" ");
                 }
             }
             // loop through each column
@@ -518,10 +514,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                         columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
                         columnStrings[i] = "";
                     }
-                    lineString = lineString + columnString + " ";
+                    lineString.append(columnString).append(" ");
                 }
                 try {
-                    w.write(lineString);
+                    w.write(lineString.toString());
                     //write vertical dividing lines
                     int iLine = w.getCurrentLineNumber();
                     for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
@@ -532,16 +528,15 @@ public class ListFrame extends jmri.util.JmriJFrame {
                             i = w.getCharactersPerLine();
                         }
                     }
-                    lineString = "\n";
-                    w.write(lineString);
-                    lineString = "";
+                    w.write("\n"); // NOI18N
+                    lineString = new StringBuilder("");
                 } catch (IOException e) {
-                    log.warn("error during printing: " + e);
+                    log.warn("error during printing:", e);
                 }
             }
         }
     }
-    private String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
+    private final String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
         rb.getString("HeadingAddress"),
         rb.getString("HeadingSystemName"),
         rb.getString("HeadingUserName")};
