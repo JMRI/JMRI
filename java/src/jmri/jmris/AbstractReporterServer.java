@@ -80,7 +80,7 @@ abstract public class AbstractReporterServer {
 
     public void dispose() {
         for (Map.Entry<String, ReporterListener> memory : this.reporters.entrySet()) {
-            InstanceManager.memoryManagerInstance().getMemory(memory.getKey()).removePropertyChangeListener(memory.getValue());
+            InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName).removePropertyChangeListener(reporters.get(reporterName));
         }
         this.reporters.clear();
     }
