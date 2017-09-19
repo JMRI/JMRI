@@ -189,7 +189,7 @@ public class LayoutBlockConnectivityTools {
      *                  return any.
      */
     public List<NamedBean> getBeansInPath(List<LayoutBlock> blocklist, LayoutEditor panel, Class<?> T) {
-        List<NamedBean> beansInPath = new ArrayList<NamedBean>();
+        List<NamedBean> beansInPath = new ArrayList<>();
         if (blocklist.size() >= 2) {
             LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
             for (int x = 1; x < blocklist.size(); x++) {
@@ -231,7 +231,7 @@ public class LayoutBlockConnectivityTools {
      */
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1, int pathMethod) throws jmri.JmriException {
 
-        List<LayoutBlock> destList = new ArrayList<LayoutBlock>();
+        List<LayoutBlock> destList = new ArrayList<>();
         if (destBlockn1 != null) {
             destList.add(destBlockn1);
         }
@@ -353,7 +353,7 @@ public class LayoutBlockConnectivityTools {
              destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
              //log.info(dest.getProtectingBlocks());
              }*/
-            List<LayoutBlock> destList = new ArrayList<LayoutBlock>();
+            List<LayoutBlock> destList = new ArrayList<>();
             for (Block b : dest.getProtectingBlocks()) {
                 destList.add(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(b));
             }
@@ -410,7 +410,7 @@ public class LayoutBlockConnectivityTools {
         if (log.isDebugEnabled()) {
             log.debug("s:" + sourceLayoutBlock.getDisplayName() + " p:" + protectingLayoutBlock.getDisplayName() + " d:" + destinationLayoutBlock.getDisplayName());
         }
-        List<BlocksTested> blocksInRoute = new ArrayList<BlocksTested>();
+        List<BlocksTested> blocksInRoute = new ArrayList<>();
         blocksInRoute.add(new BlocksTested(sourceLayoutBlock));
 
         if (!validateOnly) {
@@ -430,19 +430,17 @@ public class LayoutBlockConnectivityTools {
             blocksInRoute.add(new BlocksTested(protectingLayoutBlock));
         }
         if (destinationLayoutBlock == protectingLayoutBlock) {
-            List<LayoutBlock> returnBlocks = new ArrayList<LayoutBlock>();
+            List<LayoutBlock> returnBlocks = new ArrayList<>();
             for (int i = 0; i < blocksInRoute.size(); i++) {
                 returnBlocks.add(blocksInRoute.get(i).getBlock());
             }
             return returnBlocks;
         }
-        //TODO: FindBugs says this is a dead store; code-strip it
-        LayoutBlock currentLBlock; // = protectingLayoutBlock;
 
         BlocksTested bt = blocksInRoute.get(blocksInRoute.size() - 1);
 
         int ttl = 1;
-        List<Integer> offSet = new ArrayList<Integer>();
+        List<Integer> offSet = new ArrayList<>();
         while (ttl < ttlSize) { //value should be higher but low for test!
             log.debug("===== Ttl value = {} ======", ttl);
             log.debug("Looking for next block");
@@ -453,9 +451,9 @@ public class LayoutBlockConnectivityTools {
                     log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
                 }
                 //Sets the old next block to be our current block.
-                currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
+                LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
 
-                offSet = new ArrayList<Integer>();
+                offSet.clear();
 
                 directionOfTravel = currentLBlock.getRouteDirectionAtIndex(nextBlockIndex);
 
@@ -478,7 +476,7 @@ public class LayoutBlockConnectivityTools {
                     if (!validateOnly && !checkForLevelCrossing(destinationLayoutBlock)) {
                         throw new jmri.JmriException("Destination block is in conflict on a crossover");
                     }
-                    List<LayoutBlock> returnBlocks = new ArrayList<LayoutBlock>();
+                    List<LayoutBlock> returnBlocks = new ArrayList<>();
                     for (int i = 0; i < blocksInRoute.size(); i++) {
                         returnBlocks.add(blocksInRoute.get(i).getBlock());
                     }
@@ -495,7 +493,7 @@ public class LayoutBlockConnectivityTools {
                     return returnBlocks;
                 }
             } else {
-            //-1 is returned when there are no more valid besthop valids found
+                //-1 is returned when there are no more valid besthop valids found
                 //Block index is -1, so we need to go back a block and find another way.
 
                 //So we have gone back as far as our starting block so we better return.
@@ -532,7 +530,7 @@ public class LayoutBlockConnectivityTools {
     static class BlocksTested {
 
         LayoutBlock block;
-        List<Integer> indexNumber = new ArrayList<Integer>();
+        List<Integer> indexNumber = new ArrayList<>();
 
         BlocksTested(LayoutBlock block) {
             this.block = block;
@@ -578,7 +576,7 @@ public class LayoutBlockConnectivityTools {
         int blockindex = 0;
         Block block;
         LayoutBlock currentLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(currentBlock);
-        List<Integer> blkIndexTested = new ArrayList<Integer>(5);
+        List<Integer> blkIndexTested = new ArrayList<>(5);
         if (log.isDebugEnabled()) {
             log.debug("In find best hop current " + currentLBlock.getDisplayName() + " previous " + preBlock.getDisplayName());
         }
@@ -761,7 +759,7 @@ public class LayoutBlockConnectivityTools {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
         List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
-        List<NamedBean> ret = new ArrayList<NamedBean>();
+        List<NamedBean> ret = new ArrayList<>();
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
         try {
             for (LayoutBlock lb : lProtecting) {
@@ -781,7 +779,7 @@ public class LayoutBlockConnectivityTools {
         if (!lbm.routingStablised()) {
             throw new JmriException("routing not stabilised");
         }
-        List<NamedBean> validDestBean = new ArrayList<NamedBean>();
+        List<NamedBean> validDestBean = new ArrayList<>();
         for (int j = 0; j < blockList.size(); j++) {
             if (blockList.get(j).getBean() != source) {
                 NamedBean destObj = blockList.get(j).getBean();
@@ -814,7 +812,7 @@ public class LayoutBlockConnectivityTools {
 
     List<FacingProtecting> generateBlocksWithBeans(LayoutEditor editor, Class<?> T) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        List<FacingProtecting> beanList = new ArrayList<FacingProtecting>();
+        List<FacingProtecting> beanList = new ArrayList<>();
 
         List<String> lblksSysName = lbm.getSystemNameList();
         for (int i = 0; i < lblksSysName.size(); i++) {
@@ -828,7 +826,7 @@ public class LayoutBlockConnectivityTools {
                 int noNeigh = curLblk.getNumberOfNeighbours();
                 for (int x = 0; x < noNeigh; x++) {
                     Block blk = curLblk.getNeighbourAtIndex(x);
-                    List<Block> proBlk = new ArrayList<Block>();
+                    List<Block> proBlk = new ArrayList<>();
                     NamedBean bean = null;
                     if (T == null) {
                         proBlk.add(blk);
@@ -918,7 +916,7 @@ public class LayoutBlockConnectivityTools {
         FacingProtecting(Block facing, List<Block> protecting, NamedBean bean) {
             this.facing = facing;
             if (protecting == null) {
-                this.protectingBlocks = new ArrayList<Block>(0);
+                this.protectingBlocks = new ArrayList<>(0);
             } else {
                 this.protectingBlocks = protecting;
             }

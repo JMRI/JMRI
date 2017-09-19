@@ -88,7 +88,7 @@ public class TrackSegment extends LayoutTrack {
     private boolean bezier = false;
 
     // for Bezier
-    private ArrayList<Point2D> bezierControlPoints = new ArrayList<Point2D>(); // list of control point displacements
+    private ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
 
     public TrackSegment(@Nonnull String id,
             @Nullable LayoutTrack c1, int t1,
@@ -660,7 +660,7 @@ public class TrackSegment extends LayoutTrack {
             popup = new JPopupMenu();
         }
 
-        String info = rb.getString("TrackSegment");
+        String info = Bundle.getMessage("TrackSegment");
         if (isArc()) {
             if (isCircle()) {
                 info = info + " (" + Bundle.getMessage("Circle") + ")";
@@ -677,7 +677,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setEnabled(false);
 
         if (blockName.isEmpty()) {
-            jmi = popup.add(rb.getString("NoBlock"));
+            jmi = popup.add(Bundle.getMessage("NoBlock"));
         } else {
             jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
         }
@@ -747,7 +747,7 @@ public class TrackSegment extends LayoutTrack {
             }
         });
 
-        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
+        JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Line")) {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -783,7 +783,7 @@ public class TrackSegment extends LayoutTrack {
         popup.add(lineType);
 
         if (isArc()) {
-            popup.add(new AbstractAction(rb.getString("FlipAngle")) {
+            popup.add(new AbstractAction(Bundle.getMessage("FlipAngle")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     flipAngle();
@@ -792,14 +792,14 @@ public class TrackSegment extends LayoutTrack {
         }
         if (isArc() || isBezier()) {
             if (hideConstructionLines()) {
-                popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
+                popup.add(new AbstractAction(Bundle.getMessage("ShowConstruct")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
                     }
                 });
             } else {
-                popup.add(new AbstractAction(rb.getString("HideConstruct")) {
+                popup.add(new AbstractAction(Bundle.getMessage("HideConstruct")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(HIDECON);
@@ -808,7 +808,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
         if ((!blockName.isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
-            popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
@@ -830,19 +830,19 @@ public class TrackSegment extends LayoutTrack {
             popup = new JPopupMenu();
         }
 
-        JMenuItem jmi = popup.add(rb.getString("BezierControlPoint") + " #" + bezierControlPointIndex);
+        JMenuItem jmi = popup.add(Bundle.getMessage("BezierControlPoint") + " #" + bezierControlPointIndex);
         jmi.setEnabled(false);
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         if (bezierControlPoints.size() < BEZIER_CONTROL_POINT_OFFSET_MAX - BEZIER_CONTROL_POINT_OFFSET_MIN) {
-            popup.add(new AbstractAction(rb.getString("AddBezierControlPointAfter")) {
+            popup.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     addBezierControlPointAfter(bezierControlPointIndex);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("AddBezierControlPointBefore")) {
+            popup.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointBefore")) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -852,7 +852,7 @@ public class TrackSegment extends LayoutTrack {
         }
 
         if (bezierControlPoints.size() > 2) {
-            popup.add(new AbstractAction(rb.getString("DeleteBezierControlPoint") + " #" + bezierControlPointIndex) {
+            popup.add(new AbstractAction(Bundle.getMessage("DeleteBezierControlPoint") + " #" + bezierControlPointIndex) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -965,11 +965,11 @@ public class TrackSegment extends LayoutTrack {
     private int dashedIndex;
     private int solidIndex;
 
-    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("HideTrack"));
 
-    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Mainline"));
-    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
-    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Dashed"));
+    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Mainline"));
+    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
+    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Dashed"));
 
     private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -1000,12 +1000,12 @@ public class TrackSegment extends LayoutTrack {
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             dashedBox.removeAllItems();
-            dashedBox.addItem(rb.getString("Solid"));
+            dashedBox.addItem(Bundle.getMessage("Solid"));
             solidIndex = 0;
-            dashedBox.addItem(rb.getString("Dashed"));
+            dashedBox.addItem(Bundle.getMessage("Dashed"));
             dashedIndex = 1;
-            dashedBox.setToolTipText(rb.getString("DashedToolTip"));
-            panel31.add(new JLabel(rb.getString("Style") + " : "));
+            dashedBox.setToolTipText(Bundle.getMessage("DashedToolTip"));
+            panel31.add(new JLabel(Bundle.getMessage("Style") + " : "));
             panel31.add(dashedBox);
             contentPane.add(panel31);
 
@@ -1013,28 +1013,28 @@ public class TrackSegment extends LayoutTrack {
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
             mainlineBox.removeAllItems();
-            mainlineBox.addItem(rb.getString("Mainline"));
+            mainlineBox.addItem(Bundle.getMessage("Mainline"));
             mainlineTrackIndex = 0;
-            mainlineBox.addItem(rb.getString("NotMainline"));
+            mainlineBox.addItem(Bundle.getMessage("NotMainline"));
             sideTrackIndex = 1;
-            mainlineBox.setToolTipText(rb.getString("MainlineToolTip"));
+            mainlineBox.setToolTipText(Bundle.getMessage("MainlineToolTip"));
             panel32.add(mainlineBox);
             contentPane.add(panel32);
 
             // add hidden choice
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            hiddenBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));
             panel33.add(hiddenBox);
             contentPane.add(panel33);
 
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
+            JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));
             panel2.add(blockNameLabel);
             LayoutEditor.setupComboBox(blockNameComboBox, false, true);
-            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
+            blockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 
             contentPane.add(panel2);
@@ -1128,7 +1128,7 @@ public class TrackSegment extends LayoutTrack {
         // check if a block exists to edit
         if (block == null) {
             JOptionPane.showMessageDialog(editTrackSegmentFrame,
-                    rb.getString("Error1"),
+                    Bundle.getMessage("Error1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }

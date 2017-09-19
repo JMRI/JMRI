@@ -2208,10 +2208,10 @@ public class LayoutTurnout extends LayoutTrack {
                     label = Bundle.getMessage("LeftTurnout");
                     break;
                 case WYE_TURNOUT:
-                    label = rb.getString("WYETurnout");
+                    label = Bundle.getMessage("WYETurnout");
                     break;
                 case DOUBLE_XOVER:
-                    label = rb.getString("DoubleCrossover");
+                    label = Bundle.getMessage("DoubleCrossover");
                     break;
                 case RH_XOVER:
                     label = Bundle.getMessage("RightCrossover");
@@ -2226,7 +2226,7 @@ public class LayoutTurnout extends LayoutTrack {
             jmi.setEnabled(false);
 
             if (getTurnout() == null) {
-                jmi = popup.add(rb.getString("NoTurnout"));
+                jmi = popup.add(Bundle.getMessage("NoTurnout"));
             } else {
                 jmi = popup.add(Bundle.getMessage("BeanNameTurnout")
                         + ": " + getTurnoutName());
@@ -2241,7 +2241,7 @@ public class LayoutTurnout extends LayoutTrack {
             jmi.setEnabled(false);
 
             if (blockName.isEmpty()) {
-                jmi = popup.add(rb.getString("NoBlock"));
+                jmi = popup.add(Bundle.getMessage("NoBlock"));
             } else {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block.getDisplayName());
             }
@@ -2311,7 +2311,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
@@ -2327,7 +2327,7 @@ public class LayoutTurnout extends LayoutTrack {
                 setDisabled(o.isSelected());
             });
 
-            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
@@ -2338,7 +2338,7 @@ public class LayoutTurnout extends LayoutTrack {
             // Rotate if there are no track connections
             if ((connectA == null) && (connectB == null)
                     && (connectC == null) && (connectD == null)) {
-                JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
+                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener((ActionEvent event) -> {
                     boolean entering = true;
@@ -2348,7 +2348,7 @@ public class LayoutTurnout extends LayoutTrack {
                         // prompt for rotation angle
                         error = false;
                         newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
+                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")));
                         if (newAngle.isEmpty()) {
                             return;  // cancelled
                         }
@@ -2356,7 +2356,7 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             rot = Double.parseDouble(newAngle);
                         } catch (Exception e1) {
-                            JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
+                            JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
                                     + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                             error = true;
                             newAngle = "";
@@ -2372,7 +2372,7 @@ public class LayoutTurnout extends LayoutTrack {
                 });
             }
 
-            popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
+            popup.add(new AbstractAction(Bundle.getMessage("UseSizeAsDefault")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setUpDefaultSize();
@@ -2396,7 +2396,7 @@ public class LayoutTurnout extends LayoutTrack {
             });
 
             if (getTurnout() != null) {
-                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if ((getTurnoutType() == DOUBLE_XOVER) || (getTurnoutType() == RH_XOVER) || (getTurnoutType() == LH_XOVER)) {
@@ -2436,7 +2436,7 @@ public class LayoutTurnout extends LayoutTrack {
                 }
                 if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                     if (blockBName.isEmpty() && blockCName.isEmpty() && blockDName.isEmpty()) {
-                        popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
@@ -2444,7 +2444,7 @@ public class LayoutTurnout extends LayoutTrack {
                             }
                         });
                     } else {
-                        JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                        JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
                         viewRouting.add(new AbstractAction(blockName) {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -2487,14 +2487,14 @@ public class LayoutTurnout extends LayoutTrack {
                 }
 
                 if (blockBoundaries) {
-                    popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             tools.setSignalMastsAtTurnoutFromMenu(LayoutTurnout.this,
                                     boundaryBetween);
                         }
                     });
-                    popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             tools.setSensorsAtTurnoutFromMenu(
@@ -2664,7 +2664,7 @@ public class LayoutTurnout extends LayoutTrack {
     private JmriBeanComboBox blockDNameComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JComboBox<String> stateBox = new JComboBox<String>();
-    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTurnout"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("HideTurnout"));
     private int turnoutClosedIndex;
     private int turnoutThrownIndex;
     private JButton turnoutEditBlock;
@@ -2676,8 +2676,8 @@ public class LayoutTurnout extends LayoutTrack {
     private boolean editOpen = false;
     protected boolean needRedraw = false;
     protected boolean needsBlockUpdate = false;
-    private JCheckBox additionalTurnout = new JCheckBox(rb.getString("SupportingTurnout"));
-    private JCheckBox additionalTurnoutInvert = new JCheckBox(rb.getString("SecondTurnoutInvert"));
+    private JCheckBox additionalTurnout = new JCheckBox(Bundle.getMessage("SupportingTurnout"));
+    private JCheckBox additionalTurnoutInvert = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));
 
     /**
      * Edit a Layout Turnout
@@ -2689,7 +2689,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         // Initialize if needed
         if (editLayoutTurnoutFrame == null) {
-            editLayoutTurnoutFrame = new JmriJFrame(rb.getString("EditTurnout"), false, true);
+            editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditTurnout"), false, true);
             editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutTurnout", true);
             editLayoutTurnoutFrame.setLocation(50, 30);
             Container contentPane = editLayoutTurnoutFrame.getContentPane();
@@ -2761,7 +2761,7 @@ public class LayoutTurnout extends LayoutTrack {
                 additionalTurnoutInvert.setEnabled(additionalEnabled);
             });
             if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
-                additionalTurnout.setText(rb.getString("ThrowTwoTurnouts"));
+                additionalTurnout.setText(Bundle.getMessage("ThrowTwoTurnouts"));
             }
             panel1a.add(additionalTurnout);
             contentPane.add(panel1a);
@@ -2787,15 +2787,15 @@ public class LayoutTurnout extends LayoutTrack {
                 turnoutClosedIndex = 0;
                 stateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
                 turnoutThrownIndex = 1;
-                stateBox.setToolTipText(rb.getString("StateToolTip"));
-                panel3.add(new JLabel(rb.getString("ContinuingState")));
+                stateBox.setToolTipText(Bundle.getMessage("StateToolTip"));
+                panel3.add(new JLabel(Bundle.getMessage("ContinuingState")));
                 panel3.add(stateBox);
                 contentPane.add(panel3);
             }
 
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            hiddenBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));
             panel33.add(hiddenBox);
             contentPane.add(panel33);
 
@@ -2807,8 +2807,8 @@ public class LayoutTurnout extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             panel2.add(blockNameComboBox);
             LayoutEditor.setupComboBox(blockNameComboBox, false, true);
-            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
-            panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
+            blockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
+            panel2.add(turnoutEditBlock = new JButton(Bundle.getMessage("CreateEdit")));
             turnoutEditBlock.addActionListener((ActionEvent e) -> {
                 turnoutEditBlockPressed(e);
             });
@@ -2820,10 +2820,10 @@ public class LayoutTurnout extends LayoutTrack {
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
                 LayoutEditor.setupComboBox(blockBNameComboBox, false, true);
-                blockBNameComboBox.setToolTipText(rb.getString("EditBlockBNameHint"));
+                blockBNameComboBox.setToolTipText(Bundle.getMessage("EditBlockBNameHint"));
                 panel21.add(blockBNameComboBox);
 
-                panel21.add(turnoutEditBlockB = new JButton(rb.getString("CreateEdit")));
+                panel21.add(turnoutEditBlockB = new JButton(Bundle.getMessage("CreateEdit")));
                 turnoutEditBlockB.addActionListener((ActionEvent e) -> {
                     turnoutEditBlockBPressed(e);
                 });
@@ -2836,9 +2836,9 @@ public class LayoutTurnout extends LayoutTrack {
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
                 LayoutEditor.setupComboBox(blockCNameComboBox, false, true);
-                blockCNameComboBox.setToolTipText(rb.getString("EditBlockCNameHint"));
+                blockCNameComboBox.setToolTipText(Bundle.getMessage("EditBlockCNameHint"));
                 panel22.add(blockCNameComboBox);
-                panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
+                panel22.add(turnoutEditBlockC = new JButton(Bundle.getMessage("CreateEdit")));
                 turnoutEditBlockC.addActionListener((ActionEvent e) -> {
                     turnoutEditBlockCPressed(e);
                 });
@@ -2851,9 +2851,9 @@ public class LayoutTurnout extends LayoutTrack {
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
                 LayoutEditor.setupComboBox(blockDNameComboBox, false, true);
-                blockDNameComboBox.setToolTipText(rb.getString("EditBlockDNameHint"));
+                blockDNameComboBox.setToolTipText(Bundle.getMessage("EditBlockDNameHint"));
                 panel23.add(blockDNameComboBox);
-                panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));
+                panel23.add(turnoutEditBlockD = new JButton(Bundle.getMessage("CreateEdit")));
                 turnoutEditBlockD.addActionListener((ActionEvent e) -> {
                     turnoutEditBlockDPressed(e);
                 });
@@ -2955,7 +2955,7 @@ public class LayoutTurnout extends LayoutTrack {
         // check if a block exists to edit
         if (block == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    rb.getString("Error1"),
+                    Bundle.getMessage("Error1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2990,7 +2990,7 @@ public class LayoutTurnout extends LayoutTrack {
         // check if a block exists to edit
         if (blockB == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    rb.getString("Error1"),
+                    Bundle.getMessage("Error1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -3025,7 +3025,7 @@ public class LayoutTurnout extends LayoutTrack {
         // check if a block exists to edit
         if (blockC == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    rb.getString("Error1"),
+                    Bundle.getMessage("Error1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -3060,7 +3060,7 @@ public class LayoutTurnout extends LayoutTrack {
         // check if a block exists to edit
         if (blockD == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    rb.getString("Error1"),
+                    Bundle.getMessage("Error1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -3241,7 +3241,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
-        ArrayList<LayoutBlock> ret = new ArrayList<LayoutBlock>(2);
+        ArrayList<LayoutBlock> ret = new ArrayList<>(2);
         if (block == null) {
             return ret;
         }
@@ -3412,8 +3412,8 @@ public class LayoutTurnout extends LayoutTrack {
         return active;
     }
 
-    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<JMenuItem>(0);
-    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<JMenuItem>(0);
+    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<>(0);
+    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<>(0);
 
     public void addEditPopUpMenu(JMenuItem menu) {
         if (!editAdditionalMenu.contains(menu)) {

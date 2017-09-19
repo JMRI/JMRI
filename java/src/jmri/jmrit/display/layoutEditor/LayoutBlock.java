@@ -94,11 +94,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public boolean enableDeleteRouteLogging = false;
     public boolean enableSearchRouteLogging = false;
 
-    static List<Integer> updateReferences = new ArrayList<Integer>(500);
+    static List<Integer> updateReferences = new ArrayList<>(500);
 
     //might want to use the jmri ordered hashtable, so that we can add at the top
     //and remove at the bottom.
-    List<Integer> actedUponUpdates = new ArrayList<Integer>(500);
+    List<Integer> actedUponUpdates = new ArrayList<>(500);
 
     public void enableDeleteRouteLog() {
         enableDeleteRouteLogging = false;
@@ -124,8 +124,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     private Block block = null;
 
     //private int maxBlockNumber = 0;
-    //private LayoutBlock _instance = null; //TODO: delete this
-    private List<LayoutEditor> panels = new ArrayList<LayoutEditor>(); //panels using this block
+    private List<LayoutEditor> panels = new ArrayList<>(); //panels using this block
     private java.beans.PropertyChangeListener mBlockListener = null;
     private int jmriblknum = 1;
     private boolean useExtraColor = false;
@@ -328,7 +327,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (s == null) {
             //There is no sensor corresponding to this name
             JOptionPane.showMessageDialog(openFrame,
-                    java.text.MessageFormat.format(rb.getString("Error7"),
+                    java.text.MessageFormat.format(Bundle.getMessage("Error7"),
                             new Object[]{sensorName}),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
@@ -348,7 +347,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 //new sensor is not unique, return to the old one
                 occupancyNamedSensor = savedNamedSensor;
                 JOptionPane.showMessageDialog(openFrame,
-                        java.text.MessageFormat.format(rb.getString("Error6"),
+                        java.text.MessageFormat.format(Bundle.getMessage("Error6"),
                                 new Object[]{sensorName, b.getId()}),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return null;
@@ -386,7 +385,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (m == null) {
             //There is no memory corresponding to this name
             JOptionPane.showMessageDialog(openFrame,
-                    java.text.MessageFormat.format(rb.getString("Error16"),
+                    java.text.MessageFormat.format(Bundle.getMessage("Error16"),
                             new Object[]{memName}),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
@@ -648,12 +647,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                 && (!compareConnectivity(c, tPanel.getLEAuxTools().getConnectivityList(this)))) {
                             //send user an error message
                             int response = JOptionPane.showOptionDialog(null,
-                                    java.text.MessageFormat.format(rb.getString("Warn1"),
+                                    java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
                                             new Object[]{getUserName(), tPanel.getLayoutName(),
                                                 panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                     null, new Object[]{Bundle.getMessage("ButtonOK"),
-                                        rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
+                                        Bundle.getMessage("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
                             if (response != 0) {    //user elected to disable messages
                                 InstanceManager.getDefault(
                                         LayoutBlockManager.class).turnOffWarning();
@@ -866,7 +865,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     private JComboBox<String> extraColorBox = new JComboBox<String>();
     private JComboBox<String> blockSpeedBox = new JComboBox<String>();
 
-    private JLabel blockUseLabel = new JLabel(rb.getString("UseCount"));
+    private JLabel blockUseLabel = new JLabel(Bundle.getMessage("UseCount"));
 
     private JButton blockEditDone;
     private JButton blockEditCancel;
@@ -934,11 +933,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             Reporter reporter = getOccupancySensor().getReporter();
             if (reporter != null && block != null) {
                 String msg = java.text.MessageFormat.format(
-                        rb.getString("BlockAssignReporter"),
+                        Bundle.getMessage("BlockAssignReporter"),
                         new Object[]{getOccupancySensor().getDisplayName(),
                             reporter.getDisplayName()});
                 if (JOptionPane.showConfirmDialog(editLayoutBlockFrame,
-                        msg, rb.getString("BlockAssignReporterTitle"),
+                        msg, Bundle.getMessage("BlockAssignReporterTitle"),
                         JOptionPane.YES_NO_OPTION) == 0) {
                     block.setReporter(reporter);
                 }
@@ -1067,9 +1066,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
             LayoutEditor.setupComboBox(memoryComboBox, true, true);
 
-            layout.addItem(new BeanEditItem(new JLabel("" + useCount), rb.getString("UseCount"), null));
+            layout.addItem(new BeanEditItem(new JLabel("" + useCount), Bundle.getMessage("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryComboBox, Bundle.getMessage("BeanNameMemory"),
-                    rb.getString("MemoryVariableTip")));
+                    Bundle.getMessage("MemoryVariableTip")));
 
             senseBox.removeAllItems();
             senseBox.addItem(Bundle.getMessage("SensorStateActive"));
@@ -1077,16 +1076,16 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             senseBox.addItem(Bundle.getMessage("SensorStateInactive"));
             senseInactiveIndex = 1;
 
-            layout.addItem(new BeanEditItem(senseBox, rb.getString("OccupiedSense"), rb.getString("OccupiedSenseHint")));
+            layout.addItem(new BeanEditItem(senseBox, Bundle.getMessage("OccupiedSense"), Bundle.getMessage("OccupiedSenseHint")));
 
             initializeColorCombo(trackColorBox);
-            layout.addItem(new BeanEditItem(trackColorBox, rb.getString("TrackColor"), rb.getString("TrackColorHint")));
+            layout.addItem(new BeanEditItem(trackColorBox, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             initializeColorCombo(occupiedColorBox);
-            layout.addItem(new BeanEditItem(occupiedColorBox, rb.getString("OccupiedColor"), rb.getString("OccupiedColorHint")));
+            layout.addItem(new BeanEditItem(occupiedColorBox, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             initializeColorCombo(extraColorBox);
-            layout.addItem(new BeanEditItem(extraColorBox, rb.getString("ExtraColor"), rb.getString("ExtraColorHint")));
+            layout.addItem(new BeanEditItem(extraColorBox, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
             layout.setSaveItem(new AbstractAction() {
                 @Override
@@ -1169,7 +1168,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             routing.addItem(new BeanEditItem(metricField, "Block Metric", "set the cost for going over this block"));
 
             routing.addItem(new BeanEditItem(null, null, "Set the direction of the connection to the neighbouring block"));
-            neighbourDir = new ArrayList<JComboBox<String>>(getNumberOfNeighbours());
+            neighbourDir = new ArrayList<>(getNumberOfNeighbours());
             for (int i = 0; i < getNumberOfNeighbours(); i++) {
                 JComboBox<String> dir = new JComboBox<String>(working);
                 routing.addItem(new BeanEditItem(dir, getNeighbourAtIndex(i).getDisplayName(), null));
@@ -1420,12 +1419,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
                         //send user an error message
                         int response = JOptionPane.showOptionDialog(null,
-                                java.text.MessageFormat.format(rb.getString("Warn1"),
+                                java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
                                         new Object[]{getUserName(), tPanel.getLayoutName(),
                                             panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, new Object[]{Bundle.getMessage("ButtonOK"),
-                                    rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
+                                    Bundle.getMessage("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
                         if (response != 0) {    //user elected to disable messages
                             InstanceManager.getDefault(LayoutBlockManager.class).turnOffWarning();
                         }
@@ -1434,7 +1433,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             auxTools = panel.getLEAuxTools();
             List<LayoutConnectivity> d = auxTools.getConnectivityList(this);
-            List<LayoutBlock> attachedBlocks = new ArrayList<LayoutBlock>();
+            List<LayoutBlock> attachedBlocks = new ArrayList<>();
 
             for (int i = 0; i < d.size(); i++) {
                 if (d.get(i).getBlock1() != this) {
@@ -1728,7 +1727,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     private void informNeighbourOfValidRoutes(Block newblock) {
         //java.sql.Timestamp t1 = new java.sql.Timestamp(System.nanoTime());
-        List<Block> validFromPath = new ArrayList<Block>();
+        List<Block> validFromPath = new ArrayList<>();
         if (enableAddRouteLogging) {
             log.info("From " + this.getDisplayName() + " new block " + newblock.getDisplayName());
         }
@@ -1956,7 +1955,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     + srcblk.getDisplayName() + " has removed route to " + destblk.getDisplayName());
             log.info(msgPrefix + " routes in table " + routes.size() + " Remove route from neighbour");
         }
-        List<Routes> routesToRemove = new ArrayList<Routes>();
+        List<Routes> routesToRemove = new ArrayList<>();
         for (int i = routes.size() - 1; i > -1; i--) {
             Routes ro = routes.get(i);
             if ((ro.getNextBlock() == srcblk) && (ro.getDestBlock() == destblk)) {
@@ -1974,7 +1973,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     private List<Routes> removeRouteRecievedFromNeighbour(Block removedBlock) {
-        List<Routes> tmpBlock = new ArrayList<Routes>();
+        List<Routes> tmpBlock = new ArrayList<>();
 
         //here we simply remove the routes which are advertised from the removed neighbour
         for (int j = routes.size() - 1; j > -1; j--) {
@@ -2133,7 +2132,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         + " checking " + destBlock.getDisplayName()
                         + " from " + sourceBlock.getDisplayName());
             }
-            List<Routes> validroute = new ArrayList<Routes>();
+            List<Routes> validroute = new ArrayList<>();
             List<Routes> destRoutes = getDestRoutes(destBlock);
             for (Routes r : destRoutes) {
                 //We now know that we still have a valid route to the dest
@@ -2184,7 +2183,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
                     //At this point we could probably do with checking for other valid paths from the notifyingblock
                     //Have a feeling that this is pretty much the same as above!
-                    List<Block> validNeighboursToNotify = new ArrayList<Block>();
+                    List<Block> validNeighboursToNotify = new ArrayList<>();
 
                     //Problem we have here is that although we only have one valid route, one of our neighbours
                     //could still hold a valid through path.
@@ -2400,12 +2399,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                     tPanel.getLEAuxTools().getConnectivityList(this)))) {
                         //send user an error message
                         int response = JOptionPane.showOptionDialog(null,
-                                java.text.MessageFormat.format(rb.getString("Warn1"),
+                                java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
                                         new Object[]{getUserName(), tPanel.getLayoutName(),
                                             panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, new Object[]{Bundle.getMessage("ButtonOK"),
-                                    rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
+                                    Bundle.getMessage("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
                         if (response != 0) //user elected to disable messages
                         {
                             InstanceManager.getDefault(LayoutBlockManager.class).turnOffWarning();
@@ -2462,8 +2461,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     block.getDisplayName(), srcBlock.getDisplayName(), dstBlock.getDisplayName());
         }
         connection = new ConnectivityUtil(panel);
-        List<LayoutTurnout> stod = new ArrayList<LayoutTurnout>();
-        List<Integer> stodSet = new ArrayList<Integer>();
+        List<LayoutTurnout> stod = new ArrayList<>();
+        List<Integer> stodSet = new ArrayList<>();
 
         try {
             MDC.put("loggingDisabled", connection.getClass().getCanonicalName());
@@ -2485,8 +2484,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (!connection.isTurnoutConnectivityComplete()) {
             layoutConnectivity = false;
         }
-        List<LayoutTurnout> tmpdtos = new ArrayList<LayoutTurnout>();
-        List<Integer> tmpdtosSet = new ArrayList<Integer>();
+        List<LayoutTurnout> tmpdtos = new ArrayList<>();
+        List<Integer> tmpdtosSet = new ArrayList<>();
 
         try {
             MDC.put("loggingDisabled", connection.getClass().getName());
@@ -2511,7 +2510,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         if ((stod.size() == tmpdtos.size()) && (stodSet.size() == tmpdtosSet.size())) {
             //Need to reorder the tmplist (dst-src) to be the same order as src-dst
-            List<LayoutTurnout> dtos = new ArrayList<LayoutTurnout>();
+            List<LayoutTurnout> dtos = new ArrayList<>();
             for (int i = tmpdtos.size(); i > 0; i--) {
                 dtos.add(tmpdtos.get(i - 1));
             }
@@ -2534,7 +2533,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     return;
                 }
             }
-            List<Integer> dtosSet = new ArrayList<Integer>();
+            List<Integer> dtosSet = new ArrayList<>();
             for (int i = tmpdtosSet.size(); i > 0; i--) {
                 //Need to reorder the tmplist (dst-src) to be the same order as src-dst
                 dtosSet.add(tmpdtosSet.get(i - 1));
@@ -2741,7 +2740,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     public List<Block> getActiveNextBlocks(Block source) {
-        List<Block> currentPath = new ArrayList<Block>();
+        List<Block> currentPath = new ArrayList<>();
 
         for (int i = 0; i < throughPaths.size(); i++) {
             ThroughPaths path = throughPaths.get(i);
@@ -2786,14 +2785,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return -1;
     }
 
-    List<Adjacencies> neighbours = new ArrayList<Adjacencies>();
+    List<Adjacencies> neighbours = new ArrayList<>();
 
-    List<ThroughPaths> throughPaths = new ArrayList<ThroughPaths>();
+    List<ThroughPaths> throughPaths = new ArrayList<>();
 
     //A sub class that holds valid routes through the block.
     //Possibly want to store the path direction in here as well.
     //or we store the ref to the path, so we can get the directions.
-    List<Routes> routes = new ArrayList<Routes>();
+    List<Routes> routes = new ArrayList<>();
 
     String decodePacketFlow(int value) {
         switch (value) {
@@ -3014,7 +3013,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         int bestCount = 965255; //set stupidly high
         int bestIndex = -1;
         int lastValue = 0;
-        List<Block> nextBlocks = new ArrayList<Block>(5);
+        List<Block> nextBlocks = new ArrayList<>(5);
         if (!excludeBlock.isEmpty() && (excludeBlock.get(excludeBlock.size() - 1) < routes.size())) {
             if (routingMethod == LayoutBlockConnectivityTools.METRIC) {
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size() - 1)).getMetric();
@@ -3103,7 +3102,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Nonnull
     List<Routes> getRouteByNeighbour(Block blk) {
-        List<Routes> rtr = new ArrayList<Routes>();
+        List<Routes> rtr = new ArrayList<>();
         for (int i = 0; i < routes.size(); i++) {
             if (routes.get(i).getNextBlock() == blk) {
                 rtr.add(routes.get(i));
@@ -3257,7 +3256,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Returns a list of valid Routes to our destination block
      */
     List<Routes> getDestRoutes(Block dstBlock) {
-        List<Routes> rtr = new ArrayList<Routes>();
+        List<Routes> rtr = new ArrayList<>();
         for (int i = 0; i < routes.size(); i++) {
             if (routes.get(i).getDestBlock() == dstBlock) {
                 rtr.add(routes.get(i));
@@ -3270,7 +3269,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Returns a list of valid Routes via our next block
      */
     List<Routes> getNextRoutes(Block nxtBlock) {
-        List<Routes> rtr = new ArrayList<Routes>();
+        List<Routes> rtr = new ArrayList<>();
         for (int i = 0; i < routes.size(); i++) {
             if (routes.get(i).getNextBlock() == nxtBlock) {
                 rtr.add(routes.get(i));
@@ -3622,7 +3621,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             log.info("From " + this.getDisplayName() + " Add route to neighbour");
         }
         Block nextHop = ro.getNextBlock();
-        List<LayoutBlock> validFromPath = new ArrayList<LayoutBlock>();
+        List<LayoutBlock> validFromPath = new ArrayList<>();
 
         if (enableAddRouteLogging) {
             log.info("From " + this.getDisplayName() + " new block " + nextHop.getDisplayName());
@@ -3910,7 +3909,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         boolean mutualAdjacency = false;
 
         Hashtable<Block, Routes> adjDestRoutes = new Hashtable<Block, Routes>();
-        List<Integer> actedUponUpdates = new ArrayList<Integer>(501);
+        List<Integer> actedUponUpdates = new ArrayList<>(501);
 
         Adjacencies(Block block, int dir, int packetFlow) {
             adjBlock = block;
@@ -4520,7 +4519,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     List<Block> getThroughPathSourceByDestination(Block dest) {
-        List<Block> a = new ArrayList<Block>();
+        List<Block> a = new ArrayList<>();
 
         for (int i = 0; i < throughPaths.size(); i++) {
             if (throughPaths.get(i).getDestinationBlock() == dest) {
@@ -4531,7 +4530,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     List<Block> getThroughPathDestinationBySource(Block source) {
-        List<Block> a = new ArrayList<Block>();
+        List<Block> a = new ArrayList<>();
 
         for (int i = 0; i < throughPaths.size(); i++) {
             if (throughPaths.get(i).getSourceBlock() == source) {
@@ -4577,7 +4576,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         if (activePaths == null) {
-            activePaths = new ArrayList<ThroughPaths>();
+            activePaths = new ArrayList<>();
         }
 
         if (active) {

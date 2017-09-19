@@ -710,14 +710,14 @@ public class LayoutSlip extends LayoutTurnout {
             }
 
             if (getTurnout() == null) {
-                jmi = popup.add(rb.getString("NoTurnout"));
+                jmi = popup.add(Bundle.getMessage("NoTurnout"));
             } else {
                 jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
             }
             jmi.setEnabled(false);
 
             if (getTurnoutB() == null) {
-                jmi = popup.add(rb.getString("NoTurnout"));
+                jmi = popup.add(Bundle.getMessage("NoTurnout"));
             } else {
                 jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutBName);
             }
@@ -725,7 +725,7 @@ public class LayoutSlip extends LayoutTurnout {
 
             boolean blockAssigned = false;
             if ((blockName == null) || (blockName.isEmpty())) {
-                jmi = popup.add(rb.getString("NoBlock"));
+                jmi = popup.add(Bundle.getMessage("NoBlock"));
             } else {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block.getDisplayName());
                 blockAssigned = true;
@@ -781,7 +781,7 @@ public class LayoutSlip extends LayoutTurnout {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
@@ -797,7 +797,7 @@ public class LayoutSlip extends LayoutTurnout {
                 setDisabled(o.isSelected());
             });
 
-            cbmi = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
@@ -823,7 +823,7 @@ public class LayoutSlip extends LayoutTurnout {
             });
             if ((connectA == null) && (connectB == null)
                     && (connectC == null) && (connectD == null)) {
-                JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
+                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener(
                         (ActionEvent event) -> {
@@ -834,7 +834,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 // prompt for rotation angle
                                 error = false;
                                 newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                        Bundle.getMessage("MakeLabel", rb.getString("EnterRotation")));
+                                        Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")));
                                 if (newAngle.isEmpty()) {
                                     return;  // cancelled
                                 }
@@ -842,7 +842,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 try {
                                     rot = Double.parseDouble(newAngle);
                                 } catch (Exception e1) {
-                                    JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
+                                    JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
                                             + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                     error = true;
                                     newAngle = "";
@@ -859,7 +859,7 @@ public class LayoutSlip extends LayoutTurnout {
                 );
             }
             if (blockAssigned) {
-                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         tools.setSignalsAtSlipFromMenu(LayoutSlip.this,
@@ -885,13 +885,13 @@ public class LayoutSlip extends LayoutTurnout {
                 }
             }
             if (blockBoundaries) {
-                popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         tools.setSignalMastsAtSlipFromMenu(LayoutSlip.this, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
-                popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         tools.setSensorsAtSlipFromMenu(LayoutSlip.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
@@ -901,7 +901,7 @@ public class LayoutSlip extends LayoutTurnout {
 
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockAssigned) {
-                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                         @Override
                         public void actionPerformed(ActionEvent event) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
@@ -970,7 +970,7 @@ public class LayoutSlip extends LayoutTurnout {
     boolean editOpen = false;
     private JmriBeanComboBox turnoutAComboBox;
     private JmriBeanComboBox turnoutBComboBox;
-    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideSlip"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("HideSlip"));
 
     /**
      * Edit a Slip
@@ -982,7 +982,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         // Initialize if needed
         if (editLayoutTurnoutFrame == null) {
-            editLayoutTurnoutFrame = new JmriJFrame(rb.getString("EditSlip"), false, true);
+            editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditSlip"), false, true);
             editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutSlip", true);
             editLayoutTurnoutFrame.setLocation(50, 30);
 
@@ -1082,18 +1082,18 @@ public class LayoutSlip extends LayoutTurnout {
 
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+            hiddenBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));
             panel33.add(hiddenBox);
             contentPane.add(panel33);
 
             // setup block name
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
+            JLabel block1NameLabel = new JLabel(Bundle.getMessage("BlockID"));
             panel3.add(block1NameLabel);
             panel3.add(blockNameComboBox);
             LayoutEditor.setupComboBox(blockNameComboBox, false, true);
-            blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
+            blockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
 
             contentPane.add(panel3);
             // set up Edit Block buttons

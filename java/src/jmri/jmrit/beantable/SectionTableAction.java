@@ -308,7 +308,7 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     // instance variables
-    ArrayList<Block> blockList = new ArrayList<Block>();
+    ArrayList<Block> blockList = new ArrayList<>();
     BlockTableModel blockTableModel = null;
     EntryPointTableModel entryPointTableModel = null;
     SectionManager sectionManager = null;
@@ -318,7 +318,7 @@ public class SectionTableAction extends AbstractTableAction {
     boolean addCreateActive = true;
     ArrayList<LayoutEditor> lePanelList = null;
     LayoutEditor curLayoutEditor = null;
-    ArrayList<Block> blockBoxList = new ArrayList<Block>();
+    ArrayList<Block> blockBoxList = new ArrayList<>();
     Block beginBlock = null;
     Block endBlock = null;
     Sensor fSensor = null;

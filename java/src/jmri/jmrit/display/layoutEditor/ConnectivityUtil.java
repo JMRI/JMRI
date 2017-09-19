@@ -629,7 +629,7 @@ public class ConnectivityUtil {
      * @return the list of associated layout turnouts or an empty list if none
      */
     @Nonnull
-    public List<LayoutTurnout> getLayoutTurnoutsThisBlock(@Nullable Block block) {
+    public List<LayoutTurnout> getLayoutTurnoutsThisBlock(@Nonnull Block block) {
         List<LayoutTurnout> result = new ArrayList<>();
         String userName = block.getUserName();
         LayoutBlock lBlock = null;

@@ -1881,7 +1881,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }	//getProtectedBlockByNamedBean
 
     public List<LayoutBlock> getProtectingBlocksByNamedBean(NamedBean nb, LayoutEditor panel) {
-        ArrayList<LayoutBlock> ret = new ArrayList<LayoutBlock>();
+        ArrayList<LayoutBlock> ret = new ArrayList<>();
 
         if (nb instanceof SignalHead) {
             ret.add(getProtectedBlock((SignalHead) nb, panel));
@@ -1892,7 +1892,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }	//getProtectingBlocksByNamedBean
 
     private List<LayoutBlock> getProtectingBlocksByBean(NamedBean bean, LayoutEditor panel) {
-        ArrayList<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
+        List<LayoutBlock> protectingBlocks = new ArrayList<>();
 
         if (!(bean instanceof SignalMast) && !(bean instanceof Sensor)) {
             log.error("Incorrect class type called, must be either SignalMast or Sensor");
@@ -1999,7 +1999,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     public List<LayoutBlock> getProtectingBlocksBySensorOld(Sensor sensor, LayoutEditor panel) {
-        ArrayList<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
+        List<LayoutBlock> protectingBlocks = new ArrayList<>();
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(sensor);
         TrackSegment tr;
         boolean east = true;
