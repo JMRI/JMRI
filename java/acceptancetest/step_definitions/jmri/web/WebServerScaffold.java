@@ -1,8 +1,7 @@
 package jmri.web;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.Scenario;
+import cucumber.api.java8.En;
 
 import jmri.web.server.WebServer;
 
@@ -12,17 +11,26 @@ import jmri.web.server.WebServer;
  *
  * @author  Paul Bender Copyright (C) 2017
  */
-public class WebServerScaffold {
+public class WebServerScaffold implements En {
+
    private WebServer server = null;
+   String[] tags = {"@webtest"};
 
-   @Before(value="@webtest")
-   public void startServer() throws Exception {
-      server = new WebServer(); // a webserver using default preferences.
-      server.start();
-   }
+   public WebServerScaffold() {
 
-   @After(value="@webtest")
-   public void stopServer() throws Exception {
-      server.stop();
+      Before(tags,()->{
+          jmri.util.JUnitUtil.setUp();
+          server = new WebServer(); // a webserver using default preferences.
+          server.start();
+      });
+
+      After(tags, ()->{
+         try {
+             server.stop();
+         } catch(Exception ex) {
+             // if an exception occurs here, we may want to raise a flag,
+         }
+         jmri.util.JUnitUtil.tearDown();
+      });
    }
 }
