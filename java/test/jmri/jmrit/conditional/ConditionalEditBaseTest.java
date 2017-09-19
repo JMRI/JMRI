@@ -75,7 +75,7 @@ public class ConditionalEditBaseTest {
     @Test
     public void testValidators() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConditionalEditBase cdlBase = new ConditionalEditBase("LX101");
+        ConditionalEditBase cdlBase = new ConditionalEditBase("LX101");  // NOI18N
 
         Assert.assertNotNull("ConditionalEditBase validateTurnoutReference Return not null", cdlBase.validateTurnoutReference("Turnout 1"));  // NOI18N
         Assert.assertNotNull("ConditionalEditBase validateSensorReference Return not null", cdlBase.validateSensorReference("Sensor 1"));  // NOI18N

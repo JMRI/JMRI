@@ -75,9 +75,19 @@
 
       <p>Detail <strong>State Variable</strong> and <strong>Action</strong> Lists:</p>
       <ul>
-        <li><a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State Variables</a> </li>
-        <li><a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action">Actions</a></li>
+        <li><a href="../../package/jmri/jmrit/conditional/StateVariableActionList.shtml#variable">State Variables</a> </li>
+        <li><a href="../../package/jmri/jmrit/conditional/StateVariableActionList.shtml#action">Actions</a></li>
       </ul>
+
+      <p><strong>Notice:</strong>  The examples described in this document use the traditional
+      <strong>Conditional List</strong> editor.</p>
+
+      <p>Conditional Editor details:</p>
+      <ul>
+        <li><a href="../../package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Conditional List Editor</a> </li>
+        <li><a href="../../package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Conditional Tree Editor</a></li>
+      </ul>
+
       <h2>Introduction to Logix and Conditionals</h2>
 
       <p>A Logix is a small group of Conditionals focused on a
@@ -166,15 +176,23 @@
       <ul>
         <li>Below the Logix Table is the <strong>Add...</strong> button.</li>
 
-        <li>The Options menu has two sections:
-          <ul><li>
+        <li>The Options menu has three sections:
+          <ul>
+          <li>
           The first section lets you <strong>Enable</strong> or
           <strong>Disable</strong> all Logixs.
-          </li><li>
+          </li>
+          <li>
           The second section lets you select a user name selection
           method.  See the 
-          <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod">
-          Conditional Name Selection Method</a> for details.<span class="since">since 4.7.3</span></li>
+          <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#logixOptions">
+          Logix Options</a> menu for details.<span class="since">since 4.7.3</span>
+          </li>
+          <li>
+          The third section lets you select a Conditional Editor.  See the 
+          <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#logixOptions">
+          Logix Options</a> menu for details.<span class="since">since 4.9.2</span>
+          </li>
         </ul></li>
 
         <li>The Tools menu contains five Logix maintenance tools:
@@ -296,7 +314,7 @@
       <div style="margin-left: 2em">
       <a href="../../package/jmri/jmrit/beantable/images/ConditionalBrowser.png">
       <img src="../../package/jmri/jmrit/beantable/images/ConditionalBrowser.png"
-      alt="Conditional Browser Window" height="375" width="500">
+      alt="Conditional Browser Window" height="296" width="562">
       </a>
       </div>
       

@@ -59,7 +59,7 @@ public class ConnectivityUtil {
         layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
-    private ArrayList<Integer> companion = null;
+    private List<Integer> companion = null;
     private TrackSegment tr = null;
     private int prevConnectType = 0;
     private Object prevConnectObject = null;
@@ -83,7 +83,7 @@ public class ConnectivityUtil {
      *         currBlock between prevBlock and nextBlock; returns an empty list
      *         if prevBlock and nextBlock are not null and are not connected
      */
-    public ArrayList<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock) {
+    public List<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock) {
         return getTurnoutList(currBlock, prevBlock, nextBlock, false);
     }
 
@@ -105,9 +105,9 @@ public class ConnectivityUtil {
      *         currBlock between prevBlock and nextBlock; returns an empty list
      *         if prevBlock and nextBlock are not null and are not connected
      */
-    public ArrayList<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock, boolean suppress) {
+    public List<LayoutTurnout> getTurnoutList(Block currBlock, Block prevBlock, Block nextBlock, boolean suppress) {
         turnoutConnectivity = true;
-        ArrayList<LayoutTurnout> list = new ArrayList<>();
+        List<LayoutTurnout> list = new ArrayList<>();
         companion = new ArrayList<>();
         // initialize
         currLayoutBlock = layoutBlockManager.getByUserName(currBlock.getUserName());
@@ -119,7 +119,7 @@ public class ConnectivityUtil {
         }
         if ((prevLayoutBlock == null) || (nextLayoutBlock == null)) {
             // special search with partial information - not as good, order not assured
-            ArrayList<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlock(currLayoutBlock);
+            List<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlock(currLayoutBlock);
             list.addAll(allTurnouts);
             allTurnouts.forEach((lt) -> {
                 if (lt instanceof LayoutSlip) {
@@ -131,7 +131,7 @@ public class ConnectivityUtil {
             return list;
         }
 
-        ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
+        List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
         int cType;
         // initialize the connectivity search, processing a turnout in this block if it is present
         boolean notFound = true;
@@ -483,7 +483,10 @@ public class ConnectivityUtil {
             } else if ((cType >= LayoutTrack.SLIP_A) && (cType <= LayoutTrack.SLIP_D)) {
                 // reached a LayoutSlip
                 LayoutSlip ls = (LayoutSlip) cObject;
-                if (ls.getLayoutBlock() != currLayoutBlock) {
+                if (((cType == LayoutTrack.SLIP_A) && (ls.getLayoutBlock() != currLayoutBlock))
+                        || ((cType == LayoutTrack.SLIP_B) && (ls.getLayoutBlockB() != currLayoutBlock))
+                        || ((cType == LayoutTrack.SLIP_C) && (ls.getLayoutBlockC() != currLayoutBlock))
+                        || ((cType == LayoutTrack.SLIP_D) && (ls.getLayoutBlockD() != currLayoutBlock))) {
                     //Slip is outside of the current block
                     tr = null;
                 } else {
@@ -504,7 +507,7 @@ public class ConnectivityUtil {
      *
      * @return turnout settings as integers
      */
-    public ArrayList<Integer> getTurnoutSettingList() {
+    public List<Integer> getTurnoutSettingList() {
         return companion;
     }
 
@@ -514,10 +517,10 @@ public class ConnectivityUtil {
      * @param block the block to get connections for
      * @return connected blocks or an empty list if none
      */
-    public ArrayList<Block> getConnectedBlocks(Block block) {
-        ArrayList<Block> list = new ArrayList<>();
+    public List<Block> getConnectedBlocks(Block block) {
+        List<Block> list = new ArrayList<>();
         currLayoutBlock = layoutBlockManager.getByUserName(block.getUserName());
-        ArrayList<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
+        List<LayoutConnectivity> cList = auxTools.getConnectivityList(currLayoutBlock);
         for (int i = 0; i < cList.size(); i++) {
             LayoutConnectivity lc = cList.get(i);
             if (lc.getBlock1().getBlock() == block) {
@@ -535,10 +538,10 @@ public class ConnectivityUtil {
      * @param block the block to get anchor point boundaries for
      * @return a list of anchor point boundaries
      */
-    public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
-        ArrayList<PositionablePoint> list = new ArrayList<>();
+    public List<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
+        List<PositionablePoint> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        for (PositionablePoint p : layoutEditor.pointList) {
+        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             if ((p.getConnect2() != null) && (p.getConnect1() != null)) {
                 if ((p.getConnect2().getLayoutBlock() != null) && (p.getConnect1().getLayoutBlock() != null)) {
                     if ((((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock))
@@ -561,10 +564,10 @@ public class ConnectivityUtil {
      * @param block the block to check
      * @return a list of all complete LevelXings
      */
-    public ArrayList<LevelXing> getLevelCrossingsThisBlock(Block block) {
-        ArrayList<LevelXing> list = new ArrayList<>();
+    public List<LevelXing> getLevelCrossingsThisBlock(Block block) {
+        List<LevelXing> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
-        layoutEditor.xingList.forEach((x) -> {
+        layoutEditor.getLevelXings().forEach((x) -> {
             boolean found = false;
             if ((x.getLayoutBlockAC() == lBlock) || (x.getLayoutBlockBD() == lBlock)) {
                 found = true;
@@ -598,11 +601,11 @@ public class ConnectivityUtil {
      * @param block the Block to get layout turnouts for
      * @return the list of associated layout turnouts or an empty list if none
      */
-    public ArrayList<LayoutTurnout> getLayoutTurnoutsThisBlock(Block block) {
-        ArrayList<LayoutTurnout> list = new ArrayList<>();
+    public List<LayoutTurnout> getLayoutTurnoutsThisBlock(Block block) {
+        List<LayoutTurnout> list = new ArrayList<>();
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         String lBlockName = block.getUserName();
-        layoutEditor.turnoutList.forEach((t) -> {
+        layoutEditor.getLayoutTurnouts().forEach((t) -> {
             if ((t.getBlockName().equals(lBlockName)) || (t.getBlockBName().equals(lBlockName))
                     || (t.getBlockCName().equals(lBlockName)) || (t.getBlockDName().equals(lBlockName))) {
                 list.add(t);
@@ -616,7 +619,7 @@ public class ConnectivityUtil {
                 list.add(t);
             }
         });
-        layoutEditor.slipList.forEach((ls) -> {
+        layoutEditor.getLayoutSlips().forEach((ls) -> {
             if (ls.getBlockName().equals(lBlockName)) {
                 list.add(ls);
             } else if ((ls.getConnectA() != null) && (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lBlock)) {
@@ -720,15 +723,15 @@ public class ConnectivityUtil {
         }
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getWestBoundSignal()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getEastBoundSignal()));
             }
         } else if (((p.getConnect1()).getLayoutBlock() != lBlock) && ((p.getConnect2()).getLayoutBlock() == lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getWestBoundSignal()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(p.getEastBoundSignal()));
@@ -757,15 +760,15 @@ public class ConnectivityUtil {
         }
         LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
         if (((p.getConnect1()).getLayoutBlock() == lBlock) && ((p.getConnect2()).getLayoutBlock() != lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getWestBoundSignalMastName()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getEastBoundSignalMastName()));
             }
         } else if (((p.getConnect1()).getLayoutBlock() != lBlock) && ((p.getConnect2()).getLayoutBlock() == lBlock)) {
-            if ((leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
-                    || ((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
+            if ((LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing)
+                    || ((!LayoutEditorTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing))) {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getWestBoundSignalMastName()));
             } else {
                 return (InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(p.getEastBoundSignalMastName()));
@@ -1097,13 +1100,13 @@ public class ConnectivityUtil {
      * @param sh    the signal head to remove the sensors from
      * @return true if successful; false otherwise
      */
-    public boolean removeSensorsFromSignalHeadLogic(ArrayList<String> names, SignalHead sh) {
+    public boolean removeSensorsFromSignalHeadLogic(List<String> names, SignalHead sh) {
         if (sh == null) {
             log.error("Null signal head on entry to removeSensorsFromSignalHeadLogic");
             return false;
         }
         if (names == null) {
-            log.error("Null ArrayList of sensor names on entry to removeSensorsFromSignalHeadLogic");
+            log.error("Null List of sensor names on entry to removeSensorsFromSignalHeadLogic");
             return false;
         }
         BlockBossLogic bbLogic = BlockBossLogic.getStoppedObject(sh.getSystemName());
@@ -2234,12 +2237,12 @@ public class ConnectivityUtil {
         Object curObj = ob;
 
         if (log.isDebugEnabled()) {
-            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
+            log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
-        ArrayList<TrackSegment> posTS = new ArrayList<>();
-        ArrayList<Object> posOB = new ArrayList<>();
+        List<TrackSegment> posTS = new ArrayList<>();
+        List<Object> posOB = new ArrayList<>();
 
         int conType;
         Object conObj;
@@ -2263,10 +2266,10 @@ public class ConnectivityUtil {
                     conType = curTS.getType1();
                     conObj = curTS.getConnect1();
                 } else {
-                    log.error("Connectivity error when following track {} in Block {}", curTS.getID(), currLayoutBlock.getUserName());
+                    log.error("Connectivity error when following track {} in Block {}", curTS.getId(), currLayoutBlock.getUserName());
                     log.error("{} not connected to {} (connects: {} & {})",
                             objectToNameOrIDString(curObj),
-                            curTS.getID(),
+                            curTS.getId(),
                             curTS.getConnect1Name(),
                             curTS.getConnect2Name());
                     return false;
@@ -2276,10 +2279,10 @@ public class ConnectivityUtil {
                     log.info("In block {}, going from {} thru {} to {} (conType: {}), nextLayoutBlock: {}",
                             currLayoutBlock.getUserName(),
                             objectToNameOrIDString(conObj),
-                            curTS.getID(),
+                            curTS.getId(),
                             objectToNameOrIDString(curObj),
                             connectionTypeToString(conType),
-                            nextLayoutBlock.getID());
+                            nextLayoutBlock.getId());
                 }
 
                 // follow track according to next destination type
@@ -2289,7 +2292,7 @@ public class ConnectivityUtil {
                     if (((PositionablePoint) conObj).getType() == PositionablePoint.END_BUMPER) {
                         // end of line without reaching 'nextLayoutBlock'
                         if (log.isDebugEnabled()) {
-                            log.info("end of line without reaching {}", nextLayoutBlock.getID());
+                            log.info("end of line without reaching {}", nextLayoutBlock.getId());
                         }
                         curTS = null;
                     } else if (((PositionablePoint) conObj).getType() == PositionablePoint.ANCHOR
@@ -2626,13 +2629,13 @@ public class ConnectivityUtil {
             result = ((AbstractNamedBean) obj).getDisplayName();
         } catch (Exception ex1) {
             try {
-                result = ((PositionablePoint) obj).getID();
+                result = ((PositionablePoint) obj).getId();
             } catch (Exception ex2) {
                 try {
                     result = ((LayoutTurnout) obj).getName();
                 } catch (Exception ex3) {
                     try {
-                        result = ((LevelXing) obj).getID();
+                        result = ((LevelXing) obj).getId();
                     } catch (Exception ex4) {
                         result = "<" + obj + ">";
                     }
@@ -2684,15 +2687,15 @@ public class ConnectivityUtil {
         }
     }
 
-    public ArrayList<LayoutTurnout> getAllTurnoutsThisBlock(LayoutBlock currLayoutBlock) {
-        ArrayList<LayoutTurnout> list = new ArrayList<>();
-        for (LayoutTurnout lt : layoutEditor.turnoutList) {
+    public List<LayoutTurnout> getAllTurnoutsThisBlock(LayoutBlock currLayoutBlock) {
+        List<LayoutTurnout> list = new ArrayList<>();
+        for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             if ((lt.getLayoutBlock() == currLayoutBlock) || (lt.getLayoutBlockB() == currLayoutBlock)
                     || (lt.getLayoutBlockC() == currLayoutBlock) || (lt.getLayoutBlockD() == currLayoutBlock)) {
                 list.add(lt);
             }
         }
-        for (LayoutTurnout lt : layoutEditor.slipList) {
+        for (LayoutTurnout lt : layoutEditor.getLayoutSlips()) {
             if (lt.getLayoutBlock() == currLayoutBlock) {
                 list.add(lt);
             }
@@ -2701,5 +2704,5 @@ public class ConnectivityUtil {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class);
 }

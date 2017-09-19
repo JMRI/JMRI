@@ -107,5 +107,5 @@ public class SignalPro extends Apps {
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalPro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalPro.class);
 }

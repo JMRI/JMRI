@@ -40,8 +40,8 @@
       </ul>
 
       <p>For more information on ID Tags, see the <a href=
-      "../../../../html/tools/IdTags.shtml">ID Tag help page</a>. 
-      <!--#include virtual="/Footer" --></p>
+      "../../../../html/tools/IdTags.shtml">ID Tag help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

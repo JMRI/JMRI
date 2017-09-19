@@ -29,6 +29,6 @@ public class CMRIConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CMRIConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CMRIConnectionTypeListTest.class);
 
 }

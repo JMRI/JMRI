@@ -1,23 +1,21 @@
 package jmri.jmrit.beantable;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AddNewBeanPanelTest {
 
@@ -25,14 +23,16 @@ public class AddNewBeanPanelTest {
     public void testCTor() {
         ActionListener oklistener = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { }
+            public void actionPerformed(ActionEvent e) {
+            }
         };
         ActionListener cancellistener = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { }
+            public void actionPerformed(ActionEvent e) {
+            }
         };
-        AddNewBeanPanel t = new AddNewBeanPanel(new JTextField(), new JTextField(), new JSpinner(), new JCheckBox(), new JCheckBox(), "ButtonOK", oklistener, cancellistener);    
-        Assert.assertNotNull("exists",t);
+        AddNewBeanPanel t = new AddNewBeanPanel(new JTextField(), new JTextField(), new JSpinner(), new JCheckBox(), new JCheckBox(), "ButtonOK", oklistener, cancellistener, new JLabel());
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -46,6 +46,6 @@ public class AddNewBeanPanelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddNewBeanPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AddNewBeanPanelTest.class);
 
 }

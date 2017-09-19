@@ -67,5 +67,5 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramSwitchListFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramSwitchListFrame.class);
 }

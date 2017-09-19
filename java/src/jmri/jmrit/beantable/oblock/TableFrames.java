@@ -906,5 +906,5 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         //log.debug("Internal frame deactivated: "+frame.getTitle());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TableFrames.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TableFrames.class);
 }

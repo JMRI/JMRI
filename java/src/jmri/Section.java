@@ -19,6 +19,7 @@ import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackNode;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.JmriJFrame;
+import jmri.util.NonNullArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -142,9 +143,9 @@ public class Section extends AbstractNamedBean {
     private String mReverseBlockingSensorName = "";
     private String mForwardStoppingSensorName = "";
     private String mReverseStoppingSensorName = "";
-    private final jmri.util.NonNullArrayList<Block> mBlockEntries = new jmri.util.NonNullArrayList<>();
-    private final jmri.util.NonNullArrayList<EntryPoint> mForwardEntryPoints = new jmri.util.NonNullArrayList<>();
-    private final jmri.util.NonNullArrayList<EntryPoint> mReverseEntryPoints = new jmri.util.NonNullArrayList<>();
+    private final List<Block> mBlockEntries = new NonNullArrayList<>();
+    private final List<EntryPoint> mForwardEntryPoints = new NonNullArrayList<>();
+    private final List<EntryPoint> mReverseEntryPoints = new NonNullArrayList<>();
 
     /**
      * Operational instance variables (not saved between runs)
@@ -160,7 +161,7 @@ public class Section extends AbstractNamedBean {
     private NamedBeanHandle<Sensor> mForwardStoppingNamedSensor = null;
     private NamedBeanHandle<Sensor> mReverseStoppingNamedSensor = null;
 
-    private final ArrayList<PropertyChangeListener> mBlockListeners = new ArrayList<>();
+    private final List<PropertyChangeListener> mBlockListeners = new ArrayList<>();
     protected jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     /**
@@ -494,6 +495,10 @@ public class Section extends AbstractNamedBean {
             for (Block block : mBlockEntries) if (block == b) return false; // already present
             // Note: connectivity to current block is assumed to have been checked
         }
+        
+        // a lot of this code searches for blocks by their user name.
+        // warn if there isn't one.
+        if (b.getUserName()== null) log.warn("Block {} does not have a user name, may not work correctly in Section {}", b.getSystemName(), getSystemName());
         // add Block to the Block list
         mBlockEntries.add(b);
         mLastBlock = b;
@@ -511,7 +516,7 @@ public class Section extends AbstractNamedBean {
         return true;
     }
     private boolean initializationNeeded = false;
-    private final ArrayList<String> blockNameList = new ArrayList<>();
+    private final List<String> blockNameList = new ArrayList<>();
 
     public void delayedAddBlock(String blockName) {
         initializationNeeded = true;
@@ -564,7 +569,7 @@ public class Section extends AbstractNamedBean {
      * @return a list of blocks
      */
     @Nonnull
-    public ArrayList<Block> getBlockList() {
+    public List<Block> getBlockList() {
         if (initializationNeeded) {
             initializeBlocks();
         }
@@ -808,7 +813,7 @@ public class Section extends AbstractNamedBean {
     }
 
     public List<EntryPoint> getEntryPointList() {
-        ArrayList<EntryPoint> list = new ArrayList<>(this.mForwardEntryPoints);
+        List<EntryPoint> list = new ArrayList<>(this.mForwardEntryPoints);
         list.addAll(this.mReverseEntryPoints);
         return list;
     }
@@ -976,7 +981,7 @@ public class Section extends AbstractNamedBean {
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
                 }
             }
-            if (tBlock != null) {
+            if (tBlock != null && tBlock.getUserName()!=null) {
                 LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                 if (lb != null) {
                     dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -991,7 +996,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
                 }
-                if (tBlock != null) {
+                if (tBlock != null && tBlock.getUserName()!=null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1117,7 +1122,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null) {
+                if (tBlock != null && tBlock.getUserName()!=null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1129,7 +1134,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null) {
+                    if (tBlock != null && tBlock.getUserName()!=null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1193,7 +1198,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null) {
+                if (tBlock != null && tBlock.getUserName()!=null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1205,7 +1210,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null) {
+                    if (tBlock != null && tBlock.getUserName()!=null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1298,7 +1303,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null) {
+                if (tBlock != null && tBlock.getUserName()!=null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1310,7 +1315,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null) {
+                    if (tBlock != null && tBlock.getUserName()!=null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1365,7 +1370,7 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null) {
+                if (tBlock != null && tBlock.getUserName()!=null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                     if (lb != null) {
                         dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1377,7 +1382,7 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null) {
+                    if (tBlock != null && tBlock.getUserName()!=null) {
                         LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
                         if (lb != null) {
                             dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
@@ -1485,7 +1490,7 @@ public class Section extends AbstractNamedBean {
         return success;
     }
 
-    private int checkLists(ArrayList<EntryPoint> forwardList, ArrayList<EntryPoint> reverseList, LayoutBlock lBlock) {
+    private int checkLists(List<EntryPoint> forwardList, List<EntryPoint> reverseList, LayoutBlock lBlock) {
         for (int i = 0; i < forwardList.size(); i++) {
             if (forwardList.get(i).getFromBlock() == lBlock.getBlock()) {
                 return EntryPoint.FORWARD;
@@ -1637,7 +1642,7 @@ public class Section extends AbstractNamedBean {
         ConnectivityUtil cUtil = panel.getConnectivityUtil();
         for (Block cBlock : mBlockEntries) {
             LayoutBlock lBlock = layoutBlockManager.getByUserName(cBlock.getUserName());
-            ArrayList<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
+            List<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
             for (int j = 0; j < anchorList.size(); j++) {
                 PositionablePoint p = anchorList.get(j);
                 if ((!p.getEastBoundSignal().equals("")) && (!p.getWestBoundSignal().equals(""))) {
@@ -1671,7 +1676,7 @@ public class Section extends AbstractNamedBean {
                     missingSignalsBB++;
                 }
             }
-            ArrayList<LevelXing> xingList = cUtil.getLevelCrossingsThisBlock(cBlock);
+            List<LevelXing> xingList = cUtil.getLevelCrossingsThisBlock(cBlock);
             for (int k = 0; k < xingList.size(); k++) {
                 LevelXing x = xingList.get(k);
                 LayoutBlock alBlock = ((TrackSegment) x.getConnectA()).getLayoutBlock();
@@ -1797,7 +1802,7 @@ public class Section extends AbstractNamedBean {
                     }
                 }
             }
-            ArrayList<LayoutTurnout> turnoutList = cUtil.getLayoutTurnoutsThisBlock(cBlock);
+            List<LayoutTurnout> turnoutList = cUtil.getLayoutTurnoutsThisBlock(cBlock);
             for (int m = 0; m < turnoutList.size(); m++) {
                 LayoutTurnout t = turnoutList.get(m);
                 if (cUtil.layoutTurnoutHasRequiredSignals(t)) {
@@ -2319,9 +2324,7 @@ public class Section extends AbstractNamedBean {
         if (t == null) {
             return null;
         }
-        LayoutTurnout lt = null;
-        for (int i = 0; i < panel.turnoutList.size(); i++) {
-            lt = panel.turnoutList.get(i);
+        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
             if (lt.getTurnout() == t) {
                 return lt;
             }
@@ -2355,11 +2358,11 @@ public class Section extends AbstractNamedBean {
         return true;
     }
 
-    private ArrayList<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
+    private List<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
         if (initializationNeeded) {
             initializeBlocks();
         }
-        ArrayList<EntryPoint> a = new ArrayList<>();
+        List<EntryPoint> a = new ArrayList<>();
         for (int i = 0; i < mForwardEntryPoints.size(); i++) {
             if (b == (mForwardEntryPoints.get(i)).getBlock()) {
                 a.add(mForwardEntryPoints.get(i));
@@ -2495,9 +2498,11 @@ public class Section extends AbstractNamedBean {
      */
     public void setAlternateColor(boolean set) {
         for (Block b : mBlockEntries) {
-            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
-            if (lb != null) {
-                lb.setUseExtraColor(set);
+            if (b.getUserName()!=null) {
+                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
+                if (lb != null) {
+                    lb.setUseExtraColor(set);
+                }
             }
         }
     }
@@ -2675,6 +2680,6 @@ public class Section extends AbstractNamedBean {
         // "DoDelete" case, if needed, should be handled here.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Section.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Section.class);
 
 }

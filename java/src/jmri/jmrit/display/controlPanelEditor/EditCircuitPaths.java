@@ -96,7 +96,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         setVisible(true);
     }
 
-    private JPanel MakeButtonPanel() {
+    private JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
@@ -228,7 +228,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pathPanel.add(p);
 
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        pathPanel.add(MakeButtonPanel());
+        pathPanel.add(makeButtonPanel());
         changeUnits();
         return pathPanel;
     }
@@ -330,7 +330,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     /**
      * Construct the array of icons that displays the path
-     *
+     * <p>
      */
     private ArrayList<Positionable> makePathGroup(OPath path) {
         Portal fromPortal = path.getFromPortal();
@@ -692,7 +692,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     private boolean setPathLength(OPath path) {
-        float f = 0.0f;
+        float f;
         try {
             String num = _length.getText();
             if (num == null || num.length() == 0) {
@@ -808,5 +808,5 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return _block;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditCircuitPaths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditCircuitPaths.class);
 }

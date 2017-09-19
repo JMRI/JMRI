@@ -2,7 +2,6 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
@@ -14,9 +13,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2012
- *
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class DrawCircle extends DrawFrame {
 
@@ -26,9 +23,6 @@ public class DrawCircle extends DrawFrame {
         super(which, title, parent);
     }
 
-    /**
-     * Create a new PositionableShape
-     */
     @Override
     protected JPanel makeParamsPanel(PositionableShape ps) {
         JPanel panel = super.makeParamsPanel(ps);
@@ -43,21 +37,19 @@ public class DrawCircle extends DrawFrame {
         pp.add(_diameterText);
         _diameterText.addMouseMotionListener(new MouseMotionListener() {
             @Override
-            public void mouseDragged( MouseEvent e) {               
+            public void mouseDragged(MouseEvent e) {
                 updateShape();
             }
+
             @Override
             public void mouseMoved(MouseEvent e) {
                 _shape.setWidth(Integer.parseInt(_diameterText.getText()));
                 updateShape();
             }
         });
-        _diameterText.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _shape.setWidth(Integer.parseInt(_diameterText.getText()));
-                updateShape();
-            }
+        _diameterText.addActionListener((ActionEvent e) -> {
+            _shape.setWidth(Integer.parseInt(_diameterText.getText()));
+            updateShape();
         });
         pp.add(new JLabel(Bundle.getMessage("circleRadius")));
         p.add(pp);
@@ -78,17 +70,18 @@ public class DrawCircle extends DrawFrame {
             ps.updateSize();
             setDisplayParams(ps);
             ps.setEditFrame(this);
-            ed.putItem(ps);            
+            ed.putItem(ps);
         }
         return true;
     }
 
     @Override
     void setDisplayWidth(int w) {
-        _diameterText.setText(Integer.toString(w));        
+        _diameterText.setText(Integer.toString(w));
     }
+
     @Override
     void setDisplayHeight(int h) {
-        _diameterText.setText(Integer.toString(h));        
+        _diameterText.setText(Integer.toString(h));
     }
 }

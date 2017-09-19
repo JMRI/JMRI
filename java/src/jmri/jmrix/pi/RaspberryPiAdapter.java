@@ -2,6 +2,7 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import javax.annotation.CheckForNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,33 +10,33 @@ import org.slf4j.LoggerFactory;
  * Provides an Adapter to allow the system connection memo and multiple
  * RaspberryPi managers to be handled.
  * <P>
- * @author   Bob Jacobsen   Copyright (C) 2001, 2002
- * @author   Paul Bender Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Paul Bender Copyright (C) 2015
  */
 public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
-    implements jmri.jmrix.PortAdapter{
+        implements jmri.jmrix.PortAdapter {
 
-    // private control members
-    private boolean opened = false;
     // in theory gpio can be static, because there will only ever
-    // be one, but the library handles the details that make it a 
+    // be one, but the library handles the details that make it a
     // singleton.
     private GpioController gpio = null;
 
-    public RaspberryPiAdapter(){
-        this(GpioFactory.getInstance());
-    }
-    
-    public RaspberryPiAdapter(GpioController _gpio){
+    public RaspberryPiAdapter() {
         super(new RaspberryPiSystemConnectionMemo());
         log.debug("RaspberryPi GPIO Adapter Constructor called");
-        opened = true;
         this.manufacturerName = RaspberryPiConnectionTypeList.PI;
-        gpio = _gpio;
+        try {
+            gpio = GpioFactory.getInstance();
+            opened = true;
+        } catch (UnsatisfiedLinkError er) {
+            log.error("Expected to run on Raspberry PI, but does not appear to be.");
+        }
     }
 
     @Override
-    public String getCurrentPortName(){ return "GPIO"; }
+    public String getCurrentPortName() {
+        return "GPIO";
+    }
 
     @Override
     public void dispose() {
@@ -43,46 +44,44 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
         gpio.shutdown(); // terminate all GPIO connections.
     }
 
-   @Override
-   public void connect(){
-   }
+    @Override
+    public void connect() {
+    }
 
-   @Override
-   public void configure() {
-      this.getSystemConnectionMemo().configureManagers();
-   }
+    @Override
+    public void configure() {
+        this.getSystemConnectionMemo().configureManagers();
+    }
 
-   @Override
-   public boolean status() {
- return opened;
-   }
+    @Override
+    public java.io.DataInputStream getInputStream() {
+        return null;
+    }
 
-   @Override
-   public java.io.DataInputStream getInputStream() {
-       return null;
-   }
+    @Override
+    public java.io.DataOutputStream getOutputStream() {
+        return null;
+    }
 
-   @Override
-   public java.io.DataOutputStream getOutputStream() {
-       return null;
-   }
-    
-   @Override
-   public RaspberryPiSystemConnectionMemo getSystemConnectionMemo() { 
-      return (RaspberryPiSystemConnectionMemo) super.getSystemConnectionMemo(); 
-   }
+    @Override
+    public RaspberryPiSystemConnectionMemo getSystemConnectionMemo() {
+        return (RaspberryPiSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
 
-   @Override
-   public void recover(){
-   }
+    @Override
+    public void recover() {
+    }
 
-   /*
-    * get the GPIO Controller associated with this object.
+    /*
+    * Get the GPIO Controller associated with this object.
     *
-    * @return GpioController object.
-    */
-   public GpioController getGPIOController(){ return gpio; }
+    * @return the associaed GPIO Controller or null if none exists
+     */
+    @CheckForNull
+    public GpioController getGPIOController() {
+        return gpio;
+    }
 
-   private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class);
 
 }

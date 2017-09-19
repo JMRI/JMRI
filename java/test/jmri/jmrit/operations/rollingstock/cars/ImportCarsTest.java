@@ -29,6 +29,6 @@ public class ImportCarsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class);
 
 }

@@ -75,8 +75,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return logic;
     }
 
-    ArrayList<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
-    //Hashtable<SignalMast, ArrayList<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, ArrayList<SignalMastLogic>>();
+    List<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
+    //Hashtable<SignalMast, List<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, List<SignalMastLogic>>();
 
     @Override
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast) {
@@ -97,10 +97,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         if (mastA == null || mastB == null) {
             return;
         }
-        ArrayList<SignalMastLogic> mastALogicList = getLogicsByDestination(mastA);
+        List<SignalMastLogic> mastALogicList = getLogicsByDestination(mastA);
         SignalMastLogic mastALogicSource = getSignalMastLogic(mastA);
 
-        ArrayList<SignalMastLogic> mastBLogicList = getLogicsByDestination(mastB);
+        List<SignalMastLogic> mastBLogicList = getLogicsByDestination(mastB);
         SignalMastLogic mastBLogicSource = getSignalMastLogic(mastB);
 
         if (mastALogicSource != null) {
@@ -120,8 +120,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
-        ArrayList<SignalMastLogic> list = new ArrayList<>();
+    public List<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
+        List<SignalMastLogic> list = new ArrayList<>();
         for (SignalMastLogic source : signalMastLogic) {
             if (source.isDestinationValid(destination)) {
                 list.add(source);
@@ -131,7 +131,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     @Override
-    public ArrayList<SignalMastLogic> getSignalMastLogicList() {
+    public List<SignalMastLogic> getSignalMastLogicList() {
         return signalMastLogic;
     }
 
@@ -338,15 +338,15 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    long signalLogicDelay = 500L;
+    int signalLogicDelay = 500;
 
     @Override
-    public long getSignalLogicDelay() {
+    public int getSignalLogicDelay() {
         return signalLogicDelay;
     }
 
     @Override
-    public void setSignalLogicDelay(long l) {
+    public void setSignalLogicDelay(int l) {
         signalLogicDelay = l;
     }
 
@@ -446,7 +446,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             runWhenStablised = true;
             return;
         }
-        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
+        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
         firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
         for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanList()) {
@@ -458,7 +458,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             if (sml == null) {
                 sml = newSignalMastLogic(key);
             }
-            ArrayList<NamedBean> validDestMast = validPaths.get(key);
+            List<NamedBean> validDestMast = validPaths.get(key);
             for (int i = 0; i < validDestMast.size(); i++) {
                 if (!sml.isDestinationValid((SignalMast) validDestMast.get(i))) {
                     try {
@@ -584,5 +584,5 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

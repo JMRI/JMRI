@@ -49,7 +49,6 @@ public class ManagerDefaultSelectorTest {
         }
         // configured with only default Internal connection, preferences are valid
         Assert.assertTrue(mds.isPreferencesValid(profile));
-        CMRISystemConnectionMemo cmri = new CMRISystemConnectionMemo();
         mds.configure(profile);
         // CMRI provides no known managers, so preferences are valid
         Assert.assertTrue(mds.isPreferencesValid(profile));

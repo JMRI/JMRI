@@ -182,12 +182,14 @@ public class WarrantTest {
         Assert.assertNull("checkStartBlock - "+msg, msg);
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - "+msg, msg);
+        SpeedUtil su = warrant.getSpeedUtil();
+        Assert.assertNotNull("SpeedUtil null", su);
+        su.setOrders(orders);
         
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
         Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
-        Assert.assertNotNull("speedProfile", warrant.getSpeedUtil().getSpeedProfile());
         
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
@@ -213,10 +215,8 @@ public class WarrantTest {
         jmri.util.JUnitUtil.releaseThread(this, 100);
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
-
-        msg = warrant.getRunningMessage();
-        Assert.assertEquals("getRunningMessage", "Idle", msg);
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
+        
         // confirm one message logged
         jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }

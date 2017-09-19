@@ -29,6 +29,6 @@ public class TrainsTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsTableModelTest.class);
 
 }

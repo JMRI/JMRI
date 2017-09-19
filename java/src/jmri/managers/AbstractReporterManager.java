@@ -49,12 +49,12 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     @Override
     public Reporter getBySystemName(String name) {
-        return (Reporter) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Reporter getByUserName(String key) {
-        return (Reporter) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -184,7 +184,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
 }
 

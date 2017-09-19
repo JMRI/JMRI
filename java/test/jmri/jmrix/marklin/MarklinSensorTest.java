@@ -29,6 +29,6 @@ public class MarklinSensorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorTest.class);
 
 }

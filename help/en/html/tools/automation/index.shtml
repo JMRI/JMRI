@@ -46,6 +46,11 @@
         <dd>A simple form of automation is to define Routes, which
         allow you to simplify the control of your turnouts.</dd>
 
+        <dt><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dt>
+
+        <dd>Dispatcher lets you dispatch and (automatically) run
+          trains on layouts with <a href="../../apps/PanelPro/PanelPro.shtml">Layout Editor Panels</a>.</dd>
+
         <dt><a href="../Logix.shtml">Logix</a></dt>
 
         <dd>Using JMRI Logix, you can specify actions to happen

@@ -167,10 +167,16 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 return Bundle.getMessage("ButtonEdit");
             case VALUECOL:
                 try {
-                    return s.getAspect();
+                    if (s.getAspect() != null) {
+                        return s.getAspect();
+                    } else {
+                        //Aspect not set
+                        log.debug("NULL aspect returned for mast in row {}", row);
+                        return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
+                    }
                 } catch (java.lang.NullPointerException e) {
                     //Aspect not set
-                    log.debug("Aspect for mast {} not set", row);
+                    log.debug("Aspect for mast in row {} not set", row);
                     return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
                 }
             default:
@@ -515,6 +521,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class);
 
 }

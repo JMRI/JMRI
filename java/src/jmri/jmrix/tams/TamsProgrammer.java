@@ -257,6 +257,6 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         temp.programmingOpReply(value, status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsProgrammer.class);
 
 }

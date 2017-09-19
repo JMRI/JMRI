@@ -307,7 +307,7 @@ public class SpecificMessage extends SerialMessage {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpecificMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificMessage.class);
 }
 
 

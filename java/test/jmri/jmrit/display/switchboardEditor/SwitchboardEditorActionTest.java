@@ -31,6 +31,6 @@ public class SwitchboardEditorActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditorActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SwitchboardEditorActionTest.class);
 
 }

@@ -29,6 +29,6 @@ public class JsonSignalMastServiceFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonSignalMastServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonSignalMastServiceFactoryTest.class);
 
 }

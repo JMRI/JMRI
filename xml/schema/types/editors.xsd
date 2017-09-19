@@ -1430,6 +1430,7 @@
       <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectcname" type="beanNameType"></xs:attribute>
       <xs:attribute name="connectdname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
       <xs:attribute name="xb" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="xc" type="xs:float"></xs:attribute>    <!-- required in DTD, missing from some files -->
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>

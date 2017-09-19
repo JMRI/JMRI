@@ -11,19 +11,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of XBeeMenu
+ * Test simple functioning of XBeeMenu.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
 public class XBeeMenuTest {
 
-
     private XBeeTrafficController tc = null;
     private XBeeConnectionMemo m = null;
- 
+
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XBeeMenu action = new XBeeMenu(m);
         Assert.assertNotNull("exists", action);
     }
@@ -35,10 +34,12 @@ public class XBeeMenuTest {
             @Override
             public void setInstance() {
             }
+
             @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
+
             @Override
             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
                 return null;
@@ -51,6 +52,8 @@ public class XBeeMenuTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        tc = null;
     }
 }

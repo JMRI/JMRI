@@ -32,6 +32,6 @@ public class CommonTurnoutOperationConfigTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationConfigTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationConfigTest.class);
 
 }

@@ -36,35 +36,34 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     @Override
     public Turnout provideTurnout(String name) {
-        Turnout t = getTurnout(name);
-        if (t != null) {
-            return t;
+        Turnout result = getTurnout(name);
+        if (result == null) {
+            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+                result = newTurnout(name, null);
+            } else {
+                result = newTurnout(makeSystemName(name), null);
+            }
         }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return newTurnout(name, null);
-        } else {
-            return newTurnout(makeSystemName(name), null);
-        }
+        return result;
     }
 
     @Override
     public Turnout getTurnout(String name) {
-        Turnout t = getByUserName(name);
-        if (t != null) {
-            return t;
+        Turnout result = getByUserName(name);
+        if (result == null) {
+            result = getBySystemName(name);
         }
-
-        return getBySystemName(name);
+        return result;
     }
 
     @Override
     public Turnout getBySystemName(String name) {
-        return (Turnout) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Turnout getByUserName(String key) {
-        return (Turnout) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -75,7 +74,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
@@ -244,7 +243,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * @since 2.9.3
      * @see jmri.jmrit.beantable.TurnoutTableAction.CheckedTextField
      * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system managers pass entry validation.
+     * @return always 'true' to let undocumented connection system 
+     *         managers pass entry validation.
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
@@ -381,6 +381,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
 
 }

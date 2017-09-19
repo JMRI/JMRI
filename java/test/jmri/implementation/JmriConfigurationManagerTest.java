@@ -29,6 +29,6 @@ public class JmriConfigurationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManagerTest.class);
 
 }

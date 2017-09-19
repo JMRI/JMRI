@@ -80,7 +80,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
 
         if (f == null) {
             f = new TabbedPreferencesFrame();
-            new Thread(() -> {
+            Thread preferencesInitThread = new Thread(() -> {
                 final Object waiter = new Object();
                 try {
                     setWait(true);
@@ -95,7 +95,9 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                     Thread.currentThread().interrupt();
                     setWait(false);
                 }
-            }).start();
+            });
+            preferencesInitThread.setName("TabbedPreferencesAction actionPerformed");
+            preferencesInitThread.start();
         } else {
             showPreferences();
         }
@@ -106,7 +108,10 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         // This is needed as certain controls are instantiated
         // prior to the setup of the Look and Feel
         setWait(false);
-        f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
+        
+        // might not be a preferences item set yet
+        if (preferencesItem != null) f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
+        
         f.pack();
 
         f.setVisible(true);
@@ -134,6 +139,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class);
 
 }

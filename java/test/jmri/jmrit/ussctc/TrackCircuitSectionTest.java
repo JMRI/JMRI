@@ -19,7 +19,8 @@ public class TrackCircuitSectionTest {
     @Test
     public void testLayoutMonitoring() throws JmriException {
         sensor.setKnownState(Sensor.INACTIVE);        
-        TrackCircuitSection t = new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
+        
+        new TrackCircuitSection("Sec1 track input", "Sec 1 track output", station);
         
         sensor.setKnownState(Sensor.ACTIVE);        
         

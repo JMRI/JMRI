@@ -968,7 +968,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton addButton;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
 
@@ -1002,7 +1002,7 @@ public class TurnoutTableAction extends AbstractTableAction {
              duplicate usernames in multiple classes */
             if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
-                List<Manager> managerList = proxy.getManagerList();
+                List<Manager<Turnout>> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
@@ -1022,9 +1022,9 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
                     addButton, createListener, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
@@ -1032,6 +1032,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         }
         hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -1300,8 +1301,8 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param _who parent JFrame to center the pane on
      */
     protected void setDefaultSpeeds(JFrame _who) {
-        JComboBox<String> thrownCombo = new JComboBox<String>(speedListThrown);
-        JComboBox<String> closedCombo = new JComboBox<String>(speedListClosed);
+        JComboBox<String> thrownCombo = new JComboBox<>(speedListThrown);
+        JComboBox<String> closedCombo = new JComboBox<>(speedListClosed);
         thrownCombo.setEditable(true);
         closedCombo.setEditable(true);
 
@@ -1332,24 +1333,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         closed.setAlignmentX(Component.LEFT_ALIGNMENT);
         speedspanel.add(closed);
 
-        JOptionPane pane = new JOptionPane(
+        int retval = JOptionPane.showConfirmDialog(_who,
                 speedspanel,
-                JOptionPane.INFORMATION_MESSAGE,
-                0,
-                null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
-        //pane.setxxx(value); // Configure more?
-        JDialog dialog = pane.createDialog(_who, title);
-        dialog.pack();
-        dialog.show();
-
-        if (pane.getValue() == null) { // pane close button was clicked, check before assigning to retval
-            return;
-        }
-        Object retval = pane.getValue();
-        log.debug("Retval = {}", retval.toString());
-        // only 2 buttons to choose from, OK = button 2
-        if (retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
+                title,
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+        log.debug("Retval = {}", retval);
+        if (retval != JOptionPane.OK_OPTION) { // OK button not clicked
             return;
         }
         String closedValue = (String) closedCombo.getSelectedItem();
@@ -1605,7 +1595,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
-        String errorMessage = new String();
+        String errorMessage = null;
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
         int iType = 0;
         int iNum = 1;
@@ -1652,6 +1642,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (selectedValue == 1) {
                         // Show error message in statusBar
                         errorMessage = Bundle.getMessage("WarningOverlappingAddress", sName);
+                        statusBar.setText(errorMessage);
                         statusBar.setForeground(Color.gray);
                         return;   // return without creating if "No" response
                     }
@@ -1681,6 +1672,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 // User specified more bits, but bits are not available - return without creating
                 // Display message in statusBar
                 errorMessage = Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress);
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
                 return;
             } else {
@@ -1694,6 +1686,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     handleCreateException(ex, sName); // displays message dialog to the user
                     // add to statusBar as well
                     errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                    statusBar.setText(errorMessage);
                     statusBar.setForeground(Color.red);
                     return; // without creating
                 }
@@ -1739,7 +1732,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             // end of for loop creating range of Turnouts
         }
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
@@ -1748,6 +1741,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
 
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+        addButton = null;
     }
 
     private String addEntryToolTip;
@@ -1767,7 +1764,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Turnout>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
@@ -1973,6 +1970,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class);
 
 }

@@ -28,6 +28,6 @@ public class DnDTableExportHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DnDTableExportHandlerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DnDTableExportHandlerTest.class);
 
 }

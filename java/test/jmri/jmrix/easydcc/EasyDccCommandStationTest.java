@@ -29,6 +29,6 @@ public class EasyDccCommandStationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStationTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStationTest.class);
 
 }

@@ -34,6 +34,6 @@ public class TrainsTableFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class);
 
 }

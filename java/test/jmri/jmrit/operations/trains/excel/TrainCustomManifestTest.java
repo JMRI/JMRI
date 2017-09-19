@@ -29,6 +29,6 @@ public class TrainCustomManifestTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCustomManifestTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainCustomManifestTest.class);
 
 }

@@ -42,6 +42,6 @@ public class SRCPComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SRCPComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SRCPComponentFactoryTest.class);
 
 }

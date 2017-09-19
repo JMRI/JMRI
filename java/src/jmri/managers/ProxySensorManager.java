@@ -19,7 +19,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Sensor> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getSensorManager();
     }
 
@@ -30,7 +30,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      */
     @Override
     public Sensor getSensor(String name) {
-        return (Sensor) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     @Override
     public Sensor provideSensor(String sName) throws IllegalArgumentException {
-        return (Sensor) super.provideNamedBean(sName);
+        return super.provideNamedBean(sName);
     }
 
     /**
@@ -52,7 +52,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      */
     @Override
     public Sensor getBySystemName(String sName) {
-        return (Sensor) super.getBeanBySystemName(sName);
+        return super.getBeanBySystemName(sName);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      */
     @Override
     public Sensor getByUserName(String userName) {
-        return (Sensor) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -96,7 +96,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      */
     @Override
     public Sensor newSensor(String systemName, String userName) {
-        return (Sensor) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     // null implementation to satisfy the SensorManager interface
@@ -217,6 +217,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class);
 
 }

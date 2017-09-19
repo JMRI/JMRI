@@ -40,6 +40,6 @@ public class VSDFileTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDFileTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(VSDFileTest.class);
 
 }

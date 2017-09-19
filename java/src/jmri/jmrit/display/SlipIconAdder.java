@@ -698,5 +698,5 @@ public class SlipIconAdder extends IconAdder {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class);
 }

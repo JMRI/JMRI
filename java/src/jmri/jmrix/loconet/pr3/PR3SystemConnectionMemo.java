@@ -206,5 +206,5 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         InstanceManager.deregister(this, PR3SystemConnectionMemo.class);
         super.dispose();
     }
-    private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class);
 }

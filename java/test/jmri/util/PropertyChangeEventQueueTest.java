@@ -107,6 +107,6 @@ public class PropertyChangeEventQueueTest extends TestCase {
         super.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueueTest.class.getName());
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueueTest.class);
 
 }

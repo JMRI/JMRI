@@ -57,6 +57,6 @@ public class CsvImporterTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsvImporterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CsvImporterTest.class);
 
 }

@@ -100,7 +100,7 @@ public class SensorTableAction extends AbstractTableAction {
     JLabel hwAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton addButton;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
@@ -134,7 +134,7 @@ public class SensorTableAction extends AbstractTableAction {
             };
             if (jmri.InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {
                 jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) jmri.InstanceManager.sensorManagerInstance();
-                List<Manager> managerList = proxy.getManagerList();
+                List<Manager<Sensor>> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
@@ -154,15 +154,16 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("hwAddressTextField"); // for jfcUnit test NOI18N
             hardwareAddressTextField.setBackground(Color.white);
             userName.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userName, prefixBox, numberToAdd, range,
                     addButton, okListener, cancelListener, rangeListener, statusBar));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.white);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -213,7 +214,7 @@ public class SensorTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
-        String errorMessage = new String();
+        String errorMessage = null;
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -245,6 +246,7 @@ public class SensorTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 // Show error message in statusBar
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.gray);
                 return;   // return without creating
             }
@@ -273,7 +275,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
 
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
@@ -282,10 +284,18 @@ public class SensorTableAction extends AbstractTableAction {
         }
 
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+        addButton = null;
     }
 
     private String addEntryToolTip;
 
+    /**
+     * Activate Add a range option if manager accepts adding more than 1 Sensor
+     * and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     */
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
@@ -296,7 +306,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Sensor>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
@@ -643,6 +653,6 @@ public class SensorTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleSensorTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class);
 
 }

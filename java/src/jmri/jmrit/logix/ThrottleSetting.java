@@ -148,5 +148,5 @@ public class ThrottleSetting {
         return sb.toString();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class);
 }

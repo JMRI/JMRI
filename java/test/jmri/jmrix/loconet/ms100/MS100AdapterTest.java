@@ -29,6 +29,6 @@ public class MS100AdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MS100AdapterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MS100AdapterTest.class);
 
 }

@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 /**
  * UserInterface.java Create a window for WiThrottle information, advertise
  * service, and create a thread for it to run in.
- *
+ * <p>
  * listen() has to run in a separate thread.
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
@@ -52,13 +52,12 @@ import org.slf4j.LoggerFactory;
  */
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    private final static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
+    private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 
     JMenuBar menuBar;
     JMenuItem serverOnOff;
     JPanel panel;
-    JLabel portLabel = new JLabel(rb.getString("LabelPending"));
+    JLabel portLabel = new JLabel(Bundle.getMessage("LabelPending"));
     JLabel manualPortLabel = new JLabel();
     JLabel numConnected;
     JScrollPane scrollTable;
@@ -73,25 +72,16 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     ZeroConfService service;
     boolean isListen = true;
     ServerSocket socket = null;
-    ArrayList<DeviceServer> deviceList;
+    private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
     UserInterface() {
         super(false, false);
-        if (deviceList == null) {
-            deviceList = new ArrayList<DeviceServer>(1);
-        }
 
         createWindow();
 
         setShutDownTask();
         createServerThread();
     } // End of constructor
-
-    public void createServerThread() {
-        ServerThread s = new ServerThread(this);
-        s.setName("WiThrottleGUIServer"); // NOI18N
-        s.start();
-    }
 
     protected void createWindow() {
         panel = new JPanel();
@@ -102,7 +92,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(MessageFormat.format(rb.getString("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
+        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;
@@ -116,7 +106,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         con.gridy = 2;
         panel.add(manualPortLabel, con);
 
-        numConnected = new JLabel(rb.getString("LabelClients") + " " + deviceList.size());
+        numConnected = new JLabel(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         con.weightx = 0;
         con.gridx = 2;
         con.gridy = 2;
@@ -125,9 +115,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         panel.add(numConnected, con);
 
         JPanel rgsPanel = new JPanel();
-        rgsPanel.add(new JLabel(rb.getString("RosterGroupLabel")));
+        rgsPanel.add(new JLabel(Bundle.getMessage("RosterGroupLabel")));
         rgsPanel.add(rosterGroupSelector);
-        rgsPanel.setToolTipText(rb.getString("RosterGroupToolTip"));
+        rgsPanel.setToolTipText(Bundle.getMessage("RosterGroupToolTip"));
         JToolBar withrottleToolBar = new JToolBar();
         withrottleToolBar.setFloatable(false);
         withrottleToolBar.add(new StopAllButton());
@@ -213,19 +203,19 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     protected void buildMenu() {
         this.setJMenuBar(new JMenuBar());
 
-        JMenu menu = new JMenu(rb.getString("MenuMenu"));
-        serverOnOff = new JMenuItem(rb.getString("MenuMenuStop"));
+        JMenu menu = new JMenu(Bundle.getMessage("MenuMenu"));
+        serverOnOff = new JMenuItem(Bundle.getMessage("MenuMenuStop"));
         serverOnOff.addActionListener(new AbstractAction() {
 
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (isListen) { // Stop server
                     disableServer();
-                    serverOnOff.setText(rb.getString("MenuMenuStart"));
-                    portLabel.setText(rb.getString("LabelNone"));
+                    serverOnOff.setText(Bundle.getMessage("MenuMenuStart"));
+                    portLabel.setText(Bundle.getMessage("LabelNone"));
                     manualPortLabel.setText(null);
                 } else { // Restart server
-                    serverOnOff.setText(rb.getString("MenuMenuStop"));
+                    serverOnOff.setText(Bundle.getMessage("MenuMenuStop"));
                     isListen = true;
 
                     createServerThread();
@@ -249,8 +239,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
     }
 
+    @Override
     public void listen() {
-        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
+        int socketPort = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
 
         try { //Create socket on available port
             socket = new ServerSocket(socketPort);
@@ -294,7 +285,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     public void notifyDeviceConnected(DeviceServer device) {
 
         deviceList.add(device);
-        numConnected.setText(rb.getString("LabelClients") + " " + deviceList.size());
+        numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         withrottlesListModel.updateDeviceList(deviceList);
         pack();
     }
@@ -308,7 +299,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             return;
         }
 
-        numConnected.setText(rb.getString("LabelClients") + " " + deviceList.size());
+        numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
         withrottlesListModel.updateDeviceList(deviceList);
         device.removeDeviceListener(this);
         pack();
@@ -321,7 +312,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     /**
      * Received an UDID, filter out any duplicate.
-     *
+     * <p>
+     * @param device the device to filter for
      */
     @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {
@@ -349,7 +341,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             do {
                 device = deviceList.get(0);
                 if (device != null) {
-                    device.closeThrottles(); //Tell device to stop its throttles, 
+                    device.closeThrottles(); //Tell device to stop its throttles,
                     device.closeSocket();   //close its sockets
                     //close() will throw read error and it will be caught
                     //and drop the thread.
@@ -362,7 +354,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         }
         deviceList.clear();
         withrottlesListModel.updateDeviceList(deviceList);
-        numConnected.setText(rb.getString("LabelClients") + " " + deviceList.size());
+        numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
 
     }
 
@@ -401,7 +393,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     @Override
     public void serviceQueued(ZeroConfServiceEvent se) {
-        this.portLabel.setText(rb.getString("LabelPending"));
+        this.portLabel.setText(Bundle.getMessage("LabelPending"));
         this.manualPortLabel.setText(null);
     }
 
@@ -425,32 +417,15 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             }
         } catch (UnknownHostException ex) {
             log.error("Failed to determine this system's IP address: {}", ex.getLocalizedMessage());
-            this.portLabel.setText(rb.getString("LabelUnknown")); // NOI18N
+            this.portLabel.setText(Bundle.getMessage("LabelUnknown")); // NOI18N
             this.manualPortLabel.setText(null);
         }
     }
 
     @Override
     public void serviceUnpublished(ZeroConfServiceEvent se) {
-        this.portLabel.setText(rb.getString("LabelNone"));
+        this.portLabel.setText(Bundle.getMessage("LabelNone"));
         this.manualPortLabel.setText(null);
     }
 
-    //  listen() has to run in a separate thread.
-    static class ServerThread extends Thread {
-
-        UserInterface UI;
-
-        ServerThread(UserInterface _UI) {
-            UI = _UI;
-        }
-
-        @Override
-        public void run() {
-            UI.listen();
-            log.debug("Leaving serverThread.run()");
-        }
-
-    private final static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
-    }
 }

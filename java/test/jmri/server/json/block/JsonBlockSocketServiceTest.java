@@ -40,6 +40,6 @@ public class JsonBlockSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonBlockSocketServiceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonBlockSocketServiceTest.class);
 
 }

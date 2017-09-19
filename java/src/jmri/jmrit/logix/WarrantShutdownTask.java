@@ -11,11 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
- * Allows user to decide if (and which) SpeedProfiles to write to the Roster at 
- * the end of a session.  Locos running warrants have had their speeds measured
- * and this new data may or may not be merged into any existing SpeedProfiles
- * in the Roster.
+ *
+ * Allows user to decide if (and which) SpeedProfiles to write to the Roster at
+ * the end of a session. Locos running warrants have had their speeds measured
+ * and this new data may or may not be merged into any existing SpeedProfiles in
+ * the Roster.
  * <p>
  *
  * @author Pete cressman Copyright (C) 2017
@@ -25,10 +25,11 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
     HashMap<String, Boolean> _mergeCandidates;
     HashMap<String, RosterSpeedProfile> _mergeProfiles;
     HashMap<String, HashMap<Integer, Boolean>> _anomalies;
+
     /**
      * Constructor specifies the warning message and action to take
      *
-     * @param name      the name of the task (used in logs)
+     * @param name the name of the task (used in logs)
      */
     public WarrantShutdownTask(String name) {
         super(name);
@@ -66,51 +67,57 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         }
         return true;
     }
-    
+
     private boolean makeMergeCandidates() {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         _mergeProfiles = manager.getMergeProfiles();
-        if (_mergeProfiles == null || _mergeProfiles.size() == 0) {
+        if (_mergeProfiles == null || _mergeProfiles.isEmpty()) {
             return false;
         }
-        _anomalies = new HashMap<String, HashMap<Integer, Boolean>>();
-        _mergeCandidates = new HashMap<String, Boolean> ();
-        Iterator <java.util.Map.Entry <String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator(); 
+        _anomalies = new HashMap<>();
+        _mergeCandidates = new HashMap<>();
+        Iterator<java.util.Map.Entry<String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator();
         while (iter.hasNext()) {
-            java.util.Map.Entry <String, RosterSpeedProfile> entry = iter.next();
+            java.util.Map.Entry<String, RosterSpeedProfile> entry = iter.next();
             HashMap<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue(), entry.getKey());
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
-            _mergeCandidates.put(entry.getKey(), new Boolean(true));
+            _mergeCandidates.put(entry.getKey(), Boolean.valueOf(true));
         }
-        return  true;
+        return true;
     }
-    
+
     private void makeMergeWindow() {
         new MergePrompt(Bundle.getMessage("MergeTitle"), _mergeCandidates, _anomalies);
     }
-    
+
     private void merge() {
-        Iterator <java.util.Map.Entry <String, Boolean>> iter = _mergeCandidates.entrySet().iterator(); 
+        Iterator<java.util.Map.Entry<String, Boolean>> iter = _mergeCandidates.entrySet().iterator();
         while (iter.hasNext()) {
-            java.util.Map.Entry <String, Boolean> entry = iter.next();
+            java.util.Map.Entry<String, Boolean> entry = iter.next();
             String id = entry.getKey();
-            if (entry.getValue().booleanValue()) {
+            if (entry.getValue()) {
                 RosterEntry rosterEntry = Roster.getDefault().entryFromTitle(id);
                 if (rosterEntry != null) {
                     rosterEntry.setSpeedProfile(_mergeProfiles.get(id));
-                    if (log.isDebugEnabled()) log.debug("Write SpeedProfile to Roster. id= {}", id);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Write SpeedProfile to Roster. id= {}", id);
+                    }
                 } else {
-                    if (log.isDebugEnabled()) log.debug("Unable to Write SpeedProfile to Roster. No RosterEntry for {}", id);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Unable to Write SpeedProfile to Roster. No RosterEntry for {}", id);
+                    }
                 }
             } else {
-                if (log.isDebugEnabled()) log.debug("SpeedProfile not merged to Roster. id= {}", id);
+                if (log.isDebugEnabled()) {
+                    log.debug("SpeedProfile not merged to Roster. id= {}", id);
+                }
             }
         }
         Roster.getDefault().writeRoster();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantShutdownTask.class);
 
 }

@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a Manager to handle LayoutBlocks Note: that the same
- * LayoutBlocks may appear in multiple LayoutEditor panels.
+ * Implementation of a Manager to handle LayoutBlocks.
+ * Note: the same LayoutBlocks may appear in multiple LayoutEditor panels.
  * <P>
  * This manager does not enforce any particular system naming convention.
  * <P>
@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  */
 public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public LayoutBlockManager() {
         super();
@@ -177,11 +176,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     public LayoutBlock getBySystemName(String name) {
         String key = name.toUpperCase();
 
-        return (LayoutBlock) _tsys.get(key);
+        return _tsys.get(key);
     }	//getBySystemName
 
     public LayoutBlock getByUserName(String key) {
-        return (LayoutBlock) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -197,8 +196,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Method to find a LayoutBlock with a specified Sensor assigned as its
-     * occupancy sensor. Returns the block or null if no existing LayoutBlock
-     * has the Sensor assigned.
+     * occupancy sensor.
+     *
+     * @return the block or null if no existing LayoutBlock has the Sensor assigned
      */
     public LayoutBlock getBlockWithSensorAssigned(Sensor s) {
         java.util.Iterator<String> iter = getSystemNameList().iterator();
@@ -221,8 +221,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Method to find a LayoutBlock with a specified Memory assigned as its
-     * value display. Returns the block or null if no existing LayoutBlock has
-     * the memory assigned.
+     * value display.
+     *
+     * @return the block or null if no existing LayoutBlock has the memory assigned.
      */
     public LayoutBlock getBlockWithMemoryAssigned(Memory m) {
         java.util.Iterator<String> iter = getSystemNameList().iterator();
@@ -364,7 +365,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         //input has corresponding LayoutBlocks - does it correspond to a block boundary?
         LayoutEditor panel = fLayoutBlock.getMaxConnectedPanel();
-        ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
         LayoutConnectivity lc = null;
         int i = 0;
         boolean facingIsBlock1 = true;
@@ -474,9 +475,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         if (cType == LayoutTrack.TRACK) {
             //block boundary is at an Anchor Point
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
+//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
-            boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr, p);
+            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
 
             if ((block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1)) {
                 //block1 is on the west (north) end of the block boundary
@@ -1273,11 +1274,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (t == null) {
             return null;
         }
-        LayoutTurnout lt = null;
-
-        for (int i = 0; i < panel.turnoutList.size(); i++) {
-            lt = panel.turnoutList.get(i);
-
+        for (LayoutTurnout lt : panel.getLayoutTurnouts()) {
             if (lt.getTurnout() == t) {
                 return lt;
             }
@@ -1288,7 +1285,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the named bean of either a Sensor or signalmast facing
      * into a specified Block from a specified protected Block.
-     * <P>
+     *
      * @return The assigned sensor or signal mast as a named bean
      */
     public NamedBean getNamedBeanAtEndBumper(Block facingBlock, LayoutEditor panel) {
@@ -1323,9 +1320,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
 
-        for (int i = 0; i < panel.trackList.size(); i++) {
-            TrackSegment t = panel.trackList.get(i);
-
+        for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
@@ -1363,7 +1358,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     /**
      * Method to return a Sensor facing into a specific Block. This is used for
-     * blocks that have an end bumper at one end
+     * Blocks that have an end bumper at one end.
      */
     public Sensor getSensorAtEndBumper(Block facingBlock, LayoutEditor panel) {
         if (facingBlock == null) {
@@ -1383,9 +1378,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
 
-        for (int i = 0; i < panel.trackList.size(); i++) {
-            TrackSegment t = panel.trackList.get(i);
-
+        for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
 
@@ -1452,13 +1445,14 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * @return The assigned signalMast.
      */
     public SignalMast getFacingSignalMast(Block facingBlock, Block protectedBlock, LayoutEditor panel) {
+        log.debug("calling getFacingMast on block '{}'", facingBlock.getDisplayName());
         return (SignalMast) getFacingBean(facingBlock, protectedBlock, panel, SignalMast.class);
     }
 
     /**
      * Method to return the Sensor facing into a specified Block from a
      * specified protected Block.
-     * <P>
+     *
      * @return The assigned sensor.
      */
     public Sensor getFacingSensor(Block facingBlock, Block protectedBlock, LayoutEditor panel) {
@@ -1468,7 +1462,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return a facing bean into a specified Block from a specified
      * protected Block.
-     * <P>
+     *
      * @param panel the layout editor panel the block is assigned, if null then
      *              the maximum connected panel of the facing block is used
      * @param T     The class of the item that we are looking for, either
@@ -1490,9 +1484,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("find signal mast between facing "
-                    + facingBlock.getDisplayName() + "(" + facingBlock.getDisplayName() + ") protected "
-                    + protectedBlock.getDisplayName() + "(" + protectedBlock.getDisplayName() + ")");
+            log.debug("find signal mast between facing {} ({}) - protected {} ({})",
+                    facingBlock.getDisplayName(), facingBlock.getDisplayName(),
+                    protectedBlock.getDisplayName(), protectedBlock.getDisplayName());
         }
 
         //non-null - check if input corresponds to Blocks in a Layout Editor panel.
@@ -1514,7 +1508,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (panel == null) {
             panel = fLayoutBlock.getMaxConnectedPanel();
         }
-        ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+        List<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
         LayoutConnectivity lc = null;
         int i = 0;
         boolean facingIsBlock1 = true;
@@ -1596,10 +1590,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         if (cType == LayoutTrack.TRACK) {
             //block boundary is at an Anchor Point
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
+//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
-            boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr, p);
 
+            boolean block1IsWestEnd = LayoutEditorTools.isAtWestEndOfAnchor(tr, p);
+            log.debug("Track is west end? {}", block1IsWestEnd);
             if ((block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1)) {
                 //block1 is on the west (north) end of the block boundary
                 if (T.equals(SignalMast.class)) {
@@ -1777,8 +1772,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
 
-        /*We don't allow signal masts on the block outward facing from the level
-		   xing, nor do we consider the signal mast, that is protecting the in block on the xing*/
+        /* We don't allow signal masts on the block outward facing from the level
+		   xing, nor do we consider the signal mast, that is protecting the in block on the xing */
         LevelXing xing = (LevelXing) connected;
 
         if (cType == LayoutTrack.LEVEL_XING_A) {
@@ -1823,7 +1818,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * Head for a given facing block and protected block combination. see
      * getFacingSignalMast and getFacingSignalHead as to how they deal with what
      * they each return.
-     * <p>
+     *
      * @return either a signalMast or signalHead
      */
     public Object getFacingSignalObject(Block facingBlock, Block protectedBlock) {
@@ -1840,7 +1835,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the block that a given bean object (Sensor, SignalMast
      * or SignalHead) is protecting.
-     * <P>
+     *
      * @param nb    NamedBean
      * @param panel - panel that this bean is on
      * @return The block that the bean object is facing
@@ -1887,16 +1882,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         if (pp != null) {
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
+//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
                 }
             } else {
-                if (tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
@@ -1987,16 +1982,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         if (pp != null) {
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
+//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
                 }
             } else {
-                if (tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
@@ -2054,7 +2049,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the block facing a given bean object (Sensor, SignalMast
      * or SignalHead).
-     * <P>
+     *
      * @param nb    NamedBean
      * @param panel - panel that this bean is on
      * @return The block that the bean object is facing
@@ -2094,16 +2089,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         if (pp != null) {
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
+//            LayoutEditorTools tools = panel.getLETools(); //TODO: Dead-code strip this
 
             if (east) {
-                if (tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
                     tr = pp.getConnect1();
                 } else {
                     tr = pp.getConnect2();
                 }
             } else {
-                if (tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
+                if (LayoutEditorTools.isAtWestEndOfAnchor(pp.getConnect1(), pp)) {
                     tr = pp.getConnect2();
                 } else {
                     tr = pp.getConnect1();
@@ -2243,7 +2238,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the LayoutBlock that a given signal is protecting.
      */
-
     /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel) {
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundSignal(signalName);
@@ -2279,7 +2273,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * Method to return the LayoutBlock that a given signal is facing.
      */
-
     /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel) {
         PositionablePoint pp = panel.getFinder().findPositionablePointByWestBoundSignal(signalName);
@@ -2361,7 +2354,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         java.util.Enumeration<LayoutBlock> en = _tsys.elements();
 
         while (en.hasMoreElements()) {
-            ((LayoutBlock) en.nextElement()).initializeLayoutBlockRouting();
+            en.nextElement().initializeLayoutBlockRouting();
         }
     }	//initializeLayoutBlockRouting
 
@@ -2545,5 +2538,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return layoutBlockList;
     }	//getLayoutBlocksOccupiedByRosterEntry
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);
+
 }

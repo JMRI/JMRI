@@ -29,6 +29,6 @@ public class CarLoadTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarLoadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CarLoadTest.class);
 
 }

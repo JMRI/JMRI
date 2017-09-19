@@ -75,9 +75,9 @@ public class RosterEntryToGroupAction extends AbstractAction {
         }
 
         String selEntry = (String) rosterEntry.getSelectedItem();
-        lastGroupSelect = (String) selections.getSelectedItem();
+        lastGroupSelect = selections.getSelectedItem();
         RosterEntry re = roster.entryFromTitle(selEntry);
-        String selGroup = Roster.getRosterGroupProperty((String) selections.getSelectedItem());
+        String selGroup = Roster.getRosterGroupProperty(selections.getSelectedItem());
         re.putAttribute(selGroup, "yes");
         Roster.getDefault().writeRoster();
         re.updateFile();
@@ -95,5 +95,5 @@ public class RosterEntryToGroupAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterEntryToGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryToGroupAction.class);
 }

@@ -123,13 +123,13 @@ public class PrintRosterEntry implements PaneContainer {
         }
         Element decoderRoot;
         try {
-            decoderRoot = d.rootFromName(DecoderFile.fileLocation + d.getFilename());
+            decoderRoot = d.rootFromName(DecoderFile.fileLocation + d.getFileName());
 
         } catch (org.jdom2.JDOMException exj) {
-            log.error("could not parse " + d.getFilename() + ": " + exj.getMessage());
+            log.error("could not parse " + d.getFileName() + ": " + exj.getMessage());
             return;
         } catch (java.io.IOException exj) {
-            log.error("could not read " + d.getFilename() + ": " + exj.getMessage());
+            log.error("could not read " + d.getFileName() + ": " + exj.getMessage());
             return;
         }
 
@@ -352,5 +352,5 @@ public class PrintRosterEntry implements PaneContainer {
         w.setFontStyle(Font.PLAIN);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);
 }

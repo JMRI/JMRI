@@ -53,5 +53,5 @@ public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class);
 }

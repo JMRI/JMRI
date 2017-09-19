@@ -88,12 +88,9 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
                 }
             }
 
-            // set RTS high, DTR low to power the MS100
-            activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            // set RTS high, DTR low to power the MS100
+            configureLeadsAndFlowControl(activeSerialPort, 0, true, false);
 
             // set timeout
             try {
@@ -116,7 +113,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (UnsupportedCommOperationException | IOException ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -198,6 +195,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MS100Adapter.class);
 
 }

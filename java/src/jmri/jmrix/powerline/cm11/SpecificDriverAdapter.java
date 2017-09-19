@@ -242,19 +242,15 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     protected String[] validSpeeds = new String[]{"(automatic)"};
     protected int[] validSpeedValues = new int[]{4800};
     protected String selectedSpeed = validSpeeds[0];
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class);
 
 }

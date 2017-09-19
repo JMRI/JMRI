@@ -41,6 +41,6 @@ public class RfidNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RfidNamedPaneActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RfidNamedPaneActionTest.class);
 
 }

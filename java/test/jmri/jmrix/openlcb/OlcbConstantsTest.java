@@ -29,6 +29,6 @@ public class OlcbConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OlcbConstantsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OlcbConstantsTest.class);
 
 }

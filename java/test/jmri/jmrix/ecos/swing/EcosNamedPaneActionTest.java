@@ -37,6 +37,6 @@ public class EcosNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneActionTest.class);
 
 }

@@ -29,6 +29,6 @@ public class SkipOnTriggerEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SkipOnTriggerEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SkipOnTriggerEditorTest.class);
 
 }

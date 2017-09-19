@@ -41,6 +41,6 @@ public class SignalMastItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalMastItemPanelTest.class);
 
 }

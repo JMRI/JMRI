@@ -57,6 +57,6 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class);
 
 }

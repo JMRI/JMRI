@@ -37,18 +37,18 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV, String modulo) {
         super(prog);
         this.top = Integer.parseInt(top);
-        this.addrCVhigh = Integer.parseInt(addrCVhigh);
-        this.addrCVlow = Integer.parseInt(addrCVlow);
-        this.valueCV = Integer.parseInt(valueCV);
+        this.addrCVhigh = addrCVhigh;
+        this.addrCVlow = addrCVlow;
+        this.valueCV = valueCV;
         this.modulo = Integer.parseInt(modulo);
         _prog = prog;
         log.debug("Created with " + prog + ", " + this.top + ", " + this.addrCVhigh + ", " + this.addrCVlow + ", " + this.valueCV + ", " + this.modulo);
     }
 
     int top;
-    int addrCVhigh;
-    int addrCVlow;
-    int valueCV;
+    String addrCVhigh;
+    String addrCVlow;
+    String valueCV;
     int modulo;
     Programmer _prog;
 
@@ -58,11 +58,6 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
 
     // programming interface
     @Override
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        writeCV("" + CV, val, p);
-    }
-
-    @Override
     public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("start writeCV");
         _cv = Integer.parseInt(CV);
@@ -70,22 +65,12 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         useProgrammer(p);
         if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.writeCV(_cv, val, this);
+            prog.writeCV(CV, val, this);
         } else {
             // write index first
             state = ProgState.WRITELOWWRITE;
             prog.writeCV(addrCVhigh, _cv / modulo, this);
         }
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
-    }
-
-    @Override
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV("" + CV, p);
     }
 
     @Override
@@ -95,7 +80,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(CV, this);
         } else {
             // write index first
             state = ProgState.WRITELOWREAD;
@@ -242,6 +227,6 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         return _prog.getCanWrite() && (Integer.parseInt(addr) <= 1024);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class);
 
 }

@@ -33,6 +33,6 @@ public class MrcOpsModeProgrammerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammerTest.class);
 
 }

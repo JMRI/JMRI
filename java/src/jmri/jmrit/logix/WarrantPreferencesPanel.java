@@ -579,7 +579,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         if (tce != null) {
             tce.stopCellEditing();
         }
-        if (preferences.getAppeaancesSize() != _appearanceMap.size()) {
+        if (preferences.getAppearances().size() != _appearanceMap.size()) {
             different = true;
         } else {
             for (int i = 0; i < _appearanceMap.size(); i++) {
@@ -971,5 +971,5 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class);
 }

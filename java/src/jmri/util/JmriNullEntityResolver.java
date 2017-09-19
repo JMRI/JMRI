@@ -21,6 +21,6 @@ public class JmriNullEntityResolver implements EntityResolver {
         return new InputSource(new java.io.StringReader(""));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JmriNullEntityResolver.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JmriNullEntityResolver.class);
 
 }

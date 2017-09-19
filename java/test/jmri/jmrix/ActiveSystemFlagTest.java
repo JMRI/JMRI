@@ -49,6 +49,6 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     // protected access for subclass
-    static protected Logger log = LoggerFactory.getLogger(ActiveSystemFlagTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ActiveSystemFlagTest.class);
 
 }

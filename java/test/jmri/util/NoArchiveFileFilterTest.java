@@ -28,6 +28,6 @@ public class NoArchiveFileFilterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NoArchiveFileFilterTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NoArchiveFileFilterTest.class);
 
 }
