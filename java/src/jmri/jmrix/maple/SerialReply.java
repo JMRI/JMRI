@@ -1,8 +1,5 @@
 package jmri.jmrix.maple;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-
 /**
  * Contains the data payload of a serial reply packet. Note that _only_ the
  * payload, not the header or trailer, nor the padding DLE characters are
@@ -25,22 +22,19 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder("");
         for (int i = 0; i < getNumDataElements(); i++) {
             if (i != 0) {
-                s += " ";
+                s.append(" ");
             }
             if (getElement(i) < 16) {
-                s += "0";
+                s.append("0");
             }
-            s += Integer.toHexString(getElement(i) & 0xFF);
+            s.append(Integer.toHexString(getElement(i) & 0xFF));
         }
-        return s;
+        return s.toString();
     }
 
     // recognize format
@@ -60,5 +54,3 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
 }
-
-
