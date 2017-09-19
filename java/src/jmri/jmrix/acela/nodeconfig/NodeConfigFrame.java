@@ -1,6 +1,5 @@
 package jmri.jmrix.acela.nodeconfig;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -169,9 +168,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("ConfigNodesTitle"));
@@ -184,14 +180,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
         // Copy and pasted from the info button
-        String nodesstring = "";
+        StringBuilder nodesstring = new StringBuilder("");
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
-            nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
+            nodesstring.append(" ").append(tempnode.getNodeTypeString());
         }
-        thenodesStaticC.setText(nodesstring);
+        thenodesStaticC.setText(nodesstring.toString());
 
         // panelthenodes displays the current node configuration and polling result
         JPanel panelthenodes = new JPanel();
@@ -1231,20 +1227,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle info state
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
 
         // lookup the nodes
-        String nodesstring = "";
+        StringBuilder nodesstring = new StringBuilder("");
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
-            nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
+            nodesstring.append(" ").append(tempnode.getNodeTypeString());
         }
-        thenodesStaticC.setText(nodesstring);
+        thenodesStaticC.setText(nodesstring.toString());
 
         // Find Acela Node address
         nodeAddress = readNodeAddress();
@@ -1479,7 +1472,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
-            // Reset 
+            // Reset
             editMode = false;
             curNode = null;
             // Switch buttons
@@ -1529,7 +1522,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again 
+        // make node address editable again
         nodeAddrBox.setVisible(true);
 //        nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
@@ -1559,23 +1552,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle cancel button
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         editMode = false;
         curNode = null;
 
         // lookup the nodes
-        String nodesstring = "";
+        StringBuilder nodesstring = new StringBuilder("");
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
-            nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
+            nodesstring.append(" ").append(tempnode.getNodeTypeString());
         }
-        thenodesStaticC.setText(nodesstring);
+        thenodesStaticC.setText(nodesstring.toString());
 
         // Find Acela Node address
         nodeAddress = readNodeAddress();

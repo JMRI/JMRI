@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tabbed Preferences Action for dealing with all the preferences in a single
  * view with a list option to the left hand side.
- * <P>
+ *
  * @author Kevin Dickerson Copyright (C) 2009
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
