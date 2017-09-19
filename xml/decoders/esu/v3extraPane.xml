@@ -52,6 +52,7 @@
       <text>                                                  Range 0 - 127 </text>
       <text xml:lang="it">                                                  Valori  0- 127</text>
       <text xml:lang="fr">                                                  Valeure 0 - 127</text>
+      <text xml:lang="de">                                                  Werte 0 - 127</text>
     </label>
     <display item="DCstart">
       </display>

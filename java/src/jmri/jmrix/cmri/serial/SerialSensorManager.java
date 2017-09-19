@@ -44,7 +44,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Return the C/MRI system letter
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
@@ -151,11 +151,17 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
@@ -203,6 +209,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     int bitNum = 0;
     int nAddress = 0;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address passed does not already exist then this can
@@ -241,9 +250,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
@@ -251,9 +258,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else return "".
+     * {@inheritDoc}
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -261,7 +266,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
