@@ -1,7 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import jmri.Block;
@@ -113,7 +112,7 @@ public class AutoAllocate {
                 }
                 log.debug("Allocating Train [" + ar.getActiveTrainName() + "] section [" + ar.getSectionName() + "]");
                 Transit arTransit = ar.getActiveTrain().getTransit();
-                if (ar.getActiveTrain().getAllocateMethod() == 0) {
+                if (ar.getActiveTrain().getAllocateMethod() == ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS) {
                     log.debug("Allocating Train [" + ar.getActiveTrainName() + "] Using Safe Sections");
                     // if the last allocated section is safe but not occupied short cut out of here
                     if (ar.getActiveTrain().getLastAllocatedSection() != null &&
@@ -386,28 +385,11 @@ public class AutoAllocate {
     // private implementation methods
     private void copyAndSortARs(List<AllocationRequest> list) {
         orderedRequests.clear();
-        //        // find highest priority train
-        //        int priority = 0;
-        //        for (int i = 0; i < list.size(); i++) {
-        //            ActiveTrain at = list.get(i).getActiveTrain();
-        //            if (at.getPriority() > priority) {
-        //                priority = at.getPriority();
-        //            }
-        //        }
-        //        while ((list.size() > orderedRequests.size()) && (priority > 0)) {
-        //            for (int i = 0; i < list.size(); i++) {
-        //                ActiveTrain at = list.get(i).getActiveTrain();
-        //                if (at.getPriority() == priority) {
-        //                    orderedRequests.add(list.get(i));
-        //                }
-        //            }
-        //           priority--;
-        //        }
         // copy across and then sort...
         for (int i = 0; i < list.size(); i++) {
             orderedRequests.add(list.get(i));
         }
-        Collections.sort(orderedRequests,new arSorterComparer());
+        orderedRequests.sort(new arSorterComparer());
     }
    private class arSorterComparer implements Comparator<AllocationRequest>{
             @Override
@@ -497,8 +479,7 @@ public class AutoAllocate {
     // and go no farther than the number requested, or the next safe section.
     private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
         int allocateSectionsAhead = ar.getActiveTrain().getAllocateMethod();
-        // allocate as far as possible = 999
-        if (allocateSectionsAhead > 998) {
+        if (allocateSectionsAhead == ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN) {
             _dispatcher.allocateSection(ar, null);
             return true;
         }

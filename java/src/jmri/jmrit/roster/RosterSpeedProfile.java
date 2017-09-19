@@ -704,8 +704,13 @@ public class RosterSpeedProfile {
                 setNextStep();
             }
 
-            calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float) (timePerStep / 1000.0)));
-
+            // The throttle can disappear during a stop situation
+            if (_throttle != null) {
+                calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float) (timePerStep / 1000.0)));
+            } else {
+                log.warn("Throttle destroyed before zero length[{}] remaining.",calculatedDistance);
+                calculatedDistance = 0;
+            }
             if (calculatedDistance < 0 && !calculated) {
                 log.error("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10);

@@ -95,7 +95,6 @@ public class ActivateTrainFrame {
     private JButton deleteButton = null;
     private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
-    //private JLabel allocateMethodLabel = new JLabel(Bundle.getMessage("AllocateMethodLabel") + ":");
     private JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
     private JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
     private JRadioButton allocateNumberOfBlocks = new JRadioButton(Bundle.getMessage("NumberOfBlocks"));
@@ -630,9 +629,9 @@ public class ActivateTrainFrame {
         boolean reverseAtEnd = reverseAtEndBox.isSelected();
         int allocateMethod = 3;
         if (allocateAllTheWayRadioButton.isSelected()) {
-            allocateMethod = 999;
+            allocateMethod = ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN;
         } else if (allocateBySafeRadioButton.isSelected()) {
-            allocateMethod = 0;
+            allocateMethod = ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS;
         } else {
             allocateMethod = (Integer) allocateCustomSpinner.getValue();
         }
@@ -1136,7 +1135,7 @@ public class ActivateTrainFrame {
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
         info.setAllocateAllTheWay(false); // force to false next field is now used.
         if (allocateAllTheWayRadioButton.isSelected()) {
-            info.setAllocationMethod(999);
+            info.setAllocationMethod(-1);
         } else if (allocateBySafeRadioButton.isSelected()) {
             info.setAllocationMethod(0);
         } else {
@@ -1432,16 +1431,16 @@ public class ActivateTrainFrame {
      * Sets up the RadioButtons and visability of spinner 
      * for the allocation method
      * @param value  0, Allocate by Safe spots, 
-     *               999, allocate as far as possible
+     *               -1, allocate as far as possible
      *               Any other value the number of sections to allocate
      */
     private void setallocateMethodButtons(int value) {
         switch (value){
-            case 0:
+            case ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS:
                 allocateBySafeRadioButton.setSelected(true);
                 allocateCustomSpinner.setVisible(false);;
                 break;
-            case 999:
+            case ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN:
                 allocateAllTheWayRadioButton.setSelected(true);
                 allocateCustomSpinner.setVisible(false);;
                break;

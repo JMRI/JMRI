@@ -489,7 +489,8 @@ public class TransitTableAction extends AbstractTableAction {
             p13.add(primarySectionBox);
             primarySectionBox.setToolTipText(rbx.getString("PrimarySectionBoxHint"));
             p13.add(addNextSection = new JButton(rbx.getString("AddPrimaryButton")));
-            p13.add(addAsSafe = new JCheckBox("Section is Safe"));
+            p13.add(addAsSafe = new JCheckBox(Bundle.getMessage("TransitSectionIsSafe")));
+            addAsSafe.setToolTipText(Bundle.getMessage("TransitSectionIsSafeHint"));
             addNextSection.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

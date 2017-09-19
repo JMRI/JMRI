@@ -157,6 +157,15 @@ public class ActiveTrain {
     public static final int OPERATIONS = 0x02;
     public static final int USER = 0x04;
 
+    /**
+     * The value of {@link #getAllocateMethod()} if section state is unknown.
+     */
+    public static final int ALLOCATE_AS_FAR_AS_IT_CAN = -1;
+    /**
+     * The value of {@link #getAllocateMethod()} if section state is unknown.
+     */
+    public static final int ALLOCATE_BY_SAFE_SECTIONS = 0;
+
     // instance variables
     private Transit mTransit = null;
     private String mTrainName = "";
@@ -185,7 +194,7 @@ public class ActiveTrain {
     private String mDccAddress = "";
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
-    private boolean mAllocateAllTheWay = false;
+//    private boolean mAllocateAllTheWay = false;
     private int mAllocateMethod = 3;
     public final static int NODELAY = 0x00;
     public final static int TIMEDDELAY = 0x01;
@@ -913,21 +922,25 @@ public class ActiveTrain {
         mReverseAtEnd = s;
     }
 
-    public boolean getAllocateAllTheWay() {
-        return mAllocateAllTheWay;
-    }
-
-    public void setAllocateAllTheWay(boolean s) {
-        mAllocateAllTheWay = s;
-    }
-
     protected jmri.Section getSecondAllocatedSection() {
         return mSecondAllocatedSection;
     }
 
+    /**
+     * Returns the AllocateM Method to be used by autoAllocate
+     *
+     * @return The number of Blocks ahead to be allocated or 0 = Allocate By Safe
+     *         sections or -1 - Allocate All The Way.
+     */
     public int getAllocateMethod() {
         return mAllocateMethod;
     }
+
+    /**
+     * Sets the Allocation Method to be used bu autoAllocate
+     * @param i The number of Blocks ahead to be allocated or 0 = Allocate By Safe
+     *          sections or -1 - Allocate All The Way.
+     */
     public void setAllocateMethod(int i) {
         mAllocateMethod = i;
     }
