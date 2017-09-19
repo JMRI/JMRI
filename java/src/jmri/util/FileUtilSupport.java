@@ -11,7 +11,6 @@ import static jmri.util.FileUtil.SETTINGS;
 import com.sun.jna.platform.win32.KnownFolders;
 import com.sun.jna.platform.win32.Shell32Util;
 import com.sun.jna.platform.win32.ShlObj;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -1296,11 +1295,13 @@ public class FileUtilSupport extends Bean {
      * @param path path to delete
      * @return true if path was deleted, false otherwise
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is documented as only null if path is not a directory")
     public boolean delete(File path) {
         if (path.isDirectory()) {
-            for (File file : path.listFiles()) {
-                this.delete(file);
+            File[] files = path.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    this.delete(file);
+                }
             }
         }
         return path.delete();
