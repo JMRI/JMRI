@@ -1,6 +1,7 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 
@@ -45,7 +47,7 @@ public class ConditionalTreeEditTest {
         // Expand the Conditional, select the Variables row and select Add
         jto.expandRow(1);
         jto.selectRow(3);
-        
+
         // Add a sensor Variable
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonAdd")).push();  // NOI18N
         new JComboBoxOperator(editFrame, 0).selectItem(Bundle.getMessage("BeanNameSensor"));  // NOI18N
@@ -72,7 +74,65 @@ public class ConditionalTreeEditTest {
 
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
-    
+
+    @Test
+    public void singlePickTest() {
+        // Edit a conditional using a single pick list
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setProperty("jmri.jmrit.beantable.LogixTableAction", "Selection Mode", "USESINGLE");  // NOI18N
+        ConditionalTreeEdit cdlTreeEdit = new ConditionalTreeEdit("IX102");  // NOI18N
+
+        JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
+        Assert.assertNotNull(editFrame);
+
+        JTreeOperator jto = new JTreeOperator(editFrame);
+        Assert.assertNotNull(jto);
+
+        // Expand the Conditional, expand the Variables row and select a variable
+        jto.expandRow(0);
+        jto.expandRow(2);
+        jto.selectRow(3);
+
+        // Click the name field, and select a row from the pick single table
+        JTextFieldOperator varName = new JTextFieldOperator(editFrame, 1);
+        varName.clickMouse();
+        JFrameOperator pickFrame = new JFrameOperator(Bundle.getMessage("SinglePickFrame"));  // NOI18N
+        Assert.assertNotNull(pickFrame);
+        JTableOperator tableOp = new JTableOperator(pickFrame);
+        Assert.assertNotNull(tableOp);
+        tableOp.clickOnCell(2, 1);
+
+        // Cancel and end the edit
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
+    }
+
+    @Test
+    public void comboBoxTest() {
+        // Edit a conditional using the combo box option
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setProperty("jmri.jmrit.beantable.LogixTableAction", "Selection Mode", "USECOMBO");  // NOI18N
+        ConditionalTreeEdit cdlTreeEdit = new ConditionalTreeEdit("IX102");  // NOI18N
+
+        JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
+        Assert.assertNotNull(editFrame);
+
+        JTreeOperator jto = new JTreeOperator(editFrame);
+        Assert.assertNotNull(jto);
+
+        // Expand the Conditional, expand the Variables row and select a variable
+        jto.expandRow(0);
+        jto.expandRow(2);
+        jto.selectRow(4);
+        new JComboBoxOperator(editFrame, 2).selectItem("Sensor 4");  // NOI18N
+
+        // Cancel and end the edit
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

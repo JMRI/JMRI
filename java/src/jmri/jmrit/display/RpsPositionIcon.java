@@ -29,7 +29,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
 
         // blow up default font
-        setFont(jmri.util.FontUtil.deriveFont(getFont(), (float) 24.));
+        setFont(getFont().deriveFont(24.f));
 
         // connect
         Distributor.instance().addMeasurementListener(this);

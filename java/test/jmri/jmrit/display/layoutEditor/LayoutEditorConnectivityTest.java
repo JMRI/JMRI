@@ -1,22 +1,17 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Turnout;
-import jmri.util.JUnitUtil;
 import jmri.jmrit.display.EditorFrameOperator;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 
 /**
  * Swing tests for the LayoutEditor
@@ -52,7 +47,7 @@ public class LayoutEditorConnectivityTest {
         Block pBlock = bm.getBlock("6");
         Block nBlock = bm.getBlock("5");
         cu.getTurnoutList(cBlock, pBlock, nBlock);
-        ArrayList<Integer> tsList = cu.getTurnoutSettingList();
+        List<Integer> tsList = cu.getTurnoutSettingList();
         int setting = tsList.get(0).intValue();
         Assert.assertEquals("6_4_5Connect", setting, Turnout.CLOSED);
 

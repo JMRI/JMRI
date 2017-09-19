@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import java.awt.Color;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import jmri.ConfigureManager;
@@ -13,6 +14,13 @@ import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTrack;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -124,105 +132,51 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         }
 
-        // include LayoutTurnouts
-        num = p.turnoutList.size();
+        // include LayoutTracks
+        List<LayoutTrack> layoutTracks = p.getLayoutTracks();
+        num = layoutTracks.size();
         if (log.isDebugEnabled()) {
-            log.debug("N layoutturnout elements: " + num);
+            log.debug("N LayoutTrack elements: " + num);
         }
 
-        for (Object sub : p.turnoutList) {
+        // Because some people (like me) like to edit their panel.xml files
+        // directly we're going to group the layout tracks by class before
+        // storing them. Note: No other order is effected; They should exist
+        // in the saved file in the order that they were created (ether at
+        // panel file load time or later by the users in the editor).
+        List<LayoutTrack> orderedList = layoutTracks.stream()   // next line excludes LayoutSlips
+                .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
+                .map(item -> (LayoutTurnout) item)
+                .collect(Collectors.toList());
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof TrackSegment)
+                .map(item -> (TrackSegment) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof PositionablePoint)
+                .map(item -> (PositionablePoint) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof LevelXing)
+                .map(item -> (LevelXing) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof LayoutSlip)
+                .map(item -> (LayoutSlip) item)
+                .collect(Collectors.toList()));
+        orderedList.addAll(layoutTracks.stream()
+                .filter(item -> item instanceof LayoutTurntable)
+                .map(item -> (LayoutTurntable) item)
+                .collect(Collectors.toList()));
+
+        for (LayoutTrack lt : orderedList) {
             try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(lt);
                 if (e != null) {
                     panel.addContent(e);
                 }
             } catch (Exception e) {
                 log.error("Error storing layoutturnout element: " + e);
-            }
-        }
-
-        // include TrackSegments
-        num = p.trackList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N tracksegment elements: " + num);
-        }
-
-        for (Object sub : p.trackList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing tracksegment element: " + e);
-            }
-        }
-
-        // include PositionablePoints
-        num = p.pointList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N positionablepoint elements: " + num);
-        }
-
-        for (Object sub : p.pointList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing positionalpoint element: " + e);
-            }
-        }
-
-        // include LevelXings
-        num = p.xingList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N levelxing elements: " + num);
-        }
-
-        for (Object sub : p.xingList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing levelxing element: " + e);
-            }
-        }
-
-        // include LayoutSlips
-        num = p.slipList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N layoutSlip elements: " + num);
-        }
-
-        for (Object sub : p.slipList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing layoutSlip element: " + e);
-            }
-        }
-
-        // include LayoutTurntables
-        num = p.turntableList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N turntable elements: " + num);
-        }
-
-        for (Object sub : p.turntableList) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    panel.addContent(e);
-                }
-            } catch (Exception e) {
-                log.error("Error storing turntable element: " + e);
             }
         }
         return panel;
@@ -285,7 +239,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
             mainlinetrackwidth = shared.getAttribute("mainlinetrackwidth").getIntValue();
             sidetrackwidth = shared.getAttribute("sidetrackwidth").getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (DataConversionException e) {
             log.error("failed to convert LayoutEditor attribute");
             result = false;
         }
@@ -295,16 +249,16 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("xscale")) != null) {
             try {
                 xScale = (Float.parseFloat(a.getValue()));
-            } catch (Exception e) {
-                log.error("failed to convert to float - " + a.getValue());
+            } catch (NumberFormatException e) {
+                log.error("failed to convert xscale attribute to float - " + a.getValue());
                 result = false;
             }
         }
         if ((a = shared.getAttribute("yscale")) != null) {
             try {
                 yScale = (Float.parseFloat(a.getValue()));
-            } catch (Exception e) {
-                log.error("failed to convert to float - " + a.getValue());
+            } catch (NumberFormatException e) {
+                log.error("failed to convert yscale attribute to float - " + a.getValue());
                 result = false;
             }
         }
@@ -355,31 +309,26 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
         panel.setTurnoutCircleColor(turnoutCircleColor);
 
-        int turnoutCircleSize = 2;
         if ((a = shared.getAttribute("turnoutcirclesize")) != null) {
             try {
-                turnoutCircleSize = a.getIntValue();
-            } catch (DataConversionException e1) {
-                //leave at default if cannot convert
+                panel.setTurnoutCircleSize(a.getIntValue());
+            } catch (DataConversionException e) {
                 log.warn("unable to convert turnoutcirclesize");
             }
         }
-        panel.setTurnoutCircleSize(turnoutCircleSize);
 
-        boolean value = true;
         try {
-            value = shared.getAttribute("turnoutdrawunselectedleg").getBooleanValue();
-        } catch (Exception e) {
+            panel.setTurnoutDrawUnselectedLeg(shared.getAttribute("turnoutdrawunselectedleg").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert turnoutdrawunselectedleg attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setTurnoutDrawUnselectedLeg(value);
 
         // turnout size parameters
-        double sz = 20.0;
         if ((a = shared.getAttribute("turnoutbx")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setTurnoutBX(sz);
-            } catch (Exception e) {
+                panel.setTurnoutBX(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert turnoutbx to float - " + a.getValue());
                 result = false;
             }
@@ -387,9 +336,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if ((a = shared.getAttribute("turnoutcx")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setTurnoutCX(sz);
-            } catch (Exception e) {
+                panel.setTurnoutCX(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert turnoutcx to float - " + a.getValue());
                 result = false;
             }
@@ -397,9 +345,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if ((a = shared.getAttribute("turnoutwid")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setTurnoutWid(sz);
-            } catch (Exception e) {
+                panel.setTurnoutWid(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert turnoutwid to float - " + a.getValue());
                 result = false;
             }
@@ -407,124 +354,117 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         if ((a = shared.getAttribute("xoverlong")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setXOverLong(sz);
-            } catch (Exception e) {
+                panel.setXOverLong(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert xoverlong to float - " + a.getValue());
                 result = false;
             }
         }
         if ((a = shared.getAttribute("xoverhwid")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setXOverHWid(sz);
-            } catch (Exception e) {
+                panel.setXOverHWid(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert xoverhwid to float - " + a.getValue());
                 result = false;
             }
         }
         if ((a = shared.getAttribute("xovershort")) != null) {
             try {
-                sz = (Float.parseFloat(a.getValue()));
-                panel.setXOverShort(sz);
-            } catch (Exception e) {
+                panel.setXOverShort(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert xovershort to float - " + a.getValue());
                 result = false;
             }
         }
         // grid size parameter
-        int iz = 10; // this value is never used but it's the default
         if ((a = shared.getAttribute("gridSize")) != null) {
             try {
-                iz = (Integer.parseInt(a.getValue()));
-                panel.setGridSize(iz);
-            } catch (Exception e) {
+                panel.setGridSize(Integer.parseInt(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert gridSize to int - " + a.getValue());
                 result = false;
             }
         }
 
         // second grid size parameter
-        iz = 10; // this value is never used but it's the default
         if ((a = shared.getAttribute("gridSize2nd")) != null) {
             try {
-                iz = (Integer.parseInt(a.getValue()));
-                panel.setGridSize2nd(iz);
-            } catch (Exception e) {
+                panel.setGridSize2nd(Integer.parseInt(a.getValue()));
+            } catch (NumberFormatException e) {
                 log.error("failed to convert gridSize2nd to int - " + a.getValue());
                 result = false;
             }
         }
 
-        value = true;
         try {
-            value = shared.getAttribute("positionable").getBooleanValue();
-        } catch (Exception e) {
+            panel.setAllPositionable(shared.getAttribute("positionable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setAllPositionable(value);
 
-        value = true;
         try {
-            value = shared.getAttribute("controlling").getBooleanValue();
-        } catch (Exception e) {
+            panel.setAllControlling(shared.getAttribute("controlling").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert controlling attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setAllControlling(value);
 
-        value = true;
         try {
-            value = shared.getAttribute("animating").getBooleanValue();
-        } catch (Exception e) {
+            panel.setTurnoutAnimation(shared.getAttribute("animating").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert animating attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setTurnoutAnimation(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("drawgrid").getBooleanValue();
-        } catch (Exception e) {
+            panel.setDrawGrid(shared.getAttribute("drawgrid").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert drawgrid attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setDrawGrid(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("snaponadd").getBooleanValue();
-        } catch (Exception e) {
+            panel.setSnapOnAdd(shared.getAttribute("snaponadd").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert snaponadd attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setSnapOnAdd(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("snaponmove").getBooleanValue();
-        } catch (Exception e) {
+            panel.setSnapOnMove(shared.getAttribute("snaponmove").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert snaponmove attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setSnapOnMove(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("turnoutcircles").getBooleanValue();
-        } catch (Exception e) {
+            panel.setTurnoutCircles(shared.getAttribute("turnoutcircles").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert turnoutcircles attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setTurnoutCircles(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("tooltipsnotedit").getBooleanValue();
-        } catch (Exception e) {
+            panel.setTooltipsNotEdit(shared.getAttribute("tooltipsnotedit").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert tooltipsnotedit attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setTooltipsNotEdit(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("autoblkgenerate").getBooleanValue();
-        } catch (Exception e) {
+            panel.setAutoBlockAssignment(shared.getAttribute("autoblkgenerate").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert autoblkgenerate attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setAutoBlockAssignment(value);
 
-        value = true;
         try {
-            value = shared.getAttribute("tooltipsinedit").getBooleanValue();
-        } catch (Exception e) {
+            panel.setTooltipsInEdit(shared.getAttribute("tooltipsinedit").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert tooltipsinedit attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setTooltipsInEdit(value);
 
         // set default track color
         if ((a = shared.getAttribute("defaulttrackcolor")) != null) {
@@ -545,17 +485,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             Color backgroundColor = new Color(red, green, blue);
             panel.setDefaultBackgroundColor(ColorUtil.colorToColorName(backgroundColor));
             panel.setBackgroundColor(backgroundColor);
-        } catch (org.jdom2.DataConversionException e) {
+        } catch (DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        value = false;
         try {
-            value = shared.getAttribute("useDirectTurnoutControl").getBooleanValue();
-        } catch (Exception e) {
+            panel.setDirectTurnoutControl(shared.getAttribute("useDirectTurnoutControl").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert Layout Editor useDirectTurnoutControl attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setDirectTurnoutControl(value);
 
         // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
@@ -595,33 +535,36 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setConnections();
 
         // display the results
-        value = true;
         try {
-            value = shared.getAttribute("editable").getBooleanValue();
-        } catch (Exception e) {
+            // set first since other attribute use this setting
+            panel.setAllEditable(shared.getAttribute("editable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert editable attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setAllEditable(value);  // set first since other attribute use this setting
 
-        value = true;
         try {
-            value = shared.getAttribute("showhelpbar").getBooleanValue();
-        } catch (Exception e) {
+            panel.setShowHelpBar(shared.getAttribute("showhelpbar").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert showhelpbar attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setShowHelpBar(value);
 
-        value = false;
         try {
-            value = shared.getAttribute("antialiasing").getBooleanValue();
-        } catch (Exception e) {
+            panel.setAntialiasingOn(shared.getAttribute("antialiasing").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert antialiasing attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        panel.setAntialiasingOn(value);
 
         // set contents state
         String slValue = "both";
         try {
-            value = shared.getAttribute("sliders").getBooleanValue();
+            boolean value = shared.getAttribute("sliders").getBooleanValue();
             slValue = value ? "both" : "none";
-        } catch (Exception e) {
+        } catch (DataConversionException e) {
+            log.warn("unable to convert sliders attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         if ((a = shared.getAttribute("scrollable")) != null) {
             slValue = a.getValue();
@@ -641,13 +584,15 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
         if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
             try {
-                value = shared.getAttribute("openDispatcher").getBooleanValue();
+                boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);
                 if (value) {
                     DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
                     df.loadAtStartup();
                 }
-            } catch (Exception e) {
+            } catch (DataConversionException e) {
+                log.warn("unable to convert openDispatcher attribute");
+            } catch (NullPointerException e) {  // considered normal if the attribute is not present
             }
         }
         return result;

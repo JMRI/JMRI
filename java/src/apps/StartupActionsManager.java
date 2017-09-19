@@ -20,6 +20,7 @@ import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.server.web.app.WebAppManager;
 import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
@@ -143,6 +144,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         requires.add(ProgrammerConfigManager.class);
         requires.add(GuiLafPreferencesManager.class);
         requires.add(WarrantPreferences.class);
+        requires.add(WebAppManager.class);
         return requires;
     }
 

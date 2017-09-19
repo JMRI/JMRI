@@ -424,11 +424,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setControlling(false);
-        } else {
-            l.setControlling(true);
+        try {
+            l.setControlling(!element.getAttribute("forcecontroloff").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label forcecontroloff attribute");
+        } catch (Exception e) {
         }
 
         // find coordinates
@@ -452,33 +452,34 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
         l.setDisplayLevel(level);
 
-        a = element.getAttribute("hidden");
-        if ((a != null) && a.getValue().equals("yes")) {
-            l.setHidden(true);
-            l.setVisible(false);
+        try {
+            boolean value = element.getAttribute("hidden").getBooleanValue();
+            l.setHidden(value);
+            l.setVisible(!value);
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label hidden attribute");
+        } catch (Exception e) {
         }
-        a = element.getAttribute("positionable");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setPositionable(true);
-        } else {
-            l.setPositionable(false);
+        try {
+            l.setPositionable(element.getAttribute("positionable").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label positionable attribute");
+        } catch (Exception e) {
+        }
+        try {
+            l.setShowToolTip(element.getAttribute("showtooltip").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label showtooltip attribute");
+        } catch (Exception e) {
+        }
+        try {
+            l.setEditable(element.getAttribute("editable").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label editable attribute");
+        } catch (Exception e) {
         }
 
-        a = element.getAttribute("showtooltip");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setShowToolTip(true);
-        } else {
-            l.setShowToolTip(false);
-        }
-
-        a = element.getAttribute("editable");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setEditable(true);
-        } else {
-            l.setEditable(false);
-        }
-
-        a = element.getAttribute("degrees");
+        Attribute a = element.getAttribute("degrees");
         if (a != null && l instanceof PositionableLabel) {
             try {
                 int deg = a.getIntValue();

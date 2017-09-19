@@ -257,7 +257,11 @@ public abstract class RowComboBoxPanel
         this.renderer.removeAll();  //remove the combobox from the panel
         JComboBox<String> renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
-        renderbox.addItem(value.toString()); // display (only) the current Value
+        if (value != null) {
+            renderbox.addItem(value.toString()); // display (only) the current Value
+        } else {
+            renderbox.addItem(""); // blank item
+        }
         renderer.add(renderbox);
         return this.renderer;
     }

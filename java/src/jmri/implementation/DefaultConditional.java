@@ -66,8 +66,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditional extends AbstractNamedBean
         implements Conditional {
 
-    public static final boolean PARKS_DEBUG = false;
-
     static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");  // NOI18N
 
     public DefaultConditional(String systemName, String userName) {
@@ -290,10 +288,6 @@ public class DefaultConditional extends AbstractNamedBean
         int newState = FALSE;
         if (log.isDebugEnabled()) {
             log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName() + ") has calculated its state to be "  // NOI18N
-                    + result + ". current state is " + _currentState + ".  enabled= " + enabled);  // NOI18N
-        }
-        if (PARKS_DEBUG) {
-            System.out.println("Conditional \"" + getUserName() + "\" (" + getSystemName() + ") has calculated its state to be "  // NOI18N
                     + result + ". current state is " + _currentState + ".  enabled= " + enabled);  // NOI18N
         }
         if (result) {
@@ -1237,8 +1231,8 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                 }
             }
-            if (PARKS_DEBUG) {
-                System.out.println("Global state= " + _currentState + " Local state= " + currentState  // NOI18N
+            if (log.isDebugEnabled()) {
+                log.debug("Global state= " + _currentState + " Local state= " + currentState  // NOI18N
                         + " - Action " + (actionNeeded > neededAction ? "WAS" : "NOT")  // NOI18N
                         + " taken for action = " + action.getTypeString() + " " + action.getActionString()  // NOI18N
                         + " for device " + action.getDeviceName());  // NOI18N
@@ -1257,11 +1251,6 @@ public class DefaultConditional extends AbstractNamedBean
         }
         if (log.isDebugEnabled()) {
             log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName() + " has " + _actionList.size()  // NOI18N
-                    + " actions and has executed " + actionCount  // NOI18N
-                    + " actions of " + actionNeeded + " actions needed on state change to " + currentState);  // NOI18N
-        }
-        if (PARKS_DEBUG) {
-            System.out.println("Conditional \"" + getUserName() + "\" (" + getSystemName() + " has " + _actionList.size()  // NOI18N
                     + " actions and has executed " + actionCount  // NOI18N
                     + " actions of " + actionNeeded + " actions needed on state change to " + currentState);  // NOI18N
         }
