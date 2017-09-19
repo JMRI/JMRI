@@ -1,8 +1,8 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,6 +16,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.NameFile;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
@@ -62,7 +63,10 @@ public class ProgCheckAction extends AbstractAction {
     }
 
     /**
-     * Find all of the display elements descending from this element
+     * Find all of the display elements descending from this element.
+     *
+     * @param el   the element to search
+     * @param list the list that will be populated with the found elements
      */
     static protected void expandElement(Element el, List<Element> list) {
         // get the leaves here
@@ -86,15 +90,10 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     static String checkMissingNames(File file) {
         try {
             Element root = readFile(file);
-            if (log.isDebugEnabled()) {
-                log.debug("parsing complete");
-            }
+            log.debug("parsing complete");
 
             // check to see if there's a programmer element
             if (root.getChild("programmer") == null) {
@@ -106,12 +105,10 @@ public class ProgCheckAction extends AbstractAction {
             // to all of the "display" elements
             List<Element> varList = new ArrayList<>();
             expandElement(root.getChild("programmer"), varList);
-            if (log.isDebugEnabled()) {
-                log.debug("found " + varList.size() + " display elements");
-            }
+            log.debug("found {} display elements", varList.size());
             NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
-            String warnings = "";
+            StringBuilder warnings = new StringBuilder("");
 
             for (int i = 0; i < varList.size(); i++) {
                 Element varElement = (varList.get(i));
@@ -126,20 +123,15 @@ public class ProgCheckAction extends AbstractAction {
                             + ((name != null) ? name : "<none>") + "\"");
                 }
                 if (!(name == null ? false : nfile.checkName(name))) {
-                    log.warn("Variable not found in name list: name=\""
-                            + ((name != null) ? name : "<none>") + "\"");
-                    warnings += "Variable not found in name list: name=\""
-                            + ((name != null) ? name : "<none>") + "\"\n";
+                    log.warn("Variable not found in name list: name=\"{}\"", name);
+                    warnings.append("Variable not found in name list: name=\"").append(name).append("\"\n");
                 }
             }
 
-            if (!warnings.equals("")) {
-                return "Names missing from Comprehensive.xml\n" + warnings;
-            } else {
-                return "";
-            }
+            String result = warnings.toString();
+            return !result.isEmpty() ? "Names missing from Comprehensive.xml\n" + result : "";
 
-        } catch (Exception ex) {
+        } catch (IOException | JDOMException ex) {
             return "Error parsing programmer file: " + ex;
         }
     }
@@ -156,9 +148,6 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     static String checkIncompleteComprehensive(File file) {
         // handle the file (later should be outside this thread?)
         try {
@@ -182,13 +171,10 @@ public class ProgCheckAction extends AbstractAction {
             }
             NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
-            String warnings = "";
+            StringBuilder warnings = new StringBuilder("");
 
             // for each item in names, see if found in this file
-            for (String s : nfile.names()) {
-                if (functionMapName(s)) {
-                    continue;
-                }
+            nfile.names().stream().filter((s) -> !(functionMapName(s))).forEachOrdered((s) -> {
                 boolean found = false;
                 for (int i = 0; i < varList.size(); i++) {
                     Element varElement = varList.get(i);
@@ -204,15 +190,13 @@ public class ProgCheckAction extends AbstractAction {
                     }
                 }
                 if (!found) {
-                    log.warn("Variable not in Comprehensive: name=\""
-                            + s + "\"");
-                    warnings += "Variable not in Comprehensive: name=\""
-                            + s + "\"\n";
+                    log.warn("Variable not in Comprehensive: name=\"{}\"", s);
+                    warnings.append("Variable not in Comprehensive: name=\"").append(s).append("\"\n");
                 }
-            }
+            });
 
-            return warnings;
-        } catch (Exception ex) {
+            return warnings.toString();
+        } catch (IOException | JDOMException ex) {
             return "Error parsing programmer file: " + ex;
         }
     }
@@ -241,10 +225,7 @@ public class ProgCheckAction extends AbstractAction {
             return true;
         }
         matcher = frPattern.matcher(name);
-        if (matcher.matches()) {
-            return true;
-        }
-        return false;
+        return matcher.matches();
     }
     static final String numericRegex = "^F(\\d++) controls output (\\d++)$";
     static Pattern numericPattern;
