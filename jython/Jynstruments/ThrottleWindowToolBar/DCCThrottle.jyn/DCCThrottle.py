@@ -43,12 +43,14 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         self.advFunctions = AdvFunctions()
 
     def quit(self):
-        self.masterThrottle.removePropertyChangeListener(self)
-        self.masterThrottle = None
+        if (self.masterThrottle != None):
+            self.masterThrottle.removePropertyChangeListener(self)
+            self.masterThrottle = None
 	self.panelThrottle = None
         self.advFunctions = None
-        self.addressPanel.removeAddressListener(self)
-        self.addressPanel = None
+        if (self.addressPanel != None):
+            self.addressPanel.removeAddressListener(self)
+            self.addressPanel = None            
         self.getContext().removePropertyChangeListener(self)               
 
     #Property listener part
@@ -124,8 +126,10 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         self.masterThrottle.addPropertyChangeListener(self)
     
     def notifyFailedThrottleRequest(self, locoAddress, reason):
-        print "Couldn't get throttle for "+locoAddress+" : "+reason
         self.masterThrottle = None
+        # Try again
+        if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
+            print "Couldn't request a throttle for "+locoAddress     
     
     #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):

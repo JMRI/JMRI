@@ -146,54 +146,36 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
             if ( evt.isPressed(WRButtonEvent.B) ): # SPEED - increment
                 self.speedAction.setSpeedIncrement( valueSpeedIncrement )
                 self.speedTimer.start()
-                return
             if ( evt.isPressed(WRButtonEvent.A) ): # SPEED - decrement
                 self.speedAction.setSpeedIncrement( -valueSpeedIncrement )
                 self.speedTimer.start()
-                return
             # EStop
             if ( evt.isPressed( WRButtonEvent.PLUS | WRButtonEvent.MINUS ) ): # estop = + & -
                 self.throttle.setSpeedSetting( speedEStopSpeed )
                 self.lastTimeEStop = Calendar.getInstance().getTimeInMillis() # To cancel next inputs
                 self.wiiDevice.vibrateFor(750)
-                return
-            
+            # Directions
             if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # FORWARD
                 self.throttle.setIsForward(True)
-                return
             if ( evt.wasReleased(WRButtonEvent.MINUS) ):  # BACKWARD
                 self.throttle.setIsForward(False)
-                return   
-                        
+            # Home : F0            
             if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", False, self.throttle) != None):
-                   return
-                self.throttle.setF0( not self.throttle.getF0() )
-                return            
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", False, self.throttle) != None)):
+                   self.throttle.setF0( not self.throttle.getF0() )
             # Wiimote 1 & 2 buttons
             if (evt.isPressed(WRButtonEvent.ONE)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", True, self.throttle) != None):
-                    return
-                # default F1 not momentary (switch only on Release, do nothing here)
-                return                                
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", True, self.throttle) != None)):
+                    pass # default F1 not momentary (switch only on Release, do nothing here)
             if (evt.wasReleased(WRButtonEvent.ONE)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", False, self.throttle) != None):
-                    return
-                self.throttle.setF1( not self.throttle.getF1() )
-                return
-                
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", False, self.throttle) != None)):
+                    self.throttle.setF1( not self.throttle.getF1() )  # default F1 not momentary              
             if (evt.isPressed(WRButtonEvent.TWO)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", True, self.throttle) != None):
-                    return
-                # default F2 momentary
-                self.throttle.setF2( not self.throttle.getF2() )
-                return                
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", True, self.throttle) != None)):
+                    self.throttle.setF2( True )  # default F2 momentary
             if (evt.wasReleased(WRButtonEvent.TWO)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", False, self.throttle) != None):
-                    return
-                self.throttle.setF2( not self.throttle.getF2() )
-                return                
-
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", False, self.throttle) != None)):
+                    self.throttle.setF2( False )
 
     def disconnected(self):
         self.wiiDevice = None
@@ -322,7 +304,7 @@ class AdvFunctions():
                 if (ok):
                     if (not rosterEntry.getFunctionLockable(int(task[1:]))):
                         setter.invoke(throttle, status)
-                    else:
+                    else:                        
                         state = getter.invoke(throttle)
                         setter.invoke(throttle, not state)
                 continue
