@@ -1,7 +1,7 @@
 package jmri.jmrix.qsi;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.ProgrammingMode;
+import jmri.util.StringUtil;
 
 /**
  * Encodes a message to an QSI command station.
@@ -83,9 +83,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
 
     public void setData(int[] d) {
-        for (int i = 0; i < d.length; i++) {
-            _dataChars[5 + i] = d[i];
-        }
+        System.arraycopy(d, 0, _dataChars, 5, d.length);
     }
 
     public void setV4Data(int[] d) {
@@ -151,7 +149,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
 
     public QsiMessage v4frame() {
-        int i = 0;
+        int i;
         // Create new message to hold the framed one
         QsiMessage f = new QsiMessage(MAXSIZE);
         f.setElement(0, ':');
@@ -168,26 +166,25 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
     @Override
     public String toString() {
-       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
-       return toString(memo.getQsiTrafficController());
+        QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+        return toString(memo.getQsiTrafficController());
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public String toString(QsiTrafficController controller) {
-        String s = "";
-        if (_dataChars == null) return "<none>";
+        if (_dataChars == null) {
+            return "<none>";
+        }
+        StringBuilder s = new StringBuilder("");
         if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
-                s += jmri.util.StringUtil.twoHexFromInt(_dataChars[i]) + " ";
+                s.append(StringUtil.twoHexFromInt(_dataChars[i])).append(" ");
             }
         } else {
             for (int i = 0; i < _nDataChars; i++) {
-                s += "<" + _dataChars[i] + ">";
+                s.append("<").append(_dataChars[i]).append(">");
             }
         }
-        return s;
+        return s.toString();
     }
 
     // diagnose format

@@ -65,23 +65,14 @@ public class VSDControl extends JPanel {
 
     public static enum PropertyChangeId {
 
-        ADDRESS_CHANGE, CONFIG_CHANGE, OPTION_CHANGE, PROFILE_SELECT, HORN, BELL, NOTCH, COUPLER, BRAKE, ESTART, DELETE
+        OPTION_CHANGE, DELETE
     }
 
     public static final Map<PropertyChangeId, String> PCIdMap;
 
     static {
         Map<PropertyChangeId, String> aMap = new HashMap<>();
-        aMap.put(PropertyChangeId.ADDRESS_CHANGE, "AddressChange"); // NOI18N
-        aMap.put(PropertyChangeId.CONFIG_CHANGE, "ConfigChange"); // NOI18N
         aMap.put(PropertyChangeId.OPTION_CHANGE, "OptionChange"); // NOI18N
-        aMap.put(PropertyChangeId.PROFILE_SELECT, "ProfileSelect"); // NOI18N
-        aMap.put(PropertyChangeId.HORN, "HornSound"); // NOI18N
-        aMap.put(PropertyChangeId.BELL, "BellSound"); // NOI18N
-        aMap.put(PropertyChangeId.NOTCH, "EngineNotch"); // NOI18N
-        aMap.put(PropertyChangeId.COUPLER, "CouplerSound"); // NOI18N
-        aMap.put(PropertyChangeId.BRAKE, "BrakeSound"); // NOI18N
-        aMap.put(PropertyChangeId.ESTART, "EngineStart"); // NOI18N
         aMap.put(PropertyChangeId.DELETE, "DeleteDecoder"); // NOI18N
         PCIdMap = Collections.unmodifiableMap(aMap);
     }
@@ -90,7 +81,6 @@ public class VSDControl extends JPanel {
 
     Border tb;
     JLabel addressLabel;
-    JButton configButton;
     JButton optionButton;
     JButton deleteButton;
 
@@ -187,10 +177,8 @@ public class VSDControl extends JPanel {
 
         configPanel = new JPanel();
         configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.PAGE_AXIS));
-        configButton = new JButton(Bundle.getMessage("ConfigButtonLabel"));
         optionButton = new JButton(Bundle.getMessage("OptionsButtonLabel"));
         deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        configPanel.add(configButton); // maybe don't allow this anymore.
         configPanel.add(Box.createHorizontalGlue());
         configPanel.add(optionButton);
         configPanel.add(Box.createHorizontalGlue());
@@ -217,13 +205,6 @@ public class VSDControl extends JPanel {
             }
 
         });
-        configButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                configButtonPressed(e);
-            }
-
-        });
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -242,7 +223,7 @@ public class VSDControl extends JPanel {
         soundsPanel.removeAll();
         for (SoundEvent e : elist) {
             if (e.getButton() != null) {
-                log.debug("adding button " + e.getButton().toString());
+                log.debug("adding button " + e.getButton());
                 JComponent jc = e.getButton();
                 GridBagConstraints gbc = new GridBagConstraints();
                 // Force the EngineSoundEvent to the second row.
@@ -272,23 +253,6 @@ public class VSDControl extends JPanel {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 optionsDialogPropertyChange(event);
             }
-
-        });
-    }
-
-    /**
-     * Handle "Config" button presses
-     */
-    protected void configButtonPressed(ActionEvent e) {
-        log.debug("(" + address + ") Config Button Pressed");
-        VSDConfigDialog d = new VSDConfigDialog(this, Bundle.getMessage("ConfigDialogTitlePrefix") + " " + this.address, config);
-        d.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent event) {
-                log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
-                configDialogPropertyChange(event);
-            }
-
         });
     }
 
@@ -301,15 +265,7 @@ public class VSDControl extends JPanel {
     }
 
     /**
-     * Callback for the Config Dialog
-     */
-    protected void configDialogPropertyChange(PropertyChangeEvent event) {
-        log.debug("internal config dialog handler");
-        firePropertyChange(PropertyChangeId.CONFIG_CHANGE, event.getOldValue(), event.getNewValue());
-    }
-
-    /**
-     * Callback for the Config Dialog
+     * Callback for the Option Dialog
      */
     protected void optionsDialogPropertyChange(PropertyChangeEvent event) {
         log.debug("internal options dialog handler");
