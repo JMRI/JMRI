@@ -124,10 +124,8 @@
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of
       build.xml:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 &lt;property name="deprecation" value="on" /&gt;
-</code>
 </pre>
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
@@ -138,13 +136,13 @@
       technicalities is <a href=
       "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
       here</a>. We use them this way:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 * @deprecated 2.7.8<br>
 <br>
 @Deprecated // 2.7.8<br>
-</code>
-</pre>where the line contains the version in which the deprecation
+
+</pre>
+where the line contains the version in which the deprecation
 is applied. That lets you easily know how long ago it was
 deprecated. 
 
