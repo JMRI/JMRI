@@ -389,12 +389,6 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             }
             switch (e.getPropertyName()) {
                 case "SpeedSetting":
-                    try {
-                        clientServer.sendStatus(bus, address);
-                    } catch (IOException ioe) {
-                        log.error("Error writing to network port");
-                    }
-                    break;
                 case "SpeedSteps":
                     try {
                         clientServer.sendStatus(bus, address);
