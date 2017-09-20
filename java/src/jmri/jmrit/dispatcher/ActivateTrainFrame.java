@@ -1135,9 +1135,9 @@ public class ActivateTrainFrame {
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
         info.setAllocateAllTheWay(false); // force to false next field is now used.
         if (allocateAllTheWayRadioButton.isSelected()) {
-            info.setAllocationMethod(-1);
+            info.setAllocationMethod(ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN);
         } else if (allocateBySafeRadioButton.isSelected()) {
-            info.setAllocationMethod(0);
+            info.setAllocationMethod(ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS);
         } else {
             info.setAllocationMethod((Integer) allocateCustomSpinner.getValue());
         }

@@ -158,11 +158,11 @@ public class ActiveTrain {
     public static final int USER = 0x04;
 
     /**
-     * The value of {@link #getAllocateMethod()} if section state is unknown.
+     * The value of {@link #getAllocateMethod()} if allocating as many sections as are clear.
      */
     public static final int ALLOCATE_AS_FAR_AS_IT_CAN = -1;
     /**
-     * The value of {@link #getAllocateMethod()} if section state is unknown.
+     * The value of {@link #getAllocateMethod()} if allocating up until the next safe section
      */
     public static final int ALLOCATE_BY_SAFE_SECTIONS = 0;
 
@@ -194,7 +194,6 @@ public class ActiveTrain {
     private String mDccAddress = "";
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
-//    private boolean mAllocateAllTheWay = false;
     private int mAllocateMethod = 3;
     public final static int NODELAY = 0x00;
     public final static int TIMEDDELAY = 0x01;
