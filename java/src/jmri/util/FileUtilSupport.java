@@ -145,7 +145,7 @@ public class FileUtilSupport extends Bean {
         try {
             return uri.toURL();
         } catch (MalformedURLException | IllegalArgumentException ex) {
-            log.warn("Unable to get URL from {}", uri.toString());
+            log.warn("Unable to get URL from {}", uri);
             return null;
         } catch (NullPointerException ex) {
             log.warn("Unable to get URL from null object.", ex);
