@@ -852,7 +852,7 @@
         </java>
     </target>
 
-	<!-- see comment just above -->
+    <!-- see comment just above -->
     <target name="-debug-jmri-application"
             if="debugger"
             depends="runtime-library-selection">
@@ -1065,7 +1065,8 @@
     <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
         <property name="antargline" value="PanelProConfig2.xml"/>
         <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
-        <!-- <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail> -->
+        <echo message="Saw: ${profiler.info.jvmargs.agent}"/>
+        <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -2344,24 +2345,24 @@
         </parallel>
     </target>
 
-	<!-- - - - - - - - - - - - - - - - - -
+    <!-- - - - - - - - - - - - - - - - - -
           target: lockMetaFiles
          - - - - - - - - - - - - - - - - - -->
     <target name="lockMetaFiles" description="Lock META-INT files">
-    	<echo>locking META-INT files</echo>
-    	<chmod perm="ugo+rx">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
+        <echo>locking META-INT files</echo>
+        <chmod perm="ugo+rx">
+            <fileset dir="${target/classes/META-INF}"/>
+        </chmod>
     </target>
 
-	<!-- - - - - - - - - - - - - - - - - -
+    <!-- - - - - - - - - - - - - - - - - -
           target: unlockMetaFiles
          - - - - - - - - - - - - - - - - - -->
     <target name="unlockMetaFiles" description="Unlock META-INT files">
-    	<echo>unlocking META-INT files</echo>
-    	<chmod perm="ugo+rx+w">
-    		<fileset dir="${target/classes/META-INF}"/>
-    	</chmod>
+        <echo>unlocking META-INT files</echo>
+        <chmod perm="ugo+rx+w">
+            <fileset dir="${target/classes/META-INF}"/>
+        </chmod>
     </target>
 
 </project>
