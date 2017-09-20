@@ -319,7 +319,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * and does nothing to the block. This method also converts the sensor name
      * to upper case if it is a system name.
      *
-     * @param theSensorName to check
+     * @param sensorName to check
      * @param openFrame     determines the <code>Frame</code> in which the
      *                      dialog is displayed; if <code>null</code>, or if the
      *                      <code>parentComponent</code> has no

@@ -1717,7 +1717,7 @@ public class ConnectivityUtil {
     @Nullable
     public Block getExitBlockForTrackNode(
             @Nullable TrackNode node,
-            @Nonnull Block excludedBlock) {
+            @Nullable Block excludedBlock) {
         if ((node == null) || node.reachedEndOfTrack()) {
             return null;
         }

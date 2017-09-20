@@ -8268,46 +8268,60 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 case LayoutTrack.SLIP_B:
                 case LayoutTrack.SLIP_C:
                 case LayoutTrack.SLIP_D: {
-                    LayoutTurnout lt = (LayoutTurnout) o;
-                    result = lt.getLayoutBlock();
+                    if (o instanceof LayoutTurnout) {
+                        LayoutTurnout lt = (LayoutTurnout) o;
+                        result = lt.getLayoutBlock();
+                    }
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_B: {
-                    LayoutTurnout lt = (LayoutTurnout) o;
-                    result = lt.getLayoutBlockB();
+                    if (o instanceof LayoutTurnout) {
+                        LayoutTurnout lt = (LayoutTurnout) o;
+                        result = lt.getLayoutBlockB();
+                    }
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_C: {
-                    LayoutTurnout lt = (LayoutTurnout) o;
-                    result = lt.getLayoutBlockC();
+                    if (o instanceof LayoutTurnout) {
+                        LayoutTurnout lt = (LayoutTurnout) o;
+                        result = lt.getLayoutBlockC();
+                    }
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_D: {
-                    LayoutTurnout lt = (LayoutTurnout) o;
-                    result = lt.getLayoutBlockD();
+                    if (o instanceof LayoutTurnout) {
+                        LayoutTurnout lt = (LayoutTurnout) o;
+                        result = lt.getLayoutBlockD();
+                    }
                     break;
                 }
 
                 case LayoutTrack.LEVEL_XING_A:
                 case LayoutTrack.LEVEL_XING_C: {
-                    LevelXing lx = (LevelXing) o;
-                    result = lx.getLayoutBlockAC();
+                    if (o instanceof LevelXing) {
+                        LevelXing lx = (LevelXing) o;
+                        result = lx.getLayoutBlockAC();
+                    }
                     break;
                 }
 
                 case LayoutTrack.LEVEL_XING_B:
                 case LayoutTrack.LEVEL_XING_D: {
-                    LevelXing lx = (LevelXing) o;
-                    result = lx.getLayoutBlockBD();
+                    if (o instanceof LevelXing) {
+                        LevelXing lx = (LevelXing) o;
+                        result = lx.getLayoutBlockBD();
+                    }
                     break;
                 }
 
                 case LayoutTrack.TRACK: {
-                    TrackSegment ts = (TrackSegment) o;
-                    result = ts.getLayoutBlock();
+                    if (o instanceof TrackSegment) {
+                        TrackSegment ts = (TrackSegment) o;
+                        result = ts.getLayoutBlock();
+                    }
                     break;
                 }
                 default: {

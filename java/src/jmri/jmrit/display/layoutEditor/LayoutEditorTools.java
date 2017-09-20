@@ -1618,7 +1618,7 @@ public class LayoutEditorTools {
                 } else {
                     signalName = to.getSignalC1Name();
                 }
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -8071,9 +8071,12 @@ public class LayoutEditorTools {
             if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()
                     && (block1BoundSignalMast != null
                     || block2BoundSignalMast != null)) {
-                updateBoundaryBasedSignalMastLogic(
-                        oldBlock1SignalMast, oldBlock2SignalMast,
-                        block1BoundSignalMast, block2BoundSignalMast);
+                if ((oldBlock1SignalMast != null) && (block2BoundSignalMast != null)) {
+                    updateBoundaryBasedSignalMastLogic(
+                            oldBlock1SignalMast, oldBlock2SignalMast,
+                            block1BoundSignalMast, block2BoundSignalMast);
+
+                }
             }
         }
         setSignalMastsAtBoundaryOpen = false;
@@ -8897,8 +8900,7 @@ public class LayoutEditorTools {
 
     private int isMastAssignedHere(
             @Nullable SignalMast mast,
-            @Nullable LayoutTurnout lTurnout)
-    {
+            @Nullable LayoutTurnout lTurnout) {
         if ((mast == null) || (lTurnout == null)) {
             return NONE;
         }
