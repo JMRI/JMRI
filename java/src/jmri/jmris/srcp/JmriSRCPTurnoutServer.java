@@ -30,8 +30,12 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     @Override
     synchronized protected void addTurnoutToList(String turnoutName) {
         if (!turnouts.containsKey(turnoutName)) {
-            turnouts.put(turnoutName, new TurnoutListener(turnoutName));
-            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName).addPropertyChangeListener(turnouts.get(turnoutName));
+            Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            if(t!=null) {
+               TurnoutListener tl = new TurnoutListener(turnoutName);
+               t.addPropertyChangeListener(tl);
+               turnouts.put(turnoutName, tl);
+            }
         }
     }
 
