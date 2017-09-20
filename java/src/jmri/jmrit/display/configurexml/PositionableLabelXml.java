@@ -458,25 +458,21 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             l.setVisible(!value);
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable label hidden attribute");
-        } catch (Exception e) {
         }
         try {
             l.setPositionable(element.getAttribute("positionable").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable label positionable attribute");
-        } catch (Exception e) {
         }
         try {
             l.setShowToolTip(element.getAttribute("showtooltip").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable label showtooltip attribute");
-        } catch (Exception e) {
         }
         try {
             l.setEditable(element.getAttribute("editable").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable label editable attribute");
-        } catch (Exception e) {
         }
 
         Attribute a = element.getAttribute("degrees");

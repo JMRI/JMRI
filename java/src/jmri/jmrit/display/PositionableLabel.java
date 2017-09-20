@@ -98,9 +98,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = ed;
     }
 
-    /**
-     * *************** Positionable methods *********************
-     */
+    // *************** Positionable methods *********************
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
