@@ -184,12 +184,6 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             switch (e.getPropertyName()) {
                 case "SpeedSetting":
-                    try {
-                        clientserver.sendStatus(throttle.getLocoAddress());
-                    } catch (IOException ioe) {
-                        log.error("Error writing to network port");
-                    }
-                    break;
                 case "SpeedSteps":
                     try {
                         clientserver.sendStatus(throttle.getLocoAddress());

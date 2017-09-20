@@ -1325,7 +1325,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         int side = 0;
 
         for (int i = 0; i < ts.size(); i++) {
-            if (ts.get(i).getMainline()) {
+            if (ts.get(i).isMainline()) {
                 mainline++;
             } else {
                 side++;

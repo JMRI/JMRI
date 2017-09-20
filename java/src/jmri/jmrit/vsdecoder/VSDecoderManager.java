@@ -110,6 +110,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     public JmriJFrame provideManagerFrame() {
         if (managerFrame == null) {
             managerFrame = new VSDManagerFrame();
+        } else {
+            log.warn("Virtual Sound Decoder Manager is already running");
         }
         return (managerFrame);
     }
@@ -308,7 +310,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             return;
         }
         if (l.equals(PhysicalLocation.Origin)) {
-            log.debug("Location : " + l.toString() + " ... ignoring.");
+            log.debug("Location : " + l + " ... ignoring.");
             // Physical location at origin means it hasn't been set.
             return;
         }
@@ -512,7 +514,11 @@ public class VSDecoderManager implements PropertyChangeListener {
             } else if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.CLOSE_WINDOW))) {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
                 shutdownDecoders();
-                managerFrame = null;
+                if (managerFrame != null) {
+                    managerFrame.dispose();
+                    managerFrame = null;
+                }
+
             }
         } else {
             // Un-Handled source. Does nothing ... yet...

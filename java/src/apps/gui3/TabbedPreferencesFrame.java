@@ -10,7 +10,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Provide a preferences window.
- * <P>
+ *
  * @author Kevin Dickerson Copyright 2010
  */
 public class TabbedPreferencesFrame extends JmriJFrame {

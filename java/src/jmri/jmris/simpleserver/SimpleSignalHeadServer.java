@@ -51,7 +51,11 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
             this.setSignalHeadAppearance(status[1], status[2]);
         } else {
             SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(status[1]);
-            this.sendStatus(signalHead.getSystemName(), signalHead.getAppearance());
+            if(signalHead != null) {
+               this.sendStatus(signalHead.getSystemName(), signalHead.getAppearance());
+            } else {
+               sendErrorStatus(status[1]);
+            }
         }
     }
 
