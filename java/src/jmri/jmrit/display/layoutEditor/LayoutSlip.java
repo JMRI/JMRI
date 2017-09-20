@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Integer.parseInt;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -1451,8 +1453,8 @@ public class LayoutSlip extends LayoutTurnout {
             log.error("Trying to set invalid state for slip " + getDisplayName());
             return;
         }
-        turnoutStates.get(state).setTurnoutAState(Integer.valueOf(turnStateA));
-        turnoutStates.get(state).setTurnoutBState(Integer.valueOf(turnStateB));
+        turnoutStates.get(state).setTurnoutAState(parseInt(turnStateA));
+        turnoutStates.get(state).setTurnoutBState(parseInt(turnStateB));
     }
 
     //Internal call to update the state of the slip depending upon the turnout states.

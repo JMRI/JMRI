@@ -263,7 +263,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     private boolean useBlockSpeed = false;
 
-    protected LayoutTurnout(@Nonnull String id, 
+    protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
     }
@@ -747,6 +747,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalAMastName() {
         if (signalAMastNamed != null) {
             return signalAMastNamed.getName();
@@ -1080,25 +1081,27 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
             LayoutEditorFindItems lf = layoutEditor.getFinder();
-            if (lf != null) {
-                if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
-                    Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
-                    LayoutTurnout oldLinked = lf.findLayoutTurnoutByTurnoutName(oldTurnout.getSystemName());
-                    if (oldLinked == null) {
-                        oldLinked = lf.findLayoutTurnoutByTurnoutName(oldTurnout.getUserName());
-                    }
-                    if ((oldLinked != null) && oldLinked.getSecondTurnout() == getTurnout()) {
-                        oldLinked.setSecondTurnout(null);
-                    }
+            if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
+                Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
+                String oldSystemName = (oldTurnout == null) ? null : oldTurnout.getSystemName();
+                LayoutTurnout oldLinked = (oldSystemName == null) ? null : 
+                        lf.findLayoutTurnoutByTurnoutName(oldSystemName);
+                if (oldLinked == null) {
+                    String oldUserName = (oldTurnout == null) ? null : oldTurnout.getUserName();
+                    oldLinked = (oldUserName == null) ? null : 
+                            lf.findLayoutTurnoutByTurnoutName(oldUserName);
                 }
-                if (turnout != null) {
-                    LayoutTurnout newLinked = lf.findLayoutTurnoutByTurnoutName(turnout.getSystemName());
-                    if (newLinked == null) {
-                        newLinked = lf.findLayoutTurnoutByTurnoutName(turnout.getUserName());
-                    }
-                    if (newLinked != null) {
-                        newLinked.setSecondTurnout(turnoutName);
-                    }
+                if ((oldLinked != null) && oldLinked.getSecondTurnout() == getTurnout()) {
+                    oldLinked.setSecondTurnout(null);
+                }
+            }
+            if (turnout != null) {
+                LayoutTurnout newLinked = lf.findLayoutTurnoutByTurnoutName(turnout.getSystemName());
+                if (newLinked == null) {
+                    newLinked = lf.findLayoutTurnoutByTurnoutName(turnout.getUserName());
+                }
+                if (newLinked != null) {
+                    newLinked.setSecondTurnout(turnoutName);
                 }
             }
         }

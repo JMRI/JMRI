@@ -66,7 +66,8 @@ public abstract class LayoutTrack {
     //protected static double maxDashLength = 10;
     protected boolean hidden = false;
 
-    protected static Color defaultTrackColor = Color.black;
+    // package-private
+    static Color defaultTrackColor = Color.black;
 
 //    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
 //    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;

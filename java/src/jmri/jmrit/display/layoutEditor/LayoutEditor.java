@@ -141,6 +141,7 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.signalling.AddEntryExitPairAction;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
@@ -173,6 +174,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  */
 @SuppressWarnings("serial")
+@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements VetoableChangeListener, MouseWheelListener {
 
     //Operational instance variables - not saved to disk
@@ -188,127 +190,127 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     protected boolean skipIncludedTurnout = false;
 
     //TODO: @deprecated // now private; use public getLEAuxTools() accessor instead
-    private LayoutEditorAuxTools auxTools = null;
-    private ConnectivityUtil conTools = null;
+    private transient LayoutEditorAuxTools auxTools = null;
+    private transient ConnectivityUtil conTools = null;
 
-    private Font toolBarFont = null;
+    private transient Font toolBarFont = null;
 
-    private ButtonGroup itemGroup = null;
+    private transient ButtonGroup itemGroup = null;
 
     //top row of radio buttons
-    private JLabel turnoutLabel = new JLabel();
-    private JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
-    private JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
-    private JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
-    private JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
-    private JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
+    private transient JLabel turnoutLabel = new JLabel();
+    private transient JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
+    private transient JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
+    private transient JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
+    private transient JRadioButton doubleXoverButton = new JRadioButton(Bundle.getMessage("DoubleCrossoverAbbreviation"));
+    private transient JRadioButton rhXoverButton = new JRadioButton(Bundle.getMessage("RightCrossover")); //key is also used by Control Panel
     //Editor, placed in DisplayBundle
-    private JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
-    private JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
-    private JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
+    private transient JRadioButton lhXoverButton = new JRadioButton(Bundle.getMessage("LeftCrossover")); //idem
+    private transient JRadioButton layoutSingleSlipButton = new JRadioButton(Bundle.getMessage("LayoutSingleSlip"));
+    private transient JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
 
     //Default flow layout definitions for JPanels
-    private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
-    private FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
-    private FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
+    private transient FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
+    private transient FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
+    private transient FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
 
     //top row of check boxes
-    private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
+    private transient JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
-    private JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
-    private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
+    private transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
+    private transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
+    private transient JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JComboBox<String> rotationComboBox = null;
-    private JPanel rotationPanel = new JPanel(leftRowLayout);
+    private transient JComboBox<String> rotationComboBox = null;
+    private transient JPanel rotationPanel = new JPanel(leftRowLayout);
 
     //2nd row of radio buttons
-    private JLabel trackLabel = new JLabel();
-    private JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
-    private JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
+    private transient JLabel trackLabel = new JLabel();
+    private transient JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
+    private transient JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
 
     //2nd row of check boxes
-    private JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
-    private JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
-    private JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
+    private transient JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
+    private transient JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
+    private transient JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
 
-    private JLabel blockNameLabel = new JLabel();
-    private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
+    private transient JLabel blockNameLabel = new JLabel();
+    private transient JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JLabel blockSensorNameLabel = new JLabel();
-    private JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
-    private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
+    private transient JLabel blockSensorNameLabel = new JLabel();
+    private transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
+    private transient JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
-    private JLabel nodesLabel = new JLabel();
-    private JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
-    private JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
-    private JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
+    private transient JLabel nodesLabel = new JLabel();
+    private transient JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
+    private transient JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
+    private transient JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
 
-    private JLabel labelsLabel = new JLabel();
-    private JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
-    private JTextField textLabelTextField = new JTextField(12);
+    private transient JLabel labelsLabel = new JLabel();
+    private transient JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
+    private transient JTextField textLabelTextField = new JTextField(12);
 
-    private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
-    private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
+    private transient JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
+    private transient JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
-    private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
+    private transient JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
+    private transient JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //4th row of radio buttons (and any associated text fields)
-    private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
+    private transient JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
-    private JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
-    private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
+    private transient JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
+    private transient JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
-    private JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
+    private transient JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
+    private transient JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
-    private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
+    private transient JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
+    private transient JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
+    private transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
 
-    private JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
+    private transient JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
-    public MultiIconEditor sensorIconEditor = null;
-    public JFrame sensorFrame = null;
+    public transient MultiIconEditor sensorIconEditor = null;
+    public transient JFrame sensorFrame = null;
 
-    public MultiIconEditor signalIconEditor = null;
-    public JFrame signalFrame = null;
+    public transient MultiIconEditor signalIconEditor = null;
+    public transient JFrame signalFrame = null;
 
-    private MultiIconEditor iconEditor = null;
-    private JFrame iconFrame = null;
+    private transient MultiIconEditor iconEditor = null;
+    private transient JFrame iconFrame = null;
 
-    private MultiSensorIconFrame multiSensorFrame = null;
+    private transient MultiSensorIconFrame multiSensorFrame = null;
 
-    private JLabel xLabel = new JLabel("00");
-    private JLabel yLabel = new JLabel("00");
+    private transient JLabel xLabel = new JLabel("00");
+    private transient JLabel yLabel = new JLabel("00");
 
-    private JPanel zoomPanel = new JPanel();
-    private JLabel zoomLabel = new JLabel("x1");
+    private transient JPanel zoomPanel = new JPanel();
+    private transient JLabel zoomLabel = new JLabel("x1");
 
-    private JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-    private JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-    private JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-    private JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-    private JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
-    private JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-    private JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-    private JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-    private JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-    private JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-    private JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+    private transient JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+    private transient JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+    private transient JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+    private transient JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+    private transient JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
+    private transient JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+    private transient JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+    private transient JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+    private transient JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+    private transient JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+    private transient JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
 
-    private JPanel locationPanel = new JPanel();
+    private transient JPanel locationPanel = new JPanel();
 
     //end of main panel controls
     private boolean delayedPopupTrigger = false;
@@ -321,7 +323,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private int width = 100;
 
     //private int numTurnouts = 0;
-    private TrackSegment newTrack = null;
+    private transient TrackSegment newTrack = null;
     private boolean panelChanged = false;
 
     //grid size in pixels
@@ -448,21 +450,19 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     //Selected point information
     private transient Point2D startDelta = new Point2D.Double(0.0, 0.0); //starting delta coordinates
-    private Object selectedObject = null;       //selected object, null if nothing selected
-    private Object prevSelectedObject = null;   //previous selected object, for undo
+    private transient Object selectedObject = null;       //selected object, null if nothing selected
+    private transient Object prevSelectedObject = null;   //previous selected object, for undo
     private int selectedPointType = 0;          //hit point type within the selected object
 
-    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
-    private Object foundObject = null; //found object, null if nothing found
+    private transient Object foundObject = null; //found object, null if nothing found
 
-    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
     private transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
 
     private int foundPointType = 0; //connection type within the found object
 
     @SuppressWarnings("unused")
     private boolean foundNeedsConnect = false; //true if found point needs a connection
-    private Object beginObject = null; //begin track segment connection object, null if
+    private transient Object beginObject = null; //begin track segment connection object, null if
     //none
     private transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
     private int beginPointType = LayoutTrack.NONE; //connection type within begin connection object
@@ -470,22 +470,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     //Lists of items that describe the Layout, and allow it to be drawn
     //Each of the items must be saved to disk over sessions
-    public List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
-    public List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
-    public List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
-    public List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
-    public List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
-    public List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
-    public List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
+    public transient List<AnalogClock2Display> clocks = new ArrayList<>();           //fast clocks
+    public transient List<LocoIcon> markerImage = new ArrayList<>();                 //marker images
+    public transient List<MultiSensorIcon> multiSensors = new ArrayList<>();         //multi-sensor images
+    public transient List<PositionableLabel> backgroundImage = new ArrayList<>();    //background images
+    public transient List<PositionableLabel> labelImage = new ArrayList<>();         //positionable label images
+    public transient List<SensorIcon> sensorImage = new ArrayList<>();               //sensor images
+    public transient List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       //signal head images
 
-    private List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
+    private transient List<LayoutTrack> layoutTrackList = new ArrayList<>();         // LayoutTrack list
 
     // PositionableLabel's
-    public List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
-    public List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
-    public List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
-    public List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
-    public List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
+    public transient List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); //BlockContentsIcon Label List
+    public transient List<MemoryIcon> memoryLabelList = new ArrayList<>();               //Memory Label List
+    public transient List<SensorIcon> sensorList = new ArrayList<>();                    //Sensor Icons
+    public transient List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
+    public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
     // counts used to determine unique internal names
     private int numAnchors = 0;
@@ -497,7 +497,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
 
-    public LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
@@ -517,13 +517,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private float mainlineTrackWidth = 4.0F;
     private float sideTrackWidth = 2.0F;
 
-    private Color defaultTrackColor = Color.black;
-    private Color defaultOccupiedTrackColor = Color.red;
-    private Color defaultAlternativeTrackColor = Color.white;
-    private Color defaultBackgroundColor = Color.lightGray;
-    private Color defaultTextColor = Color.black;
+    private transient Color defaultTrackColor = Color.black;
+    private transient Color defaultOccupiedTrackColor = Color.red;
+    private transient Color defaultAlternativeTrackColor = Color.white;
+    private transient Color defaultBackgroundColor = Color.lightGray;
+    private transient Color defaultTextColor = Color.black;
 
-    private String layoutName = "";
+    private transient String layoutName = "";
     private double xScale = 1.0;
     private double yScale = 1.0;
     private boolean animatingLayout = true;
@@ -565,7 +565,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     JPanel blockPropertiesPanel = null;
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
-    private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    private transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
     //Antialiasing rendering
     private static final RenderingHints antialiasing = new RenderingHints(
@@ -579,8 +579,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         eRIGHT("right"),
         eFLOAT("float");
 
-        private String name;
-        private static final Map<String, ToolBarSide> ENUM_MAP;
+        private transient String name;
+        private transient static final Map<String, ToolBarSide> ENUM_MAP;
 
         ToolBarSide(String name) {
             this.name = name;
@@ -2130,8 +2130,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //initStringsToVTCodes
 
-    private LayoutEditorTools tools = null;
-    private jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
+    private transient LayoutEditorTools tools = null;
+    private AddEntryExitPairAction entryExit = null;
 
     protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
@@ -2384,7 +2384,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             });
             toolBarFontSizeMenu.add(fontSizeButton);
             toolBarFontSizeGroup.add(fontSizeButton);
-            fontSizeButton.setSelected(fontSizeFloat == toolBarFontSize);
             fontSizeButton.setSelected(MathUtil.equals(fontSizeFloat, toolBarFontSize));
         }
         toolBarFontSizeMenu.addMenuListener(new MenuListener() {
@@ -2990,7 +2989,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //
     //update drop down menu display order menu
     //
-    private JmriBeanComboBox.DisplayOptions gDDMDO = JmriBeanComboBox.DisplayOptions.DISPLAYNAME;
+    private transient JmriBeanComboBox.DisplayOptions gDDMDO = JmriBeanComboBox.DisplayOptions.DISPLAYNAME;
 
     private void updateDropDownMenuDisplayOrderMenu() {
         Component focusedComponent = getFocusOwner();
@@ -3330,7 +3329,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         });
     } //setupZoomMenu
 
-    private MouseWheelListener[] mouseWheelListeners;
+    private transient MouseWheelListener[] mouseWheelListeners;
 
     // scroll bar listener to update x & y coordinates in toolbar on scroll
     public void scrollBarAdjusted(AdjustmentEvent event) {
@@ -3711,13 +3710,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     |* Dialog box to enter new track widths *|
     \*======================================*/
     //operational variables for enter track width pane
-    private JmriJFrame enterTrackWidthFrame = null;
+    private transient JmriJFrame enterTrackWidthFrame = null;
     private boolean enterTrackWidthOpen = false;
     private boolean trackWidthChange = false;
-    private JTextField sideTrackWidthField = new JTextField(6);
-    private JTextField mainlineTrackWidthField = new JTextField(6);
-    private JButton trackWidthDone;
-    private JButton trackWidthCancel;
+    private transient JTextField sideTrackWidthField = new JTextField(6);
+    private transient JTextField mainlineTrackWidthField = new JTextField(6);
+    private transient JButton trackWidthDone;
+    private transient JButton trackWidthCancel;
 
     //display dialog for entering track widths
     protected void enterTrackWidth() {
@@ -3877,13 +3876,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     |* Dialog box to enter new grid sizes *|
     \*====================================*/
     //operational variables for enter grid sizes pane
-    private JmriJFrame enterGridSizesFrame = null;
+    private transient JmriJFrame enterGridSizesFrame = null;
     private boolean enterGridSizesOpen = false;
     private boolean gridSizesChange = false;
-    private JTextField primaryGridSizeField = new JTextField(6);
-    private JTextField secondaryGridSizeField = new JTextField(6);
-    private JButton gridSizesDone;
-    private JButton gridSizesCancel;
+    private transient JTextField primaryGridSizeField = new JTextField(6);
+    private transient JTextField secondaryGridSizeField = new JTextField(6);
+    private transient JButton gridSizesDone;
+    private transient JButton gridSizesCancel;
 
     //display dialog for entering grid sizes
     protected void enterGridSizes() {
@@ -4046,13 +4045,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     |* Dialog box to enter new reporter info *|
     \*=======================================*/
     //operational variables for enter reporter pane
-    private JmriJFrame enterReporterFrame = null;
+    private transient JmriJFrame enterReporterFrame = null;
     private boolean reporterOpen = false;
-    private JTextField xPositionField = new JTextField(6);
-    private JTextField yPositionField = new JTextField(6);
-    private JTextField reporterNameField = new JTextField(6);
-    private JButton reporterDone;
-    private JButton reporterCancel;
+    private transient JTextField xPositionField = new JTextField(6);
+    private transient JTextField yPositionField = new JTextField(6);
+    private transient JTextField reporterNameField = new JTextField(6);
+    private transient JButton reporterDone;
+    private transient JButton reporterCancel;
 
     //display dialog for entering Reporters
     protected void enterReporter(int defaultX, int defaultY) {
@@ -4237,14 +4236,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     |*  translate track diagram info *|
     \*===============================*/
     //operational variables for scale/translate track diagram pane
-    private JmriJFrame scaleTrackDiagramFrame = null;
+    private transient JmriJFrame scaleTrackDiagramFrame = null;
     private boolean scaleTrackDiagramOpen = false;
-    private JTextField xFactorField = new JTextField(6);
-    private JTextField yFactorField = new JTextField(6);
-    private JTextField xTranslateField = new JTextField(6);
-    private JTextField yTranslateField = new JTextField(6);
-    private JButton scaleTrackDiagramDone;
-    private JButton scaleTrackDiagramCancel;
+    private transient JTextField xFactorField = new JTextField(6);
+    private transient JTextField yFactorField = new JTextField(6);
+    private transient JTextField xTranslateField = new JTextField(6);
+    private transient JTextField yTranslateField = new JTextField(6);
+    private transient JButton scaleTrackDiagramDone;
+    private transient JButton scaleTrackDiagramCancel;
 
     //display dialog for scaling the track diagram
     protected void scaleTrackDiagram() {
@@ -4489,16 +4488,16 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     |* Dialog box to enter move selection info *|
     \*=========================================*/
     //operational variables for move selection pane
-    private JmriJFrame moveSelectionFrame = null;
+    private transient JmriJFrame moveSelectionFrame = null;
     private boolean moveSelectionOpen = false;
-    private JTextField xMoveField = new JTextField(6);
-    private JTextField yMoveField = new JTextField(6);
-    private JButton moveSelectionDone;
-    private JButton moveSelectionCancel;
+    private transient JTextField xMoveField = new JTextField(6);
+    private transient JTextField yMoveField = new JTextField(6);
+    private transient JButton moveSelectionDone;
+    private transient JButton moveSelectionCancel;
     private boolean canUndoMoveSelection = false;
     private double undoDeltaX = 0.0;
     private double undoDeltaY = 0.0;
-    private Rectangle2D undoRect;
+    private transient Rectangle2D undoRect;
 
     //display dialog for translation a selection
     protected void moveSelection() {
@@ -5434,7 +5433,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         for (int i = labelImage.size() - 1; i >= 0; i--) {
             PositionableLabel s = labelImage.get(i);
-            Rectangle2D r = s.getBounds();
             double x = s.getX();
             double y = s.getY();
             double w = 10.0;
@@ -5448,7 +5446,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 w = (h * 2 * (s.getText().length())) / 3;
             }
 
-            r = new Rectangle2D.Double(x, y, w, h);
+            Rectangle2D r = new Rectangle2D.Double(x, y, w, h);
             if (r.contains(loc)) {
                 if (s.getDisplayLevel() >= level) {
                     //Check to make sure that we are returning the highest level label.
@@ -5866,7 +5864,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             } else {
                 if (p.doViemMenu()) {
                     String objectType = p.getClass().getName();
-                    objectType = objectType.substring(objectType.lastIndexOf(".") + 1);
+                    objectType = objectType.substring(objectType.lastIndexOf('.') + 1);
                     jmi = popup.add(objectType);
                     jmi.setEnabled(false);
 
@@ -6387,8 +6385,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     }
 
-    private List<Positionable> _positionableSelection = new ArrayList<>();
-    private List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    private transient List<Positionable> _positionableSelection = new ArrayList<>();
+    private transient List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
 
     private void highLightSelection(Graphics2D g) {
         Stroke stroke = g.getStroke();
@@ -8270,39 +8268,46 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 case LayoutTrack.SLIP_B:
                 case LayoutTrack.SLIP_C:
                 case LayoutTrack.SLIP_D: {
-                    result = ((LayoutTurnout) o).getLayoutBlock();
+                    LayoutTurnout lt = (LayoutTurnout) o;
+                    result = lt.getLayoutBlock();
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_B: {
-                    result = ((LayoutTurnout) o).getLayoutBlockB();
+                    LayoutTurnout lt = (LayoutTurnout) o;
+                    result = lt.getLayoutBlockB();
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_C: {
-                    result = ((LayoutTurnout) o).getLayoutBlockC();
+                    LayoutTurnout lt = (LayoutTurnout) o;
+                    result = lt.getLayoutBlockC();
                     break;
                 }
 
                 case LayoutTrack.TURNOUT_D: {
-                    result = ((LayoutTurnout) o).getLayoutBlockD();
+                    LayoutTurnout lt = (LayoutTurnout) o;
+                    result = lt.getLayoutBlockD();
                     break;
                 }
 
                 case LayoutTrack.LEVEL_XING_A:
                 case LayoutTrack.LEVEL_XING_C: {
-                    result = ((LevelXing) o).getLayoutBlockAC();
+                    LevelXing lx = (LevelXing) o;
+                    result = lx.getLayoutBlockAC();
                     break;
                 }
 
                 case LayoutTrack.LEVEL_XING_B:
                 case LayoutTrack.LEVEL_XING_D: {
-                    result = ((LevelXing) o).getLayoutBlockBD();
+                    LevelXing lx = (LevelXing) o;
+                    result = lx.getLayoutBlockBD();
                     break;
                 }
 
                 case LayoutTrack.TRACK: {
-                    result = ((TrackSegment) o).getLayoutBlock();
+                    TrackSegment ts = (TrackSegment) o;
+                    result = ts.getLayoutBlock();
                     break;
                 }
                 default: {
@@ -8338,8 +8343,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //Sensor xSensor = l.getSensor();
         //(Note: I don't see the point of this section of code because...
         if (l.getSensor() != null) {
-            if ((l.getNamedSensor().getName() == null)
-                    || (!(l.getNamedSensor().getName().equals(newName)))) {
+            if (!newName.equals(l.getNamedSensor().getName())) {
                 sensorComboBox.setText(l.getNamedSensor().getName());
             }
         }
@@ -9700,40 +9704,38 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public List<PositionablePoint> getPositionablePoints() {
-        Stream<LayoutTrack> solt = getLayoutTracksOfClass(PositionablePoint.class);
-        return solt.map(PositionablePoint.class::cast)
+        return getLayoutTracksOfClass(PositionablePoint.class)
+                .map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
     public List<LayoutSlip> getLayoutSlips() {
-        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutSlip.class);
-        return solt.map(LayoutSlip.class::cast)
+        return getLayoutTracksOfClass(LayoutSlip.class)
+                .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
     }
 
     public List<TrackSegment> getTrackSegments() {
-        Stream<LayoutTrack> solt = getLayoutTracksOfClass(TrackSegment.class);
-        return solt.map(TrackSegment.class::cast)
+        return getLayoutTracksOfClass(TrackSegment.class).map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
 
     public List<LayoutTurnout> getLayoutTurnouts() {
-        Stream<LayoutTrack> solt = layoutTrackList.stream() // next line excludes LayoutSlips
+        return layoutTrackList.stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
-                .map(LayoutTurnout.class::cast);
-        return solt.map(LayoutTurnout.class::cast)
+                .map(LayoutTurnout.class::cast).map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
     public List<LayoutTurntable> getLayoutTurntables() {
-        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutTurntable.class);
-        return solt.map(LayoutTurntable.class::cast)
+        return getLayoutTracksOfClass(LayoutTurntable.class)
+                .map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
     }
 
     public List<LevelXing> getLevelXings() {
-        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LevelXing.class);
-        return solt.map(LevelXing.class::cast)
+        return getLayoutTracksOfClass(LevelXing.class)
+                .map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
     }
 
@@ -9742,8 +9744,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        Stream<LayoutTrack> solt = getLayoutTracksOfClass(LayoutTurnout.class);
-        return solt.map(LayoutTurnout.class::cast)
+        return getLayoutTracksOfClass(LayoutTurnout.class)
+                .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
@@ -10175,6 +10177,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     //initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditor.class
+    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditor.class
     );
 }

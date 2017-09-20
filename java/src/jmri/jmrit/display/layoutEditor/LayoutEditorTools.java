@@ -1131,7 +1131,7 @@ public class LayoutEditorTools {
 
     @CheckReturnValue
     public SignalHead getSignalHeadFromEntry(
-            @Nonnull JTextField signalNameTextField, 
+            @Nonnull JTextField signalNameTextField,
             boolean requireEntry, @Nonnull JmriJFrame frame) {
         String signalName = NamedBean.normalizeUserName(signalNameTextField.getText());
         SignalHead result = getSignalHeadFromEntry(signalName, requireEntry, frame);
@@ -1253,48 +1253,39 @@ public class LayoutEditorTools {
         String sysName = head.getSystemName();
         String uName = head.getUserName();
         String name = lTurnout.getSignalA1Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return A1;
         }
         name = lTurnout.getSignalA2Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return A2;
         }
         name = lTurnout.getSignalA3Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return A3;
         }
         name = lTurnout.getSignalB1Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return B1;
         }
         name = lTurnout.getSignalB2Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return B2;
         }
         name = lTurnout.getSignalC1Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return C1;
         }
         name = lTurnout.getSignalC2Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return C2;
         }
         name = lTurnout.getSignalD1Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return D1;
         }
         name = lTurnout.getSignalD2Name();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return D2;
         }
         return NONE;
@@ -1320,49 +1311,40 @@ public class LayoutEditorTools {
         String sName = head.getSystemName();
         String uName = head.getUserName();
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
-            if ((to.getSignalA1Name() != null)
-                    && (to.getSignalA1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalA1Name().equals(uName))))) {
+            if ((to.getSignalA1Name().equals(sName) || ((uName != null)
+                    && to.getSignalA1Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalA2Name() != null)
-                    && (to.getSignalA2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalA2Name().equals(uName))))) {
+            if ((to.getSignalA2Name().equals(sName) || ((uName != null)
+                    && to.getSignalA2Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalA3Name() != null)
-                    && (to.getSignalA3Name().equals(sName) || ((uName != null)
-                    && (to.getSignalA3Name().equals(uName))))) {
+            if ((to.getSignalA3Name().equals(sName) || ((uName != null)
+                    && to.getSignalA3Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalB1Name() != null)
-                    && (to.getSignalB1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalB1Name().equals(uName))))) {
+            if ((to.getSignalB1Name().equals(sName) || ((uName != null)
+                    && to.getSignalB1Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalB2Name() != null)
-                    && (to.getSignalB2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalB2Name().equals(uName))))) {
+            if ((to.getSignalB2Name().equals(sName) || ((uName != null)
+                    && to.getSignalB2Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalC1Name() != null)
-                    && (to.getSignalC1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalC1Name().equals(uName))))) {
+            if ((to.getSignalC1Name().equals(sName) || ((uName != null)
+                    && to.getSignalC1Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalC2Name() != null)
-                    && (to.getSignalC2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalC2Name().equals(uName))))) {
+            if ((to.getSignalC2Name().equals(sName) || ((uName != null)
+                    && to.getSignalC2Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalD1Name() != null)
-                    && (to.getSignalD1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalD1Name().equals(uName))))) {
+            if ((to.getSignalD1Name().equals(sName) || ((uName != null)
+                    && to.getSignalD1Name().equals(uName)))) {
                 return true;
             }
-            if ((to.getSignalD2Name() != null)
-                    && (to.getSignalD2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalD2Name().equals(uName))))) {
+            if ((to.getSignalD2Name().equals(sName) || ((uName != null)
+                    && to.getSignalD2Name().equals(uName)))) {
                 return true;
             }
         }
@@ -1409,49 +1391,40 @@ public class LayoutEditorTools {
         String sName = head.getSystemName();
         String uName = head.getUserName();
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
-            if ((to.getSignalA1Name() != null)
-                    && (to.getSignalA1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalA1Name().equals(uName))))) {
+            if ((to.getSignalA1Name().equals(sName) || ((uName != null)
+                    && to.getSignalA1Name().equals(uName)))) {
                 to.setSignalA1Name("");
             }
-            if ((to.getSignalA2Name() != null)
-                    && (to.getSignalA2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalA2Name().equals(uName))))) {
+            if ((to.getSignalA2Name().equals(sName) || ((uName != null)
+                    && to.getSignalA2Name().equals(uName)))) {
                 to.setSignalA2Name("");
             }
-            if ((to.getSignalA3Name() != null)
-                    && (to.getSignalA3Name().equals(sName) || ((uName != null)
-                    && (to.getSignalA3Name().equals(uName))))) {
+            if ((to.getSignalA3Name().equals(sName) || ((uName != null)
+                    && to.getSignalA3Name().equals(uName)))) {
                 to.setSignalA3Name("");
             }
-            if ((to.getSignalB1Name() != null)
-                    && (to.getSignalB1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalB1Name().equals(uName))))) {
+            if ((to.getSignalB1Name().equals(sName) || ((uName != null)
+                    && to.getSignalB1Name().equals(uName)))) {
                 to.setSignalB1Name("");
             }
-            if ((to.getSignalB2Name() != null)
-                    && (to.getSignalB2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalB2Name().equals(uName))))) {
+            if ((to.getSignalB2Name().equals(sName) || ((uName != null)
+                    && to.getSignalB2Name().equals(uName)))) {
                 to.setSignalB2Name("");
             }
-            if ((to.getSignalC1Name() != null)
-                    && (to.getSignalC1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalC1Name().equals(uName))))) {
+            if ((to.getSignalC1Name().equals(sName) || ((uName != null)
+                    && to.getSignalC1Name().equals(uName)))) {
                 to.setSignalC1Name("");
             }
-            if ((to.getSignalC2Name() != null)
-                    && (to.getSignalC2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalC2Name().equals(uName))))) {
+            if ((to.getSignalC2Name().equals(sName) || ((uName != null)
+                    && to.getSignalC2Name().equals(uName)))) {
                 to.setSignalC2Name("");
             }
-            if ((to.getSignalD1Name() != null)
-                    && (to.getSignalD1Name().equals(sName) || ((uName != null)
-                    && (to.getSignalD1Name().equals(uName))))) {
+            if ((to.getSignalD1Name().equals(sName) || ((uName != null)
+                    && to.getSignalD1Name().equals(uName)))) {
                 to.setSignalD1Name("");
             }
-            if ((to.getSignalD2Name() != null)
-                    && (to.getSignalD2Name().equals(sName) || ((uName != null)
-                    && (to.getSignalD2Name().equals(uName))))) {
+            if ((to.getSignalD2Name().equals(sName) || ((uName != null)
+                    && to.getSignalD2Name().equals(uName)))) {
                 to.setSignalD2Name("");
             }
         }
@@ -1603,7 +1576,7 @@ public class LayoutEditorTools {
                     } else {
                         signalName = p.getEastBoundSignal();
                     }
-                    if ((signalName == null) || signalName.isEmpty()) {
+                    if (signalName.isEmpty()) {
                         return null;
                     }
                     return InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
@@ -1613,11 +1586,11 @@ public class LayoutEditorTools {
                 // Reached turnout throat, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalA2Name();
-                if ((!(signalName == null)) && !signalName.isEmpty()) {
+                if (!signalName.isEmpty()) {
                     auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = to.getSignalA1Name();
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -1637,7 +1610,7 @@ public class LayoutEditorTools {
                 if (to.getContinuingSense() == Turnout.THROWN) {
                     signalName = to.getSignalC2Name();
                 }
-                if ((signalName != null) && !signalName.isEmpty()) {
+                if (!signalName.isEmpty()) {
                     auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 if (to.getContinuingSense() == Turnout.CLOSED) {
@@ -1665,7 +1638,7 @@ public class LayoutEditorTools {
                 if (to.getContinuingSense() == Turnout.THROWN) {
                     signalName = to.getSignalB2Name();
                 }
-                if ((signalName != null) && !signalName.isEmpty()) {
+                if (!signalName.isEmpty()) {
                     auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 if (to.getContinuingSense() == Turnout.CLOSED) {
@@ -1690,11 +1663,11 @@ public class LayoutEditorTools {
                 // Reached turnout xover 4, should be signalled
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalD2Name();
-                if ((!(signalName == null)) && !signalName.isEmpty()) {
+                if (!signalName.isEmpty()) {
                     auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = to.getSignalD1Name();
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -1770,11 +1743,11 @@ public class LayoutEditorTools {
             } else if (type == LayoutTrack.SLIP_A) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalA2Name();
-                if ((!(signalName == null)) && !signalName.isEmpty()) {
+                if (!signalName.isEmpty()) {
                     auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = sl.getSignalA1Name();
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -1792,12 +1765,12 @@ public class LayoutEditorTools {
                 String signalName;
                 if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                     signalName = sl.getSignalB2Name();
-                    if ((!(signalName == null)) && !signalName.isEmpty()) {
+                    if (!signalName.isEmpty()) {
                         auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                     }
                 }
                 signalName = sl.getSignalB1Name();
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -1815,12 +1788,12 @@ public class LayoutEditorTools {
                 String signalName;
                 if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                     signalName = sl.getSignalC2Name();
-                    if ((!(signalName == null)) && !signalName.isEmpty()) {
+                    if (!signalName.isEmpty()) {
                         auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                     }
                 }
                 signalName = sl.getSignalC1Name();
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -1836,11 +1809,11 @@ public class LayoutEditorTools {
             } else if (type == LayoutTrack.SLIP_D) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalD2Name();
-                if ((!(signalName == null)) && !signalName.isEmpty()) {
+                if (!signalName.isEmpty()) {
                     auxSignal = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalName);
                 }
                 signalName = sl.getSignalD1Name();
-                if ((signalName == null) || signalName.isEmpty()) {
+                if (signalName.isEmpty()) {
                     if (!layoutEditor.skipIncludedTurnout) {
                         return null;
                     }
@@ -7966,11 +7939,9 @@ public class LayoutEditorTools {
         if (!getSimpleBlockInformation()) {
             return;
         }
-        SignalMast oldBlock1SignalMast = boundary.getEastBoundSignalMast();
-        SignalMast oldBlock2SignalMast = boundary.getWestBoundSignalMast();
-        SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
-        SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
 
+        SignalMast oldBlock1SignalMast = boundary.getEastBoundSignalMast();
+        SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
         if (block1BoundSignalMast == null) {
             if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed(oldBlock1SignalMast)) {
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast);
@@ -7980,6 +7951,9 @@ public class LayoutEditorTools {
             removeSignalMastAssignment(boundary.getEastBoundSignalMast());
             boundary.setEastBoundSignalMast("");
         }
+
+        SignalMast oldBlock2SignalMast = boundary.getWestBoundSignalMast();
+        SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
         if (block2BoundSignalMast == null) {
             if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(SignalMastLogicManager.class).isSignalMastUsed(oldBlock2SignalMast)) {
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast);
@@ -8094,8 +8068,11 @@ public class LayoutEditorTools {
             }
 
             //If advanced routing is enabled and then this indicates that we are using this for discovering the signalmast logic paths.
-            if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && (block1BoundSignalMast != null || block2BoundSignalMast != null)) {
-                updateBoundaryBasedSignalMastLogic(oldBlock1SignalMast, oldBlock2SignalMast,
+            if (InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()
+                    && (block1BoundSignalMast != null
+                    || block2BoundSignalMast != null)) {
+                updateBoundaryBasedSignalMastLogic(
+                        oldBlock1SignalMast, oldBlock2SignalMast,
                         block1BoundSignalMast, block2BoundSignalMast);
             }
         }
@@ -8142,13 +8119,11 @@ public class LayoutEditorTools {
                 }
             }
             if (block2BoundSignalMast != null) {
-                if (oldBlock1SignalMast != null && old1Used
-                        && oldBlock1SignalMast == block2BoundSignalMast) {
+                if (old1Used && oldBlock1SignalMast == block2BoundSignalMast) {
 
                     SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast, block2BoundSignalMast);
                 }
-                if (oldBlock2SignalMast != null && old2Used
-                        && oldBlock2SignalMast != block2BoundSignalMast) {
+                if (old2Used && oldBlock2SignalMast != block2BoundSignalMast) {
                     SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast, block2BoundSignalMast);
                 }
             }
@@ -8858,12 +8833,12 @@ public class LayoutEditorTools {
             });
             setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
-            signalMastsJmriFrame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-//	   setSignalMastsCancelPressed(null);
-                }
-            });
+            //signalMastsJmriFrame.addWindowListener(new WindowAdapter() {
+            //    @Override
+            //    public void windowClosing(WindowEvent e) {
+            //        setSignalMastsCancelPressed(null);
+            //    }
+            //});
             if (turnoutFromMenu) {
                 turnoutSignalMastsGetSaved(null);
             }
@@ -8920,30 +8895,29 @@ public class LayoutEditorTools {
         signalMastsJmriFrame.pack();
     }
 
-    private int isMastAssignedHere(SignalMast mast, LayoutTurnout lTurnout) {
+    private int isMastAssignedHere(
+            @Nullable SignalMast mast,
+            @Nullable LayoutTurnout lTurnout)
+    {
         if ((mast == null) || (lTurnout == null)) {
             return NONE;
         }
         String sysName = mast.getSystemName();
         String uName = mast.getUserName();
         String name = lTurnout.getSignalAMastName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return A1;
         }
         name = lTurnout.getSignalBMastName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return A2;
         }
         name = lTurnout.getSignalCMastName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return A3;
         }
         name = lTurnout.getSignalDMastName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && (name.equals(uName) || name.equals(sysName))) {
             return B1;
         }
         return NONE;
@@ -8953,23 +8927,19 @@ public class LayoutEditorTools {
         String sName = mast.getSystemName();
         String uName = mast.getUserName();
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
-            if ((to.getSignalAMastName() != null)
-                    && (to.getSignalAMastName().equals(sName) || ((uName != null)
+            if ((to.getSignalAMastName().equals(sName) || ((uName != null)
                     && (to.getSignalAMastName().equals(uName))))) {
                 to.setSignalAMast("");
             }
-            if ((to.getSignalBMastName() != null)
-                    && (to.getSignalBMastName().equals(sName) || ((uName != null)
+            if ((to.getSignalBMastName().equals(sName) || ((uName != null)
                     && (to.getSignalBMastName().equals(uName))))) {
                 to.setSignalBMast("");
             }
-            if ((to.getSignalCMastName() != null)
-                    && (to.getSignalCMastName().equals(sName) || ((uName != null)
+            if ((to.getSignalCMastName().equals(sName) || ((uName != null)
                     && (to.getSignalCMastName().equals(uName))))) {
                 to.setSignalCMast("");
             }
-            if ((to.getSignalDMastName() != null)
-                    && (to.getSignalDMastName().equals(sName) || ((uName != null)
+            if ((to.getSignalDMastName().equals(sName) || ((uName != null)
                     && (to.getSignalDMastName().equals(uName))))) {
                 to.setSignalDMast("");
             }
@@ -10480,23 +10450,19 @@ public class LayoutEditorTools {
         String sysName = sensor.getSystemName();
         String uName = sensor.getUserName();
         String name = lTurnout.getSensorAName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
             return A1;
         }
         name = lTurnout.getSensorBName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
             return A2;
         }
         name = lTurnout.getSensorCName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
             return A3;
         }
         name = lTurnout.getSensorDName();
-        if ((name != null) && !name.isEmpty() && ((name.equals(uName))
-                || (name.equals(sysName)))) {
+        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
             return B1;
         }
         return NONE;
