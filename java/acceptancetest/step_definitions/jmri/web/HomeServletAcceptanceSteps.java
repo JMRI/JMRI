@@ -20,7 +20,6 @@ public class HomeServletAcceptanceSteps implements En {
    
    public HomeServletAcceptanceSteps() {
 
-      System.setProperty("webdriver.gecko.driver", "/home/Paul/JMRI/geckodriver");
       Before(tags,()->{
          webDriver = new EventFiringWebDriver(new FirefoxDriver());
       });
