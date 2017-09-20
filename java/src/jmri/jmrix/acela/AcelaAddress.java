@@ -127,7 +127,8 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to validate system name format
+     * Public static method to validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
@@ -135,20 +136,20 @@ public class AcelaAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.warn("invalid character in header field of system name: " + systemName);
             return (false);
         }
         int num;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: " + systemName);
             return (false);
         }
         if (num >= 0) {
             // This is a CLnnxxx address
         } else {
-            log.error("invalid Acela system name: " + systemName);
+            log.warn("invalid Acela system name: " + systemName);
             return (false);
         }
         return true;

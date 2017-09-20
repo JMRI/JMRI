@@ -114,6 +114,7 @@ public interface LightManager extends Manager<Light> {
 
     /**
      * Test if parameter is a properly formatted system name.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @param systemName the system name
      * @return true if formatted correctly; false otherwise

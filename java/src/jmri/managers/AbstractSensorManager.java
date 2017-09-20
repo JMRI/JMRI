@@ -189,6 +189,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /**
      * Validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @since 2.9.3
      * @see jmri.jmrit.beantable.SensorTableAction.CheckedTextField

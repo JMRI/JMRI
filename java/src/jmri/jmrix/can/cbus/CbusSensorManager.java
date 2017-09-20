@@ -111,6 +111,13 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         return true;
     }
 
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();

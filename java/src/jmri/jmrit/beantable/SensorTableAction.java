@@ -22,11 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +60,7 @@ public class SensorTableAction extends AbstractTableAction {
         this(Bundle.getMessage("TitleSensorTable"));
     }
 
-    protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
+    protected SensorManager senManager = InstanceManager.sensorManagerInstance();
 
     @Override
     @SuppressFBWarnings("BC_UNCONFIRMED_CAST") // AbstractTableTabAction responsible for getting this right;
@@ -107,7 +109,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     @Override
     protected void addPressed(ActionEvent e) {
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSensor"));
@@ -132,8 +134,8 @@ public class SensorTableAction extends AbstractTableAction {
                     canAddRange(e);
                 }
             };
-            if (jmri.InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {
-                jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) jmri.InstanceManager.sensorManagerInstance();
+            if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {
+                jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
                 List<Manager<Sensor>> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
@@ -152,7 +154,7 @@ public class SensorTableAction extends AbstractTableAction {
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
                 }
             } else {
-                prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
+                prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
             hardwareAddressTextField.setBackground(Color.white);
             userName.setName("userName"); // NOI18N
@@ -218,9 +220,9 @@ public class SensorTableAction extends AbstractTableAction {
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
         for (int x = 0; x < numberOfSensors; x++) {
             try {
-                curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
+                curAddress = InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             } catch (jmri.JmriException ex) {
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", curAddress), "" + ex, "", true, false);
                 // directly add to statusBar (but never called?)
                 statusBar.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
@@ -237,10 +239,10 @@ public class SensorTableAction extends AbstractTableAction {
 
             lastSuccessfulAddress = curAddress;
             // Compose the proposed system name from parts:
-            sName = sensorPrefix + jmri.InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
+            sName = sensorPrefix + InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
             Sensor s = null;
             try {
-                s = jmri.InstanceManager.sensorManagerInstance().provideSensor(sName);
+                s = InstanceManager.sensorManagerInstance().provideSensor(sName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
@@ -255,10 +257,10 @@ public class SensorTableAction extends AbstractTableAction {
             if ((x != 0) && user != null && !user.equals("")) {
                 user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
             }
-            if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
+            if (user != null && !user.equals("") && (InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                 s.setUserName(user);
-            } else if (user != null && !user.equals("") && jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+            } else if (user != null && !user.equals("") && InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
             }
 
@@ -527,7 +529,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
@@ -572,6 +574,9 @@ public class SensorTableAction extends AbstractTableAction {
 
         /**
          * Validate the field information. Does not make any GUI changes.
+         * <p>
+         * During validation, logging is capped below the Error level to keep console clean from repeated validation.
+         * This is reset to default level afterwards.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -589,11 +594,19 @@ public class SensorTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-            } else if (jmri.InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value)) {
-                // get prefixSelectedItem
-                return true;
             } else {
-                return false;
+                // store previous level
+                Level prevloglevel = org.apache.log4j.Logger.getRootLogger().getLevel();
+                // silence WARN logging
+                org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
+                boolean validFormat = InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value);
+                // reset logging level
+                org.apache.log4j.Logger.getRootLogger().setLevel(prevloglevel);
+                if (validFormat) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 

@@ -59,6 +59,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
+import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1899,6 +1900,9 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         /**
          * Validate the field information. Does not make any GUI changes.
+         * <p>
+         * During validation, logging is capped below the Error level to keep console clean from repeated validation.
+         * This is reset to default level afterwards.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -1916,11 +1920,19 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-            } else if (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value)) {
-                // get prefixSelectedItem
-                return true;
             } else {
-                return false;
+                // store previous level
+                Level prevloglevel = org.apache.log4j.Logger.getRootLogger().getLevel();
+                // silence WARN logging
+                org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
+                boolean validFormat = InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value);
+                // reset logging level
+                org.apache.log4j.Logger.getRootLogger().setLevel(prevloglevel);
+                if (validFormat) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 

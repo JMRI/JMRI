@@ -239,6 +239,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /**
      * Validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @since 2.9.3
      * @see jmri.jmrit.beantable.TurnoutTableAction.CheckedTextField

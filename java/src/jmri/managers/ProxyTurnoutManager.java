@@ -234,6 +234,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /**
      * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @return if a manager is found, return its determination of validity of
      * system name format. Return false if no manager exists.
