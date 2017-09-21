@@ -292,7 +292,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
          The swing thread for flashing the icons will carry on without interuption. */
         final List<Color> realColorStd = new ArrayList<Color>();
         final List<Color> realColorXtra = new ArrayList<Color>();
-        final List<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
+        final List<LayoutBlock> routeBlocks = new ArrayList<>();
         if (manager.useDifferentColorWhenSetting()) {
             for (LayoutBlock lbk : routeDetails) {
                 routeBlocks.add(lbk);
@@ -912,7 +912,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         return destination;
                     }
 
-                    List<LayoutBlock> listOfBlocks = new ArrayList<LayoutBlock>(0);
+                    List<LayoutBlock> listOfBlocks = new ArrayList<>(0);
                     String errorMessage = "";
 
                     List<LayoutBlock> getListOfBlocks() {
@@ -937,7 +937,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         //We have a problem, the destination point is already setup with a route, therefore we would need to
                         //check some how that a route hasn't been set to it.
                         destinationLBlock = getFacing();
-                        List<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                        List<LayoutBlock> blocks = new ArrayList<>();
                         String errorMessage = null;
                         try {
                             blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
@@ -972,7 +972,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                                     return;
                                 } else {
-                                    List<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                    List<LayoutBlock> blocks = new ArrayList<>();
                                     String errorMessage = null;
                                     try {
                                         blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
@@ -993,7 +993,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                     startlBlock = getFacing();
                                     protectLBlock = srcProLBlock;
                                 }
-                                List<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                List<LayoutBlock> blocks = new ArrayList<>();
                                 String errorMessage = "";
                                 try {
                                     blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.NONE);
@@ -1005,7 +1005,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                 toadd.setErrorMessage(errorMessage);
                                 pathList.add(toadd);
                             } else {
-                                List<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                List<LayoutBlock> blocks = new ArrayList<>();
                                 String errorMessage = "";
                                 try {
                                     blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.NONE);

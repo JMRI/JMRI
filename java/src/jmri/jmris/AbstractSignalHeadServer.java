@@ -38,16 +38,23 @@ abstract public class AbstractSignalHeadServer {
 
     synchronized protected void addSignalHeadToList(String signalHeadName) {
         if (!signalHeads.containsKey(signalHeadName)) {
-            signalHeads.put(signalHeadName, new SignalHeadListener(signalHeadName));
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName).addPropertyChangeListener(signalHeads.get(signalHeadName));
-            log.debug("Added listener to signalHead {}", signalHeadName);
+            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
+            if(sh!=null) {
+               SignalHeadListener shl = new SignalHeadListener(signalHeadName);
+               sh.addPropertyChangeListener(shl);
+               signalHeads.put(signalHeadName, shl );
+               log.debug("Added listener to signalHead {}", signalHeadName);
+            }
         }
     }
 
     synchronized protected void removeSignalHeadFromList(String signalHeadName) {
         if (signalHeads.containsKey(signalHeadName)) {
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName).removePropertyChangeListener(signalHeads.get(signalHeadName));
-            signalHeads.remove(signalHeadName);
+            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
+            if(sh!=null) {
+               sh.removePropertyChangeListener(signalHeads.get(signalHeadName));
+               signalHeads.remove(signalHeadName);
+            }
         }
     }
 
@@ -139,7 +146,10 @@ abstract public class AbstractSignalHeadServer {
 
     public void dispose() {
         for (Map.Entry<String, SignalHeadListener> signalHead : this.signalHeads.entrySet()) {
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead.getKey()).removePropertyChangeListener(signalHead.getValue());
+            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead.getKey());
+            if(sh != null) {
+               sh.removePropertyChangeListener(signalHead.getValue());
+            }
         }
         this.signalHeads.clear();
     }

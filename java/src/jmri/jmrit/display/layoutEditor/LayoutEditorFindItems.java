@@ -74,7 +74,7 @@ public class LayoutEditorFindItems {
         if (name.isEmpty()) {
             return null;
         }
-        ArrayList<TrackSegment> ts = new ArrayList<TrackSegment>();
+        ArrayList<TrackSegment> ts = new ArrayList<>();
         for (TrackSegment t : layoutEditor.getTrackSegments()) {
             if (t.getBlockName().equals(name)) {
                 ts.add(t);

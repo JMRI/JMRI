@@ -1568,7 +1568,7 @@ public class Section extends AbstractNamedBean {
             int dir = EntryPoint.UNKNOWN;
             while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                 tn = cUtil.getNextNode(tn, 0);
-                tBlock = cUtil.getExitBlockForTrackNode(tn, null);
+                tBlock = (tn == null) ? null : cUtil.getExitBlockForTrackNode(tn, null);
             }
             if (tBlock != null) {
                 lb = InstanceManager.getDefault(LayoutBlockManager.class).
@@ -1580,7 +1580,7 @@ public class Section extends AbstractNamedBean {
                 tn = altNode;
                 while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                     tn = cUtil.getNextNode(tn, 0);
-                    tBlock = cUtil.getExitBlockForTrackNode(tn, null);
+                    tBlock = (tn == null) ? null : cUtil.getExitBlockForTrackNode(tn, null);
                 }
                 if (tBlock != null) {
                     lb = InstanceManager.getDefault(LayoutBlockManager.class).
