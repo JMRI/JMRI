@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An icon to display a status of a Block Object.<P>
  *
- * This is the same name as display.BlockContentsIcon, it follows 
+ * This is the same name as display.BlockContentsIcon, it follows
  * on from the MemoryIcon
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
@@ -20,7 +20,7 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
-        log.debug("BlockContentsIcon ctor= " + BlockContentsIcon.class.getName());
+        log.debug("BlockContentsIcon ctor= {}", BlockContentsIcon.class.getName());
     }
 
     LayoutBlock lBlock = null;
