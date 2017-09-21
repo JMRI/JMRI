@@ -29,12 +29,36 @@ public class NcePacketMonitorPanelTest {
         NcePacketMonitorPanel action = new NcePacketMonitorPanel();
         // this test currently only verifies there is no exception thrown.
         action.initComponents(memo);
+        // also check that dispose doesn't cause an exception
+        action.dispose();
+    }
+
+    @Test
+    public void testInitContext() throws Exception {
+        NcePacketMonitorPanel action = new NcePacketMonitorPanel();
+        // this test currently only verifies there is no exception thrown.
+        action.initContext(memo);
+        // also check that dispose doesn't cause an exception
+        action.dispose();
     }
 
     @Test
     public void testHelpTarget() {
         NcePacketMonitorPanel action = new NcePacketMonitorPanel();
         Assert.assertEquals("help target","package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame",action.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        NcePacketMonitorPanel action = new NcePacketMonitorPanel();
+        Assert.assertEquals("Title","NCE_: DCC Packet Analyzer",action.getTitle());
+    }
+
+    @Test
+    public void testGetTitleAfterInit() throws Exception {
+        NcePacketMonitorPanel action = new NcePacketMonitorPanel();
+        action.initComponents(memo);
+        Assert.assertEquals("Title","NCE: DCC Packet Analyzer",action.getTitle());
     }
 
     @Before
