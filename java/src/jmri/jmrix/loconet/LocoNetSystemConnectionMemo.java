@@ -123,10 +123,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
             sm.setCommandStationType(type);
             sm.setSystemConnectionMemo(this);
-        }
 
-        // store as CommandStation object
-        jmri.InstanceManager.setCommandStation(sm);
+            // store as CommandStation object
+            jmri.InstanceManager.setCommandStation(sm);
+        }
 
     }
 
