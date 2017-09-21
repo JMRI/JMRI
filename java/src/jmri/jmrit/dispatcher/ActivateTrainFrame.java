@@ -87,7 +87,7 @@ public class ActivateTrainFrame {
     private List<Block> startingBlockBoxList = new ArrayList<>();
     private List<Integer> startingBlockSeqList = new ArrayList<>();
     private JComboBox<String> destinationBlockBox = new JComboBox<String>();
-    private List<Block> destinationBlockBoxList = new ArrayList<Block>();
+    private List<Block> destinationBlockBoxList = new ArrayList<>();
     private List<Integer> destinationBlockSeqList = new ArrayList<Integer>();
     private JButton addNewTrainButton = null;
     private JButton loadButton = null;
@@ -150,7 +150,7 @@ public class ActivateTrainFrame {
             }
             transitsFromSpecificBlock = true;
             initializeFreeTransitsCombo(transitList);
-            List<Block> tmpBlkList = new ArrayList<Block>();
+            List<Block> tmpBlkList = new ArrayList<>();
             if (selectedTransit.getEntryBlocksList().contains(b)) {
                 tmpBlkList = selectedTransit.getEntryBlocksList();
                 inTransitBox.setSelected(false);

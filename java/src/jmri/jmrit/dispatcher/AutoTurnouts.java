@@ -211,7 +211,7 @@ public class AutoTurnouts {
             }
         }
 
-        List<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
+        List<LayoutTurnout> turnoutList = new ArrayList<>();
         List<Integer> settingsList = new ArrayList<Integer>();
         // get turnouts by Block
         boolean turnoutsOK = true;

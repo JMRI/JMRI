@@ -231,8 +231,7 @@ any <code>.xml</code> and <code>.jhm</code> files or the <code>web*.shtml</code>
 are automatically produced.
 </ul>
 
-<a name="dev"><h2>Internationalization for Developers</h2>
-<p>
+<a name="dev"></a><h2>Internationalization for Developers</h2>
 For internationalization to work, you have to do a few things in the code 
 you write. Some web references on how to do this:
 <ul>
@@ -260,7 +259,7 @@ Cross-package references, e.g. between <code>jmri.jmrit</code> and <code>jmri.jm
 and existing ones are being removed.
 <p>
 Access is via a Bundle class local to each package.  A typical one is
-<code><href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
+<code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a></code>.
 It provides two key methods you use to access (translated) resource
 strings:<br>
 <code>
@@ -407,9 +406,8 @@ For output:
 without using these formatting tools. That way, the files can be moved
 from one user to another without worrying about whether they are using the same Locale.</strong>
 
-<a name="testing">
+<a name="testing"></a>
 <h3>Testing</h3>
-<p>
 You should check that you've properly internationalized 
 your code.  We provide a tool for doing this which creates
 an automatically translated version of your properties files,

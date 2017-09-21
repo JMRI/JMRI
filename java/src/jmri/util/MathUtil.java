@@ -19,6 +19,24 @@ import javax.annotation.Nonnull;
  */
 public final class MathUtil {
 
+    /**
+     * @param a the first float
+     * @param b the second float
+     * @return true if a is equal to b
+     */
+    public static boolean equals(float a, float b) {
+        return (Float.floatToIntBits(a) == Float.floatToIntBits(b));
+    }
+
+    /**
+     * @param a the first double
+     * @param b the second double
+     * @return true if a is equal to b
+     */
+    public static boolean equals(double a, double b) {
+        return (Double.doubleToLongBits(a) == Double.doubleToLongBits(b));
+    }
+
     public static final Point2D zeroPoint2D = zeroPoint2D();
     public static final Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
 
@@ -58,6 +76,14 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point point2DToPoint(@Nonnull Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * @param p the point
+     * @return true if p1 is equal to zeroPoint2D
+     */
+    public static boolean isEqualToZeroPoint2D(@Nonnull Point2D p) {
+        return p.equals(zeroPoint2D);
     }
 
     /**

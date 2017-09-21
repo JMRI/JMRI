@@ -57,7 +57,6 @@
         <a href="SystemStructure.shtml">another page</a>.
       </div>
 
-      <div class="list">
         <p>We list the files that are modified and created in the
         order they were done in this case; other orders may also
         work, and you might not need to do all these.</p>
@@ -67,10 +66,8 @@
         ordered this, and made the basic process move pretty
         quickly.</p>
 
-        <dl>
-          <dd>
             <h3>Duplicate an existing system</h3>
-          </dd>
+        <dl>
 
           <dt>Create a duplicate file tree</dt>
 
@@ -133,9 +130,10 @@
           </dd>
 
 <!-- (The dl vs h3 structure is really messed up here and below) -->
-
+            </dl>
             <h3>Do Basic Migration</h3>
-
+            <dl>
+            
           <dt>Migrate names</dt>
 
           <dd>
@@ -145,13 +143,12 @@
 
             <p>Then search for and replace, perhaps not literally,
             all the occurances.</p>
-          </dd>
 
-          <dd>
             <p>At this point, make sure you can compile.</p>
 
           <dt>Register system for preferences</dt>
-          <dd>Add the line
+          <dd>
+            <p>Add the line
             <code>@ServiceProvider(service = ConnectionTypeList)</code> just
             before the class definition so that the preferences system sees your
             new connection types. You may also need to add the following import
@@ -171,13 +168,14 @@
                 <a href="../../hardware/index.shtml">help/en/html/hardware/index.shtml</a>
                 hardware home page. Include a link to the
                 manufacturer's web site if possible.
+            </ul>
           </dd>
 
-            <h3>Create Basic JUnit Tests</h3>
-            For more information on this, see the
+            <dt>Create Basic JUnit Tests</dt>
+            <dd>
+            <p>For more information on this, see the
             <a href="JUnit.shtml">testing page</a>.
-
-          </dd>
+            </dd>
 
           <dt>Duplicate directory</dt>
 
@@ -201,9 +199,9 @@
             jmri.jmrix.powerline.SerialTest</code></p>
           </dd>
 
-          <dd>
+          </dl>
             <h3>Connect Basics to Rest of System</h3>
-          </dd>
+          <dl>
 
           <dt>Connect to configuration menus</dt>
 
@@ -234,25 +232,29 @@
           <dd>
             <p>At this point, when you "ant alltest", your new
             system's test should be run.</p>
-
-            <h3>Migrate to Basic Functionality</h3>
           </dd>
+          
+            </dl>
+            <h3>Migrate to Basic Functionality</h3>
+            <dl>
 
           <dt>Update connection options</dt>
 
-          <dd>Speeds, etc, in
+          <dd>
+          <p>Speeds, etc, in
           powerline/serialdriver/SerialDriverAdapter.java.</dd>
 
           <dt>Get send/receive communications working</dt>
 
-          <dd>The first step is to get communications working so
+          <dd>
+          <p>The first step is to get communications working so
           that you can send a message from the "Send Command"
           window, and see it and the response in the "Monitor"
           window.</dd>
 
-          <dd>
+          </dl>
             <h3>Make It Easy to Use</h3>
-          </dd>
+          <dl>
 
           <dt>Add Possible Startup Items</dt>
 
@@ -264,9 +266,9 @@
             to reference this newly created ActionListBundle.</p>
           </dd>
 
-          <dd>
+          </dl>
             <h3>Complete the documentation</h3>
-          </dd>
+          </dl>
 
           <dt>Create The Help Tree</dt>
 
