@@ -134,7 +134,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         if (!iter.hasNext()) {
             return;
         }
-        ArrayList<NamedBean> excludeList = new ArrayList<NamedBean>();
+        ArrayList<NamedBean> excludeList = new ArrayList<>();
         while (iter.hasNext()) {
             String mname = iter.next();
             if (mname != null) {
