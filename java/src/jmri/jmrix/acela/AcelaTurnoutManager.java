@@ -53,7 +53,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         }
 
 // Bob C: Fix this up  
-/*
+         /*
          conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum);
          if ( conflict != "" ) {
          log.error("Assignment conflict with "+conflict+".  Turnout not created.");
@@ -61,6 +61,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
          return (null);
          }
          */
+
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix())) {
             trn = new AcelaTurnout(systemName, userName,_memo);
@@ -77,7 +78,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * Public method to notify user of Turnout creation error.
      */
-    public void notifyTurnoutCreationError(String conflict, int bitNum) {
+    public void notifyTurnoutCreationError(String conflict, int bitNum) { // I18N TODO
         javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum
                 + ", is currently assigned to " + conflict + ". Turnout cannot be created as "
                 + "you specified.", "Acela Assignment Conflict",
@@ -104,10 +105,10 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to normalize a system name
-     * <P>
-     * Returns a normalized system name if system name has a valid format, else
-     * returns "".
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else
+     * return "" (empty string)
      */
     public String normalizeSystemName(String systemName) {
         return (AcelaAddress.normalizeSystemName(systemName));
