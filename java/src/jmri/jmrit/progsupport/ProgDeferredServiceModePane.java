@@ -121,5 +121,5 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class);
 }

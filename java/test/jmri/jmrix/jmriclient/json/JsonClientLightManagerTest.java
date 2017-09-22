@@ -30,6 +30,6 @@ public class JsonClientLightManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonClientLightManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonClientLightManagerTest.class);
 
 }

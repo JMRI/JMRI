@@ -35,5 +35,5 @@ public class XNetMonActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XNetMonActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XNetMonActionTest.class);
 }

@@ -29,7 +29,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
     /**
      * Default implementation for storing the contents of a SwitchboardEditor.
-     * Storing of beanswitch properties for use on web panel {@link SwitchboardEditor$BeanSwitchXml}
+     * Storing of beanswitch properties for use on web panel
+     * {@link SwitchboardEditorXml}
      *
      * @param o Object to store, of type SwitchboardEditor
      * @return Element containing the complete info
@@ -50,7 +51,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
-        panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
+        panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
@@ -71,7 +72,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         // include contents (not used to store Switchboards on disk as
         // all config is stored at Panel level.
-
         return panel;
     }
 
@@ -81,8 +81,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Create a SwitchboardEditor object, then register and fill it, then pop it in a
-     * JFrame
+     * Create a SwitchboardEditor object, then register and fill it, then pop it
+     * in a JFrame
      *
      * @param shared Top level Element to unpack.
      * @return true if successful
@@ -144,7 +144,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        panel.setAllShowTooltip(value);
+        panel.setAllShowToolTip(value);
 
         value = true;
         if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
@@ -271,6 +271,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditorXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditorXml.class);
 
 }

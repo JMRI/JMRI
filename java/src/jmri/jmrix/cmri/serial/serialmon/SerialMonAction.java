@@ -36,6 +36,6 @@ public class SerialMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);
 
 }

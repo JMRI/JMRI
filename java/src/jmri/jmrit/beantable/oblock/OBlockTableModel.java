@@ -128,7 +128,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         while (iter.hasNext()) {
             ts.add(getBySystemName(iter.next()));
         }
-        ArrayList<NamedBean> list = new ArrayList<NamedBean>(sysNameList.size());
+        ArrayList<NamedBean> list = new ArrayList<>(sysNameList.size());
 
         Iterator<NamedBean> it = ts.iterator();
         while (it.hasNext()) {
@@ -773,5 +773,5 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class);
 }

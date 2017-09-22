@@ -30,6 +30,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(MultiJfcUnitTest.suite());
         suite.addTest(new JUnit4TestAdapter(MultiPaneWindowTest.class));
+        suite.addTest(new JUnit4TestAdapter(PanedInterfaceTest.class));
+        suite.addTest(new JUnit4TestAdapter(ThreePaneTLRWindowTest.class));
 
         return suite;
     }

@@ -1021,5 +1021,5 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class);
 }

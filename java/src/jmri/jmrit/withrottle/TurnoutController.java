@@ -37,13 +37,15 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
     @Override
     public void filterList() {
-        ArrayList<String> tempList = new ArrayList<String>(0);
+        ArrayList<String> tempList = new ArrayList<>(0);
         for (String sysName : sysNameList) {
             Turnout t = manager.getBySystemName(sysName);
-            Object o = t.getProperty("WifiControllable");
-            if ((o == null) || (!o.toString().equalsIgnoreCase("false"))) {
-                //  Only skip if 'false'
-                tempList.add(sysName);
+            if (t != null) {
+                Object o = t.getProperty("WifiControllable");
+                if (o == null || Boolean.getBoolean(o.toString())) {
+                    //  Only skip if 'false'
+                    tempList.add(sysName);
+                }
             }
         }
         sysNameList = tempList;
@@ -51,35 +53,36 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
     @Override
     void handleMessage(String message) {
-        try {
-            if (message.charAt(0) == 'A') {
-                if (message.charAt(1) == '2') {
-                    Turnout t = manager.getBySystemName(message.substring(2));
-                    if (t.getCommandedState() == Turnout.CLOSED) {
-                        t.setCommandedState(Turnout.THROWN);
-                    } else {
+        if (message.charAt(0) == 'A') {
+            Turnout t = manager.getBySystemName(message.substring(2));
+            if (t != null) {
+                switch (message.charAt(1)) {
+                    case '2':
+                        if (t.getCommandedState() == Turnout.CLOSED) {
+                            t.setCommandedState(Turnout.THROWN);
+                        } else {
+                            t.setCommandedState(Turnout.CLOSED);
+                        }
+                        break;
+                    case 'C':
                         t.setCommandedState(Turnout.CLOSED);
-                    }
-                } else if (message.charAt(1) == 'C') {
-                    Turnout t = manager.getBySystemName(message.substring(2));
-                    t.setCommandedState(Turnout.CLOSED);
-
-                } else if (message.charAt(1) == 'T') {
-                    Turnout t = manager.getBySystemName(message.substring(2));
-                    t.setCommandedState(Turnout.THROWN);
-
-                } else {
-                    log.warn("Message \"" + message + "\" unknown.");
+                        break;
+                    case 'T':
+                        t.setCommandedState(Turnout.THROWN);
+                        break;
+                    default:
+                        log.warn("Message \"{}\" unknown.", message);
+                        break;
                 }
+            } else {
+                log.warn("Message \"{}\" does not match a turnout.", message);
             }
-        } catch (NullPointerException exb) {
-            log.warn("Message \"" + message + "\" does not match a turnout.");
         }
     }
 
     /**
      * Send Info on turnouts to devices, not specific to any one turnout.
-     *
+     * <p>
      * Format: PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
      */
     public void sendTitles() {
@@ -89,9 +92,9 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
         StringBuilder labels = new StringBuilder("PTT");    //  Panel Turnout Titles
 
-        labels.append("]\\[" + Bundle.getMessage("MenuItemTurnoutTable") + "}|{Turnout");
-        labels.append("]\\[" + manager.getClosedText() + "}|{2");
-        labels.append("]\\[" + manager.getThrownText() + "}|{4");
+        labels.append("]\\[").append(Bundle.getMessage("MenuItemTurnoutTable")).append("}|{Turnout");
+        labels.append("]\\[").append(manager.getClosedText()).append("}|{2");
+        labels.append("]\\[").append(manager.getThrownText()).append("}|{4");
 
         String message = labels.toString();
 
@@ -104,7 +107,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
     /**
      * Send list of turnouts Format:
      * PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
-     *
+     * <p>
      * States: 1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
      */
     public void sendList() {
@@ -123,16 +126,17 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
         for (String sysName : sysNameList) {
             Turnout t = manager.getBySystemName(sysName);
-            list.append("]\\[" + sysName);
-            list.append("}|{");
-            if (t.getUserName() != null) {
-                list.append(t.getUserName());
+            if (t != null) {
+                list.append("]\\[").append(sysName);
+                list.append("}|{");
+                if (t.getUserName() != null) {
+                    list.append(t.getUserName());
+                }
+                list.append("}|{").append(t.getKnownState());
+                if (canBuildList) {
+                    t.addPropertyChangeListener(this);
+                }
             }
-            list.append("}|{" + t.getKnownState());
-            if (canBuildList) {
-                t.addPropertyChangeListener(this);
-            }
-
         }
         String message = list.toString();
 
@@ -195,5 +199,5 @@ public class TurnoutController extends AbstractController implements PropertyCha
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutController.class);
 }

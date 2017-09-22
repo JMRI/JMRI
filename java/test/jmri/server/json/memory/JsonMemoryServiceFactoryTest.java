@@ -29,6 +29,6 @@ public class JsonMemoryServiceFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonMemoryServiceFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonMemoryServiceFactoryTest.class);
 
 }

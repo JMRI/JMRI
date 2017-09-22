@@ -29,6 +29,6 @@ public class SoundEventTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SoundEventTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SoundEventTest.class);
 
 }

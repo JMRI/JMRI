@@ -54,7 +54,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             }
         } catch (NumberFormatException ex) {
             log.debug("Unable to convert " + addr + " into Cbus format +nn");
-        };
+        }
         Turnout t = new CbusTurnout(getSystemPrefix(), addr, memo.getTrafficController());
         t.setUserName(userName);
         return t;
@@ -79,7 +79,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
         } catch (NumberFormatException ex) {
             // already warned
-        };
+        }
         if (unsigned > 0 && !curAddress.startsWith("+")) {
             curAddress = "+" + curAddress;
         }
@@ -122,7 +122,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
                     unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
                     log.debug("Unable to convert " + address + " into Cbus format +nn");
-                };
+                }
                 if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
@@ -157,6 +157,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);
 
 }

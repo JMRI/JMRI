@@ -48,7 +48,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
 
-            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
             if (editor.getBackgroundColor() != null) {
                 Element color = new Element("backgroundColor");

@@ -1,9 +1,11 @@
 package jmri;
 
+import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import jmri.util.MathUtil;
 
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
@@ -27,7 +29,6 @@ import java.util.Objects;
  * <P>
  * This implementation handles paths with a list of bean settings. This has been
  * extended from the initial implementation.
- *
  * <P>
  * The length of the path may also optionally be entered if desired. This
  * attribute is for use in automatic running of trains. Length should be the
@@ -161,6 +162,24 @@ public class Path {
      * Westward
      */
     public static final int WEST = 0x00080;
+
+    /**
+     * North-East
+     */
+    public static final int NORTH_EAST = NORTH | EAST;
+    /**
+     * South-East
+     */
+    public static final int SOUTH_EAST = SOUTH | EAST;
+    /**
+     * South-West
+     */
+    public static final int SOUTH_WEST = SOUTH | WEST;
+    /**
+     * North-West
+     */
+    public static final int NORTH_WEST = NORTH | WEST;
+
     /**
      * Clockwise
      */
@@ -378,4 +397,67 @@ public class Path {
     private int _toBlockDirection;
     private int _fromBlockDirection;
     private float _length = 0.0f;  // always stored in millimeters
+
+    /**
+     * compute octagonal direction of vector from p1 to p2
+     * <p>
+     * Note: the octagonal (8) directions are: North, North-East, East,
+     * South-East, South, South-West, West and North-West
+     *
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the octagonal direction from p1 to p2
+     */
+    public static int computeDirection(Point2D p1, Point2D p2) {
+        double angleDEG = MathUtil.computeAngleDEG(p2, p1);
+        angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
+
+        // convert the angleDEG into an octant index (ccw from south)
+        // note: because we use round here, the octants are offset by half (+/-22.5 deg)
+        // so SOUTH isn't from 0-45 deg; it's from -22.5 deg to +22.5 deg; etc. for other octants.
+        // (and this is what we want!)
+        int octant = (int) Math.round(angleDEG / 45.0);
+
+        // use the octant index to lookup its direction
+        int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
+            NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH};
+        return dirs[octant];
+    }   // computeOctagonalDirection
+
+    /**
+     * return the reverse octagonal direction
+     *
+     * @param inDir the direction
+     * @return the reverse direction
+     */
+    public static int reverseDirection(int inDir) {
+        int result = NONE;
+        switch (inDir) {
+            case NORTH:
+                result = SOUTH;
+                break;
+            case NORTH_EAST:
+                result = SOUTH_WEST;
+                break;
+            case EAST:
+                result = WEST;
+                break;
+            case SOUTH_EAST:
+                result = NORTH_WEST;
+                break;
+            case SOUTH:
+                result = NORTH;
+                break;
+            case SOUTH_WEST:
+                result = NORTH_EAST;
+                break;
+            case WEST:
+                result = EAST;
+                break;
+            case NORTH_WEST:
+                result = SOUTH_EAST;
+                break;
+        }
+        return result;
+    }   // reverseDirection
 }

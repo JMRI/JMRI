@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
@@ -32,6 +34,7 @@ public class JsonManifest implements WebManifest {
     private final List<String> dependencies = new ArrayList<>();
     private final Set<AngularRoute> routes = new HashSet<>();
     private final List<URL> sources = new ArrayList<>();
+    private final Set<String> translations = new HashSet<>();
     private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
 
     @Override
@@ -68,6 +71,27 @@ public class JsonManifest implements WebManifest {
     public List<URL> getAngularSources() {
         this.initialize();
         return this.sources;
+    }
+
+    @Override
+    public Set<URI> getPreloadedTranslations(Locale locale) {
+        this.initialize();
+        Set<URI> found = new HashSet<>();
+        this.translations.forEach((translation) -> {
+            URI url = FileUtil.findURI(translation.replaceFirst("\\*", locale.toString()));
+            if (url == null) {
+                url = FileUtil.findURI(translation.replaceFirst("\\*", locale.getLanguage()));
+            }
+            if (url == null) {
+                url = FileUtil.findURI(translation.replaceFirst("\\*", "en"));
+            }
+            if (url != null) {
+                found.add(url);
+            } else {
+                log.error("Unable to find localization file {} for any language", translation);
+            }
+        });
+        return found;
     }
 
     synchronized private void initialize() {
@@ -122,6 +146,12 @@ public class JsonManifest implements WebManifest {
                         URL url = FileUtil.findURL(source.asText());
                         if (url != null) {
                             this.sources.add(url);
+                        }
+                    });
+                    root.path("translations").forEach((translation) -> {
+                        String url = translation.asText();
+                        if (url != null) {
+                            this.translations.add(url);
                         }
                     });
                 } catch (IOException ex) {

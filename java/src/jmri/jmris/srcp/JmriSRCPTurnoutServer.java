@@ -27,14 +27,6 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         output = outStream;
     }
 
-    @Override
-    synchronized protected void addTurnoutToList(String turnoutName) {
-        if (!turnouts.containsKey(turnoutName)) {
-            turnouts.put(turnoutName, new TurnoutListener(turnoutName));
-            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName).addPropertyChangeListener(turnouts.get(turnoutName));
-        }
-    }
-
     /*
      * Protocol Specific Abstract Functions
      */
@@ -170,5 +162,5 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class);
 }

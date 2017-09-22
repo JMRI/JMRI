@@ -243,12 +243,11 @@ browser. For an example of that, click on this link to the
       <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
       schema file. Our standard stylesheet is pretty basic. It just
       shows basic structure. If anybody knows of a better
-      stylesheet, we can certainly switch to it. <a id="test" name=
-      "test"></a>
+      stylesheet, we can certainly switch to it. 
 
-      <h3><a id="test" name="test">JUnit testing</a></h3><a id=
-      "test" name="test">You should also add a</a> <a href=
-      "JUnit.shtml">JUnit test</a> that checks a typical file.
+      <h3><a id="test" name="test">JUnit testing</a></h3>
+      You should also add a 
+      <a href="JUnit.shtml">JUnit test</a> that checks a typical file.
       There are three kinds of checks that can be done:
 
       <ol>

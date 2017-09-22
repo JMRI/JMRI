@@ -33,5 +33,5 @@ public class TrainCsvManifestTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCsvManifestTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainCsvManifestTest.class);
 }

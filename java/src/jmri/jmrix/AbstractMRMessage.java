@@ -213,6 +213,6 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         return s;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class);
 
 }

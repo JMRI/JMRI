@@ -62,7 +62,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.util.ColorUtil;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
@@ -70,21 +69,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a simple editor for adding jmri.jmrit.display.switchBoard items
- * to a JLayeredPane inside a captive JFrame. Primary use is for new users.
+ * Provides a simple editor for adding jmri.jmrit.display.switchBoard items to a
+ * JLayeredPane inside a captive JFrame. Primary use is for new users.
  * <p>
  * GUI is structured as a separate setup panel to set the visible range and type
  * plus menus.
  * <p>
- * All created objects are put insite a GridLayout grid.
- * No special use of the LayeredPane layers. Inspired by Oracle JLayeredPane demo.
+ * All created objects are put insite a GridLayout grid. No special use of the
+ * LayeredPane layers. Inspired by Oracle JLayeredPane demo.
  * <p>
- * The "switchlist" List keeps track of all the objects added to the target frame
- * for later manipulation. May be used in an update to store mixed switchboards
- * with more than 1 connection and more than 1 bean type/range.
+ * The "switchlist" List keeps track of all the objects added to the target
+ * frame for later manipulation. May be used in an update to store mixed
+ * switchboards with more than 1 connection and more than 1 bean type/range.
  * <p>
  * No DnD as panels will be automatically populated in order of the DCC address.
- * New beans may be created from the Switchboard by right clicking an unconnected switch.
+ * New beans may be created from the Switchboard by right clicking an
+ * unconnected switch.
  *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
  * @author Egbert Broerse Copyright (c) 2017
@@ -98,15 +98,14 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
     private ArrayList<Positionable> _secondSelectionGroup;
-    private ItemPalette _itemPalette;
     private boolean panelChanged = false;
 
     // Switchboard items
     private JPanel navBarPanel = null;
     ImageIcon iconPrev = new ImageIcon("resources/icons/misc/gui3/LafLeftArrow_m.gif");
-    private JLabel prev = new JLabel(iconPrev);
+    private final JLabel prev = new JLabel(iconPrev);
     ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
-    private JLabel next = new JLabel(iconNext);
+    private final JLabel next = new JLabel(iconNext);
     String rootPath = "resources/icons/misc/switchboard/";
     String iconOffPath = rootPath + "appslide-off-s.png";
     String iconOnPath = rootPath + "appslide-on-s.png";
@@ -120,37 +119,34 @@ public class SwitchboardEditor extends Editor {
     JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
     JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
     private TargetPane switchboardLayeredPane; // JLayeredPane
-    private JCheckBox hideUnconnected;
-    static final String _turnout = Bundle.getMessage("BeanNameTurnout");
-    static final String _sensor = Bundle.getMessage("BeanNameSensor");
-    static final String _light = Bundle.getMessage("BeanNameLight");
-    private String[] beanTypeStrings = {_turnout, _sensor, _light};
+    static final String TURNOUT = Bundle.getMessage("BeanNameTurnout");
+    static final String SENSOR = Bundle.getMessage("BeanNameSensor");
+    static final String LIGHT = Bundle.getMessage("BeanNameLight");
+    private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox beanTypeList;
     private char beanTypeChar;
-    JSpinner Columns = new JSpinner(new SpinnerNumberModel(8, 1, 16, 1));
-    private String[] switchShapeStrings = {
-            Bundle.getMessage("Buttons"),
-            Bundle.getMessage("Sliders"),
-            Bundle.getMessage("Keys"),
-            Bundle.getMessage("Symbols")
+    JSpinner columns = new JSpinner(new SpinnerNumberModel(8, 1, 16, 1));
+    private final String[] switchShapeStrings = {
+        Bundle.getMessage("Buttons"),
+        Bundle.getMessage("Sliders"),
+        Bundle.getMessage("Keys"),
+        Bundle.getMessage("Symbols")
     };
     private JComboBox<String> switchShapeList;
-    private List<String> beanManuPrefixes = new ArrayList<String>();
+    private final List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
 
     // toolbar (from LE)
-    private JPanel floatEditHelpPanel = null;
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
-    private Color defaultBackgroundColor = Color.lightGray;
-    private Color defaultTextColor = Color.black;
+    private Color defaultTextColor = Color.BLACK;
     private ButtonGroup textColorButtonGroup = null;
     private ButtonGroup backgroundColorButtonGroup = null;
-    private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
-    private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
-    private Color[] textColors = new Color[13];
-    private Color[] backgroundColors = new Color[13];
+    private final JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
+    private final JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
+    private final Color[] textColors = new Color[13];
+    private final Color[] backgroundColors = new Color[13];
     private int textColorCount = 0;
     private int backgroundColorCount = 0;
 
@@ -163,30 +159,31 @@ public class SwitchboardEditor extends Editor {
     private boolean savedEditMode = true; // TODO store/load accordingly
     private boolean savedControlLayout = true; // TODO add menu option to turn this off
     private int height = 100;
-    private int width = 100;
+    private final int width = 100;
 
-    private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
-    private JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
-    private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
-    private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
-    private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
-    private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
-    private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
+    private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
+    private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
+    private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
+    private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
+    private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
+    private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
+    private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
     //Action commands
-    private static String HIDE_COMMAND = "hideUnconnected";
     private static String LAYER_COMMAND = "layer";
     private static String MANU_COMMAND = "manufacturer";
     private static String SWITCHTYPE_COMMAND = "switchshape";
 
     /**
-     * List of names/labels of all switches currently displayed. Refreshed during {@link #updatePressed()}
+     * List of names/labels of all switches currently displayed. Refreshed
+     * during {@link #updatePressed()}
      */
-    private List<String> switchlist = new ArrayList<String>();
+    private final List<String> switchlist = new ArrayList<>();
     /**
-     * List with copies of BeanSwitch objects currently displayed to display on Web Server. Created by {@link #getSwitches()}
+     * List with copies of BeanSwitch objects currently displayed to display on
+     * Web Server. Created by {@link #getSwitches()}
      */
-    protected ArrayList<BeanSwitch> _switches = new ArrayList<BeanSwitch>();
+    protected ArrayList<BeanSwitch> _switches = new ArrayList<>();
 
     /**
      * Ctor
@@ -293,21 +290,18 @@ public class SwitchboardEditor extends Editor {
         // add column spinner
         JLabel columnLabel = new JLabel(Bundle.getMessage("NumberOfColumns"));
         switchShapePane.add(columnLabel);
-        switchShapePane.add(Columns);
+        switchShapePane.add(columns);
         add(switchShapePane);
 
         JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
         hideUnconnected.setSelected(hideUnconnected());
-        hideUnconnected.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setHideUnconnected(hideUnconnected.isSelected());
-            }
+        hideUnconnected.addActionListener((ActionEvent event) -> {
+            setHideUnconnected(hideUnconnected.isSelected());
         });
         add(hideUnconnected);
 
         // Next, add the buttons to the layered pane.
-        switchboardLayeredPane.setLayout(new GridLayout(java.lang.Math.max(2, _range % ((Integer) Columns.getValue())), (Integer) Columns.getValue()));
+        switchboardLayeredPane.setLayout(new GridLayout(java.lang.Math.max(2, _range % ((Integer) columns.getValue())), (Integer) columns.getValue()));
         // vertical (at least 2 rows), horizontal
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
         addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
@@ -335,12 +329,9 @@ public class SwitchboardEditor extends Editor {
 
         JPanel updatePanel = new JPanel();
         JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                log.debug("Update clicked");
-                updatePressed();
-            }
+        updateButton.addActionListener((ActionEvent event) -> {
+            log.debug("Update clicked");
+            updatePressed();
         });
         updatePanel.add(updateButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
@@ -366,58 +357,63 @@ public class SwitchboardEditor extends Editor {
     /**
      * Create a new set of switches after removing the current array.
      * <p>
-     * Called by Update button click and automatically after loading a panel from XML.
+     * Called by Update button click and automatically after loading a panel
+     * from XML.
      */
     public void updatePressed() {
-        for (int i = switchlist.size() - 1; i >=0; i--) {
+        for (int i = switchlist.size() - 1; i >= 0; i--) {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
         switchlist.clear(); // reset list
-        log.debug("switchlist cleared, size is now: {}", "" + switchlist.size());
-        switchboardLayeredPane.setSize(300,300);
+        log.debug("switchlist cleared, size is now: {}", switchlist.size());
+        switchboardLayeredPane.setSize(300, 300);
         // update selected address range
-        _range =(Integer)minSpinner.getValue()-(Integer)maxSpinner.getValue();
-                switchboardLayeredPane.setLayout(new GridLayout(_range %((Integer) Columns.getValue()),
-                        (Integer)Columns.getValue())); // vertical, horizontal
+        _range = (Integer) minSpinner.getValue() - (Integer) maxSpinner.getValue();
+        switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) columns.getValue()),
+                (Integer) columns.getValue())); // vertical, horizontal
         addSwitchRange((Integer) minSpinner.
-        getValue(), (Integer)maxSpinner.getValue(),
-            beanTypeList.getSelectedIndex(),
-            beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
-            switchShapeList.getSelectedIndex());
+                getValue(), (Integer) maxSpinner.getValue(),
+                beanTypeList.getSelectedIndex(),
+                beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
+                switchShapeList.getSelectedIndex());
         //log.debug("bgcolor: {}", getBackgroundColor().toString() );
         switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(defaultTextColor),
                 beanManuNames.getSelectedItem().toString() + " " + beanTypeList.getSelectedItem().toString() + " - " + Bundle.getMessage("SwitchboardBanner"),
                 TitledBorder.LEADING,
                 TitledBorder.ABOVE_BOTTOM,
-                getFont(),defaultTextColor));
+                getFont(), defaultTextColor));
         pack();
         repaint();
     }
 
     /**
-     * From default or user entry in Editor, fill the _targetpane
-     * with a series of Switches.
+     * From default or user entry in Editor, fill the _targetpane with a series
+     * of Switches.
      * <p>
-     * Items in range that can connect
-     * to existing beans in JMRI are active. The others are greyed out.
-     * Option to later connect (new) beans to switches.
+     * Items in range that can connect to existing beans in JMRI are active. The
+     * others are greyed out. Option to later connect (new) beans to switches.
      *
-     * @param rangeMin starting ordinal of Switch address range
-     * @param rangeMax highest ordinal of Switch address range
-     * @param beanType index of selected item in Type comboBox, either T, S or L
-     * @param manuPrefix selected item in Connection comboBox, filled from active connections
-     * @param switchShape index of selected visual presentation of Switch shape selected in Type comboBox, choose either a JButton showing the name or (to do) a graphic image
+     * @param rangeMin    starting ordinal of Switch address range
+     * @param rangeMax    highest ordinal of Switch address range
+     * @param beanType    index of selected item in Type comboBox, either T, S
+     *                    or L
+     * @param manuPrefix  selected item in Connection comboBox, filled from
+     *                    active connections
+     * @param switchShape index of selected visual presentation of Switch shape
+     *                    selected in Type comboBox, choose either a JButton
+     *                    showing the name or (to do) a graphic image
      */
     private void addSwitchRange(int rangeMin, int rangeMax, int beanType, String manuPrefix, int switchShape) {
         log.debug("hideUnconnected = {}", hideUnconnected());
         String name;
         BeanSwitch _switch;
-        NamedBean nb = null;
-        int _currentState;
+        NamedBean nb;
         String _manu = manuPrefix; // cannot use All group as in Tables
         String _insert = "";
-        if (_manu.startsWith("M")) { _insert = "+"; } // create CANbus.MERG On event
+        if (_manu.startsWith("M")) {
+            _insert = "+";
+        } // create CANbus.MERG On event
         for (int i = rangeMin; i <= rangeMax; i++) {
             switch (beanType) {
                 case 0:
@@ -437,10 +433,10 @@ public class SwitchboardEditor extends Editor {
                     return;
             }
             _switch = new BeanSwitch(i, nb, name, switchShape); // add button instance i
-            log.debug("Added switch {} ({})", i + "", name);
+            log.debug("Added switch {} ({})", i, name);
             if (nb == null) {
                 _switch.setEnabled(false); // not connected
-                if(!hideUnconnected()) {
+                if (!hideUnconnected()) {
                     switchboardLayeredPane.add(_switch); // or setVisible(false)
                     switchlist.add(name); // add to total number of switches on JLayeredPane
                 } else {
@@ -458,7 +454,8 @@ public class SwitchboardEditor extends Editor {
     /**
      * Class for a switchboard object.
      * <p>
-     * Contains a JButton or JPanel to control existing turnouts, sensors and lights.
+     * Contains a JButton or JPanel to control existing turnouts, sensors and
+     * lights.
      */
     public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
 
@@ -492,9 +489,10 @@ public class SwitchboardEditor extends Editor {
         /**
          * Ctor
          *
-         * @param index DCC address
-         * @param bean layout object to connect to
-         * @param switchName descriptive name corresponding with system name to display in switch tooltip, i.e. LT1
+         * @param index       DCC address
+         * @param bean        layout object to connect to
+         * @param switchName  descriptive name corresponding with system name to
+         *                    display in switch tooltip, i.e. LT1
          * @param shapeChoice Button, Icon (static) or Drawing (vector graphics)
          */
         public BeanSwitch(int index, NamedBean bean, String switchName, int shapeChoice) {
@@ -506,7 +504,7 @@ public class SwitchboardEditor extends Editor {
             if (bean != null) {
                 _uname = bean.getUserName();
                 log.debug("UserName: {}", _uname);
-                if (_uname == null){
+                if (_uname == null) {
                     _uname = Bundle.getMessage("NoUserName");
                 }
             }
@@ -521,7 +519,7 @@ public class SwitchboardEditor extends Editor {
             beanTypeChar = _label.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
             // check for space char which might be caused by connection name > 2 chars and/or space in name
             if (beanTypeChar != 'T' && beanTypeChar != 'S' && beanTypeChar != 'L') { // add if more bean types are supported
-                log.error("invalid char in Switchboard Button \"" + _label + "\". Check connection name.");
+                log.error("invalid char in Switchboard Button \"{}\". Check connection name.", _label);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSwitchAddFailed"),
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -538,7 +536,7 @@ public class SwitchboardEditor extends Editor {
                     namedBean = nbhm.getNamedBeanHandle(switchName, bean);
                 }
             } catch (IllegalArgumentException e) {
-                log.error("invalid bean name= \"" + switchName + "\" in Switchboard Button");
+                log.error("invalid bean name= \"{}\" in Switchboard Button", switchName);
             }
             // attach shape specific code to this beanSwitch
             switch (_shape) {
@@ -549,6 +547,7 @@ public class SwitchboardEditor extends Editor {
                         public void mouseClicked(MouseEvent me) {
                             operate(me, switchName);
                         }
+
                         @Override
                         public void mousePressed(MouseEvent e) {
                             setToolTip(null); // ends tooltip if displayed
@@ -562,7 +561,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = true;
                     beanIcon.setLabel(switchLabel);
                     beanIcon.positionLabel(17, 45); // provide x, y offset, depending on image size and free space
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanIcon.setToolTipText(switchTooltip);
                     }
                     beanIcon.setBackground(defaultBackgroundColor);
@@ -576,6 +575,7 @@ public class SwitchboardEditor extends Editor {
                         public void mouseClicked(MouseEvent me) {
                             operate(me, switchName);
                         }
+
                         @Override
                         public void mousePressed(MouseEvent e) {
                             setToolTip(null); // ends tooltip if displayed
@@ -589,7 +589,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = true;
                     beanKey.setLabel(switchLabel);
                     beanKey.positionLabel(14, 60); // provide x, y offset, depending on image size and free space
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanKey.setToolTipText(switchTooltip);
                     }
                     beanKey.setBackground(defaultBackgroundColor);
@@ -603,6 +603,7 @@ public class SwitchboardEditor extends Editor {
                         public void mouseClicked(MouseEvent me) {
                             operate(me, switchName);
                         }
+
                         @Override
                         public void mousePressed(MouseEvent e) {
                             setToolTip(null); // ends tooltip if displayed
@@ -616,7 +617,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = true;
                     beanSymbol.setLabel(switchLabel);
                     beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanSymbol.setToolTipText(switchTooltip);
                     }
                     beanSymbol.setBackground(defaultBackgroundColor);
@@ -631,6 +632,7 @@ public class SwitchboardEditor extends Editor {
                         public void mouseClicked(MouseEvent me) {
                             operate(me, switchName);
                         }
+
                         @Override
                         public void mousePressed(MouseEvent e) {
                             setToolTip(null); // ends tooltip if displayed
@@ -644,7 +646,7 @@ public class SwitchboardEditor extends Editor {
                     _icon = false;
                     beanButton.setBackground(defaultBackgroundColor);
                     beanButton.setOpaque(false);
-                    if (showTooltip()) {
+                    if (showToolTip()) {
                         beanButton.setToolTipText(switchTooltip);
                     }
                     this.add(beanButton);
@@ -652,40 +654,39 @@ public class SwitchboardEditor extends Editor {
             }
             // connect to object or dim switch
             if (bean == null) {
-                if(!hideUnconnected()) {
+                if (!hideUnconnected()) {
                     switch (_shape) {
-                        case 0 :
+                        case 0:
                             beanButton.setEnabled(false);
                             break;
-                        default :
+                        default:
                             beanIcon.setOpacity(opac);
                     }
                 }
             } else {
                 _control = true;
                 switch (beanTypeChar) {
-                    case 'T' :
+                    case 'T':
                         getTurnout().addPropertyChangeListener(this, _label, "Switchboard Editor Turnout Switch");
                         if (getTurnout().canInvert()) {
                             this.setInverted(getTurnout().getInverted()); // only add and set when suppported by object/connection
                         }
                         break;
-                    case 'S' :
+                    case 'S':
                         getSensor().addPropertyChangeListener(this, _label, "Switchboard Editor Sensor Switch");
                         if (getSensor().canInvert()) {
                             this.setInverted(getSensor().getInverted()); // only add and set when suppported by object/connection
                         }
                         break;
-                    default : // light
+                    default: // light
                         getLight().addPropertyChangeListener(this, _label, "Switchboard Editor Light Switch");
-                        // Lights do not support Invert
+                    // Lights do not support Invert
                 }
             }
             // from finishClone
             setTristate(getTristate());
             setMomentary(getMomentary());
-            log.debug("Created switch {}", index + "");
-            return;
+            log.debug("Created switch {}", index);
         }
 
         public NamedBean getNamedBean() {
@@ -693,17 +694,17 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         * Stores an object as NamedBeanHandle, using _label as the display name.
+         * Stores an object as NamedBeanHandle, using _label as the display
+         * name.
          *
-         * @param bean the object (either a Turnout, Sensor or Light) to attach to this switch
+         * @param bean the object (either a Turnout, Sensor or Light) to attach
+         *             to this switch
          */
         public void setNamedBean(@Nonnull NamedBean bean) {
             try {
-                if (bean != null) {
-                    namedBean = nbhm.getNamedBeanHandle(_label, bean);
-                }
+                namedBean = nbhm.getNamedBeanHandle(_label, bean);
             } catch (IllegalArgumentException e) {
-                log.error("invalid bean name= \"" + _label + "\" in Switchboard Button");
+                log.error("invalid bean name= \"{}\" in Switchboard Button", _label);
             }
             _uname = bean.getUserName();
             _control = true;
@@ -732,6 +733,7 @@ public class SwitchboardEditor extends Editor {
 
         /**
          * Get the user selected switch shape (e.g. 3 for Slider)
+         *
          * @return the index of the selected item in Shape comboBox
          */
         public int getType() {
@@ -739,8 +741,8 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         * Get text to display on this switch in Web Server panel when attached object is Inactive.
-         * used in jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor$BeanSwitchXml#store(Object)
+         * Get text to display on this switch in Web Server panel when attached
+         * object is Inactive.
          *
          * @return text to show on inactive state (used on all types of objects)
          */
@@ -755,8 +757,8 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         * Get text to display on this switch in Web Server panel when attached object is Unknown (initial state displayed).
-         * used in jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor$BeanSwitchXml#store(Object)
+         * Get text to display on this switch in Web Server panel when attached
+         * object is Unknown (initial state displayed).
          *
          * @return text to show on unknown state (used on all types of objects)
          */
@@ -769,17 +771,16 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         * Get text to display as switch tooltip in Web Server panel.
-         * used in jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor.BeanSwitchXml#store(Object)
+         * Get text to display as switch tooltip in Web Server panel. used in
+         * jmri.jmrit.display.switchboardEditor.configureXml.SwitchboardEditor.BeanSwitchXml#store(Object)
          *
          * @return switch tooltip text
          */
-        public String getTooltip() {
+        public String getToolTip() {
             return switchTooltip;
         }
 
         // ******************* Display ***************************
-
         @Override
         public void actionPerformed(ActionEvent e) {
             //updateBean();
@@ -795,17 +796,18 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         * Drive the current state of the display from the state of the connected bean.
+         * Drive the current state of the display from the state of the
+         * connected bean.
          *
          * @param state integer representing the new state e.g. Turnout.CLOSED
          */
         public void displayState(int state) {
             log.debug("heard change");
             if (getNamedBean() == null) {
-                log.debug("Display state " + state + ", disconnected");
+                log.debug("Display state {}, disconnected", state);
             } else {
                 // display abbreviated name of state instead of state index
-                log.debug("bean: {} state: {}", _label, state + ""); //getNameString() + " displayState " + _state2nameMap.get(state));
+                log.debug("bean: {} state: {}", _label, state); //getNameString() + " displayState " + _state2nameMap.get(state));
                 if (isText() && !isIcon()) { // to allow text buttons on web switchboard. TODO add graphic switches on web
                     beanButton.setText(_label + ": " + state); //_state2nameMap.get(state));
                 }
@@ -835,7 +837,9 @@ public class SwitchboardEditor extends Editor {
          * Switch presentation is text based.
          *
          * @see #displayState(int)
-         * @return true when switch shape 'Button' is selected (and also for the other, graphic switch types until SwitchboardServlet directly supports their graphic icons)
+         * @return true when switch shape 'Button' is selected (and also for the
+         *         other, graphic switch types until SwitchboardServlet directly
+         *         supports their graphic icons)
          */
         public final boolean isText() {
             return _text;
@@ -855,9 +859,9 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         *  Update switch as state of turnout changes.
+         * Update switch as state of turnout changes.
          *
-         *  @param e the PropertyChangeEvent heard
+         * @param e the PropertyChangeEvent heard
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -875,19 +879,19 @@ public class SwitchboardEditor extends Editor {
                 }
                 // this takes care of the quick double click
                 if (getTurnout().getCommandedState() == getTurnout().getKnownState()) {
-                    int now = ((Integer) e.getNewValue()).intValue();
+                    int now = ((Integer) e.getNewValue());
                     displayState(now);
                 }
             }
             if (e.getPropertyName().equals("KnownState")) {
-                int now = ((Integer) e.getNewValue()).intValue();
+                int now = ((Integer) e.getNewValue());
                 displayState(now);
                 log.debug("Turnout state changed");
             }
             if (e.getPropertyName().equals("UserName")) {
                 // update tooltip
-                String newUserName = "unconnected";
-                if (showTooltip()) {
+                String newUserName;
+                if (showToolTip()) {
                     newUserName = ((String) e.getNewValue());
                     if (newUserName == null || newUserName.equals("")) {
                         newUserName = Bundle.getMessage("NoUserName");
@@ -902,7 +906,7 @@ public class SwitchboardEditor extends Editor {
         }
 
         public String getStateName(int state) {
-            return _state2nameMap.get(Integer.valueOf(state));
+            return _state2nameMap.get(state);
         }
 
         public void mousePressed(MouseEvent e) {
@@ -920,8 +924,9 @@ public class SwitchboardEditor extends Editor {
         /**
          * Process mouseClick on this switch.
          *
-         * @param e the event heard
-         * @param name ID of this button (identical to name of suggested bean object)
+         * @param e    the event heard
+         * @param name ID of this button (identical to name of suggested bean
+         *             object)
          */
         public void operate(MouseEvent e, String name) {
             log.debug("Button {} clicked", name);
@@ -965,8 +970,9 @@ public class SwitchboardEditor extends Editor {
         JMenuItem connectNewMenu = new JMenuItem(Bundle.getMessage("ConnectNewMenu", "..."));
 
         /**
-         * Show pop-up on a switch with its unique attributes including the (un)connected bean.
-         * Derived from {@link #showPopUp(Positionable, MouseEvent)}
+         * Show pop-up on a switch with its unique attributes including the
+         * (un)connected bean. Derived from
+         * {@link #showPopUp(Positionable, MouseEvent)}
          *
          * @param e the event
          */
@@ -976,7 +982,6 @@ public class SwitchboardEditor extends Editor {
             } else {
                 switchPopup = new JPopupMenu();
             }
-            JPopupMenu switchPopup = new JPopupMenu();
 
             switchPopup.add(getNameString());
 
@@ -1002,11 +1007,8 @@ public class SwitchboardEditor extends Editor {
                 } else {
                     // show option to attach a new bean
                     switchPopup.add(connectNewMenu);
-                    connectNewMenu.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            connectNew(_label);
-                        }
+                    connectNewMenu.addActionListener((java.awt.event.ActionEvent e1) -> {
+                        connectNew(_label);
                     });
                 }
             }
@@ -1018,7 +1020,6 @@ public class SwitchboardEditor extends Editor {
         }
 
 //        javax.swing.JCheckBoxMenuItem tristateItem = null;
-
 //        void addTristateEntry(JPopupMenu popup) {
 //            tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
 //            tristateItem.setSelected(getTristate());
@@ -1030,46 +1031,39 @@ public class SwitchboardEditor extends Editor {
 //                }
 //            });
 //        }
-
-        javax.swing.JMenuItem EditItem = null;
+        javax.swing.JMenuItem editItem = null;
 
         void addEditUserName(JPopupMenu popup) {
-            EditItem = new javax.swing.JMenuItem(Bundle.getMessage("EditNameTitle", "..."));
-            popup.add(EditItem);
-            EditItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    renameBean();
-                }
+            editItem = new javax.swing.JMenuItem(Bundle.getMessage("EditNameTitle", "..."));
+            popup.add(editItem);
+            editItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                renameBean();
             });
         }
 
-        javax.swing.JCheckBoxMenuItem InvertItem = null;
+        javax.swing.JCheckBoxMenuItem invertItem = null;
 
         void addInvert(JPopupMenu popup) {
-            InvertItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("MenuInvertItem", _label));
-            InvertItem.setSelected(getInverted());
-            popup.add(InvertItem);
-            InvertItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setBeanInverted(InvertItem.isSelected());
-                }
+            invertItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("MenuInvertItem", _label));
+            invertItem.setSelected(getInverted());
+            popup.add(invertItem);
+            invertItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                setBeanInverted(invertItem.isSelected());
             });
         }
 
         /**
-         * Edit user name on a switch using N11N.
-         * Copied from BeanTableDataModel.
+         * Edit user name on a switch using N11N. Copied from
+         * BeanTableDataModel.
          */
         public void renameBean() {
-            NamedBean nb = null;
+            NamedBean nb;
             String oldName = _uname;
             // show input dialog
             String newUserName = (String) JOptionPane.showInputDialog(null,
-                        Bundle.getMessage("EnterNewName", _label),
-                        Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
-            if (newUserName == null ) { // user cancelled
+                    Bundle.getMessage("EnterNewName", _label),
+                    Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
+            if (newUserName == null) { // user cancelled
                 log.debug("NewName dialog returned Null, cancelled");
                 return;
             }
@@ -1111,7 +1105,7 @@ public class SwitchboardEditor extends Editor {
                         return;
                 }
                 if (nb != null) {
-                    log.error("User name is not unique " + newUserName);
+                    log.error("User name is not unique {}", newUserName);
                     String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + newUserName)});
                     JOptionPane.showMessageDialog(null, msg,
                             Bundle.getMessage("WarningTitle"),
@@ -1169,7 +1163,6 @@ public class SwitchboardEditor extends Editor {
                         getTurnout().setInverted(set);
                     } else {
                         // show error message?
-                        return;
                     }
                     break;
                 case 'S':
@@ -1178,7 +1171,6 @@ public class SwitchboardEditor extends Editor {
                         getSensor().setInverted(set);
                     } else {
                         // show error message?
-                        return;
                     }
                     break;
                 case 'L':
@@ -1186,7 +1178,6 @@ public class SwitchboardEditor extends Editor {
                     return;
                 default:
                     log.error("Invert item: cannot parse bean name. userName = {}", _label);
-                    return;
             }
         }
 
@@ -1206,41 +1197,41 @@ public class SwitchboardEditor extends Editor {
          */
         void alternateOnClick() {
             switch (beanTypeChar) {
-            case 'T':
-                log.debug("T clicked");
-                if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
-                {
-                    getTurnout().setCommandedState(jmri.Turnout.THROWN);
-                } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
-                    getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-                } else if (getTurnout().getCommandedState() == jmri.Turnout.CLOSED) {
-                    getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
-                } else {
-                    getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force Closed
-                }
-                break;
-            case 'L': // Light
-                log.debug("L clicked");
-                if (getLight().getState() == jmri.Light.OFF) {
-                    getLight().setState(jmri.Light.ON);
-                } else {
-                    getLight().setState(jmri.Light.OFF);
-                }
-                break;
-            case 'S': // Sensor
-                log.debug("S clicked");
-                try {
-                    if (getSensor().getKnownState() == jmri.Sensor.INACTIVE) {
-                        getSensor().setKnownState(jmri.Sensor.ACTIVE);
+                case 'T':
+                    log.debug("T clicked");
+                    if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
+                    {
+                        getTurnout().setCommandedState(jmri.Turnout.THROWN);
+                    } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
+                        getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                    } else if (getTurnout().getCommandedState() == jmri.Turnout.CLOSED) {
+                        getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
                     } else {
-                        getSensor().setKnownState(jmri.Sensor.INACTIVE);
+                        getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force Closed
                     }
-                } catch (jmri.JmriException reason) {
-                    log.warn("Exception flipping sensor: " + reason);
-                }
-                break;
-            default:
-                log.error("invalid char in Switchboard Button \"" + _label + "\". State not set.");
+                    break;
+                case 'L': // Light
+                    log.debug("L clicked");
+                    if (getLight().getState() == jmri.Light.OFF) {
+                        getLight().setState(jmri.Light.ON);
+                    } else {
+                        getLight().setState(jmri.Light.OFF);
+                    }
+                    break;
+                case 'S': // Sensor
+                    log.debug("S clicked");
+                    try {
+                        if (getSensor().getKnownState() == jmri.Sensor.INACTIVE) {
+                            getSensor().setKnownState(jmri.Sensor.ACTIVE);
+                        } else {
+                            getSensor().setKnownState(jmri.Sensor.INACTIVE);
+                        }
+                    } catch (jmri.JmriException reason) {
+                        log.warn("Exception flipping sensor: {}", (Object) reason);
+                    }
+                    break;
+                default:
+                    log.error("invalid char in Switchboard Button \"{}\". State not set.", _label);
             }
         }
 
@@ -1250,8 +1241,8 @@ public class SwitchboardEditor extends Editor {
 
     }
 
-    /** Create the setup pane for the top of the frame.
-     * From layeredpane demo
+    /**
+     * Create the setup pane for the top of the frame. From layeredpane demo
      */
     private JPanel createControlPanel() {
         JPanel controls = new JPanel();
@@ -1269,15 +1260,15 @@ public class SwitchboardEditor extends Editor {
                 _range = oldMax - oldMin;
                 minSpinner.setValue(Math.max(rangeMin, oldMin - _range - 1));
                 maxSpinner.setValue(Math.max(oldMax - _range - 1, Math.max(rangeMax, oldMax - _range - 1)));
-                log.debug("oldMin =" + oldMin + ", oldMax =" + oldMax);
+                log.debug("oldMin ={}, oldMax ={}", oldMin, oldMax);
                 //rangeMin = (Integer) minSpinner.getValue();
                 //rangeMax = (Integer) maxSpinner.getValue();
             }
         });
         prev.setToolTipText(Bundle.getMessage("PreviousToolTip"));
-        navBarPanel.add(new JLabel (Bundle.getMessage("MakeLabel", Bundle.getMessage("From"))));
+        navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("From"))));
         navBarPanel.add(minSpinner);
-        navBarPanel.add(new JLabel (Bundle.getMessage("MakeLabel", Bundle.getMessage("UpTo"))));
+        navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("UpTo"))));
         navBarPanel.add(maxSpinner);
         navBarPanel.add(next);
 
@@ -1317,7 +1308,6 @@ public class SwitchboardEditor extends Editor {
 //        if (helpBarPanel != null) {
 //            contentPane.remove(helpBarPanel);
 //        }
-
         editToolBarPanel = new JPanel();
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
 
@@ -1325,9 +1315,9 @@ public class SwitchboardEditor extends Editor {
         innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
         TitledBorder TitleBorder = BorderFactory.createTitledBorder(Bundle.getMessage("SwitchboardHelpTitle"));
         innerBorderPanel.setBorder(TitleBorder);
-        innerBorderPanel.add(new JTextArea (Bundle.getMessage("Help1")));
+        innerBorderPanel.add(new JTextArea(Bundle.getMessage("Help1")));
         if (!hideUnconnected()) {
-            innerBorderPanel.add(new JTextArea (Bundle.getMessage("Help2")));
+            innerBorderPanel.add(new JTextArea(Bundle.getMessage("Help2")));
             // TODO hide this panel when hideUnconnected() is set to false from menu or checkbox
         }
         contentPane.add(innerBorderPanel);
@@ -1363,31 +1353,22 @@ public class SwitchboardEditor extends Editor {
         _menuBar.add(_optionMenu, 0);
         // controllable item
         _optionMenu.add(controllingBox);
-        controllingBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setAllControlling(controllingBox.isSelected());
-            }
+        controllingBox.addActionListener((ActionEvent event) -> {
+            setAllControlling(controllingBox.isSelected());
         });
         controllingBox.setSelected(allControlling());
         // hideUnconnected item
         _optionMenu.add(hideUnconnectedBox);
-        hideUnconnectedBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setHideUnconnected(hideUnconnectedBox.isSelected());
-            }
+        hideUnconnectedBox.addActionListener((ActionEvent event) -> {
+            setHideUnconnected(hideUnconnectedBox.isSelected());
         });
         hideUnconnectedBox.setSelected(hideUnconnected());
         // show tooltip item
-        _optionMenu.add(showTooltipBox);
-        showTooltipBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setAllShowTooltip(showTooltipBox.isSelected());
-            }
+        _optionMenu.add(showToolTipBox);
+        showToolTipBox.addActionListener((ActionEvent e) -> {
+            setAllShowToolTip(showToolTipBox.isSelected());
         });
-        showTooltipBox.setSelected(showTooltip());
+        showToolTipBox.setSelected(showToolTip());
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -1395,69 +1376,57 @@ public class SwitchboardEditor extends Editor {
         ButtonGroup scrollGroup = new ButtonGroup();
         scrollGroup.add(scrollBoth);
         scrollMenu.add(scrollBoth);
-        scrollBoth.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_BOTH);
-            }
+        scrollBoth.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_BOTH);
         });
         scrollGroup.add(scrollNone);
         scrollMenu.add(scrollNone);
-        scrollNone.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_NONE);
-            }
+        scrollNone.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_NONE);
         });
         scrollGroup.add(scrollHorizontal);
         scrollMenu.add(scrollHorizontal);
-        scrollHorizontal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_HORIZONTAL);
-            }
+        scrollHorizontal.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_HORIZONTAL);
         });
         scrollGroup.add(scrollVertical);
         scrollMenu.add(scrollVertical);
-        scrollVertical.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setScroll(SCROLL_VERTICAL);
-            }
+        scrollVertical.addActionListener((ActionEvent event) -> {
+            setScroll(SCROLL_VERTICAL);
         });
         //add background color menu item
         JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
         backgroundColorButtonGroup = new ButtonGroup();
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Black"),     Color.black);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("DarkGray"),  Color.darkGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Gray"),      Color.gray);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("LightGray"), Color.lightGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("White"),     Color.white);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Red"),       Color.red);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Pink"),      Color.pink);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Orange"),    Color.orange);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Yellow"),    Color.yellow);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Green"),     Color.green);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Blue"),      Color.blue);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Magenta"),   Color.magenta);
-        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Cyan"),      Color.cyan);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Black"), Color.black);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("White"), Color.white);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Red"), Color.red);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Green"), Color.green);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         _optionMenu.add(backgroundColorMenu);
         //add text color menu item
         JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Black"),     Color.black);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Gray"),      Color.gray);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("LightGray"), Color.lightGray);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("White"),     Color.white);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Red"),       Color.red);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Pink"),      Color.pink);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Orange"),    Color.orange);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Yellow"),    Color.yellow);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Green"),     Color.green);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
-        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Black"), Color.black);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("White"), Color.white);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Red"), Color.red);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Green"), Color.green);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         _optionMenu.add(textColorMenu);
     }
 
@@ -1469,11 +1438,8 @@ public class SwitchboardEditor extends Editor {
         _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
-        storeIndexItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
-            }
+        storeIndexItem.addActionListener((ActionEvent event) -> {
+            InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
         });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
@@ -1486,23 +1452,17 @@ public class SwitchboardEditor extends Editor {
 
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
         _fileMenu.add(deleteItem);
-        deleteItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                if (deletePanel()) {
-                    dispose(true);
-                }
+        deleteItem.addActionListener((ActionEvent event) -> {
+            if (deletePanel()) {
+                dispose(true);
             }
         });
         _fileMenu.addSeparator();
         editItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
         _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setAllEditable(false);
-                setVisible(false); // hide Editor pane
-            }
+        editItem.addActionListener((ActionEvent event) -> {
+            setAllEditable(false);
+            setVisible(false); // hide Editor pane
         });
     }
 
@@ -1519,7 +1479,7 @@ public class SwitchboardEditor extends Editor {
                                 Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
                                 0, JOptionPane.INFORMATION_MESSAGE, null,
                                 new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                        log.debug("Retval: "+retval);
+                        log.debug("Retval: {}", retval);
                         if (retval != 0) {
                             return;
                         }
@@ -1560,7 +1520,7 @@ public class SwitchboardEditor extends Editor {
                                 Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
                                 0, JOptionPane.INFORMATION_MESSAGE, null,
                                 new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                        log.debug("Retval: "+retval);
+                        log.debug("Retval: {}", retval);
                         if (retval != 0) {
                             return;
                         }
@@ -1628,7 +1588,6 @@ public class SwitchboardEditor extends Editor {
     }
 
     // *********************** end Menus ************************
-
     @Override
     public void setAllEditable(boolean edit) {
         if (edit) {
@@ -1681,7 +1640,7 @@ public class SwitchboardEditor extends Editor {
         String name = getName(); // get name of JFrame
         log.debug("JFrame name = {}", name);
         if (name == null || name.length() == 0) {
-            name = Bundle.getMessage("SwitchboardDefaultName","");
+            name = Bundle.getMessage("SwitchboardDefaultName", "");
         }
         if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
@@ -1691,15 +1650,15 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Control whether target panel items without a connection to the layout
-     * are displayed.
+     * Control whether target panel items without a connection to the layout are
+     * displayed.
      *
      * @param state true to hide all in range
      */
     public void setHideUnconnected(boolean state) {
         _hideUnconnected = state;
         //if (!state) {
-            // TODO hide Help2
+        // TODO hide Help2
         //}
     }
 
@@ -1736,7 +1695,6 @@ public class SwitchboardEditor extends Editor {
     }
 
     // ********************** load/store board *******************
-
     /**
      * Load Range minimum.
      *
@@ -1779,7 +1737,6 @@ public class SwitchboardEditor extends Editor {
     private String type;
 
     // ***************** Store & Load xml ********************
-
     /**
      * Store bean type.
      *
@@ -1787,9 +1744,9 @@ public class SwitchboardEditor extends Editor {
      */
     public String getSwitchType() {
         String switchType = beanTypeList.getSelectedItem().toString();
-        if (switchType.equals(_light)) { // switch-case doesn't work here
+        if (switchType.equals(LIGHT)) { // switch-case doesn't work here
             typePrefix = "L";
-        } else if (switchType.equals(_sensor)) {
+        } else if (switchType.equals(SENSOR)) {
             typePrefix = "S";
         } else { // Turnout
             typePrefix = "T";
@@ -1807,18 +1764,18 @@ public class SwitchboardEditor extends Editor {
 //        String type;
         switch (typePrefix) {
             case "L":
-                type = _light;
+                type = LIGHT;
                 break;
             case "S":
-                type = _sensor;
+                type = SENSOR;
                 break;
             default: // Turnout
-                type = _turnout;
+                type = TURNOUT;
         }
         try {
             beanTypeList.setSelectedItem(type);
         } catch (IllegalArgumentException e) {
-            log.error("invalid bean type [" + typePrefix + "] in Switchboard");
+            log.error("invalid bean type [{}] in Switchboard", typePrefix);
         }
     }
 
@@ -1834,7 +1791,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Load connection type.
      *
-     * @param  manuPrefix connection prefix
+     * @param manuPrefix connection prefix
      */
     public void setSwitchManu(String manuPrefix) {
         int choice = 0;
@@ -1845,9 +1802,9 @@ public class SwitchboardEditor extends Editor {
             }
         }
         try {
-        beanManuNames.setSelectedItem(beanManuPrefixes.get(choice));
+            beanManuNames.setSelectedItem(beanManuPrefixes.get(choice));
         } catch (IllegalArgumentException e) {
-            log.error("invalid connection [" + manuPrefix + "] in Switchboard");
+            log.error("invalid connection [{}] in Switchboard", manuPrefix);
         }
     }
 
@@ -1859,14 +1816,20 @@ public class SwitchboardEditor extends Editor {
     public String getSwitchShape() {
         String shape;
         int shapeChoice = switchShapeList.getSelectedIndex();
-        if (shapeChoice == 1) {
-            shape = "icon";
-        } else if (shapeChoice == 2) {
-            shape = "drawing";
-        } else if (shapeChoice == 3) {
-            shape = "symbol";
-        } else { // Turnout
-            shape = "button";
+        switch (shapeChoice) {
+            case 1:
+                shape = "icon";
+                break;
+            case 2:
+                shape = "drawing";
+                break;
+            case 3:
+                shape = "symbol";
+                break;
+            default:
+                // Turnout
+                shape = "button";
+                break;
         }
         return shape;
     }
@@ -1894,7 +1857,7 @@ public class SwitchboardEditor extends Editor {
         try {
             switchShapeList.setSelectedIndex(shape);
         } catch (IllegalArgumentException e) {
-            log.error("invalid switch shape [" + shape + "] in Switchboard");
+            log.error("invalid switch shape [{}] in Switchboard", shape);
         }
     }
 
@@ -1904,7 +1867,7 @@ public class SwitchboardEditor extends Editor {
      * @return the number of switches to display per row
      */
     public int getColumns() {
-        return (Integer) Columns.getValue();
+        return (Integer) columns.getValue();
     }
 
     /**
@@ -1913,7 +1876,7 @@ public class SwitchboardEditor extends Editor {
      * @param cols the number of switches to display per row (as text)
      */
     public void setColumns(int cols) {
-        Columns.setValue(cols);
+        columns.setValue(cols);
     }
 
     // all content loaded from file.
@@ -1928,7 +1891,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     public void initView() {
         controllingBox.setSelected(allControlling());
-        showTooltipBox.setSelected(showTooltip());
+        showToolTipBox.setSelected(showToolTip());
         switch (_scrollState) {
             case SCROLL_NONE:
                 scrollNone.setSelected(true);
@@ -1964,8 +1927,8 @@ public class SwitchboardEditor extends Editor {
     JTextField userName = new JTextField(15);
 
     /**
-     * Create new bean and connect it to this switch.
-     * Use type letter from switch label (S, T or L).
+     * Create new bean and connect it to this switch. Use type letter from
+     * switch label (S, T or L).
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");
@@ -1999,7 +1962,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     protected void okAddPressed(ActionEvent e) {
-        NamedBean nb = null;
+        NamedBean nb;
         String manuPrefix = getSwitchManu();
         String user = userName.getText().trim();
         if (user.equals("")) {
@@ -2069,10 +2032,9 @@ public class SwitchboardEditor extends Editor {
 //                    getSwitch(sName).displayState(nb.getState());
 //                    getSwitch(sName).setEnabled(true);
                 }
-            }
-            catch (NullPointerException npe) {
+            } catch (NullPointerException npe) {
                 handleCreateException(sName);
-                return; // without updating
+                // exit without updating
             }
         }
 
@@ -2143,23 +2105,27 @@ public class SwitchboardEditor extends Editor {
     }
 
     // ********************* Mouse Methods ***********************
-
     private long _clickTime;
 
     @Override
-    public void mousePressed(MouseEvent event) {}
+    public void mousePressed(MouseEvent event) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent event) {}
+    public void mouseReleased(MouseEvent event) {
+    }
 
     @Override
-    public void mouseClicked(MouseEvent event) {}
+    public void mouseClicked(MouseEvent event) {
+    }
 
     @Override
-    public void mouseDragged(MouseEvent event) {}
+    public void mouseDragged(MouseEvent event) {
+    }
 
     @Override
-    public void mouseMoved(MouseEvent event) {}
+    public void mouseMoved(MouseEvent event) {
+    }
 
     @Override
     public void mouseEntered(MouseEvent event) {
@@ -2174,11 +2140,10 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Handle close of editor window.
-     * <P>
+     * <p>
      * Overload/override method in JmriJFrame parent, which by default is
      * permanently closing the window. Here, we just want to make it invisible,
      * so we don't dispose it (yet).
-     *
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -2187,7 +2152,6 @@ public class SwitchboardEditor extends Editor {
     }
 
     // ************* implementation of Abstract Editor methods **********
-
     /**
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
@@ -2313,8 +2277,9 @@ public class SwitchboardEditor extends Editor {
         /**
          * Position label on switch.
          *
-         * @param x    horizontal offset from top left corner, positive to the right
-         * @param y    vertical offset from top left corner, positive down
+         * @param x horizontal offset from top left corner, positive to the
+         *          right
+         * @param y vertical offset from top left corner, positive down
          */
         protected void positionLabel(int x, int y) {
             labelX = x;
@@ -2384,8 +2349,8 @@ public class SwitchboardEditor extends Editor {
     /**
      * Create popup for a Positionable object.
      * <p>
-     * Popup items common to all positionable objects are done before and
-     * after the items that pertain only to specific Positionable types.
+     * Popup items common to all positionable objects are done before and after
+     * the items that pertain only to specific Positionable types.
      * <p>
      * Not used on switchboards but has to override Editor
      *
@@ -2401,5 +2366,5 @@ public class SwitchboardEditor extends Editor {
         return _selectionGroup;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);
 }

@@ -35,6 +35,6 @@ public class UsbBrowserFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserFrameTest.class);
 
 }

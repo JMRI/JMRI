@@ -23,7 +23,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    protected AbstractManager makeInternalManager() {
+    protected AbstractManager<Turnout> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
     }
 
@@ -31,7 +31,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Revise superclass behavior: support TurnoutOperations
      */
     @Override
-    public void addManager(Manager m) {
+    public void addManager(Manager<Turnout> m) {
         super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
     }
@@ -43,7 +43,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getTurnout(String name) {
-        return (Turnout) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public Turnout provideTurnout(String name) throws IllegalArgumentException {
-        return (Turnout) super.provideNamedBean(name);
+        return super.provideNamedBean(name);
     }
 
     /**
@@ -64,7 +64,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getBySystemName(String systemName) {
-        return (Turnout) super.getBeanBySystemName(systemName);
+        return super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout getByUserName(String userName) {
-        return (Turnout) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
     /**
@@ -108,7 +108,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public Turnout newTurnout(String systemName, String userName) {
-        return (Turnout) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
     /**
@@ -316,6 +316,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class);
 
 }

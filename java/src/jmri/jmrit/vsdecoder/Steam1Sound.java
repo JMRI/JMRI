@@ -133,6 +133,10 @@ class Steam1Sound extends EngineSound {
 
     @Override
     public void shutdown() {
+        for (VSDSound vs : trigger_sounds.values()) {
+            log.debug(" Stopping trigger sound: {}", vs.getName());
+            vs.stop(); // SoundBite: Stop playing
+        }
         this.stop();
     }
 
@@ -374,7 +378,7 @@ class Steam1Sound extends EngineSound {
         this.startThread();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Steam1Sound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Steam1Sound.class);
 
     private static class S1Notch {
 
@@ -553,7 +557,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private static final Logger log = LoggerFactory.getLogger(S1Notch.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(S1Notch.class);
     }
 
     private static class S1LoopThread extends Thread {
@@ -1165,7 +1169,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        private static final Logger log = LoggerFactory.getLogger(S1LoopThread.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(S1LoopThread.class);
 
     }
 }

@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import jmri.jmrix.tams.TamsInterfaceScaffold;
+import jmri.jmrix.tams.TamsTrafficController;
 
 /**
  * Test simple functioning of LocoDataPane
@@ -13,6 +16,7 @@ import org.junit.Test;
  */
 public class LocoDataPaneTest {
 
+    private TamsSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
@@ -20,11 +24,24 @@ public class LocoDataPaneTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInit() {
+        // this test currently just makes sure we don't throw any exceptions
+        // initializing the panel
+        LocoDataPane action = new LocoDataPane();
+        action.initComponents(memo);
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
+        memo = new TamsSystemConnectionMemo(tc);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        memo = null;
+        JUnitUtil.tearDown();    
+    }
 }

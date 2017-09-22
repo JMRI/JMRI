@@ -36,5 +36,5 @@ public class ConcentratorReporterManagerXml extends jmri.jmrix.rfid.configurexml
         return loadReporters(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManagerXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManagerXml.class);
 }

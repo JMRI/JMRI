@@ -409,5 +409,5 @@ public class ProgDebugger implements AddressedProgrammer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class);
 }

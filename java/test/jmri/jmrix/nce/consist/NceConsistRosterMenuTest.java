@@ -36,6 +36,6 @@ public class NceConsistRosterMenuTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceConsistRosterMenuTest.class);
 
 }

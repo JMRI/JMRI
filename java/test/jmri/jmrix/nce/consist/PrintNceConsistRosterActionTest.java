@@ -35,6 +35,6 @@ public class PrintNceConsistRosterActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintNceConsistRosterActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintNceConsistRosterActionTest.class);
 
 }

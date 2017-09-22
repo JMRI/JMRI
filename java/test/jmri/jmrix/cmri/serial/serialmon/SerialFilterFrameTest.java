@@ -36,6 +36,6 @@ public class SerialFilterFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialFilterFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialFilterFrameTest.class);
 
 }

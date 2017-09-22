@@ -29,6 +29,6 @@ public class IbxConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IbxConnectionTypeListTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IbxConnectionTypeListTest.class);
 
 }

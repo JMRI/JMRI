@@ -301,8 +301,8 @@ end of old list, to be deleted -->
       versions and hardware requirements</a>.<br>
       Get the latest Java as a free download at: <a href=
       "http://java.com/download/" target=
-      "_blank">java.com/download</a>. 
-      <!--#include virtual="/Footer" --></p>
+      "_blank">java.com/download</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

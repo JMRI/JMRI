@@ -272,6 +272,6 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class);
 
 }

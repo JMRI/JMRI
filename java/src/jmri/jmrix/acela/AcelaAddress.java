@@ -135,20 +135,20 @@ public class AcelaAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.debug("invalid character in header field of system name: " + systemName);
             return (false);
         }
         int num;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.debug("invalid character in number field of system name: " + systemName);
             return (false);
         }
         if (num >= 0) {
-            // This is a CLnnxxx address
+            // This is a ALnnxxx address
         } else {
-            log.error("invalid Acela system name: " + systemName);
+            log.debug("invalid Acela system name: " + systemName);
             return (false);
         }
         return true;
@@ -351,6 +351,6 @@ public class AcelaAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class);
 
 }

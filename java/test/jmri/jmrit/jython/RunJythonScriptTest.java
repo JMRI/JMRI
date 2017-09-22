@@ -39,6 +39,6 @@ public class RunJythonScriptTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RunJythonScriptTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(RunJythonScriptTest.class);
 
 }

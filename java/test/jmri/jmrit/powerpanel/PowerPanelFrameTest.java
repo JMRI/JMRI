@@ -33,6 +33,6 @@ public class PowerPanelFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerPanelFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PowerPanelFrameTest.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,7 +13,9 @@ import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
+import java.beans.PropertyChangeListener;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -29,11 +32,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * PositionableShape is item drawn by java.awt.Graphics2D.
- * <P>
+ *
  * @author Pete Cressman Copyright (c) 2012
  */
-public class PositionableShape extends PositionableJComponent
-        implements java.beans.PropertyChangeListener {
+public abstract class PositionableShape extends PositionableJComponent implements PropertyChangeListener {
 
     private Shape _shape;
     protected Color _lineColor = Color.black;
@@ -61,25 +63,29 @@ public class PositionableShape extends PositionableJComponent
 
     public PositionableShape(Editor editor) {
         super(editor);
-        setName("Graphic");
-        setShowTooltip(false);
-        setDisplayLevel(ControlPanelEditor.LABELS);
+        super.setName("Graphic");
+        super.setShowToolTip(false);
+        super.setDisplayLevel(ControlPanelEditor.LABELS);
     }
 
-    public PositionableShape(Editor editor, Shape shape) {
+    public PositionableShape(Editor editor, @Nonnull Shape shape) {
         this(editor);
-        _shape = shape;
+        PositionableShape.this.setShape(shape);
     }
 
     public PathIterator getPathIterator(AffineTransform at) {
-        return _shape.getPathIterator(at);
+        return getShape().getPathIterator(at);
     }
 
-    protected void setShape(Shape s) {
+    protected void setShape(@Nonnull Shape s) {
         _shape = s;
     }
 
+    @Nonnull
     protected Shape getShape() {
+        if (_shape == null) {
+            _shape = makeShape();
+        }
         return _shape;
     }
 
@@ -93,6 +99,7 @@ public class PositionableShape extends PositionableJComponent
         } else {
             _width = SIZE;
         }
+        invalidateShape();
     }
 
     public void setHeight(int h) {
@@ -101,6 +108,7 @@ public class PositionableShape extends PositionableJComponent
         } else {
             _height = SIZE;
         }
+        invalidateShape();
     }
 
     @Override
@@ -114,10 +122,18 @@ public class PositionableShape extends PositionableJComponent
     }
 
     /**
-     * this class must be overridden by its subclasses and executed only after
-     * its parameters have been set
+     * Create the shape returned by {@link #getShape()}.
+     *
+     * @return the created shape
      */
-    public void makeShape() {
+    @Nonnull
+    protected abstract Shape makeShape();
+
+    /**
+     * Force the shape to be regenerated next time it is needed.
+     */
+    protected void invalidateShape() {
+        _shape = null;
     }
 
     public void setLineColor(Color c) {
@@ -125,6 +141,7 @@ public class PositionableShape extends PositionableJComponent
             c = Color.black;
         }
         _lineColor = c;
+        invalidateShape();
     }
 
     public Color getLineColor() {
@@ -135,6 +152,7 @@ public class PositionableShape extends PositionableJComponent
         if (c != null) {
             _fillColor = c;
         }
+        invalidateShape();
     }
 
     public Color getFillColor() {
@@ -143,6 +161,7 @@ public class PositionableShape extends PositionableJComponent
 
     public void setLineWidth(int w) {
         _lineWidth = w;
+        invalidateShape();
     }
 
     public int getLineWidth() {
@@ -164,6 +183,7 @@ public class PositionableShape extends PositionableJComponent
     }
 
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Cast required due to how Graphics2D was implemented in Java 1.2")
     public void paint(Graphics g) {
         if (!getEditor().isEditable() && !isVisible()) {
             return;
@@ -171,7 +191,8 @@ public class PositionableShape extends PositionableJComponent
         Graphics2D g2d = (Graphics2D) g;
 
         // set antialiasing hint for macOS and Windows
-        // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+        // note: antialiasing has performance problems on constrained systems
+        // like the Raspberry Pi, assuming Linux variants are constrained
         if (SystemType.isMacOSX() || SystemType.isWindows()) {
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
                     RenderingHints.VALUE_RENDER_QUALITY);
@@ -179,8 +200,9 @@ public class PositionableShape extends PositionableJComponent
                     RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                     RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-//             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,  // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
-//                     RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+            // g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+            //        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         }
 
         g2d.setClip(null);
@@ -189,13 +211,13 @@ public class PositionableShape extends PositionableJComponent
         }
         if (_fillColor != null) {
             g2d.setColor(_fillColor);
-            g2d.fill(_shape);
+            g2d.fill(getShape());
         }
         if (_lineColor != null) {
             BasicStroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f);
             g2d.setColor(_lineColor);
             g2d.setStroke(stroke);
-            g2d.draw(_shape);
+            g2d.draw(getShape());
         }
         paintHandles(g2d);
     }
@@ -211,22 +233,19 @@ public class PositionableShape extends PositionableJComponent
             r.height += _lineWidth;
             g2d.draw(r);
 //         g2d.fill(r);
-            for (int i = 0; i < _handles.length; i++) {
-                if (_handles[i] != null) {
+            for (Rectangle handle : _handles) {
+                if (handle != null) {
                     g2d.setColor(Color.RED);
-                    g2d.fill(_handles[i]);
+                    g2d.fill(handle);
                     g2d.setColor(Editor.HIGHLIGHT_COLOR);
-                    g2d.draw(_handles[i]);
+                    g2d.draw(handle);
                 }
             }
         }
     }
 
     @Override
-    public Positionable deepClone() {
-        PositionableShape pos = new PositionableShape(_editor);
-        return finishClone(pos);
-    }
+    public abstract Positionable deepClone();
 
     protected Positionable finishClone(PositionableShape pos) {
         pos._lineWidth = _lineWidth;
@@ -235,8 +254,8 @@ public class PositionableShape extends PositionableJComponent
         pos.setControlSensor(getSensorName(), _doHide, _changeLevel);
         pos.setWidth(_width);
         pos.setHeight(_height);
-        pos.makeShape();
-        pos.rotate(getDegrees());       // must be after makeShape due to updateSize call
+        pos.invalidateShape();
+        pos.rotate(getDegrees()); // recreates invalidated shape
         return super.finishClone(pos);
     }
 
@@ -247,12 +266,7 @@ public class PositionableShape extends PositionableJComponent
 
     @Override
     public void updateSize() {
-        Rectangle r;
-        if (_shape != null) {
-            r = _shape.getBounds();
-        } else {
-            r = super.getBounds();
-        }
+        Rectangle r = getShape().getBounds();
         setWidth(r.width);
         setHeight(r.height);
         setSize(r.width, r.height);
@@ -274,7 +288,10 @@ public class PositionableShape extends PositionableJComponent
     }
 
     /**
-     * return true if popup is set
+     * Add a rotation menu to the contextual menu for this PostionableShape.
+     *
+     * @param popup the menu to add a rotation menu to
+     * @return true if rotation menu is added; false otherwise
      */
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
@@ -300,29 +317,33 @@ public class PositionableShape extends PositionableJComponent
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: \"{}\"= {} for {}",
-                   evt.getPropertyName(), evt.getNewValue(), getClass().getName());
+                    evt.getPropertyName(), evt.getNewValue(), getClass().getName());
         }
         if (!_editor.isEditable()) {
             if (evt.getPropertyName().equals("KnownState")) {
-                if (((Integer) evt.getNewValue()).intValue() == Sensor.ACTIVE) {
-                    if (_doHide) {
-                        setVisible(true);
-                    } else {
-                        super.setDisplayLevel(_changeLevel);
-                        setVisible(true);
-                    }
-                } else if (((Integer) evt.getNewValue()).intValue() == Sensor.INACTIVE) {
-                    if (_doHide) {
-                        setVisible(false);
-                    } else {
+                switch ((Integer) evt.getNewValue()) {
+                    case Sensor.ACTIVE:
+                        if (_doHide) {
+                            setVisible(true);
+                        } else {
+                            super.setDisplayLevel(_changeLevel);
+                            setVisible(true);
+                        }
+                        break;
+                    case Sensor.INACTIVE:
+                        if (_doHide) {
+                            setVisible(false);
+                        } else {
+                            super.setDisplayLevel(_saveLevel);
+                            setVisible(true);
+                        }
+                        break;
+                    default:
                         super.setDisplayLevel(_saveLevel);
                         setVisible(true);
-                    }
-                } else {
-                    super.setDisplayLevel(_saveLevel);
-                    setVisible(true);
+                        break;
                 }
-                ((ControlPanelEditor)_editor).mouseMoved(new MouseEvent(this,
+                ((ControlPanelEditor) _editor).mouseMoved(new MouseEvent(this,
                         MouseEvent.MOUSE_MOVED, System.currentTimeMillis(),
                         0, getX(), getY(), 0, false));
                 repaint();
@@ -349,7 +370,7 @@ public class PositionableShape extends PositionableJComponent
      * Attach a named sensor to shape
      *
      * @param pName Used as a system/user name to lookup the sensor object
-     * @param hide true if sensor should be hidden
+     * @param hide  true if sensor should be hidden
      * @param level level at which sensor is placed
      * @return error message, if any
      */
@@ -405,6 +426,7 @@ public class PositionableShape extends PositionableJComponent
         }
         return _controlSensor.getBean();
     }
+
     protected String getSensorName() {
         Sensor s = getControlSensor();
         if (s != null) {
@@ -455,6 +477,7 @@ public class PositionableShape extends PositionableJComponent
 
     public void removeHandles() {
         _handles = null;
+        invalidateShape();
         repaint();
     }
 
@@ -497,7 +520,7 @@ public class PositionableShape extends PositionableJComponent
             try {
                 pt = getInversePoint(x, y);
             } catch (java.awt.geom.NoninvertibleTransformException nte) {
-                log.error("Can't locate Hit Rectangles " + nte.getMessage());
+                log.error("Can't locate Hit Rectangles {}", nte.getMessage());
                 return;
             }
             for (int i = 0; i < _handles.length; i++) {
@@ -545,11 +568,11 @@ public class PositionableShape extends PositionableJComponent
                     log.warn("Unhandled dir: {}", _hitIndex);
                     break;
             }
-            if (_editFrame!=null) {
+            if (_editFrame != null) {
                 _editFrame.setDisplayWidth(_width);
                 _editFrame.setDisplayHeight(_height);
             }
-            makeShape();
+            invalidateShape();
             updateSize();
             drawHandles();
             repaint();
@@ -560,5 +583,5 @@ public class PositionableShape extends PositionableJComponent
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableShape.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableShape.class);
 }

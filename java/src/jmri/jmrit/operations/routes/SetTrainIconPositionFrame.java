@@ -308,8 +308,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // East icon
             if ((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST) {
                 _tIonEast = editor.addTrainIcon(Bundle.getMessage("East"));
-                _tIonEast.getTooltip().setText(l.getName());
-                _tIonEast.getTooltip().setBackgroundColor(Color.white);
+                _tIonEast.getToolTip().setText(l.getName());
+                _tIonEast.getToolTip().setBackgroundColor(Color.white);
                 _tIonEast.setLocoColor(Setup.getTrainIconColorEast());
                 _tIonEast.setLocation((Integer) spinTrainIconEastX.getValue(), (Integer) spinTrainIconEastY.getValue());
                 addIconListener(_tIonEast);
@@ -317,8 +317,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // West icon
             if ((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST) {
                 _tIonWest = editor.addTrainIcon(Bundle.getMessage("West"));
-                _tIonWest.getTooltip().setText(l.getName());
-                _tIonWest.getTooltip().setBackgroundColor(Color.white);
+                _tIonWest.getToolTip().setText(l.getName());
+                _tIonWest.getToolTip().setBackgroundColor(Color.white);
                 _tIonWest.setLocoColor(Setup.getTrainIconColorWest());
                 _tIonWest.setLocation((Integer) spinTrainIconWestX.getValue(), (Integer) spinTrainIconWestY.getValue());
                 addIconListener(_tIonWest);
@@ -326,8 +326,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // North icon
             if ((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH) {
                 _tIonNorth = editor.addTrainIcon(Bundle.getMessage("North"));
-                _tIonNorth.getTooltip().setText(l.getName());
-                _tIonNorth.getTooltip().setBackgroundColor(Color.white);
+                _tIonNorth.getToolTip().setText(l.getName());
+                _tIonNorth.getToolTip().setBackgroundColor(Color.white);
                 _tIonNorth.setLocoColor(Setup.getTrainIconColorNorth());
                 _tIonNorth.setLocation((Integer) spinTrainIconNorthX.getValue(), (Integer) spinTrainIconNorthY.getValue());
                 addIconListener(_tIonNorth);
@@ -335,8 +335,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // South icon
             if ((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH) {
                 _tIonSouth = editor.addTrainIcon(Bundle.getMessage("South"));
-                _tIonSouth.getTooltip().setText(l.getName());
-                _tIonSouth.getTooltip().setBackgroundColor(Color.white);
+                _tIonSouth.getToolTip().setText(l.getName());
+                _tIonSouth.getToolTip().setBackgroundColor(Color.white);
                 _tIonSouth.setLocoColor(Setup.getTrainIconColorSouth());
                 _tIonSouth.setLocation((Integer) spinTrainIconSouthX.getValue(), (Integer) spinTrainIconSouthY.getValue());
                 addIconListener(_tIonSouth);
@@ -421,5 +421,5 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetTrainIconPositionFrame.class.getName());
+            .getLogger(SetTrainIconPositionFrame.class);
 }

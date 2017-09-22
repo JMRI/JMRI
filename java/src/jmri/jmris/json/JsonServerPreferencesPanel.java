@@ -2,7 +2,6 @@ package jmri.jmris.json;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,8 +24,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     public static final int MIN_HEARTBEAT_INTERVAL = 1;
     private JSpinner heartbeatIntervalSpinner;
     private JSpinner port;
-    private JButton btnSave;
-    private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
 
@@ -57,14 +54,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     }
 
     /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        btnSave.setVisible(true);
-        btnCancel.setVisible(true);
-    }
-
-    /**
      * set the local prefs to match the GUI Local prefs are independent from the
      * singleton instance prefs.
      *
@@ -75,20 +64,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         preferences.setHeartbeatInterval((int) heartbeatIntervalSpinner.getValue() * 1000); // convert to milliseconds from seconds
         preferences.setPort((int) port.getValue());
         return didSet;
-    }
-
-    /**
-     * Update the singleton instance of prefs, then mark (isDirty) that the
-     * values have changed and needs to save to xml file.
-     */
-    protected void applyValues() {
-        this.setValues();
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
-        }
     }
 
     private JPanel heartbeatPanel() {

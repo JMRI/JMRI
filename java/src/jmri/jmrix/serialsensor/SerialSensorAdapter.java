@@ -67,12 +67,9 @@ public class SerialSensorAdapter extends AbstractSerialPortController
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            // set RTS active low, DTR inactive high
+            configureLeadsAndFlowControl(activeSerialPort, 0, true, false);
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -140,9 +137,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         } catch (NoSuchPortException ex1) {
             log.error("No such port " + portName, ex1);
             return "No such port " + portName + ": " + ex1;
-        } catch (UnsupportedCommOperationException ex2) {
-            log.error("Exception to operation on port " + portName, ex2);
-            return "Exception to operation on port " + portName + ": " + ex2;
         } catch (TooManyListenersException ex3) {
             log.error("Too Many Listeners on port " + portName, ex3);
             return "Too Many Listeners on port " + portName + ": " + ex3;
@@ -238,6 +232,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorAdapter.class);
 
 }

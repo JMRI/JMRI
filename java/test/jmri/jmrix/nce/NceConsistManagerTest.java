@@ -47,5 +47,5 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceConsistManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceConsistManagerTest.class);
 }

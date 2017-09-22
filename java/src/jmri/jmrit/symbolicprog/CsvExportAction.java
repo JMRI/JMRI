@@ -68,5 +68,5 @@ public class CsvExportAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsvExportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CsvExportAction.class);
 }

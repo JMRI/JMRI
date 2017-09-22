@@ -53,19 +53,20 @@
       popularity, were:
 
       <ol>
-        <li>74% 1.7.6 (The most recent test release at that
+        <li>74&#37; 1.7.6 (The most recent test release at that
         time)</li>
 
-        <li>7% 1.7.5</li>
+        <li>7&#37; 1.7.5</li>
 
-        <li>5% 1.6.1 (The most recent production release)</li>
+        <li>5&#37; 1.6.1 (The most recent production release)</li>
 
-        <li>5% I build my own version from the code</li>
+        <li>5&#37; I build my own version from the code</li>
 
-        <li>4% 1.7.4 and 1.7.3 combined</li>
+        <li>4&#37; 1.7.4 and 1.7.3 combined</li>
 
-        <li>0% Test releases in the 1.7 series before 1.7.3</li>
-      </ol>One respondent (of 266) reported using "1.5 (any)", and
+        <li>0&#37; Test releases in the 1.7 series before 1.7.3</li>
+      </ol>
+      One respondent (of 266) reported using "1.5 (any)", and
       one reported "1.4 (any)". These may be confusions with the
       Java version.
 
@@ -84,23 +85,24 @@
       were:
 
       <ol>
-        <li>35% 1.5</li>
+        <li>35&#37; 1.5</li>
 
-        <li>33% 1.6</li>
+        <li>33&#37; 1.6</li>
 
-        <li>20% 1.4</li>
+        <li>20&#37; 1.4</li>
 
-        <li>10% 1.7</li>
+        <li>10&#37; 1.7</li>
 
-        <li>0% 1.3 or earlier</li>
-      </ol>Out of 159 responses, there were zero users of Java 1.3
+        <li>0&#37; 1.3 or earlier</li>
+      </ol>
+      Out of 159 responses, there were zero users of Java 1.3
       or earlier. This is somewhat inconsistent with smallbut
       non-zero number of people who said they are using JMRI on
       original Macintosh computers, which use Java 1.1, but the
       response to this poll was small than to the operating system
       poll.
 
-      <p>It's possible that 10% of JMRI users have downloaded test
+      <p>It's possible that 10&#37; of JMRI users have downloaded test
       distributions of Java 1.7 from Sun, but since Java 1.7 is not
       generally released yet it seems more likely that some of
       those responses are confusions with the JMRI release number.

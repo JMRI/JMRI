@@ -34,6 +34,6 @@ public class QsiComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(QsiComponentFactoryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(QsiComponentFactoryTest.class);
 
 }

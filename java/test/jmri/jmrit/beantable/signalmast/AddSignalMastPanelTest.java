@@ -41,6 +41,8 @@ public class AddSignalMastPanelTest {
                 }
             }
             Assert.assertTrue("did not find JUnit Test Signals", found);
+        } catch (Exception e) {
+            Assert.fail("testSearch exception thrown: " + e.getCause().getMessage());
         } finally {
             SignalSystemTestUtil.deleteMockSystem();
         }
@@ -59,5 +61,4 @@ public class AddSignalMastPanelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 }

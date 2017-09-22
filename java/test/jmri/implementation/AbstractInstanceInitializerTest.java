@@ -31,6 +31,6 @@ public class AbstractInstanceInitializerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractInstanceInitializerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractInstanceInitializerTest.class);
 
 }

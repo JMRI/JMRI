@@ -35,6 +35,6 @@ public class TrainsScriptActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class);
 
 }

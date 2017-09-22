@@ -170,6 +170,6 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSystemConnectionMemo.class);
 
 }

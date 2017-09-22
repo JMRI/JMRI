@@ -407,6 +407,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     private void btnExportProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnExportProfileActionPerformed
         Profile p = ProfileManager.getDefault().getProfiles(profilesTbl.getSelectedRow());
+        if (p == null) {
+            // abort if selection does not match an existing profile
+            return;
+        }
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter("ZIP Archives", "zip"));
         chooser.setFileView(new ProfileFileView());
@@ -703,7 +707,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     private void searchPathsTblValueChanged(ListSelectionEvent e) {
         if (this.searchPathsTbl.getSelectedRowCount() == 1 && this.searchPathsTbl.getSelectedRow() < ProfileManager.getDefault().getAllSearchPaths().size()) {
-            if (ProfileManager.getDefault().getSearchPaths(this.searchPathsTbl.getSelectedRow()).equals(new File(FileUtil.getPreferencesPath()))) {
+            File sp = ProfileManager.getDefault().getSearchPaths(this.searchPathsTbl.getSelectedRow());
+            if (sp == null || sp.equals(new File(FileUtil.getPreferencesPath()))) {
                 this.btnRemoveSearchPath.setEnabled(false);
             } else {
                 this.btnRemoveSearchPath.setEnabled(true);
@@ -720,16 +725,18 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         return false; // ProfileManager preferences are saved immediately, so this is always false
     }
 
+    /**
+     * {@inheritDoc}
+     * @return if the next profile to use has changed; false otherwise
+     */
     @Override
     public boolean isRestartRequired() {
-        // true if the next profile to use has changed, false otherwise.
         // Since next profile defaults to null when application starts, restart
         // is required only if next profile is not null and is not the same
         // profile as the current profile
-        return ProfileManager.getDefault().getNextActiveProfile() != null
-                && ProfileManager.getDefault().getActiveProfile() != null
-                && !ProfileManager.getDefault().getActiveProfile().equals(ProfileManager.getDefault().getNextActiveProfile()
-                );
+        Profile ap = ProfileManager.getDefault().getActiveProfile();
+        Profile np = ProfileManager.getDefault().getNextActiveProfile();
+        return np != null && ap != null && !ap.equals(np);
     }
 
     @Override

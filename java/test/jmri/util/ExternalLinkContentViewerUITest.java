@@ -34,6 +34,6 @@ public class ExternalLinkContentViewerUITest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUITest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUITest.class);
 
 }

@@ -68,7 +68,6 @@ public class RouteLockTest {
 
     @Test
     public void testOneFailSingleStringCtor() throws JmriException {
-        ArrayList<NamedBeanHandle<SignalHead>> list = new ArrayList<>();
 
         SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);

@@ -31,5 +31,5 @@ public class LayoutBlockTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class);
 }

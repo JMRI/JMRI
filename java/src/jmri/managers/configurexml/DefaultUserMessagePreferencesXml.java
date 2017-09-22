@@ -3,22 +3,17 @@ package jmri.managers.configurexml;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Set;
 import javax.swing.SortOrder;
-import jmri.managers.DefaultUserMessagePreferences;
 import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide XML persistence for the
- * {@link jmri.managers.DefaultUserMessagePreferences}.
- *
- * @deprecated since 4.5.4 because the
- * {@link jmri.managers.DefaultUserMessagePreferences} is deprecated.
+ * Read XML persistence data for the now removed
+ * jmri.managers.DefaultUserMessagePreferences class so that the current
+ * {@link jmri.UserPreferencesManager} can use it.
  */
-@Deprecated
 public class DefaultUserMessagePreferencesXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public DefaultUserMessagePreferencesXml() {
@@ -35,181 +30,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      */
     @Override
     public Element store(Object o) {
-        DefaultUserMessagePreferences p = (DefaultUserMessagePreferences) o;
-
-        Element messages = new Element("UserMessagePreferences");
-        setStoreElementClass(messages);
-
-        java.util.ArrayList<String> preferenceList = p.getSimplePreferenceStateList();
-        for (int i = 0; i < preferenceList.size(); i++) {
-            Element pref = new Element("setting");
-            pref.addContent(preferenceList.get(i));
-            messages.addContent(pref);
-        }
-
-        int comboBoxSize = p.getComboBoxSelectionSize();
-        if (comboBoxSize > 0) {
-            Element comboList = new Element("comboBoxLastValue");
-            for (int i = 0; i < comboBoxSize; i++) {
-                //No point in storing the last entered/selected value if it is blank
-                if ((p.getComboBoxLastSelection(i) != null) && (!p.getComboBoxLastSelection(i).equals(""))) {
-                    Element combo = new Element("comboBox");
-                    combo.setAttribute("name", p.getComboBoxName(i));
-                    combo.setAttribute("lastSelected", p.getComboBoxLastSelection(i));
-                    comboList.addContent(combo);
-                }
-            }
-            messages.addContent(comboList);
-        }
-        java.util.ArrayList<String> preferenceClassList = p.getPreferencesClasses();
-        for (int k = 0; k < preferenceClassList.size(); k++) {
-            String strClass = preferenceClassList.get(k);
-            java.util.ArrayList<String> multipleList = p.getMultipleChoiceList(strClass);
-            Element classElement = new Element("classPreferences");
-            classElement.setAttribute("class", strClass);
-            //This bit deals with the multiple choice
-            boolean store = false;
-            Element multiOption = new Element("multipleChoice");
-            for (int i = 0; i < multipleList.size(); i++) {
-                String itemName = p.getChoiceName(strClass, i);
-                if (p.getMultipleChoiceDefaultOption(strClass, itemName) != p.getMultipleChoiceOption(strClass, itemName)) {
-                    //Only save if we are not at the default value.
-                    Element multiOptionItem = new Element("option");
-                    store = true;
-                    multiOptionItem.setAttribute("item", itemName);
-                    multiOptionItem.setAttribute("value", Integer.toString(p.getMultipleChoiceOption(strClass, itemName)));
-                    multiOption.addContent(multiOptionItem);
-                }
-            }
-            if (store) {
-                classElement.addContent(multiOption);
-
-            }
-
-            boolean listStore = false;
-            java.util.ArrayList<String> singleList = p.getPreferenceList(strClass);
-            if (singleList.size() != 0) {
-                Element singleOption = new Element("reminderPrompts");
-                for (int i = 0; i < singleList.size(); i++) {
-                    String itemName = p.getPreferenceItemName(strClass, i);
-                    if (p.getPreferenceState(strClass, itemName)) {
-                        Element pref = new Element("reminder");
-                        pref.addContent(singleList.get(i));
-                        singleOption.addContent(pref);
-                        listStore = true;
-                    }
-                }
-                if (listStore) {
-                    classElement.addContent(singleOption);
-                }
-            }
-
-            //This bit deals with simple hiding of messages
-            if ((store) || (listStore)) {
-                messages.addContent(classElement);
-            }
-        }
-
-        java.util.ArrayList<String> windowList = p.getWindowList();
-        if (windowList != null && windowList.size() != 0) {
-            for (String strClass : windowList) {
-                Element windowElement = new Element("windowDetails");
-                windowElement.setAttribute("class", strClass);
-                boolean set = false;
-                if (p.getSaveWindowLocation(strClass)) {
-                    try {
-                        double x = p.getWindowLocation(strClass).getX();
-                        double y = p.getWindowLocation(strClass).getY();
-                        Element loc = new Element("locX");
-                        loc.addContent(Double.toString(x));
-                        windowElement.addContent(loc);
-                        loc = new Element("locY");
-                        windowElement.addContent(loc);
-                        loc.addContent(Double.toString(y));
-                        set = true;
-                    } catch (NullPointerException ex) {
-                        //Considered normal if the window hasn't been closed or all of the information hasn't been set
-                    }
-                }
-                if (p.getSaveWindowSize(strClass)) {
-                    try {
-                        double width = p.getWindowSize(strClass).getWidth();
-                        double height = p.getWindowSize(strClass).getHeight();
-                        //We do not want to save the width or height if it is set to zero!
-                        if (!(width == 0.0 && height == 0.0)) {
-                            Element size = new Element("width");
-                            size.addContent(Double.toString(width));
-                            windowElement.addContent(size);
-                            size = new Element("height");
-                            size.addContent(Double.toString(height));
-                            windowElement.addContent(size);
-                            set = true;
-                        }
-                    } catch (NullPointerException ex) {
-                        //Considered normal if the window hasn't been closed
-                    }
-                }
-                Set<String> s = p.getPropertyKeys(strClass);
-                if (s != null && s.size() != 0) {
-                    Element ret = new Element("properties");
-                    windowElement.addContent(ret);
-                    for (String key : s) {
-                        Object value = p.getProperty(strClass, key);
-                        Element prop = new Element("property");
-                        ret.addContent(prop);
-                        prop.addContent(new Element("key")
-                                .setAttribute("class", key.getClass().getName())
-                                .setText(key)
-                        );
-                        if (value != null) {
-                            prop.addContent(new Element("value")
-                                    .setAttribute("class", value.getClass().getName())
-                                    .setText(value.toString())
-                            );
-                        }
-                    }
-                    set = true;
-                }
-
-                if (set) {
-                    messages.addContent(windowElement);
-                }
-            }
-        }
-
-        if (p.getTablesList().size() != 0) {
-            Element tablesElement = new Element("tableDetails");
-            for (String table : p.getTablesList()) {
-                Element tableElement = new Element("table");
-                tableElement.setAttribute("name", table);
-                for (String column : p.getTablesColumnList(table)) {
-                    Element columnElement = new Element("column");
-                    columnElement.setAttribute("name", column);
-                    if (p.getTableColumnOrder(table, column) != -1) {
-                        columnElement.addContent(new Element("order").addContent(Integer.toString(p.getTableColumnOrder(table, column))));
-                    }
-                    if (p.getTableColumnWidth(table, column) != -1) {
-                        columnElement.addContent(new Element("width").addContent(Integer.toString(p.getTableColumnWidth(table, column))));
-                    }
-                    if (p.getTableColumnSort(table, column) != SortOrder.UNSORTED) {
-                        columnElement.addContent(
-                                new Element("sortOrder").addContent(p.getTableColumnSort(table, column).name()));
-                        // TODO for backwards compatibility with releases before 4.3.5, can be removed after 2016
-                        columnElement.addContent(new Element("sort")
-                                .addContent(p.getTableColumnSort(table, column) == SortOrder.ASCENDING
-                                        ? Integer.toString(TableSorter.ASCENDING)
-                                        : Integer.toString(TableSorter.DESCENDING)));
-                    }
-                    if (p.getTableColumnHidden(table, column)) {
-                        columnElement.addContent(new Element("hidden").addContent("yes"));
-                    }
-                    tableElement.addContent(columnElement);
-                }
-                tablesElement.addContent(tableElement);
-            }
-            messages.addContent(tablesElement);
-        }
-        return messages;
+        // nothing to do, since this class exists only to load older preferences if they exist
+        return null;
     }
 
     public void setStoreElementClass(Element messages) {
@@ -389,5 +211,5 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class);
 }

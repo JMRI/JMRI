@@ -33,6 +33,6 @@ public class WindowMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WindowMenuTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WindowMenuTest.class);
 
 }

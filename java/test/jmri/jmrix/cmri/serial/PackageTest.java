@@ -41,7 +41,9 @@ import org.slf4j.LoggerFactory;
    SerialLightTest.class,
    SerialLightManagerTest.class,
    SerialSensorTest.class,
-   BundleTest.class
+   BundleTest.class,
+   jmri.jmrix.cmri.serial.nodeconfigmanager.PackageTest.class,
+   jmri.jmrix.cmri.serial.cmrinetmanager.PackageTest.class,
 })
 
 public class PackageTest{
@@ -59,6 +61,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

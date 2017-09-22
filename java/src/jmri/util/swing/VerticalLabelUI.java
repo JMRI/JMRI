@@ -34,6 +34,9 @@ import javax.swing.plaf.basic.BasicLabelUI;
  *
  * @author Matthew Harris copyright (c) 2010
  */
+// commented out in AudioBufferFrame and used in scripts, so do not deprecate
+// without checking those sources first even though IDE find usages tools show
+// no use outside unit tests
 public class VerticalLabelUI extends BasicLabelUI {
 
     /**
@@ -60,10 +63,10 @@ public class VerticalLabelUI extends BasicLabelUI {
      * Static variables used to compute bounding rectangles for each constituent
      * part of the VerticalLabel
      */
-    private static Rectangle iconRectangle = new Rectangle();
-    private static Rectangle textRectangle = new Rectangle();
-    private static Rectangle viewRectangle = new Rectangle();
-    private static Insets viewInsets = new Insets(0, 0, 0, 0);
+    private final Rectangle iconRectangle = new Rectangle();
+    private final Rectangle textRectangle = new Rectangle();
+    private final Rectangle viewRectangle = new Rectangle();
+    private Insets viewInsets = new Insets(0, 0, 0, 0);
 
     /**
      * Default constructor which provides a vertical label with anti-clockwise
@@ -95,73 +98,79 @@ public class VerticalLabelUI extends BasicLabelUI {
     public void paint(Graphics graphics, JComponent component) {
 
         // Retrieve the text and icon of the label being rotated
-        JLabel label = (JLabel) component;
-        String text = label.getText();
-        Icon icon = (label.isEnabled()) ? label.getIcon() : label.getDisabledIcon();
+        if (component instanceof JLabel) {
+            JLabel label = (JLabel) component;
+            String text = label.getText();
+            Icon icon = (label.isEnabled()) ? label.getIcon() : label.getDisabledIcon();
 
-        // If both the icon and text are empty, nothing to be done
-        if ((icon == null) && (text == null)) {
-            return;
-        }
+            // If both the icon and text are empty, nothing to be done
+            if ((icon == null) && (text == null)) {
+                return;
+            }
 
-        // Retrieve the font redering informaton
-        FontMetrics fontMetrics = graphics.getFontMetrics();
+            // Retrieve the font redering informaton
+            FontMetrics fontMetrics = graphics.getFontMetrics();
 
-        // Determine required insets for the view
-        viewInsets = component.getInsets(viewInsets);
+            // Determine required insets for the view
+            viewInsets = component.getInsets(viewInsets);
 
-        // Initialise view origin
-        viewRectangle.x = viewInsets.left;
-        viewRectangle.y = viewInsets.top;
+            // Initialise view origin
+            viewRectangle.x = viewInsets.left;
+            viewRectangle.y = viewInsets.top;
 
-        // Determine view height and width
-        // (inverting width and height as rotation not yet performed)
-        viewRectangle.height = component.getWidth() - (viewInsets.left + viewInsets.right);
-        viewRectangle.width = component.getHeight() - (viewInsets.top + viewInsets.bottom);
+            // Determine view height and width
+            // (inverting width and height as rotation not yet performed)
+            viewRectangle.height = component.getWidth() - (viewInsets.left + viewInsets.right);
+            viewRectangle.width = component.getHeight() - (viewInsets.top + viewInsets.bottom);
 
-        // Initialise the icon and text bounding boxes
-        iconRectangle.x = 0;
-        iconRectangle.y = 0;
-        iconRectangle.width = 0;
-        iconRectangle.height = 0;
-        textRectangle.x = 0;
-        textRectangle.y = 0;
-        textRectangle.width = 0;
-        textRectangle.height = 0;
+            // Initialise the icon and text bounding boxes
+            iconRectangle.x = 0;
+            iconRectangle.y = 0;
+            iconRectangle.width = 0;
+            iconRectangle.height = 0;
+            textRectangle.x = 0;
+            textRectangle.y = 0;
+            textRectangle.width = 0;
+            textRectangle.height = 0;
 
-        // Grab the string to display
-        String clippedText
-                = layoutCL(label, fontMetrics, text, icon, viewRectangle, iconRectangle, textRectangle);
+            // Grab the string to display
+            String clippedText
+                    = layoutCL(label, fontMetrics, text, icon, viewRectangle, iconRectangle, textRectangle);
 
-        // Store the current transform prior to rotation
-        Graphics2D graphics2d = (Graphics2D) graphics;
-        AffineTransform transform = graphics2d.getTransform();
+            // Store the current transform prior to rotation
+            AffineTransform transform = null;
+            if (graphics instanceof Graphics2D) {
+                transform = ((Graphics2D) graphics).getTransform();
 
-        // Perform the rotation
-        graphics2d.rotate((this.rotation == CLOCKWISE ? 1 : -1) * (Math.PI / 2));
-        graphics2d.translate(
-                this.rotation == CLOCKWISE ? 0 : -component.getHeight(),
-                this.rotation == CLOCKWISE ? -component.getWidth() : 0);
+                // Perform the rotation
+                ((Graphics2D) graphics).rotate((this.rotation == CLOCKWISE ? 1 : -1) * (Math.PI / 2));
+                ((Graphics2D) graphics).translate(
+                        this.rotation == CLOCKWISE ? 0 : -component.getHeight(),
+                        this.rotation == CLOCKWISE ? -component.getWidth() : 0);
+            }
 
-        // If necessary, paint the icon
-        if (icon != null) {
-            icon.paintIcon(component, graphics, iconRectangle.x, iconRectangle.y);
-        }
+            // If necessary, paint the icon
+            if (icon != null) {
+                icon.paintIcon(component, graphics, iconRectangle.x, iconRectangle.y);
+            }
 
-        // If necessary, paint the text
-        if (text != null) {
-            int textX = textRectangle.x;
-            int textY = textRectangle.y + fontMetrics.getAscent();
+            // If necessary, paint the text
+            if (text != null) {
+                int textX = textRectangle.x;
+                int textY = textRectangle.y + fontMetrics.getAscent();
 
-            if (label.isEnabled()) {
-                paintEnabledText(label, graphics, clippedText, textX, textY);
-            } else {
-                paintDisabledText(label, graphics, clippedText, textX, textY);
+                if (label.isEnabled()) {
+                    paintEnabledText(label, graphics, clippedText, textX, textY);
+                } else {
+                    paintDisabledText(label, graphics, clippedText, textX, textY);
+                }
+            }
+
+            if (graphics instanceof Graphics2D && transform != null) {
+                // Finally, restore the original transform
+                ((Graphics2D) graphics).setTransform(transform);
             }
         }
-
-        // Finally, restore the original transform
-        graphics2d.setTransform(transform);
     }
 
     /**
@@ -169,10 +178,12 @@ public class VerticalLabelUI extends BasicLabelUI {
      *
      * @param component ignored
      * @return default VerticalLabelUI instance
+     * @deprecated since 4.9.5; construct a new VerticalLabelUI object instead
      */
+    @Deprecated
     public static ComponentUI createUI(JComponent component) {
         return verticalLabelUI;
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class);
 }

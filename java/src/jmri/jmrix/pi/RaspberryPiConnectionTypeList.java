@@ -17,7 +17,7 @@ public class RaspberryPiConnectionTypeList implements jmri.jmrix.ConnectionTypeL
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.pi.ConnectionConfig"
+            "jmri.jmrix.pi.RaspberryPiConnectionConfig"
         };
     }
 

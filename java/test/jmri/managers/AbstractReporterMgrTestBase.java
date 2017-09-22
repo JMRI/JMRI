@@ -76,7 +76,7 @@ public abstract class AbstractReporterMgrTestBase {
     @Test(expected=IllegalArgumentException.class)
     @Ignore("Not currently functional")
     public void testProvideFailure() {
-        Reporter t = l.provideReporter("..");
+        l.provideReporter("..");
     }
 
     @Test

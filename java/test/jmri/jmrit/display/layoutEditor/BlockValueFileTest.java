@@ -31,5 +31,5 @@ public class BlockValueFileTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(BlockValueFileTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BlockValueFileTest.class);
 }

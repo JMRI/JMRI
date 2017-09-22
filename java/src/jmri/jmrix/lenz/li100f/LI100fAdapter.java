@@ -247,16 +247,13 @@ public class LI100fAdapter extends XNetSerialPortController implements jmri.jmri
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
+
         /*if (getOptionState(option2Name).equals(validOption2[0]))
          checkBuffer = true;*/
     }
@@ -295,6 +292,6 @@ public class LI100fAdapter extends XNetSerialPortController implements jmri.jmri
     }
     volatile static LI100fAdapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LI100fAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100fAdapter.class);
 
 }

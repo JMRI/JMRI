@@ -278,6 +278,6 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);
 
 }

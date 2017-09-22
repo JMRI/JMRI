@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -104,7 +105,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         });
     }
 
-    ArrayList<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
+    List<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
 
     @Override
     protected void createModel() {
@@ -156,10 +157,10 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                         }
                     }
                 }
-                ArrayList<SignalMastLogic> source = getManager().getSignalMastLogicList();
+                List<SignalMastLogic> source = getManager().getSignalMastLogicList();
                 signalMastLogicList = new ArrayList<Hashtable<SignalMastLogic, SignalMast>>();
                 for (int i = 0; i < source.size(); i++) {
-                    ArrayList<SignalMast> destList = source.get(i).getDestinationList();
+                    List<SignalMast> destList = source.get(i).getDestinationList();
                     source.get(i).addPropertyChangeListener(this);
                     source.get(i).getSourceMast().addPropertyChangeListener(this);
                     for (int j = 0; j < destList.size(); j++) {
@@ -349,6 +350,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 return null;
             }
 
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
             @Override
             public int getPreferredWidth(int col) {
                 switch (col) {
@@ -595,5 +598,5 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         return SignalMastLogicTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class);
 }

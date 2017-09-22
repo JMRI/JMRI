@@ -2,7 +2,7 @@ package jmri;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.List;
 import jmri.jmrit.XmlFile;
 
 /**
@@ -84,9 +84,9 @@ public interface ConfigureManager {
      * Returns a list of instances stored for a given class.
      *
      * @param c Class of the desired objects
-     * @return an ArrayList of objects of class c or null
+     * @return an List of objects of class c or null
      */
-    public ArrayList<Object> getInstanceList(Class<?> c);
+    public List<Object> getInstanceList(Class<?> c);
 
     /**
      * Stores prefs, config, tools and user information.

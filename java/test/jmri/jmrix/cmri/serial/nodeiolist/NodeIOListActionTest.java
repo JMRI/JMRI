@@ -38,6 +38,6 @@ public class NodeIOListActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeIOListActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NodeIOListActionTest.class);
 
 }

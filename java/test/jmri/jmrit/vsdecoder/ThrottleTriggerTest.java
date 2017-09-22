@@ -31,6 +31,6 @@ public class ThrottleTriggerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleTriggerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ThrottleTriggerTest.class);
 
 }

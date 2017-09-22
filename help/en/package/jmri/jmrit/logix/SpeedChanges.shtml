@@ -102,8 +102,11 @@
        order for it to done smoothly in prototypical fashion, it
        depends on the following parameters:
       <ul>
-        <li><b>Ramp Step Time</b></li>
-        <li><b>Ramp Step Throttle Increment</b></li> 
+        <li><b>Ramp Step Time</b> The number of milliseconds 
+        between making throttle setting changes.</li>
+        <li><b>Ramp Step Throttle Increment</b> The initial
+        throttle increment when increasing speed, or last
+        increment when decreasing speed.</li> 
       </ul>
       These are configured in Warrant Preferences. See <a href=
       "../../../apps/TabbedPreferences.shtml#Warrants">Warrant

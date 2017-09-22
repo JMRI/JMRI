@@ -28,6 +28,6 @@ public class GotoFailureActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GotoFailureActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GotoFailureActionTest.class);
 
 }

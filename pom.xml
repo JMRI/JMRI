@@ -516,6 +516,7 @@
                                 <File>jmri/jmrix/openlcb/SampleFactory.class</File>
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
+                                <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -845,9 +846,9 @@
         </dependency>
         -->
         <dependency>
-            <groupId>org.netbeans</groupId>
-            <artifactId>jemmy</artifactId>
-            <version>2.2.7.5</version>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>jemmy-2.3.1.1</artifactId>
+            <version>RELEASE802</version>
             <scope>test</scope>
         </dependency>
         <!--

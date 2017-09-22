@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(ZeroConfServiceTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ZeroConfClientTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ZeroConfServiceEventTest.class));
 
         return suite;
     }

@@ -251,5 +251,5 @@ public class Sprogv4UpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(Sprogv4UpdateFrame.class.getName());
+            .getLogger(Sprogv4UpdateFrame.class);
 }

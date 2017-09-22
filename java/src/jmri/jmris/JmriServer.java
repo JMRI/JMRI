@@ -62,7 +62,7 @@ public class JmriServer {
         try {
             this.connectSocket = new ServerSocket(port);
         } catch (IOException e) {
-            log.error("Failed to connect to port " + port);
+            log.error("Failed to connect to port {}", port);
         }
         this.portNo = port;
         this.timeout = timeout;
@@ -88,7 +88,7 @@ public class JmriServer {
     public void start() {
         /* Start the server thread */
         if (this.listenThread == null) {
-            this.listenThread = new Thread(new newClientListener(connectSocket));
+            this.listenThread = new Thread(new NewClientListener(connectSocket));
             this.listenThread.start();
             this.advertise();
         }
@@ -125,12 +125,12 @@ public class JmriServer {
     }
 
     // Internal thread to listen for new connections
-    class newClientListener implements Runnable {
+    class NewClientListener implements Runnable {
 
         ServerSocket listenSocket = null;
         boolean running = true;
 
-        public newClientListener(ServerSocket socket) {
+        public NewClientListener(ServerSocket socket) {
 
             listenSocket = socket;
         }
@@ -160,7 +160,7 @@ public class JmriServer {
                 log.error("socket in ThreadedServer won't close");
             }
         }
-    } // end of newClientListener class
+    } // end of NewClientListener class
 
     // Internal class to handle a client
     protected class ClientListener implements Runnable {
@@ -234,5 +234,5 @@ public class JmriServer {
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         outStream.writeBytes("");
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriServer.class);
 }

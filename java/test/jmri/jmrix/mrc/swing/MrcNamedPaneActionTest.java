@@ -42,6 +42,6 @@ public class MrcNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcNamedPaneActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MrcNamedPaneActionTest.class);
 
 }

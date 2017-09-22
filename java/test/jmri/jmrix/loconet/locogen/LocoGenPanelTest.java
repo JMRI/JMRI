@@ -29,6 +29,6 @@ public class LocoGenPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoGenPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoGenPanelTest.class);
 
 }

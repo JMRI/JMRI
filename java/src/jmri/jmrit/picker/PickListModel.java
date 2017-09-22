@@ -494,7 +494,7 @@ public abstract class PickListModel<E extends NamedBean> extends jmri.jmrit.bean
         return new LogixPickModel();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PickListModel.class);
 
     static class TurnoutPickModel extends PickListModel<Turnout> {
 

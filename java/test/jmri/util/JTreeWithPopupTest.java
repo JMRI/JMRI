@@ -32,6 +32,6 @@ public class JTreeWithPopupTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JTreeWithPopupTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JTreeWithPopupTest.class);
 
 }

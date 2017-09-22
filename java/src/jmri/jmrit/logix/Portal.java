@@ -641,5 +641,5 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return Bundle.getMessage("BeanNamePortal");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Portal.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Portal.class);
 }

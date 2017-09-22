@@ -29,6 +29,6 @@ public class NceMonBinaryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceMonBinaryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceMonBinaryTest.class);
 
 }
