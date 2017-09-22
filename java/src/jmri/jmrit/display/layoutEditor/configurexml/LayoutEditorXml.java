@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -40,6 +41,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     public LayoutEditorXml() {
     }
 
+    //TODO: Convert to use Bundle.getMessage(...) (and remove this line)
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     /**
@@ -144,7 +146,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // storing them. Note: No other order is effected; They should exist
         // in the saved file in the order that they were created (ether at
         // panel file load time or later by the users in the editor).
-        List<LayoutTrack> orderedList = layoutTracks.stream()   // next line excludes LayoutSlips
+        List<LayoutTrack> orderedList = layoutTracks.stream() // next line excludes LayoutSlips
                 .filter(item -> ((item instanceof LayoutTurnout) && !(item instanceof LayoutSlip)))
                 .map(item -> (LayoutTurnout) item)
                 .collect(Collectors.toList());
@@ -272,8 +274,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             JFrame frame = new JFrame("DialogDemo");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
+            //TODO: Convert to use Bundle.getMessage(...)
             int n = JOptionPane.showConfirmDialog(frame,
-                    java.text.MessageFormat.format(rb.getString("DuplicatePanel"),
+                    MessageFormat.format(rb.getString("DuplicatePanel"),
                             new Object[]{name}),
                     rb.getString("DuplicatePanelTitle"),
                     JOptionPane.YES_NO_OPTION);

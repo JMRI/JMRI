@@ -564,13 +564,13 @@
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
       AbstractAutomat</a>, you can check the start with:</p>
 <pre style="font-family: monospace;">
-    AbsractAutomat p = new MyThreadClass();<br>
-    p.start();<br>
+    AbsractAutomat p = new MyThreadClass();
+    p.start();
     JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
 </pre>
     and ensure termination with
 <pre style="font-family: monospace;">
-    p.stop();<br>
+    p.stop();
     JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
 </pre>
 
@@ -622,7 +622,6 @@
 <pre style="font-family: monospace;">
     import org.junit.Rule;
     import org.junit.rules.TemporaryFolder;
-
     ...
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -652,18 +651,18 @@
         exists before creating files in the directory, and create
         the directory if necessary. An example is shown here:
 <pre style="font-family: monospace;">
-        String tempDirectoryName = "temp";<br>
-        if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>
-                // create the temp directory if it does not exist<br>
-                <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>
-        }<br></code>
+        String tempDirectoryName = "temp";
+        if ( ! (new File(tempDirectoryName).isDirectory())) {
+                // create the temp directory if it does not exist
+                FileUtil.createDirectory(tempDirectoryName);
+        }
 </pre>
         </li>
 
         <li>Allow the JRE to define the directory hierarchy
         separator character automatically:
 <pre style="font-family: monospace;">
-    String filename = tempDirectoryName + <strong>File.separator</strong> + "testcaseFile.txt";
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
 </pre>
         </li>
 
@@ -674,17 +673,19 @@
         before writing to the file(s). The following example will
         delete the previous file if it exists:
 <pre style="font-family: monospace;">
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>
-    File file = new File(filename);<br>
-    <strong>if (file.exists())</strong> {<br>
-        <strong> try {<br>
-            file.delete();<br>
-        } catch (java.lang.Exception e) {<br>
-            Assert.fail("Exception while trying to delete the existing file " + <br>
-                                    filename + <br>                    ".\n Exception reported: " + <br>
-                                    e.toString());<br>            // perform some appropriate action in this case<br>
-        }</strong><br>
-    }<br></code>
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
+    File file = new File(filename);
+    if (file.exists()) {
+        try {
+            file.delete();
+        } catch (java.lang.Exception e) {
+            Assert.fail("Exception while trying to delete the existing file " +
+                                    filename +
+                                    ".\n Exception reported: " +
+                                    e.toString());
+                // perform some appropriate action in this case
+        }
+    }
 </pre>
         </li>
 
@@ -698,11 +699,11 @@
         deleting the temporary file), and to perform the delete
         only when debug logging is not enabled, such as:
 <pre style="font-family: monospace;">
-    <strong>if (log.isDebugEnabled()) {</strong><br>
-            log.debug("Path to written hex file is: "+filename);<br>
-    <strong>} else {<br>
-            file.delete();<br>
-    }</strong><br></code>
+    if (log.isDebugEnabled()) {
+            log.debug("Path to written hex file is: "+filename);
+    } else {
+            file.delete();
+    }
 </pre>
         </li>
 
