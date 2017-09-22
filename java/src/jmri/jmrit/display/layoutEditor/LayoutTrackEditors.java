@@ -598,7 +598,7 @@ public class LayoutTrackEditors {
         editLayoutTurnout2ndTurnoutInvertCheckBox.setEnabled(enable2nd);
         editLayoutTurnout2ndTurnoutLabel.setEnabled(enable2nd);
         editLayoutTurnout2ndTurnoutComboBox.setEnabled(enable2nd);
-        if (enable) {
+        if (enable2nd) {
             editLayoutTurnout2ndTurnoutInvertCheckBox.setSelected(layoutTurnout.isSecondTurnoutInverted());
             editLayoutTurnout2ndTurnoutComboBox.setText(layoutTurnout.getSecondTurnoutName());
         } else {
