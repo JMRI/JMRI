@@ -281,8 +281,8 @@ public class LayoutTrackEditors {
         }
         // check if Block changed
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
-        if ((trackSegment.getLayoutBlock() == null)
-                || !trackSegment.getLayoutBlock().equals(newName)) {
+        if ((trackSegment.getBlockName() == null)
+                || !trackSegment.getBlockName().equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (trackSegment.getLayoutBlock() != null) {
                 trackSegment.getLayoutBlock().decrementUse();
