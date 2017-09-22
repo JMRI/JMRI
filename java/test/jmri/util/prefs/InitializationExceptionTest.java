@@ -22,7 +22,6 @@ public class InitializationExceptionTest {
    @Before
    public void setUp() {
         JUnitUtil.setUp();
-
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 

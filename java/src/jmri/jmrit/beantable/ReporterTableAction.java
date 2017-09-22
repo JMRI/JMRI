@@ -212,7 +212,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton addButton;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     String connectionChoice = "";
@@ -266,6 +266,7 @@ public class ReporterTableAction extends AbstractTableAction {
             }
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
                     okListener, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
@@ -376,10 +377,18 @@ public class ReporterTableAction extends AbstractTableAction {
         }
 
         pref.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+        addButton = null;
     }
 
     private String addEntryToolTip;
 
+    /**
+     * Activate Add a range option if manager accepts adding more than 1 Reporter
+     * and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     */
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
@@ -480,11 +489,11 @@ public class ReporterTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
-                // get prefixSelectedItem
-                return true;
+//            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
+//                // get prefixSelectedItem
+//                return true;
             } else {
-                return false;
+                return true; //false; // TODO temporarily disabled checking format while adding user feedback
             }
         }
 

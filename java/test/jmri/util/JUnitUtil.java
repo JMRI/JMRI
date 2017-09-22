@@ -550,16 +550,16 @@ public class JUnitUtil {
     public static void resetPreferencesProviders() {
         try {
             // reset UI provider
-            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("providers");
+            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
             ((HashMap<?, ?>) providers.get(null)).clear();
             // reset XML storage provider
-            providers = JmriConfigurationProvider.class.getDeclaredField("providers");
+            providers = JmriConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
             ((HashMap<?, ?>) providers.get(null)).clear();
             // reset java.util.prefs.Preferences storage provider
-            Field shared = JmriPreferencesProvider.class.getDeclaredField("sharedProviders");
-            Field privat = JmriPreferencesProvider.class.getDeclaredField("privateProviders");
+            Field shared = JmriPreferencesProvider.class.getDeclaredField("SHARED_PROVIDERS");
+            Field privat = JmriPreferencesProvider.class.getDeclaredField("PRIVATE_PROVIDERS");
             shared.setAccessible(true);
             ((HashMap<?, ?>) shared.get(null)).clear();
             privat.setAccessible(true);

@@ -97,7 +97,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void replaceSourceMast(SignalMast oldMast, SignalMast newMast) {
         if (oldMast != source) {
-            //Old mast does not match new mast so will exit
+            // Old mast does not match new mast so will exit replace
             return;
         }
         source.removePropertyChangeListener(propertySourceMastListener);
@@ -164,7 +164,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
     @Override
     public List<SignalMast> getDestinationList() {
-        List<SignalMast> out = new ArrayList<SignalMast>();
+        List<SignalMast> out = new ArrayList<>();
         Enumeration<SignalMast> en = destList.keys();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -283,7 +283,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             /*We don't care which layout editor panel the signalmast is on, just so long as
              the routing is done via layout blocks*/
             // TODO: what is this?
-            log.debug("userLayoutEditor finds layout size is {}", Integer.toString(layout.size()));
+            log.debug("userLayoutEditor finds layout list size is {}", Integer.toString(layout.size()));
             for (int i = 0; i < layout.size(); i++) {
                 if (log.isDebugEnabled()) {
                     log.debug(layout.get(i).getLayoutName());
@@ -470,7 +470,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public List<Block> getBlocks(SignalMast destination) {
         if (!destList.containsKey(destination)) {
-            return new ArrayList<Block>();
+            return new ArrayList<>();
         }
         return destList.get(destination).getBlocks();
     }
@@ -478,7 +478,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public List<Block> getAutoBlocks(SignalMast destination) {
         if (!destList.containsKey(destination)) {
-            return new ArrayList<Block>();
+            return new ArrayList<>();
         }
         return destList.get(destination).getAutoBlocks();
     }
@@ -486,7 +486,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public List<Block> getAutoBlocksBetweenMasts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
-            return new ArrayList<Block>();
+            return new ArrayList<>();
         }
         return destList.get(destination).getAutoBlocksBetweenMasts();
     }
@@ -544,7 +544,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public List<SignalMast> getSignalMasts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
-            return new ArrayList<SignalMast>();
+            return new ArrayList<>();
         }
         return destList.get(destination).getSignalMasts();
     }
@@ -552,7 +552,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public List<SignalMast> getAutoMasts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
-            return new ArrayList<SignalMast>();
+            return new ArrayList<>();
         }
         return destList.get(destination).getAutoSignalMasts();
     }
@@ -621,7 +621,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         Enumeration<SignalMast> en = destList.keys();
-        log.debug("checkStates enumerates over {} masts", destList.size());
+        log.debug("checkStates enumerates over {} mast(s)", destList.size());
         while (en.hasMoreElements()) {
             SignalMast key = en.nextElement();
             log.debug("  Destination mast {}", key.getDisplayName());
@@ -759,14 +759,14 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
     volatile boolean inWait = false;
 
-    /*
+    /**
      * Before going active or checking that we can go active, wait 500ms
      * for things to settle down to help prevent a race condition.
      */
     synchronized void setSignalAppearance() {
-        log.debug("setSignalAppearance called for {}", source.getDisplayName());
+        log.debug("setMastAppearance (Aspect) called for {}", source.getDisplayName());
         if (inWait) {
-            log.debug("setSignalAppearance called with inWait set, returning");
+            log.debug("setMastAppearance (Aspect) called with inWait set, returning");
             return;
         }
         inWait = true;
@@ -778,7 +778,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         // The next line forces a single initialization of InstanceManager.getDefault(jmri.SignalMastLogicManager.class)
         // before launching delay
         int tempDelay = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay() / 2;
-
+        log.debug("SignalMastLogicManager started (delay)");
         jmri.util.ThreadingUtil.runOnLayoutDelayed(
                 () -> {
                     setMastAppearance();
@@ -793,7 +793,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
      * Evaluate the destination signal mast Aspect and set ours accordingly.
      */
     void setMastAppearance() {
-        log.debug("Set Signal Mast Aspect");
+        log.debug("Set source Signal Mast Aspect");
         if (getSourceMast().getHeld()) {
             log.debug("Signal is at a Held state so will set to the aspect defined for Held or Danger");
 
@@ -1053,8 +1053,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         //autoBlocks are for those automatically generated by the system.
         LinkedHashMap<Block, Integer> autoBlocks = new LinkedHashMap<Block, Integer>(0);
 
-        List<Block> xingAutoBlocks = new ArrayList<Block>(0);
-        List<Block> dblCrossoverAutoBlocks = new ArrayList<Block>(0);
+        List<Block> xingAutoBlocks = new ArrayList<>(0);
+        List<Block> dblCrossoverAutoBlocks = new ArrayList<>(0);
         SignalMast destination;
         boolean active = false;
         boolean destMastInit = false;
@@ -1419,7 +1419,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         List<Block> getBlocks() {
-            List<Block> out = new ArrayList<Block>();
+            List<Block> out = new ArrayList<>();
             for (NamedBeanSetting nbh : userSetBlocks) {
                 out.add((Block) nbh.getBean());
             }
@@ -1427,7 +1427,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         List<Block> getAutoBlocks() {
-            List<Block> out = new ArrayList<Block>();
+            List<Block> out = new ArrayList<>();
             Set<Block> blockKeys = autoBlocks.keySet();
             //while ( blockKeys.hasMoreElements() )
             for (Block key : blockKeys) {
@@ -1495,7 +1495,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         List<SignalMast> getSignalMasts() {
-            List<SignalMast> out = new ArrayList<SignalMast>();
+            List<SignalMast> out = new ArrayList<>();
             for (NamedBeanSetting nbh : userSetMasts) {
                 out.add((SignalMast) nbh.getBean());
             }
@@ -1503,7 +1503,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         List<SignalMast> getAutoSignalMasts() {
-            List<SignalMast> out = new ArrayList<SignalMast>();
+            List<SignalMast> out = new ArrayList<>();
             Enumeration<SignalMast> en = autoMasts.keys();
             while (en.hasMoreElements()) {
                 out.add(en.nextElement());
@@ -1920,7 +1920,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             Enumeration<SignalMast> mastKeys = autoMasts.keys();
             while (mastKeys.hasMoreElements()) {
                 SignalMast key = mastKeys.nextElement();
-                //log.debug(destination.getDisplayName() + " auto mast add list " + key.getDisplayName());
+                if (log.isDebugEnabled()) {
+                    log.debug("{} auto mast add list {}", destination.getDisplayName(), key.getDisplayName());
+                }
                 key.addPropertyChangeListener(propertySignalMastListener);
                 if (!key.getAspect().equals(autoMasts.get(key))) {
                     if (isSignalMastIncluded(key)) {
@@ -1936,8 +1938,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             for (NamedBeanSetting nbh : userSetMasts) {
                 SignalMast key = (SignalMast) nbh.getBean();
                 key.addPropertyChangeListener(propertySignalMastListener);
-                //log.debug(destination.getDisplayName() + " key asepct " + key.getAspect());
-                //log.debug(destination.getDisplayName() + " key exepcted aspect " + masts.get(key));
+                if (log.isDebugEnabled()) {
+                    log.debug("mast '{}' key aspect '{}'", destination.getDisplayName(), key.getAspect());
+                }
                 if ((key.getAspect() == null) || (!key.getAspect().equals(nbh.getStringSetting()))) {
                     routeclear = false;
                 }
@@ -1952,7 +1955,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
             Set<Block> autoBlockKeys = autoBlocks.keySet();
             for (Block key : autoBlockKeys) {
-                //log.debug(destination.getDisplayName() + " auto block add list " + key.getDisplayName());
+                log.debug("{} auto block add list {}", destination.getDisplayName(), key.getDisplayName());
                 key.addPropertyChangeListener(propertyBlockListener);
                 if (key.getState() != autoBlocks.get(key)) {
                     if (isBlockIncluded(key)) {
@@ -1989,8 +1992,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 }
             }
             if (permissiveBlock) {
-                /*If a block has been found to be permissive, but the source signalmast
-                 does not support a call-on/permissive aspect then the route can not be set*/
+                /* If a block has been found to be permissive, but the source signalmast
+                 does not support a call-on/permissive aspect then the route can not be set */
                 if (getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE) == null) {
                     routeclear = false;
                 }
@@ -2018,7 +2021,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     setupLayoutEditorDetails();
                 } catch (jmri.JmriException e) {
                     throw e;
-                    //Considered normal if there is no vlaid path using the layout editor.
+                    // Considered normal if there is no valid path using the layout editor.
                 }
             } else {
                 destinationBlock = null;
@@ -2040,15 +2043,13 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     setupLayoutEditorDetails();
                 } catch (jmri.JmriException e) {
                     throw e;
-                    //Considered normal if there is no valid path using the Layout Editor.
+                    // Considered normal if there is no valid path using the Layout Editor.
                 }
             }
         }
 
         void setupLayoutEditorDetails() throws jmri.JmriException {
-            if (log.isDebugEnabled()) {
-                log.debug("setupLayoutEditorDetails: useLayoutEditor={} disposed={}", useLayoutEditor, disposed);
-            }
+            log.debug("setupLayoutEditorDetails: useLayoutEditor={} disposed={}", useLayoutEditor, disposed);
             if ((!useLayoutEditor) || (disposed)) {
                 return;
             }
@@ -2057,7 +2058,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 log.debug(destination.getDisplayName() + " Set use layout editor");
             }
             List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-            List<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
+            List<LayoutBlock> protectingBlocks = new ArrayList<>();
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
             LayoutBlock remoteProtectingBlock = null;
@@ -2092,16 +2093,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 log.error("No facing block found for destination mast " + destination.getDisplayName());
                 throw new jmri.JmriException("No facing block found for destination mast " + destination.getDisplayName());
             }
-            List<LayoutBlock> lblks = new ArrayList<LayoutBlock>();
+            List<LayoutBlock> lblks = new ArrayList<>();
             if (protectingBlock == null) {
+                log.debug("protecting block is null");
                 String pBlkNames = "";
                 StringBuffer lBlksNamesBuf = new StringBuffer();
                 for (LayoutBlock pBlk : protectingBlocks) {
-                    pBlkNames = pBlkNames + " " + pBlk.getDisplayName() + " " + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST) + ", ";
+                    log.debug("checking layoutBlock {}", pBlk.getDisplayName());
+                    pBlkNames = pBlkNames + pBlk.getDisplayName() + " (" + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST) + "), ";
                     if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)) {
                         try {
                             lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
                             protectingBlock = pBlk;
+                            log.debug("building path names...");
                             for (LayoutBlock lBlk : lblks) {
                                 lBlksNamesBuf.append(" ");
                                 lBlksNamesBuf.append(lBlk.getDisplayName());
@@ -2115,7 +2119,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 String lBlksNames = new String(lBlksNamesBuf);
 
                 if (protectingBlock == null) {
-                    throw new jmri.JmriException("Path not valid, protecting block null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.getDisplayName() + " layout block names: " + lBlksNames);
+                    throw new jmri.JmriException("Path not valid, protecting block is null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.getDisplayName() + ". Layout block names: " + lBlksNames);
                 }
             }
             try {
@@ -2142,7 +2146,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 try {
                     lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
                 } catch (jmri.JmriException ee) {
-                    log.error("No blocks found by the layout editor for pair " + source.getDisplayName() + " " + destination.getDisplayName());
+                    log.error("No blocks found by the layout editor for pair {}-{}", source.getDisplayName(), destination.getDisplayName());
                 }
                 LinkedHashMap<Block, Integer> block = setupLayoutEditorTurnoutDetails(lblks);
 
@@ -2150,7 +2154,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                     blockInXings.get(i).removeSignalMastLogic(source);
                 }
                 blockInXings = new ArrayList<LevelXing>(0);
-                xingAutoBlocks = new ArrayList<Block>(0);
+                xingAutoBlocks = new ArrayList<>(0);
                 for (LayoutEditor lay : layout) {
                     for (LevelXing levelXing : lay.getLevelXings()) {
                         //Looking for a crossing that both layout blocks defined and they are individual.
@@ -2184,8 +2188,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
 
         /**
-         * From a list of Layout Blocks search for included Turnouts and their
-         * set to state
+         * From a list of Layout Blocks, search for included Turnouts and their
+         * Set To state.
          *
          * @param lblks List of Layout Blocks
          * @return a list of block - turnout state pairs
@@ -2289,7 +2293,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                 return;
             }
             List<jmri.SignalMastLogic> smlList = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getLogicsByDestination(destination);
-            List<Block> allBlock = new ArrayList<Block>();
+            List<Block> allBlock = new ArrayList<>();
 
             for (NamedBeanSetting nbh : userSetBlocks) {
                 allBlock.add((Block) nbh.getBean());

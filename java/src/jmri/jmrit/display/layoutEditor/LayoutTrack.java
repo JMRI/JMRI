@@ -5,13 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jmri.util.ColorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,10 +66,11 @@ public abstract class LayoutTrack {
     //protected static double maxDashLength = 10;
     protected boolean hidden = false;
 
-    protected static Color defaultTrackColor = Color.black;
+    // package-private
+    static Color defaultTrackColor = Color.black;
 
-    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
-    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;
+//    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
+//    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;
 
     /**
      * constructor method
@@ -80,6 +79,7 @@ public abstract class LayoutTrack {
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;
+        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
     }
 
     /**
@@ -107,7 +107,7 @@ public abstract class LayoutTrack {
      *
      * @param p the coordinates to set
      */
-    public void setCoordsCenter(@Nullable Point2D p) {
+    public void setCoordsCenter(@Nonnull Point2D p) {
         center = p;
     }
 

@@ -43,8 +43,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AppsBase {
 
-    @SuppressFBWarnings(value = "MS_PKGPROTECT", justification = "not a library pattern")
-    private final static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
+    private final static String CONFIG_FILENAME = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
@@ -67,7 +66,7 @@ public abstract class AppsBase {
         try {
             Application.setApplicationName(applicationName);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
-            log.error("Unable to set application name: " + ex.getCause());
+            log.error("Unable to set application name", ex);
         }
 
         log.info(Log4JUtil.startupInfo(applicationName));
@@ -107,7 +106,6 @@ public abstract class AppsBase {
 
         FileUtil.logFilePaths();
 
-        Runnable r;
         /*
          * Once all the preferences have been loaded we can initial the
          * preferences doing it in a thread at this stage means we can let it
@@ -115,37 +113,25 @@ public abstract class AppsBase {
          * initialize it
          */
         if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
-            r = new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                            tp.init();
-                        });
-                    } catch (Exception ex) {
-                        log.error(ex.toString(), ex);
-                    }
+            new Thread(() -> {
+                try {
+                    InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
+                        tp.init();
+                    });
+                } catch (Exception ex) {
+                    log.error("Error initializing preferences window", ex);
                 }
-            };
-            Thread thr = new Thread(r);
-            thr.start();
+            }, "Initialize TabbedPreferences").start();
         }
 
         if (Boolean.getBoolean("org.jmri.python.preload")) {
-            r = new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        JmriScriptEngineManager.getDefault().initializeAllEngines();
-                    } catch (Exception ex) {
-                        log.error("Error in trying to initialize python interpreter " + ex.toString());
-                    }
+            new Thread(() -> {
+                try {
+                    JmriScriptEngineManager.getDefault().initializeAllEngines();
+                } catch (Exception ex) {
+                    log.error("Error initializing python interpreter", ex);
                 }
-            };
-            Thread thr2 = new Thread(r, "initialize python interpreter");
-            thr2.start();
+            }, "initialize python interpreter").start();
         }
 
         // all loaded, initialize objects as necessary
@@ -182,7 +168,7 @@ public abstract class AppsBase {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
-        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
+        if (!profileFile.exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // GUI should show message here
@@ -199,7 +185,8 @@ public abstract class AppsBase {
                 // Manually setting the configFilename property since calling
                 // Apps.setConfigFilename() does not reset the system property
                 System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-                log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
+                Profile profile = ProfileManager.getDefault().getActiveProfile();
+                log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
             } else {
                 log.error("Specify profile to use as command line argument.");
                 log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
@@ -232,18 +219,19 @@ public abstract class AppsBase {
     }
 
     /**
-     * Invoked to load the preferences information, and in the process
-     * configure the system.
-     * The high-level steps are:
-     *<ul>
-     *  <li>Locate the preferences file based through
-     *      {@link FileUtil#getFile(String)}
-     *  <li>See if the preferences file exists, and handle it if it doesn't
-     *  <li>Obtain a {@link jmri.ConfigureManager} from the {@link jmri.InstanceManager}
-     *  <li>Ask that ConfigureManager to load the file, in the process loading information into existing and new managers.
-     *  <li>Do any deferred loads that are needed
-     *  <li>If needed, migrate older formats
-     *</ul>
+     * Invoked to load the preferences information, and in the process configure
+     * the system. The high-level steps are:
+     * <ul>
+     * <li>Locate the preferences file based through
+     * {@link FileUtil#getFile(String)}
+     * <li>See if the preferences file exists, and handle it if it doesn't
+     * <li>Obtain a {@link jmri.ConfigureManager} from the
+     * {@link jmri.InstanceManager}
+     * <li>Ask that ConfigureManager to load the file, in the process loading
+     * information into existing and new managers.
+     * <li>Do any deferred loads that are needed
+     * <li>If needed, migrate older formats
+     * </ul>
      * (There's additional handling for shared configurations)
      */
     protected void setAndLoadPreferenceFile() {
@@ -271,7 +259,7 @@ public abstract class AppsBase {
         if (!file.exists()) {
             preferenceFileExists = false;
             configOK = false;
-            log.info("No pre-existing config file found, searched for '" + file.getPath() + "'");
+            log.info("No pre-existing config file found, searched for '{}'", file.getPath());
             return;
         }
         preferenceFileExists = true;
@@ -302,7 +290,7 @@ public abstract class AppsBase {
                     configDeferredLoadOK = doDeferredLoad(file);
                 });
             } catch (InterruptedException | InvocationTargetException ex) {
-                log.error("Exception creating system console frame: " + ex);
+                log.error("Exception creating system console frame:", ex);
             }
         }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
@@ -334,7 +322,7 @@ public abstract class AppsBase {
                 result = false;
             }
         } catch (JmriException e) {
-            log.error("Unhandled problem loading deferred configuration: " + e);
+            log.error("Unhandled problem loading deferred configuration:", e);
             result = false;
         }
         log.debug("end deferred load from config file {}, OK={}", file.getName(), result);
@@ -359,7 +347,7 @@ public abstract class AppsBase {
                             new BlockValueFile().writeBlockValues();
                         } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: "+jde); }
                         catch (java.io.IOException ioe) {
-                            log.error("Exception writing blocks: " + ioe);
+                            log.error("Exception writing blocks:", ioe);
                         }
 
                         // continue shutdown
@@ -401,18 +389,18 @@ public abstract class AppsBase {
         // save the configuration filename if present on the command line
         if (args.length >= 1 && args[0] != null && !args[0].equals("") && !args[0].contains("=")) {
             def = args[0];
-            log.debug("Config file was specified as: " + args[0]);
+            log.debug("Config file was specified as: {}", args[0]);
         }
         for (String arg : args) {
             String[] split = arg.split("=", 2);
             if (split[0].equalsIgnoreCase("config")) {
                 def = split[1];
-                log.debug("Config file was specified as: " + arg);
+                log.debug("Config file was specified as: {}", arg);
             }
         }
         if (def != null) {
             setJmriSystemProperty("configFilename", def);
-            log.debug("Config file set to: " + def);
+            log.debug("Config file set to: {}", def);
         }
     }
 
@@ -422,7 +410,7 @@ public abstract class AppsBase {
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return System.getProperty("org.jmri.Apps.configFilename");
         }
-        return configFilename;
+        return CONFIG_FILENAME;
     }
 
     static protected void setJmriSystemProperty(String key, String value) {
@@ -431,12 +419,10 @@ public abstract class AppsBase {
             if (current == null) {
                 System.setProperty("org.jmri.Apps." + key, value);
             } else if (!current.equals(value)) {
-                log.warn("JMRI property " + key + " already set to " + current
-                        + ", skipping reset to " + value);
+                log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (Exception e) {
-            log.error("Unable to set JMRI property " + key + " to " + value
-                    + "due to exception: " + e);
+            log.error("Unable to set JMRI property {} to {}due to exception: {}", key, value, e);
         }
     }
 

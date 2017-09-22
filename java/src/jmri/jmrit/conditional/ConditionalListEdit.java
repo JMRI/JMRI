@@ -567,8 +567,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _numConditionals++;
         _showReminder = true;
         // clear action items
-        _actionList = new ArrayList<ConditionalAction>();
-        _variableList = new ArrayList<ConditionalVariable>();
+        _actionList = new ArrayList<>();
+        _variableList = new ArrayList<>();
         _oldTargetNames.clear();
         makeEditConditionalWindow();
     }

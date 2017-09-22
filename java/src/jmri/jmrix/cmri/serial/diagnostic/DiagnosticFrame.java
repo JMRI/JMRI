@@ -39,9 +39,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected int obsDelay = 2000;
     protected int inCardNum = 2;
     protected int filterDelay = 0;
-    // Test running variables  
+    // Test running variables
     protected boolean testRunning = false;
-    protected boolean testSuspended = false;  // true when Wraparound is suspended by error 
+    protected boolean testSuspended = false;  // true when Wraparound is suspended by error
     protected byte[] outBytes = new byte[256];
     protected int curOutByte = 0;       // current output byte in output test
     protected int curOutBit = 0;        // current on bit in current output byte in output test
@@ -274,7 +274,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             statusText1.setVisible(true);
             return (false);
         }
-        // determine if node is SMINI, USIC_SUSIC, or 
+        // determine if node is SMINI, USIC_SUSIC, or
         int type = node.getNodeType();
         isSMINI = (type == SerialNode.SMINI);
         isUSIC_SUSIC = (type == SerialNode.USIC_SUSIC);
@@ -421,7 +421,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // Set up beginning LED on position
         curOutByte = begOutByte;
         curOutBit = 0;
-        // Send initialization message                
+        // Send initialization message
         _memo.getTrafficController().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
         try {
             // Wait for initialization to complete
@@ -438,9 +438,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Run an Output Test.
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem,
-    // though it would be good to fix it if you're working in this area
     protected void runOutputTest() {
         // Set up timer to update output pattern periodically
         outTimer = new Timer(obsDelay, new ActionListener() {
@@ -469,7 +466,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             }
                         }
                     }
-                    statusText2.setText(new String(st));
+                    statusText2.setText(st.toString());
                     statusText2.setVisible(true);
                     // update bit pattern for next entry
                     curOutBit++;
@@ -488,7 +485,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
 
-        // start timer        
+        // start timer
         outTimer.start();
     }
 
@@ -523,7 +520,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         curOutByte = begOutByte;
         curOutValue = 0;
 
-        // Send initialization message                
+        // Send initialization message
         _memo.getTrafficController().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
         try {
             // Wait for initialization to complete
@@ -535,7 +532,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // Clear error count
         numErrors = 0;
         numIterations = 0;
-        // Initialize running flags 
+        // Initialize running flags
         testRunning = true;
         testSuspended = false;
         waitingOnInput = false;
@@ -547,9 +544,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Run a Wraparound Test.
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     protected void runWraparoundTest() {
         // Display Status Message
         statusText1.setText(Bundle.getMessage("StatusRunningWraparoundTest"));
@@ -594,7 +588,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                                     st.append(" ");
                                     st.append(Integer.toHexString((inBytes[i]) & 0x000000ff));
                                 }
-                                statusText2.setText(new String(st));
+                                statusText2.setText(st.toString());
                                 statusText2.setVisible(true);
                                 numErrors++;
                                 testSuspended = true;
@@ -631,7 +625,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                                 st.append("O ");
                             }
                         }
-                        statusText2.setText(new String(st));
+                        statusText2.setText(st.toString());
                         statusText2.setVisible(true);
 
                         // set up for testing input returned
@@ -672,7 +666,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
 
-        // start timer        
+        // start timer
         wrapTimer.start();
     }
 
@@ -726,7 +720,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
      */
     @Override
     public void message(SerialMessage m) {
-    }  // Ignore for now 
+    }  // Ignore for now
 
     /**
      * Reply notification implementing SerialListener interface

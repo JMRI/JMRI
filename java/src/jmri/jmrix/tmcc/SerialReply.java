@@ -1,6 +1,6 @@
 package jmri.jmrix.tmcc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.util.StringUtil;
 
 
 /**
@@ -24,19 +24,16 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder("");
         for (int i = 0; i < getNumDataElements(); i++) {
             if (i != 0) {
-                s += " ";
+                s.append(" ");
             }
-            s += jmri.util.StringUtil.twoHexFromInt(getElement(i));
+            s.append(StringUtil.twoHexFromInt(getElement(i)));
         }
-        return s;
+        return s.toString();
     }
 
     public int getAsWord() {
