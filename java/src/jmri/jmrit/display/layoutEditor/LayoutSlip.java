@@ -11,6 +11,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -106,15 +107,12 @@ public class LayoutSlip extends LayoutTurnout {
     public void setSlipType(int slipType) {
         if (type != slipType) {
             type = slipType;
+            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
+            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
             if (type == SINGLE_SLIP) {
-                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
                 turnoutStates.remove(STATE_BC);
             } else if (type == DOUBLE_SLIP) {
-                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
-                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
                 turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             } else {
                 log.error("Invalid slip Type " + slipType); //I18IN
@@ -977,12 +975,12 @@ public class LayoutSlip extends LayoutTurnout {
         InstanceManager.getDefault(jmri.SignalMastLogicManager.class).disableLayoutEditorUse(signalMast);
     }
 
-    HashMap<Integer, TurnoutState> turnoutStates = new HashMap<>(4);
+    HashMap<Integer, TurnoutState> turnoutStates = new LinkedHashMap<>(4);
 
     protected HashMap<Integer, TurnoutState> getTurnoutStates() {
         return turnoutStates;
     }
-    
+
     public int getTurnoutState(@Nonnull Turnout turn, int state) {
         if (turn == getTurnout()) {
             return getTurnoutState(state);

@@ -18,8 +18,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -502,13 +504,29 @@ public class LayoutTurntable extends LayoutTrack {
                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
                 jmi.setEnabled(false);
                 if (rt.getTurnout() != null) {
-                    jmi = rayPopup.add(rt.getTurnout().getDisplayName() + " (" + rt.getTurnoutState() + ")");
+                    String info = rt.getTurnout().getDisplayName();
+                    String stateString = getTurnoutStateString(rt.getTurnoutState());
+                    if (!stateString.isEmpty()) {
+                        info += " (" + stateString +")";
+                    }
+                    jmi = rayPopup.add(info);
                     jmi.setEnabled(false);
                 }
                 rayPopup.show(e.getComponent(), e.getX(), e.getY());
                 break;
             }
         }
+    }
+
+    private String getTurnoutStateString(int turnoutState) {
+        String result = "";
+        TurnoutManager tmi = InstanceManager.turnoutManagerInstance();
+        if (turnoutState == Turnout.CLOSED) {
+            result = tmi.getClosedText();
+        } else if (turnoutState == Turnout.THROWN) {
+            result = tmi.getThrownText();
+        }
+        return result;
     }
 
     public void setPosition(int index) {

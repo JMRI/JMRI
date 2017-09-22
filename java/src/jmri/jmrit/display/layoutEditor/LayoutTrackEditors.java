@@ -593,18 +593,16 @@ public class LayoutTrackEditors {
             editLayoutTurnout2ndTurnoutCheckBox.setText(Bundle.getMessage("ThrowTwoTurnouts"));
         }
 
-        if (layoutTurnout.getSecondTurnoutName() != null) {
-            editLayoutTurnout2ndTurnoutCheckBox.setSelected(true);
-            editLayoutTurnout2ndTurnoutInvertCheckBox.setEnabled(true);
+        boolean enable2nd = !layoutTurnout.getSecondTurnoutName().isEmpty();
+        editLayoutTurnout2ndTurnoutCheckBox.setSelected(enable2nd);
+        editLayoutTurnout2ndTurnoutInvertCheckBox.setEnabled(enable2nd);
+        editLayoutTurnout2ndTurnoutLabel.setEnabled(enable2nd);
+        editLayoutTurnout2ndTurnoutComboBox.setEnabled(enable2nd);
+        if (enable) {
             editLayoutTurnout2ndTurnoutInvertCheckBox.setSelected(layoutTurnout.isSecondTurnoutInverted());
-            editLayoutTurnout2ndTurnoutLabel.setEnabled(true);
-            editLayoutTurnout2ndTurnoutComboBox.setEnabled(true);
             editLayoutTurnout2ndTurnoutComboBox.setText(layoutTurnout.getSecondTurnoutName());
         } else {
-            editLayoutTurnout2ndTurnoutCheckBox.setSelected(false);
-            editLayoutTurnout2ndTurnoutInvertCheckBox.setEnabled(false);
-            editLayoutTurnout2ndTurnoutLabel.setEnabled(false);
-            editLayoutTurnout2ndTurnoutComboBox.setEnabled(false);
+            editLayoutTurnout2ndTurnoutInvertCheckBox.setSelected(false);
             editLayoutTurnout2ndTurnoutComboBox.setText("");
         }
 
@@ -1185,15 +1183,17 @@ public class LayoutTrackEditors {
     }
 
     private void drawSlipState(Graphics2D g2, int state) {
-        int ctrX = 20;
-        int ctrY = 20;
-        Point2D ldispA = new Point2D.Double(-20.0, 0.0);
-        Point2D ldispB = new Point2D.Double(-14.0, 14.0);
+        Point2D cenP = layoutSlip.getCoordsCenter();
+        Point2D A = MathUtil.subtract(layoutSlip.getCoordsA(), cenP);
+        Point2D B = MathUtil.subtract(layoutSlip.getCoordsB(), cenP);
+        Point2D C = MathUtil.subtract(layoutSlip.getCoordsC(), cenP);
+        Point2D D = MathUtil.subtract(layoutSlip.getCoordsD(), cenP);
 
-        Point2D A = new Point2D.Double(ctrX + ldispA.getX(), ctrY + ldispA.getY());
-        Point2D B = new Point2D.Double(ctrX + ldispB.getX(), ctrY + ldispB.getY());
-        Point2D C = new Point2D.Double(ctrX - ldispA.getX(), ctrY - ldispA.getY());
-        Point2D D = new Point2D.Double(ctrX - ldispB.getX(), ctrY - ldispB.getY());
+        Point2D ctrP = new Point2D.Double(20.0, 20.0);
+        A = MathUtil.add(MathUtil.multiply(MathUtil.normalize(A), 18.0), ctrP);
+        B = MathUtil.add(MathUtil.multiply(MathUtil.normalize(B), 18.0), ctrP);
+        C = MathUtil.add(MathUtil.multiply(MathUtil.normalize(C), 18.0), ctrP);
+        D = MathUtil.add(MathUtil.multiply(MathUtil.normalize(D), 18.0), ctrP);
 
         g2.setColor(Color.black);
         g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -1294,21 +1294,21 @@ public class LayoutTrackEditors {
         switch (testState) {
             default:
             case LayoutTurnout.STATE_AC: {
-                testState = LayoutTurnout.STATE_BD;
-                break;
-            }
-
-            case LayoutTurnout.STATE_BD: {
                 testState = LayoutTurnout.STATE_AD;
                 break;
             }
 
-            case LayoutTurnout.STATE_AD: {
+            case LayoutTurnout.STATE_BD: {
                 if (layoutSlip.getSlipType() == LayoutTurnout.SINGLE_SLIP) {
                     testState = LayoutTurnout.STATE_AC;
                 } else {
                     testState = LayoutTurnout.STATE_BC;
                 }
+                break;
+            }
+
+            case LayoutTurnout.STATE_AD: {
+                testState = LayoutTurnout.STATE_BD;
                 break;
             }
 
