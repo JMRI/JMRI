@@ -83,7 +83,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
-    private void forwardMessageToTurnout(String s, XNetReply l){
+    protected void forwardMessageToTurnout(String s, XNetReply l){
         XNetTurnout t = (XNetTurnout) getBySystemName(s);
         if ( null == t ) {
            // need to create a new one, and send the message on 
