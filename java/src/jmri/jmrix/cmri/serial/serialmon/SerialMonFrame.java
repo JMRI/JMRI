@@ -56,6 +56,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     jmri.UserPreferencesManager p;
     
     protected long lastTicks = 0L;
+    protected static int _DLE    = 0x10;    
 
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getHomePath()); //jmri.jmrit.XmlFile.userFileLocationDefault());
 //    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath()); //jmri.jmrit.XmlFile.userFileLocationDefault());
@@ -632,6 +633,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 sb.append(" OB=");
                 for (int i=2; i<l.getNumDataElements(); i++)
                 {
+                    if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE )) //c2
+                    {
+                        sb.append("<dle>");  // Convert DLE (0x10) to text
+                        i++;
+                    }
+
                     sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
                     sb.append(" ");
                 }   
@@ -687,7 +694,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     int i=5;
                     while (i<l.getNumDataElements())
                     {
-                        if (l.getElement(i) != 16) // skip DLE
+                        if (l.getElement(i) != _DLE) // skip DLE
                         {    
                             sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
                             sb.append(" ");
@@ -707,7 +714,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     i=5;
                     while (i<l.getNumDataElements())
                     {
-			if (l.getElement(i) != 16) // skip DLE
+			if (l.getElement(i) != _DLE) // skip DLE
 			{    
                             sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
                             sb.append(" ");
@@ -790,6 +797,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     sb.append(" IB=");
                     for (int i=2; i<l.getNumDataElements(); i++)
                     {
+                        if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE))  //c2
+                        {
+                            sb.append("<dle>");
+                            i++;
+                        }
                         sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
                         sb.append(" ");
                     }
