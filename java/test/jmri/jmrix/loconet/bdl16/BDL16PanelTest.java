@@ -29,6 +29,6 @@ public class BDL16PanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BDL16PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(BDL16PanelTest.class);
 
 }

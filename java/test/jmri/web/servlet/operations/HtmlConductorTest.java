@@ -34,6 +34,6 @@ public class HtmlConductorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HtmlConductorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HtmlConductorTest.class);
 
 }

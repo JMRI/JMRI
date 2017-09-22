@@ -29,6 +29,6 @@ public class SampleAutomatonTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SampleAutomatonTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SampleAutomatonTest.class);
 
 }

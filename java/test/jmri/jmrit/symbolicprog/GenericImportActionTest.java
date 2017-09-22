@@ -40,6 +40,6 @@ public class GenericImportActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GenericImportActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(GenericImportActionTest.class);
 
 }

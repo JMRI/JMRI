@@ -29,6 +29,6 @@ public class LnMessageServerActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnMessageServerActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnMessageServerActionTest.class);
 
 }

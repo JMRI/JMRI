@@ -239,6 +239,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             if (log.isDebugEnabled()) {
                 log.debug("list of WaitingThrottles is empty: " + la + ";" + a);
             }
+            log.debug("calling requestThrottleSetup()");
             requestThrottleSetup(la, true);
         } else {
             a.add(new WaitingThrottle(l, re));
@@ -407,6 +408,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     @Override
     public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l,boolean steal){
        // the default implementation does nothing.
+       log.debug("empty stealThrottleRequest() has been activated for address {}, with steal boolean = {}",address.getNumber(),steal);
     }
 
 
@@ -504,6 +506,32 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     
     public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         notifyThrottleKnown(throttle, addr, false);
+    }
+
+    /**
+     * When the system-specific ThrottleManager has been unable to create the DCC
+     * throttle because it is already in use and must be "stolen" to take control,
+     * it needs to notify the listener of this situation.
+     * <p>
+     * This applies only to those systems where "stealing" applies, such as LocoNet.
+     * <p>
+     * @param address The DCC Loco Address where controlling requires a steal
+     */
+    public void notifyStealRequest(DccLocoAddress address) {
+        if (throttleListeners != null) {
+            ArrayList<WaitingThrottle> a = throttleListeners.get(address);
+            if (a == null) {
+                log.debug("Cannot issue a steal request to a throttle listener because No throttle listeners registered for address {}",address.getNumber());
+                return;
+            }
+            ThrottleListener l;
+            log.debug("{} listener(s) registered for address {}",a.size(),address.getNumber());
+            for (int i = 0; i < a.size(); i++) {
+                l = a.get(i).getListener();
+                log.debug("Notifying a throttle listener (address {}) of the steal situation", address.getNumber());
+                l.notifyStealThrottleRequired(address);
+            }
+        }
     }
 
     /**
@@ -801,5 +829,5 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class);
 }

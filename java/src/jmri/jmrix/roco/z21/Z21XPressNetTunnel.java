@@ -265,6 +265,6 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class);
 
 }

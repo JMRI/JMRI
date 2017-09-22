@@ -34,6 +34,6 @@ public class PoolTrackActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PoolTrackActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PoolTrackActionTest.class);
 
 }

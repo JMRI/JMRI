@@ -71,6 +71,6 @@ public class ComboOffRadioButtonTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ComboOffRadioButtonTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ComboOffRadioButtonTest.class);
 
 }

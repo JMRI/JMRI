@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
+import java.util.List;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -175,22 +176,35 @@ public class AutoTurnouts {
             // next Block is outside of the Section
             nextBlock = exitPt.getFromBlock();
         } else {
-            // next Block is inside the Section
-            if (direction == Section.FORWARD) {
-                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
-                nextBlockSeqNum = curBlockSeqNum + 1;
-            } else if (direction == Section.REVERSE) {
-                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
-                nextBlockSeqNum = curBlockSeqNum - 1;
-            }
-            if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
-                log.error("Error in block sequence numbers when setting/checking turnouts");
-                return false;
+            if (!at.isAllocationReversed()) {
+                if (direction == Section.FORWARD) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                    nextBlockSeqNum = curBlockSeqNum + 1;
+                } else if (direction == Section.REVERSE) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                    nextBlockSeqNum = curBlockSeqNum - 1;
+                }
+                if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
+                    log.error("Error in block sequence numbers fwd when setting/checking turnouts");
+                    return false;
+                }
+            } else {
+                if (direction == Section.REVERSE) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                    nextBlockSeqNum = curBlockSeqNum + 1;
+                } else if (direction == Section.FORWARD) {
+                    nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                    nextBlockSeqNum = curBlockSeqNum - 1;
+                }
+                if ((nextBlock == null) && (curBlock != at.getStartBlock())) {
+                    log.error("Error in block sequence numbers rev when setting/checking turnouts");
+                    return false;
+                }
             }
         }
 
-        ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
-        ArrayList<Integer> settingsList = new ArrayList<Integer>();
+        List<LayoutTurnout> turnoutList = new ArrayList<>();
+        List<Integer> settingsList = new ArrayList<Integer>();
         // get turnouts by Block
         boolean turnoutsOK = true;
         while (curBlock != null) {
@@ -297,5 +311,5 @@ public class AutoTurnouts {
         return turnoutsOK;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class);
 }

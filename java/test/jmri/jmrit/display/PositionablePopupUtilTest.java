@@ -37,6 +37,6 @@ public class PositionablePopupUtilTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtilTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtilTest.class);
 
 }

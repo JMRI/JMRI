@@ -9,9 +9,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2012
- *
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class ShapeDrawer {
 

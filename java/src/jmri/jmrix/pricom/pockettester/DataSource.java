@@ -320,6 +320,8 @@ public class DataSource extends jmri.util.JmriJFrame {
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -405,7 +407,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(DataSource.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DataSource.class);
 
     /**
      * Internal class to handle the separate character-receive thread

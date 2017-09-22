@@ -34,6 +34,6 @@ public class ControlPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ControlPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ControlPanelTest.class);
 
 }

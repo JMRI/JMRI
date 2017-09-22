@@ -40,6 +40,6 @@ public class JsonConsistSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonConsistSocketServiceTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JsonConsistSocketServiceTest.class);
 
 }

@@ -40,6 +40,6 @@ public class EditPortalDirectionTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditPortalDirectionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditPortalDirectionTest.class);
 
 }

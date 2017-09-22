@@ -31,6 +31,6 @@ public class SimpleTurnoutTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutTest.class);
 
 }

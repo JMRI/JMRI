@@ -385,13 +385,13 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         int knownState = light.getState();
         switch (knownState) {
             case Light.ON:
-                nowStateTextField.setText(rbean.getString("LightStateOn"));
+                nowStateTextField.setText(rbean.getString("StateOn"));
                 break;
             case Light.INTERMEDIATE:
                 nowStateTextField.setText(rbean.getString("LightStateIntermediate"));
                 break;
             case Light.OFF:
-                nowStateTextField.setText(rbean.getString("LightStateOff"));
+                nowStateTextField.setText(rbean.getString("StateOff"));
                 break;
             case Light.TRANSITIONINGTOFULLON:
                 nowStateTextField.setText(rbean.getString("LightStateTransitioningToFullOn"));
@@ -424,5 +424,5 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlFrame.class);
 }

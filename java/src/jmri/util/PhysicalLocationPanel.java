@@ -72,9 +72,6 @@ public class PhysicalLocationPanel extends JPanel {
         gbc1.weighty = 100.0;
         gbc1.gridwidth = 1;
         gbc1.anchor = GridBagConstraints.LINE_START;
-        if (fill && false) {
-            gbc1.fill = GridBagConstraints.HORIZONTAL;
-        }
         return (gbc1);
     }
 
@@ -159,6 +156,6 @@ public class PhysicalLocationPanel extends JPanel {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PhysicalLocationPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(PhysicalLocationPanel.class);
 
 }

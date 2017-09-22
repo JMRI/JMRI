@@ -20,7 +20,7 @@ public class PointDetailsTest {
         LayoutBlock f = new LayoutBlock("test1","Facing Block");
         LayoutBlock p1 = new LayoutBlock("test2","Protecting Block 1");
         LayoutBlock p2 = new LayoutBlock("test3","Protecting Block 2");
-        List<LayoutBlock> blockList = new ArrayList<LayoutBlock>();
+        List<LayoutBlock> blockList = new ArrayList<>();
         blockList.add(p1);
         blockList.add(p2);
         PointDetails t = new PointDetails(f,blockList);
@@ -38,6 +38,6 @@ public class PointDetailsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PointDetailsTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PointDetailsTest.class);
 
 }

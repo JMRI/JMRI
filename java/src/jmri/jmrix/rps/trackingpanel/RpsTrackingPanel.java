@@ -65,7 +65,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
                 MeasurementRep r = measurementRepList.get(i);
                 if (r.contains(userPt)) {
                     Measurement m = r.measurement;
-                    return "ID " + m.getID() + " at " + m.getX() + "," + m.getY();
+                    return "ID " + m.getId() + " at " + m.getX() + "," + m.getY();
                 }
             }
 
@@ -210,7 +210,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
 
     @Override
     public void notify(Measurement m) {
-        String id = m.getID();
+        String id = m.getId();
         TransmitterStatus transmitter = transmitters.get(id);
         double xend = m.getX();
         double yend = m.getY();
@@ -220,7 +220,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         if (transmitter == null) {
             // create Transmitter status with current measurement
             // so we can draw line next time
-            log.debug("create new TransmitterStatus for " + m.getID());
+            log.debug("create new TransmitterStatus for " + m.getId());
             transmitter = new TransmitterStatus();
             transmitter.measurement = m;
             transmitter.color = nextColor();
@@ -315,5 +315,5 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         Shape rep2;
         Measurement measurement;
     }
-    private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class);
 }

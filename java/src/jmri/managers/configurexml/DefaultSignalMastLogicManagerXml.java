@@ -1,6 +1,5 @@
 package jmri.managers.configurexml;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import jmri.Block;
@@ -34,13 +33,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         setStoreElementClass(signalMastLogic);
         SignalMastLogicManager smlm = (SignalMastLogicManager) o;
         signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
-        ArrayList<SignalMastLogic> sml = smlm.getSignalMastLogicList();
+        List<SignalMastLogic> sml = smlm.getSignalMastLogicList();
         for (int i = 0; i < sml.size(); i++) {
             SignalMastLogic sm = sml.get(i);
             Element source = new Element("signalmastlogic");
             source.setAttribute("source", sm.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sm.getSourceMast().getDisplayName()));
-            ArrayList<SignalMast> destination = sm.getDestinationList();
+            List<SignalMast> destination = sm.getDestinationList();
             if (destination.size() != 0) {
                 for (int k = 0; k < destination.size(); k++) {
                     SignalMast dest = destination.get(k);
@@ -89,7 +88,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         }
 
                         if (sml.get(i).getStoreState(dest) == SignalMastLogic.STOREALL) {
-                            ArrayList<Block> blocks = sm.getBlocks(dest);
+                            List<Block> blocks = sm.getBlocks(dest);
                             if (blocks.size() > 0) {
                                 Element blockElement = new Element("blocks");
                                 for (int j = 0; j < blocks.size(); j++) {
@@ -106,7 +105,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(blockElement);
                             }
-                            ArrayList<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
+                            List<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
                             if (turnouts.size() > 0) {
                                 Element turnoutElement = new Element("turnouts");
                                 for (int j = 0; j < turnouts.size(); j++) {
@@ -121,7 +120,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(turnoutElement);
                             }
-                            ArrayList<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
+                            List<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
                             if (sensors.size() > 0) {
                                 Element sensorElement = new Element("sensors");
                                 for (int j = 0; j < sensors.size(); j++) {
@@ -136,7 +135,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(sensorElement);
                             }
-                            ArrayList<SignalMast> masts = sm.getSignalMasts(dest);
+                            List<SignalMast> masts = sm.getSignalMasts(dest);
                             if (masts.size() > 0) {
                                 Element mastElement = new Element("masts");
                                 for (int j = 0; j < masts.size(); j++) {
@@ -182,7 +181,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         SignalMastLogicManager sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         try {
             String logicDelay = signalMastLogic.getChild("logicDelay").getText();
-            sml.setSignalLogicDelay(Long.parseLong(logicDelay));
+            sml.setSignalLogicDelay(Integer.parseInt(logicDelay));
         } catch (java.lang.NullPointerException e) {
             //Considered normal if it doesn't exists
         }
@@ -358,5 +357,5 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class);
 }

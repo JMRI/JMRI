@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    NodeConfigActionTest.class,
-    NodeConfigFrameTest.class,
-    AddNodeFrameTest.class,
-    EditNodeFrameTest.class,
+    XBeeNodeConfigActionTest.class,
+    XBeeNodeConfigFrameTest.class,
+    XBeeAddNodeFrameTest.class,
+    XBeeEditNodeFrameTest.class,
     AssignmentTableModelTest.class
 })
 
@@ -35,6 +35,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

@@ -34,5 +34,5 @@ public class DispatcherProTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DispatcherProTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(DispatcherProTest.class);
 }

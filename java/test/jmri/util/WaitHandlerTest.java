@@ -204,6 +204,6 @@ public class WaitHandlerTest extends TestCase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class);
 
 }

@@ -29,6 +29,6 @@ public class XmlFileValidateActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlFileValidateActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XmlFileValidateActionTest.class);
 
 }

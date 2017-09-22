@@ -48,12 +48,12 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
     String url;
 
     @Override
-    public String getUrl() {
+    public String getURL() {
         return url;
     }
 
     @Override
-    public void setUrl(String u) {
+    public void setULRL(String u) {
         url = u;
     }
 
@@ -99,6 +99,6 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
         super.doMouseClicked(event);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LinkingLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LinkingLabel.class);
 
 }

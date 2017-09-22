@@ -212,7 +212,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton addButton;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     String connectionChoice = "";
@@ -244,7 +244,7 @@ public class ReporterTableAction extends AbstractTableAction {
             };
             if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
                 jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
-                List<Manager> managerList = proxy.getManagerList();
+                List<Manager<Reporter>> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
@@ -264,14 +264,15 @@ public class ReporterTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(reportManager.getSystemPrefix()));
             }
-            hardwareAddressTextField.setName("sysName"); // for jfcUnit test NOI18N
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
                     okListener, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
+        hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.white);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -317,8 +318,7 @@ public class ReporterTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage = new String();
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        String errorMessage = null;
         for (int x = 0; x < numberOfReporters; x++) {
             curAddress = reportManager.getNextValidAddress(curAddress, reporterPrefix);
             if (curAddress == null) {
@@ -329,7 +329,6 @@ public class ReporterTableAction extends AbstractTableAction {
                 break;
             }
 
-            lastSuccessfulAddress = curAddress;
             // Compose the proposed system name from parts:
             rName = reporterPrefix + reportManager.typeLetter() + curAddress;
             // rName = prefix + InstanceManager.reportManagerInstance().typeLetter() + curAddress;
@@ -341,6 +340,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 handleCreateException(rName); // displays message dialog to the user
                 // add to statusBar as well
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
                 return; // without creating
             }
@@ -368,7 +368,7 @@ public class ReporterTableAction extends AbstractTableAction {
             // end of for loop creating range of Reporters
         }
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
@@ -377,10 +377,18 @@ public class ReporterTableAction extends AbstractTableAction {
         }
 
         pref.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+        addButton = null;
     }
 
     private String addEntryToolTip;
 
+    /**
+     * Activate Add a range option if manager accepts adding more than 1 Reporter
+     * and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     */
     private void canAddRange(ActionEvent e) {
         range.setEnabled(false);
         range.setSelected(false);
@@ -391,7 +399,7 @@ public class ReporterTableAction extends AbstractTableAction {
         }
         if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
             jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
-            List<Manager> managerList = proxy.getManagerList();
+            List<Manager<Reporter>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (int x = 0; x < managerList.size(); x++) {
                 jmri.ReporterManager mgr = (jmri.ReporterManager) managerList.get(x);
@@ -481,11 +489,11 @@ public class ReporterTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
-                // get prefixSelectedItem
-                return true;
+//            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
+//                // get prefixSelectedItem
+//                return true;
             } else {
-                return false;
+                return true; //false; // TODO temporarily disabled checking format while adding user feedback
             }
         }
 
@@ -545,6 +553,6 @@ public class ReporterTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class);
 
 }

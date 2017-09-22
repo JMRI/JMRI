@@ -29,6 +29,6 @@ public class XTableColumnModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XTableColumnModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(XTableColumnModelTest.class);
 
 }

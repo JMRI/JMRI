@@ -172,6 +172,8 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+            justification = "better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         JTextField b;
         switch (col) {
@@ -298,7 +300,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * Configure a table to have our standard rows and columns. This is
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
-     *
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -367,11 +368,10 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * Method to self print or print preview the table. Printed in equally sized
      * columns across the page with headings and vertical lines between each
      * column. Data is word wrapped within a column. Can handle data as strings,
-     * comboboxes or booleans
+     * comboboxes or booleans.
+     *
+     * @param w the printer output to write to
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine() - this.getColumnCount() - 1) / this.getColumnCount();
@@ -394,15 +394,15 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
         // now print each row of data
         // create a base string the width of the column
-        String spaces = "";
+        StringBuilder spaces = new StringBuilder("");
         for (int i = 0; i < columnSize; i++) {
-            spaces = spaces + " ";
+            spaces.append(" ");
         }
         for (int i = 0; i < this.getRowCount(); i++) {
             for (int j = 0; j < this.getColumnCount(); j++) {
                 //check for special, non string contents
                 if (this.getValueAt(i, j) == null) {
-                    columnStrings[j] = spaces;
+                    columnStrings[j] = spaces.toString();
                 } else if (this.getValueAt(i, j) instanceof JComboBox) {
                     columnStrings[j] = (String) ((JComboBox<?>) this.getValueAt(i, j)).getSelectedItem();
                 } else if (this.getValueAt(i, j) instanceof Boolean) {
@@ -418,16 +418,13 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
-        String lineString = "";
+        StringBuilder lineString = new StringBuilder("");
         // create a base string the width of the column
-        String spaces = "";
+        StringBuilder spaces = new StringBuilder("");
         for (int i = 0; i < columnSize; i++) {
-            spaces = spaces + " ";
+            spaces.append(" ");
         }
         // loop through each column
         boolean complete = false;
@@ -462,23 +459,22 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                     columnString = columnStrings[i] + spaces.substring(columnStrings[i].length());
                     columnStrings[i] = "";
                 }
-                lineString = lineString + columnString + " ";
+                lineString.append(columnString).append(" ");
             }
             try {
-                w.write(lineString);
+                w.write(lineString.toString());
                 //write vertical dividing lines
                 for (int i = 0; i < w.getCharactersPerLine(); i = i + columnSize + 1) {
                     w.write(w.getCurrentLineNumber(), i, w.getCurrentLineNumber() + 1, i);
                 }
-                lineString = "\n"; // NOI18N
-                w.write(lineString);
-                lineString = "";
+                w.write("\n"); // NOI18N
+                lineString = new StringBuilder("");
             } catch (IOException e) {
-                log.warn("error during printing: " + e);
+                log.warn("error during printing:", e);
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class);
 
 }

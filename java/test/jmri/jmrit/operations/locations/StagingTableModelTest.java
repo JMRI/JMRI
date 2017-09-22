@@ -28,6 +28,6 @@ public class StagingTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StagingTableModelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StagingTableModelTest.class);
 
 }

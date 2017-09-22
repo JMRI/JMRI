@@ -149,7 +149,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     private boolean unsolicited;
-    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class);
 
     /**
      * Respond to an event triggered by RXTX. In this case we are

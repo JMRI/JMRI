@@ -286,7 +286,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
-    Thread PollThread;
+    Thread pollThread;
     boolean stopPolling = true;
 
     protected Runnable pollHandler;

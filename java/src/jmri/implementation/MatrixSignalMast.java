@@ -438,8 +438,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //NOI18N
-            //Do nothing at this stage
         }
     }
 
@@ -483,5 +481,5 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class);
 }

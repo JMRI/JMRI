@@ -229,6 +229,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

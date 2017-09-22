@@ -133,6 +133,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         };
         Thread thr = new Thread(r);
+        thr.setName("PanelEditor init");
         thr.start();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -170,8 +171,6 @@ public class PanelEditor extends Editor implements ItemListener {
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
-            PanelEditor panelEd;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
@@ -179,11 +178,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 ii.setVisible(true);
             }
 
-            ActionListener init(PanelEditor pe) {
-                panelEd = pe;
-                return this;
-            }
-        }.init(this));
+        });
         fileMenu.add(editItem);
 
         editItem = new JMenuItem(Bundle.getMessage("CPEView"));
@@ -359,10 +354,10 @@ public class PanelEditor extends Editor implements ItemListener {
             showTooltipBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    setAllShowTooltip(showTooltipBox.isSelected());
+                    setAllShowToolTip(showTooltipBox.isSelected());
                 }
             });
-            showTooltipBox.setSelected(showTooltip());
+            showTooltipBox.setSelected(showToolTip());
 
             contentPane.add(menuBox);
             menuBox.addActionListener(new ActionListener() {
@@ -459,7 +454,7 @@ public class PanelEditor extends Editor implements ItemListener {
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
-        showTooltipBox.setSelected(showTooltip());
+        showTooltipBox.setSelected(showToolTip());
         hiddenBox.setSelected(showHidden());
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
     }
@@ -467,7 +462,7 @@ public class PanelEditor extends Editor implements ItemListener {
     static class ComboBoxItem {
 
         private String name;
-        private String BundleName;
+        private String bundleName;
 
         protected ComboBoxItem(String n) {
             name = n;
@@ -482,27 +477,23 @@ public class PanelEditor extends Editor implements ItemListener {
             // I18N split Bundle name
             // use NamedBeanBundle property for basic beans like "Turnout" I18N
             if ("Sensor".equals(name)) {
-                BundleName = "BeanNameSensor";
+                bundleName = "BeanNameSensor";
             } else if ("SignalHead".equals(name)) {
-                BundleName = "BeanNameSignalHead";
+                bundleName = "BeanNameSignalHead";
             } else if ("SignalMast".equals(name)) {
-                BundleName = "BeanNameSignalMast";
+                bundleName = "BeanNameSignalMast";
             } else if ("Memory".equals(name)) {
-                BundleName = "BeanNameMemory";
+                bundleName = "BeanNameMemory";
             } else if ("Reporter".equals(name)) {
-                BundleName = "BeanNameReporter";
+                bundleName = "BeanNameReporter";
             } else if ("Light".equals(name)) {
-                BundleName = "BeanNameLight";
+                bundleName = "BeanNameLight";
             } else {
-                BundleName = name;
+                bundleName = name;
             }
-            return Bundle.getMessage(BundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            return Bundle.getMessage(bundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
-
-    private int locationX = 0;
-    private int locationY = 0;
-    private static final int DELTA = 20;
 
     /*
      *  itemListener for JComboBox
@@ -930,7 +921,7 @@ public class PanelEditor extends Editor implements ItemListener {
             _highlightcomponent = null;
             _targetPanel.repaint();
         }
-        if (selection != null && selection.getDisplayLevel() > BKG && selection.showTooltip()) {
+        if (selection != null && selection.getDisplayLevel() > BKG && selection.showToolTip()) {
             showToolTip(selection, event);
             //selection.highlightlabel(true);
             _targetPanel.repaint();
@@ -1374,5 +1365,5 @@ public class PanelEditor extends Editor implements ItemListener {
      * ***************************************************
      */
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
 }

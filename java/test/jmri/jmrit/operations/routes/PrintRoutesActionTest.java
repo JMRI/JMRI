@@ -32,6 +32,6 @@ public class PrintRoutesActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintRoutesActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PrintRoutesActionTest.class);
 
 }

@@ -28,6 +28,7 @@ public class IndicatorTOItemPanelTest {
         Editor editor = new EditorScaffold();
         IndicatorTOItemPanel t = new IndicatorTOItemPanel(jf,"IT01","",tableModel,editor);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(jf);
     }
 
     // The minimal setup for log4J
@@ -41,6 +42,6 @@ public class IndicatorTOItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(IndicatorTOItemPanelTest.class);
 
 }

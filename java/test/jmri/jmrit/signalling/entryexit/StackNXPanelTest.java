@@ -29,6 +29,6 @@ public class StackNXPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StackNXPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(StackNXPanelTest.class);
 
 }

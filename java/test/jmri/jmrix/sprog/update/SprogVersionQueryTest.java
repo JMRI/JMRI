@@ -31,6 +31,6 @@ public class SprogVersionQueryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogVersionQueryTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogVersionQueryTest.class);
 
 }

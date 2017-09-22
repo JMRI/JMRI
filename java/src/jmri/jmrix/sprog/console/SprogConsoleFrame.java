@@ -620,6 +620,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogConsoleFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogConsoleFrame.class);
 
 }

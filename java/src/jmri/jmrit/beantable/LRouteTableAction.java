@@ -1354,7 +1354,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
+                soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting sound file: " + e);
             }
@@ -1375,7 +1375,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             try {
-                scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
+                scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
                 log.error("exception setting script file: " + e);
             }
@@ -2437,8 +2437,8 @@ public class LRouteTableAction extends AbstractTableAction {
     private static final String SET_TO_CLOSED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateClosed")); //rbx.getString("xSetClosed");
     private static final String SET_TO_THROWN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateThrown")); //rbx.getString("xSetThrown");
     private static final String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle")); //rbx.getString("xSetToggle");
-    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOn")); //rbx.getString("xSetLightOn");
-    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOff")); //rbx.getString("xSetLightOff");
+    private static final String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOn")); //rbx.getString("xSetLightOn");
+    private static final String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("StateOff")); //rbx.getString("xSetLightOff");
     private static final String SET_TO_DARK = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateDark")); //rbx.getString("xSetDark");
     private static final String SET_TO_LIT = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("ColumnHeadLit")); //rbx.getString("xSetLit");
     private static final String SET_TO_HELD = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateHeld")); //rbx.getString("xSetHeld");
@@ -3020,5 +3020,5 @@ public class LRouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
 }

@@ -28,6 +28,6 @@ public class AbstractRailComReporterTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(AbstractRailComReporterTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(AbstractRailComReporterTest.class);
 
 }

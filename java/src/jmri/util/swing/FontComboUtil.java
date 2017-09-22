@@ -329,6 +329,6 @@ public class FontComboUtil {
         return fontList;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class);
 
 }

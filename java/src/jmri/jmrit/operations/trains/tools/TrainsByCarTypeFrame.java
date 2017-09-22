@@ -37,9 +37,9 @@ import org.slf4j.LoggerFactory;
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     TrainManager manager;
-    String Empty = "            ";
+    static final String EMPTY = "            ";
 
-    ArrayList<JCheckBox> trainList = new ArrayList<JCheckBox>();
+    ArrayList<JCheckBox> trainList = new ArrayList<>();
     JPanel trainCheckBoxes = new JPanel();
 
     // panels
@@ -55,7 +55,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 
     // radio buttons
     // text field
-    JLabel textCarType = new JLabel(Empty);
+    JLabel textCarType = new JLabel(EMPTY);
 
     // for padding out panel
     // combo boxes
@@ -231,7 +231,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             if (copyCheckBox.isSelected()) {
                 textCarType.setText((String) typeComboBox.getSelectedItem());
             } else {
-                textCarType.setText(Empty);
+                textCarType.setText(EMPTY);
                 updateTrains();
             }
         } else {
@@ -280,5 +280,5 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrame.class);
 }

@@ -334,5 +334,5 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         getBlock().setValue(val);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
 }

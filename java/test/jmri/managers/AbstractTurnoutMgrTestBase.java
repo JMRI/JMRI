@@ -56,7 +56,7 @@ public abstract class AbstractTurnoutMgrTestBase {
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
         try {
-            Turnout t = l.provideTurnout("");
+            l.provideTurnout("");
         } catch (IllegalArgumentException ex) {
           jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
           throw ex;

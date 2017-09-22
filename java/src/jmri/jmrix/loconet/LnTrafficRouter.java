@@ -99,5 +99,5 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class);
 }

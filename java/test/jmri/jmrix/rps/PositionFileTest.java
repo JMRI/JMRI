@@ -52,7 +52,7 @@ public class PositionFileTest extends TestCase {
     }
 
     void checkReading(Reading first, Reading second) {
-        Assert.assertEquals("id ok", first.getID(), second.getID());
+        Assert.assertEquals("id ok", first.getId(), second.getId());
         Assert.assertEquals("num ok", first.getNValues(), second.getNValues());
 
         for (int i = 1; i <= first.getNValues(); i++) {

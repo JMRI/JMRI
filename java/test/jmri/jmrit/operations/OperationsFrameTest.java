@@ -34,6 +34,6 @@ public class OperationsFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OperationsFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(OperationsFrameTest.class);
 
 }

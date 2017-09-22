@@ -220,8 +220,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     protected void edit() {
         makeIconEditorFrame(this, "Light", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.lightPickModelInstance());
-        _iconEditor.setIcon(3, "LightStateOff", off);
-        _iconEditor.setIcon(2, "LightStateOn", on);
+        _iconEditor.setIcon(3, "StateOff", off);
+        _iconEditor.setIcon(2, "StateOn", on);
         _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
         _iconEditor.makeIconPanel(false);
@@ -234,8 +234,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
     void updateLight() {
-        setOffIcon(_iconEditor.getIcon("LightStateOff"));
-        setOnIcon(_iconEditor.getIcon("LightStateOn"));
+        setOffIcon(_iconEditor.getIcon("StateOff"));
+        setOnIcon(_iconEditor.getIcon("StateOn"));
         setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
         setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
         setLight((Light) _iconEditor.getTableSelection());
@@ -326,5 +326,5 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIcon.class);
 }

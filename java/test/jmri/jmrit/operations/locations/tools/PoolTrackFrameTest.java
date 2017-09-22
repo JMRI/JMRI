@@ -34,6 +34,6 @@ public class PoolTrackFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PoolTrackFrameTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PoolTrackFrameTest.class);
 
 }

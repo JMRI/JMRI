@@ -42,22 +42,45 @@ public interface AddressedProgrammerManager {
      * Gain access to a Addressed Mode Programmer without reservation.
      *
      * @param pLongAddress true if this is a long (14 bit) address, else false
-     * @param pAddress     Specific decoder address to use.
+     * @param pAddress     specific decoder address to use
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     @CheckForNull
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
 
     /**
+     * Gain access to a Addressed Mode Programmer without reservation.
+     *
+     * @param address specific decoder address to use
+     * @return null only if there isn't an Ops Mode Programmer in the system
+     */
+    @CheckForNull
+    public default AddressedProgrammer getAddressedProgrammer(@Nonnull DccLocoAddress address) {
+        return this.getAddressedProgrammer(address.isLongAddress(), address.getNumber());
+    }
+
+    /**
      * Gain access to a (the) Addressed Mode Programmer, in the process
      * reserving it for yourself.
      *
      * @param pLongAddress true if this is a long (14 bit) address, else false
-     * @param pAddress     Specific decoder address to use.
+     * @param pAddress     Specific decoder address to use
      * @return null if the address is in use by a reserved programmer
      */
     @CheckForNull
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
+
+    /**
+     * Gain access to a (the) Addressed Mode Programmer, in the process
+     * reserving it for yourself.
+     *
+     * @param address specific decoder address to use
+     * @return null if the address is in use by a reserved programmer
+     */
+    @CheckForNull
+    public default AddressedProgrammer reserveAddressedProgrammer(@Nonnull DccLocoAddress address) {
+        return this.reserveAddressedProgrammer(address.isLongAddress(), address.getNumber());
+    }
 
     /**
      * Return access to an Addressed Mode Programmer, so that it can be used

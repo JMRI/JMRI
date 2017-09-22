@@ -141,7 +141,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoopbackTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoopbackTrafficController.class);
 }
 
 

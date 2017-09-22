@@ -1,8 +1,14 @@
 package jmri.jmrit.withrottle;
 
+import java.io.File;
+import java.util.Set;
+import jmri.InstanceInitializer;
+import jmri.implementation.AbstractInstanceInitializer;
+import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -260,4 +266,22 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
     private final static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
 
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(WiThrottlePreferences.class)) {
+                return new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"); // NOI18N
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(WiThrottlePreferences.class);
+            return set;
+        }
+    }
 }

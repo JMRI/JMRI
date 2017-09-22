@@ -203,5 +203,5 @@ public class XmlFileLocationAction extends AbstractAction {
         return s.toString();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(XmlFileLocationAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(XmlFileLocationAction.class);
 }

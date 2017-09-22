@@ -118,5 +118,5 @@ abstract public class VSDSound {
         // Default: do nothing
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(VSDSound.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDSound.class);
 }

@@ -93,7 +93,7 @@ public class MemoryTableAction extends AbstractTableAction {
 
             @Override
             public void clickOn(NamedBean t) {
-                // don't do anything on click; not used in this class, because 
+                // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
 
@@ -179,15 +179,11 @@ public class MemoryTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener okListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
-                }
+            ActionListener okListener = (ActionEvent e1) -> {
+                okPressed(e1);
             };
-            ActionListener cancelListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            ActionListener cancelListener = (ActionEvent e1) -> {
+                cancelPressed(e1);
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonCreate", okListener, cancelListener, statusBar));
             sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
@@ -245,8 +241,7 @@ public class MemoryTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the memoryManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameMemory"));
-        String errorMessage = new String();
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        String errorMessage = null;
         StringBuilder b;
         for (int x = 0; x < numberOfMemory; x++) {
 
@@ -271,6 +266,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 user = null; // new Memory objects always receive a valid system name using the next free index, but user names must not be in use so use none in that case
                 // show in status bar
                 errorMessage = Bundle.getMessage("ErrorDuplicateUserName", user);
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
             }
             if (sName != null && !sName.equals("") && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
@@ -278,6 +274,7 @@ public class MemoryTableAction extends AbstractTableAction {
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
                 // show in status bar
                 errorMessage = Bundle.getMessage("ErrorDuplicateSystemName", sName);
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
                 return; // new Memory objects are always valid, but system names must not be in use so skip in that case
             }
@@ -291,6 +288,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 // user input no good
                 handleCreateException(sName);
                 errorMessage = "An error has occurred";
+                statusBar.setText(errorMessage);
                 statusBar.setForeground(Color.red);
                 return; // without creating
             }
@@ -301,7 +299,7 @@ public class MemoryTableAction extends AbstractTableAction {
         } // end of for loop creating range of Memories
 
         // provide feedback to user
-        if (errorMessage.equals("")) {
+        if (errorMessage == null) {
             statusBar.setText(statusMessage);
             statusBar.setForeground(Color.gray);
         } else {
@@ -329,6 +327,6 @@ public class MemoryTableAction extends AbstractTableAction {
         return MemoryTableAction.class.getName();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryTableAction.class);
 
 }

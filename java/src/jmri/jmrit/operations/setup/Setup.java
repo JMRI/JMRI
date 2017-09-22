@@ -579,7 +579,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     public static String getRailroadName() {
         if (getDefault().railroadName == null) {
-            return WebServerPreferences.getDefault().getRailRoadName();
+            return WebServerPreferences.getDefault().getRailroadName();
         }
         return getDefault().railroadName;
     }
@@ -1788,7 +1788,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
             values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
         } else {
             values.setAttribute(Xml.NAME, getRailroadName());
@@ -2931,7 +2931,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return InstanceManager.getDefault(Setup.class);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Setup.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Setup.class);
 
     @Override
     public void dispose() {

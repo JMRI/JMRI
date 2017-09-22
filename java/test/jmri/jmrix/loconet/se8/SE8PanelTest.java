@@ -29,6 +29,6 @@ public class SE8PanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class);
 
 }

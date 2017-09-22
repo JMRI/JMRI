@@ -248,7 +248,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         XpaMessage msg = new XpaMessage();
         // message exists, now fill it
         int i;
-        for (i = 0; i < XpaMessage.maxSize; i++) {
+        for (i = 0; i < XpaMessage.MAX_SIZE; i++) {
             byte char1 = istream.readByte();
             msg.setElement(i, char1);
             //if (endReply(msg)) break;
@@ -334,5 +334,5 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XpaTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTrafficController.class);
 }

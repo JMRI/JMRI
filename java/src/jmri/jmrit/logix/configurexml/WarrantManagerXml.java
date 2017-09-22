@@ -393,7 +393,7 @@ public class WarrantManagerXml //extends XmlFile
             try {
                 speed = attr.getFloatValue();
             } catch (DataConversionException ex) {
-                speed = 0.0f;;
+                speed = 0.0f;
                 log.error("Unable to read speed of command.", ex);
             }
         }
@@ -406,6 +406,6 @@ public class WarrantManagerXml //extends XmlFile
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class);
 }
 

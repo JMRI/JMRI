@@ -62,10 +62,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JSlider speedSliderContinuous;
     private JSpinner speedSpinner;
     private SpinnerNumberModel speedSpinnerModel;
-    private JRadioButton SpeedStep128Button;
-    private JRadioButton SpeedStep28Button;
-    private JRadioButton SpeedStep27Button;
-    private JRadioButton SpeedStep14Button;
+    private JRadioButton speedStep128Button;
+    private JRadioButton speedStep28Button;
+    private JRadioButton speedStep27Button;
+    private JRadioButton speedStep14Button;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
     private JButton idleButton;
@@ -162,10 +162,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         //super.setEnabled(isEnabled);
         forwardButton.setEnabled(isEnabled);
         reverseButton.setEnabled(isEnabled);
-        SpeedStep128Button.setEnabled(isEnabled);
-        SpeedStep28Button.setEnabled(isEnabled);
-        SpeedStep27Button.setEnabled(isEnabled);
-        SpeedStep14Button.setEnabled(isEnabled);
+        speedStep128Button.setEnabled(isEnabled);
+        speedStep28Button.setEnabled(isEnabled);
+        speedStep27Button.setEnabled(isEnabled);
+        speedStep14Button.setEnabled(isEnabled);
         if (isEnabled) {
             configureAvailableSpeedStepModes();
         }
@@ -246,28 +246,28 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         float oldSpeed = (speedSlider.getValue() / (maxSpeed * 1.0f));
 
         if (speedStepMode == DccThrottle.SpeedStepMode14) {
-            SpeedStep14Button.setSelected(true);
-            SpeedStep27Button.setSelected(false);
-            SpeedStep28Button.setSelected(false);
-            SpeedStep128Button.setSelected(false);
+            speedStep14Button.setSelected(true);
+            speedStep27Button.setSelected(false);
+            speedStep28Button.setSelected(false);
+            speedStep128Button.setSelected(false);
             intSpeedSteps = 14;
         } else if (speedStepMode == DccThrottle.SpeedStepMode27) {
-            SpeedStep14Button.setSelected(false);
-            SpeedStep27Button.setSelected(true);
-            SpeedStep28Button.setSelected(false);
-            SpeedStep128Button.setSelected(false);
+            speedStep14Button.setSelected(false);
+            speedStep27Button.setSelected(true);
+            speedStep28Button.setSelected(false);
+            speedStep128Button.setSelected(false);
             intSpeedSteps = 27;
         } else if (speedStepMode == DccThrottle.SpeedStepMode28) {
-            SpeedStep14Button.setSelected(false);
-            SpeedStep27Button.setSelected(false);
-            SpeedStep28Button.setSelected(true);
-            SpeedStep128Button.setSelected(false);
+            speedStep14Button.setSelected(false);
+            speedStep27Button.setSelected(false);
+            speedStep28Button.setSelected(true);
+            speedStep128Button.setSelected(false);
             intSpeedSteps = 28;
         } else {
-            SpeedStep14Button.setSelected(false);
-            SpeedStep27Button.setSelected(false);
-            SpeedStep28Button.setSelected(false);
-            SpeedStep128Button.setSelected(true);
+            speedStep14Button.setSelected(false);
+            speedStep27Button.setSelected(false);
+            speedStep28Button.setSelected(false);
+            speedStep128Button.setSelected(true);
             intSpeedSteps = 126;
         }
         /* Set maximum speed based on the max speed stored in the roster as a percentage of the maximum */
@@ -510,10 +510,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
 
-        SpeedStep128Button = new JRadioButton(Bundle.getMessage("Button128SS"));
-        SpeedStep28Button = new JRadioButton(Bundle.getMessage("Button28SS"));
-        SpeedStep27Button = new JRadioButton(Bundle.getMessage("Button27SS"));
-        SpeedStep14Button = new JRadioButton(Bundle.getMessage("Button14SS"));
+        speedStep128Button = new JRadioButton(Bundle.getMessage("Button128SS"));
+        speedStep28Button = new JRadioButton(Bundle.getMessage("Button28SS"));
+        speedStep27Button = new JRadioButton(Bundle.getMessage("Button27SS"));
+        speedStep14Button = new JRadioButton(Bundle.getMessage("Button14SS"));
 
         forwardButton = new JRadioButton();
         if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
@@ -718,21 +718,21 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 });
 
         ButtonGroup speedStepButtons = new ButtonGroup();
-        speedStepButtons.add(SpeedStep128Button);
-        speedStepButtons.add(SpeedStep28Button);
-        speedStepButtons.add(SpeedStep27Button);
-        speedStepButtons.add(SpeedStep14Button);
+        speedStepButtons.add(speedStep128Button);
+        speedStepButtons.add(speedStep28Button);
+        speedStepButtons.add(speedStep27Button);
+        speedStepButtons.add(speedStep14Button);
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridy = 1;
-        spinnerPanel.add(SpeedStep128Button, constraints);
+        spinnerPanel.add(speedStep128Button, constraints);
         constraints.gridy = 2;
-        spinnerPanel.add(SpeedStep28Button, constraints);
+        spinnerPanel.add(speedStep28Button, constraints);
         constraints.gridy = 3;
-        spinnerPanel.add(SpeedStep27Button, constraints);
+        spinnerPanel.add(speedStep27Button, constraints);
         constraints.gridy = 4;
-        spinnerPanel.add(SpeedStep14Button, constraints);
+        spinnerPanel.add(speedStep14Button, constraints);
 
-        SpeedStep14Button.addActionListener(
+        speedStep14Button.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -741,7 +741,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     }
                 });
 
-        SpeedStep27Button.addActionListener(
+        speedStep27Button.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -750,7 +750,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     }
                 });
 
-        SpeedStep28Button.addActionListener(
+        speedStep28Button.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -759,7 +759,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     }
                 });
 
-        SpeedStep128Button.addActionListener(
+        speedStep128Button.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -1197,24 +1197,24 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         int modes = jmri.InstanceManager.throttleManagerInstance()
                 .supportedSpeedModes();
         if ((modes & DccThrottle.SpeedStepMode128) != 0) {
-            SpeedStep128Button.setEnabled(true);
+            speedStep128Button.setEnabled(true);
         } else {
-            SpeedStep128Button.setEnabled(false);
+            speedStep128Button.setEnabled(false);
         }
         if ((modes & DccThrottle.SpeedStepMode28) != 0) {
-            SpeedStep28Button.setEnabled(true);
+            speedStep28Button.setEnabled(true);
         } else {
-            SpeedStep28Button.setEnabled(false);
+            speedStep28Button.setEnabled(false);
         }
         if ((modes & DccThrottle.SpeedStepMode27) != 0) {
-            SpeedStep27Button.setEnabled(true);
+            speedStep27Button.setEnabled(true);
         } else {
-            SpeedStep27Button.setEnabled(false);
+            speedStep27Button.setEnabled(false);
         }
         if ((modes & DccThrottle.SpeedStepMode14) != 0) {
-            SpeedStep14Button.setEnabled(true);
+            speedStep14Button.setEnabled(true);
         } else {
-            SpeedStep14Button.setEnabled(false);
+            speedStep14Button.setEnabled(false);
         }
     }
 
@@ -1459,5 +1459,5 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ControlPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControlPanel.class);
 }

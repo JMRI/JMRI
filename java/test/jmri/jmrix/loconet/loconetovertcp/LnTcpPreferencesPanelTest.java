@@ -32,6 +32,6 @@ public class LnTcpPreferencesPanelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTcpPreferencesPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LnTcpPreferencesPanelTest.class);
 
 }

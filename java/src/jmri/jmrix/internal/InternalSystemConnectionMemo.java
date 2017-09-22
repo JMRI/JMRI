@@ -219,6 +219,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class);
 
 }

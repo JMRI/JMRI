@@ -29,6 +29,6 @@ public class SprogSlotTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SprogSlotTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogSlotTest.class);
 
 }

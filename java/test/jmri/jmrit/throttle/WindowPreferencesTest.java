@@ -29,5 +29,5 @@ public class WindowPreferencesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WindowPreferencesTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(WindowPreferencesTest.class);
 }

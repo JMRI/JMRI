@@ -206,7 +206,7 @@ confuses JavaHelp.
         <li>If you'd like to operate it manually, please 
         follow the rest of these bullets.
         (Or if using Eclipse, right-click on the
-        help/en/build.xml file and select Run As Ant Build.)<li>
+        help/en/build.xml file and select Run As Ant Build.)</li>
         
         <li>Start the tool by clicking on the jhelpdev.jar file.
         (If that doesn't work, try running either JHelpDev.csh or

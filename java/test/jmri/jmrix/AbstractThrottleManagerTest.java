@@ -50,6 +50,6 @@ public class AbstractThrottleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManagerTest.class);
 
 }

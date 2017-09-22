@@ -31,6 +31,6 @@ public class EngineSoundTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineSoundTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EngineSoundTest.class);
 
 }

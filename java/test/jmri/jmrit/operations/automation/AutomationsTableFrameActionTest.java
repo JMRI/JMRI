@@ -28,6 +28,6 @@ public class AutomationsTableFrameActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AutomationsTableFrameActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AutomationsTableFrameActionTest.class);
 
 }

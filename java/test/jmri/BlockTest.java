@@ -230,7 +230,7 @@ public class BlockTest extends TestCase {
         b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
         s1.setState(Sensor.ACTIVE);
         b1.setValue("b1 contents");
-        b1.setDirection(Path.NORTH | Path.WEST); //combination direction
+        b1.setDirection(Path.NORTH_WEST); //combination direction
 
         Sensor s2 = sm.provideSensor("IS2");
         b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));

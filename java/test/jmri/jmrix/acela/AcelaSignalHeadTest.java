@@ -41,6 +41,6 @@ public class AcelaSignalHeadTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadTest.class);
 
 }

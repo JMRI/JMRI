@@ -460,7 +460,7 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManager.class);
 
     @Override
     public void initialize() {

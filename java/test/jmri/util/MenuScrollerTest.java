@@ -31,6 +31,6 @@ public class MenuScrollerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MenuScrollerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(MenuScrollerTest.class);
 
 }

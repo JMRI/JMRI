@@ -534,6 +534,6 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BDL16Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BDL16Panel.class);
 
 }

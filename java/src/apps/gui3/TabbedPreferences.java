@@ -74,6 +74,10 @@ public class TabbedPreferences extends AppConfigBase {
     ArrayList<Element> preferencesElements = new ArrayList<>();
 
     JPanel detailpanel = new JPanel();
+    { 
+        // The default panel needs to have a CardLayout
+        detailpanel.setLayout(new CardLayout());
+    }
 
     ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<>();
     JPanel buttonpanel;
@@ -613,6 +617,6 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class);
 
 }

@@ -77,7 +77,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public Light getBySystemName(String name) {
-        return (Light) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public Light getByUserName(String key) {
-        return (Light) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -272,6 +272,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);
 
 }

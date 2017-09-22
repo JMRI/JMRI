@@ -40,6 +40,6 @@ public class Pr1WinExportActionTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Pr1WinExportActionTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(Pr1WinExportActionTest.class);
 
 }
