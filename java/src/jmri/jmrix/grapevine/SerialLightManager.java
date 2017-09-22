@@ -50,7 +50,7 @@ public class SerialLightManager extends AbstractLightManager {
                         + systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.warn("Invalid Light system Name format: " + systemName);
         }
         return lgt;
     }

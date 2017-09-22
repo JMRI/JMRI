@@ -129,7 +129,7 @@ public class SerialAddress {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'O') || (systemName.charAt(1) != type)) {
             // here if an illegal format 
-            log.error("illegal character in header field system name: "
+            log.error("invalid character in header field system name: "
                     + systemName);
             return (false);
         }
@@ -150,24 +150,24 @@ public class SerialAddress {
             try {
                 num = Integer.valueOf(systemName.substring(2)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field system name: "
+                log.warn("invalid character in number field system name: "
                         + systemName);
                 return (false);
             }
             if ((num < 1) || (num >= 256000)) {
-                log.error("number field out of range in system name: "
+                log.warn("number field out of range in system name: "
                         + systemName);
                 return (false);
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.error("bit number not in range 1 - 999 in system name: "
+                log.warn("bit number not in range 1 - 999 in system name: "
                         + systemName);
                 return (false);
             }
         } else {
             // This is a OLnnnBxxxx address - validate the node address field
             if (s.length() == 0) {
-                log.error("no node address before 'B' in system name: "
+                log.warn("no node address before 'B' in system name: "
                         + systemName);
                 return (false);
             }
@@ -175,12 +175,12 @@ public class SerialAddress {
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.error("illegal character in node address field of system name: "
+                log.warn("invalid character in node address field of system name: "
                         + systemName);
                 return (false);
             }
             if ((num < 0) || (num >= 128)) {
-                log.error("node address field out of range in system name: "
+                log.warn("node address field out of range in system name: "
                         + systemName);
                 return (false);
             }
@@ -188,12 +188,12 @@ public class SerialAddress {
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field of system name: "
+                log.warn("invalid character in bit number field of system name: "
                         + systemName);
                 return (false);
             }
             if ((num < 1) || (num > 2048)) {
-                log.error("bit number field out of range in system name: "
+                log.warn("bit number field out of range in system name: "
                         + systemName);
                 return (false);
             }

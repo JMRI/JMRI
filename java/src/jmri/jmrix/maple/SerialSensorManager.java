@@ -177,7 +177,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 sysNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
                 address = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and address format of nn:xx");
+                log.error("Unable to convert {} into the cab and address format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
             iName = (sysNode * 1000) + address;
@@ -186,7 +186,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
@@ -206,7 +206,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
         //Check to determine if the systemName is in use, return null if it is,
@@ -227,4 +228,5 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+
 }

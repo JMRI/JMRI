@@ -279,13 +279,14 @@ public class SerialAddress {
 
     /**
      * Public static method to validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      * @param systemName name to check
      * @param type       expected device type letter
      */
     public static boolean validSystemNameFormat(String systemName, char type) {
-        // validate the System Name leader characters
+        // validate the System Name prefix characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format, e.g. another system letter
@@ -293,7 +294,7 @@ public class SerialAddress {
             return false;
         }
         if (matcher.group(2).charAt(0) != type) {
-            log.error("type in " + systemName + " does not match " + type);
+            log.warn("type in " + systemName + " does not match " + type);
             return false;
         }
         Pattern p;
@@ -314,7 +315,7 @@ public class SerialAddress {
         Matcher m2 = p.matcher(systemName);
         if (!m2.matches()) {
             // here if cannot parse specifically
-            log.error("illegal system name format: " + systemName + " for type " + type);
+            log.warn("invalid system name format: " + systemName + " for type " + type);
             return (false);
         }
 
@@ -328,7 +329,7 @@ public class SerialAddress {
                 node = num / 1000;
                 bit = num % 1000;
             } else {
-                log.error("invalid value in system name: " + systemName);
+                log.warn("invalid value in system name: " + systemName);
                 return false;
             }
         } else {
@@ -340,7 +341,7 @@ public class SerialAddress {
 
         // check values
         if ((node < 1) || (node > 127)) {
-            log.error("invalid node number " + node + " in " + systemName);
+            log.warn("invalid node number " + node + " in " + systemName);
             return false;
         }
 
@@ -350,7 +351,7 @@ public class SerialAddress {
                     || (bit >= 201 && bit <= 224)
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
-                log.error("invalid bit number " + bit + " in " + systemName);
+                log.warn("invalid bit number " + bit + " in " + systemName);
                 return false;
             }
         } else { 
@@ -359,7 +360,7 @@ public class SerialAddress {
             String subtype = matcher.group(5);
             if (subtype == null) { // no subtype, just look at total
                 if ((bit < 1) || (bit > 224)) {
-                    log.error("invalid bit number " + bit + " in " + systemName);
+                    log.warn("invalid bit number " + bit + " in " + systemName);
                     return false;
                 } else {
                     return true;
@@ -369,23 +370,23 @@ public class SerialAddress {
             if (subtype.equals("A")) {
                 // advanced serial occ
                 if ((bit < 1) || (bit > 24)) {
-                    log.error("invalid bit number " + bit + " in " + systemName);
+                    log.warn("invalid bit number " + bit + " in " + systemName);
                     return false;
                 }
             } else if (subtype.equals("M")) { 
                 // advanced serial motion 
                 if ((bit < 1) || (bit > 24)) {
-                    log.error("invalid bit number " + bit + " in " + systemName);
+                    log.warn("invalid bit number " + bit + " in " + systemName);
                     return false;
                 }
             } else if (subtype.equals("S")) {// old serial
                 if ((bit < 1) || (bit > 24)) {
-                    log.error("invalid bit number " + bit + " in " + systemName);
+                    log.warn("invalid bit number " + bit + " in " + systemName);
                     return false;
                 }
             } else if (subtype.equals("P")) { // parallel
                 if ((bit < 1) || (bit > 96)) {
-                    log.error("invalid bit number " + bit + " in " + systemName);
+                    log.warn("invalid bit number " + bit + " in " + systemName);
                     return false;
                 }
             }

@@ -176,6 +176,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     /**
      * Get the bit address from the system name.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -191,14 +192,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: " + systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid loconet sensor system name: " + systemName);
+            log.warn("invalid loconet sensor system name: " + systemName);
             return (0);
         } else if (num > 4096) {
-            log.error("bit number out of range in loconet sensor system name: " + systemName);
+            log.warn("bit number out of range in loconet sensor system name: " + systemName);
             return (0);
         }
         return (num);
@@ -223,7 +224,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false); // NOI18N
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false); // I18N
             return null;
         }
 

@@ -50,9 +50,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         try {
             iName = Integer.parseInt(curAddress.substring(1));
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -93,7 +94,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(sName, 'T')) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }

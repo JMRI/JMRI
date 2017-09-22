@@ -43,13 +43,13 @@ public class CMRISystemConnectionMemoTest {
         Assert.assertTrue(m.validSystemNameFormat("CS127B1024",'S'));    
 
         Assert.assertFalse(m.validSystemNameFormat("CSx",'S'));  
-        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CSx");
+        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CSx");
 
         Assert.assertFalse(m.validSystemNameFormat("CS2000",'S'));  
         jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
 
         Assert.assertFalse(m.validSystemNameFormat("CS",'S'));  
-        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CS");
+        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CS");
     }
 
     @Test public void systemPrefixTest() {

@@ -53,9 +53,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     // listen for sensors, creating them as needed
     @Override
     public void message(XNetReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
-        }
+        log.debug("received message: {}", l);
         if (l.isFeedbackBroadcastMessage()) {
             int numDataBytes = l.getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
@@ -63,9 +61,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                     // This is a feedback encoder message. The address of the 
                     // Feedback sensor is byte two of the message.
                     int address = l.getFeedbackEncoderMsgAddr(i);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Message for feedback encoder " + address);
-                    }
+                    log.debug("Message for feedback encoder {}", address);
 
                     int firstaddress = ((address) * 8) + 1;
                     // Each Feedback encoder includes 8 addresses, so register 
@@ -126,7 +122,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                 encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
                 input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and input format of nn:xx");
+                log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
             iName = ((encoderAddress - 1) * 8) + input;
@@ -135,7 +131,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
@@ -157,7 +153,8 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -179,7 +176,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

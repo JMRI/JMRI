@@ -189,9 +189,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage("Error", "Unable to convert " +
-                    curAddress +
-                    " to a valid Hardware Address", "" + ex, "", true, false);
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"),
+                    Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 

@@ -83,7 +83,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 boardNo = Integer.valueOf(systemName);
             } catch (NumberFormatException ex) {
-                log.error("Unable to find the board address from system name " + systemName);
+                log.error("Unable to find the board address from system name {}", systemName);
                 return;
             }
             addBoard(boardNo);
@@ -102,12 +102,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         if (curAddress.contains(":")) {
             board = 0;
             channel = 0;
-            //Address format passed is in the form of board:channel or T:turnout address
+            // Address format passed is in the form of board:channel or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
                 board = Integer.valueOf(curAddress.substring(0, seperator));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
+                log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
 
@@ -118,13 +118,13 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     throw new JmriException("Channel number should be in the range of 1 to 16");
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
+                log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
             iName = curAddress;
             addBoard(board);
         } else {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             throw new JmriException("Unable to convert " + curAddress + " Hardware Address to a number");
         }
         return prefix + typeLetter() + iName;
@@ -142,7 +142,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -1117,4 +1118,5 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManager.class);
+
 }

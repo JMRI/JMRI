@@ -57,12 +57,13 @@ public class XNetLightManager extends AbstractLightManager {
 
     /**
      * Get the bit address from the system name.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
             // here if an illegal XPressNet light system name 
-            log.error("illegal character in header field of XPressNet light system name: " + systemName);
+            log.error("invalid character in header field of XPressNet light system name: {}", systemName);
             return (0);
         }
         // name must be in the XLnnnnn format (X is user configurable)
@@ -71,14 +72,14 @@ public class XNetLightManager extends AbstractLightManager {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid XPressNet light system name: " + systemName);
+            log.warn("invalid XPressNet light system name: {}", systemName);
             return (0);
         } else if (num > 1024) {
-            log.error("bit number out of range in XPressNet light system name: " + systemName);
+            log.warn("bit number out of range in XPressNet light system name: {}", systemName);
             return (0);
         }
         return (num);
@@ -86,8 +87,9 @@ public class XNetLightManager extends AbstractLightManager {
 
     /**
      * Validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {

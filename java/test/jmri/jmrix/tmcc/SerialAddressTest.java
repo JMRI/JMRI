@@ -22,8 +22,8 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("invalid format - TL", !SerialAddress.validSystemNameFormat("TL", 'L'));
 
         Assert.assertTrue("invalid format - TLB2", !SerialAddress.validSystemNameFormat("TLB2", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field system name: TL");
-        JUnitAppender.assertErrorMessage("no node address before 'B' in system name: TLB2");
+        JUnitAppender.assertWarnMessage("invalid character in number field system name: TL");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in system name: TLB2");
 
         Assert.assertTrue("valid format - TL2005", SerialAddress.validSystemNameFormat("TL2005", 'L'));
 
@@ -38,10 +38,10 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - TS2B5", SerialAddress.validSystemNameFormat("TS2B5", 'S'));
 
         Assert.assertTrue("invalid format - TY2005", !SerialAddress.validSystemNameFormat("TY2005", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in header field system name: TY2005");
+        JUnitAppender.assertErrorMessage("invalid character in header field system name: TY2005");
 
         Assert.assertTrue("invalid format - TY2B5", !SerialAddress.validSystemNameFormat("TY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in header field system name: TY2B5");
+        JUnitAppender.assertErrorMessage("invalid character in header field system name: TY2B5");
 
         Assert.assertTrue("valid format - TL22001", SerialAddress.validSystemNameFormat("TL22001", 'L'));
 
@@ -71,13 +71,13 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: TL128B7");
 
         Assert.assertTrue("invalid format - TL2oo5", !SerialAddress.validSystemNameFormat("TL2oo5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field system name: TL2oo5");
+        JUnitAppender.assertWarnMessage("invalid character in number field system name: TL2oo5");
 
         Assert.assertTrue("invalid format - TL2aB5", !SerialAddress.validSystemNameFormat("TL2aB5", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in node address field of system name: TL2aB5");
+        JUnitAppender.assertWarnMessage("invalid character in node address field of system name: TL2aB5");
 
         Assert.assertTrue("invalid format - TL2B5x", !SerialAddress.validSystemNameFormat("TL2B5x", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in bit number field of system name: TL2B5x");
+        JUnitAppender.assertWarnMessage("invalid character in bit number field of system name: TL2B5x");
     }
 
     public void testGetBitFromSystemName() {
@@ -170,4 +170,5 @@ public class SerialAddressTest extends TestCase {
     protected void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

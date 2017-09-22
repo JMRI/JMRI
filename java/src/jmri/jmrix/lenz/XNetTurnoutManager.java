@@ -132,13 +132,54 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
+    /**
+     * Get the bit address from the system name.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
+            // here if an illegal XPressNet turnout system name
+            log.error("invalid character in header field of XPressNet turnout system name: {}", systemName);
+            return (0);
+        }
+        // name must be in the XTnnnnn format (X is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+        } catch (Exception e) {
+            log.warn("invalid character in number field of system name: {}", systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.warn("invalid XPressNet turnout system name: {}", systemName);
+            return (0);
+        } else if (num > 1024) {
+            log.warn("bit number out of range in XPressNet turnout system name: {}", systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0);
+    }
+
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

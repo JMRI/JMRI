@@ -36,7 +36,7 @@ public class SerialAddress {
         if ((systemName.charAt(0) != 'T') || ((systemName.charAt(1) != 'L')
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.error("illegal character in header field of system name: {}", systemName);
             return (-1);
         }
         String s = "";
@@ -54,18 +54,18 @@ public class SerialAddress {
             if (num > 0) {
                 ua = num / 1000;
             } else {
-                log.error("invalid TMCC system name: " + systemName);
+                log.error("invalid TMCC system name: {}", systemName);
                 return (-1);
             }
         } else {
             if (s.length() == 0) {
-                log.error("no node address before 'B' in TMCC system name: " + systemName);
+                log.error("no node address before 'B' in TMCC system name: {}", systemName);
                 return (-1);
             } else {
                 try {
                     ua = Integer.parseInt(s);
                 } catch (Exception e) {
-                    log.error("illegal character in TMCC system name: " + systemName);
+                    log.error("illegal character in TMCC system name: {}", systemName);
                     return (-1);
                 }
             }
@@ -86,7 +86,7 @@ public class SerialAddress {
         if ((systemName.charAt(0) != 'T') || ((systemName.charAt(1) != 'L')
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.error("invalid character in header field of system name: {}", systemName);
             return (0);
         }
         // Find the beginning of the bit number field
@@ -103,13 +103,13 @@ public class SerialAddress {
             try {
                 num = Integer.valueOf(systemName.substring(2)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field of system name: " + systemName);
+                log.warn("invalid character in number field of system name: {}", systemName);
                 return (0);
             }
             if (num > 0) {
                 n = num - ((num / 1000) * 1000);
             } else {
-                log.error("invalid system name: " + systemName);
+                log.warn("invalid system name: {}", systemName);
                 return (0);
             }
         } else {
@@ -117,8 +117,7 @@ public class SerialAddress {
             try {
                 n = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.error("illegal character in bit number field system name: "
-                        + systemName);
+                log.warn("illegal character in bit number field system name: {}", systemName);
                 return (0);
             }
         }
@@ -127,6 +126,7 @@ public class SerialAddress {
 
     /**
      * Public static method to validate system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @param systemName name to test
      * @param type S, L, T for either sensor, light, turnout
@@ -136,11 +136,11 @@ public class SerialAddress {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'T') || (systemName.charAt(1) != type)) {
             // here if an illegal format 
-            log.error("illegal character in header field system name: "
-                    + systemName);
+            log.error("invalid character in header field system name: {}", systemName);
             return (false);
         }
         // check for the presence of a 'B' to differentiate the two address formats
+        // may also be entered as ":" TODO
         String s = "";
         int k = 0;
         boolean noB = true;
@@ -157,51 +157,43 @@ public class SerialAddress {
             try {
                 num = Integer.valueOf(systemName.substring(2)).intValue();
             } catch (Exception e) {
-                log.error("illegal character in number field system name: "
-                        + systemName);
+                log.warn("invalid character in number field system name: {}", systemName);
                 return (false);
             }
             if ((num < 1) || (num >= 128000)) {
-                log.warn("number field out of range in system name: "
-                        + systemName);
+                log.warn("number field out of range in system name: {}", systemName);
                 return (false);
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.warn("bit number not in range 1 - 999 in system name: "
-                        + systemName);
+                log.warn("bit number not in range 1 - 999 in system name: {}", systemName);
                 return (false);
             }
         } else {
             // This is a TTnnnBxxxx address - validate the node address field
             if (s.length() == 0) {
-                log.error("no node address before 'B' in system name: "
-                        + systemName);
+                log.warn("no node address before 'B' in system name: {}", systemName);
                 return (false);
             }
             int num;
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.warn("illegal character in node address field of system name: "
-                        + systemName);
+                log.warn("invalid character in node address field of system name: {}", systemName);
                 return (false);
             }
             if ((num < 0) || (num >= 128)) {
-                log.warn("node address field out of range in system name: "
-                        + systemName);
+                log.warn("node address field out of range in system name: {}", systemName);
                 return (false);
             }
             // validate the bit number field
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
-                log.warn("illegal character in bit number field of system name: "
-                        + systemName);
+                log.warn("invalid character in bit number field of system name: {}", systemName);
                 return (false);
             }
             if ((num < 1) || (num > 2048)) {
-                log.warn("bit number field out of range in system name: "
-                        + systemName);
+                log.warn("bit number field out of range in system name: {}", systemName);
                 return (false);
             }
         }
@@ -212,6 +204,7 @@ public class SerialAddress {
      * Public static method to validate system name for configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
+     *
      * @param systemName name to test
      * @param type S, L, T sensor, light, turnout
      * @return true if valid name
@@ -231,6 +224,7 @@ public class SerialAddress {
      * format. If the supplied system name does not have a valid format, or if
      * there is no representation in the alternate naming scheme, an empty
      * string is returned.
+     *
      * @param systemName name to convert
      * @return alternate form if valid, empty if not
      */
@@ -281,6 +275,7 @@ public class SerialAddress {
      * If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.
+     *
      * @param systemName name to convert
      * @return normalized form of systemName
      */
@@ -330,6 +325,7 @@ public class SerialAddress {
      * If the supplied character is not valid, or the node address is out of the
      * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
      * message is logged and the null string "" is returned.
+     *
      * @param type S,L,T for sensor, light, turnout
      * @param nAddress node value 0-127
      * @param bitNum bit within node 1-2048
@@ -368,4 +364,5 @@ public class SerialAddress {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class);
+
 }

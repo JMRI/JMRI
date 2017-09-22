@@ -2294,7 +2294,7 @@ public class LightTableAction extends AbstractTableAction {
         /**
          * Validate the field information. Does not make any GUI changes.
          * <p>
-         * During validation, logging is capped below the Error level to keep console clean from repeated validation.
+         * During validation, logging is capped at the Error level to keep the Console clean from repeated validation.
          * This is reset to default level afterwards.
          *
          * @return 'true' if current field entry is valid according to the
@@ -2315,12 +2315,12 @@ public class LightTableAction extends AbstractTableAction {
                 return true;
             } else {
                 // store previous level
-                Level prevloglevel = org.apache.log4j.Logger.getRootLogger().getLevel();
+                Level prevLogLevel = org.apache.log4j.Logger.getRootLogger().getLevel();
                 // silence WARN logging
                 org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
                 boolean validFormat = InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value);
                 // reset logging level
-                org.apache.log4j.Logger.getRootLogger().setLevel(prevloglevel);
+                org.apache.log4j.Logger.getRootLogger().setLevel(prevLogLevel);
                 if (validFormat) {
                     return true;
                 } else {
