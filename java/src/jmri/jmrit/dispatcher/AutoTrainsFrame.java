@@ -118,7 +118,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         displayAutoTrains();
     }
 
-    private void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
+    private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
         for (AutoActiveTrain aat : _autoTrainsList) {
             if (aat.getActiveTrain() == e.getSource()) {
                 int newValue = ((Integer) e.getNewValue()).intValue();

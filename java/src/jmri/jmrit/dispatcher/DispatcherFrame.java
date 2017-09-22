@@ -2011,6 +2011,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     if (at.reachedRestartPoint()) {
                                         foundOne = true;
                                     }
+                                } else if (nas == null) {
+                                    foundOne = false;
                                 } else {
                                     if ((nas.getActiveTrain() != as.getActiveTrain()) || (!nas.getEntered())) {
                                         foundOne = false;
