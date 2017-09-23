@@ -8,7 +8,7 @@ import jmri.managers.DefaultProgrammerManager;
 /**
  * Extend DefaultProgrammerManager to provide programmers for SPROG systems.
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
   */
 public class SprogProgrammerManager extends DefaultProgrammerManager {

@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * It uses the DefaultProgrammerManager to handle the service mode operations.
  *
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @see jmri.managers.DefaultProgrammerManager
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 

@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * (e.g. in a local anonymous class) to create the programmer frame you're
  * interested in.
  * <p>
- * <P>
  * To override this class to use a different decoder-selection GUI, replace
  * members:
  * <UL>
@@ -351,7 +350,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     /**
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
-     * <p>
+     *
+     * @param dccAddress the address to select
      */
     protected void selectLoco(int dccAddress) {
         // raise the button again

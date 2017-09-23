@@ -11,7 +11,7 @@ import jmri.managers.DefaultProgrammerManager;
  * DCC4PC Programmer acts as a proxy for ops mode programming. Extend
  * DefaultProgrammerManager to provide ops mode programmers on XpressNet
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author Kevin Dickerson Copyright (C) 2012
  *
  */

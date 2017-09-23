@@ -545,7 +545,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * The following has been taken from an example given in..
      * http://www.java2s.com/Code/Java/Swing-Components/DecoderTreeNodeTreeExample.htm
      * with extracts from http://www.codeguru.com/java/articles/143.shtml
-     * <p>
      */
     static class InvisibleTreeModel extends DefaultTreeModel {
 

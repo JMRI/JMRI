@@ -11,13 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Defers GlobalProgrammer operations to the default GlobalProgrammer, and
- * AddressedProgrammer operations to the default AddressedProgrammer.
+ * Defers global programmer operations to the default global Programmer, and
+ * addressed programmer operations to the default AddressedProgrammer.
  * <p>
- * The underlying Programmer is looked up for each access to ensure that it's
+ * The underlying Programmer is looked up for each access to ensure that it is
  * current.
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.GlobalProgrammerManager
+ * @see jmri.AddressedProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2014
  */
 public class DeferringProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
@@ -29,8 +30,8 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in user interface components, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface components, so it should
+     * return a user-provided name for this particular one.
      */
     @Override
     public String getUserName() {
@@ -39,8 +40,8 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in user interface components, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface components, so it should
+     * return a user-provided name for this particular one.
      */
     @Override
     public String toString() {
@@ -51,12 +52,12 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
     public Programmer getGlobalProgrammer() {
         GlobalProgrammerManager gp = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gp == null || this.equals(gp)) {
-            log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null" );
+            log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null");
             return null;
         }
         Programmer p = gp.getGlobalProgrammer();
         log.debug("getGlobalProgrammer returns default service-mode programmer of type {} from {}",
-            (p != null ? p.getClass() : "(null)"), gp.getClass() );
+                (p != null ? p.getClass() : "(null)"), gp.getClass());
         return p;
     }
 
@@ -154,4 +155,3 @@ public class DeferringProgrammerManager implements AddressedProgrammerManager, G
 
     private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class);
 }
-

@@ -7,7 +7,7 @@ import jmri.managers.DefaultProgrammerManager;
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author Karl Johan Lisby Copyright (C) 2015
  */
 public class EcosProgrammerManager extends DefaultProgrammerManager {

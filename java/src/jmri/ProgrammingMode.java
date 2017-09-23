@@ -12,9 +12,8 @@ import javax.annotation.Nonnull;
  * <p>
  * A ProgrammingMode has a user-readable name to help humans select it.
  * <P>
- * We define a number of modes as constants in
- * {@link jmri.managers.DefaultProgrammerManager} because they are common across
- * so many DCC-specific implementations, they've become defacto standards.
+ * We define a number of modes as constants because they are common across so
+ * many DCC-specific implementations, they've become defacto standards.
  * <p>
  * More specific definitions (and Bundle entries) should retreat to specific
  * Programmer implementations. The whole idea is to have code deal with the
@@ -22,8 +21,6 @@ import javax.annotation.Nonnull;
  * global values.
  *
  * @see jmri.Programmer
- * @see jmri.ProgrammerManager
- * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2014
  */
 @javax.annotation.concurrent.Immutable
