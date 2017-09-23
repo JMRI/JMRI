@@ -16,16 +16,37 @@ import org.junit.Test;
  */
 public class NodeConfigFrameTest {
 
+    private CMRISystemConnectionMemo memo = null;
+
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigFrame action = new NodeConfigFrame(new CMRISystemConnectionMemo());
+        NodeConfigFrame action = new NodeConfigFrame(memo);
         Assert.assertNotNull("exists", action);
+    }
+
+    @Test
+    public void testInitComponents() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame(memo);
+        // for now, just makes ure there isn't an exception.
+        t.initComponents();
+        t.dispose();
+    }
+
+    @Test
+    public void testGetTitle(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame(memo);
+        t.initComponents();
+        Assert.assertEquals("title","Configure Nodes",t.getTitle());
+        t.dispose();
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new CMRISystemConnectionMemo();
     }
 
     @After
