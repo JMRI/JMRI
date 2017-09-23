@@ -27,7 +27,7 @@
         <label xml:lang="it">Accellerazione (0-255)</label>
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Beschleunigungszeit</label>
-       <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
+        <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
     </variable>
     <variable CV="4" default="12" item="Decel">
         <decVal/>
@@ -35,19 +35,19 @@
         <label xml:lang="it">Decellerazione (0-255)</label>
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit</label>
-       <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
+        <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
     </variable>
     <variable CV="5" default="255" item="Vhigh" exclude="LokPilot Fx V4.0">
         <decVal min="1"/>
         <label>Vhigh</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
-       <tooltip xml:lang="de">Festlegung der Höchstgeschwindigkeit der Lok</tooltip>
+        <tooltip xml:lang="de">Festlegung der Höchstgeschwindigkeit der Lok</tooltip>
     </variable>
-    <variable CV="6" default="88" item="Vmid" exclude="LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0">
+    <variable CV="6" default="88" item="Vmid" exclude="LokSound L V4.0,LokSound Select L,LokSound XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0,LokPilot XL V4.0">
         <decVal min="1"/>
         <label>Vmid</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
-       <tooltip xml:lang="de">Festlegung der Geschwindigkeit der Lok bei mittlerer Fahrstufe</tooltip>
+        <tooltip xml:lang="de">Festlegung der Geschwindigkeit der Lok bei mittlerer Fahrstufe</tooltip>
     </variable>
     <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
@@ -71,109 +71,109 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
         <label xml:lang="de">Analog Modus F1</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F1 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F1 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
         <label xml:lang="de">Analog Modus F2</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F2 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F2 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
         <label xml:lang="de">Analog Modus F3</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F3 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F3 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
         <label xml:lang="de">Analog Modus F4</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F4 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F4 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
         <label xml:lang="de">Analog Modus F5</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F5 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F5 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
         <label xml:lang="de">Analog Modus F6</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F6 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F6 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F7</label>
         <label xml:lang="de">Analog Modus F7</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F7 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F7 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
         <label xml:lang="de">Analog Modus F8</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F8 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F8 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - FL" CV="14" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL</label>
         <label xml:lang="de">Analog Modus Lvor</label>
-       <tooltip xml:lang="de">Zustand der Funktionen Lvor im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen Lvor im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9</label>
         <label xml:lang="de">Analog Modus F9</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F9 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F9 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10</label>
         <label xml:lang="de">Analog Modus F10</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F10 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F10 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
         <label xml:lang="de">Analog Modus F11</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F11 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F11 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F12" CV="14" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
         <label xml:lang="de">Analog Modus F12</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F12 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F12 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F13" CV="14" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F13</label>
         <label xml:lang="de">Analog Modus F13</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F13 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F13 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F14" CV="14" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F14</label>
         <label xml:lang="de">Analog Modus F14</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F14 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F14 im Analogmodus.</tooltip>
     </variable>
     <variable item="Analog Mode Function Status - F15" CV="14" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F15</label>
         <label xml:lang="de">Analog Modus F15</label>
-       <tooltip xml:lang="de">Zustand der Funktionen F15 im Analogmodus.</tooltip>
+        <tooltip xml:lang="de">Zustand der Funktionen F15 im Analogmodus.</tooltip>
     </variable>
     <variable CV="15" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
         <decVal/>
         <label>Decoder Lock ID number</label>
         <label xml:lang="de">Decoder Lock Wert</label>
-       <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+        <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
     </variable>
     <variable CV="16" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
         <decVal/>
         <label>Preset Lock ID number</label>
         <label xml:lang="de">Decoder-Typ Lock Wert</label>
-       <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion, etc.</tooltip>
+        <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion, etc.</tooltip>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
@@ -233,7 +233,7 @@
         <label>RailCom® Enable</label>
         <label xml:lang="de">RailCom® aktiv</label>
     </variable>
-    <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0">
+    <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LokSound L V4.0,LokSound Select L,LokSound XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0,LokPilot XL V4.0">
         <enumVal>
             <enumChoice choice="Use Vstart, Vmid, Vhigh">
                 <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -250,12 +250,12 @@
     <variable CV="31" default="16" item="Index register H">
         <decVal max="16"/>
         <label>Index register H</label>
-       <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
+        <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
     </variable>
     <variable CV="32" default="0" item="Index register L">
         <decVal max="4"/>
         <label>Index register L</label>
-       <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
+        <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
     </variable>
     <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Protocols Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -302,20 +302,20 @@
     <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Protocols Option 11">
         <enumVal>
             <enumChoice choice="No additional addresses" value="0">
-              <choice>No additional addresses</choice>
-              <choice xml:lang="de">keine Adresse</choice>
+                <choice>No additional addresses</choice>
+                <choice xml:lang="de">keine Adresse</choice>
             </enumChoice>
             <enumChoice choice="Use 2 addresses" value="1">
-              <choice>Use 2 addresses</choice>
-              <choice xml:lang="de">benutze 2 Adressen</choice>
+                <choice>Use 2 addresses</choice>
+                <choice xml:lang="de">benutze 2 Adressen</choice>
             </enumChoice>
             <enumChoice choice="Use 3 addresses" value="16">
-              <choice>Use 3 addresses</choice>
-              <choice xml:lang="de">benutze 3 Adressen</choice>
+                <choice>Use 3 addresses</choice>
+                <choice xml:lang="de">benutze 3 Adressen</choice>
             </enumChoice>
             <enumChoice choice="Use 4 addresses" value="17">
-              <choice>Use 4 addresses</choice>
-              <choice xml:lang="de">benutze 4 Adressen</choice>
+                <choice>Use 4 addresses</choice>
+                <choice xml:lang="de">benutze 4 Adressen</choice>
             </enumChoice>
         </enumVal>
         <label>Marklin Additional Addresses</label>
@@ -350,38 +350,38 @@
         <variable CV="51" default="0" item="EMF Option 4">
             <decVal/>
             <label>BEMF Parameter 'I' Slow</label>
-           <label xml:lang="de">Lastregelung Param. „I“ Slow</label>
+            <label xml:lang="de">Lastregelung Param. „I“ Slow</label>
         </variable>
         <variable CV="52" default="15" item="EMF Option 3">
             <decVal/>
             <label>BEMF Parameter 'K' Slow</label>
-           <label xml:lang="de">Lastregelung Param. „K“ Slow</label>
+            <label xml:lang="de">Lastregelung Param. „K“ Slow</label>
         </variable>
         <variable CV="53" default="140" item="EMF Control Reference">
             <decVal/>
             <label>BEMF Reference Voltage</label>
-           <label xml:lang="de">Regelungsreferenz Spannung</label>
+            <label xml:lang="de">Regelungsreferenz Spannung</label>
         </variable>
         <variable CV="54" default="50" item="EMF Option 1">
             <decVal/>
             <label>BEMF Parameter 'K'</label>
-           <label xml:lang="de">Lastregelung Param. „K“</label>
+            <label xml:lang="de">Lastregelung Param. „K“</label>
         </variable>
         <variable CV="55" default="100" item="EMF Option 2">
             <decVal/>
             <label>BEMF Parameter 'I'</label>
-           <label xml:lang="de">Lastregelung Param. „I“</label>
+            <label xml:lang="de">Lastregelung Param. „I“</label>
         </variable>
         <variable CV="56" default="255" item="EMF Feedback Cutout">
             <decVal/>
             <label>BEMF Control Range</label>
-           <label xml:lang="de">Regelungseinfluss</label>
+            <label xml:lang="de">Regelungseinfluss</label>
         </variable>
         <variable CV="10" default="8" item="Motor Option 1">
             <decVal min="4" max="8"/>
             <label>BEMF Sampling Period</label>
             <label xml:lang="de">Lastregelung Abtastperiode</label>
-       <tooltip xml:lang="de">Für Glockenankermotoren sind die Werte 5 oder 6 empfohlen, für alle anderen Motoren der bisherige Werkswert 8.</tooltip>
+            <tooltip xml:lang="de">Für Glockenankermotoren sind die Werte 5 oder 6 empfohlen, für alle anderen Motoren der bisherige Werkswert 8.</tooltip>
         </variable>
         <variable CV="66" default="128" item="Forward Trim" comment="Range 0-255">
             <decVal/>
@@ -513,13 +513,13 @@
         <decVal/>
         <label>Smoke Unit Automatic Power Off Time</label>
         <label xml:lang="de"> automatische Abschaltung Rauchentwickler </label>
-       <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
+        <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
     </variable>
     <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0,LokSound Select L">
         <decVal/>
         <label>Preheating Temperature for Secondary Smoke Unit</label>
         <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
-       <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
+        <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
     </variable>
     <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" include="LokSound Micro V4.0,LokSound XL V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -536,13 +536,13 @@
         <decVal/>
         <label>Auto Uncoupling Remove Time</label>
         <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
-       <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
+        <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
     </variable>
     <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Auto Uncoupling Push Time</label>
         <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
-       <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
+        <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
     </variable>
     <!-- A nicht beschrieben -->
     <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Advanced Starting Delay Slider 1">
@@ -554,7 +554,7 @@
         <decVal/>
         <label>Constant Brake Time</label>
         <label xml:lang="de">Konstanter Bremsmodus</label>
-       <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
+        <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
     </variable>
     <variable CV="254" default="0" item="ESU V4 Advanced Constant Brake Option 2" exclude="LokPilot Fx V4.0">
         <decVal/>
