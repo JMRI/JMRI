@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Lenz (XPresssNet) connections.
+ * Implement turnout manager for Lenz (XpresssNet) connections.
  * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
-    protected XNetTrafficController tc = null;
-
     // ctor has to register for XNet events
     public XNetTurnoutManager(XNetTrafficController controller, String prefix) {
         super();
@@ -25,18 +23,35 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
+    protected XNetTrafficController tc = null;
+    protected String prefix = null;
+
+    /**
+     * Return the system letter for XpressNet.
+     */
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
 
     // XNet-specific methods
 
+    /**
+     * Create a new Turnout based on the system name.
+     * Assumes calling method has checked that a Turnout with this
+     * system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
+     */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        Turnout t = new XNetTurnout(prefix, addr, tc);
+        // check if the output bit is available
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        if (bitNum == -1) {
+            return (null);
+        }
+        // create the new Turnout object
+        Turnout t = new XNetTurnout(prefix, bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -96,7 +111,6 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
-
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
      * Allows text other than "CLOSED" to be use with certain hardware system to
@@ -131,44 +145,13 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     /**
-     * Get the bit address from the system name.
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
-            // here if an illegal XPressNet turnout system name
-            log.error("invalid character in header field of XPressNet turnout system name: {}", systemName);
-            return (0);
-        }
-        // name must be in the XTnnnnn format (X is user configurable)
-        int num = 0;
-        try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
-        } catch (Exception e) {
-            log.warn("invalid character in number field of system name: {}", systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.warn("invalid XPressNet turnout system name: {}", systemName);
-            return (0);
-        } else if (num > 1024) {
-            log.warn("bit number out of range in XPressNet turnout system name: {}", systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Validate system name format.
+     * Validate Turnout system name format.
      * Logging should not be higher than WARN to keep silent when used for in line validation.
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    @Override
     public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+        return (XNetAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     @Override

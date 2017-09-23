@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the XpressNet specific Sensor implementation.
+ * Implement sensor manager for Lenz (XpresssNet) connections.
  * <p>
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
@@ -15,13 +15,23 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
+    // ctor has to register for XNetNet events
+    public XNetSensorManager(XNetTrafficController controller, String prefix) {
+        tc = controller;
+        tc.addXNetListener(XNetInterface.FEEDBACK, this);
+        this.prefix = prefix;
+    }
+
+    protected XNetTrafficController tc = null;
+    protected String prefix = null;
+
+    /**
+     * Return the system letter for XpressNet.
+     */
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
-
-    protected XNetTrafficController tc = null;
 
     @Deprecated
     static public XNetSensorManager instance() {
@@ -38,16 +48,24 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // XpressNet specific methods
 
+    /**
+     * Create a new Sensor based on the system name.
+     * Assumes calling method has checked that a Sensor with this
+     * system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
+     */
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        return new XNetSensor(systemName, userName, tc);
-    }
-
-    // ctor has to register for XNetNet events
-    public XNetSensorManager(XNetTrafficController controller, String prefix) {
-        tc = controller;
-        tc.addXNetListener(XNetInterface.FEEDBACK, this);
-        this.prefix = prefix;
+        // check if the output bit is available
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        if (bitNum == -1) {
+            return (null);
+        }
+        // normalize system name
+        String sName = prefix + typeLetter() + bitNum;
+        // create the new Sensor object
+        return new XNetSensor(sName, userName, tc);
     }
 
     // listen for sensors, creating them as needed
@@ -105,6 +123,16 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
+    /**
+     * Validate Sensor system name format.
+     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     *
+     * @return 'true' if system name has a valid format, else return 'false'
+     */
+    public boolean validSystemNameFormat(String systemName) {
+        return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+    }
+
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -116,7 +144,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         int input = 0;
 
         if (curAddress.contains(":")) {
-            //Address format passed is in the form of encoderAddress:input or T:turnout address
+            // Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
                 encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
@@ -127,7 +155,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             }
             iName = ((encoderAddress - 1) * 8) + input;
         } else {
-            //Entered in using the old format
+            // Entered in using the old format
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {

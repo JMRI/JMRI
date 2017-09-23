@@ -46,19 +46,11 @@ public class AcelaLightManager extends AbstractLightManager {
         if (nAddress == -1) {
             return (null);
         }
-        int bitNum = AcelaAddress.getBitFromSystemName(systemName);
+        int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
 
-// Bob C: Fix this up  
-         /*
-         conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum,_memo);
-         if ( conflict != "" ) {
-            log.error("Assignment conflict with "+conflict+".  Light not created.");
-            throw new IllegalArgumentException("Assignment conflict with "+conflict+".  Light not created.");
-         }
-         */
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
             lgt = new AcelaLight(systemName, userName, _memo);

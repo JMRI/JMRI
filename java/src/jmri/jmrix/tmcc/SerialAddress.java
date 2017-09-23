@@ -76,10 +76,11 @@ public class SerialAddress {
 
     /**
      * Public static method to parse a TMCC system name and return the bit
-     * number Notes: Bits are numbered from 1. If an error is found, 0 is
-     * returned.
+     * number.
+     * Note: Bits are numbered from 1.
+     *
      * @param systemName normal sensor, light, or turnout name
-     * @return bit part 1-2048
+     * @return bit part in range 1 - 2048; if an error is found, return 0
      */
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

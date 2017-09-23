@@ -88,7 +88,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         TamsSensor s = new TamsSensor(systemName, userName);
-        //log.info("Creating new TamsSensor: " + systemName);
+        log.debug("Creating new TamsSensor: {}", systemName);
         if (systemName.contains(":")) {
             int board = 0;
             int channel = 0;
@@ -108,7 +108,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     }*/
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             Hashtable<Integer, TamsSensor> sensorList = _ttams.get(board);
@@ -118,7 +118,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             if ((board * 2) > maxSE) {//Check if newly defined board number is higher than what we know

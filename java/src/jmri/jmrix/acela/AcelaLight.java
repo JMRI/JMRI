@@ -56,7 +56,7 @@ public class AcelaLight extends AbstractLight {
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
-        mBit = AcelaAddress.getBitFromSystemName(systemName);
+        mBit = AcelaAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
         // Set initial state
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName, _memo);
 

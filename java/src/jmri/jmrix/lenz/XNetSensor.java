@@ -46,7 +46,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     private void init(String id) {
         // store address
         systemName = id;
-        address = Integer.parseInt(id.substring(2, id.length()));
+        address = XNetAddress.getBitFromSystemName(systemName, "X"); //tc.getSystemConnectionMemo().getSystemPrefix());
         // calculate the base address, the nibble, and the bit to examine
         baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;
@@ -73,13 +73,12 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                 nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
-            log.debug("Created Sensor " + systemName
-                    + " (Address " + baseaddress
-                    + " position " + (((address - 1) % 8) + 1)
-                    + ")");
+            log.debug("Created Sensor {} (Address {},  position {})",
+                    systemName, baseaddress,
+                    (((address - 1) % 8) + 1)
+            );
         }
         // Finally, request the current state from the layout.
-        //this.requestUpdateFromLayout();
         tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
     }
 

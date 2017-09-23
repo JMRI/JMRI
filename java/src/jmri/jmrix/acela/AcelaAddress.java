@@ -4,12 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility Class supporting parsing and testing of addresses for Acela
+ * Utility Class supporting parsing and testing of addresses for Acela.
  * <P>
  * One address format is supported: Atxxxx where: t is the type code, 'T' for
  * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
  * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
- * (bit134)
+ * (bit134).
+ * Note: Not fully supporting long system connection prefix yet
  *
  * @author Dave Duchamp, Copyright (C) 2004 - 2006
  *
@@ -20,7 +21,7 @@ public class AcelaAddress {
 
     public AcelaAddress() {
     }
-
+    
     static final int MINSENSORADDRESS = 0;
     static final int MAXSENSORADDRESS = 1023;   //  Artifical limit but OK until someone has
     //  more than 64 sensor modules (at 16 sensors each).
@@ -29,7 +30,7 @@ public class AcelaAddress {
     //  more than 64 output modules (at 16 outputs each).
 
     /**
-     * Public static method to parse a Acela system name and return the Acela
+     * Public static method to parse an Acela system name and return the Acela
      * Node Address Note: Returns '-1' if illegal systemName format or if the
      * node is not found. Nodes are numbered from 0 - 127.
      */
@@ -39,28 +40,26 @@ public class AcelaAddress {
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
                 && (systemName.charAt(1) != 'H'))) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.error("invalid character in header field of system name: {}", systemName);
             return (-1);
         }
         int num;
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.error("invalid character in number field of system name: {}", systemName);
             return (-1);
         }
         if (num >= 0) {
             // This is a CLnnxxx address
         } else {
-            log.error("invalid Acela system name: " + systemName);
+            log.error("invalid Acela system name: {}", systemName);
             return (-1);
         }
         int nodeaddress = -1;
         if (systemName.charAt(1) == 'S') {
             // Acela has two address spaces: true == sensor address space; false == output address space
             nodeaddress = memo.getTrafficController().lookupAcelaNodeAddress(num, true);
-//            log.info("For this sensor, we want to use node: " + nodeaddress);
-
         } else {
             // Acela has two address spaces: true == sensor address space; false == output address space
             nodeaddress = memo.getTrafficController().lookupAcelaNodeAddress(num, false);
@@ -69,16 +68,14 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to parse a Acela system name.
+     * Public static method to parse an Acela system name.
      *
      * @return the Acela Node number, return 'null' if illegal systemName format or if the node is
      * not found
      */
-    public static AcelaNode getNodeFromSystemName(String systemName,AcelaSystemConnectionMemo memo) {
+    public static AcelaNode getNodeFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // get the node address
         int ua;
-        //int tempaddress;
-//        log.info("Trying to register sensor "+ systemName );
 
         ua = getNodeAddressFromSystemName(systemName,memo);
         if (ua == -1) {
@@ -88,39 +85,36 @@ public class AcelaAddress {
 
         AcelaNode tempnode;
         tempnode = (AcelaNode) (memo.getTrafficController().getNodeFromAddress(ua));
-        //tempaddress = tempnode.getNodeAddress();
 
-//        log.info("Got back node of type (expecting 1,3, or 9): " + tempnode.nodeType + " for node: " + tempaddress);
         return tempnode;
-        //        return (AcelaNode)(memo.getTrafficController().getNodeFromAddress(ua));
     }
 
     /**
-     * Public static method to parse a Acela system name.
+     * Public static method to parse an Acela system name.
      * Note: Bits are numbered from 1.
      *
      * @return the bit number, return 0 if an error is found
      */
-    public static int getBitFromSystemName(String systemName) {
+    public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'A') || ((systemName.charAt(1) != 'L')
-                && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
-                && (systemName.charAt(1) != 'H'))) {
-            // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+        if (!(systemName.startsWith(prefix)) || ((systemName.charAt(prefix.length()) != 'L')
+                && (systemName.charAt(prefix.length()) != 'S') && (systemName.charAt(prefix.length()) != 'T')
+                && (systemName.charAt(prefix.length()) != 'H'))) {
+            // here if an invalid Acela format
+            log.error("illegal character in header field of system name: {}", systemName);
             return (-1);
         }
         int num;
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: {}", systemName);
             return (-1);
         }
-        if (num >= 0) {
-            // This is a CLnnxxx address
+        if (num >= 0) { // looks like a double negative construct TODO replace by if (num < 0) ?
+            // This is an ALnnxxx address
         } else {
-            log.error("invalid Acela system name: " + systemName);
+            log.warn("invalid Acela system name: {}", systemName);
             return (-1);
         }
         return (num);
@@ -133,26 +127,18 @@ public class AcelaAddress {
      * @return 'true' if system name has a valid format, else return 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
+        prefix = prefix;
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
-            log.warn("invalid character in header field of system name: " + systemName);
+            log.error("invalid character in header field of system name: {}", systemName);
             return (false);
         }
-        int num;
-        try {
-            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        } catch (Exception e) {
-            log.warn("invalid character in number field of system name: " + systemName);
-            return (false);
-        }
-        if (num >= 0) {
-            // This is a ALnnxxx address
+        if (getBitFromSystemName(systemName, prefix) >= 0) {
+            return true;
         } else {
-            log.warn("invalid Acela system name: " + systemName);
-            return (false);
+            return false;
         }
-        return true;
     }
 
     /**
@@ -161,33 +147,38 @@ public class AcelaAddress {
      * @return 'true' if system name has a valid meaning in current
      * configuration, else return 'false'
      */
-    public static boolean validSystemNameConfig(String systemName, char type,AcelaSystemConnectionMemo memo) {
+    public static boolean validSystemNameConfig(String systemName, char type, AcelaSystemConnectionMemo memo) {
         if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix() )) {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        AcelaNode node = getNodeFromSystemName(systemName,memo);
+        AcelaNode node = getNodeFromSystemName(systemName, memo);
         if (node == null) {
             // The node indicated by this system address is not present
             return false;
         }
-        int bit = getBitFromSystemName(systemName);
-        if ((type == 'T') || (type == 'L')) {
-            if ((bit < MINOUTPUTADDRESS) || (bit > MAXOUTPUTADDRESS)) {
-                // The bit is not valid for this defined Acela node
-                return false;
+        int bit = getBitFromSystemName(systemName, memo.getSystemPrefix());
+        switch (type) {
+            case 'T':
+            case 'L':
+            if ((bit >= MINOUTPUTADDRESS) && (bit <= MAXOUTPUTADDRESS)) {
+                // The bit is within valid range for this defined Acela node
+                return true;
             }
-        } else if (type == 'S') {
-            if ((bit < MINSENSORADDRESS) || (bit > MAXSENSORADDRESS)) {
-                // The bit is not valid for this defined Acela node
-                return false;
+            break;
+            case 'S':
+            if ((bit >= MINSENSORADDRESS) && (bit <= MAXSENSORADDRESS)) {
+                // The bit is within valid range for this defined Acela node
+                return true;
             }
-        } else {
-            log.error("Invalid type specification in validSystemNameConfig call");
-            return false;
+            break;
+            default:
+                log.error("Invalid type specification in validSystemNameConfig call");
+                return false;
         }
-        // System name has passed all tests
-        return true;
+        // System name has failed all tests
+        log.warn("Acela hardware address out of range in system name: {}", systemName);
+        return false;
     }
 
     public static boolean validSystemNameConfig(String systemName, AcelaSystemConnectionMemo memo) {
@@ -196,12 +187,12 @@ public class AcelaAddress {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        AcelaNode node = getNodeFromSystemName(systemName,memo);
+        AcelaNode node = getNodeFromSystemName(systemName, memo);
         if (node == null) {
             // The node indicated by this system address is not present
             return false;
         }
-        int bit = getBitFromSystemName(systemName);
+        int bit = getBitFromSystemName(systemName, memo.getSystemPrefix());
         if ((type == 'T') || (type == 'L')) {
             if ((bit < MINOUTPUTADDRESS) || (bit > MAXOUTPUTADDRESS)) {
                 // The bit is not valid for this defined Acela node
@@ -240,7 +231,7 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to normalize a Acela system name
+     * Public static method to normalize an Acela system name
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one Acela bit, by removing extra zeros inserted by the user.
@@ -259,7 +250,7 @@ public class AcelaAddress {
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.error("invalid character in number field of system name: {}", systemName);
             return "";
         }
         String nName = "";
@@ -268,10 +259,10 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to construct a Acela system name from type
+     * Public static method to construct an Acela system name from type
      * character, node address, and bit number
      *
-     * @return a system name in the CLxxxx, CTxxxx, or CSxxxx
+     * @return a system name in the ALxxxx, ATxxxx, or ASxxxx
      * format. The returned name is normalized.
      * Return the null string "" if the supplied character is not valid,
      * or if the node address is out of the 0 - 127 range, or the bit number is
@@ -308,7 +299,7 @@ public class AcelaAddress {
     }
 
     /**
-     * Public static method to the user name for a valid system name.
+     * Public static method to check the user name for a valid system name.
      *
      * @return "" (null string) if the system name is not valid or does not exist
      */
