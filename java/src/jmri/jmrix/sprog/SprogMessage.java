@@ -319,7 +319,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      */
     static public SprogMessage getReadCV(int cv, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(6);
-        if (mode == DefaultProgrammerManager.PAGEMODE) {
+        if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');
@@ -331,7 +331,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public SprogMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(10);
-        if (mode == DefaultProgrammerManager.PAGEMODE) {
+        if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');

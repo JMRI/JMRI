@@ -1,12 +1,13 @@
 package jmri.jmrix.lenz;
 
 import java.util.ResourceBundle;
+import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
 import jmri.ConsistManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.PowerManager;
-import jmri.ProgrammerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
@@ -71,15 +72,15 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * <p>
      * NOTE: Programmer defaults to null
      */
-    public ProgrammerManager getProgrammerManager() {
+    public XNetProgrammerManager getProgrammerManager() {
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(XNetProgrammerManager p) {
         programmerManager = p;
     }
 
-    private ProgrammerManager programmerManager = null;
+    private XNetProgrammerManager programmerManager = null;
 
     /*
      * Provide access to the Throttle Manager for this particular connection.
@@ -189,9 +190,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public void setCommandStation(CommandStation c) {
         commandStation = c;
-        if( c instanceof LenzCommandStation) {
-           ((LenzCommandStation) c).setTrafficController(xt);
-           ((LenzCommandStation) c).setSystemConnectionMemo(this);
+        if (c instanceof LenzCommandStation) {
+            ((LenzCommandStation) c).setTrafficController(xt);
+            ((LenzCommandStation) c).setSystemConnectionMemo(this);
         }
     }
 
@@ -201,16 +202,14 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        } else if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
-        } else if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            ProgrammerManager p = getProgrammerManager();
+        } else if (type.equals(GlobalProgrammerManager.class)) {
+            GlobalProgrammerManager p = getProgrammerManager();
             if (p == null) {
                 return false;
             }
             return p.isGlobalProgrammerAvailable();
-        } else if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            ProgrammerManager p = getProgrammerManager();
+        } else if (type.equals(AddressedProgrammerManager.class)) {
+            AddressedProgrammerManager p = getProgrammerManager();
             if (p == null) {
                 return false;
             }
@@ -227,20 +226,19 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
             try {
-                return (((LenzCommandStation)getCommandStation()).getCommandStationType()!=0x10);
-            } catch (java.lang.NullPointerException npe){
+                return (((LenzCommandStation) getCommandStation()).getCommandStationType() != 0x10);
+            } catch (java.lang.NullPointerException npe) {
                 // if the command station has not been configured yet,
                 // assume true
-                if(log.isTraceEnabled()){
-                   npe.printStackTrace();
+                if (log.isTraceEnabled()) {
+                    log.trace("Unconfigured command station", npe);
                 }
                 return true;
             }
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
-        } else {
-            return false; // nothing, by default
         }
+        return false; // nothing, by default
     }
 
     @SuppressWarnings("unchecked")
@@ -248,9 +246,6 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();

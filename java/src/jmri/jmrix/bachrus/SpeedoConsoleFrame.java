@@ -33,6 +33,7 @@ import javax.swing.border.TitledBorder;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -63,7 +64,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      *
      * TODO: Complete the help file Allow selection of arbitrary scale
      */
-
     private PowerManager pm = null;
 
     // member declarations
@@ -115,20 +115,20 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected javax.swing.JLabel readerLabel = new javax.swing.JLabel();
 
     protected String[] scaleStrings = new String[]{
-            Bundle.getMessage("ScaleZ"),
-            Bundle.getMessage("ScaleEuroN"),
-            Bundle.getMessage("ScaleNFine"),
-            Bundle.getMessage("ScaleJapaneseN"),
-            Bundle.getMessage("ScaleBritishN"),
-            Bundle.getMessage("Scale3mm"),
-            Bundle.getMessage("ScaleTT"),
-            Bundle.getMessage("Scale00"),
-            Bundle.getMessage("ScaleH0"),
-            Bundle.getMessage("ScaleS"),
-            Bundle.getMessage("Scale048"),
-            Bundle.getMessage("Scale045"),
-            Bundle.getMessage("Scale043"),
-            Bundle.getMessage("ScaleOther")
+        Bundle.getMessage("ScaleZ"),
+        Bundle.getMessage("ScaleEuroN"),
+        Bundle.getMessage("ScaleNFine"),
+        Bundle.getMessage("ScaleJapaneseN"),
+        Bundle.getMessage("ScaleBritishN"),
+        Bundle.getMessage("Scale3mm"),
+        Bundle.getMessage("ScaleTT"),
+        Bundle.getMessage("Scale00"),
+        Bundle.getMessage("ScaleH0"),
+        Bundle.getMessage("ScaleS"),
+        Bundle.getMessage("Scale048"),
+        Bundle.getMessage("Scale045"),
+        Bundle.getMessage("Scale043"),
+        Bundle.getMessage("ScaleOther")
     };
 
     protected float[] scales = new float[]{
@@ -266,10 +266,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // What services do we have?
         dccServices = BASIC;
-        if (InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
-                && InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
-            prog = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
-            dccServices |= PROG;
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+            if (InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
+                prog = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+                dccServices |= PROG;
+            }
         }
         if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
             // otherwise we'll send speed commands
@@ -322,7 +323,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         scalePanel.add(scaleLabel);
         scalePanel.add(scaleList);
         scalePanel.add(readerLabel);
-        
+
         // Custom Scale panel to hold the custome scale selection
         JPanel customScalePanel = new JPanel();
         customScalePanel.setBorder(BorderFactory.createTitledBorder(
@@ -333,7 +334,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         customScaleLabel.setVisible(true);
         customScaleField.setVisible(true);
         customScaleField.setEnabled(false);
-        
+
         // Let user press return to enter custom scale
         customScaleField.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -518,13 +519,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
          */
         rosterBox.addPropertyChangeListener(
                 RosterEntrySelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent pce) {
-                        if (!disableRosterBoxActions) { //Have roster box actions been disabled?
-                            rosterItemSelected();
-                        }
-                    }
-                });
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (!disableRosterBoxActions) { //Have roster box actions been disabled?
+                    rosterItemSelected();
+                }
+            }
+        });
 
         readAddressButton.setToolTipText(Bundle.getMessage("ReadLoco"));
 
@@ -753,7 +754,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
         }
     }
-    
+
     /**
      * Handle changing/setting the address.
      */
@@ -823,7 +824,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * Handle "replies" from the hardware. In fact, all the hardware does is
      * send a constant stream of unsolicited speed updates.
-     *
+     * <p>
      */
     @Override
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
@@ -942,7 +943,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 }
                 break;
             default:
-                log.debug("range {} unsupported, range unchanged.",range);
+                log.debug("range {} unsupported, range unchanged.", range);
         }
     }
 
@@ -1075,7 +1076,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(DccLocoAddress address) {
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

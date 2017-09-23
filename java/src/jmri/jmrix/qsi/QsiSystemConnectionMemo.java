@@ -1,8 +1,9 @@
 package jmri.jmrix.qsi;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
+import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -21,7 +22,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.st = st;
         register();
         InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this),
         jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -30,7 +31,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         register(); // registers general type
         InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
 
-        InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this),
         jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -67,9 +68,6 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (getDisabled()) {
             return false;
         }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
-        }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
         }
@@ -85,9 +83,6 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (getDisabled()) {
             return null;
         }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
@@ -99,25 +94,23 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Configure the common managers for Qsi connections. This puts the common
-     * manager config in one place. This method is static so that it can be
-     * referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * manager config in one place.
      */
     public void configureManagers() {
-        jmri.InstanceManager.setProgrammerManager(
-                getProgrammerManager());
+        InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
     }
 
-    private ProgrammerManager programmerManager;
+    private DefaultProgrammerManager programmerManager;
 
-    public ProgrammerManager getProgrammerManager() {
+    public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new jmri.managers.DefaultProgrammerManager(new jmri.jmrix.qsi.QsiProgrammer(this), this);
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(DefaultProgrammerManager p) {
         programmerManager = p;
     }
 

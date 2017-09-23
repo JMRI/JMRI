@@ -1,31 +1,29 @@
 package jmri.jmrit.decoderdefn;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.managers.DefaultProgrammerManager;
+import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * IdentifyDecoderTest.java
- *
+ * <p>
  * Description:	tests for the jmrit.roster.IdentifyDecoder class
  *
  * @author	Bob Jacobsen
  */
-public class IdentifyDecoderTest extends TestCase {
+public class IdentifyDecoderTest {
 
     static int cvRead = -1;
+    private ProgDebugger p;
 
+    @Test
     public void testIdentifyStandard() {
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -58,16 +56,8 @@ public class IdentifyDecoderTest extends TestCase {
 
     }
 
+    @Test
     public void testIdentifyHarman() {
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -112,16 +102,8 @@ public class IdentifyDecoderTest extends TestCase {
 
     }
 
+    @Test
     public void testIdentifyTsu2() {
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -166,16 +148,8 @@ public class IdentifyDecoderTest extends TestCase {
 
     }
 
+    @Test
     public void testIdentifyHornby1() { // CV159 == 143, hence productIDlow in CV159 and productIDhigh in CV153
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -219,16 +193,8 @@ public class IdentifyDecoderTest extends TestCase {
         Assert.assertEquals("found product ID ", (2 * 256) + 143, i.productID);
     }
 
+    @Test
     public void testIdentifyHornby2() { // CV159 < 143, hence productID in CV159
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -267,16 +233,8 @@ public class IdentifyDecoderTest extends TestCase {
         Assert.assertEquals("found product ID ", 142, i.productID);
     }
 
+    @Test
     public void testIdentifyHornby3() { // CV159 > 143, hence productID in CV159
-        // initialize the system
-        jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
-            @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
-            }
-        };
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
-
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -315,26 +273,24 @@ public class IdentifyDecoderTest extends TestCase {
         Assert.assertEquals("found product ID ", 144, i.productID);
     }
 
-    // from here down is testing infrastructure
-    public IdentifyDecoderTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        // initialize the system
+        p = new ProgDebugger() {
+            @Override
+            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+                cvRead = CV;
+            }
+        };
+        DefaultProgrammerManager dpm = new DefaultProgrammerManager(p);
+        InstanceManager.setAddressedProgrammerManager(dpm);
+        InstanceManager.store(dpm, GlobalProgrammerManager.class);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {IdentifyDecoderTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IdentifyDecoderTest.class);
-        return suite;
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @After
+    public void tearDown() {
+        p = null;
+        JUnitUtil.tearDown();
     }
 }

@@ -26,6 +26,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
@@ -60,7 +62,6 @@ import jmri.jmrit.symbolicprog.QuantumCvMgrImportAction;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -145,11 +146,11 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
                                 (String) null, this
                         ) {
-                            @Override
-                            public boolean checkPromptNeeded() {
-                                return !checkDirtyDecoder();
-                            }
-                        };
+                    @Override
+                    public boolean checkPromptNeeded() {
+                        return !checkDirtyDecoder();
+                    }
+                };
             }
             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
             if (fileDirtyTask == null) {
@@ -158,17 +159,17 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
                                 Bundle.getMessage("PromptSaveQuit"), this
                         ) {
-                            @Override
-                            public boolean checkPromptNeeded() {
-                                return !checkDirtyFile();
-                            }
+                    @Override
+                    public boolean checkPromptNeeded() {
+                        return !checkDirtyFile();
+                    }
 
-                            @Override
-                            public boolean doPrompt() {
-                                boolean result = storeFile(); // storeFile false if failed, abort shutdown
-                                return result;
-                            }
-                        };
+                    @Override
+                    public boolean doPrompt() {
+                        boolean result = storeFile(); // storeFile false if failed, abort shutdown
+                        return result;
+                    }
+                };
             }
             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
         }
@@ -369,8 +370,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Enable the [Read all] and [Read changes] buttons if possible. This checks to
-     * make sure this is appropriate, given the attached programmer's
+     * Enable the [Read all] and [Read changes] buttons if possible. This checks
+     * to make sure this is appropriate, given the attached programmer's
      * capability.
      */
     void enableReadButtons() {
@@ -421,7 +422,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create the tables
         cvModel = new CvTableModel(progStatus, mProgrammer);
- 
+
         variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"},
                 cvModel);
 
@@ -485,7 +486,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // set the programming mode
         if (pProg != null) {
-            if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null) {
+            if (InstanceManager.getOptionalDefault(AddressedProgrammerManager.class).isPresent()
+                    || InstanceManager.getOptionalDefault(GlobalProgrammerManager.class).isPresent()) {
                 // go through in preference order, trying to find a mode
                 // that exists in both the programmer and decoder.
                 // First, get attributes. If not present, assume that
@@ -496,15 +498,17 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                     // add a verify-write facade if configured
                     Programmer pf = mProgrammer;
-                    if (getDoConfirmRead()) pf = new jmri.implementation.VerifyWriteProgrammerFacade(pf);
+                    if (getDoConfirmRead()) {
+                        pf = new jmri.implementation.VerifyWriteProgrammerFacade(pf);
+                    }
                     // add any facades defined in the decoder file
                     pf = jmri.implementation.ProgrammerFacadeSelector
-                                    .loadFacadeElements(programming, pf, getCanCacheDefault());
-                    log.debug("new programmer " + pf);
+                            .loadFacadeElements(programming, pf, getCanCacheDefault());
+                    log.debug("new programmer {}", pf);
                     mProgrammer = pf;
                     cvModel.setProgrammer(pf);
                     resetModel.setProgrammer(pf);
-                    log.debug("Found programmer: " + cvModel.getProgrammer());
+                    log.debug("Found programmer: {}", cvModel.getProgrammer());
 
                 }
 
@@ -612,7 +616,6 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
-
         // find an accepted mode to set it to
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
 
@@ -627,7 +630,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         // first try specified modes
         for (Element el1 : programming.getChildren("mode")) {
             String name = el1.getText();
-            if (log.isDebugEnabled()) log.debug(" mode {} was specified", name);
+            if (log.isDebugEnabled()) {
+                log.debug(" mode {} was specified", name);
+            }
             for (ProgrammingMode m : modes) {
                 if (name.equals(m.getStandardName())) {
                     log.info("Programming mode selected: {} ({})", m.toString(), m.getStandardName());
@@ -638,21 +643,20 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // go through historical modes
-
-        if (modes.contains(DefaultProgrammerManager.DIRECTMODE) && directbit && directbyte) {
-            mProgrammer.setMode(DefaultProgrammerManager.DIRECTMODE);
+        if (modes.contains(ProgrammingMode.DIRECTMODE) && directbit && directbyte) {
+            mProgrammer.setMode(ProgrammingMode.DIRECTMODE);
             log.debug("Set to DIRECTMODE");
-        } else if (modes.contains(DefaultProgrammerManager.DIRECTBITMODE) && directbit) {
-            mProgrammer.setMode(DefaultProgrammerManager.DIRECTBITMODE);
+        } else if (modes.contains(ProgrammingMode.DIRECTBITMODE) && directbit) {
+            mProgrammer.setMode(ProgrammingMode.DIRECTBITMODE);
             log.debug("Set to DIRECTBITMODE");
-        } else if (modes.contains(DefaultProgrammerManager.DIRECTBYTEMODE) && directbyte) {
-            mProgrammer.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        } else if (modes.contains(ProgrammingMode.DIRECTBYTEMODE) && directbyte) {
+            mProgrammer.setMode(ProgrammingMode.DIRECTBYTEMODE);
             log.debug("Set to DIRECTBYTEMODE");
-        } else if (modes.contains(DefaultProgrammerManager.PAGEMODE) && paged) {
-            mProgrammer.setMode(DefaultProgrammerManager.PAGEMODE);
+        } else if (modes.contains(ProgrammingMode.PAGEMODE) && paged) {
+            mProgrammer.setMode(ProgrammingMode.PAGEMODE);
             log.debug("Set to PAGEMODE");
-        } else if (modes.contains(DefaultProgrammerManager.REGISTERMODE) && register) {
-            mProgrammer.setMode(DefaultProgrammerManager.REGISTERMODE);
+        } else if (modes.contains(ProgrammingMode.REGISTERMODE) && register) {
+            mProgrammer.setMode(ProgrammingMode.REGISTERMODE);
             log.debug("Set to REGISTERMODE");
         } else {
             log.warn("No acceptable mode found, leave as found");
@@ -671,7 +675,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // get a DecoderFile from the locomotive xml
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
-        log.debug("selected loco uses decoder {} {}",decoderFamily, decoderModel);
+        log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
 
         // locate a decoder like that.
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
@@ -710,7 +714,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         } catch (org.jdom2.JDOMException e) {
             log.error("Exception while parsing decoder XML file: " + df.getFileName(), e);
             return;
-        } catch (java.io.IOException  e) {
+        } catch (java.io.IOException e) {
             log.error("Exception while reading decoder XML file: " + df.getFileName(), e);
             return;
         }
@@ -1263,8 +1267,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Create a BusyGlassPane transparent layer over the panel
-     * blocking any other interaction, excluding a supplied button.
+     * Create a BusyGlassPane transparent layer over the panel blocking any
+     * other interaction, excluding a supplied button.
      *
      * @param activeButton a button to put on top of the pane
      */
@@ -1367,9 +1371,9 @@ abstract public class PaneProgFrame extends JmriJFrame
      * invoked by "Read Changes" button, this sets in motion a continuing
      * sequence of "read changes" operations on the panes.
      * <p>
-     * Each invocation of this method reads one pane; completion of that
-     * request will cause it to happen again, reading the next pane, until
-     * there's nothing left to read.
+     * Each invocation of this method reads one pane; completion of that request
+     * will cause it to happen again, reading the next pane, until there's
+     * nothing left to read.
      *
      * @return true if a read has been started, false if the operation is
      *         complete.
@@ -1392,12 +1396,12 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Invoked by the "Read All" button, this sets in motion a continuing sequence
-     * of "read all" operations on the panes.
+     * Invoked by the "Read All" button, this sets in motion a continuing
+     * sequence of "read all" operations on the panes.
      * <p>
      * Each invocation of this method reads one pane; completion of that request
-     * will cause it to happen again, reading the next pane, until there's nothing
-     * left to read.
+     * will cause it to happen again, reading the next pane, until there's
+     * nothing left to read.
      *
      * @return true if a read has been started, false if the operation is
      *         complete.
@@ -1487,7 +1491,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     /**
      * Invoked by "Write Changes" button, this sets in motion a continuing
      * sequence of "write changes" operations on each pane.
-     * <p>Each invocation of this method writes one pane; completion of that
+     * <p>
+     * Each invocation of this method writes one pane; completion of that
      * request will cause it to happen again, writing the next pane, until
      * there's nothing left to write.
      *
@@ -1554,7 +1559,8 @@ abstract public class PaneProgFrame extends JmriJFrame
      * Prepare a roster entry to be printed, and display a selection list.
      *
      * @see jmri.jmrit.roster.PrintRosterEntry#doPrintPanes(boolean)
-     * @param preview true if output should got to a Preview pane on screen, false to output to a printer (dialog)
+     * @param preview true if output should got to a Preview pane on screen,
+     *                false to output to a printer (dialog)
      */
     public void printPanes(final boolean preview) {
         PrintRosterEntry pre = new PrintRosterEntry(_rosterEntry, paneList, _flPane, _rMPane, this);
@@ -1574,13 +1580,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event
         if (_programmingPane == null) {
-            log.warn("unexpected propertyChange: " + e);
+            log.warn("unexpected propertyChange: {}", e);
             return;
         } else if (log.isDebugEnabled()) {
             log.debug("property changed: " + e.getPropertyName()
                     + " new value: " + e.getNewValue());
         }
-        log.debug("check valid: " + (e.getSource() == _programmingPane) + " " + (!e.getPropertyName().equals("Busy")) + " " + (((Boolean) e.getNewValue()).equals(Boolean.FALSE)));
+        log.debug("check valid: {} {} {}", e.getSource() == _programmingPane, !e.getPropertyName().equals("Busy"), ((Boolean) e.getNewValue()).equals(Boolean.FALSE));
         if (e.getSource() == _programmingPane
                 && e.getPropertyName().equals("Busy")
                 && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -1743,17 +1749,18 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
+        }
     }
 
     /**
      * get value of Preference option to show empty panes
      */
     public static boolean getShowEmptyPanes() {
-        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
-            true :
-            InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null)
+                ? true
+                : InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
 
     /**
@@ -1780,36 +1787,39 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
+        }
     }
 
     public static boolean getShowCvNumbers() {
-        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
-            true :
-            InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null)
+                ? true
+                : InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }
 
     public static void setCanCacheDefault(boolean yes) {
-        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setCanCacheDefault(yes);
+        }
     }
 
     public static boolean getCanCacheDefault() {
-        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
-            true :
-            InstanceManager.getDefault(ProgrammerConfigManager.class).isCanCacheDefault();
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null)
+                ? true
+                : InstanceManager.getDefault(ProgrammerConfigManager.class).isCanCacheDefault();
     }
 
     public static void setDoConfirmRead(boolean yes) {
-        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setDoConfirmRead(yes);
+        }
     }
 
     public static boolean getDoConfirmRead() {
-        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
-            true :
-            InstanceManager.getDefault(ProgrammerConfigManager.class).isDoConfirmRead();
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null)
+                ? true
+                : InstanceManager.getDefault(ProgrammerConfigManager.class).isDoConfirmRead();
     }
 
     public RosterEntry getRosterEntry() {
