@@ -52,7 +52,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     @Override
-    @Nonnull
     public char typeLetter() {
         return 'B';
     }

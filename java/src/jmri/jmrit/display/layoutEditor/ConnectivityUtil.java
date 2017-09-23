@@ -939,7 +939,6 @@ public class ConnectivityUtil {
      *         contains a connecting track segment
      */
     @CheckReturnValue
-    @Nullable
     public boolean blockInternalToLevelXing(
             @Nullable LevelXing x,
             @Nullable Block block) {
