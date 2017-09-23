@@ -147,7 +147,7 @@ public class AcelaAddress {
             return (false);
         }
         if (num >= 0) {
-            // This is a CLnnxxx address
+            // This is a ALnnxxx address
         } else {
             log.warn("invalid Acela system name: " + systemName);
             return (false);

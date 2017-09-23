@@ -714,7 +714,7 @@ public class LayoutTurnoutTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
-        // note: Not really testing anything here…
+        // note: Not really testing anything here,
         // this is just for code coverage.
         ltRH.setUpDefaultSize();
         ltLH.setUpDefaultSize();

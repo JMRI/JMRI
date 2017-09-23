@@ -65,15 +65,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         // reach here for switch command; make sure we know 
                         // about this one
                         String s = prefix + typeLetter() + addr;
-                        if (null == getBySystemName(s)) {
-                            // need to create a new one, and send the message on 
-                            // to the newly created object.
-                            ((XNetTurnout) provideTurnout(s)).initmessage(l);
-                        } else {
-                            // The turnout exists, forward this message to the 
-                            // turnout
-                            ((XNetTurnout) getBySystemName(s)).message(l);
-                        }
+                        forwardMessageToTurnout(s,l);
                     }
                     if (addr % 2 != 0) {
                         // If the address we got was odd, we need to check to 
@@ -83,21 +75,27 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                             // reach here for switch command; make sure we know 
                             // about this one
                             String s = prefix + typeLetter() + (addr + 1);
-                            if (null == getBySystemName(s)) {
-                                // need to create a new one, and send the message on 
-                                // to the newly created object.
-                                ((XNetTurnout) provideTurnout(s)).message(l);
-                            } else {
-                                // The turnout exists, forward this message to the 
-                                // turnout
-                                ((XNetTurnout) getBySystemName(s)).message(l);
-                            }
+                            forwardMessageToTurnout(s,l);
                         }
                     }
                 }
             }
         }
     }
+
+    protected void forwardMessageToTurnout(String s, XNetReply l){
+        XNetTurnout t = (XNetTurnout) getBySystemName(s);
+        if ( null == t ) {
+           // need to create a new one, and send the message on 
+           // to the newly created object.
+           ((XNetTurnout) provideTurnout(s)).initmessage(l);
+        } else {
+           // The turnout exists, forward this message to the 
+           // turnout
+           t.message(l);
+        }
+    }
+
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.

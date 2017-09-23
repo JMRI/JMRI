@@ -105,7 +105,8 @@
       the <a href="Logging.shtml">logger reference</a> at the
       bottom of each file.</p>
 
-      <h2>Deprecating Code</h2>As development proceeds, sometimes
+      <h2>Deprecating Code</h2>
+      As development proceeds, sometimes
       old ways of doing things have to be replaced by new ways. In
       many cases, you can just change all the using code in our
       repository, and move forward. For general interfaces that
@@ -124,10 +125,8 @@
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of
       build.xml:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 &lt;property name="deprecation" value="on" /&gt;
-</code>
 </pre>
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
@@ -138,15 +137,117 @@
       technicalities is <a href=
       "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
       here</a>. We use them this way:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 * @deprecated 2.7.8<br>
-<br>
 @Deprecated // 2.7.8<br>
-</code>
-</pre>where the line contains the version in which the deprecation
-is applied. That lets you easily know how long ago it was
-deprecated. 
+</pre>
+        where the line contains the version in which the deprecation
+        is applied. That lets you easily know how long ago it was
+        deprecated. 
+
+    <h2>Exceptions</h2>
+    
+    <a href="">FindBugs</a>
+    will object to
+    <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastSuccessfulBuild/findbugsResult/type.-1293684328/">code like this</a>:
+
+<pre style="font-family: monospace;">
+  try {
+     // do something here
+  } catch (Exception e) {
+  }
+</pre>
+with a 
+<a href="http://findbugs.sourceforge.net/bugDescriptions.html#REC_CATCH_EXCEPTION"><code>REC_CATCH_EXCEPTION</code></a>
+and/or a 
+<a href="http://findbugs.sourceforge.net/bugDescriptions.html#DE_MIGHT_IGNORE"><code>DE_MIGHT_IGNORE</code></a>
+(less often 
+<a href="http://findbugs.sourceforge.net/bugDescriptions.html#DE_MIGHT_DROP"><code>DE_MIGHT_DROP</code></a>).
+This is an example of two problems:
+<ul>
+<li>Catching <code>Exception</code> instead of more specific types
+<li>Having nothing in the <code>catch</code> block
+</ul>
+
+Let's discuss those separately:
+
+<h3>Catching the Exception class</h3>
+
+There are two subcases here:
+<ul>
+<li>You're catching <code>Exception</code> because a lot of different specific things can be thrown, 
+and it's a pain to write multiple <code>catch</code> blocks for each of those.  
+That's actually obsolete thinking, though, because now there's syntax for combining those:
+<pre style="font-family: monospace;">
+  try {
+    // do something here
+  } catch (IOException | JDOMException e) {
+    // and do something, see below
+  }
+</pre>
+That's a much better way to convey what this code is intended to do.
+
+<li>You want to catch any unchecked exception, such as
+<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html"><code>NullPointerException</code></a>,
+that is thrown.  Those are all subclasses of 
+<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html"><code>RunTimeException</code></a>,
+so the clean way to do this is to catch that:
+<pre style="font-family: monospace;">
+  try {
+    // do something here
+  } catch (RunTimeException e) {
+    // and do something, see below
+  }
+</pre>
+</ul>
+
+<h3>Empty catch block</h3>
+
+What's an empty <code>catch</code> block trying to say?
+
+<ul>
+<li>Ideally, the code should handle the exception, in the sense of reacting to it so that the right stuff 
+still happens for the user. So do that as a first strategy.
+<p>
+But sometimes, that's complicated, or the error is really something that isn't understood,
+or perhaps is routine and doesn't matter.
+
+<li>If you can't do anything else, at least consider logging that the code has caught something.  
+Typically, this would be a warning:
+<pre style="font-family: monospace;">
+log.warn("can't do anything useful with this:", e);
+</pre>
+Adding the <code>Exception</code> object <code>e</code> to the log logs all its content, including the traceback. 
+That way, if something weird happens later on, at least there's a clue in the log. 
+
+<li>If it's really routine, log at <code>debug</code> or even <code>trace</code> level. 
+That way if it turns out later to not actually be routine, turning on additional logging will help track it down.
+
+<li>Consider <u>not</u> catching the error, so that it propagates up. 
+(The methods for targeting the catch block more narrowly in the prior section can help here) 
+It will eventually be caught, and will contain a more useful stach trace.  
+This might require adding the exception to the signature of the current method so you can throw it upwards. 
+<p>
+Or, if absolutely can't change the signature, consider re-characterizing it, e.g.:
+<pre style="font-family: monospace;">
+  try {
+     // do something here
+  } catch (IOException e) {
+     // do something to clean upp
+     ...
+     // But still need to signal that this failed.
+     // Let's blame the arguments we are processing:
+     throw new IllegalArgumentException("couldn't process because ...", e);
+  }
+</pre>
+
+<li>If it really is "ignore this, it's going to be OK", 
+you should add an annotation so that others know why it's OK and don't have to worry about it in the future:
+<pre style="font-family: monospace;">
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value={"DE_MIGHT_DROP", "DE_MIGHT_IGNORE"}, 
+    justification = "(Something about why this is OK)")
+</pre>
+</ul>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
