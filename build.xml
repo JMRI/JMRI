@@ -1066,9 +1066,16 @@
         <property name="antargline" value="PanelProConfig2.xml"/>
         <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
         <echo message="Saw: ${profiler.info.jvmargs.agent}"/>
-        <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
+        <!-- <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail> -->
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
+            <nbprofiledirect>
+                <classpath>
+                    <pathelement location="dist/test.jar"/>
+                    <pathelement path="${java.class.path}"/>
+                    <!-- <pathelement path="${target}"/> -->
+                </classpath>
+            </nbprofiledirect>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
