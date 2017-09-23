@@ -64,7 +64,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return bundle.handleGetMessage(key);
+        return b.handleGetMessage(key);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key) {
-        return bundle.handleGetMessage(locale, key);
+        return b.handleGetMessage(locale, key);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return bundle.handleGetMessage(key, subs);
+        return b.handleGetMessage(key, subs);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return bundle.handleGetMessage(locale, key, subs);
+        return b.handleGetMessage(locale, key, subs);
     }
 
     /**
@@ -191,7 +191,7 @@ public class Bundle {
         throw new MissingResourceException("Resource not found", this.getClass().toString(), key); // NOI18N
     }
 
-    private final static Bundle bundle = new Bundle();
+    private final static Bundle b = new Bundle();
 
     @Nullable
     protected String bundleName() {
@@ -199,7 +199,7 @@ public class Bundle {
     }
 
     protected jmri.Bundle getBundle() {
-        return bundle;
+        return b;
     }
 
     // Can get pathname of ctor class (to auto-generate BundleName) via getClass().getPackage()

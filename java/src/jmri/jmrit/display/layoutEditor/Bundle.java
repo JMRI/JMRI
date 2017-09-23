@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return bundle.handleGetMessage(key);
+        return b.handleGetMessage(key);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return bundle.handleGetMessage(key, subs);
+        return b.handleGetMessage(key, subs);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return bundle.handleGetMessage(locale, key, subs);
+        return b.handleGetMessage(locale, key, subs);
     }
 
     private final static Bundle bundle = new Bundle();
