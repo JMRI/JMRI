@@ -5,9 +5,8 @@
 # You need to have Bluecove and WiiRemoteJ jars in your Java classpath, JMRI lib folder is a good place for that (copy both jars there)
 # See: http://bluecove.org/ and https://github.com/micromu/WiiRemoteJ
 #
-# once Jynstrument started (aka WiimoteThrottle.jyn **FOLDER** (no the py file) dropped into a throttle window toolbar
-# press 1+2 on the Wiimote you want to use, it should connect
-# connection will be validated by Wiimote vibrating and one of the LED turned on
+# once Jynstrument started press 1+2 on the Wiimote you want to use, it should connect
+# connection will be validated by Wiimote vibrating and one of the LED turning on
 #
 # See JMRI output or log in case of issue.
 #
@@ -20,9 +19,9 @@
 #    +/-   : direction
 #     A    : brake
 #     B    : accelerate
-#    1+2      : EStop 
-#     1   :function 1 (or advanced function 1)
-#     2   :function 2 (or advanced function 2)
+#    +&-   : EStop 
+#     1    : function 1 (or advanced function 1)
+#     2    : function 2 (or advanced function 2)
 #
 
 speedEStopSpeed = -1
@@ -147,54 +146,36 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
             if ( evt.isPressed(WRButtonEvent.B) ): # SPEED - increment
                 self.speedAction.setSpeedIncrement( valueSpeedIncrement )
                 self.speedTimer.start()
-                return
             if ( evt.isPressed(WRButtonEvent.A) ): # SPEED - decrement
                 self.speedAction.setSpeedIncrement( -valueSpeedIncrement )
                 self.speedTimer.start()
-                return
             # EStop
             if ( evt.isPressed( WRButtonEvent.PLUS | WRButtonEvent.MINUS ) ): # estop = + & -
                 self.throttle.setSpeedSetting( speedEStopSpeed )
                 self.lastTimeEStop = Calendar.getInstance().getTimeInMillis() # To cancel next inputs
                 self.wiiDevice.vibrateFor(750)
-                return
-            
+            # Directions
             if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # FORWARD
                 self.throttle.setIsForward(True)
-                return
             if ( evt.wasReleased(WRButtonEvent.MINUS) ):  # BACKWARD
                 self.throttle.setIsForward(False)
-                return   
-                        
+            # Home : F0            
             if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", False, self.throttle) != None):
-                   return
-                self.throttle.setF0( not self.throttle.getF0() )
-                return            
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", False, self.throttle) != None)):
+                   self.throttle.setF0( not self.throttle.getF0() )
             # Wiimote 1 & 2 buttons
             if (evt.isPressed(WRButtonEvent.ONE)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", True, self.throttle) != None):
-                    return
-                # default F1 not momentary (switch only on Release, do nothing here)
-                return                                
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", True, self.throttle) != None)):
+                    pass # default F1 not momentary (switch only on Release, do nothing here)
             if (evt.wasReleased(WRButtonEvent.ONE)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", False, self.throttle) != None):
-                    return
-                self.throttle.setF1( not self.throttle.getF1() )
-                return
-                
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", False, self.throttle) != None)):
+                    self.throttle.setF1( not self.throttle.getF1() )  # default F1 not momentary              
             if (evt.isPressed(WRButtonEvent.TWO)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", True, self.throttle) != None):
-                    return
-                # default F2 momentary
-                self.throttle.setF2( not self.throttle.getF2() )
-                return                
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", True, self.throttle) != None)):
+                    self.throttle.setF2( True )  # default F2 momentary
             if (evt.wasReleased(WRButtonEvent.TWO)):
-                if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", False, self.throttle) != None):
-                    return
-                self.throttle.setF2( not self.throttle.getF2() )
-                return                
-
+                if not ((self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", False, self.throttle) != None)):
+                    self.throttle.setF2( False )
 
     def disconnected(self):
         self.wiiDevice = None
@@ -293,29 +274,20 @@ class SpeedAction(ActionListener):
             throttle.setSpeedSetting( ns )
 
 class AdvFunctions():
-    # (rosterEntry, fnId , push (boolean)
     def call(self, rosterEntry, advFn, status, throttle):
         assert (rosterEntry!=None), "rosterEntry is null"
         assert (advFn!=None), "advFn is null"
-        assert (status!=None), "status is null"
-        todoStr = self.getAdvFunctionString(rosterEntry, advFn)
+        assert (status!=None), "status is null"        
+        assert (throttle!=None), "throttle is null"
+        todoStr = rosterEntry.getAttribute("advF"+advFn)
         if (todoStr == None):
             return None
-        self.parseAdvFunctionString(rosterEntry, todoStr, status, throttle)                
-        return True
-
-    def getAdvFunctionString(self, rosterEntry, fn):
-        return rosterEntry.getAttribute("advF"+fn)
-
-    def parseAdvFunctionString(self, rosterEntry, todoStr, status, throttle):
+       # poor man parser, should unserialize a json object instead
         todo = todoStr.split(";")
         for task in todo:
             task = task.lstrip()
             # Actual function call 
-            if (task.startswith("F")):
-                if (throttle == None):
-                    print ("Was going to activate "+task+" but no throttle")
-                    continue                    
+            if (task.startswith("F")):                 
                 task = task.rstrip()
                 setter = None
                 getter = None
@@ -332,25 +304,28 @@ class AdvFunctions():
                 if (ok):
                     if (not rosterEntry.getFunctionLockable(int(task[1:]))):
                         setter.invoke(throttle, status)
-                    else:
+                    else:                        
                         state = getter.invoke(throttle)
                         setter.invoke(throttle, not state)
                 continue
             # Play sound
             if (task.startswith("P") and status):
                 path = task[1:]
-                self.play(path)
+                self.play(path, throttle)
                 continue
+        return True
                 
-    def play(self, sndPath):
-        assert (sndPath!=None), "sndPath is null"   
-        source = audio.getAudio("IAS"+sndPath)
+    def play(self, sndPath, throttle):
+        assert (sndPath!=None), "sndPath is null"
+        sourceName="IAS"+sndPath+"-"+str(throttle.getLocoAddress())
+        bufferName="IAB"+sndPath
+        source = audio.getAudio(sourceName)
         if (source == None):
-            buffer = audio.getAudio("IAS"+sndPath)
+            buffer = audio.getAudio(bufferName)
             if (buffer == None):
-                buffer = audio.provideAudio("IAB"+sndPath)
+                buffer = audio.provideAudio(bufferName)
                 buffer.setURL(sndPath)
-            source = audio.provideAudio("IAS"+sndPath)
-            source.setAssignedBuffer("IAB"+sndPath)
+            source = audio.provideAudio(sourceName)
+            source.setAssignedBuffer(bufferName)
         # would need to update location here
         source.play()
