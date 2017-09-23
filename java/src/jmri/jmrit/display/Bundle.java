@@ -77,7 +77,7 @@ public class Bundle extends jmri.jmrit.Bundle {
         return b.handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle bundle = new Bundle();
+    private final static Bundle b = new Bundle();
 
     @Override
     @Nullable
@@ -87,7 +87,7 @@ public class Bundle extends jmri.jmrit.Bundle {
 
     @Override
     protected jmri.Bundle getBundle() {
-        return bundle;
+        return b;
     }
 
     @Override

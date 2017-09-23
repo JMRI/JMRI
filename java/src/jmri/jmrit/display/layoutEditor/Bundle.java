@@ -77,7 +77,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
         return b.handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle bundle = new Bundle();
+    private final static Bundle b = new Bundle();
 
     /**
      * @return the name of the bundle
@@ -92,8 +92,8 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      * @return the bundle for this bundle
      */
     @Override
-    protected Bundle getBundle() {
-        return bundle;
+    protected jmri.Bundle getBundle() {
+        return b;
     }
 
     @Override
