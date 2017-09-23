@@ -30,6 +30,13 @@ public class CbusConsolePaneTest {
     }
 
     @Test
+    public void testInitComponentsNoArgs() throws Exception{
+        CbusConsolePane pane = new CbusConsolePane();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
     public void testInitContext() throws Exception {
         CbusConsolePane pane = new CbusConsolePane();
         // for now, just makes ure there isn't an exception.
