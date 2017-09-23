@@ -938,8 +938,6 @@ public class ConnectivityUtil {
      * @return true if block is internal to x; false if block is external or
      *         contains a connecting track segment
      */
-    @CheckReturnValue
-    @Nullable
     public boolean blockInternalToLevelXing(
             @Nullable LevelXing x,
             @Nullable Block block) {
