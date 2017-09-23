@@ -43,7 +43,7 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <tooltip xml:lang="de">Festlegung der Höchstgeschwindigkeit der Lok</tooltip>
     </variable>
-    <variable  CV="6" default="88" item="Vmid" default="88" exclude="LokSound L V4.0,LokSound Select L,LokSound XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0,LokPilot XL V4.0">
+    <variable CV="6" default="88" item="Vmid" default="88" exclude="LokSound L V4.0,LokSound Select L,LokSound XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Fx V4.0,LokPilot XL V4.0">
         <decVal min="1"/>
         <label>Vmid</label>
         <label xml:lang="de">Mittengeschwindigkeit</label>
