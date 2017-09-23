@@ -2008,11 +2008,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     //    STOPPED, READY, or WORKING, or is in MANUAL mode.
                                     foundOne = false;
                                     //But do so if the active train has reached its restart point
-                                    if (at.reachedRestartPoint()) {
+                                    if (nas != null && at.reachedRestartPoint()) {
                                         foundOne = true;
                                     }
-                                } else if (nas == null) {
-                                    foundOne = false;
                                 } else {
                                     if ((nas.getActiveTrain() != as.getActiveTrain()) || (!nas.getEntered())) {
                                         foundOne = false;
