@@ -597,9 +597,14 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 // store previous level
                 Level prevLogLevel = org.apache.log4j.Logger.getRootLogger().getLevel();
+                boolean validFormat = false;
                 // silence WARN logging
                 org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
-                boolean validFormat = InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value);
+//                try {
+                    validFormat = InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value);
+//                } catch (jmri.JmriException e) {
+                    // perhaps use it for the status bar?
+//                }
                 // reset logging level
                 org.apache.log4j.Logger.getRootLogger().setLevel(prevLogLevel);
                 if (validFormat) {

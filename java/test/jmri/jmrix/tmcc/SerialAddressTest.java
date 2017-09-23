@@ -88,7 +88,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("TL999", 999, SerialAddress.getBitFromSystemName("TL999"));
         Assert.assertEquals("TL2999", 999, SerialAddress.getBitFromSystemName("TL2999"));
         Assert.assertEquals("TL29O9", 0, SerialAddress.getBitFromSystemName("TL29O9"));
-        JUnitAppender.assertErrorMessage("illegal character in number field of system name: TL29O9");
+        JUnitAppender.assertWarnMessage("invalid character in number field of system name: TL29O9");
         Assert.assertEquals("TL0B7", 7, SerialAddress.getBitFromSystemName("TL0B7"));
         Assert.assertEquals("TL2B7", 7, SerialAddress.getBitFromSystemName("TL2B7"));
         Assert.assertEquals("TL0B1", 1, SerialAddress.getBitFromSystemName("TL0B1"));
