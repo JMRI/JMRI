@@ -16,14 +16,15 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
-    String defaultText = " ";
+    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED")
+    private transient String defaultText = " ";
 
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
         log.debug("BlockContentsIcon ctor= " + BlockContentsIcon.class.getName());
     }
 
-    LayoutBlock lBlock = null;
+    private transient LayoutBlock lBlock = null;
 
     @Override
     public void setBlock(jmri.NamedBeanHandle<Block> m) {
@@ -90,5 +91,5 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
+    private transient final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
 }

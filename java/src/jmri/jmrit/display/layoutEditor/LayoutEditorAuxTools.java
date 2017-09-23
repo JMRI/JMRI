@@ -98,9 +98,7 @@ public class LayoutEditorAuxTools {
                     || (lt instanceof TrackSegment)
                     || (lt instanceof LayoutTurnout)) { // <== includes LayoutSlips
                 lcs = lt.getLayoutConnectivity();
-                if (lcs != null) {
-                    cList.addAll(lcs); // append to list
-                }
+                cList.addAll(lcs); // append to list
             }
         }
         initialized = true;
@@ -120,44 +118,36 @@ public class LayoutEditorAuxTools {
         // Check for block boundaries at positionable points.
         for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             lcs = p.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // Check for block boundaries at layout turnouts and level crossings
         for (TrackSegment ts : layoutEditor.getTrackSegments()) {
             lcs = ts.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // check for block boundaries internal to crossover turnouts
         for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             lcs = lt.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // check for block boundaries internal to slips
         for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
             lcs = ls.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 

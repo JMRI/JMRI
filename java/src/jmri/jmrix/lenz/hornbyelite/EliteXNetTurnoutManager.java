@@ -50,16 +50,8 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                     log.debug("message has address: {}", addr);
                     // reach here for switch command; make sure we know 
                     // about this one
-                    String s = "XT" + (addr - 1);
-                    if (null == getBySystemName(s)) {
-                        // need to create a new one, and send the message on 
-                        // to the newly created object.
-                        ((EliteXNetTurnout) provideTurnout(s)).message(l);
-                    } else {
-                        // The turnout exists, forward this message to the 
-                        // turnout
-                        ((EliteXNetTurnout) getBySystemName(s)).message(l);
-                    }
+                    String s = prefix + typeLetter() +(addr - 1);
+                    forwardMessageToTurnout(s,l);
                     if ((addr & 0x01) == 1) {
                         // If the address we got was odd, we need to check to 
                         // see if the even address should be added as well.
@@ -67,16 +59,8 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                         if ((a2 & 0x0c) != 0) {
                             // reach here for switch command; make sure we know 
                             // about this one
-                            s = "XT" + (addr);
-                            if (null == getBySystemName(s)) {
-                                // need to create a new one, and send the message on 
-                                // to the newly created object.
-                                ((EliteXNetTurnout) provideTurnout(s)).message(l);
-                            } else {
-                                // The turnout exists, forward this message to the 
-                                // turnout
-                                ((EliteXNetTurnout) getBySystemName(s)).message(l);
-                            }
+                            s = prefix + typeLetter() + (addr);
+                            forwardMessageToTurnout(s,l);
                         }
                     }
                 }

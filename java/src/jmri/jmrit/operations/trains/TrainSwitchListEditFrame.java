@@ -46,7 +46,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     // load managers
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
     List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
-    List<JComboBox<String>> locationComboBoxes = new ArrayList<JComboBox<String>>();
+    List<JComboBox<String>> locationComboBoxes = new ArrayList<>();
     JPanel locationPanelCheckBoxes = new JPanel();
 
     // checkboxes

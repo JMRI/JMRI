@@ -489,11 +489,11 @@ public class ReporterTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
-                // get prefixSelectedItem
-                return true;
+//            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
+//                // get prefixSelectedItem
+//                return true;
             } else {
-                return false;
+                return true; //false; // TODO temporarily disabled checking format while adding user feedback
             }
         }
 
