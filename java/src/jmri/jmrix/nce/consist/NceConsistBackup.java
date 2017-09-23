@@ -97,88 +97,89 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                 return;
             }
         }
-        PrintWriter fileOut;
 
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new FileWriter(f)),
-                    true);
-        } catch (IOException e) {
-            return;
-        }
+        try(PrintWriter fileOut = new PrintWriter(new BufferedWriter(new FileWriter(f)),
+                    true)) {
 
-        if (JOptionPane.showConfirmDialog(null,
-                "Backup can take over a minute, continue?", "NCE Consist Backup",
-                JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-            fileOut.close();
-            return;
-        }
+           if (JOptionPane.showConfirmDialog(null,
+                   "Backup can take over a minute, continue?", "NCE Consist Backup",
+                   JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+               fileOut.close();
+               return;
+           }
 
-        // create a status frame
-        JPanel ps = new JPanel();
-        jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Consist Backup");
-        fstatus.setLocationRelativeTo(null);
-        fstatus.setSize(200, 100);
-        fstatus.getContentPane().add(ps);
+           // create a status frame
+           JPanel ps = new JPanel();
+           jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Consist Backup");
+           fstatus.setLocationRelativeTo(null);
+           fstatus.setSize(200, 100);
+           fstatus.getContentPane().add(ps);
 
-        ps.add(textConsist);
-        ps.add(consistNumber);
+           ps.add(textConsist);
+           ps.add(consistNumber);
 
-        textConsist.setText("Consist line number:");
-        textConsist.setVisible(true);
-        consistNumber.setVisible(true);
+           textConsist.setText("Consist line number:");
+           textConsist.setVisible(true);
+           consistNumber.setVisible(true);
 
-        // now read NCE CS consist memory and write to file
-        waiting = 0;   // reset in case there was a previous error
-        fileValid = true;  // assume we're going to succeed
-        // output string to file
+           // now read NCE CS consist memory and write to file
+           waiting = 0;   // reset in case there was a previous error
+           fileValid = true;  // assume we're going to succeed
+           // output string to file
 
-        for (int consistNum = 0; consistNum < workingNumConsists; consistNum++) {
+           for (int consistNum = 0; consistNum < workingNumConsists; consistNum++) {
 
-            consistNumber.setText(Integer.toString(consistNum));
-            fstatus.setVisible(true);
+               consistNumber.setText(Integer.toString(consistNum));
+               fstatus.setVisible(true);
 
-            getNceConsist(consistNum);
+               getNceConsist(consistNum);
 
-            if (!fileValid) {
-                consistNum = workingNumConsists;  // break out of for loop
-            }
-            if (fileValid) {
-                StringBuilder buf = new StringBuilder();
-                buf.append(":").append(Integer.toHexString(NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
+               if (!fileValid) {
+                   consistNum = workingNumConsists;  // break out of for loop
+               }
+               if (fileValid) {
+                   StringBuilder buf = new StringBuilder();
+                   buf.append(":").append(Integer.toHexString(NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
 
-                for (int i = 0; i < CONSIST_LNTH; i++) {
-                    buf.append(" ").append(StringUtil.twoHexFromInt(nceConsistData[i++]));
-                    buf.append(StringUtil.twoHexFromInt(nceConsistData[i]));
-                }
+                   for (int i = 0; i < CONSIST_LNTH; i++) {
+                       buf.append(" ").append(StringUtil.twoHexFromInt(nceConsistData[i++]));
+                       buf.append(StringUtil.twoHexFromInt(nceConsistData[i]));
+                   }
 
-                if (log.isDebugEnabled()) {
-                    log.debug("consist " + buf.toString());
-                }
+                   if (log.isDebugEnabled()) {
+                       log.debug("consist " + buf.toString());
+                   }
 
-                fileOut.println(buf.toString());
-            }
-        }
+                   fileOut.println(buf.toString());
+               }
+           }
 
-        if (fileValid) {
-            // NCE file terminator
-            String line = ":0000";
-            fileOut.println(line);
-        }
+           if (fileValid) {
+               // NCE file terminator
+               String line = ":0000";
+               fileOut.println(line);
+           }
 
-        // Write to disk and close file
-        fileOut.flush();
-        fileOut.close();
+           // Write to disk and close file
+           fileOut.flush();
+           fileOut.close();
+        
+           // kill status panel
+           fstatus.dispose();
 
-        // kill status panel
-        fstatus.dispose();
-
-        if (fileValid) {
-            JOptionPane.showMessageDialog(null, "Successful Backup!",
+           if (fileValid) {
+               JOptionPane.showMessageDialog(null, "Successful Backup!",
                     "NCE Consist", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Backup failed", "NCE Consist",
-                    JOptionPane.ERROR_MESSAGE);
+           } else {
+               JOptionPane.showMessageDialog(null, "Backup failed", "NCE Consist",
+                       JOptionPane.ERROR_MESSAGE);
+           }
+
+        } catch (IOException e) {
+            // this is the end of the try-with-resources that opens fileOut.
+            return;
         }
+
     }
 
     // Read 16 bytes of NCE CS memory
