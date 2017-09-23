@@ -21,6 +21,7 @@ import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
+import time
 
 class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.ThrottleListener):
     #Jynstrument main and mandatory methods
@@ -127,7 +128,8 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     
     def notifyFailedThrottleRequest(self, locoAddress, reason):
         self.masterThrottle = None
-        # Try again
+        # Sleep a bit and try again
+        time.sleep(1)
         if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
             print "Couldn't request a throttle for "+locoAddress     
     
