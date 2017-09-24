@@ -22,7 +22,6 @@ public class OpenLcbCanSendPaneTest {
     }
 
     @Test
-    @Ignore("Needs more setup")
     public void testInitComponents() throws Exception{
         OpenLcbCanSendPane p = new OpenLcbCanSendPane();
         // for now, just makes ure there isn't an exception.
@@ -30,7 +29,6 @@ public class OpenLcbCanSendPaneTest {
     }
 
     @Test
-    @Ignore("Needs more setup")
     public void testInitContext() throws Exception {
         OpenLcbCanSendPane p = new OpenLcbCanSendPane();
         // for now, just makes ure there isn't an exception.
@@ -57,6 +55,7 @@ public class OpenLcbCanSendPaneTest {
         tc = new jmri.jmrix.can.TestTrafficController();
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.configureManagers();
     }
 
     @After
