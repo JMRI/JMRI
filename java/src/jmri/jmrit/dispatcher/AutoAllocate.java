@@ -197,8 +197,9 @@ public class AutoAllocate {
                             continue;
                         }
                     }
-                    allocateIfLessThanThreeAhead(ar);
-                    continue;
+                    if (allocateIfLessThanThreeAhead(ar)) {
+                        continue;
+                    }
                 }
                 log.debug("Using Regular");
                 if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST &&
@@ -516,12 +517,17 @@ public class AutoAllocate {
                 // block further allocations till occupied.
                 log.debug("auto allocating Section returning false");
                 return false;
+            } else if (allocateBySafeSections) {
+                log.debug("auto allocating Section keep going");
+                _dispatcher.allocateSection(ar, null);
+                return true;
             }
-            log.debug("auto allocating Section keep going");
-            if ((curAS != null) && (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
+            log.debug("Auto allocating by count");
+            int numberAllocatedButUnoccupied = 0;
+            while ((curAS != null) && (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
                 //last allocated section exists and is not occupied, test previous one
+                numberAllocatedButUnoccupied+=1;
                 curSeq = curSeq - 1;
-
                 if ((curSeq == 1) && ar.getActiveTrain().getResetWhenDone()) {
                     curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
                 }
@@ -532,26 +538,14 @@ public class AutoAllocate {
                         curAS = as;
                     }
                 }
-                if ((curAS != null) && (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
-                    //previous allocated section exists and is not occupied, test previous one
-                    curSeq = curSeq - 1;
-                    if ((curSeq == 1) && ar.getActiveTrain().getResetWhenDone()) {
-                        curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
-                    }
-                    curAS = null;
-                    for (int i = aSectionList.size() - 1; i >= 0; i--) {
-                        AllocatedSection as = aSectionList.get(i);
-                        if ((as != null) && (as.getSequence() == curSeq)) {
-                            curAS = as;
-                        }
-                    }
-                    if (!allocateBySafeSections &&
-                            curAS != null &&
-                            (curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED)) {
-                        return false;
-                    }
-                }
             }
+            log.debug("FinalCounter[{}]",numberAllocatedButUnoccupied);
+            if (numberAllocatedButUnoccupied < allocateSectionsAhead) {
+                _dispatcher.allocateSection(ar, null);
+                return true;
+            }
+            return false;
+
         }
         log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(),
                 ar.getSectionName());
