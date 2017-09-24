@@ -15,7 +15,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,7 +79,7 @@ import org.slf4j.LoggerFactory;
 public class LayoutEditorTools {
 
     // Defined text resource, should be called by Bundle.getMessage() to allow reuse of shared keys via path
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // constants
     private int NONE = 0;  // Signal at Turnout Positions

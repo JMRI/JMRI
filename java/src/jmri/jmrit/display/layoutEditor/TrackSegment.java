@@ -2,8 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -18,28 +16,14 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import jmri.BlockManager;
-import jmri.InstanceManager;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +54,7 @@ public class TrackSegment extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-    private LayoutBlock block = null;
+    private LayoutBlock layoutBlock = null;
 
     // persistent instances variables (saved between sessions)
     private String blockName = "";
@@ -370,10 +354,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && !blockName.isEmpty()) {
-            block = layoutEditor.provideLayoutBlock(blockName);
+        if ((layoutBlock == null) && (blockName != null) && !blockName.isEmpty()) {
+            layoutBlock = layoutEditor.provideLayoutBlock(blockName);
         }
-        return block;
+        return layoutBlock;
     }
 
     public String getConnect1Name() {
@@ -447,7 +431,7 @@ public class TrackSegment extends LayoutTrack {
      * Set Up a Layout Block for a Track Segment.
      */
     public void setLayoutBlock(@Nullable LayoutBlock b) {
-        block = b;
+        layoutBlock = b;
         if (b != null) {
             blockName = b.getId();
         }
@@ -512,10 +496,10 @@ public class TrackSegment extends LayoutTrack {
     // we're using it here for backwards compatibility until it can be removed
     public void setObjects(LayoutEditor p) {
         if (!tBlockName.isEmpty()) {
-            block = p.getLayoutBlock(tBlockName);
-            if (block != null) {
+            layoutBlock = p.getLayoutBlock(tBlockName);
+            if (layoutBlock != null) {
                 blockName = tBlockName;
-                block.incrementUse();
+                layoutBlock.incrementUse();
             } else {
                 log.error("bad blockname '" + tBlockName + "' in tracksegment " + ident);
             }
@@ -536,15 +520,15 @@ public class TrackSegment extends LayoutTrack {
     }
 
     protected void updateBlockInfo() {
-        if (block != null) {
-            block.updatePaths();
+        if (layoutBlock != null) {
+            layoutBlock.updatePaths();
         }
         LayoutBlock b1 = getBlock(connect1, type1);
-        if ((b1 != null) && (b1 != block)) {
+        if ((b1 != null) && (b1 != layoutBlock)) {
             b1.updatePaths();
         }
         LayoutBlock b2 = getBlock(connect2, type2);
-        if ((b2 != null) && (b2 != block) && (b2 != b1)) {
+        if ((b2 != null) && (b2 != layoutBlock) && (b2 != b1)) {
             b2.updatePaths();
         }
 
@@ -648,7 +632,10 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    JPopupMenu popup = null;
+    private JPopupMenu popup = null;
+    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Mainline"));
+    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
+    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Dashed"));
 
     /**
      * Display popup menu for information and editing.
@@ -731,14 +718,12 @@ public class TrackSegment extends LayoutTrack {
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                editTrackSegment();
+                layoutEditor.getLayoutTrackEditors().editTrackSegment(TrackSegment.this);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 layoutEditor.removeTrackSegment(TrackSegment.this);
@@ -952,256 +937,6 @@ public class TrackSegment extends LayoutTrack {
         setFlip(!isFlip());
         layoutEditor.redrawPanel();
         layoutEditor.setDirty();
-    }
-
-    // variables for Edit Track Segment pane
-    private JmriJFrame editTrackSegmentFrame = null;
-
-    private JComboBox<String> mainlineBox = new JComboBox<String>();
-    private int mainlineTrackIndex;
-    private int sideTrackIndex;
-
-    private JComboBox<String> dashedBox = new JComboBox<String>();
-    private int dashedIndex;
-    private int solidIndex;
-
-    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("HideTrack"));
-
-    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Mainline"));
-    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Dashed"));
-
-    private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JTextField arcField = new JTextField(5);
-    private JButton segmentEditBlock;
-    private JButton segmentEditDone;
-    private JButton segmentEditCancel;
-    private boolean editOpen = false;
-    private boolean needsRedraw = false;
-
-    /**
-     * Edit a Track Segment.
-     */
-    protected void editTrackSegment() {
-        if (editOpen) {
-            editTrackSegmentFrame.setVisible(true);
-            return;
-        }
-        // Initialize if needed
-        if (editTrackSegmentFrame == null) {
-            editTrackSegmentFrame = new JmriJFrame(Bundle.getMessage("EditTrackSegment"), false, true); // key moved to DisplayBundle to be found by CircuitBuilder.java
-            editTrackSegmentFrame.addHelpMenu("package.jmri.jmrit.display.EditTrackSegment", true);
-            editTrackSegmentFrame.setLocation(50, 30);
-            Container contentPane = editTrackSegmentFrame.getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-            // add dashed choice
-            JPanel panel31 = new JPanel();
-            panel31.setLayout(new FlowLayout());
-            dashedBox.removeAllItems();
-            dashedBox.addItem(Bundle.getMessage("Solid"));
-            solidIndex = 0;
-            dashedBox.addItem(Bundle.getMessage("Dashed"));
-            dashedIndex = 1;
-            dashedBox.setToolTipText(Bundle.getMessage("DashedToolTip"));
-            panel31.add(new JLabel(Bundle.getMessage("Style") + " : "));
-            panel31.add(dashedBox);
-            contentPane.add(panel31);
-
-            // add mainline choice
-            JPanel panel32 = new JPanel();
-            panel32.setLayout(new FlowLayout());
-            mainlineBox.removeAllItems();
-            mainlineBox.addItem(Bundle.getMessage("Mainline"));
-            mainlineTrackIndex = 0;
-            mainlineBox.addItem(Bundle.getMessage("NotMainline"));
-            sideTrackIndex = 1;
-            mainlineBox.setToolTipText(Bundle.getMessage("MainlineToolTip"));
-            panel32.add(mainlineBox);
-            contentPane.add(panel32);
-
-            // add hidden choice
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));
-            panel33.add(hiddenBox);
-            contentPane.add(panel33);
-
-            // setup block name
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));
-            panel2.add(blockNameLabel);
-            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
-            blockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
-            panel2.add(blockNameComboBox);
-
-            contentPane.add(panel2);
-
-            if (isArc() && isCircle()) {
-                JPanel panel20 = new JPanel();
-                panel20.setLayout(new FlowLayout());
-                JLabel arcLabel = new JLabel("Set Arc Angle");
-                panel20.add(arcLabel);
-                panel20.add(arcField);
-                arcField.setToolTipText("Set Arc Angle");
-                contentPane.add(panel20);
-                arcField.setText("" + getAngle());
-            }
-
-            // set up Edit Block, Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-
-            // Edit Block
-            panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
-            segmentEditBlock.addActionListener((ActionEvent e) -> {
-                segmentEditBlockPressed(e);
-            });
-            segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
-            panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            segmentEditDone.addActionListener((ActionEvent e) -> {
-                segmentEditDonePressed(e);
-            });
-            segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
-                rootPane.setDefaultButton(segmentEditDone);
-            });
-
-            // Cancel
-            panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            segmentEditCancel.addActionListener((ActionEvent e) -> {
-                segmentEditCancelPressed(e);
-            });
-            segmentEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            contentPane.add(panel5);
-        }
-        // Set up for Edit
-        if (mainline) {
-            mainlineBox.setSelectedIndex(mainlineTrackIndex);
-        } else {
-            mainlineBox.setSelectedIndex(sideTrackIndex);
-        }
-        if (dashed) {
-            dashedBox.setSelectedIndex(dashedIndex);
-        } else {
-            dashedBox.setSelectedIndex(solidIndex);
-        }
-        hiddenBox.setSelected(hidden);
-        blockNameComboBox.setText(blockName);
-
-        editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                segmentEditCancelPressed(null);
-            }
-        });
-        editTrackSegmentFrame.pack();
-        editTrackSegmentFrame.setVisible(true);
-        editOpen = true;
-    }
-
-    void segmentEditBlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = blockNameComboBox.getUserName();
-        if (!blockName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if (block != null) {
-                block.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockName = newName;
-            try {
-                block = layoutEditor.provideLayoutBlock(blockName);
-            } catch (IllegalArgumentException ex) {
-                blockName = "";
-            }
-            needsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            updateBlockInfo();
-        }
-        // check if a block exists to edit
-        if (block == null) {
-            JOptionPane.showMessageDialog(editTrackSegmentFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        block.editLayoutBlock(editTrackSegmentFrame);
-        layoutEditor.setDirty();
-        needsRedraw = true;
-    }
-
-    void segmentEditDonePressed(ActionEvent a) {
-        // set dashed
-        boolean oldDashed = dashed;
-        setDashed(dashedBox.getSelectedIndex() == dashedIndex);
-
-        // set mainline
-        boolean oldMainline = mainline;
-        setMainline(mainlineBox.getSelectedIndex() == mainlineTrackIndex);
-
-        // set hidden
-        boolean oldHidden = hidden;
-        setHidden(hiddenBox.isSelected());
-
-        if (isArc()) {
-            //setAngle(Integer.parseInt(arcField.getText()));
-            //needsRedraw = true;
-            try {
-                double newAngle = Double.parseDouble(arcField.getText());
-                setAngle(newAngle);
-                needsRedraw = true;
-            } catch (NumberFormatException e) {
-                arcField.setText("" + getAngle());
-            }
-        }
-        // check if anything changed
-        if ((oldDashed != dashed) || (oldMainline != mainline) || (oldHidden != hidden)) {
-            needsRedraw = true;
-        }
-        // check if Block changed
-        String newName = blockNameComboBox.getUserName();
-        if (!blockName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if (block != null) {
-                block.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockName = newName;
-            try {
-                block = layoutEditor.provideLayoutBlock(blockName);
-            } catch (IllegalArgumentException ex) {
-                blockName = "";
-            }
-            needsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            updateBlockInfo();
-        }
-        editOpen = false;
-        editTrackSegmentFrame.setVisible(false);
-        editTrackSegmentFrame.dispose();
-        editTrackSegmentFrame = null;
-        if (needsRedraw) {
-            layoutEditor.redrawPanel();
-        }
-        layoutEditor.setDirty();
-    }
-
-    void segmentEditCancelPressed(ActionEvent a) {
-        editOpen = false;
-        editTrackSegmentFrame.setVisible(false);
-        editTrackSegmentFrame.dispose();
-        editTrackSegmentFrame = null;
-        if (needsRedraw) {
-            layoutEditor.setDirty();
-            layoutEditor.redrawPanel();
-        }
     }
 
     /**
