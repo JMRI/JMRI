@@ -939,7 +939,7 @@ public class ConnectivityUtil {
      *         contains a connecting track segment
      */
     @CheckReturnValue
-    @Nullable
+//    @Nullable  - this annotation not applicable to primative type boolean
     public boolean blockInternalToLevelXing(
             @Nullable LevelXing x,
             @Nullable Block block) {

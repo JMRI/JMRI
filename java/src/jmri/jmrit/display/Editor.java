@@ -23,8 +23,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -91,7 +89,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.DnDStringImportHandler;
 import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2819,22 +2816,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         Rectangle rect = new Rectangle();
         ArrayList<Positionable> selections = new ArrayList<Positionable>();
         for (Positionable p : _contents) {
-            Point2D where = new Point2D.Double(event.getX(), event.getY());
+            double x = event.getX();
+            double y = event.getY();
             rect = p.getBounds(rect);
-            if (p instanceof PositionableShape
+            if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape
                     && p.getDegrees() != 0) {
-                Point2D center = MathUtil.center(rect);
-                // since this object is rotated we have to transform the point
-                // we're testing into the coordinate space of this object before
-                // we can test if it is in our objects bounds.
-                double rad = Math.toRadians(p.getDegrees());
-                AffineTransform t = AffineTransform.getRotateInstance(-rad);
-                where = t.transform(where, where);
+                double rad = p.getDegrees() * Math.PI / 180.0;
+                java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
+                double[] pt = new double[2];
+                // bit shift to avoid Findbugs paranoia
+                pt[0] = x - rect.x - (rect.width >>> 1);
+                pt[1] = y - rect.y - (rect.height >>> 1);
+                t.transform(pt, 0, pt, 0, 1);
+                x = pt[0] + rect.x + (rect.width >>> 1);
+                y = pt[1] + rect.y + (rect.height >>> 1);
             }
-            Rectangle2D rect2D = MathUtil.scale(MathUtil.rectangleToRectangle2D(rect), _paintScale);
-            int level = p.getDisplayLevel();
-            if (rect2D.contains(where) && (level > BKG || event.isControlDown())) {
+            Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x * _paintScale,
+                    rect.y * _paintScale,
+                    rect.width * _paintScale,
+                    rect.height * _paintScale);
+            if (rect2D.contains(x, y) && (p.getDisplayLevel() > BKG || event.isControlDown())) {
                 boolean added = false;
+                int level = p.getDisplayLevel();
                 for (int k = 0; k < selections.size(); k++) {
                     if (level >= selections.get(k).getDisplayLevel()) {
                         selections.add(k, p);

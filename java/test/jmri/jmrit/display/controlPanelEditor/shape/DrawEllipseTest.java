@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,8 +19,17 @@ public class DrawEllipseTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        ShapeDrawer s = new ShapeDrawer(frame);
-        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", s);
+        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
+    }
+
+    public void testCTorEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        PositionableEllipse ps =  new PositionableEllipse(frame);
+        DrawRectangle t = new DrawRoundRect("editShape", "Ellipse", ps);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

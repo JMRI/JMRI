@@ -52,7 +52,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     @Override
-    @Nonnull
+//    @Nonnull - this annotation not applicable to primative type char
     public char typeLetter() {
         return 'B';
     }
