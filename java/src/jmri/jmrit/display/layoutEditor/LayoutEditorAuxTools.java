@@ -174,7 +174,7 @@ public class LayoutEditorAuxTools {
         int rDir = c.getReverseDirection();
 
         TrackSegment track = c.getTrackSegment();
-        Object connected = c.getConnectedObject();
+        LayoutTrack connected = c.getConnectedObject();
         int type = c.getConnectedType();
 
         LayoutTurnout xOver = c.getXover();
@@ -235,15 +235,15 @@ public class LayoutEditorAuxTools {
      */
     public void addBeanSettings(Path p, LayoutConnectivity lc, LayoutBlock layoutBlock) {
         p.clearSettings();
-        Object curConnection = null;
-        Object prevConnection = null;
+        LayoutTrack curConnection = null;
+        LayoutTrack prevConnection = null;
         int typeCurConnection = 0;
         BeanSetting bs = null;
         LayoutTurnout lt = null;
-        // process object at block boundary
+        // process track at block boundary
         if (lc.getBlock1() == layoutBlock) {    // block1 is this LayoutBlock
             curConnection = lc.getTrackSegment();
-            if (curConnection != null) {        // connected object in this block is a track segment
+            if (curConnection != null) {        // connected track in this block is a track segment
                 prevConnection = lc.getConnectedObject();
                 typeCurConnection = LayoutTrack.TRACK;
                 // is this Track Segment connected to a RH, LH, or WYE turnout at the continuing or diverging track?
