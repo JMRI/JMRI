@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
-    // ctor has to register for XNetNet events
+    // ctor has to register for XNet events
     public XNetSensorManager(XNetTrafficController controller, String prefix) {
         tc = controller;
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
@@ -65,7 +65,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         // normalize system name
         String sName = prefix + typeLetter() + bitNum;
         // create the new Sensor object
-        return new XNetSensor(sName, userName, tc);
+        return new XNetSensor(sName, userName, tc, prefix);
     }
 
     // listen for sensors, creating them as needed

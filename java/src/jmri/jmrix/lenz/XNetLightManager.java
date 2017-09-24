@@ -51,7 +51,7 @@ public class XNetLightManager extends AbstractLightManager {
         }
         Light lgt = null;
         // Normalize the System Name
-        String sName = prefix + typeLetter() + bitNum;   // removes any leading zeros
+        String sName = prefix + typeLetter() + bitNum; // removes any leading zeros
         // create the new Light object
         lgt = new XNetLight(tc, this, sName, userName);
         return lgt;

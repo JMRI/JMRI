@@ -79,7 +79,7 @@ public class SerialAddress {
         }
         // now check range
         if ((bitNum <= 0) || (type == 'S' && bitNum > 1000) || (bitNum > 8000)) {
-            log.error("node address field out of range in system name - " + systemName);
+            log.error("node address field out of range in system name - {}", systemName);
             return false;
         }
         return true;
@@ -136,7 +136,7 @@ public class SerialAddress {
         // check if bit number is within the valid range
         int bitNum = Integer.valueOf(systemName.substring(2)).intValue();
         if ((bitNum <= 0) || ((systemName.charAt(1) == 'S') && bitNum > 1000) || (bitNum > 8000)) {
-            log.error("node address field out of range in system name - " + systemName);
+            log.error("node address field out of range in system name - {}", systemName);
             return "";
         }
         // everything OK, normalize the address
@@ -161,13 +161,13 @@ public class SerialAddress {
         // check the type character
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
             // here if an illegal type character 
-            log.error("illegal type character proposed for system name - " + type);
+            log.error("illegal type character proposed for system name - {}", type);
             return (nName);
         }
         // check the bit number
         if ((bitNum < 1) || ((type.equals("S")) && (bitNum > 1000)) || (bitNum > 8000)) {
             // here if an illegal bit number 
-            log.error("illegal address range proposed for system name - " + bitNum);
+            log.error("illegal address range proposed for system name - {}", bitNum);
             return (nName);
         }
         // construct the address
@@ -258,7 +258,7 @@ public class SerialAddress {
      */
     public static String getUserNameFromSystemName(String systemName) {
         // check for a valid system name
-        if ((systemName.length() < 3) || (systemName.charAt(0) != 'K')) {
+        if ((systemName.length() < 3) || (systemName.charAt(0) != 'K')) { // TODO use multi char prefix, cf. Acela
             // not a valid system name
             return ("");
         }

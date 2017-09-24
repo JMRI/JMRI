@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for serial systems
+ * Implement light manager for Maple serial systems
  * <P>
  * System names are "KLnnn", where nnn is the bit number without padding.
  * <P>
@@ -22,7 +22,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter.
+     * Get the system prefix.
      */
     @Override
     public String getSystemPrefix() {
@@ -48,26 +48,26 @@ public class SerialLightManager extends AbstractLightManager {
         String conflict = "";
         conflict = SerialAddress.isOutputBitFree(bitNum);
         if (!conflict.equals("")) {
-            log.error("Assignment conflict with " + conflict + ".  Light not created.");
+            log.error("Assignment conflict with '{}'.  Light not created.", conflict);
             notifyLightCreationError(conflict, bitNum);
             return (null);
         }
         // Validate the systemName
         String sysName = SerialAddress.normalizeSystemName(systemName);
         if (sysName.equals("")) {
-            log.error("error when normalizing system name " + systemName);
+            log.error("error when normalizing system name {}", systemName);
             return null;
         }
         if (SerialAddress.validSystemNameFormat(systemName, 'L')) {
             lgt = new SerialLight(sysName, userName);
             if (!SerialAddress.validSystemNameConfig(sysName, 'L')) {
-                log.warn("Light system Name '" + sysName + "' does not refer to configured hardware.");
+                log.warn("Light system Name '{}' does not refer to configured hardware.", sysName);
                 javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Light just added, " + sysName
                         + ", refers to an unconfigured output bit.", "Configuration Warning",
                         javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
         }
         return lgt;
     }

@@ -36,6 +36,7 @@ public class AcelaAddress {
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
+
         if ((systemName.charAt(0) != 'A') || ((systemName.charAt(1) != 'L')
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
                 && (systemName.charAt(1) != 'H'))) {
@@ -47,7 +48,7 @@ public class AcelaAddress {
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
         } catch (Exception e) {
-            log.error("invalid character in number field of system name: {}", systemName);
+            log.warn("invalid character in number field of system name: {}", systemName);
             return (-1);
         }
         if (num >= 0) {
@@ -127,7 +128,6 @@ public class AcelaAddress {
      * @return 'true' if system name has a valid format, else return 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
-        prefix = prefix;
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
@@ -182,7 +182,7 @@ public class AcelaAddress {
     }
 
     public static boolean validSystemNameConfig(String systemName, AcelaSystemConnectionMemo memo) {
-        char type = systemName.charAt(1);
+        char type = systemName.charAt(memo.getSystemPrefix().length());
         if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix() )) {
             // No point in trying if a valid system name format is not present
             return false;
@@ -219,9 +219,9 @@ public class AcelaAddress {
      * system name does not have a valid format, or if there is no representation
      * in the alternate naming scheme.
      */
-    public static String convertSystemNameToAlternate(String systemName) {
+    public static String convertSystemNameToAlternate(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1),"A")) {
+        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
             // No point in trying if a valid system name format is not present
             return "";
         }
@@ -240,9 +240,9 @@ public class AcelaAddress {
      * or an empty string if the supplied system name does not have a valid format.
      *
      */
-    public static String normalizeSystemName(String systemName) {
+    public static String normalizeSystemName(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1),"A")) {
+        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()),prefix)) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
@@ -273,28 +273,28 @@ public class AcelaAddress {
         // check the type character
         if (!type.equalsIgnoreCase("S") && !type.equalsIgnoreCase("L") && !type.equalsIgnoreCase("T")) {
             // here if an illegal type character 
-            log.error("illegal type character proposed for system name");
+            log.error("invalid type character proposed for system name");
             return (nName);
         }
         // check the node address
         if ((nAddress < memo.getTrafficController().getMinimumNodeAddress()) || (nAddress > memo.getTrafficController().getMaximumNumberOfNodes())) {
             // here if an illegal node address 
-            log.error("illegal node adddress proposed for system name");
+            log.warn("invalid node adddress proposed for system name");
             return (nName);
         }
         // check the bit number
         if (type.equalsIgnoreCase("S") && ((bitNum < 0) || (bitNum > MAXSENSORADDRESS))) {
             // here if an illegal bit number 
-            log.error("illegal bit number proposed for Acela Sensor");
+            log.warn("invalid bit number proposed for Acela Sensor");
             return (nName);
         }
         if ((type.equalsIgnoreCase("L") || type.equalsIgnoreCase("T")) && ((bitNum < 0) || (bitNum > MAXOUTPUTADDRESS))) {
             // here if an illegal bit number 
-            log.error("illegal bit number proposed for Acela Turnout or Light");
+            log.warn("invalid bit number proposed for Acela Turnout or Light");
             return (nName);
         }
         // construct the address
-        nName = "A" + type + Integer.toString(bitNum);
+        nName = memo.getSystemPrefix() + type + Integer.toString(bitNum);
         return (nName);
     }
 
@@ -303,15 +303,14 @@ public class AcelaAddress {
      *
      * @return "" (null string) if the system name is not valid or does not exist
      */
-    public static String getUserNameFromSystemName(String systemName) {
+    public static String getUserNameFromSystemName(String systemName, String prefix) {
         // check for a valid system name
-        if ((systemName.length() < 3) || (systemName.charAt(0) != 'A')) {
+        if ((systemName.length() < (prefix.length() + 2)) || (!systemName.startsWith(prefix))) {
             // not a valid system name for Acela
             return ("");
         }
         // check for a sensor
-
-        if (systemName.charAt(1) == 'S') {
+        if (systemName.charAt(prefix.length() + 1) == 'S') {
             jmri.Sensor s = null;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
@@ -320,7 +319,7 @@ public class AcelaAddress {
                 return ("");
             }
         } // check for a turnout
-        else if (systemName.charAt(1) == 'T') {
+        else if (systemName.charAt(prefix.length() + 1) == 'T') {
             jmri.Turnout t = null;
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
             if (t != null) {
@@ -329,7 +328,7 @@ public class AcelaAddress {
                 return ("");
             }
         } // check for a light
-        else if (systemName.charAt(1) == 'L') {
+        else if (systemName.charAt(prefix.length() + 1) == 'L') {
             jmri.Light lgt = null;
             lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
             if (lgt != null) {

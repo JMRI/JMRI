@@ -23,7 +23,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Returns the system letter for Acela
+     * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
@@ -47,7 +47,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         if (nAddress == -1) {
             return (null);
         }
-        int bitNum = AcelaAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
+        int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
@@ -56,16 +56,17 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         if (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix())) {
             trn = new AcelaTurnout(systemName, userName, _memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'T', _memo)) {
-                log.warn("Turnout system Name does not refer to configured hardware: {}", systemName);
+                log.warn("Turnout System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
             log.error("Invalid Turnout system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Turnout System Name format: " + systemName);
         }
         return trn;
     }
 
     /**
-     * Public method to notify user of Turnout creation error. TODO
+     * Public method to notify user of Turnout creation error. use it somewhere TODO
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("AcelaAssignDialog", bitNum, conflict,
@@ -100,7 +101,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * return "" (empty string)
      */
     public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName));
+        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -110,7 +111,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * alternate representation, else return "".
      */
     public String convertSystemNameToAlternate(String systemName) {
-        return (AcelaAddress.convertSystemNameToAlternate(systemName));
+        return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     @Override

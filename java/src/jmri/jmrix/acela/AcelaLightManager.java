@@ -25,7 +25,7 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for Acela
+     * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
@@ -55,11 +55,10 @@ public class AcelaLightManager extends AbstractLightManager {
         if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
             lgt = new AcelaLight(systemName, userName, _memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'L', _memo)) {
-                log.warn("Light System Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light System Name format: " + systemName);
             throw new IllegalArgumentException("Invalid Light System Name format: " + systemName);
         }
         return lgt;
@@ -94,7 +93,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName));
+        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -105,7 +104,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return (AcelaAddress.convertSystemNameToAlternate(systemName));
+        return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     /**

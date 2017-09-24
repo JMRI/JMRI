@@ -75,15 +75,14 @@ public class XNetAddress {
      *
      * @return "" (null string) if the system name is not valid or does not exist
      */
-    public static String getUserNameFromSystemName(String systemName) {
+    public static String getUserNameFromSystemName(String systemName, String prefix) {
         // check for a valid system name
-        if ((systemName.length() < 3) || (systemName.charAt(0) != 'A')) {
+        if ((systemName.length() < (prefix.length() + 2)) || (!systemName.startsWith(prefix))) {
             // not a valid system name for XNet
             return ("");
         }
         // check for a sensor
-
-        if (systemName.charAt(1) == 'S') {
+        if (systemName.charAt(prefix.length() + 1) == 'S') {
             jmri.Sensor s = null;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
@@ -92,7 +91,7 @@ public class XNetAddress {
                 return ("");
             }
         } // check for a turnout
-        else if (systemName.charAt(1) == 'T') {
+        else if (systemName.charAt(prefix.length() + 1) == 'T') {
             jmri.Turnout t = null;
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
             if (t != null) {
@@ -101,7 +100,7 @@ public class XNetAddress {
                 return ("");
             }
         } // check for a light
-        else if (systemName.charAt(1) == 'L') {
+        else if (systemName.charAt(prefix.length() + 1) == 'L') {
             jmri.Light lgt = null;
             lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
             if (lgt != null) {

@@ -1211,7 +1211,7 @@ public class AcelaNode extends AbstractNode {
                 }
             } else {
                 // multiple registration of the same sensor
-                log.warn("Multiple registration of same sensor: CS" + rawaddr);
+                log.warn("Multiple registration of same sensor: AS" + rawaddr);
             }
         }
     }

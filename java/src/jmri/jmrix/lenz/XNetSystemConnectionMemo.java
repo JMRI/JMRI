@@ -230,7 +230,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
             } catch (java.lang.NullPointerException npe){
                 // if the command station has not been configured yet,
                 // assume true
-                if(log.isTraceEnabled()){
+                if (log.isTraceEnabled()) {
                    npe.printStackTrace();
                 }
                 return true;
