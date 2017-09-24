@@ -459,6 +459,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Output Driver on AUX3 and AUX4</label>
     </variable>
+    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Stop immediately on speed step 0</label>
+    </variable>
     <variable CV="125" default="90" item="Analog Vstart">
         <decVal/>
         <label>Start Volts in DC Mode</label>
