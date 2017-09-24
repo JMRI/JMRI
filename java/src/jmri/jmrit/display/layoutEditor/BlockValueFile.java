@@ -45,12 +45,12 @@ public class BlockValueFile extends XmlFile {
     private Element root = null;
 
     /**
-     *  Reads Block values from a file in the user's preferences directory
+     *  Reads Block values from a file in the user's preferences directory.
      *  If the file containing block values does not exist this routine returns quietly.
      *  If a Block named in the file does not exist currently, that entry is quietly ignored.
      * 
-     * @throws JDOMException
-     * @throws IOException 
+     * @throws JDOMException on rootFromName if all methods fail
+     * @throws IOException if an I/O error occurs while reading a file
      */
     @SuppressWarnings("unchecked")
     public void readBlockValues() throws JDOMException, IOException {

@@ -174,7 +174,7 @@ public class LayoutEditorAuxTools {
         int rDir = c.getReverseDirection();
 
         TrackSegment track = c.getTrackSegment();
-        Object connected = c.getConnectedObject();
+        LayoutTrack connected = c.getConnectedObject();
         int type = c.getConnectedType();
 
         LayoutTurnout xOver = c.getXover();
@@ -244,7 +244,7 @@ public class LayoutEditorAuxTools {
         if (lc.getBlock1() == layoutBlock) {    // block1 is this LayoutBlock
             curConnection = lc.getTrackSegment();
             if (curConnection != null) {        // connected track in this block is a track segment
-                prevConnection = (LayoutTrack) lc.getConnectedObject();
+                prevConnection = lc.getConnectedObject();
                 typeCurConnection = LayoutTrack.TRACK;
                 // is this Track Segment connected to a RH, LH, or WYE turnout at the continuing or diverging track?
                 if (((lc.getConnectedType() == LayoutTrack.TURNOUT_B)
@@ -416,7 +416,7 @@ public class LayoutEditorAuxTools {
             // block2 is this LayoutBlock, and block1 is in a track segment
             if (lc.getConnectedObject() != null) {
                 // connected object in this block is a turnout or levelxing
-                curConnection = (LayoutTrack) lc.getConnectedObject();
+                curConnection = lc.getConnectedObject();
                 prevConnection = lc.getTrackSegment();
                 typeCurConnection = lc.getConnectedType();
                 if ((typeCurConnection >= LayoutTrack.TURNOUT_A) && (typeCurConnection <= LayoutTrack.TURNOUT_D)) {

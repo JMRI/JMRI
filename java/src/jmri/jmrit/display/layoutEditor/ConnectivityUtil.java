@@ -67,7 +67,7 @@ public class ConnectivityUtil {
     private List<Integer> companion = null;
     private TrackSegment tr = null;
     private int prevConnectType = 0;
-    private Object prevConnectObject = null;
+    private LayoutTrack prevConnectObject = null;
     private LayoutBlock currLayoutBlock = null;
     private LayoutBlock nextLayoutBlock = null;
     private LayoutBlock prevLayoutBlock = null;
