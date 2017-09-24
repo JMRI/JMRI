@@ -1,8 +1,10 @@
 package jmri.jmrix.can.cbus.swing.console;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,6 +33,7 @@ public class CbusConsolePaneTest {
 
     @Test
     public void testInitComponentsNoArgs() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusConsolePane pane = new CbusConsolePane();
         // for now, just makes ure there isn't an exception.
         pane.initComponents();
