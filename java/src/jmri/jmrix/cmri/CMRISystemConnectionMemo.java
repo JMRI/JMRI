@@ -541,6 +541,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
+
+        log.debug("Created CMRISystemConnectionMemo");
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;

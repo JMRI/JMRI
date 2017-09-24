@@ -7,21 +7,28 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * JUnit tests for the jmri.jmrix.maple.SerialLight class
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class SerialLightTest {
 
+    private SerialTrafficControlScaffold tcis = null;
+    private MapleSystemConnectionMemo _memo = null;
+
     @Test
     public void testCTor() {
-        SerialLight t = new SerialLight("KL1");
-        Assert.assertNotNull("exists",t);
+        SerialLight l = new SerialLight("KL1", _memo);
+        Assert.assertNotNull("exists", l);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        // prepare an interface
+        tcis = new SerialTrafficControlScaffold();
+        _memo = new MapleSystemConnectionMemo("K", "Maple");
     }
 
     @After

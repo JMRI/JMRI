@@ -8,7 +8,6 @@ import org.junit.Test;
 
 /**
  * JUnit tests for the MapleSystemConnectionMemo class
- * <p>
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -18,7 +17,7 @@ public class MapleSystemConnectionMemoTest {
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull("exists",memo);
+       Assert.assertNotNull("exists", memo);
     }
 
     @Before
@@ -26,7 +25,7 @@ public class MapleSystemConnectionMemoTest {
        JUnitUtil.setUp();
        SerialTrafficController tc = new SerialTrafficController(){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
        };
        memo = new MapleSystemConnectionMemo();

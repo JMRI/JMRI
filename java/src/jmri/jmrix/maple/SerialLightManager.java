@@ -17,16 +17,23 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialLightManager extends AbstractLightManager {
 
-    public SerialLightManager() {
+//    public SerialLightManager() {
+//
+//    }
+
+    public SerialLightManager(MapleSystemConnectionMemo memo) {
+        _memo = memo;
 
     }
 
+    MapleSystemConnectionMemo _memo = null;
+
     /**
-     * Get the system prefix.
+     * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
-        return "K";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -41,26 +48,26 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
-        int bitNum = SerialAddress.getBitFromSystemName(systemName);
+        int bitNum = SerialAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == 0) {
             return (null);
         }
         String conflict = "";
-        conflict = SerialAddress.isOutputBitFree(bitNum);
+        conflict = SerialAddress.isOutputBitFree(bitNum, getSystemPrefix());
         if (!conflict.equals("")) {
-            log.error("Assignment conflict with '{}'.  Light not created.", conflict);
+            log.error("Assignment conflict with '{}'. Light not created.", conflict);
             notifyLightCreationError(conflict, bitNum);
             return (null);
         }
-        // Validate the systemName
-        String sysName = SerialAddress.normalizeSystemName(systemName);
+        // Validate the System Name
+        String sysName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sysName.equals("")) {
             log.error("error when normalizing system name {}", systemName);
             return null;
         }
-        if (SerialAddress.validSystemNameFormat(systemName, 'L')) {
-            lgt = new SerialLight(sysName, userName);
-            if (!SerialAddress.validSystemNameConfig(sysName, 'L')) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
+            lgt = new SerialLight(sysName, userName, _memo);
+            if (!SerialAddress.validSystemNameConfig(sysName, 'L', _memo)) {
                 log.warn("Light system Name '{}' does not refer to configured hardware.", sysName);
                 javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Light just added, " + sysName
                         + ", refers to an unconfigured output bit.", "Configuration Warning",
@@ -88,7 +95,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
@@ -98,7 +105,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L'));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L', _memo));
     }
 
     /**
@@ -109,7 +116,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -122,13 +129,12 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to SerialLightManager.
+     * Allow access to SerialLightManager
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialLightManager instance() {
-        if (_instance == null) {
-            _instance = new SerialLightManager();
-        }
-        return _instance;
+        return null;
     }
     static SerialLightManager _instance = null;
 

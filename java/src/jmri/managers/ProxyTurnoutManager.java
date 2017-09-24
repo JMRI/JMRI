@@ -104,7 +104,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * except to issue warnings. This will mostly happen if you're creating
      * Sensors when you should be looking them up.
      *
-     * @return requested Sensor object (never null)
+     * @return requested Turnout object (never null)
      */
     @Override
     public Turnout newTurnout(String systemName, String userName) {

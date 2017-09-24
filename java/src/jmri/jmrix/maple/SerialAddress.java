@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * One address format is supported: Ktxxxx where:
  * <ul>
- *   <li>K is (fixed) system prefix for Maple</li>
+ *   <li>K is (user configurable) system prefix for Maple</li>
  *   <li>t is the type code: 'T' for turnouts, 'S' for sensors,
  *   and 'L' for lights</li>
  *   <li>xxxx is a bit number of the input or output bit (001-9999)</li>
@@ -24,29 +24,31 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the bit number
+     * Public static method to parse a Maple system name and return the bit number.
      * Notes: Bits are numbered from 1.
      *
-     * @return 0 if an error is found
+     * @return the bit number, return 0 if an error is found
      */
-    public static int getBitFromSystemName(String systemName) {
+    public static int getBitFromSystemName(String systemName, String prefix) {
+        log.debug("systemName = {}", systemName);
+        log.debug("prefix = {}", prefix);
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'K') || ((systemName.charAt(1) != 'L')
-                && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T'))) {
+        if (!(systemName.startsWith(prefix)) || ((systemName.charAt(prefix.length()) != 'L')
+                && (systemName.charAt(prefix.length()) != 'S') && (systemName.charAt(prefix.length()) != 'T'))) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
+            log.debug("invalid character in header field of system name: {}", systemName);
             return (0);
         }
-        // bit number field begins at 2 - third character
+        // try to parse remaining system name part
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(2)).intValue();
+            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid system name: " + systemName);
+            log.debug("invalid Maple system name: {}", systemName);
             return (0);
         }
         return (num);
@@ -58,28 +60,22 @@ public class SerialAddress {
      * @return 'true' if system name has a valid format,
      * else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type) {
+    public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'K') || (systemName.charAt(1) != type)) {
+        if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
-            log.error("illegal character in header field of system name: "
-                    + systemName);
+            log.error("invalid character in header field of system name: {}", systemName);
             return (false);
         }
-
-        // This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK
-        int bitNum = 0;
-        try {
-            // we're justing using this to check, and failure is interesting
-            bitNum = Integer.valueOf(systemName.substring(2)).intValue();
-        } catch (Exception e) {
-            log.error("illegal character in number field of system name: "
-                    + systemName);
-            return false;
+        if (systemName.length() <= prefix.length() + 1) {
+            log.warn("missing numerical node address in system name: {}", systemName);
+            return (false);
         }
+        // This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK
+        int bit = getBitFromSystemName(systemName, prefix);
         // now check range
-        if ((bitNum <= 0) || (type == 'S' && bitNum > 1000) || (bitNum > 8000)) {
-            log.error("node address field out of range in system name - {}", systemName);
+        if ((bit <= 0) || (type == 'S' && bit > 1000) || (bit > 8000)) {
+            log.warn("node address field out of range in system name - {}", systemName);
             return false;
         }
         return true;
@@ -91,28 +87,33 @@ public class SerialAddress {
      * @return 'true' if system name has a valid meaning in current configuration,
      * else returns 'false'
      */
-    public static boolean validSystemNameConfig(String systemName, char type) {
-        if (!validSystemNameFormat(systemName, type)) {
+    public static boolean validSystemNameConfig(String systemName, char type, MapleSystemConnectionMemo memo) {
+        if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix())) {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        int bit = getBitFromSystemName(systemName);
-        if ((type == 'T') || (type == 'L')) {
-            if ((bit <= 0) || (bit > OutputBits.getNumOutputBits())) {
-                // The bit is not valid for this configuration
+        int bit = getBitFromSystemName(systemName, memo.getSystemPrefix());
+        switch (type) {
+            case 'T':
+            case 'L':
+                if ((bit > 0) && (bit <= OutputBits.getNumOutputBits())) {
+                    // The bit is within valid range for this Maple configuration
+                    return true;
+                }
+                break;
+            case 'S':
+                if ((bit > 0) && (bit <= InputBits.getNumInputBits())) {
+                    // The bit is within valid range for this Maple configuration
+                    return true;
+                }
+                break;
+            default:
+                log.error("Invalid type specification in validSystemNameConfig call");
                 return false;
-            }
-        } else if (type == 'S') {
-            if ((bit <= 0) || (bit > InputBits.getNumInputBits())) {
-                // The bit is not valid for this configuration
-                return false;
-            }
-        } else {
-            log.error("Invalid type specification in validSystemNameConfig call");
-            return false;
         }
-        // System name has passed all tests
-        return true;
+        // System name has failed all tests
+        log.warn("Maple hardware address out of range in system name: {}", systemName);
+        return false;
     }
 
     /**
@@ -127,21 +128,22 @@ public class SerialAddress {
      * returned. Otherwise a normalized name is returned in the same format as
      * the input name.
      */
-    public static String normalizeSystemName(String systemName) {
+    public static String normalizeSystemName(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
         // check if bit number is within the valid range
-        int bitNum = Integer.valueOf(systemName.substring(2)).intValue();
-        if ((bitNum <= 0) || ((systemName.charAt(1) == 'S') && bitNum > 1000) || (bitNum > 8000)) {
-            log.error("node address field out of range in system name - {}", systemName);
+        int bitNum = getBitFromSystemName(systemName, prefix);
+        char type = systemName.charAt(prefix.length());
+        if ((bitNum <= 0) || ((type == 'S') && bitNum > 1000) || (bitNum > 8000)) {
+            log.warn("node address field out of range in system name - {}", systemName);
             return "";
         }
         // everything OK, normalize the address
         String nName = "";
-        nName = systemName.substring(0, 2) + bitNum;
+        nName = prefix + type + bitNum;
         return nName;
     }
 
@@ -149,14 +151,14 @@ public class SerialAddress {
      * Public static method to construct a system name from type character and
      * bit number
      * <P>
-     * This routine returns a system name in the CLxxxx, CTxxxx, or CSxxxx
+     * This routine returns a system name in the KLxxxx, KTxxxx, or KSxxxx
      * format. The returned name is normalized.
      *
      * @return "" (null string) if the supplied type character is not valid,
      * or the bit number is out of the 1 - 9000 range, and an error message is
      * logged.
      */
-    public static String makeSystemName(String type, int bitNum) {
+    public static String makeSystemName(String type, int bitNum, String prefix) {
         String nName = "";
         // check the type character
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
@@ -167,11 +169,11 @@ public class SerialAddress {
         // check the bit number
         if ((bitNum < 1) || ((type.equals("S")) && (bitNum > 1000)) || (bitNum > 8000)) {
             // here if an illegal bit number 
-            log.error("illegal address range proposed for system name - {}", bitNum);
+            log.warn("illegal address range proposed for system name - {}", bitNum);
             return (nName);
         }
         // construct the address
-        nName = "K" + type + Integer.toString(bitNum);
+        nName = prefix + type + Integer.toString(bitNum);
         return (nName);
     }
 
@@ -180,20 +182,20 @@ public class SerialAddress {
      *
      * @return "" (null string) if the specified output bit is free for
      * assignment, else returns the system name of the conflicting assignment.
-     * Test is not performed if the node address or bit number are illegal.
+     * Test is not performed if the node address or bit number are valid.
      */
-    public static String isOutputBitFree(int bitNum) {
+    public static String isOutputBitFree(int bitNum, String prefix) {
         // check the bit number
         if ((bitNum < 1) || (bitNum > 8000)) {
             // here if an illegal bit number 
-            log.error("illegal bit number in free bit test - " + bitNum);
+            log.error("illegal bit number in free bit test - {}", bitNum);
             return ("");
         }
 
         // check for a turnout using the bit
         jmri.Turnout t = null;
         String sysName = "";
-        sysName = makeSystemName("T", bitNum);
+        sysName = makeSystemName("T", bitNum, prefix);
         t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
         if (t != null) {
             return (sysName);
@@ -201,7 +203,7 @@ public class SerialAddress {
 
         // check for a two-bit turnout assigned to the previous bit
         if (bitNum > 1) {
-            sysName = makeSystemName("T", bitNum - 1);
+            sysName = makeSystemName("T", bitNum - 1, prefix);
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
             if (t != null) {
                 if (t.getNumberOutputBits() == 2) {
@@ -213,7 +215,7 @@ public class SerialAddress {
 
         // check for a light using the bit
         jmri.Light lgt = null;
-        sysName = makeSystemName("L", bitNum);
+        sysName = makeSystemName("L", bitNum, prefix);
         lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(sysName);
         if (lgt != null) {
             return (sysName);
@@ -231,7 +233,7 @@ public class SerialAddress {
      * Test is not performed if the node address is illegal or bit number is
      * greater than 2048.
      */
-    public static String isInputBitFree(int bitNum) {
+    public static String isInputBitFree(int bitNum, String prefix) {
         // check the bit number
         if ((bitNum < 1) || (bitNum > 1000)) {
             // here if an illegal bit number 
@@ -242,7 +244,7 @@ public class SerialAddress {
         // check for a sensor using the bit
         jmri.Sensor s = null;
         String sysName = "";
-        sysName = makeSystemName("S", bitNum);
+        sysName = makeSystemName("S", bitNum, prefix);
         s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(sysName);
         if (s != null) {
             return (sysName);
@@ -256,14 +258,14 @@ public class SerialAddress {
      *
      * @return "" (null string) if the system name is not valid or does not exist
      */
-    public static String getUserNameFromSystemName(String systemName) {
+    public static String getUserNameFromSystemName(String systemName, String prefix) {
         // check for a valid system name
-        if ((systemName.length() < 3) || (systemName.charAt(0) != 'K')) { // TODO use multi char prefix, cf. Acela
+        if ((systemName.length() < (prefix.length() + 2)) || (!systemName.startsWith(prefix))) { // use multi char prefix, cf. Acela
             // not a valid system name
             return ("");
         }
         // check for a sensor
-        if (systemName.charAt(1) == 'S') {
+        if (systemName.charAt(prefix.length() + 1) == 'S') {
             jmri.Sensor s = null;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
@@ -272,7 +274,7 @@ public class SerialAddress {
                 return ("");
             }
         } // check for a turnout
-        else if (systemName.charAt(1) == 'T') {
+        else if (systemName.charAt(prefix.length() + 1) == 'T') {
             jmri.Turnout t = null;
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
             if (t != null) {
@@ -281,7 +283,7 @@ public class SerialAddress {
                 return ("");
             }
         } // check for a light
-        else if (systemName.charAt(1) == 'L') {
+        else if (systemName.charAt(prefix.length() + 1) == 'L') {
             jmri.Light lgt = null;
             lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
             if (lgt != null) {

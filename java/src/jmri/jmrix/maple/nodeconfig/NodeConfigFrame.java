@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import jmri.jmrix.maple.InputBits;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.SerialTrafficController;
@@ -68,11 +69,15 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected String editStatus2 = rb.getString("NotesEdit2");
     protected String editStatus3 = rb.getString("NotesEdit3");
 
+    private MapleSystemConnectionMemo _memo = null;
+
     /**
      * Constructor method
      */
-    public NodeConfigFrame() {
+    public NodeConfigFrame(MapleSystemConnectionMemo memo) {
         super();
+        _memo = memo;
+
         addHelpMenu("package.jmri.jmrix.maple.nodeconfig.NodeConfigFrame", true);
     }
 

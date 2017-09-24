@@ -10,17 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.maple.SerialTurnoutManager class
+ * JUnit tests for the jmri.jmrix.maple.SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    private MapleSystemConnectionMemo memo = null;
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        memo = null;
     }
 
     @Override
@@ -35,8 +36,9 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
             }
         }.test();
         t.registerNode(new SerialNode());
+        memo = new MapleSystemConnectionMemo("K", "Maple");
         // create and register the turnout manager object
-        l = new SerialTurnoutManager() {
+        l = new SerialTurnoutManager(memo) {
             @Override
             public void notifyTurnoutCreationError(String conflict, int bitNum) {
             }
@@ -47,6 +49,13 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Override
     public String getSystemName(int n) {
         return "KT" + n;
+    }
+
+    @Test
+    public void testConstructor() {
+        // create and register the manager object
+        SerialTurnoutManager atm = new SerialTurnoutManager(new MapleSystemConnectionMemo("K", "Maple"));
+        Assert.assertNotNull("Maple Turnout Manager creation", atm);
     }
 
     @Test
