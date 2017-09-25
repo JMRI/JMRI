@@ -259,8 +259,6 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     /**
      * Set parameters on the popup that will edit the PositionableShape Called
      * both for creation and editing. (don't make a copy for Cancel)
-     *
-     * @param editShape - Shape being created or edited
      */
     protected void setDisplayParams() {
         _lineWidth = _shape.getLineWidth();
@@ -447,7 +445,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
      * Create a new PositionableShape in an Editor.
      *
      * @param event the triggering event
-     * @param editor making the call
+     * @param ed editor making the call
      */
     abstract protected void makeFigure(MouseEvent event, jmri.jmrit.display.Editor ed);
 }
