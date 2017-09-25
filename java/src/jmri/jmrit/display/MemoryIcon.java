@@ -38,6 +38,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
 
+    /**
+     * {@inheritDoc}
+     */
     public MemoryIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();

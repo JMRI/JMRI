@@ -286,6 +286,35 @@ public final class MathUtil {
     }
 
     /**
+     * rotate a point (by radians) around another point
+     *
+     * @param p the point being rotated
+     * @param c the point being rotated around
+     * @param aRAD the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    @CheckReturnValue
+    public static Point2D rotateRAD(
+            @Nonnull Point2D p, @Nonnull Point2D c, double aRAD) {
+        return add(c, rotateRAD(subtract(p, c), aRAD));
+    }
+
+    /**
+     * rotate a point (by degrees)
+     * rotate a point (by radians) around another point
+     *
+     * @param p the point being rotated
+     * @param c the point being rotated around
+     * @param aDEG the angle (in radians)
+     * @return the point rotated by the angle
+     */
+    @CheckReturnValue
+    public static Point2D rotateDEG(
+            @Nonnull Point2D p, @Nonnull Point2D c, double aDEG) {
+        return rotateRAD(p, c, Math.toRadians(aDEG));
+    }
+
+    /**
      * dot product of two points (vectors)
      *
      * @param pA the first point
