@@ -31,7 +31,7 @@ public class SlotMonPaneTest {
     @Test
     public void testGetTitle() {
         SlotMonPane t = new SlotMonPane();
-        Assert.assertEquals("title","Monitor Slots",t.getTitle());
+        Assert.assertEquals("title",Bundle.getMessage("MenuItemSlotMonitor"),t.getTitle());
     }
 
     @Test
