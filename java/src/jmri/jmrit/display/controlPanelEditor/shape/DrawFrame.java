@@ -248,11 +248,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create a panel for setting parameters for the PositionableShape.
-     *
-     * @param ps the shape to edit parameters for
      * @return a parameters panel
-     * @throws IllegalArgumentException if ps cannot be cast to the required
-     *                                  subclass of PositionableShape
      */
     protected JPanel makeParamsPanel() {
         JPanel panel = new JPanel();
@@ -451,7 +447,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
      * Create a new PositionableShape in an Editor.
      *
      * @param event the triggering event
-     * @return true if created; false otherwise
+     * @param editor making the call
      */
     abstract protected void makeFigure(MouseEvent event, jmri.jmrit.display.Editor ed);
 }
