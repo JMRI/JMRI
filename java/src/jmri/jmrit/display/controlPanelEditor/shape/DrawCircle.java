@@ -53,7 +53,6 @@ public class DrawCircle extends DrawFrame {
         pp.add(new JLabel(Bundle.getMessage("circleRadius")));
         p.add(pp);
         panel.add(p);
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         return panel;
     }
 

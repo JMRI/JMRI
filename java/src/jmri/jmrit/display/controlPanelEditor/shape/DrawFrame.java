@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -311,6 +312,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     protected JPanel makeDoneButtonPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener((ActionEvent a) -> {
             closingEvent(false);
@@ -323,7 +325,12 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             closingEvent(true);
         });
         panel.add(cancelButton);
-        return panel;
+        JPanel p1 = new JPanel();
+//        p1.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        p1.add(Box.createHorizontalGlue());
+        p1.add(panel);
+        p1.add(Box.createHorizontalGlue());
+        return p1;
     }
 
     private void buttonChange() {

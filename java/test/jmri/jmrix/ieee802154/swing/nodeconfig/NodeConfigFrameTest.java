@@ -25,6 +25,24 @@ public class NodeConfigFrameTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame(tc);
+        // for now, just makes ure there isn't an exception.
+        t.initComponents();
+        t.dispose();
+    }
+
+    @Test
+    public void testGetTitle(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        NodeConfigFrame t = new NodeConfigFrame(tc);
+        t.initComponents();
+        Assert.assertEquals("title","Configure IEEE802154 Nodes",t.getTitle());
+        t.dispose();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -978,6 +978,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
         } else {
+            String ending = " " + Bundle.getMessage("LabelEditor");
+            if (name.endsWith(ending)) {
+                name.substring(0, name.length() - ending.length());
+            }
             super.setTitle(name);
         }
     }

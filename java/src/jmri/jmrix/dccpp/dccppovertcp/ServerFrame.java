@@ -12,6 +12,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.implementation.AbstractInstanceInitializer;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -28,12 +29,12 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
  */
-public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
+public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, InstanceManagerAutoInitialize {
 
     private ServerFrame() {
         super("DCCppOverTcp Server");
 
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        super.getContentPane().setLayout(new BoxLayout(super.getContentPane(), BoxLayout.Y_AXIS));
 
         portNumber = new JSpinner();
         portNumberModel = new SpinnerNumberModel(65535, 1, 65535, 1);
@@ -47,20 +48,20 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         panel.add(autoStartCheckBox);
         panel.add(portNumberLabel);
         panel.add(portNumber);
-        getContentPane().add(panel);
+        super.getContentPane().add(panel);
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(startButton);
         panel.add(stopButton);
         panel.add(saveButton);
-        getContentPane().add(panel);
+        super.getContentPane().add(panel);
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(serverStatus);
         panel.add(clientStatus);
-        getContentPane().add(panel);
+        super.getContentPane().add(panel);
 
         startButton.addActionListener((ActionEvent a) -> {
             InstanceManager.getDefault(Server.class).enable();
@@ -86,7 +87,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
             });
         }
 
-        pack();
+        super.pack();
     }
 
     @Override
@@ -159,18 +160,21 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     JButton stopButton = new JButton("Stop Server");
     JButton saveButton = new JButton("Save Settings");
 
+    @Override
+    public void initialize() {
+        Server server = InstanceManager.getDefault(Server.class);
+        server.setStateListner(this);
+        server.updateServerStateListener();
+        server.updateClinetStateListener();
+    }
+
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(ServerFrame.class)) {
-                ServerFrame instance = new ServerFrame();
-                Server server = InstanceManager.getDefault(Server.class);
-                server.setStateListner(instance);
-                server.updateServerStateListener();
-                server.updateClinetStateListener();
-                return instance;
+                return new ServerFrame();
             }
             return super.getDefault(type);
         }

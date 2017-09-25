@@ -2310,7 +2310,8 @@ public class LightTableAction extends AbstractTableAction {
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
             } else {
-                return InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value); // get prefixSelectedItem
+                return true; // TODO temporarily disabled checking format while adding user feedbac
+                // return InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value); // get prefixSelectedItem
             }
         }
 

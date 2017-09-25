@@ -99,8 +99,6 @@ public class DrawRectangle extends DrawFrame {
 
     /**
      * Set parameters on the popup that will edit the PositionableShape.
-     *
-     * @param p the shape to edit
      */
     @Override
     protected void setDisplayParams() {
