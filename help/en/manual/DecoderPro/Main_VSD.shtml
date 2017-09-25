@@ -29,7 +29,7 @@
       <h2>Virtual Sound Decoder</h2>
 
       <div align="right">
-        <p><a href="Main_Debug.shtml#pricom">Back</a></p>
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
       </div>
       <hr>
 
@@ -53,6 +53,11 @@
       installed in the locomotive would by playing sounds through
       the computer speakers.</span></p>
 
+      <p>An example VSD file is included with the package, 
+      more examples are available for download
+      <a href="https://github.com/JMRI/vsdecoder">on the web</a>
+      and you can make (and share!) your own.</p>
+
       <h4>OpenAL Required</h4>
 
       <p>Virtual Sound Decoder requires that your system have the
@@ -60,8 +65,7 @@
       on the Mac, but must be installed on Windows.</p>
 
       <p>OpenAL is available free from Creative Labs. You can
-      <a target="_blank" href=
-      "http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">
+      <a target="_blank" href="http://www.openal.org/downloads/">
       download the installer for your operating system</a> from the
       OpenAL site.</p>
 
@@ -148,8 +152,8 @@
       <p>*Support for these systems is expected but not confirmed.
       If you have one of these systems and can confirm that VSD
       responds to throttle changes, please mention this on the
-      <a href="http://groups.yahoo.com/group/jmriusers/">JMRIUsers
-      Yahoo! Group</a></p>
+      <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
+	  JMRIUsers Yahoo! Group</a></p>
 
       <p>Notably missing from this list is the popular NCE PowerCab
       system.</p>
@@ -201,7 +205,7 @@
       <p>If you have one of the systems noted as "not tested", and
       would like to help with testing and debug of this feature,
       please contact me on the <a href=
-      "http://groups.yahoo.com/group/jmriusers/">JMRIUsers Yahoo!
+      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRIUsers Yahoo!
       Group</a>. More systems will be added in the future.</p>
 
       <p>For details on setting up Location Following, see the
@@ -270,6 +274,9 @@
       <p>The VSDecoder Preferences pane allows the user to change
       various preferences in how the VSDecoder works.</p>
 
+      <p><img src="images/VSD_Preferences.png" width="828" height=
+      "222"></p>
+
       <h5>Auto Start Engine</h5>
 
       <p>If checked, the Engine sounds will react immediately to
@@ -282,12 +289,6 @@
       Path field will be automatically loaded on start-up. This can
       save a step for frequently used VSD Files.</p>
 
-      <h5>Listener Position</h5>These entries allow the Listener
-      Position to be set relative to the user-chosen Origin of the
-      sound field. This allows you to place the Origin at a
-      convenient-for-you spot, such as a corner of the layout or of
-      the room.
-
       <h5>Cancel / Apply / Save Buttons</h5>
 
       <p>Choose Cancel to cancel changes to the Preferences</p>
@@ -297,7 +298,7 @@
       <p>Choose Save to save changes to the Preferences</p>
 
       <div align="right">
-        <p><a href="Main_Debug.shtml#pricom">Back</a></p>
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

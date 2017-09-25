@@ -33,7 +33,7 @@ public class NamedBeanHandle<T extends NamedBean> {
         this.bean = bean;
     }
 
-    @CheckReturnValue
+    @Nonnull
     public String getName() {
         return name;
     }
