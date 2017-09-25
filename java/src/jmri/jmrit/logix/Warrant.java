@@ -896,7 +896,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             }
                         }
                         ret = setMovement(MID);
-                    } else if(runState == WAIT_FOR_TRAIN) { // bump up speed one speed step
+                    } else if (runState == WAIT_FOR_TRAIN) { // bump up speed one speed step
                         float speed = _engineer.getSpeedSetting();
                         speed += _speedUtil.getSpeedIncrement();
                         _engineer.setSpeed(speed);

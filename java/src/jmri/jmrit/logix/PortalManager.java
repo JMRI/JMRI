@@ -95,9 +95,9 @@ public class PortalManager extends AbstractManager<Portal>
         return portal;
     }
 
-    @SuppressFBWarnings(value=" ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification="Lesser of two evils")
-    // Multiple instances prevented by use of the InstanceManager.  However, should multiple 
+    // Multiple instances are prevented by use of the InstanceManager.  However, should multiple 
     // instances happen a static '_nextSName' provides a chance the session can survive.
+    @SuppressFBWarnings(value=" ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification="Lesser of two evils")
     public String generateSystemName() {
         String name;
         do {
