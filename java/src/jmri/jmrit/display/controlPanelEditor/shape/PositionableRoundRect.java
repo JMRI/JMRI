@@ -41,15 +41,12 @@ public class PositionableRoundRect extends PositionableRectangle {
     @Override
     public Positionable deepClone() {
         PositionableRoundRect pos = new PositionableRoundRect(_editor);
+        pos._radius = _radius;
         return finishClone(pos);
     }
 
     @Override
     protected Positionable finishClone(PositionableShape pos) {
-        if (!(pos instanceof PositionableRoundRect)) {
-            throw new IllegalArgumentException("parameter is not a PositionableRoundRect");
-        }
-        ((PositionableRoundRect) pos)._radius = _radius;
         return super.finishClone(pos);
     }
 
