@@ -33,7 +33,7 @@ public class Log4JTreePaneTest {
         JUnitUtil.dispose(f);
     }
 
-        @Test
+    @Test
     public void testGetHelpTarget() {
         Log4JTreePane t = new Log4JTreePane();
         Assert.assertEquals("help target","package.jmri.jmrit.log.Log4JTreePane",t.getHelpTarget());
