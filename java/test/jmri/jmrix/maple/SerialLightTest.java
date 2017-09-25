@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class SerialLightTest {
 
-    private SerialTrafficControlScaffold tcis = null;
+//    private SerialTrafficControlScaffold tcis = null;
     private MapleSystemConnectionMemo _memo = null;
 
     @Test
@@ -27,12 +27,13 @@ public class SerialLightTest {
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
+//        tcis = new SerialTrafficControlScaffold();
         _memo = new MapleSystemConnectionMemo("K", "Maple");
     }
 
     @After
     public void tearDown() {
+        _memo = null;
         JUnitUtil.tearDown();
     }
 

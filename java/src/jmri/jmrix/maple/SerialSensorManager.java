@@ -103,6 +103,17 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to normalize a system name.
+     * <P>
+     * Returns a normalized system name if system name has a valid format, else
+     * returns "".
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
+    }
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override

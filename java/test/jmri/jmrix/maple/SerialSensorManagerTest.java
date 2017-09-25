@@ -70,6 +70,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 

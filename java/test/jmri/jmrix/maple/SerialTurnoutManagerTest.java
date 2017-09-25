@@ -18,34 +18,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     private MapleSystemConnectionMemo memo = null;
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-        memo = null;
-    }
-
-    @Override
-    @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
-        t.registerNode(new SerialNode());
-        memo = new MapleSystemConnectionMemo("K", "Maple");
-        // create and register the turnout manager object
-        l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
-        jmri.InstanceManager.setTurnoutManager(l);
-    }
-
     @Override
     public String getSystemName(int n) {
         return "KT" + n;
@@ -79,6 +51,34 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         Assert.assertTrue(null != l.getBySystemName("KT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
 
+    }
+
+    @Override
+    @Before
+    public void setUp(){
+        apps.tests.Log4JFixture.setUp();
+        // replace the SerialTrafficController
+        SerialTrafficController t = new SerialTrafficController() {
+            SerialTrafficController test() {
+                setInstance();
+                return this;
+            }
+        }.test();
+        t.registerNode(new SerialNode());
+        memo = new MapleSystemConnectionMemo("K", "Maple");
+        // create and register the turnout manager object
+        l = new SerialTurnoutManager(memo) {
+            @Override
+            public void notifyTurnoutCreationError(String conflict, int bitNum) {
+            }
+        };
+        jmri.InstanceManager.setTurnoutManager(l);
+    }
+
+    @After
+    public void tearDown() {
+        memo = null;
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);

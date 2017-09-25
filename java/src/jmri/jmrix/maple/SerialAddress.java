@@ -231,7 +231,7 @@ public class SerialAddress {
      * @return "" (null string) if the specified input bit is free for
      * assignment, else returns the system name of the conflicting assignment.
      * Test is not performed if the node address is illegal or bit number is
-     * greater than 2048.
+     * valid.
      */
     public static String isInputBitFree(int bitNum, String prefix) {
         // check the bit number
@@ -265,7 +265,7 @@ public class SerialAddress {
             return ("");
         }
         // check for a sensor
-        if (systemName.charAt(prefix.length() + 1) == 'S') {
+        if (systemName.charAt(prefix.length()) == 'S') {
             jmri.Sensor s = null;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
@@ -274,7 +274,7 @@ public class SerialAddress {
                 return ("");
             }
         } // check for a turnout
-        else if (systemName.charAt(prefix.length() + 1) == 'T') {
+        else if (systemName.charAt(prefix.length()) == 'T') {
             jmri.Turnout t = null;
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
             if (t != null) {
@@ -283,7 +283,7 @@ public class SerialAddress {
                 return ("");
             }
         } // check for a light
-        else if (systemName.charAt(prefix.length() + 1) == 'L') {
+        else if (systemName.charAt(prefix.length()) == 'L') {
             jmri.Light lgt = null;
             lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
             if (lgt != null) {

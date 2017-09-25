@@ -195,6 +195,7 @@ public class InputBitsTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        ibit = null;
         JUnitUtil.tearDown();
     }
 

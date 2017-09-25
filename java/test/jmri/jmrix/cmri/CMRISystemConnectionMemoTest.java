@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * CMRISystemConnectionMemoTest.java
- *
- * Description:	tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class
+ * Tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -52,12 +50,14 @@ public class CMRISystemConnectionMemoTest {
         jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CS");
     }
 
-    @Test public void systemPrefixTest() {
+    @Test
+    public void systemPrefixTest() {
         CMRISystemConnectionMemo m = new CMRISystemConnectionMemo();
-        Assert.assertEquals("Default System Prefix","C",m.getSystemPrefix());
+        Assert.assertEquals("Default System Prefix", "C", m.getSystemPrefix());
     }
 
-    @Test public void getNodeAddressFromSystemNameTest() {
+    @Test
+    public void getNodeAddressFromSystemNameTest() {
         CMRISystemConnectionMemo m = new CMRISystemConnectionMemo();
         Assert.assertEquals("Node Address for CT4",0,m.getNodeAddressFromSystemName("CT4"));
         Assert.assertEquals("Node Address for CT1005",1,m.getNodeAddressFromSystemName("CT1005"));

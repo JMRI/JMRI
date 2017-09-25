@@ -207,12 +207,7 @@ public class SerialAddressTest {
 
         jmri.util.JUnitUtil.resetInstanceManager();
 
-        memo = new MapleSystemConnectionMemo("K", "Maple");
-
-        // replace the SerialTrafficController
-        stcs = new SerialTrafficControlScaffold();
-        memo = new jmri.jmrix.maple.MapleSystemConnectionMemo();
-        memo.setTrafficController(stcs);
+        memo = new MapleSystemConnectionMemo();
 
         jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
             @Override
@@ -233,14 +228,16 @@ public class SerialAddressTest {
     }
 
     private MapleSystemConnectionMemo memo = null;
-    private SerialTrafficControlScaffold stcs = null;
 
     // The minimal setup for log4J
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         memo = null;
-        stcs = null;
+        d = null;
+        c = null;
+        b = null;
+        n = null;
+        JUnitUtil.tearDown();
     }
 
 }

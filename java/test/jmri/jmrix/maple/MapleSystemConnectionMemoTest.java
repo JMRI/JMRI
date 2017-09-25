@@ -20,10 +20,17 @@ public class MapleSystemConnectionMemoTest {
        Assert.assertNotNull("exists", memo);
     }
 
+    @Test
+    public void systemPrefixTest() {
+        // default values would be changed to K2 as there is already a connection with prefix [K] active
+        MapleSystemConnectionMemo m = new MapleSystemConnectionMemo("K9", SerialConnectionTypeList.MAPLE);
+        Assert.assertEquals("Special System Prefix", "K9", m.getSystemPrefix());
+    }
+
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController(){
+       SerialTrafficController tc = new SerialTrafficController() {
           @Override
           public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
@@ -33,7 +40,8 @@ public class MapleSystemConnectionMemoTest {
 
     @After
     public void tearDown(){
-       JUnitUtil.tearDown();
+        memo = null;
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,5 +59,14 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         t = new SerialTurnout("KT4", "t4", _memo);
     }
 
-    // clean up via AbstractTurnoutTestBase
+    // OK to used this for class clean up?
+    @After
+    public void tearDown() {
+        tcis = null;
+        _memo = null;
+        n = null;
+        t = null;
+        // JUnitUtil.tearDown() clean up is done through the AbstractTurnoutTestBase
+    }
+
 }

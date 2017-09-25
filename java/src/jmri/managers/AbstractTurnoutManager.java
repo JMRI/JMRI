@@ -68,6 +68,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     @Override
     public Turnout newTurnout(String systemName, String userName) {
+        // add normalize? see AbstractSensor
         if (log.isDebugEnabled()) {
             log.debug("newTurnout:"
                     + ((systemName == null) ? "null" : systemName)
