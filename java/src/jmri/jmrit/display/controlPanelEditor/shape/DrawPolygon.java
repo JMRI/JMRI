@@ -93,10 +93,10 @@ public class DrawPolygon extends DrawFrame {
 
     protected void drawShape(Graphics g) {
         if (!_editing) {
-            if (_vertices.isEmpty()) {
+            if (_vertices.isEmpty() || !(g instanceof Graphics2D)) {
                 return;
             }
-            Graphics2D g2d = (Graphics2D) g;
+            Graphics2D g2d = (Graphics2D)g;
             _lineWidth = _lineSlider.getValue();
             BasicStroke stroke = new BasicStroke(_lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f);
             g2d.setColor(_lineColor);

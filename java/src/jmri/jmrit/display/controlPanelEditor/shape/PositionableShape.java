@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -185,10 +184,11 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",
-            justification = "Cast required due to how Graphics2D was implemented in Java 1.2")
     public void paint(Graphics g) {
         if (!getEditor().isEditable() && !isVisible()) {
+            return;
+        }
+        if (!(g instanceof Graphics2D)) {
             return;
         }
         Graphics2D g2d = (Graphics2D) g;
