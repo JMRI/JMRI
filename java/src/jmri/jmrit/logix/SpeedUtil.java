@@ -321,6 +321,11 @@ public class SpeedUtil {
         _stepIncrement = _throttle.getSpeedIncrement();
         getSpeedProfile();
     }
+    
+    protected float getSpeedIncrement() {
+        _stepIncrement = _throttle.getSpeedIncrement();
+        return _stepIncrement;
+    }
     /**
      * Calculates the scale speed of the current throttle setting for display
      * @param speedType name of current speed
