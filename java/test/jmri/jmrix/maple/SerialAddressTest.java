@@ -42,6 +42,7 @@ public class SerialAddressTest {
 
         Assert.assertTrue("invalid format - KL2oo5", !SerialAddress.validSystemNameFormat("KL2oo5", 'L', "K"));
         JUnitAppender.assertWarnMessage("invalid character in number field of system name: KL2oo5");
+        JUnitAppender.assertWarnMessage("node address field out of range in system name - KL2oo5");
     }
 
     @Test
@@ -80,7 +81,9 @@ public class SerialAddressTest {
         JUnitAppender.assertWarnMessage("node address field out of range in system name - KS0");
         Assert.assertTrue("valid config KT201", SerialAddress.validSystemNameConfig("KT201", 'T', memo));
         Assert.assertTrue("invalid config KT202", !SerialAddress.validSystemNameConfig("KT202", 'T', memo));
+        JUnitAppender.assertWarnMessage("Maple hardware address out of range in system name: KT202");
         Assert.assertTrue("invalid config KT4129", !SerialAddress.validSystemNameConfig("KT4129", 'T', memo));
+        JUnitAppender.assertWarnMessage("Maple hardware address out of range in system name: KT4129");
     }
 
     @Test
