@@ -52,7 +52,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     @Override
-    @Nonnull
     public char typeLetter() {
         return 'B';
     }
@@ -501,7 +500,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //not internal crossover block boundary
-        Object connected = lc.getConnectedObject();
+        LayoutTrack connected = lc.getConnectedObject();
         cType = lc.getConnectedType();
 
         if (connected == null) {
@@ -1625,7 +1624,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return null;
         }
         LayoutTurnout lt = null;
-        Object connected = lc.getConnectedObject();
+        LayoutTrack connected = lc.getConnectedObject();
 
         TrackSegment tr = lc.getTrackSegment();
         int cType = lc.getConnectedType();
