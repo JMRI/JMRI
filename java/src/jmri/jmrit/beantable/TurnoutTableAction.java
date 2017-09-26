@@ -959,9 +959,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
 
     CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
-    // add a JSpinner for numerical entry? TODO
-    // SpinnerNumberModel addressSpinner = new SpinnerNumberModel(1, 1, 2048, 1); // initially configured for LocoNet
-    // JSpinner hardwareAddressSpinner = new JSpinner(addressSpinner);
     // initially allow any 20 char string, updated to prefixBox selection by canAddRange()
     JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
