@@ -48,6 +48,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
     @Override
     public void dispose() {
+
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());

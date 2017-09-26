@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.cmri.serial.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.cmri.serial.serialmon.SerialFilterBundle"; // c2
+    private static final String name = "jmri.jmrix.cmri.serial.serialmon.SerialFilterBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

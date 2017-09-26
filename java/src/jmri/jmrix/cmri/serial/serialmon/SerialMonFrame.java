@@ -44,38 +44,43 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public boolean loggingEnabled = false;  // true if message logging to a file
     public boolean freezeDisplay  = false;  // true if display is halted
 
-    protected JButton doneButton = new JButton();
-    protected JButton logMsgButton = new JButton();
-    protected JCheckBox deltaTBox = new JCheckBox();
-    protected JButton packetfilterButton = new JButton();  //c2
     String rawDataCheck = this.getClass().getName()+".RawData";
     String timeStampCheck = this.getClass().getName()+".TimeStamp";
-    String deltaTCheck = this.getClass().getName()+".DeltaT";
     String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
     String autoScrollCheck = this.getClass().getName()+".AutoScroll";
+    String deltaTCheck = this.getClass().getName()+".DeltaT"; // NOI18N
+ 
+    protected JCheckBox deltaTBox = new JCheckBox();
+    protected JButton doneButton = new JButton();
+    protected JButton logMsgButton = new JButton();
+    protected JButton packetfilterButton = new JButton();  //c2
+
     jmri.UserPreferencesManager p;
     
     protected long lastTicks = 0L;
     protected static int _DLE    = 0x10;    
 
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getHomePath()); //jmri.jmrit.XmlFile.userFileLocationDefault());
-//    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath()); //jmri.jmrit.XmlFile.userFileLocationDefault());
-
+    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath()); //jmri.jmrit.XmlFile.userFileLocationDefault());
+    
     private CMRISystemConnectionMemo _memo = null;
 
     public SerialMonFrame(CMRISystemConnectionMemo memo) {
         super();
         _memo = memo;
     }
-    
+
     @Override
     public void dispose() { 
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
         p.setSimplePreferenceState(autoScrollCheck, !autoScrollCheckBox.isSelected());
+        p.setSimplePreferenceState(deltaTCheck, deltaTBox.isSelected());
         _memo.getTrafficController().removeSerialListener(this);
-    }
+//      log.info("Local dispose no super called");
+//      super.dispose();
+//      log.info("Local dispose super called");
+  }
 
     @Override
     protected String title() {
@@ -147,12 +152,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         Border packetDisplayBorderTitled = BorderFactory.createTitledBorder(packetDisplayBorder,
                                               Bundle.getMessage("ConnectionText")+" "+_memo.getUserName(),
                                               TitledBorder.LEFT,TitledBorder.ABOVE_TOP);            
-
+        
         jScrollPane1.getViewport().add(monTextPane);
         jScrollPane1.setPreferredSize(new Dimension(x, y));
         jScrollPane1.setVisible(true);
         jScrollPane1.setBorder(packetDisplayBorderTitled); 
-                
+        
         logMsgButton.setText(Bundle.getMessage("StartLoggingText"));
         logMsgButton.setVisible(true);
         logMsgButton.setToolTipText(Bundle.getMessage("StartStopLoggingTip"));
@@ -238,6 +243,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         getContentPane().add(paneA);
 
         // connect actions to buttons
+
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -272,14 +278,14 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 enterButtonActionPerformed(e);
             }
         });
-
+/*
         alwaysOnTopCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
             }
         });
-
+*/
         autoScrollCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -287,7 +293,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             }
         });
 
-         packetfilterButton.addActionListener(new ActionListener() {
+        packetfilterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 openPacketFilterPerformed(e);
@@ -297,6 +303,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         doneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                log.info("doneButton with local dispose called");
+//                log.info("doneButton without dispose called");
                 setVisible(false);
                 dispose();
             }
@@ -357,7 +365,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             
             if (deltaTBox.isSelected())   //c2
             {
-              if (lastTicks == 0) lastTicks = curTicks;
+              if (lastTicks == 0L) lastTicks = curTicks;
               sb.append(" [").append(Long.toString(curTicks-lastTicks)).append("]");
               lastTicks = curTicks;
             }
@@ -452,8 +460,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         });
     }
     /**
-     * Method to test for packet logging
-     * @param OnOff 
+     * Method to test for packet logging 
      */
     public void setMsgLogging( boolean OnOff )
     {
@@ -464,8 +471,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         return loggingEnabled;       
     }
     /**
-     * Toggle the packet logging function with one button
-     * @param e 
+     * Toggle the packet logging function with one button 
      */
     public synchronized void logButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
@@ -500,7 +506,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     
      /**
      * Toggle the display on/off
-     * @param e 
      */
    public synchronized void freezeButtonActionPerformed(java.awt.event.ActionEvent e)
     {
@@ -519,7 +524,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     
    /**
     * Open a file chooser dialog for packet log
-    * @param e 
     */
     @Override
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -533,7 +537,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
     /**
     * Open the node/packet filter window
-    * @param e 
     */
     public void openPacketFilterPerformed(ActionEvent e) {
 		// create a SerialFilterFrame
@@ -547,52 +550,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 		f.setVisible(true);
 	}
     
-/*
-    @Override 
-    public synchronized void message(SerialMessage l) {  // receive a message and log it
-        // check for valid length
-        if (l.getNumDataElements() < 2) {
-            nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
-                    l.toString());
-            return;
-        } else if (l.isPoll()) {
-            nextLine("Poll ua=" + l.getUA() + "\n", l.toString());
-        } else if (l.isXmt()) {
-            StringBuilder sb = new StringBuilder("Transmit ua=");
-            sb.append(l.getUA());
-            sb.append(" OB=");
-            for (int i = 2; i < l.getNumDataElements(); i++) {
-                sb.append(Integer.toHexString(l.getElement(i) & 0x000000ff));
-                sb.append(" ");
-            }
-            sb.append("\n");
-            nextLine(new String(sb), l.toString());
-        } else if (l.isInit()) {
-            StringBuilder sb = new StringBuilder("Init ua=");
-            sb.append(l.getUA());
-            sb.append(" type=");
-            sb.append((char) l.getElement(2));
-            int len = l.getNumDataElements();
-            if (len >= 5) {
-                sb.append(" DL=");
-                sb.append(l.getElement(3) * 256 + l.getElement(4));
-            }
-            if (len >= 6) {
-                sb.append(" NS=");
-                sb.append(l.getElement(5));
-                sb.append(" CT: ");
-                for (int i = 6; i < l.getNumDataElements(); i++) {
-                    sb.append(Integer.toHexString(l.getElement(i) & 0x000000ff));
-                    sb.append(" ");
-                }
-            }
-            sb.append("\n");
-            nextLine(new String(sb), l.toString());
-        } else {
-            nextLine("unrecognized cmd: \"" + l.toString() + "\"\n", "");
-        }
-    }
-*/
 
   /********************
      Transmit Packets
@@ -739,30 +696,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
           
         }  // end packet ID case
     }
-/*   
 
-    public synchronized void reply(SerialReply l) {  // receive a reply message and log it
-        // check for valid length
-        if (l.getNumDataElements() < 2) {
-            nextLine("Truncated reply of length " + l.getNumDataElements() + "\n",
-                    l.toString());
-            return;
-        } else if (l.isRcv()) {
-            StringBuilder sb = new StringBuilder("Receive ua=");
-            sb.append(l.getUA());
-            sb.append(" IB=");
-            for (int i = 2; i < l.getNumDataElements(); i++) {
-                sb.append(Integer.toHexString(l.getElement(i) & 0x000000ff));
-                sb.append(" ");
-            }
-            sb.append("\n");
-            nextLine(new String(sb), l.toString());
-        } else {
-            nextLine("unrecognized rep: \"" + l.toString() + "\"\n", "");
-        }
-    }
-
-*/
   /********************
      Receive Packets
   *********************/
@@ -790,7 +724,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 	switch(aPacketTypeID)
 	{
             case 0x52:  // (R) Receive (poll reply)
-                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktTransmit))
+                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktRead))
                 {
                     StringBuilder sb = new StringBuilder("Receive ua=");
                     sb.append(l.getUA());
@@ -811,7 +745,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             break; 
 				
             case 0x45:  // (E) EOT c2
-                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktTransmit))
+                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktEOT))
                 {
                 StringBuilder sb = new StringBuilder("Receive ua=");
                 sb.append(l.getUA());
