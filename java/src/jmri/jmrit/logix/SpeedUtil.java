@@ -94,6 +94,7 @@ public class SpeedUtil {
                 makeSpeedTree();
             } else {
                 _rosterId = null;
+                _rosterEntry = null;
             }
         }
     }
@@ -134,7 +135,6 @@ public class SpeedUtil {
     public boolean setDccAddress(String id) {
         if (log.isDebugEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
         if (id == null || id.trim().length()==0) {
-            _rosterEntry = null;
             setRosterId(null);   // set _rosterId
             _dccAddress = null;           
            return false;
@@ -182,7 +182,7 @@ public class SpeedUtil {
         } else {
             setRosterId(id);
             _dccAddress = _rosterEntry.getDccLocoAddress();
-            _rosterId = _rosterEntry.getId();
+//            _rosterId = _rosterEntry.getId();
         }
         if (log.isDebugEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
         return true;
