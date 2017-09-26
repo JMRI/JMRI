@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
- * @author kcameron Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -97,6 +97,25 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
+    }
+
+    /**
+     * Public method to validate system name format
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

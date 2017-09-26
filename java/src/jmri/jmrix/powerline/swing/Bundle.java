@@ -1,4 +1,4 @@
-package jmri.jmrix.powerline;
+package jmri.jmrix.powerline.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.Bundle {
+public class Bundle extends jmri.jmrix.powerline.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.powerline.PowerlineBundle"; // NOI18N
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

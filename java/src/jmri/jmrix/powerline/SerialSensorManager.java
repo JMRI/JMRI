@@ -130,6 +130,26 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         }
     }
 
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'S'));
+
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 
 }
