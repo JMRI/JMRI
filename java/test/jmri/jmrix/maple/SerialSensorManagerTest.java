@@ -24,7 +24,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Test
     public void testConstructor() {
         // create and register the manager object
-        SerialSensorManager atm = new SerialSensorManager(new MapleSystemConnectionMemo("K", "Maple"));
+        SerialSensorManager atm = new SerialSensorManager(new MapleSystemConnectionMemo());
         Assert.assertNotNull("Maple Sensor Manager creation", atm);
     }
 
@@ -62,15 +62,14 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         memo = new MapleSystemConnectionMemo("K", "Maple");
         // create and register the turnout manager object
         l = new SerialSensorManager(memo);
-
+//        jmri.InstanceManager.setSensorManager(l);
 //        SerialNode n1 = new SerialNode(1,0);
 //        SerialNode n2 = new SerialNode(2,0);
     }
 
     @After
     public void tearDown() {
-        l.dispose();
-        memo = null;
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

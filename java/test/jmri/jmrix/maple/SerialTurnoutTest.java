@@ -63,7 +63,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @After
     public void tearDown() {
         tcis = null;
-        _memo = null;
+        _memo.dispose();
         n = null;
         t = null;
         // JUnitUtil.tearDown() clean up is done through the AbstractTurnoutTestBase

@@ -17,6 +17,46 @@ import jmri.jmrix.cmri.serial.*;
  */
 public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
+    public CMRISystemConnectionMemo() {
+        this("C", CMRIConnectionTypeList.CMRI);
+    }
+
+    public CMRISystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
+        super(prefix, userName);
+
+        register(); // registers general type
+        InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
+
+        // create and register the ComponentFactory for the GUI
+        InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
+                jmri.jmrix.swing.ComponentFactory.class);
+
+        log.debug("Created CMRISystemConnectionMemo");
+    }
+
+    private SerialTrafficController tc = null;
+    jmri.jmrix.swing.ComponentFactory cf = null;
+
+    /**
+     * Set the traffic controller instance associated with this connection memo.
+     *
+     * @param s jmri.jmrix.cmri.serial.SerialTrafficController object to use.
+     */
+    public void setTrafficController(SerialTrafficController s){
+        tc = s;
+    }
+
+    /**
+     * Get the traffic controller instance associated with this connection memo.
+     */
+    public SerialTrafficController getTrafficController(){
+        if (tc == null) {
+            setTrafficController(new SerialTrafficController());
+            log.debug("Auto create of SerialTrafficController for initial configuration");
+        }
+        return tc;
+    }
+
     /**
      * Public static method to the user name for a valid system name.
      *
@@ -524,47 +564,6 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         return ua;
-    }
-
-    private SerialTrafficController tc = null;
-
-    public CMRISystemConnectionMemo() {
-        this("C", CMRIConnectionTypeList.CMRI);
-    }
-    
-    public CMRISystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
-        super(prefix, userName);
-        
-        register(); // registers general type
-        InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
-
-        // create and register the ComponentFactory for the GUI
-        InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
-
-        log.debug("Created CMRISystemConnectionMemo");
-    }
-
-    jmri.jmrix.swing.ComponentFactory cf = null;
-
-    /**
-     * Set the traffic controller instance associated with this connection memo.
-     *
-     * @param s jmri.jmrix.cmri.serial.SerialTrafficController object to use.
-     */
-    public void setTrafficController(SerialTrafficController s){
-        tc = s;
-    }
-
-    /**
-     * Get the traffic controller instance associated with this connection memo.
-     */
-    public SerialTrafficController getTrafficController(){
-        if (tc == null) {
-            setTrafficController(new SerialTrafficController());
-            log.debug("Auto create of SerialTrafficController for initial configuration");
-        }
-        return tc;
     }
 
     @Override

@@ -30,7 +30,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * <P>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
-     *
      */
     static final int SENSORSPERUA = 1000;
 

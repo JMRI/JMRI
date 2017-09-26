@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * same address space, so there is no node number in the address.
  *
  * @author Dave Duchamp, Copyright (C) 2004 - 2009
+ * @author Egbert Broerse, Copyright (C) 2017
  */
 public class SerialAddress {
 
@@ -30,6 +31,9 @@ public class SerialAddress {
      * @return the bit number, return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
+        if (prefix.length() < 1) {
+            return 0;
+        }
         log.debug("systemName = {}", systemName);
         log.debug("prefix = {}", prefix);
         // validate the system Name leader characters
@@ -43,7 +47,7 @@ public class SerialAddress {
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
-        } catch (Exception e) {
+        } catch (NumberFormatException ex) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (0);
         }
@@ -61,9 +65,13 @@ public class SerialAddress {
      * else returns 'false'
      */
     public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return false;
+        }
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
-            // here if an illegal format 
+            // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
             return (false);
         }
@@ -117,10 +125,11 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to normalize a system name
+     * Public static method to normalize a system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to a bit, by removing extra zeros inserted by the user.
+     * It's not applied to sensors (whick might be addressed using the KS3:5 format.
      *
      * @return If the supplied system name does not have a valid format, an empty string
      * is returned. If the address in the system name is not within the legal
@@ -129,8 +138,14 @@ public class SerialAddress {
      * the input name.
      */
     public static String normalizeSystemName(String systemName, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return "";
+        }
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
+        // precheck startsWith(prefix) to pass jmri.managers.AbstractSensorMgrTestBase line 95/96 calling "foo" and "bar"
+        if ((systemName.length() < prefix.length() + 1) || (!systemName.startsWith(prefix)) ||
+                (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix))) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
@@ -149,7 +164,7 @@ public class SerialAddress {
 
     /**
      * Public static method to construct a system name from type character and
-     * bit number
+     * bit number.
      * <P>
      * This routine returns a system name in the KLxxxx, KTxxxx, or KSxxxx
      * format. The returned name is normalized.
@@ -159,6 +174,10 @@ public class SerialAddress {
      * logged.
      */
     public static String makeSystemName(String type, int bitNum, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return "";
+        }
         String nName = "";
         // check the type character
         if ((!type.equals("S")) && (!type.equals("L")) && (!type.equals("T"))) {
@@ -185,13 +204,16 @@ public class SerialAddress {
      * Test is not performed if the node address or bit number are valid.
      */
     public static String isOutputBitFree(int bitNum, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return "";
+        }
         // check the bit number
         if ((bitNum < 1) || (bitNum > 8000)) {
             // here if an illegal bit number 
             log.error("illegal bit number in free bit test - {}", bitNum);
             return ("");
         }
-
         // check for a turnout using the bit
         jmri.Turnout t = null;
         String sysName = "";
@@ -200,7 +222,6 @@ public class SerialAddress {
         if (t != null) {
             return (sysName);
         }
-
         // check for a two-bit turnout assigned to the previous bit
         if (bitNum > 1) {
             sysName = makeSystemName("T", bitNum - 1, prefix);
@@ -212,7 +233,6 @@ public class SerialAddress {
                 }
             }
         }
-
         // check for a light using the bit
         jmri.Light lgt = null;
         sysName = makeSystemName("L", bitNum, prefix);
@@ -220,13 +240,12 @@ public class SerialAddress {
         if (lgt != null) {
             return (sysName);
         }
-
         // not assigned to a turnout or a light
         return ("");
     }
 
     /**
-     * Public static method to test if a input bit is free for assignment.
+     * Public static method to test if an input bit is free for assignment.
      *
      * @return "" (null string) if the specified input bit is free for
      * assignment, else returns the system name of the conflicting assignment.
@@ -234,13 +253,16 @@ public class SerialAddress {
      * valid.
      */
     public static String isInputBitFree(int bitNum, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return "";
+        }
         // check the bit number
         if ((bitNum < 1) || (bitNum > 1000)) {
             // here if an illegal bit number 
             log.error("illegal bit number in free bit test");
             return ("");
         }
-
         // check for a sensor using the bit
         jmri.Sensor s = null;
         String sysName = "";
@@ -259,6 +281,10 @@ public class SerialAddress {
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {
+        if (prefix.length() < 1) {
+            log.error("invalid system name prefix: {}", prefix);
+            return "";
+        }
         // check for a valid system name
         if ((systemName.length() < (prefix.length() + 2)) || (!systemName.startsWith(prefix))) { // use multi char prefix, cf. Acela
             // not a valid system name
@@ -292,7 +318,6 @@ public class SerialAddress {
                 return ("");
             }
         }
-
         // not any known sensor, light, or turnout
         return ("");
     }
