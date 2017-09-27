@@ -44,10 +44,10 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public boolean loggingEnabled = false;  // true if message logging to a file
     public boolean freezeDisplay  = false;  // true if display is halted
 
-    String rawDataCheck = this.getClass().getName()+".RawData";
-    String timeStampCheck = this.getClass().getName()+".TimeStamp";
-    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
-    String autoScrollCheck = this.getClass().getName()+".AutoScroll";
+    String rawDataCheck = this.getClass().getName()+".RawData"; // NOI18N
+    String timeStampCheck = this.getClass().getName()+".TimeStamp"; // NOI18N
+    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop"; // NOI18N
+    String autoScrollCheck = this.getClass().getName()+".AutoScroll"; // NOI18N
     String deltaTCheck = this.getClass().getName()+".DeltaT"; // NOI18N
  
     protected JCheckBox deltaTBox = new JCheckBox();
@@ -77,9 +77,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         p.setSimplePreferenceState(autoScrollCheck, !autoScrollCheckBox.isSelected());
         p.setSimplePreferenceState(deltaTCheck, deltaTBox.isSelected());
         _memo.getTrafficController().removeSerialListener(this);
-//      log.info("Local dispose no super called");
 //      super.dispose();
-//      log.info("Local dispose super called");
   }
 
     @Override
@@ -158,47 +156,47 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         jScrollPane1.setVisible(true);
         jScrollPane1.setBorder(packetDisplayBorderTitled); 
         
-        logMsgButton.setText(Bundle.getMessage("StartLoggingText"));
+        logMsgButton.setText(Bundle.getMessage("StartLoggingText")); // NOI18N
         logMsgButton.setVisible(true);
-        logMsgButton.setToolTipText(Bundle.getMessage("StartStopLoggingTip"));
+        logMsgButton.setToolTipText(Bundle.getMessage("StartStopLoggingTip")); // NOI18N
 
-        rawCheckBox.setText(Bundle.getMessage("ShowRawDataText"));
+        rawCheckBox.setText(Bundle.getMessage("ShowRawDataText")); // NOI18N
         rawCheckBox.setVisible(true);
-        rawCheckBox.setToolTipText(Bundle.getMessage("ShowRawDataTip"));
+        rawCheckBox.setToolTipText(Bundle.getMessage("ShowRawDataTip")); // NOI18N
         rawCheckBox.setSelected(p.getSimplePreferenceState(rawDataCheck));
 
-        timeCheckBox.setText(Bundle.getMessage("ShowTimestampText"));
+        timeCheckBox.setText(Bundle.getMessage("ShowTimestampText")); // NOI18N
         timeCheckBox.setVisible(true);
-        timeCheckBox.setToolTipText(Bundle.getMessage("ShowTimestampTip"));
+        timeCheckBox.setToolTipText(Bundle.getMessage("ShowTimestampTip")); // NOI18N
         timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
         
-        deltaTBox.setText(Bundle.getMessage("ShowWithTimeDiffText"));
+        deltaTBox.setText(Bundle.getMessage("ShowWithTimeDiffText")); // NOI18N
         deltaTBox.setVisible(true);
-        deltaTBox.setToolTipText(Bundle.getMessage("ShowWithDimeDiffTip"));
+        deltaTBox.setToolTipText(Bundle.getMessage("ShowWithDimeDiffTip")); // NOI18N
         deltaTBox.setSelected(p.getSimplePreferenceState(deltaTCheck));
         
-        alwaysOnTopCheckBox.setText(Bundle.getMessage("WindowOnTopText"));
+        alwaysOnTopCheckBox.setText(Bundle.getMessage("WindowOnTopText")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
-        alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("WindowOnTopTip"));
+        alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("WindowOnTopTip")); // NOI18N
         alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
         setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
 
-        autoScrollCheckBox.setText(Bundle.getMessage("AutoScrollText"));
+        autoScrollCheckBox.setText(Bundle.getMessage("AutoScrollText")); // NOI18N
         autoScrollCheckBox.setVisible(true);
-        autoScrollCheckBox.setToolTipText(Bundle.getMessage("AutoScollTip"));
+        autoScrollCheckBox.setToolTipText(Bundle.getMessage("AutoScollTip")); // NOI18N
         autoScrollCheckBox.setSelected(!p.getSimplePreferenceState(autoScrollCheck));
 
-        openFileChooserButton.setText(Bundle.getMessage("ChooseLogFileText"));
+        openFileChooserButton.setText(Bundle.getMessage("ChooseLogFileText")); // NOI18N
         openFileChooserButton.setVisible(true);
-        openFileChooserButton.setToolTipText(Bundle.getMessage("ChooseLogFileTip"));
+        openFileChooserButton.setToolTipText(Bundle.getMessage("ChooseLogFileTip")); // NOI18N
 
-        packetfilterButton.setText(Bundle.getMessage("FilterPacketsText"));
+        packetfilterButton.setText(Bundle.getMessage("FilterPacketsText")); // NOI18N
         packetfilterButton.setVisible(true);
-        packetfilterButton.setToolTipText(Bundle.getMessage("FilterPacketTip"));
+        packetfilterButton.setToolTipText(Bundle.getMessage("FilterPacketTip")); // NOI18N
 
-        doneButton.setText(Bundle.getMessage("DoneButtonText"));
+        doneButton.setText(Bundle.getMessage("DoneButtonText")); // NOI18N
         doneButton.setVisible(true);
-        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip"));
+        doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip")); // NOI18N
 
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -278,14 +276,14 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 enterButtonActionPerformed(e);
             }
         });
-/*
+
         alwaysOnTopCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
             }
         });
-*/
+
         autoScrollCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -303,8 +301,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         doneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                log.info("doneButton with local dispose called");
-//                log.info("doneButton without dispose called");
                 setVisible(false);
                 dispose();
             }
@@ -312,7 +308,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         });
 
        // set file chooser to a default
-        logFileChooser.setSelectedFile(new File("monitorLog.txt"));
+        logFileChooser.setSelectedFile(new File("monitorLog.txt")); // NOI18N
 
         // connect to data source
         init();
@@ -477,27 +473,29 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // start logging by creating the stream
         if (getMsgLogging()) // Logging enabled, stop logging
         {
-            if (logStream!=null)
+            if (logStream != null)
             {
-                synchronized (logStream)
-                {
+//                synchronized (logStream)
+//                {
                  logStream.flush();
                  logStream.close();
-                }   
+//                }   
            }
+            
            logStream = null;
-           logMsgButton.setText(Bundle.getMessage("StartLoggingText"));
+           logMsgButton.setText(Bundle.getMessage("StartLoggingText")); // NOI18N
            setMsgLogging( false );
+           openFileChooserButton.setEnabled(true);
         }
         else
-        if ( logStream==null)
+        if ( logStream == null)
         {  // successive clicks don't restart the file
             // start logging
             try {
                 logStream = new PrintStream (new FileOutputStream(logFileChooser.getSelectedFile()));
-                logMsgButton.setText(Bundle.getMessage("StopLoggingText"));
-                setMsgLogging( true );
-
+                logMsgButton.setText(Bundle.getMessage("StopLoggingText")); // NOI18N
+                setMsgLogging( true );  
+                openFileChooserButton.setEnabled(false);
             } catch (Exception ex) {
                 log.error("exception "+ex);
             }
@@ -512,12 +510,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // freeze/resume the monitor output
         if (freezeDisplay) 
         {
-           freezeButton.setText(Bundle.getMessage("FreezeDisplayText"));
+           freezeButton.setText(Bundle.getMessage("FreezeDisplayText")); // NOI18N
            freezeDisplay = false;
         }
         else
         {  
-           freezeButton.setText(Bundle.getMessage("ResumeDisplayText"));
+           freezeButton.setText(Bundle.getMessage("ResumeDisplayText")); // NOI18N
            freezeDisplay = true;
         }
     }
@@ -535,6 +533,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             stopLogButtonActionPerformed(e);  // stop before changing file
         }
     }
+
     /**
     * Open the node/packet filter window
     */
