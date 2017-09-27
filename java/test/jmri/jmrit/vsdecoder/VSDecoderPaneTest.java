@@ -30,7 +30,7 @@ public class VSDecoderPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
         VSDecoderPane t = new VSDecoderPane(vf);
-        Assert.assertEquals("help target","package.jmri.jmrit.log.Log4JTreePane",t.getHelpTarget());
+        Assert.assertEquals("help target","package.jmri.jmrit.vsdecoder.VSDecoderPane",t.getHelpTarget());
         JUnitUtil.dispose(vf);
     }
 
@@ -39,7 +39,7 @@ public class VSDecoderPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
         VSDecoderPane t = new VSDecoderPane(vf);
-        Assert.assertEquals("title",Bundle.getMessage("MenuItemLogTreeAction"),t.getTitle());
+        Assert.assertEquals("title",Bundle.getMessage("WindowTitle"),t.getTitle());
         JUnitUtil.dispose(vf);
     }
 
