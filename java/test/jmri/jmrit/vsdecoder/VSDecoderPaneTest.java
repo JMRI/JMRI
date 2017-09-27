@@ -25,6 +25,34 @@ public class VSDecoderPaneTest {
         JUnitUtil.dispose(vf);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VSDecoderFrame vf = new VSDecoderFrame();
+        VSDecoderPane t = new VSDecoderPane(vf);
+        Assert.assertEquals("help target","package.jmri.jmrit.log.Log4JTreePane",t.getHelpTarget());
+        JUnitUtil.dispose(vf);
+    }
+
+    @Test
+    public void testGetTitle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VSDecoderFrame vf = new VSDecoderFrame();
+        VSDecoderPane t = new VSDecoderPane(vf);
+        Assert.assertEquals("title",Bundle.getMessage("MenuItemLogTreeAction"),t.getTitle());
+        JUnitUtil.dispose(vf);
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VSDecoderFrame vf = new VSDecoderFrame();
+        VSDecoderPane t = new VSDecoderPane(vf);
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+        JUnitUtil.dispose(vf);
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
