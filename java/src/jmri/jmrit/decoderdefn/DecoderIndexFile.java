@@ -249,6 +249,8 @@ public class DecoderIndexFile extends XmlFile {
     static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
         switch (FileUtil.findFiles(defaultDecoderIndexFilename(), ".").size()) {
             case 0:
+                log.debug("creating decoder index");
+                forceCreationOfNewIndex();
                 return true; // no index exists, so create one
             case 1:
                 return false; // only one index, so nothing to compare
