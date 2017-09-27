@@ -30,6 +30,9 @@ import org.slf4j.LoggerFactory;
  */
 public class BlockValueFile extends XmlFile {
 
+    /**
+     * {@inheritDoc}
+     */
     public BlockValueFile() {
         super();
         blockManager = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
@@ -41,10 +44,13 @@ public class BlockValueFile extends XmlFile {
     private Document doc = null;
     private Element root = null;
 
-    /*
-     *  Reads Block values from a file in the user's preferences directory
+    /**
+     *  Reads Block values from a file in the user's preferences directory.
      *  If the file containing block values does not exist this routine returns quietly.
      *  If a Block named in the file does not exist currently, that entry is quietly ignored.
+     * 
+     * @throws JDOMException on rootFromName if all methods fail
+     * @throws IOException if an I/O error occurs while reading a file
      */
     @SuppressWarnings("unchecked")
     public void readBlockValues() throws JDOMException, IOException {
@@ -106,6 +112,8 @@ public class BlockValueFile extends XmlFile {
      *  Writes out block values to a file in the user's preferences directory
      *  If there are no defined Blocks, no file is written.
      *  If none of the defined Blocks have values, no file is written.
+     * 
+     * @throws IOException 
      */
     public void writeBlockValues() throws IOException {
         log.debug("entered writeBlockValues");

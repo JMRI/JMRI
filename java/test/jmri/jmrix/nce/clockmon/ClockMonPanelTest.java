@@ -18,6 +18,25 @@ public class ClockMonPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        ClockMonPanel t = new ClockMonPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.clockmon.ClockMonFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        ClockMonPanel t = new ClockMonPanel();
+        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("TitleNceClockMonitor"),t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        ClockMonPanel t = new ClockMonPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

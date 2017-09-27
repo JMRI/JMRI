@@ -16,9 +16,13 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
-    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED")
-    private transient String defaultText = " ";
+    //TODO: unused - dead-code strip
+    //@SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED")
+    //private final transient String defaultText = " ";
 
+    /**
+     * {@inheritDoc}
+     */
     public BlockContentsIcon(String s, LayoutEditor panel) {
         super(s, panel);
         log.debug("BlockContentsIcon ctor= " + BlockContentsIcon.class.getName());
@@ -26,6 +30,9 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     private transient LayoutBlock lBlock = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBlock(jmri.NamedBeanHandle<Block> m) {
         super.setBlock(m);
@@ -34,6 +41,10 @@ public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
         }
     }
 
+    /**
+     * add a roster to this icon
+     * @param roster to add
+     */
     @Override
     protected void addRosterToIcon(RosterEntry roster) {
         if (!jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() || lBlock == null) {

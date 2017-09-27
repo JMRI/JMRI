@@ -1,16 +1,10 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.powerpanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
-@CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
-
-@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -21,10 +15,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.display.Bundle {
+@ParametersAreNonnullByDefault
+@CheckReturnValue
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@javax.annotation.concurrent.Immutable
+public class Bundle extends jmri.jmrit.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrit.display.layoutEditor.LayoutEditorBundle"; // NOI18N
+    private static final String name = "jmri.jmrit.powerpanel.PowerPanelBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -40,6 +38,20 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      */
     static String getMessage(String key) {
         return b.handleGetMessage(key);
+    }
+
+    /**
+     * Provides a translated string for a given key in a given locale from the
+     * package resource bundle or parent.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key) {
+        return b.handleGetMessage(locale, key);
     }
 
     /**
@@ -79,18 +91,12 @@ public class Bundle extends jmri.jmrit.display.Bundle {
 
     private final static Bundle b = new Bundle();
 
-    /**
-     * @return the name of the bundle
-     */
     @Override
     @Nullable
     protected String bundleName() {
         return name;
     }
 
-    /**
-     * @return the bundle for this bundle
-     */
     @Override
     protected jmri.Bundle getBundle() {
         return b;
@@ -100,4 +106,5 @@ public class Bundle extends jmri.jmrit.display.Bundle {
     protected String retry(Locale locale, String key) {
         return super.getBundle().handleGetMessage(locale,key);
     }
+
 }
