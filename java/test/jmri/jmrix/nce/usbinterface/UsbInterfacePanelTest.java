@@ -19,6 +19,25 @@ public class UsbInterfacePanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        UsbInterfacePanel t = new UsbInterfacePanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        UsbInterfacePanel t = new UsbInterfacePanel();
+        Assert.assertEquals("title","NCE_: USB Interface Configuration", t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        UsbInterfacePanel t = new UsbInterfacePanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

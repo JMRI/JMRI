@@ -32,6 +32,18 @@ public class LocoDataPaneTest {
         action.initComponents(memo);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        LocoDataPane t = new LocoDataPane();
+        Assert.assertEquals("help target","package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        LocoDataPane t = new LocoDataPane();
+        Assert.assertEquals("title","Tams Loco Database",t.getTitle());
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -123,7 +123,7 @@ public class VSDecoderPane extends JmriPanel {
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.vsdecoder.VSDecoderPane";
+        return "package.jmri.jmrit.vsdecoder.VSDecoderPane";
     }
 
     /**

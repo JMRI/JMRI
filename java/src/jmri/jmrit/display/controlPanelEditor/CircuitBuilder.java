@@ -1040,7 +1040,7 @@ public class CircuitBuilder {
     }
 
     /*
-     * *************** Overriden methods of Editor *******************
+     * *************** Overridden methods of Editor *******************
      *
      * public void paintTargetPanel(Graphics g) { Graphics2D g2d =
      * (Graphics2D)g; if (_circuitIcons!=null){ java.awt.Stroke stroke =
