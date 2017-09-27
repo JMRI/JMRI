@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,7 +24,6 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -206,7 +207,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
-    JTextField hardwareAddressTextField = new JTextField(10);
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     JTextField userNameTextField = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -214,6 +215,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
+    PropertyChangeListener colorChangeListener;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     String connectionChoice = "";
@@ -249,7 +251,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
-                    //Simple test not to add a system with a duplicate System prefix
+                    // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
                         if ((prefixBox.getItemAt(i)).equals(manuName)) {
                             addToPrefix = false;
@@ -268,13 +270,29 @@ public class ReporterTableAction extends AbstractTableAction {
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+            addButton.setEnabled(false);
+            // Define PropertyChangeListener
+            colorChangeListener = new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                    String property = propertyChangeEvent.getPropertyName();
+                    if ("background".equals(property)) {
+                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
+                            addButton.setEnabled(true);
+                        } else { // invalid
+                            addButton.setEnabled(false);
+                        }
+                    }
+                }
+            };
+            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
                     okListener, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
         hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
-        hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setBackground(Color.yellow);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -435,7 +453,7 @@ public class ReporterTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on
+     * @author Egbert Broerse 2017, based on
      * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
@@ -494,18 +512,12 @@ public class ReporterTableAction extends AbstractTableAction {
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
             } else {
-                // store previous level
-                Level prevLogLevel = org.apache.log4j.Logger.getRootLogger().getLevel();
                 boolean validFormat = false;
-                // silence WARN logging
-                org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 //                try {
                     validFormat = InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value);
 //                } catch (jmri.JmriException e) {
                     // perhaps use it for the status bar?
 //                }
-                // reset logging level
-                org.apache.log4j.Logger.getRootLogger().setLevel(prevLogLevel);
                 if (validFormat) {
                     return true;
                 } else {

@@ -11,6 +11,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -59,7 +61,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +123,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
     String noneText = "None";
-    String connectionChoice = "";
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
@@ -967,8 +967,10 @@ public class TurnoutTableAction extends AbstractTableAction {
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
+    PropertyChangeListener colorChangeListener;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
+    String connectionChoice = "";
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -1004,7 +1006,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
-                    //Simple test not to add a system with a duplicate System prefix
+                    // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
                         if (prefixBox.getItemAt(i).equals(manuName)) {
                             addToPrefix = false;
@@ -1022,14 +1024,30 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            // set up validation, zero text = false
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+            addButton.setEnabled(false);
+            // Define PropertyChangeListener
+            colorChangeListener = new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                    String property = propertyChangeEvent.getPropertyName();
+                    if ("background".equals(property)) {
+                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
+                            addButton.setEnabled(true);
+                        } else { // invalid
+                            addButton.setEnabled(false);
+                        }
+                    }
+                }
+            };
+            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
                     addButton, createListener, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
-
         }
-        hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setBackground(Color.yellow);
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -1742,6 +1760,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
         addButton = null;
     }
 
@@ -1859,7 +1878,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on
+     * @author Egbert Broerse 2017, based on
      * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
@@ -1918,18 +1937,12 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
             } else {
-                // store previous level
-                Level prevLogLevel = org.apache.log4j.Logger.getRootLogger().getLevel();
                 boolean validFormat = false;
-                // silence WARN logging
-                org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 //                try {
                     validFormat = InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value);
 //                } catch (jmri.JmriException e) {
-                    // perhaps use it for the status bar?
+                    // use it for the status bar?
 //                }
-                // reset logging level
-                org.apache.log4j.Logger.getRootLogger().setLevel(prevLogLevel);
                 if (validFormat) {
                     return true;
                 } else {

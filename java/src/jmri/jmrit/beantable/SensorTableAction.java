@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -28,7 +30,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,6 +104,7 @@ public class SensorTableAction extends AbstractTableAction {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
+    PropertyChangeListener colorChangeListener;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
@@ -140,7 +142,7 @@ public class SensorTableAction extends AbstractTableAction {
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
-                    //Simple test not to add a system with a duplicate System prefix
+                    // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
                         if ((prefixBox.getItemAt(i)).equals(manuName)) {
                             addToPrefix = false;
@@ -156,17 +158,32 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            hardwareAddressTextField.setBackground(Color.white);
             userName.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+            addButton.setEnabled(false);
+            // Define PropertyChangeListener
+            colorChangeListener = new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                    String property = propertyChangeEvent.getPropertyName();
+                    if ("background".equals(property)) {
+                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
+                            addButton.setEnabled(true);
+                        } else { // invalid
+                            addButton.setEnabled(false);
+                        }
+                    }
+                }
+            };
+            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userName, prefixBox, numberToAdd, range,
                     addButton, okListener, cancelListener, rangeListener, statusBar));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-        hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setBackground(Color.yellow);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -536,7 +553,7 @@ public class SensorTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on
+     * @author Egbert Broerse 2017, based on
      * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
@@ -595,18 +612,12 @@ public class SensorTableAction extends AbstractTableAction {
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
             } else {
-                // store previous level
-                Level prevLogLevel = org.apache.log4j.Logger.getRootLogger().getLevel();
                 boolean validFormat = false;
-                // silence WARN logging
-                org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 //                try {
                     validFormat = InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value);
 //                } catch (jmri.JmriException e) {
-                    // perhaps use it for the status bar?
+                    // use it for the status bar?
 //                }
-                // reset logging level
-                org.apache.log4j.Logger.getRootLogger().setLevel(prevLogLevel);
                 if (validFormat) {
                     return true;
                 } else {

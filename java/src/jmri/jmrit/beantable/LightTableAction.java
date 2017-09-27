@@ -12,6 +12,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +53,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -589,7 +590,7 @@ public class LightTableAction extends AbstractTableAction {
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(hardwareAddressTextField);
             hardwareAddressTextField.setText(""); // reset from possible previous use
-            hardwareAddressTextField.setBackground(Color.white); // reset after possible error notification
+            hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
@@ -2255,7 +2256,7 @@ public class LightTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on
+     * @author Egbert Broerse 2017, based on
      * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
@@ -2314,18 +2315,12 @@ public class LightTableAction extends AbstractTableAction {
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
             } else {
-                // store previous level
-                Level prevLogLevel = org.apache.log4j.Logger.getRootLogger().getLevel();
                 boolean validFormat = false;
-                // silence WARN logging
-                org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 //                try {
                     validFormat = InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value);
 //                } catch (jmri.JmriException e) {
-                    // perhaps use it for the status bar?
+                    // use it for the status bar?
 //                }
-                // reset logging level
-                org.apache.log4j.Logger.getRootLogger().setLevel(prevLogLevel);
                 if (validFormat) {
                     return true;
                 } else {
