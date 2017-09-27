@@ -35,7 +35,7 @@ public class RpsSensor extends AbstractSensor
     @Override
     public void notify(Measurement r) {
         Point3d p = new Point3d(r.getX(), r.getY(), r.getZ());
-        Integer id = Integer.valueOf(r.getReading().getID());
+        Integer id = Integer.valueOf(r.getReading().getId());
 
         // ignore if code not OK
         if (!r.isOkPoint()) {
@@ -125,7 +125,7 @@ public class RpsSensor extends AbstractSensor
     public void requestUpdateFromLayout() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsSensor.class);
 
 }
 

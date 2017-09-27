@@ -2,9 +2,9 @@ package jmri.jmrix.cmri.serial.diagnostic;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a DiagnosticFrame object
@@ -21,7 +21,7 @@ public class DiagnosticAction extends AbstractAction {
     }
 
     public DiagnosticAction(CMRISystemConnectionMemo memo) {
-        this("Run C/MRI Diagnostic",memo);
+        this(Bundle.getMessage("MenuItemDiagnostics"),memo);
     }
 
     @Override
@@ -35,5 +35,5 @@ public class DiagnosticAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DiagnosticAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DiagnosticAction.class);
 }

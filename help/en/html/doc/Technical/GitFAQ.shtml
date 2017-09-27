@@ -40,7 +40,8 @@
       <h1>JMRI: Git FAQ</h1>
 
       <p>This is a list of Frequently Asked Questions for Git,
-      particularly regarding how we use it with JMRI.</p>
+      particularly regarding how we use it with JMRI.
+      Click on a question to open the answer.</p>
 
       <p>There's a <a href="getgitcode.shtml">separate JMRI Help
       page</a> on how to <a href="getgitcode.shtml">get the code
@@ -88,8 +89,10 @@
           from the JMRI master on GitHub and push to your fork
           (also on GitHub):
 
-          <p><img src="/web/images/GitHubWorkflow.png"></p>
-
+          <a href="/web/images/GitHubWorkflow.png">
+            <img src="/web/images/GitHubWorkflow.png" align="right" height="25%" width="25%">
+          </a>
+            
           <p>That horizontal arrow is the "Pull Request" (and
           subsequent pull) that records information about how
           things get into the repository.</p>
@@ -124,7 +127,7 @@
           <p>Once you have a copy of your changes on GitHub, it is
           easy to <a href=
           "https://help.github.com/articles/creating-a-pull-request/">
-          generate a pull request</a> (link to GitHub):</p>
+          generate a Pull Request</a> (link to GitHub):</p>
 
           <ul>
             <li>In a browser, navigate to your repository on GitHub
@@ -157,7 +160,7 @@
           been "cloned" from the main repository. If you're making
           individual little changes, you can work directly on the
           default "master" branch within it. If not, see <a href=
-          "#branch">Branching</a>, below.</p>
+          "#branch">Using Branches</a>, below.</p>
 
           <p>To understand Git, it is good to know about the
           various <em>places</em> in your local git repository:</p>
@@ -196,7 +199,7 @@
           cloned things from.</p>
 
           <p>The following reference should get you started using
-          either the git command line or GotHub Desktop:</p>
+          either the git command line or GitHub Desktop:</p>
 
           <ul>
             <li>Log in to GitHub and clone your own copy of the
@@ -382,7 +385,91 @@
           </ul>
         </dd>
 
-        <dt id="branch">Branching</dt>
+        <dt id="branchexamples">Branch Examples</dt>
+        
+        <dd>
+        <img src="images/git_branch_baseline.png" align="right">
+        The figure to the right shows a couple examples
+        of how we use branches in Git. 
+        The black line
+        going from left to right is the "master" branch.
+        Each dot on it is a change that somebody made on the 
+        master branch. 
+        <p>At the left, the blue rectangle shows how a 
+        change can be made.
+        <ul>
+        <li>Somebody created a new branch (the colored line)
+        <li>That person made a change on their new branch (colored dot)
+        <li>And then, through the PR process, that was merged back onto
+            the master branch (rightmost black dot).
+        </ul>
+        That basic process is used to make all the changes to the master
+        branch, although for simplicity we haven't shown all the details for
+        all of them.
+        <p>
+        Sometimes, your development work can take a while. Maybe 
+        you do it in several phases, making multiple commits.
+        Before you're finally ready to merge it back into the 
+        common code with via a Pull Request (PR), somebody else
+        can make a change on the master branch.  
+        The green path shows that case.
+        The branch was created, development took some time, and 
+        then a change was made to master (black dot on black line)
+        before the green change was merged back.  The merge process in the
+        green arrowhead took care of this. Generally, this is 
+        straightforward, because most of the code doesn't change very often: 
+        If just a couple changes have been made, they rarely overlap.
+        This motivates our "merge often" philosophy.
+
+        <img src="images/git_branch_merge_master.png" align="right">
+        
+        <p>
+        Sometimes development goes on for such a long time that
+        people made changes to master that matter to you.
+        Perhaps they're new features or bug fixes that you'd like
+        to have in your own development branch.  Or perhaps they're
+        changes that conflict, and you'd like to resolve those conflicts
+        in your own work now, rather than waiting for later. 
+        <p>
+        The 2nd diagram to the right has an example of this.
+        After the programmer created the blue branch for his 
+        own work, changes were made on both his branch 
+        (first three dots on blue line) and on master (three
+        dots on black line).  Sometime after that 3rd change
+        on master, the developer decided to "git merge master" 
+        onto his branch, bringing all those changes in via the 
+        black diagonal arrow.  Both his changes and the changes
+        to master are now present in the blue branch he's working on.
+        <p>
+        Later, he decides to merge his work back onto master
+        via the blue arrow in the middle.  
+        <p>But at that point, he can still continue to work
+        on his branch (next blue dot).  Perhaps he's fixing a 
+        bug that was found by a user once the work was merged to master.
+        Or perhaps he's just working more in the same direction.
+        Either way, when he's ready, he can merge again (right-most blue diagonal),
+        or keep working on his branch (blue line running off to right), or merge
+        other people's work to his branch once it's merged (not shown).
+        <p>
+        By doing your work on your own branch:
+        <ul>
+        <li>You get control over when you want to merge in other 
+        people work.  You can hold off on that as long as you want,
+        even distributing your own version if you want to.
+        <li>At the same time, you can merge your work into the master
+        branch shared by others whenever it's ready, without disrupting 
+        your own work: Your branch is unchanged by merging it with master.
+        </ul>
+        More complicated diagrams are possible, with branches from branches to
+        work collaboratively, etc.  You can see
+        <a href="https://github.com/JMRI/JMRI/network">JMRI's entire branch graph</a>
+        on the GitHub site.
+        <p>The basic idea is important:
+        By working on a branch in your repository, 
+        your work can be kept a part of the overall
+        JMRI effort instead of being isolated and unavailable.
+
+        <dt id="branch">Using Branches</dt>
 
         <dd>
           Always work on a named <em>branch</em>, never on the one
@@ -557,7 +644,7 @@
           </ol>
         </dd>
 
-        <dt id="share">Resolving a Merge Conflict</dt>
+        <dt id="resolve">Resolving a Merge Conflict</dt>
 
         <dd>
           It's not uncommon for two or more people to have ideas
@@ -991,15 +1078,17 @@ your own.
         <dd>
         AppVeyor CI can have transient failures when processing a Pull Request.  When it 
         does, it looks like this:
-        <br><img src="images/AppVeyorRestart1.png"><br>
-        In that case, you can sign on and restart the build to have AppVeyor try again.
-        To do that, click the "Details" link indicated above.  This will take you to:
+        <br><img src="images/AppVeyorRestart1.png">
+        <p>
+        In that case, one of the JMRI Maintainers can sign in and restart the build to have AppVeyor try again.
+        To do that, click the "Details" link indicated above. This will take you to:
         <br><img src="images/AppVeyorRestart2.png"><br>
         Click the indicated sign in link (if you're already signed in, click sign off, then sign in)
-        You'll get choices of methods:
+        You'll get a choice of methods:
         <br><img src="images/AppVeyorRestart3.png"><br>
-        Pick GitHub. You'll get a choice of accounts. DO NOT select your own
-        or anybody elses; select JMRI.
+        Pick GitHub.<br>
+        Registered users with sufficient user priviliges will get a choice of accounts.
+        DO NOT select your own or anybody elses; select &quot;JMRI&quot;.
         <br><img src="images/AppVeyorRestart4.png"><br>
         Then click the "GitHub" bar again to finish the sign in.
         <p>

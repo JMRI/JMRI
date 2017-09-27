@@ -36,7 +36,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Turnout s = getBySystemName(prefix + typeLetter() + curAddress);
         if (s == null) {
@@ -98,7 +98,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
 

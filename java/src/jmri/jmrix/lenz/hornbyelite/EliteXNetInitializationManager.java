@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for The Hornby
+ * This class performs Command Station dependant initialization for the Hornby
  * Elite. It adds the appropriate Managers via the Initialization Manager based
  * on the Command Station Type.
  *
@@ -20,9 +20,8 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
 
     @Override
     protected void init() {
-        if (log.isDebugEnabled()) {
-            log.debug("Init called");
-        }
+        log.debug("Init called");
+
         /* First, we load things that should work on all systems */
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         systemMemo.setThrottleManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetThrottleManager(systemMemo));
@@ -43,10 +42,10 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
 
         if (log.isDebugEnabled()) {
-            log.debug("XPressNet Initialization Complete");
+            log.debug("XpressNet Initialization Complete");
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class);
 
 }

@@ -3444,7 +3444,10 @@
    <p>The "Routes" window shows for every route created the id, name, comment, shortest route
     length, longest route length, and status of the route. If there's a problem with the route, the
     status will be reported as "Error". If the route hasn't been assigned to a train, the status for
-    the route is reported as "Orphan". Use the "Edit" button to modify an existing route.</p>
+    the route is reported as "Orphan". If a route has been assigned to a train or trains, and one of
+    the trains is built, the status becomes "Train Built". You can not modify a route that is
+    assigned to a built train. Reset or terminate a built train if you want to modify the route. Use
+    the "Edit" button to modify a route.</p>
 
    <a name="AddRoute" id="AddRoute"></a>
    <h3>Add Route</h3>

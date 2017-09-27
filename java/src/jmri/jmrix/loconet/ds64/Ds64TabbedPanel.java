@@ -1,13 +1,15 @@
 package jmri.jmrix.loconet.ds64;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -65,7 +67,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Revision 1.1 of DS64Panel.java by Bob Jacobsen
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2005, 2007, 2010
+ * @author Bob Jacobsen Copyright (C) 2002, 2004, 2005, 2007, 2010
  * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017
  */
 public class Ds64TabbedPanel extends AbstractBoardProgPanel {
@@ -83,17 +85,13 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         super(boardNum, readOnInit);
         origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
-        int[] boards = new int[1];
-        boards[0] = boardNum;
-        debugIsEnabled = log.isDebugEnabled();
     }
 
     /**
      * Ds64TabbedPanel constructor when the boardNum is not already known.
-     * <P>
+     * <p>
      * At instantiation, the object will automatically assume BoardID 1 and will
      * not pre-read the basic board configuration information.
-     *
      */
     public Ds64TabbedPanel() {
         // this is a constructor which is in-place to support legacy applications.
@@ -114,8 +112,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     }
     int[] boardNumbers;
     int origAccessBoardNum = 0;
-    java.util.ArrayList<Integer> boardNumsEntryValue = new java.util.ArrayList<Integer>();
-    private boolean debugIsEnabled = false;
+    ArrayList<Integer> boardNumsEntryValue = new ArrayList<>();
 
     /**
      * Ds64TabbedPanel constructor which may be used when the instantiating
@@ -134,18 +131,12 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      */
     public Ds64TabbedPanel(boolean readOnInit, Integer[] boardNums) {
         this(boardNums[0], readOnInit);
-        if (debugIsEnabled) {
-            log.debug("into DS64 tabbed panel with list of boards of length " + boardNums.length); // NOI18N
-        }
-        if (debugIsEnabled) {
-            log.debug("boardNums[0] = " + boardNums[0]); // NOI18N
-        }
+        log.debug("into DS64 tabbed panel with list of boards of length {}", boardNums.length); // NOI18N
+        log.debug("boardNums[0] = {}", boardNums[0]); // NOI18N
         origAccessBoardNum = boardNums[0];
         boardNumsEntryValue.remove(0);  // remove the entry  added by Ds64TabbedPanel(int boardNum, boolean readOnInit)
         for (int boardNum : boardNums) {
-            if (debugIsEnabled) {
-                log.debug("board " + boardNum); // NOI18N
-            }
+            log.debug("board {}", boardNum); // NOI18N
             boardNumsEntryValue.add(boardNum);
         }
         Collections.sort(boardNumsEntryValue);
@@ -272,9 +263,10 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Copy from the GUI to the opsw array.
-     * <p>
-     * Used before write operations start
+     * <P>
+     * Used before write operations start.
      */
+    @Override
     protected void copyToOpsw() {
         // copy over the display
         opsw[1] = (outputType.getSelectedIndex() == 1);
@@ -308,7 +300,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         updateGuiBasicOpSw(14);
         opsw[15] = (localControlOfOutputsStyle.getSelectedIndex() >= 2);  //0 -> OpSw15="c"
         updateGuiBasicOpSw(15);
-        opsw[16] = routesControl.getSelectedIndex() >=2;
+        opsw[16] = routesControl.getSelectedIndex() >= 2;
         updateGuiBasicOpSw(16);
         opsw[17] = output1CrossbuckFlasherCheckBox.isSelected();
         updateGuiBasicOpSw(17);
@@ -323,6 +315,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     }
     java.awt.Component colorizedObject;
 
+    @Override
     protected void updateDisplay() {
         switch (state) {
             case 1:
@@ -387,6 +380,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         updateUI();
     }
 
+    @Override
     protected int nextState(int state) {
         if (isWritingResetOpSw) {
             if ((state == 7) && (opsw[7] == true)) {
@@ -680,7 +674,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             }
             case 32: {
                 read = isRead;               // go back to original mode of operation
-                log.debug("Dealing with index " + (indexToRead));
+                log.debug("Dealing with index {}", indexToRead);
                 changeGuiElementHighlight(33, indexToRead);
                 if (isRead == true) {
                     return 46;  // want to read "out-of-turn" to speed up reads when
@@ -715,7 +709,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     for (int i = 48; i >= 33; i--) {
                         extractedDataValue = (extractedDataValue << 1) + (opsw[i] ? 1 : 0);
                     }
-                    log.debug("Read Index " + (indexToRead + 1) + " value (OpSws 33-48) = 0x" + Integer.toHexString(extractedDataValue));
+                    log.debug("Read Index {} value (OpSws 33-48) = 0x{}", indexToRead + 1, Integer.toHexString(extractedDataValue));
                     updateGuiFromOpSws33_48();
                     changeGuiElementHighlight(48, indexToRead); // clear the highlighted GUI element
 
@@ -733,14 +727,10 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
                     if ((opsw[47] == false) && (opsw[48] == false)) {
                         // entry is valid, so need to read all opSw bits in [46:33]
-                        if (debugIsEnabled) {
-                            log.debug("Read of low value in index " + indexToRead + " is a valid entry."); // NOI18N
-                        }
+                        log.debug("Read of low value in index {} is a valid entry.", indexToRead); // NOI18N
                         return 33;
                     } else {
-                        if (debugIsEnabled) {
-                            log.debug("Read of low value in index " + indexToRead + " is an invalid entry."); // NOI18N
-                        }
+                        log.debug("Read of low value in index {} is an invalid entry.", indexToRead); // NOI18N
                         // entry is not valid, so do not need to read opSw bits in [46:33]
                         // Do need to update internal opSw bits so that they imply an unused
                         // entry
@@ -764,7 +754,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     for (int i = 48; i >= 33; i--) {
                         extractedDataValue = (extractedDataValue << 1) + (opsw[i] ? 1 : 0);
                     }
-                    log.debug("Wrote Index " + (indexToRead + 1) + " value (OpSws 33-48) = 0x" + Integer.toHexString(extractedDataValue));
+                    log.debug("Wrote Index {} value (OpSws 33-48) = 0x{}", indexToRead + 1, Integer.toHexString(extractedDataValue));
                     updateGuiFromOpSws33_48();
                     switch (indexToRead) {
                         case 0: {
@@ -790,7 +780,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeTop[effectiveIndex].addressField.setLastQueriedValue(routeTop[effectiveIndex].addressField.getText());
                             try {
                                 routeTop[effectiveIndex].setAddress(Integer.parseInt(routeTop[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeTop[effectiveIndex].setIsUnused();
                             }
                             break;
@@ -808,7 +798,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA3[effectiveIndex].addressField.setLastQueriedValue(routeA3[effectiveIndex].addressField.getText());
                             try {
                                 routeA3[effectiveIndex].setAddress(Integer.parseInt(routeA3[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA3[effectiveIndex].setIsUnused();
 
                             }
@@ -827,7 +817,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA5[effectiveIndex].addressField.setLastQueriedValue(routeA5[effectiveIndex].addressField.getText());
                             try {
                                 routeA5[effectiveIndex].setAddress(Integer.parseInt(routeA5[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA5[effectiveIndex].setIsUnused();
                             }
                             break;
@@ -845,13 +835,13 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA7[effectiveIndex].addressField.setLastQueriedValue(routeA7[effectiveIndex].addressField.getText());
                             try {
                                 routeA7[effectiveIndex].setAddress(Integer.parseInt(routeA7[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA7[effectiveIndex].setIsUnused();
                             }
                             break;
                         }
                         default:
-                            log.error("invalid indirectIndex for write: " + indexToRead.toString()); // NOI18N
+                            log.error("invalid indirectIndex for write: {}", indexToRead); // NOI18N
                             return 0;
                     }
                     return 49;
@@ -879,7 +869,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     for (int i = 64; i >= 49; i--) {
                         extractedDataValue = (extractedDataValue << 1) + (opsw[i] ? 1 : 0);
                     }
-                    log.debug("Read Index " + (indexToRead + 1) + " value (OpSws 49-64) = 0x" + Integer.toHexString(extractedDataValue));
+                    log.debug("Read Index {} value (OpSws 49-64) = 0x{}", indexToRead + 1, Integer.toHexString(extractedDataValue));
                     updateGuiFromOpSws49_64();
                     changeGuiElementHighlight(61, indexToRead);
                     return determineNextStateForRead();
@@ -893,14 +883,14 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
                     if ((opsw[63] == false) && (opsw[64] == false)) {
                         // entry is valid, so need to read all opSw bits in [62:49]
-                        log.debug("Read of high value in index " + indexToRead + " is a valid entry."); // NOI18N
+                        log.debug("Read of high value in index {} is a valid entry.", indexToRead); // NOI18N
                         changeGuiElementUnHighlight(64, indexToRead);
                         return 49;
                     } else {
                         // entry is not valid, so do not need to read opSw bits in [46:33]
                         // Do need to update internal opSw bits so that they imply an unused
                         // entry
-                        log.debug("Read of high value in index " + indexToRead + " is an invalid entry."); // NOI18N
+                        log.debug("Read of high value in index {} is an invalid entry.", indexToRead); // NOI18N
                         for (int i = 49; i < 62; ++i) {
                             opsw[i] = true;
                         }
@@ -949,7 +939,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA2[effectiveIndex].addressField.setLastQueriedValue(routeA2[effectiveIndex].addressField.getText());
                             try {
                                 routeA2[effectiveIndex].setAddress(Integer.parseInt(routeA2[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA2[effectiveIndex].setIsUnused();
                             }
                             indexToRead++;
@@ -970,7 +960,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA4[effectiveIndex].addressField.setLastQueriedValue(routeA4[effectiveIndex].addressField.getText());
                             try {
                                 routeA4[effectiveIndex].setAddress(Integer.parseInt(routeA4[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA4[effectiveIndex].setIsUnused();
                             }
                             indexToRead++;
@@ -991,7 +981,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA6[effectiveIndex].addressField.setLastQueriedValue(routeA6[effectiveIndex].addressField.getText());
                             try {
                                 routeA6[effectiveIndex].setAddress(Integer.parseInt(routeA6[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA6[effectiveIndex].setIsUnused();
                             }
                             indexToRead++;
@@ -1012,7 +1002,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             routeA8[effectiveIndex].addressField.setLastQueriedValue(routeA8[effectiveIndex].addressField.getText());
                             try {
                                 routeA8[effectiveIndex].setAddress(Integer.parseInt(routeA8[effectiveIndex].addressField.getText()));
-                            } catch (Exception e) {
+                            } catch (NumberFormatException e) {
                                 routeA8[effectiveIndex].setIsUnused();
                             }
                             indexToRead++;
@@ -1034,7 +1024,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 return 0;
             }       // done!
             default:
-                log.error("unexpected state " + state); // NOI18N
+                log.error("unexpected state {}", state); // NOI18N
                 this.readAllButton.setEnabled(true);
                 this.writeAllButton.setEnabled(true);
                 return 0;
@@ -1212,8 +1202,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     }
 
     private void changeGuiElementUnHighlight(Integer reportedState, Integer reportedIndexToRead) {
-        log.debug("changedGuiElementUnHiglight st=" + reportedState + " index=" + reportedIndexToRead);
-        Color noAccessColor = null;
+        log.debug("changedGuiElementUnHiglight st={} index={}", reportedState, reportedIndexToRead);
         JComponent jc;
         switch (reportedState) {
             case 33:
@@ -1222,26 +1211,26 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             case 48:
                 jc = whichComponent(33, reportedIndexToRead);
                 if (jc != null) {
-                    changeComponentBgColor(jc, noAccessColor);
+                    changeComponentBgColor(jc, null); // inherit from parent
                 }
                 return;
             case 61:
             case 64:
                 jc = whichComponent(49, reportedIndexToRead);
                 if (jc != null) {
-                    changeComponentBgColor(jc, noAccessColor);
+                    changeComponentBgColor(jc, null); // inherit from parent
                 }
-                return;
+                break;
             default:
-                return;
+                // nothing to do in this case
+                break;
         }
     }
 
     private void changeGuiElementHighlight(Integer reportedState, Integer reportedIndexToRead) {
-        log.debug("changedGuiElementHiglight st=" + reportedState + " index=" + reportedIndexToRead);
+        log.debug("changedGuiElementHiglight st={} index={}", reportedState, reportedIndexToRead);
         Color accessColor = Color.blue.brighter();
-        Color noAccessColor = null;
-        JComponent jc = null;
+        JComponent jc;
         if (reportedState == 33) {
             jc = whichComponent(reportedState, reportedIndexToRead);
             changeComponentBgColor(jc, accessColor);
@@ -1255,7 +1244,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
         if (reportedState == 64) {
             jc = whichComponent(49, reportedIndexToRead);
-            changeComponentBgColor(jc, noAccessColor);
+            changeComponentBgColor(jc, null); // inherit from parent component
         }
     }
 
@@ -1437,11 +1426,11 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * Updates data register to reflect address, state, and enable for two
      * turnouts.
      *
-     * @param address1 - first turnout address
-     * @param state1 - first turnout's state
+     * @param address1  - first turnout address
+     * @param state1    - first turnout's state
      * @param is1Unused - true if first turnout entry is to be "unused"
-     * @param address2 - second turnout address
-     * @param state2 - second turnout's state
+     * @param address2  - second turnout address
+     * @param state2    - second turnout's state
      * @param is2Unused - true if second turnout entry is to be "unused"
      */
     protected void updateOpSwsOutAddr(int address1, boolean state1, boolean is1Unused, int address2, boolean state2, boolean is2Unused) {
@@ -1506,24 +1495,24 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * @param index - indirect address
      */
     protected void updateOpswForWrite(int index) {
-        Integer value1Address = 0;
-        Integer value2Address = 0;
-        boolean value1IsUnused = false;
-        boolean value2IsUnused = false;
-        boolean value1DirectionIsClosed = false;
-        boolean value2DirectionIsClosed = false;
+        Integer value1Address;
+        Integer value2Address;
+        boolean value1IsUnused;
+        boolean value2IsUnused;
+        boolean value1DirectionIsClosed;
+        boolean value2DirectionIsClosed;
 
         switch (index) {
             case 0: {
                 try {
                     value1Address = Integer.parseInt(outAddr1.getText());
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     value1Address = 2048;
                 }
 
                 try {
                     value2Address = Integer.parseInt(outAddr2.getText());
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     value2Address = 2048;
                 }
 
@@ -1533,13 +1522,13 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             case 1: {
                 try {
                     value1Address = Integer.parseInt(outAddr3.getText());
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     value1Address = 2048;
                 }
 
                 try {
                     value2Address = Integer.parseInt(outAddr4.getText());
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     value2Address = 2048;
                 }
 
@@ -1562,7 +1551,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 opsw[64] = false; // assume valid turnout address entry
 
                 if (routeTop[extractedIndex].getIsUnused()) {
-                    log.warn("updateOpswForWrite - routetop[" + extractedIndex + "] is unused."); // NOI18N
+                    log.warn("updateOpswForWrite - routetop[{}] is unused.", extractedIndex); // NOI18N
                     value1Address = 2048;
                     value1IsUnused = true;
                     value1DirectionIsClosed = true;
@@ -1571,7 +1560,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value1IsUnused = false;
                     try {
                         value1Address = Integer.parseInt(routeTop[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value1Address = 2048;
                         value1IsUnused = true;
                         value1DirectionIsClosed = true;
@@ -1579,7 +1568,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 }
 
                 if (routeA2[extractedIndex].getIsUnused()) {
-                    log.warn("updateOpswForWrite - routeA2[" + extractedIndex + "] is unused."); // NOI18N
+                    log.warn("updateOpswForWrite - routeA2[{}] is unused.", extractedIndex); // NOI18N
                     value2Address = 2048;
                     value2IsUnused = true;
                     value2DirectionIsClosed = true;
@@ -1588,7 +1577,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value2IsUnused = false;
                     try {
                         value2Address = Integer.parseInt(routeA2[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value2Address = 2048;
                         value2IsUnused = true;
                         value2DirectionIsClosed = true;
@@ -1641,7 +1630,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value1IsUnused = false;
                     try {
                         value1Address = Integer.parseInt(routeA3[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value1Address = 2048;
                         value1IsUnused = true;
                     }
@@ -1656,7 +1645,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value2IsUnused = false;
                     try {
                         value2Address = Integer.parseInt(routeA4[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value2Address = 2048;
                         value2IsUnused = true;
                     }
@@ -1707,7 +1696,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value1IsUnused = false;
                     try {
                         value1Address = Integer.parseInt(routeA5[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value1Address = 2048;
                         value1IsUnused = true;
                     }
@@ -1722,7 +1711,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value2IsUnused = false;
                     try {
                         value2Address = Integer.parseInt(routeA6[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value2Address = 2048;
                         value2IsUnused = true;
                     }
@@ -1774,7 +1763,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value1IsUnused = false;
                     try {
                         value1Address = Integer.parseInt(routeA7[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value1Address = 2048;
                         value1IsUnused = true;
                     }
@@ -1789,7 +1778,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     value2IsUnused = false;
                     try {
                         value2Address = Integer.parseInt(routeA8[extractedIndex].addressField.getText());
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         value2Address = 2048;
                         value2IsUnused = true;
                     }
@@ -1957,13 +1946,13 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Reset the DS64 board
      */
-    @SuppressWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "Functionality not yet confirmed with hardware; may be useful at a future date.")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "Functionality not yet confirmed with hardware; may be useful at a future date.")
     private void boardFactoryReset() {
 
         // before proceeding, make sure that the user really wants to go forward
         Object[] dialogBoxButtonOptions = {
             Bundle.getMessage("ButtonTextResetToFactoryDefault"),
-            Bundle.getMessage("ButtonTextCancelBoardReset")};
+            Bundle.getMessage("ButtonCancel")};
         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                 Bundle.getMessage("DialogTextBoardResetWarning"),
                 Bundle.getMessage("DialogHeadingBoardResetWarning"),
@@ -1998,10 +1987,10 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         boardResetResponseTimer.start();
     }
 
-    private java.awt.event.ActionListener routeResetResponseTimerListener = new java.awt.event.ActionListener() {
+    private final ActionListener routeResetResponseTimerListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.debug("routeresetresponsetimerlistener state=" + state + ", indextoread" + indexToRead);
+            log.debug("routeresetresponsetimerlistener state={}, indextoread{}", state, indexToRead);
             resetRouteButton.setSelected(false);
             readAllButton.setEnabled(true);
             writeAllButton.setEnabled(true);
@@ -2009,6 +1998,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     };
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
         LocoNetMessage m = new LocoNetMessage(6);
@@ -2366,7 +2356,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         opswClosed = new JRadioButtonWithInteger[22];
         for (int i = 1; i <= 21; i++) {
             if (i != 7) {
-                log.debug("Creating entry for OpSw " + i);
+                log.debug("Creating entry for OpSw {}", i);
                 innerPanel = new JPanel(new FlowLayout());
                 innerPanel.add(new JLabel("OpSw " + i)); // NOI18N
                 opswThrown[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("RadioButtonTextThrown"));
@@ -2383,8 +2373,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         JRadioButtonWithInteger source = ((JRadioButtonWithInteger) (event.getSource()));
                         int ind = source.index;
                         boolean st = (event.getStateChange() == ItemEvent.DESELECTED);
-                        log.debug("ItemEventListener Opsw values: " + ind + " thrown radio button event: "
-                                + st + " " + (st ? "Closed" : "Thrown") + "."); // NOI18N
+                        log.debug("ItemEventListener Opsw values: {} thrown radio button event: {} {}.", ind, st, st ? "Closed" : "Thrown"); // NOI18N
                         opsw[ind] = st;
                     }
                 });
@@ -2528,9 +2517,9 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         // before proceeding, make sure that the user really wants to go forward
                         Object[] dialogBoxButtonOptions = {
                             Bundle.getMessage("ButtonTextResetRouteN", routeNumber),
-                            Bundle.getMessage("ButtonTextCancelBoardReset")};
+                            Bundle.getMessage("ButtonCancel")};
                         int userReply = JOptionPane.showOptionDialog(this.getParent(),
-                                Bundle.getMessage("DialogTextClearRouteWarning",routeNumber),
+                                Bundle.getMessage("DialogTextClearRouteWarning", routeNumber),
                                 Bundle.getMessage("DialogHeadingClearRouteWarning"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
@@ -2538,8 +2527,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             resetRouteButton.setSelected(false);
                             return; // compare only to exactly the value for executing the "clear route" operation!
                         }
-
-
 
                         resetRouteOperation(routeNumber);
                     }
@@ -2666,8 +2653,11 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     readAllButton.updateUI();
                     updateUI();
                 }
-                (pane.getRootPane().getParent()).setPreferredSize(null);
-                ((Window) pane.getRootPane().getParent()).pack();
+                Container c = pane.getRootPane().getParent();
+                c.setPreferredSize(null);
+                if (c instanceof Window) {
+                    ((Window) c).pack();
+                }
             }
 
         });
@@ -2974,7 +2964,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    private ActionListener basicConfigChangeActionListener = new ActionListener() {
+    private final ActionListener basicConfigChangeActionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().getClass() == JComboBox.class) {
@@ -3024,7 +3014,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         break;
 
                     case "1116": // NOI18N
-                        opsw[11] = (routesControl.getSelectedIndex()  == 1) || (routesControl.getSelectedIndex() == 3);
+                        opsw[11] = (routesControl.getSelectedIndex() == 1) || (routesControl.getSelectedIndex() == 3);
                         opsw[16] = routesControl.getSelectedIndex() >= 2;
                         updateGuiBasicOpSw(11);
                         updateGuiBasicOpSw(16);
@@ -3082,6 +3072,5 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             index = i;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class.getName()); // NOI18N
+    private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
 }

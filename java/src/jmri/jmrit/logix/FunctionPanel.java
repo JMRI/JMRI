@@ -24,15 +24,18 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public static final int NUM_FUNCTION_BUTTONS = 29;
     public static final int NUM_FUNC_BUTTONS_INIT = 16; //only show 16 function buttons at start
     private DccThrottle _throttle;
-    private RosterEntry _rosterEntry;
-    private LearnThrottleFrame _throttleFrame;
+    private final RosterEntry _rosterEntry;
+    private final LearnThrottleFrame _throttleFrame;
 
     private FunctionButton functionButton[];
     javax.swing.JToggleButton alt1Button = new javax.swing.JToggleButton();
     javax.swing.JToggleButton alt2Button = new javax.swing.JToggleButton();
 
     /**
-     * Constructor
+     * Constructor.
+     *
+     * @param rosterEntry the associated roster entry
+     * @param learnFrame  the window in which this window is embedded
      */
     public FunctionPanel(RosterEntry rosterEntry, LearnThrottleFrame learnFrame) {
         super("Functions");
@@ -58,7 +61,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 java.lang.reflect.Method getter
                         = _throttle.getClass().getMethod("getF" + functionNumber, (Class[]) null);
                 Boolean state = (Boolean) getter.invoke(_throttle, (Object[]) null);
-                functionButton[i].setState(state.booleanValue());
+                functionButton[i].setState(state);
                 if (_rosterEntry != null) {
                     String text = _rosterEntry.getFunctionLabel(functionNumber);
                     if (text != null) {
@@ -73,12 +76,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                         functionButton[i].setIsLockable(_rosterEntry.getFunctionLockable(functionNumber));
                     }
                 }
-            } catch (java.lang.NoSuchMethodException ex1) {
-                log.warn("Exception in notifyThrottleFound: " + ex1);
-            } catch (java.lang.IllegalAccessException ex2) {
-                log.warn("Exception in notifyThrottleFound: " + ex2);
-            } catch (java.lang.reflect.InvocationTargetException ex3) {
-                log.warn("Exception in notifyThrottleFound: " + ex3);
+            } catch (java.lang.NoSuchMethodException | java.lang.IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
+                log.warn("Exception in notifyThrottleFound: {}", ex);
             }
         }
         this.setEnabled(true);
@@ -310,7 +309,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     /**
-     * Enable or disable all the buttons
+     * Enable or disable all the buttons.
+     *
+     * @param isEnabled true to enable; false to disable
      */
     @Override
     public void setEnabled(boolean isEnabled) {
@@ -357,11 +358,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt1Button.setText("Alt");
         alt1Button.setPreferredSize(new Dimension(FunctionButton.getButtonWidth(), FunctionButton.getButtonHeight()));
         alt1Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Push_for_alternate_set_of_function_keys"));
-        alt1Button.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                buttonActionCmdPerformed();
-            }
+        alt1Button.addActionListener((java.awt.event.ActionEvent e) -> {
+            buttonActionCmdPerformed();
         });
         mainPanel.add(alt1Button);
 
@@ -498,95 +496,122 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
 
     // update the state of this panel if any of the properties change
-    // did not add f13 - f28 dboudreau, maybe I should have? 
+    // did not add f13 - f28 dboudreau, maybe I should have?
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String functionName = e.getPropertyName();
         if (!functionName.startsWith("F")) {
             return;
         }
-        boolean isSet = ((Boolean) e.getNewValue()).booleanValue();
+        boolean isSet = ((Boolean) e.getNewValue());
         boolean lockable = false;
-        if (functionName.equals(Throttle.F0)) {
-            functionButton[0].setState(isSet);
-        } else if (functionName.equals(Throttle.F1)) {
-            functionButton[1].setState(isSet);
-        } else if (functionName.equals(Throttle.F2)) {
-            functionButton[2].setState(isSet);
-        } else if (functionName.equals(Throttle.F3)) {
-            functionButton[3].setState(isSet);
-        } else if (functionName.equals(Throttle.F4)) {
-            functionButton[4].setState(isSet);
-        } else if (functionName.equals(Throttle.F5)) {
-            functionButton[5].setState(isSet);
-        } else if (functionName.equals(Throttle.F6)) {
-            functionButton[6].setState(isSet);
-        } else if (functionName.equals(Throttle.F7)) {
-            functionButton[7].setState(isSet);
-        } else if (functionName.equals(Throttle.F8)) {
-            functionButton[8].setState(isSet);
-        } else if (functionName.equals(Throttle.F9)) {
-            functionButton[9].setState(isSet);
-        } else if (functionName.equals(Throttle.F10)) {
-            functionButton[10].setState(isSet);
-        } else if (functionName.equals(Throttle.F11)) {
-            functionButton[11].setState(isSet);
-        } else if (functionName.equals(Throttle.F12)) {
-            functionButton[12].setState(isSet);
-        } else if (functionName.equals(Throttle.F0Momentary)) {
-            lockable = true;
-            functionName = "LockF0";
-            functionButton[0].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F1Momentary)) {
-            functionName = "LockF1";
-            lockable = true;
-            functionButton[1].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F2Momentary)) {
-            functionName = "LockF2";
-            lockable = true;
-            functionButton[2].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F3Momentary)) {
-            functionName = "LockF3";
-            lockable = true;
-            functionButton[3].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F4Momentary)) {
-            functionName = "LockF4";
-            lockable = true;
-            functionButton[4].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F5Momentary)) {
-            functionName = "LockF5";
-            lockable = true;
-            functionButton[5].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F6Momentary)) {
-            functionName = "LockF6";
-            lockable = true;
-            functionButton[6].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F7Momentary)) {
-            functionName = "LockF7";
-            lockable = true;
-            functionButton[7].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F8Momentary)) {
-            functionName = "LockF8";
-            lockable = true;
-            functionButton[8].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F9Momentary)) {
-            functionName = "LockF9";
-            lockable = true;
-            functionButton[9].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F10Momentary)) {
-            functionName = "LockF10";
-            lockable = true;
-            functionButton[10].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F11Momentary)) {
-            functionName = "LockF11";
-            lockable = true;
-            functionButton[11].setIsLockable(isSet);
-        } else if (functionName.equals(Throttle.F12Momentary)) {
-            functionName = "LockF12";
-            lockable = true;
-            functionButton[12].setIsLockable(isSet);
-        } else {
-            return;
+        switch (functionName) {
+            case Throttle.F0:
+                functionButton[0].setState(isSet);
+                break;
+            case Throttle.F1:
+                functionButton[1].setState(isSet);
+                break;
+            case Throttle.F2:
+                functionButton[2].setState(isSet);
+                break;
+            case Throttle.F3:
+                functionButton[3].setState(isSet);
+                break;
+            case Throttle.F4:
+                functionButton[4].setState(isSet);
+                break;
+            case Throttle.F5:
+                functionButton[5].setState(isSet);
+                break;
+            case Throttle.F6:
+                functionButton[6].setState(isSet);
+                break;
+            case Throttle.F7:
+                functionButton[7].setState(isSet);
+                break;
+            case Throttle.F8:
+                functionButton[8].setState(isSet);
+                break;
+            case Throttle.F9:
+                functionButton[9].setState(isSet);
+                break;
+            case Throttle.F10:
+                functionButton[10].setState(isSet);
+                break;
+            case Throttle.F11:
+                functionButton[11].setState(isSet);
+                break;
+            case Throttle.F12:
+                functionButton[12].setState(isSet);
+                break;
+            case Throttle.F0Momentary:
+                lockable = true;
+                functionName = "LockF0";
+                functionButton[0].setIsLockable(isSet);
+                break;
+            case Throttle.F1Momentary:
+                functionName = "LockF1";
+                lockable = true;
+                functionButton[1].setIsLockable(isSet);
+                break;
+            case Throttle.F2Momentary:
+                functionName = "LockF2";
+                lockable = true;
+                functionButton[2].setIsLockable(isSet);
+                break;
+            case Throttle.F3Momentary:
+                functionName = "LockF3";
+                lockable = true;
+                functionButton[3].setIsLockable(isSet);
+                break;
+            case Throttle.F4Momentary:
+                functionName = "LockF4";
+                lockable = true;
+                functionButton[4].setIsLockable(isSet);
+                break;
+            case Throttle.F5Momentary:
+                functionName = "LockF5";
+                lockable = true;
+                functionButton[5].setIsLockable(isSet);
+                break;
+            case Throttle.F6Momentary:
+                functionName = "LockF6";
+                lockable = true;
+                functionButton[6].setIsLockable(isSet);
+                break;
+            case Throttle.F7Momentary:
+                functionName = "LockF7";
+                lockable = true;
+                functionButton[7].setIsLockable(isSet);
+                break;
+            case Throttle.F8Momentary:
+                functionName = "LockF8";
+                lockable = true;
+                functionButton[8].setIsLockable(isSet);
+                break;
+            case Throttle.F9Momentary:
+                functionName = "LockF9";
+                lockable = true;
+                functionButton[9].setIsLockable(isSet);
+                break;
+            case Throttle.F10Momentary:
+                functionName = "LockF10";
+                lockable = true;
+                functionButton[10].setIsLockable(isSet);
+                break;
+            case Throttle.F11Momentary:
+                functionName = "LockF11";
+                lockable = true;
+                functionButton[11].setIsLockable(isSet);
+                break;
+            case Throttle.F12Momentary:
+                functionName = "LockF12";
+                lockable = true;
+                functionButton[12].setIsLockable(isSet);
+                break;
+            default:
+                return;
         }
         if (lockable) {
             _throttleFrame.setFunctionLock(functionName, isSet);
@@ -595,5 +620,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
 }

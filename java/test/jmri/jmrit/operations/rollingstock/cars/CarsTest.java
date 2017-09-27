@@ -1,44 +1,45 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
  * on 20090131
- *
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarsTest extends OperationsTestCase {
 
-     // test constructors.
-     public void testCtor(){
-       // test the default constructor.
-       Car c1 = new Car();
-       Assert.assertNotNull("Default Constructor",c1);
+    // test constructors.
+    public void testCtor() {
+        // test the default constructor.
+        Car c1 = new Car();
+        Assert.assertNotNull("Default Constructor", c1);
     }
 
     public void test2ParmCtor() {
-      // test the constructor with roadname and roadnumer as parameters.
-      Car c1 = new Car("TESTROAD", "TESTNUMBER1");
-      Assert.assertNotNull("Two parameter Constructor",c1);
+        // test the constructor with roadname and roadnumer as parameters.
+        Car c1 = new Car("TESTROAD", "TESTNUMBER1");
+        Assert.assertNotNull("Two parameter Constructor", c1);
 
-      Assert.assertEquals("Car Road", "TESTROAD", c1.getRoadName());
-      Assert.assertEquals("Car Number", "TESTNUMBER1", c1.getNumber());
-      Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", c1.getId());
+        Assert.assertEquals("Car Road", "TESTROAD", c1.getRoadName());
+        Assert.assertEquals("Car Number", "TESTNUMBER1", c1.getNumber());
+        Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", c1.getId());
     }
 
-    public void testXmlConstructor(){
-       // test the constructor loading this car from an XML element.
+    public void testXmlConstructor() {
+        // test the constructor loading this car from an XML element.
 
-       // first, we need to build the XML element.
-       org.jdom2.Element e = new org.jdom2.Element("cars");
+        // first, we need to build the XML element.
+        org.jdom2.Element e = new org.jdom2.Element("cars");
         // set the rolling stock generic attributes.
         e.setAttribute("id", "TESTID");
         e.setAttribute("roadName", "TESTROAD1");
@@ -49,60 +50,57 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute("weight", "TESTWEIGHT");
         e.setAttribute("weightTons", "TESTWEIGHTTONS");
         e.setAttribute("built", "TESTBUILT");
-        e.setAttribute("locationId","TESTLOCATION");
+        e.setAttribute("locationId", "TESTLOCATION");
         e.setAttribute("routeLocationId", "TESTROUTELOCATION");
         e.setAttribute("secLocationId", "TESTTRACK");
         e.setAttribute("destinationId", "TESTDESTINATION");
         e.setAttribute("routeDestinationId", "TESTROUTEDESTINATION");
         e.setAttribute("secDestionationId", "TESTDESTINATIONTRACK");
         e.setAttribute("lastRouteId", "SAVEDROUTE");
-        e.setAttribute("moves","5");
+        e.setAttribute("moves", "5");
         e.setAttribute("date", "2015/05/15 15:15:15");
-        e.setAttribute("selected",Xml.FALSE);
+        e.setAttribute("selected", Xml.FALSE);
         e.setAttribute("lastLocationId", "TESTLASTLOCATION");
         e.setAttribute("train", "TESTTRAIN");
         e.setAttribute("owner", "TESTOWNER");
         e.setAttribute("value", "TESTVALUE");
-        e.setAttribute("rifd","12345");
-        e.setAttribute("locUnknown",Xml.FALSE);
+        e.setAttribute("rifd", "12345");
+        e.setAttribute("locUnknown", Xml.FALSE);
         e.setAttribute("outOfService", Xml.FALSE);
         e.setAttribute("blocking", "5");
-        e.setAttribute("comment","Test Comment");
-        e.setAttribute(Xml.PASSENGER,Xml.FALSE);
-        e.setAttribute(Xml.HAZARDOUS,Xml.FALSE);
-        e.setAttribute(Xml.CABOOSE,Xml.TRUE);
-        e.setAttribute(Xml.FRED,Xml.FALSE);
-        e.setAttribute(Xml.UTILITY,Xml.FALSE);
-        e.setAttribute(Xml.KERNEL,"TESTKERNEL");
-        e.setAttribute(Xml.LEAD_KERNEL,Xml.FALSE);
-        e.setAttribute(Xml.LOAD,"TESTLOAD");
-        e.setAttribute(Xml.LOAD_FROM_STAGING,Xml.TRUE);
-        e.setAttribute(Xml.WAIT,"0");
-        e.setAttribute(Xml.PICKUP_SCHEDULE_ID,"TESTPICKUPSCHEDULE");
-        e.setAttribute(Xml.SCHEDULE_ID,"TESTSCHEDULEID");
-        e.setAttribute(Xml.NEXT_LOAD,"TESTLOAD2");
-        e.setAttribute(Xml.NEXT_WAIT,"0");
-        e.setAttribute(Xml.NEXT_PICKUP_SCHEDULE_ID,"TESTNEXTPICKUPSCHEDULEID");
-        e.setAttribute(Xml.NEXT_DEST_ID,"TESTNEXTDESTID");
-        e.setAttribute(Xml.NEXT_DEST_TRACK_ID,"TESTNEXTDESTTRACKID");
-        e.setAttribute(Xml.PREVIOUS_NEXT_DEST_ID,"TESTPREVOIUSNEXTDESTID");
-        e.setAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID,"TESTPREVOUSNEXTDESTTRACKID");
-        e.setAttribute(Xml.PREVIOUS_SCHEDULE_ID,"TESTPREVIOUSSCHEDULEID");
-        e.setAttribute(Xml.RWE_DEST_ID,"TESTRWEDESTID");
-        e.setAttribute(Xml.RWE_LOAD,"TESTRWELOAD");
+        e.setAttribute("comment", "Test Comment");
+        e.setAttribute(Xml.PASSENGER, Xml.FALSE);
+        e.setAttribute(Xml.HAZARDOUS, Xml.FALSE);
+        e.setAttribute(Xml.CABOOSE, Xml.TRUE);
+        e.setAttribute(Xml.FRED, Xml.FALSE);
+        e.setAttribute(Xml.UTILITY, Xml.FALSE);
+        e.setAttribute(Xml.KERNEL, "TESTKERNEL");
+        e.setAttribute(Xml.LEAD_KERNEL, Xml.FALSE);
+        e.setAttribute(Xml.LOAD, "TESTLOAD");
+        e.setAttribute(Xml.LOAD_FROM_STAGING, Xml.TRUE);
+        e.setAttribute(Xml.WAIT, "0");
+        e.setAttribute(Xml.PICKUP_SCHEDULE_ID, "TESTPICKUPSCHEDULE");
+        e.setAttribute(Xml.SCHEDULE_ID, "TESTSCHEDULEID");
+        e.setAttribute(Xml.NEXT_LOAD, "TESTLOAD2");
+        e.setAttribute(Xml.NEXT_WAIT, "0");
+        e.setAttribute(Xml.NEXT_PICKUP_SCHEDULE_ID, "TESTNEXTPICKUPSCHEDULEID");
+        e.setAttribute(Xml.NEXT_DEST_ID, "TESTNEXTDESTID");
+        e.setAttribute(Xml.NEXT_DEST_TRACK_ID, "TESTNEXTDESTTRACKID");
+        e.setAttribute(Xml.PREVIOUS_NEXT_DEST_ID, "TESTPREVOIUSNEXTDESTID");
+        e.setAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID, "TESTPREVOUSNEXTDESTTRACKID");
+        e.setAttribute(Xml.PREVIOUS_SCHEDULE_ID, "TESTPREVIOUSSCHEDULEID");
+        e.setAttribute(Xml.RWE_DEST_ID, "TESTRWEDESTID");
+        e.setAttribute(Xml.RWE_LOAD, "TESTRWELOAD");
 
         try {
-           Car c1 = new Car(e);
-           Assert.assertNotNull("Xml Element Constructor",c1);
-        } catch(java.lang.NullPointerException npe) {
-           Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
+            Car c1 = new Car(e);
+            Assert.assertNotNull("Xml Element Constructor", c1);
+        } catch (java.lang.NullPointerException npe) {
+            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
 
         jmri.util.JUnitAppender.assertErrorMessage("Kernel TESTKERNEL does not exist");
     }
-
-    
-
 
     // test creation
     public void testCreate() {
@@ -136,8 +134,8 @@ public class CarsTest extends OperationsTestCase {
     }
 
     // test setting the location
-    public void testSetLocation(){
-        CarManager manager = CarManager.instance();
+    public void testSetLocation() {
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = manager.newCar("CP", "1");
         Car c2 = manager.newCar("ACL", "3");
@@ -188,7 +186,7 @@ public class CarsTest extends OperationsTestCase {
         l3t1.addTypeName("Boxcar");
         l3t2.addTypeName("Boxcar");
 
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
 
         // place cars on tracks
@@ -202,8 +200,8 @@ public class CarsTest extends OperationsTestCase {
     }
 
     // test setting the destination
-    public void testSetDestination(){
-        CarManager manager = CarManager.instance();
+    public void testSetDestination() {
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = manager.newCar("CP", "1");
         Car c2 = manager.newCar("ACL", "3");
@@ -254,7 +252,7 @@ public class CarsTest extends OperationsTestCase {
         l3t1.addTypeName("Boxcar");
         l3t2.addTypeName("Boxcar");
 
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
 
         // place cars on tracks
@@ -299,6 +297,6 @@ public class CarsTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

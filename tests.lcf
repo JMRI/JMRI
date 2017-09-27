@@ -27,6 +27,11 @@
 
 log4j.rootCategory= WARN, A1
 
+# Note that many JMRI tests assume that INFO, WARN, ERROR and FATAL will 
+# be logged so that they can test for their presence in specific cases.
+# Raising that level will cause errors. Extraneous messages should be 
+# handled within the tests to keep the volume down.
+
 # A1 is set to be a jmri.util.JUnitAppender which outputs to System.err. 
 # The JUnitAppender provides hooks used to test whether a given
 # log message is expected or not, and whether ERROR messages have been logged.
@@ -60,12 +65,16 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # is left justified, at least 5 and no more than 10 characters wide
 
 log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
+# always limit output to INFO; if you want more, add R to the rootCategory above and log there
+log4j.appender.A1.Threshold=INFO
 
 # R is set to output to a log file, but then not used in normal testing
 log4j.appender.R=org.apache.log4j.FileAppender
-log4j.appender.R.File=example.log
+log4j.appender.R.File=tests.log
+log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
-log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
+log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
+log4j.appender.R.Threshold=DEBUG
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
@@ -84,12 +93,19 @@ log4j.category.jmri.util.I18NTest=DEBUG
 # Needed for jmri.util.Log4JUtilTest
 log4j.category.jmri.util.Log4JUtilTest = WARN
 
+# Needed for jmri.util.JUnitAppenderTest
+log4j.category.jmri.util.JUnitAppenderTest = INFO
+
+# Turn on INFO for application tests
+log4j.category.apps.Apps = INFO
+log4j.category.apps.PanelPro.PanelPro = INFO
+
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
-# log4j.category.jmri.implementation=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
+# log4j.category.jmri.InstanceManager=DEBUG
+# log4j.category.jmri.implementation.DefaultSignalMastLogic=DEBUG
+# log4j.category.jmri.implementation.SignalSpeedMap=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG

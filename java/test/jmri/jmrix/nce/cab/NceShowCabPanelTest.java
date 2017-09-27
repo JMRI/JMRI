@@ -1,6 +1,5 @@
 package jmri.jmrix.nce.cab;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,15 +19,30 @@ public class NceShowCabPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        NceShowCabPanel pane = new NceShowCabPanel();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        NceShowCabPanel pane = new NceShowCabPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.cab.NceShowCabFrame",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        NceShowCabPanel pane = new NceShowCabPanel();
+        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("Title"),pane.getTitle());
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

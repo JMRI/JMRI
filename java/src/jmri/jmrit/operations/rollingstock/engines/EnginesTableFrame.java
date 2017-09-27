@@ -40,7 +40,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     EnginesTableModel enginesModel;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
-    EngineManager engineManager = EngineManager.instance();
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
     // labels
     JLabel numEngines = new JLabel();
@@ -327,5 +327,5 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class);
 }

@@ -73,4 +73,5 @@ public class LocoNetMenu extends JMenu {
         String name;
         String load;
     }
+
 }

@@ -25,7 +25,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     protected ArrayList<Throttle> throttleList;
 
     public AbstractThrottleServer() {
-        throttleList=new ArrayList<Throttle>();
+        throttleList = new ArrayList<>();
     }
 
     /*
@@ -49,16 +49,16 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * @param isForward boolean, true if forward, false if reverse or
      * undefined.
      */
-    public void setThrottleSpeedAndDirection(LocoAddress l, float speed, boolean isForward){
-       // get the throttle for the address.
-       throttleList.forEach( t -> {
-          if(t.getLocoAddress()==l) {
-             // set the speed and direction.
-             t.setSpeedSetting(speed);
-             t.setIsForward(isForward);
-          }
-       });
-   }
+    public void setThrottleSpeedAndDirection(LocoAddress l, float speed, boolean isForward) {
+        // get the throttle for the address.
+        throttleList.forEach(t -> {
+            if (t.getLocoAddress() == l) {
+                // set the speed and direction.
+                t.setSpeedSetting(speed);
+                t.setIsForward(isForward);
+            }
+        });
+    }
 
     /*
      * Set Throttle Functions on/off
@@ -67,29 +67,29 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * @param fList an ArrayList of boolean values indicating whether the
      *         function is active or not.
      */
-    public void setThrottleFunctions(LocoAddress l, ArrayList<Boolean> fList){
-       // get the throttle for the address.
-       throttleList.forEach( t -> {
-          if(t.getLocoAddress()==l) {
-             for(int i=0;i< fList.size();i++){
-                 try {
-                   java.lang.reflect.Method setter = t.getClass()
-                       .getMethod("setF"+i,boolean.class);
-                   setter.invoke(t, fList.get(i));
-                 } catch (java.lang.NoSuchMethodException|
-                          java.lang.IllegalAccessException|
-                          java.lang.reflect.InvocationTargetException ex1) {
-                   ex1.printStackTrace();
-                   try {
-                     sendErrorStatus();
-                   } catch(IOException ioe){
-                     log.error("Error writing to network port");
-                   }
-                 }
-             }
-          }
-       });
-   }
+    public void setThrottleFunctions(LocoAddress l, ArrayList<Boolean> fList) {
+        // get the throttle for the address.
+        throttleList.forEach(t -> {
+            if (t.getLocoAddress() == l) {
+                for (int i = 0; i < fList.size(); i++) {
+                    try {
+                        java.lang.reflect.Method setter = t.getClass()
+                                .getMethod("setF" + i, boolean.class);
+                        setter.invoke(t, fList.get(i));
+                    } catch (java.lang.NoSuchMethodException
+                            | java.lang.IllegalAccessException
+                            | java.lang.reflect.InvocationTargetException ex1) {
+                        log.error("", ex1);
+                        try {
+                            sendErrorStatus();
+                        } catch (IOException ioe) {
+                            log.error("Error writing to network port");
+                        }
+                    }
+                }
+            }
+        });
+    }
 
 
     /*
@@ -98,21 +98,21 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      *
      * @param l LocoAddress of the locomotive to request.
      */
-    public void requestThrottle(LocoAddress l){
+    public void requestThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
         boolean result;
-        if(l instanceof DccLocoAddress) {
-           result = t.requestThrottle(((DccLocoAddress)l), this);
+        if (l instanceof DccLocoAddress) {
+            result = t.requestThrottle(((DccLocoAddress) l), this);
         } else {
-           result = t.requestThrottle(l.getNumber(),t.canBeLongAddress(l.getNumber()),
-                             this);
+            result = t.requestThrottle(l.getNumber(), t.canBeLongAddress(l.getNumber()),
+                    this);
         }
-        if(!result) {
-           try {
-              sendErrorStatus();
-           } catch(IOException ioe) {
-             log.error("Error writing to network port");
-           }
+        if (!result) {
+            try {
+                sendErrorStatus();
+            } catch (IOException ioe) {
+                log.error("Error writing to network port");
+            }
         }
     }
 
@@ -122,101 +122,98 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      *
      * @param l LocoAddress of the locomotive to request.
      */
-    public void releaseThrottle(LocoAddress l){
+    public void releaseThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
-        t.cancelThrottleRequest(l.getNumber(),this);
-        if(l instanceof DccLocoAddress) {
-          throttleList.forEach( throttle -> {
-              if(throttle.getLocoAddress()==l) {
-                 t.releaseThrottle((DccThrottle)throttle,this);
-                 throttleList.remove(throttle);
-                 try {
-                    sendThrottleReleased(l);
-                 } catch(IOException ioe) {
-                    log.error("Error writing to network port");
-                 }
-              }
-          });
+        t.cancelThrottleRequest(l.getNumber(), this);
+        if (l instanceof DccLocoAddress) {
+            throttleList.forEach(throttle -> {
+                if (throttle.getLocoAddress() == l) {
+                    t.releaseThrottle((DccThrottle) throttle, this);
+                    throttleList.remove(throttle);
+                    try {
+                        sendThrottleReleased(l);
+                    } catch (IOException ioe) {
+                        log.error("Error writing to network port");
+                    }
+                }
+            });
         }
     }
 
-
-
     // implementation of ThrottleListener
     @Override
-    public void notifyThrottleFound(DccThrottle t){
-       throttleList.add(t);
-       t.addPropertyChangeListener(new throttlePropertyChangeListener(this,t));
-       try{
-          sendThrottleFound(t.getLocoAddress());
-       } catch(java.io.IOException ioe){
-           //Something failed writing data to the port.
-       }
+    public void notifyThrottleFound(DccThrottle t) {
+        throttleList.add(t);
+        t.addPropertyChangeListener(new ThrottlePropertyChangeListener(this, t));
+        try {
+            sendThrottleFound(t.getLocoAddress());
+        } catch (java.io.IOException ioe) {
+            //Something failed writing data to the port.
+        }
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
-       try{
-         sendErrorStatus();
-       } catch(java.io.IOException ioe){
-           //Something failed writing data to the port.
-       }
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+        try {
+            sendErrorStatus();
+        } catch (java.io.IOException ioe) {
+            //Something failed writing data to the port.
+        }
     }
 
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address) {
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    }
 
     // internal class used to propagate back end throttle changes
     // to the clients.
-    static class throttlePropertyChangeListener implements PropertyChangeListener{
+    static class ThrottlePropertyChangeListener implements PropertyChangeListener {
 
-       protected AbstractThrottleServer clientserver=null;
-       protected Throttle throttle=null;
+        protected AbstractThrottleServer clientserver = null;
+        protected Throttle throttle = null;
 
-       throttlePropertyChangeListener(AbstractThrottleServer ts,Throttle t){
-            clientserver=ts;
+        ThrottlePropertyChangeListener(AbstractThrottleServer ts, Throttle t) {
+            clientserver = ts;
             throttle = t;
-       }
+        }
 
-       // update the state of this throttle if any of the properties change
-       @Override
-       public void propertyChange(java.beans.PropertyChangeEvent e) {
-          if (e.getPropertyName().equals("SpeedSetting")) {
-             try {
-                clientserver.sendStatus(throttle.getLocoAddress());
-             } catch(IOException ioe){
-                log.error("Error writing to network port");
-             }
-          } else if (e.getPropertyName().equals("SpeedSteps")) {
-             try {
-                clientserver.sendStatus(throttle.getLocoAddress());
-             } catch(IOException ioe){
-                log.error("Error writing to network port");
-             }
-          } else {
-              for (int i = 0; i <= 28; i++) {
-                 if (e.getPropertyName().equals("F" + i)) {
+        // update the state of this throttle if any of the properties change
+        @Override
+        public void propertyChange(java.beans.PropertyChangeEvent e) {
+            switch (e.getPropertyName()) {
+                case "SpeedSetting":
+                case "SpeedSteps":
                     try {
-                       clientserver.sendStatus(throttle.getLocoAddress());
-                    } catch(IOException ioe){
-                       log.error("Error writing to network port");
+                        clientserver.sendStatus(throttle.getLocoAddress());
+                    } catch (IOException ioe) {
+                        log.error("Error writing to network port");
                     }
-                    break; // stop the loop, only one function property
-                    // will be matched.
-                 } else if (e.getPropertyName().equals("F" + i + "Momentary")) {
-                    try {
-                       clientserver.sendStatus(throttle.getLocoAddress());
-                    } catch(IOException ioe){
-                       log.error("Error writing to network port");
+                    break;
+                default:
+                    for (int i = 0; i <= 28; i++) {
+                        if (e.getPropertyName().equals("F" + i)) {
+                            try {
+                                clientserver.sendStatus(throttle.getLocoAddress());
+                            } catch (IOException ioe) {
+                                log.error("Error writing to network port");
+                            }
+                            break; // stop the loop, only one function property will be matched.
+                        } else if (e.getPropertyName().equals("F" + i + "Momentary")) {
+                            try {
+                                clientserver.sendStatus(throttle.getLocoAddress());
+                            } catch (IOException ioe) {
+                                log.error("Error writing to network port");
+                            }
+                            break; // stop the loop, only one function property will be matched.
+                        }
                     }
-                    break; // stop the loop, only one function property
-                    // will be matched.
-                 }
-              }
-          }
+                    break;
+            }
 
-          if (log.isDebugEnabled()) {
-              log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
-          }
-       }
-   }
+            log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
+        }
+    }
 
 }

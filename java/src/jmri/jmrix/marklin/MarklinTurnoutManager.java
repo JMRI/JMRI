@@ -7,11 +7,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Marklin systems.
  * <P>
- *
  * Based on work by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * 
  */
 public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -46,9 +44,12 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     boolean noWarnDelete = false;
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class);
 }
-
-

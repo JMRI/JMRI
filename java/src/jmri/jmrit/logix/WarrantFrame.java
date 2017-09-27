@@ -35,6 +35,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +66,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
     private long _startTime;
+    private float _speed;
     private long _TTP = 0;
     private boolean _forward = true;
     LearnThrottleFrame _learnThrottle = null;       // need access for JUnit test
@@ -79,6 +81,7 @@ public class WarrantFrame extends WarrantRoute {
     JPanel _commandPanel;
     JRadioButton _isSCWarrant = new JRadioButton(Bundle.getMessage("SmallLayoutTrainAutomater"), false);
     JRadioButton _isWarrant = new JRadioButton(Bundle.getMessage("NormalWarrant"), true);
+    JRadioButton _addSpeeds = new JRadioButton(Bundle.getMessage("AddTrackSpeeds"), false);
     JCheckBox    _runForward = new JCheckBox(Bundle.getMessage("Forward"));
     JFormattedTextField _TTPtextField = new JFormattedTextField();
     JCheckBox    _noRampBox = new JCheckBox();
@@ -159,9 +162,9 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(warrant.getTrainName());
         
         SpeedUtil spU = warrant.getSpeedUtil();
-        String trainId = spU.getTrainId();
+        String trainId = spU.getRosterId();
         setTrainInfo(trainId);
-        _warrant.getSpeedUtil().setTrainId(trainId);
+        _warrant.getSpeedUtil().setDccAddress(trainId);
     }
 
     private void init() {
@@ -303,21 +306,87 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makeBorderedTrainPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(makeTypePanel());
+        JPanel typePanel = makeTypePanel();
+        JPanel edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("SelectType"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(typePanel);
+        panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(makeSCParamPanel());
+        
+        JPanel scParamPanel = makeSCParamPanel();
+        edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("SetSCParameters"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(scParamPanel);
+        panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(makeRecordPanel());
+        
+        JPanel learnPanel = makeRecordPanel();
+        edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("LearnMode"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(learnPanel);
+        panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(makeRunParmsPanel());
+        
+        JPanel paramsPanel = makeRunParmsPanel();
+        edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("RunParameters"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(paramsPanel);
+        panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(makePlaybackPanel());
+        
+        JPanel runPanel = makePlaybackPanel();
+        edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("RunTrain"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(runPanel);
+        panel.add(edge);
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         tab2.add(panel);
+        
+        _isSCWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(scParamPanel,true);
+                setPanelEnabled(learnPanel,false);
+                setPanelEnabled(paramsPanel,false);
+                setPanelEnabled(runPanel,false);
+                _addSpeeds.setEnabled(false);
+            }
+        });
+        if (_saveWarrant instanceof SCWarrant) {
+            setPanelEnabled(scParamPanel,true);
+            setPanelEnabled(learnPanel,false);
+            setPanelEnabled(paramsPanel,false);
+            setPanelEnabled(runPanel,false);
+            _addSpeeds.setEnabled(false);
+            _isSCWarrant.setSelected(true);
+        }
+
+        _isWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(scParamPanel,false);
+                setPanelEnabled(learnPanel,true);
+                setPanelEnabled(paramsPanel,true);
+                setPanelEnabled(runPanel,true);
+                _addSpeeds.setEnabled(_throttleCommands.size() > 1);
+            }
+        });
 
         panel = new JPanel();
         String status = getIdleMessage();
-
         panel.add(makeTextBoxPanel(false, _statusBox, "Status", null));
         _statusBox.setEditable(false);
         _statusBox.setMinimumSize(new Dimension(300, _statusBox.getPreferredSize().height));
@@ -390,16 +459,35 @@ public class WarrantFrame extends WarrantRoute {
         _isWarrant.setToolTipText(Bundle.getMessage("W_Tooltip"));
         wTypePanel.add(_isSCWarrant);
         wTypePanel.add(_isWarrant);
+        wTypePanel.add(_addSpeeds);
         typePanel.add(wTypePanel);
-        _isSCWarrant.setSelected(_saveWarrant instanceof SCWarrant);
 
-        JPanel edge = new JPanel();
-        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
-                Bundle.getMessage("SelectType"),
-                javax.swing.border.TitledBorder.CENTER,
-                javax.swing.border.TitledBorder.TOP));
-        edge.add(typePanel);
-        return edge;
+        _addSpeeds.addActionListener((ActionEvent evt)-> {
+            addSpeeds();
+        });
+
+        return typePanel;
+    }
+    
+    private void addSpeeds() {
+        setAddress();
+        RosterSpeedProfile speedProfile =  _speedUtil.getValidSpeedProfile(this);         
+        boolean isForward = true;
+        for (ThrottleSetting ts :_throttleCommands) {
+            if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
+                isForward = Boolean.parseBoolean(ts.getValue());
+            }
+            if ("SPEED".equalsIgnoreCase(ts.getCommand())) {
+                try {
+                    ts.setSpeed(speedProfile.getSpeed(Float.parseFloat(ts.getValue()), isForward) / 1000);                    
+                } catch (NumberFormatException nfe) {
+                    log.error("Command failed! {} {}", ts.toString(), nfe.toString());
+                }
+            }
+        }
+        _commandModel.fireTableDataChanged();
+        showCommands(true);
+        _addSpeeds.setSelected(false);
     }
 
     private JPanel makeSCParamPanel() {
@@ -426,25 +514,7 @@ public class WarrantFrame extends WarrantRoute {
         if (_isWarrant.isSelected()) {
             setPanelEnabled(scParamPanel,false);
         }
-
-        _isSCWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(scParamPanel,true);
-            }
-        });
-        _isWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(scParamPanel,false);
-            }
-        });
-
-        JPanel edge = new JPanel();
-        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
-                Bundle.getMessage("SetSCParameters"),
-                javax.swing.border.TitledBorder.CENTER,
-                javax.swing.border.TitledBorder.TOP));
-        edge.add(scParamPanel);
-        return edge;
+        return scParamPanel;
     }
 
     private JPanel makeRecordPanel() {
@@ -479,28 +549,7 @@ public class WarrantFrame extends WarrantRoute {
         startStopPanel.add(Box.createRigidArea(new Dimension(30 + stopButton.getPreferredSize().width, 10)));
         learnPanel.add(startStopPanel);
 
-        if (_isSCWarrant.isSelected()) {
-            setPanelEnabled(learnPanel,false);
-        }
-
-        _isSCWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(learnPanel,false);
-            }
-        });
-        _isWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(learnPanel,true);
-            }
-        });
-
-        JPanel edge = new JPanel();
-        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
-                Bundle.getMessage("LearnMode"),
-                javax.swing.border.TitledBorder.CENTER,
-                javax.swing.border.TitledBorder.TOP));
-        edge.add(learnPanel);
-        return edge;
+        return learnPanel;
     }
 
     private JPanel makeRunParmsPanel() {
@@ -516,29 +565,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(makeTextBoxPanel(_runETOnlyBox, "RunETOnly", "ToolTipRunETOnly"));
 
         paramsPanel.add(panel);
-
-        if (_isSCWarrant.isSelected()) {
-            setPanelEnabled(panel,false);
-        }
-
-        _isSCWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(panel,false);
-            }
-        });
-        _isWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(panel,true);
-            }
-        });
-
-        JPanel edge = new JPanel();
-        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
-                Bundle.getMessage("RunParameters"),
-                javax.swing.border.TitledBorder.CENTER,
-                javax.swing.border.TitledBorder.TOP));
-        edge.add(paramsPanel);
-        return edge;
+        return paramsPanel;
     }
 
     private JPanel makePlaybackPanel() {
@@ -602,32 +629,7 @@ public class WarrantFrame extends WarrantRoute {
             }
         });
         runPanel.add(panel);
-
-        if (_isSCWarrant.isSelected()) {
-            setPanelEnabled(panel,false);
-            setPanelEnabled(bPanel,false);
-        }
-
-        _isSCWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(runPanel,false);
-                setPanelEnabled(bPanel,false);
-            }
-        });
-        _isWarrant.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setPanelEnabled(runPanel,true);
-                setPanelEnabled(bPanel,true);
-            }
-        });
-
-        JPanel edge = new JPanel();
-        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
-                Bundle.getMessage("RunTrain"),
-                javax.swing.border.TitledBorder.CENTER,
-                javax.swing.border.TitledBorder.TOP));
-        edge.add(runPanel);
-        return edge;
+        return runPanel;
     }
 
     private JPanel makeTabMidPanel() {
@@ -885,6 +887,7 @@ public class WarrantFrame extends WarrantRoute {
      *
      */
     private String checkTrainId() {
+        setAddress();
         String msg = null;
         if (_warrant.getRunMode() != Warrant.MODE_NONE) {
             msg = _warrant.getRunModeMessage();
@@ -959,6 +962,9 @@ public class WarrantFrame extends WarrantRoute {
 
         _warrant.setTrainName(getTrainName());
         _startTime = System.currentTimeMillis();
+        _speed = 0.0f;
+        
+        _warrant.getSpeedUtil().getValidSpeedProfile(this);
         _warrant.addPropertyChangeListener(this);
 
         msg = _warrant.setRunMode(Warrant.MODE_LEARN, _speedUtil.getDccAddress(), _learnThrottle,
@@ -994,7 +1000,16 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.black);
             return;
         }
+        if (_warrant.commandsHaveTrackSpeeds()) {
+            _warrant.getSpeedUtil().getValidSpeedProfile(this);            
+        } else {
+            setStatusText(Bundle.getMessage("NoTrackSpeeds", _warrant.getDisplayName()), Color.red);
+        }
         _warrant.addPropertyChangeListener(this);
+        if (_saveWarrant!=null) {
+            _saveWarrant.addPropertyChangeListener(WarrantTableFrame.getDefault().getModel());            
+        }
+        
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
                 _throttleCommands, _runETOnlyBox.isSelected());
         if (msg != null) {
@@ -1028,12 +1043,6 @@ public class WarrantFrame extends WarrantRoute {
           return;
         }
         if (_learnThrottle != null) {
-            // if last block is dark and previous block has not been exited, we must assume train
-            // has entered the last block now that the user is terminating the recording.
-            if (_learnThrottle.getSpeedSetting() > 0.0) {
-                _learnThrottle.setSpeedSetting(-0.5F);
-                _learnThrottle.setSpeedSetting(0.0F);
-            }
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
@@ -1246,12 +1255,21 @@ public class WarrantFrame extends WarrantRoute {
         }
         setThrottleCommand(cmd, value, bName);
     }
+    
+    protected void setSpeedCommand(float speed, boolean isForward) {
+        if (_warrant.getSpeedUtil().profileHasSpeedInfo(isForward)) {
+            _speed = _warrant.getSpeedUtil().getTrackSpeed(speed, isForward);  // mm/ms            
+        } else {
+            _speed = 0.0f;
+        }
+        setThrottleCommand("speed", Float.toString(speed));
+    }
 
     private void setThrottleCommand(String cmd, String value, String bName) {
         long endTime = System.currentTimeMillis();
         long time = endTime - _startTime;
         _startTime = endTime;
-        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName));
+        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName, _speed));
         _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());
@@ -1319,7 +1337,6 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
-        _warrant.setSpeedUtil(_speedUtil);
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
@@ -1330,9 +1347,11 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setAvoidOrder(getAvoidBlockOrder());
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
+        _speedUtil.setOrders(getOrders());
+        _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
-                _warrant.getDisplayName(), _speedUtil.getTrainId(), getTrainName());
+                _warrant.getDisplayName(), _speedUtil.getRosterId(), getTrainName());
         WarrantTableAction.updateWarrantMenu();
         WarrantTableFrame.getDefault().getModel().fireTableDataChanged();
         return true;
@@ -1372,7 +1391,9 @@ public class WarrantFrame extends WarrantRoute {
         public static final int COMMAND_COLUMN = 2;
         public static final int VALUE_COLUMN = 3;
         public static final int BLOCK_COLUMN = 4;
-        public static final int NUMCOLS = 5;
+        public static final int SPEED_COLUMN = 5;
+        public static final int NUMCOLS = 6;
+        java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
 
         public ThrottleTableModel() {
             super();
@@ -1401,6 +1422,8 @@ public class WarrantFrame extends WarrantRoute {
                     return Bundle.getMessage("ValueCol");
                 case BLOCK_COLUMN:
                     return Bundle.getMessage("BlockCol");
+                case SPEED_COLUMN:
+                    return Bundle.getMessage("trackSpeed");
                 default:
                     // fall through
                     break;
@@ -1410,7 +1433,7 @@ public class WarrantFrame extends WarrantRoute {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (row == ROW_NUM) {
+            if (row == ROW_NUM || row == SPEED_COLUMN) {
                 return false;
             }
             return true;
@@ -1433,6 +1456,8 @@ public class WarrantFrame extends WarrantRoute {
                     return new JTextField(8).getPreferredSize().width;
                 case BLOCK_COLUMN:
                     return new JTextField(40).getPreferredSize().width;
+                case SPEED_COLUMN:
+                    return new JTextField(10).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -1467,6 +1492,8 @@ public class WarrantFrame extends WarrantRoute {
                     return ts.getValue();
                 case BLOCK_COLUMN:
                     return ts.getBeanDisplayName();
+                case SPEED_COLUMN:
+                    return threeDigit.format(ts.getSpeed() * 1000);
                 default:
                     // fall through
                     break;
@@ -1695,5 +1722,5 @@ public class WarrantFrame extends WarrantRoute {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantFrame.class);
 }

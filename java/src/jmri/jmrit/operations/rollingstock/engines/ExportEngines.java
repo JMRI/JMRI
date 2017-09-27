@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -82,7 +83,7 @@ public class ExportEngines extends XmlFile {
             return;
         }
 
-        EngineManager manager = EngineManager.instance();
+        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         List<RollingStock> engineList = manager.getByNumberList();
         String line = "";
         // check for delimiter in the following Engine fields
@@ -187,15 +188,15 @@ public class ExportEngines extends XmlFile {
     }
 
     public static void setOperationsFileName(String name) {
-        OperationsFileName = name;
+        operationsFileName = name;
     }
 
     public static String getOperationsFileName() {
-        return OperationsFileName;
+        return operationsFileName;
     }
 
-    private static String OperationsFileName = "ExportOperationsEngineRoster.csv"; // NOI18N
+    private static String operationsFileName = "ExportOperationsEngineRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportEngines.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportEngines.class);
 
 }

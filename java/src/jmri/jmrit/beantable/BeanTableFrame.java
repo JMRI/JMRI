@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,8 +64,13 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
 
         // give system name column as smarter sorter and use it initially
         TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+
         sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+
+        sorter.setComparator(BeanTableDataModel.USERNAMECOL, new AlphanumComparator());
+        RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
+
         this.dataTable.setRowSorter(sorter);
 
         // configure items for GUI
@@ -160,5 +166,5 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableFrame.class);
 }

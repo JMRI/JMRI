@@ -1,5 +1,6 @@
 package jmri.jmrix.can;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -43,17 +44,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanConstantsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanConfigurationManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

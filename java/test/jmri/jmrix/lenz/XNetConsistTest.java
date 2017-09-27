@@ -3,7 +3,6 @@ package jmri.jmrix.lenz;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -13,17 +12,11 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2010,2016,2017
  */
-public class XNetConsistTest {
+public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     // infrastructure objects, populated by setUp.
     private XNetInterfaceScaffold tc = null;
     private XNetSystemConnectionMemo memo = null;
-    private XNetConsist c = null;
-
-    @Test public void integerConstructorTest() {
-        XNetConsist ic = new XNetConsist(5, tc, memo);
-        Assert.assertNotNull(ic);
-    }
 
     @Test public void dccLocoAddressConstructorTest() {
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
@@ -32,75 +25,42 @@ public class XNetConsistTest {
         Assert.assertNotNull(ac);
     }
 
-    @Test public void checkDisposeMethod(){
+    @Override
+    @Test(expected=java.lang.NullPointerException.class)
+    public void checkDisposeMethod(){
         // verify that c has been added to the traffic controller's 
         // list of listeners.
         int listeners = tc.numListeners();
+
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // use restore here, as it does not send
+                           // any data to the command station
+        // before dispose, this should succeed.
+        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
+        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+
         c.dispose();
         Assert.assertEquals("dispose check",listeners -1, tc.numListeners()); 
+
+        // after dispose, this should fail
+        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
+        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+
     }
 
-    @Test public void testGetConsistType(){
-        Assert.assertEquals("default consist type",jmri.Consist.ADVANCED_CONSIST,c.getConsistType());
-    }
-
-    @Test public void testSetConsistTypeAdvanced(){
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertEquals("advanced consist type",jmri.Consist.ADVANCED_CONSIST,c.getConsistType());
-    }
-
+    @Override
     @Test public void testSetConsistTypeCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Test public void testSetConsistTypeOther(){
-        c.setConsistType(255);
-        // make sure an error message is generated.
-        jmri.util.JUnitAppender.assertErrorMessage("Consist Type Not Supported");
-    }
-
-    @Test public void checkAddressAllowedGood(){
-        Assert.assertTrue("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(200,true)));
-    }
-
-    @Test public void checkAddressAllowedBad(){
-        Assert.assertFalse("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(0,false)));
-    }
-
-    @Test public void checkSizeLimitAdvanced(){
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertEquals("Advanced Consist Limit",-1,c.sizeLimit());   
-    } 
-
     @Test public void checkSizeLimitCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",2,c.sizeLimit());   
     } 
-
-    @Ignore("Can't directly set consist type to something that is not supported")
-    @Test public void checkSizeLimitOther(){
-        c.setConsistType(255);
-        Assert.assertEquals("Other Consist Limit",0,c.sizeLimit());   
-    } 
-
-    @Test public void checkContainsAdvanced(){
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        // nothing added, should be false for all.
-        Assert.assertFalse("Advanced Consist Contains",c.contains(A));   
-        Assert.assertFalse("Advanced Consist Contains",c.contains(B));   
-        // add just A
-        c.restore(A,true); // use restore here, as it does not send
-                           // any data to the command station
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));   
-        Assert.assertFalse("Advanced Consist Contains",c.contains(B));   
-        // then add B
-        c.restore(B,false);
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));   
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));   
-    }
 
     @Test public void checkContainsCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
@@ -120,17 +80,6 @@ public class XNetConsistTest {
         Assert.assertTrue("CS Consist Contains",c.contains(B));   
     }
 
-    @Test public void checkGetLocoDirectionAdvanced(){
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        c.restore(A,true); // use restore here, as it does not send
-                           // any data to the command station
-        c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in Advanced Consist",c.getLocoDirection(A));   
-        Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));   
-    }
-
     @Test public void checkGetLocoDirectionCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
@@ -144,6 +93,7 @@ public class XNetConsistTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -152,6 +102,7 @@ public class XNetConsistTest {
     }
    
     @After
+    @Override
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         tc=null;

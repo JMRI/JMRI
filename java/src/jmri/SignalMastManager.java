@@ -1,7 +1,6 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -25,7 +24,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public interface SignalMastManager extends Manager {
+public interface SignalMastManager extends Manager<SignalMast> {
 
     // to free resources when no longer used
     @Override

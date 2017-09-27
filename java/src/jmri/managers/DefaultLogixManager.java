@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
-public class DefaultLogixManager extends AbstractManager
+public class DefaultLogixManager extends AbstractManager<Logix>
         implements LogixManager, java.beans.PropertyChangeListener {
 
     public DefaultLogixManager() {
@@ -186,12 +185,12 @@ public class DefaultLogixManager extends AbstractManager
 
     @Override
     public Logix getBySystemName(String name) {
-        return (Logix) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Logix getByUserName(String key) {
-        return (Logix) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -218,5 +217,5 @@ public class DefaultLogixManager extends AbstractManager
         return Bundle.getMessage("BeanNameLogix");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
 }

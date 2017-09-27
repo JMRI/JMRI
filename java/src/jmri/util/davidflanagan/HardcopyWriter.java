@@ -30,8 +30,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.JWindow;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide graphic output to a screen/printer.
@@ -765,5 +763,5 @@ public class HardcopyWriter extends Writer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(HardcopyWriter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(HardcopyWriter.class);
 }

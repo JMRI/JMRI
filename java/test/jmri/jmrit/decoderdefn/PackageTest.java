@@ -35,6 +35,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(DecoderIndexCreateActionTest.class));
         suite.addTest(new JUnit4TestAdapter(InstallDecoderFileActionTest.class));
         suite.addTest(new JUnit4TestAdapter(InstallDecoderURLActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PrintDecoderListActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         // Disabled until #2601 is resolved
         // suite.addTest(new JUnit4TestAdapter(DuplicateTest.class));
 

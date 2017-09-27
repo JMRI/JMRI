@@ -209,7 +209,7 @@ public class DecoderFile extends XmlFile {
         return _replacementFamily;
     }
 
-    public String getFilename() {
+    public String getFileName() {
         return _filename;
     }
 
@@ -357,7 +357,6 @@ public class DecoderFile extends XmlFile {
             VariableTableModel variableModel) {
 
         nextCvStoreIndex = 0;
-        nextICvStoreIndex = 0;
 
         processVariablesElement(decoderElement.getChild("variables"), variableModel, "", "");
 
@@ -365,7 +364,6 @@ public class DecoderFile extends XmlFile {
     }
 
     int nextCvStoreIndex = 0;
-    int nextICvStoreIndex = 0;
 
     public void processVariablesElement(Element variablesElement,
             VariableTableModel variableModel, String extraInclude, String extraExclude) {
@@ -431,44 +429,6 @@ public class DecoderFile extends XmlFile {
             variableModel.setConstant(e);
         }
 
-        for (Element e : variablesElement.getChildren("ivariable")) {
-            try {
-                if (log.isDebugEnabled()) {
-                    log.debug("process iVar " + e.getAttribute("CVname"));
-                }
-                // if its associated with an inconsistent number of functions,
-                // skip creating it
-                if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
-                        && getNumFunctions() < e.getAttribute("minFn").getIntValue()) {
-                    log.debug("skip due to num functions");
-                    continue;
-                }
-                // if its associated with an inconsistent number of outputs,
-                // skip creating it
-                if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
-                        && getNumOutputs() < e.getAttribute("minOut").getIntValue()) {
-                    log.debug("skip due to num outputs");
-                    continue;
-                }
-                // if not correct productID, skip
-                if (!isProductIDok(e, extraInclude, extraExclude)) {
-                    continue;
-                }
-            } catch (DataConversionException ex) {
-                log.warn("Problem parsing minFn or minOut in decoder file, variable "
-                        + e.getAttribute("item") + " exception: " + ex);
-            }
-            // load each row
-            if (variableModel.setIndxRow(nextICvStoreIndex, e, _productID, _model, _family) == nextICvStoreIndex) {
-                // if this one existed, we will not update the row count.
-                nextICvStoreIndex++;
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("skipping entry for " + e.getAttribute("CVname"));
-                }
-            }
-        }
-
         for (Element e : variablesElement.getChildren("variables")) {
             processVariablesElement(e, variableModel, extraInclude, extraExclude);
         }
@@ -483,11 +443,6 @@ public class DecoderFile extends XmlFile {
             for (int i = 0; i < resetList.size(); i++) {
                 Element e = resetList.get(i);
                 resetModel.setRow(i, e, decoderElement.getChild("resets"), _model);
-            }
-            List<Element> iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
-            for (int i = 0; i < iresetList.size(); i++) {
-                Element e = iresetList.get(i);
-                resetModel.setIndxRow(i, e, decoderElement.getChild("resets"), _model);
             }
         }
     }
@@ -511,6 +466,6 @@ public class DecoderFile extends XmlFile {
     static public String fileLocation = "decoders" + File.separator;
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DecoderFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderFile.class);
 
 }

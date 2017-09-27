@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -62,6 +63,23 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Test
+    public void testValidSystemNameFormat() {
+        Assert.assertTrue(l.validSystemNameFormat("CS1"));
+        Assert.assertTrue(l.validSystemNameFormat("CS21"));
+        Assert.assertTrue(l.validSystemNameFormat("CS2001"));
+        Assert.assertTrue(l.validSystemNameFormat("CS21001"));
+
+        Assert.assertFalse(l.validSystemNameFormat("CSx"));
+        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CSx");
+        
+        Assert.assertFalse(l.validSystemNameFormat("CS2000"));
+        jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
+        
+        Assert.assertFalse(l.validSystemNameFormat("CS"));
+        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CS");
+    }
+    
+    @Test
     public void testDefinitions() {
         Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,
                 SerialNode.MAXSENSORS + 1);
@@ -71,9 +89,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
+        JUnitUtil.setUp();
 
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
@@ -82,8 +98,8 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         l = new SerialSensorManager(memo);
 
         n0 = new SerialNode(stcs);
-        n1 = new SerialNode(1, SerialNode.SMINI,stcs);
-        n2 = new SerialNode(2, SerialNode.USIC_SUSIC,stcs);
+        n1 = new SerialNode(1, SerialNode.SMINI, stcs);
+        n2 = new SerialNode(2, SerialNode.USIC_SUSIC, stcs);
         n2.setNumBitsPerCard(24);
         n2.setCardTypeByAddress(0, SerialNode.INPUT_CARD);
         n2.setCardTypeByAddress(1, SerialNode.OUTPUT_CARD);
@@ -96,8 +112,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         stcs = null;
         memo = null;
     }

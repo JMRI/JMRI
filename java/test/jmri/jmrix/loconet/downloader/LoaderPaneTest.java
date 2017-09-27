@@ -1,12 +1,15 @@
 package jmri.jmrix.loconet.downloader;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.SlotManager;
 
 /**
  *
@@ -14,25 +17,56 @@ import org.slf4j.LoggerFactory;
  */
 public class LoaderPaneTest {
 
+   private LnTrafficController lnis = null;
+   private LocoNetSystemConnectionMemo memo = null;
+   private SlotManager slotmanager = null;
+
     @Test
     public void testCTor() {
         LoaderPane t = new LoaderPane();
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        LoaderPane t = new LoaderPane();
+        // for now, just makes ure there isn't an exception.
+        t.initComponents(memo);
+    }
+
+    @Test
+    public void testInitContext() throws Exception {
+        LoaderPane t = new LoaderPane();
+        // for now, just makes ure there isn't an exception.
+        t.initContext(memo);
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        LoaderPane t = new LoaderPane();
+        Assert.assertEquals("help target","package.jmri.jmrix.loconet.downloader.LoaderFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        LoaderPane t = new LoaderPane();
+        Assert.assertEquals("title","Firmware Downloader",t.getTitle());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        lnis = new LocoNetInterfaceScaffold();
+        slotmanager = new SlotManager(lnis);
+        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPaneTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LoaderPaneTest.class);
 
 }

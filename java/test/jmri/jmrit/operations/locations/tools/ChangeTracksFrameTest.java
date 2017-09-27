@@ -1,19 +1,17 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.LocationEditFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.operations.locations.LocationEditFrame;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ChangeTracksFrameTest {
 
@@ -22,22 +20,21 @@ public class ChangeTracksFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationEditFrame f = new LocationEditFrame(null);
         ChangeTracksFrame t = new ChangeTracksFrame(f);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);
 }

@@ -122,7 +122,7 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     /**
-     * setSpeedStepMode - set the speed step value and the related
+     * Set the speed step value and the related
      * speedIncrement value.
      *
      * @param Mode - the current speed step mode - default should be 128 speed
@@ -167,7 +167,7 @@ public class SprogThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
      *
@@ -265,6 +265,6 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogThrottle.class);
 
 }

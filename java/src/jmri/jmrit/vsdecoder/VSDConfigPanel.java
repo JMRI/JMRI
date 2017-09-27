@@ -19,7 +19,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
@@ -69,7 +68,7 @@ public class VSDConfigPanel extends JmriPanel {
     private boolean profile_selected;  // true if a user has selected a Profile
     private NullProfileBoxItem loadProfilePrompt; // dummy profileComboBox entry
 
-    private BusyDialog busy_dialog;
+    private jmri.util.swing.BusyDialog busy_dialog;
 
     // CONSTRUCTORS
     public VSDConfigPanel() {
@@ -417,18 +416,17 @@ public class VSDConfigPanel extends JmriPanel {
 
     protected boolean storeFile(RosterEntry _rosterEntry) {
         log.debug("storeFile starts");
-        // We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
+        // We need to create a programmer, a cvTableModel, and a variableTableModel.
         // Doesn't matter which, so we'll use the Global programmer.
         Programmer p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
-        IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
-        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel, iCvModel);
+        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel);
 
         // Now, in theory we can call _rosterEntry.writeFile...
         if (_rosterEntry.getFileName() != null) {
             // set the loco file name in the roster entry
             _rosterEntry.readFile();  // read, but don't yet process
-            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel);
         }
 
         // id has to be set!
@@ -441,7 +439,7 @@ public class VSDConfigPanel extends JmriPanel {
         _rosterEntry.ensureFilenameExists();
 
         // create the RosterEntry to its file
-        _rosterEntry.writeFile(cvModel, iCvModel, variableModel); // where to get the models???
+        _rosterEntry.writeFile(cvModel, variableModel); // where to get the models???
 
         // mark this as a success
         variableModel.setFileDirty(false);
@@ -498,7 +496,7 @@ public class VSDConfigPanel extends JmriPanel {
 
     protected VSDecoder getNewDecoder() {
         VSDecoder rv;
-        busy_dialog = new BusyDialog(this.main_pane.getFrame(), "Loading VSD Profile...", false);
+        busy_dialog = new jmri.util.swing.BusyDialog(this.main_pane.getFrame(), "Loading VSD Profile...", false);
         // This takes a little while... so we'll use a SwingWorker
         SwingWorker<VSDecoder, Object> sw = new SwingWorker<VSDecoder, Object>() {
             @Override
@@ -538,6 +536,6 @@ public class VSDConfigPanel extends JmriPanel {
         updateAddress();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDConfigPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigPanel.class);
 
 }

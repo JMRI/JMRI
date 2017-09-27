@@ -30,7 +30,7 @@ public class SignalSystemTest {
     @Test
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
@@ -114,7 +114,7 @@ public class SignalSystemTest {
                 "LayoutEditor stabilized sensor went ACTIVE");
 
         // check aspects
-        checkAspect("IF$vsm:BNSF-1996:SE-1A($0152)", "Stop");
+        checkAspect("IF$vsm:BNSF-1996:SE-1A($0152)", "Stop");  // not on visual panel
 
         checkAspect("IF$vsm:UP-2008:SL-3A($0170)", "Advance Approach");
         checkAspect("IF$vsm:UP-2008:SL-3A($0171)", "Stop");
@@ -164,7 +164,7 @@ public class SignalSystemTest {
             jmri.util.JUnitUtil.waitFor(() -> {
                 return mast.getAspect().equals(aspect);
             },
-                    "mast " + mastName + " aspect \"" + aspect + "\" expected, currently showing \"" + mast.getAspect() + "\"");
+                    "mast " + mastName + "currently showing \"" + mast.getAspect() + "\", expected aspect \"" + aspect + "\"," );
         } else {
             Assert.fail("Mast " + mastName + " not found");
         }
@@ -172,8 +172,7 @@ public class SignalSystemTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
@@ -184,9 +183,7 @@ public class SignalSystemTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SignalSystemTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalSystemTest.class);
 }

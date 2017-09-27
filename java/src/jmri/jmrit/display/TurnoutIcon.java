@@ -428,7 +428,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
@@ -537,8 +537,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     void alternateOnClick() {
-        if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
-        {
+        if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {  // if clear known state, set to opposite
             getTurnout().setCommandedState(jmri.Turnout.THROWN);
         } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
             getTurnout().setCommandedState(jmri.Turnout.CLOSED);
@@ -578,5 +577,5 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         return clone;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIcon.class);
 }

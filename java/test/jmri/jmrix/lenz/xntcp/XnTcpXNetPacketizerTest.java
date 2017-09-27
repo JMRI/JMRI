@@ -1,11 +1,10 @@
 package jmri.jmrix.lenz.xntcp;
 
-import org.junit.After;
+import jmri.jmrix.lenz.XNetListenerScaffold;
+import jmri.jmrix.lenz.XNetMessage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.lenz.XNetListenerScaffold;
-import jmri.jmrix.lenz.XNetMessage;
 
 /**
  * <p>
@@ -156,13 +155,6 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }

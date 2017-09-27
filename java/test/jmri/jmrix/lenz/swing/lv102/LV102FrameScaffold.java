@@ -1,10 +1,11 @@
 package jmri.jmrix.lenz.swing.lv102;
 
+import javax.swing.JComboBox;
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
-import javax.swing.JComboBox;
+import org.netbeans.jemmy.operators.JToggleButtonOperator;
 
 /*
  *  Helper class for operating the LV102Frame and the  LV102InternalFrame
@@ -17,20 +18,20 @@ public class LV102FrameScaffold extends JFrameOperator{
    private JInternalFrameOperator IFrameOperator = null;
 
    public LV102FrameScaffold(){
-        super(Bundle.getMessage("LV102Config"));
+        super(Bundle.getMessage("MenuItemLV102ConfigurationManager"));
         IFrameOperator = new JInternalFrameOperator(this,Bundle.getMessage("LV102Power"));
    }
 
    public void pushCloseButton(){
-        new JToggleButtonOperator(this,"Close").push();
+        new JButtonOperator(this,Bundle.getMessage("ButtonClose")).push();
    }
 
    public void pushResetButton(){
-        new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102ResetButtonLabel")).push();
+        new JButtonOperator(IFrameOperator,Bundle.getMessage("LV102ResetButtonLabel")).push();
    }
 
    public void pushDefaultButton(){
-        new JToggleButtonOperator(IFrameOperator,Bundle.getMessage("LV102DefaultButtonLabel")).push();
+        new JButtonOperator(IFrameOperator,Bundle.getMessage("ButtonResetDefaults")).push();
    }
 
    public void pushWriteSettingsButton(){

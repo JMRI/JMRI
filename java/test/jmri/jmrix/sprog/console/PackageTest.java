@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SprogConsoleFrameTest.class,
-    SprogConsoleActionTest.class
+    SprogConsoleActionTest.class,
+    BundleTest.class
 })
 
 /**
@@ -30,6 +31,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

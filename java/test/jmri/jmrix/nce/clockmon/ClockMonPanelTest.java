@@ -1,12 +1,10 @@
 package jmri.jmrix.nce.clockmon;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -20,19 +18,36 @@ public class ClockMonPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        ClockMonPanel t = new ClockMonPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.clockmon.ClockMonFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        ClockMonPanel t = new ClockMonPanel();
+        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("TitleNceClockMonitor"),t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        ClockMonPanel t = new ClockMonPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClockMonPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ClockMonPanelTest.class);
 
 }

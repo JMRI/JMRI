@@ -30,7 +30,9 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.consist.PackageTest.class,
     jmri.server.json.operations.PackageTest.class,
     JsonExceptionTest.class,
-    JsonWebSocketTest.class
+    JsonWebSocketTest.class,
+    JsonConnectionTest.class,
+    JsonClientHandlerTest.class
 })
 public class PackageTest {
 }

@@ -191,7 +191,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             if (_iconMaps != null) {
                 displayState(turnoutState());
             }
-            setTooltip(new ToolTip(block.getDescription(), 0, 0));
+            setToolTip(new ToolTip(block.getDescription(), 0, 0));
         }
     }
 
@@ -520,7 +520,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 }
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _TOPanel.dispose();
@@ -540,5 +540,5 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class);
 }

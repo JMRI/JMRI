@@ -1,42 +1,51 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.Shape;
+import jmri.jmrit.display.EditorScaffold;
+import jmri.jmrit.display.Positionable;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.display.EditorScaffold;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PositionableShapeTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PositionableShape t = new PositionableShape(new EditorScaffold());
-        Assert.assertNotNull("exists",t);
+        PositionableShape t = new PositionableShape(new EditorScaffold()) {
+            @Override
+            protected Shape makeShape() {
+                // bogus body, not used in tests
+                return null;
+            }
+
+            @Override
+            public Positionable deepClone() {
+                // bogus body, not used in tests
+                return null;
+            }
+        };
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableShapeTest.class.getName());
-
+    // private final static Logger log = LoggerFactory.getLogger(PositionableShapeTest.class);
 }

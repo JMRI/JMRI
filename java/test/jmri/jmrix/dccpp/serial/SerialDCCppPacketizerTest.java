@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.serial;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -27,7 +28,7 @@ public class SerialDCCppPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerT
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

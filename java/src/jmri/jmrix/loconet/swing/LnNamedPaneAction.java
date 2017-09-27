@@ -54,7 +54,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
 
     @Override
     public SystemConnectionMemo getSystemConnectionMemo() {
@@ -74,4 +74,5 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
         return new HashSet<>(Arrays.asList(LocoNetSystemConnectionMemo.class));
     }
+
 }

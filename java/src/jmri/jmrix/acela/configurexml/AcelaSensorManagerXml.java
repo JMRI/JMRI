@@ -1,6 +1,5 @@
 package jmri.jmrix.acela.configurexml;
 
-import jmri.jmrix.acela.AcelaSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,19 +33,10 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
 
     @Override
     public boolean load(Element shared, Element perNode) throws jmri.configurexml.JmriConfigureXmlException {
-        // create the master object
-        try {
-            AcelaSensorManager.instance();
-        } catch (Exception e) {
-            handleException("Could not create Acela Sensor Manager",
-                    null, null, null, null);
-
-            return false;
-        }
-
         // load individual sensors
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class);
+
 }

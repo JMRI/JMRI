@@ -1,6 +1,9 @@
 package jmri.jmrit.logix;
 
+import java.util.HashMap;
 import jmri.InstanceManager;
+import jmri.ShutDownTask;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +27,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009
  */
-public class WarrantManager extends AbstractManager
+public class WarrantManager extends AbstractManager<Warrant>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+    
+    private HashMap<String, RosterSpeedProfile> _mergeProfiles;
+    private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
     public WarrantManager() {
         super();
@@ -106,14 +112,14 @@ public class WarrantManager extends AbstractManager
             return null;
         }
         String key = name.toUpperCase();
-        return (Warrant) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public Warrant getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (Warrant) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     public Warrant provideWarrant(String name) {
@@ -166,8 +172,45 @@ public class WarrantManager extends AbstractManager
 
     @Override
     public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameWarrant");
+        return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
+    }
+    
+    protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
+        if (_mergeProfiles == null) {
+            _mergeProfiles = new HashMap<String, RosterSpeedProfile>();
+            _sessionProfiles = new HashMap<String, RosterSpeedProfile>();
+            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+            } else {
+                log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
+            }
+        }
+        if (id != null && merge != null) {
+            _mergeProfiles.put(id, merge);
+            _sessionProfiles.put(id, session);
+        }
+    }
+    
+    protected RosterSpeedProfile getMergeProfile(String id) {
+        if (_mergeProfiles == null) {
+            return null;
+        }
+        return _mergeProfiles.get(id);
+    }
+    protected RosterSpeedProfile getSessionProfile(String id) {
+        if (_sessionProfiles == null) {
+            return null;
+        }
+        return _sessionProfiles.get(id);
+    }
+    
+    protected HashMap<String, RosterSpeedProfile> getMergeProfiles() {
+        return _mergeProfiles;
+    }
+    protected HashMap<String, RosterSpeedProfile> getSessionProfiles() {
+        return _sessionProfiles;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class);
 }

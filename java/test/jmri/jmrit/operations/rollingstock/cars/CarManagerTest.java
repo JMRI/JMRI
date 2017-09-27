@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -8,37 +9,37 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations RollingStock Cars CarManager class Last manually cross-checked
- * on 20090131
- *
+ * Tests for the Operations RollingStock Cars CarManager class Last manually
+ * cross-checked on 20090131
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarManagerTest extends OperationsTestCase {
-        
-     private Car c1;
-     private Car c2;
-     private Car c3;
-     private Car c4;
-     private Car c5;
-     private Car c6;
-     private Location l1;
-     private Location l2;
-     private Location l3;
 
-    public void testCTor(){
-        CarManager manager = CarManager.instance();
-        Assert.assertNotNull("Manager Creation",manager);
+    private Car c1;
+    private Car c2;
+    private Car c3;
+    private Car c4;
+    private Car c5;
+    private Car c6;
+    private Location l1;
+    private Location l2;
+    private Location l3;
+
+    public void testCTor() {
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
+        Assert.assertNotNull("Manager Creation", manager);
     }
-    
+
     public void testAddCars() {
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, carList.size());
@@ -58,7 +59,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsById() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
 
         // now get cars by id
@@ -75,17 +76,17 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByBuildDate() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
- 
+
         c1.setBuilt("06-66"); // this becomes 1966
         c2.setBuilt("01-09"); // this becomes 1909
         c3.setBuilt("100"); // this stays at 100
         c4.setBuilt("10"); // this becomes 1910
         c5.setBuilt("1000");
         c6.setBuilt("1956");
- 
-       // now get cars by built
+
+        // now get cars by built
         carList = manager.getByBuiltList();
         Assert.assertEquals("Number of Cars by built", 6, carList.size());
         Assert.assertEquals("1st car in list by built", c3, carList.get(0));
@@ -99,7 +100,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByMoves() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
 
         c1.setMoves(2);
@@ -123,7 +124,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByOwner() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // now get cars by owner
         carList = manager.getByOwnerList();
@@ -139,7 +140,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByColor() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
 
         c1.setColor("RED");
@@ -162,7 +163,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByRoadName() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // now get cars by road name
         carList = manager.getByRoadNameList();
@@ -178,7 +179,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByLoad() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // now get cars by load
         carList = manager.getByLoadList();
@@ -194,7 +195,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByKernel() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
 
         // set car weight so there won't be an exception when setting car in a kernel
@@ -225,7 +226,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByLocation() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         // now get cars by location
         List<RollingStock> carList = manager.getByLocationList();
         Assert.assertEquals("Number of Cars by location", 6, carList.size());
@@ -240,7 +241,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByDestination() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // now get cars by destination
         carList = manager.getByDestinationList();
@@ -256,14 +257,14 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByTrain() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
-        
+
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
         r.addLocation(l3);
-     
+
         Train t1;
         Train t3;
 
@@ -292,7 +293,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsBySpecifiedTrain() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
         Route r = new Route("id", "Test");
         r.addLocation(l1);
@@ -327,12 +328,12 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByTrainDestination() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
         r.addLocation(l3);
- 
+
         Train t1;
         Train t3;
 
@@ -362,7 +363,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsAvailableByTrain() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
@@ -425,7 +426,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByNumber() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // now get cars by road number
         carList = manager.getByNumberList();
@@ -441,7 +442,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testGetCarByRoadNumber() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         // find car by road and number
         Assert.assertEquals("find c1 by road and number", c1, manager.getByRoadAndNumber("CP", "1"));
@@ -455,7 +456,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByRfid() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // now get cars by RFID
         carList = manager.getByRfidList();
@@ -471,7 +472,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testGetCarByRfid() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         // find car by RFID
         Assert.assertEquals("find c1 by rfid", c1, manager.getByRfid("SQ1"));
@@ -485,7 +486,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByType() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getByIdList();
         // change car types so sort will work
         c1.setTypeName("F");
@@ -509,38 +510,38 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsByLastMovedDate() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
 
         java.util.Calendar cal = java.util.Calendar.getInstance();
         java.util.Date start = cal.getTime(); // save to rest time, to avoid
-                                              // test probelms if run near 
-                                              // midnight.
+        // test probelms if run near
+        // midnight.
         java.util.Date time = cal.getTime();
         c1.setLastDate(time); // right now
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY,-1);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
         time = cal.getTime();
         c2.setLastDate(time); // one hour ago
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY,1);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, 1);
         time = cal.getTime();
         c3.setLastDate(time); // one hour from now
 
         cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH,-1);
+        cal.set(java.util.Calendar.DAY_OF_MONTH, -1);
         time = cal.getTime();
         c4.setLastDate(time); // one day ago.
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.DAY_OF_MONTH,1);
+        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
         time = cal.getTime();
         c5.setLastDate(time); // one day in the future now.
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR,-1);
+        cal.add(java.util.Calendar.YEAR, -1);
         time = cal.getTime();
         c6.setLastDate(time); // one year ago.
 
@@ -558,38 +559,38 @@ public class CarManagerTest extends OperationsTestCase {
     public void testSortListedCarsByLastMovedDate() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList;
 
         java.util.Calendar cal = java.util.Calendar.getInstance();
         java.util.Date start = cal.getTime(); // save to rest time, to avoid
-                                              // test probelms if run near 
-                                              // midnight.
+        // test probelms if run near
+        // midnight.
         java.util.Date time = cal.getTime();
         c1.setLastDate(time); // right now
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY,-1);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
         time = cal.getTime();
         c2.setLastDate(time); // one hour ago
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY,1);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, 1);
         time = cal.getTime();
         c3.setLastDate(time); // one hour from now
 
         cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH,-1);
+        cal.set(java.util.Calendar.DAY_OF_MONTH, -1);
         time = cal.getTime();
         c4.setLastDate(time); // one day ago.
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.DAY_OF_MONTH,1);
+        cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
         time = cal.getTime();
         c5.setLastDate(time); // one day in the future now.
 
         cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR,-1);
+        cal.add(java.util.Calendar.YEAR, -1);
         time = cal.getTime();
         c6.setLastDate(time); // one year ago.
 
@@ -607,7 +608,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCabooseRoads() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         // check caboose roads
         List<String> cabooseRoads = manager.getCabooseRoadNames();
@@ -619,18 +620,18 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListFREDRoads() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         // check FRED roads
         List<String> fredRoads = manager.getFredRoadNames();
         Assert.assertEquals("Number of FRED", 1, fredRoads.size());
         Assert.assertEquals("1st road", "PC", fredRoads.get(0));
     }
- 
+
     public void testListCarsAtLocation() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         List<RollingStock> carList = manager.getList(l1);
         Assert.assertEquals("Number of Cars at location", 2, carList.size());
         Assert.assertTrue("c1 in car list at location", carList.contains(c1));
@@ -641,7 +642,7 @@ public class CarManagerTest extends OperationsTestCase {
     public void testListCarsOnTrack() {
         resetCarManager();
 
-        CarManager manager = CarManager.instance();
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
         Track l1t1 = l1.getTrackByName("A", Track.SPUR);
         List<RollingStock> carList = manager.getList(l1t1);
         Assert.assertEquals("Number of Cars on track", 1, carList.size());
@@ -650,10 +651,10 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertFalse("c3 not in car list on track", carList.contains(c3));
     }
 
-    private void resetCarManager(){
-        CarManager.instance().dispose();
- 
-        CarManager manager = CarManager.instance();
+    private void resetCarManager() {
+        InstanceManager.getDefault(CarManager.class).dispose();
+
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         c1 = manager.newCar("CP", "1");
         c2 = manager.newCar("ACL", "3");
@@ -663,7 +664,6 @@ public class CarManagerTest extends OperationsTestCase {
         c6 = manager.newCar("AA", "1");
 
         //setup the cars
-
         c1.setTypeName("Boxcar");
         c2.setTypeName("Boxcar");
         c3.setTypeName("Boxcar");
@@ -688,7 +688,7 @@ public class CarManagerTest extends OperationsTestCase {
         Track l3t1 = l3.addTrack("B", Track.SPUR);
         Track l3t2 = l3.addTrack("A", Track.SPUR);
 
-        // add track lengths       
+        // add track lengths
         l1t1.setLength(100);
         l1t2.setLength(100);
         l2t1.setLength(100);
@@ -706,7 +706,7 @@ public class CarManagerTest extends OperationsTestCase {
         l3t1.addTypeName("Boxcar");
         l3t2.addTypeName("Boxcar");
 
-        CarTypes ct = CarTypes.instance();
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
 
         // place cars on tracks
@@ -731,7 +731,7 @@ public class CarManagerTest extends OperationsTestCase {
         c4.setMoves(33);
         c5.setMoves(4);
         c6.setMoves(9999);
- 
+
         // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("SQ1");
@@ -740,7 +740,7 @@ public class CarManagerTest extends OperationsTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("asd");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("93F");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("B12");
-        
+
         c1.setRfid("SQ1");
         c2.setRfid("1Ab");
         c3.setRfid("Ase");
@@ -771,7 +771,6 @@ public class CarManagerTest extends OperationsTestCase {
 
     }
 
-
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
@@ -797,6 +796,6 @@ public class CarManagerTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

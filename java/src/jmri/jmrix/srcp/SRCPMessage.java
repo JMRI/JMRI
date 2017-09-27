@@ -1,8 +1,5 @@
 package jmri.jmrix.srcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Encodes a message to an SRCP server. The SRCPReply class handles the response
  * from the command station.
@@ -225,7 +222,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     static final int LONG_TIMEOUT = 180000;  // e.g. for programming options
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPMessage.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SRCPMessage.class);
 
 }
 

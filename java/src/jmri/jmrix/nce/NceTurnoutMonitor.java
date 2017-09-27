@@ -1,4 +1,3 @@
-//NceTournoutMonitor.java
 package jmri.jmrix.nce;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -7,33 +6,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * Polls NCE Command Station for turnout discrepancies
- *
+ * <p>
  * This implementation reads the NCE Command Station (CS) memory that stores the
  * state of all accessories thrown by cabs or though the comm port using the new
  * binary switch command. The accessory states are storied in 256 byte array
  * starting at address 0xEC00.
- *
+ * <p>
  * byte 0, bit 0 = ACCY 1, bit 1 = ACCY 2 byte 1, bit 0 = ACCY 9, bit 1 = ACCY
  * 10
- *
+ * <p>
  * byte 255, bit 0 = ACCY 2041, bit 3 = ACCY 2044 (last valid addr)
- *
+ * <p>
  * ACCY bit = 0 turnout thrown, 1 = turnout closed
- *
+ * <p>
  * Block reads (16 bytes) of the NCE CS memory are performed to minimize impact
  * to the NCE CS. Data from the CS is then compared to the JMRI turnout
  * (accessory) state and if a discrepancy is discovered, the JMRI turnout state
  * is modified to match the CS.
- *
  *
  * @author Daniel Boudreau (C) 2007
  */
 public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChangeListener {
 
     // scope constants
-    public static final int CS_ACCY_MEMORY = 0xEC00;  // Address of start of CS accessory memory 
+    public static final int CS_ACCY_MEMORY = 0xEC00;  // Address of start of CS accessory memory
     private static final int NUM_BLOCK = 16;            // maximum number of memory blocks
     private static final int BLOCK_LEN = 16;            // number of bytes in a block
     private static final int REPLY_LEN = BLOCK_LEN;  // number of bytes read
@@ -43,9 +40,9 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
     // object state
     private int currentBlock;       // used as state in scan over active blocks
-    private int numTurnouts = 0;      // number of NT turnouts known by NceTurnoutMonitor 
+    private int numTurnouts = 0;      // number of NT turnouts known by NceTurnoutMonitor
     private int numActiveBlocks = 0;
-    private boolean FeedbackChange = false;    // true if feedback for a turnout has changed 
+    private boolean feedbackChange = false;    // true if feedback for a turnout has changed
 
     // cached work fields
     boolean[] newTurnouts = new boolean[NUM_BLOCK]; // used to sync poll turnout memory
@@ -56,12 +53,11 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
     private boolean recData = false;     // when true, valid recieve data
 
-    Thread NceTurnoutMonitorThread;
+    Thread nceTurnoutMonitorThread;
     boolean turnoutUpdateValid = true;     // keep the thread running
-    private boolean sentWarnMessage = false;   // used to report about early 2007 EPROM problem 
+    private boolean sentWarnMessage = false;   // used to report about early 2007 EPROM problem
 
     // debug final
-    static final boolean debugTurnoutMonitor = false; // Control verbose debug
     private NceTrafficController tc = null;
 
     public NceTurnoutMonitor(NceTrafficController t) {
@@ -91,17 +87,17 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
         // User can change a turnout's feedback to MONITORING, therefore we need to rescan
         // also see if the number of turnouts now differs from the last scan
-        if (FeedbackChange || numTurnouts != NceTurnout.getNumNtTurnouts()) {
-            FeedbackChange = false;
+        if (feedbackChange || numTurnouts != NceTurnout.getNumNtTurnouts()) {
+            feedbackChange = false;
             numTurnouts = NceTurnout.getNumNtTurnouts();
 
             // Determine what turnouts have been defined and what blocks have active turnouts
             for (int block = 0; block < NUM_BLOCK; block++) {
 
-                newTurnouts[block] = true;   // Block may be active, but new turnouts may have been loaded 
+                newTurnouts[block] = true;   // Block may be active, but new turnouts may have been loaded
                 if (activeBlock[block] == false) {  // no need to scan once known to be active
 
-                    for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
+                    for (int i = 0; i < 128; i++) { // Check 128 turnouts per block
                         int NTnum = 1 + i + (block * 128);
                         Turnout mControlTurnout = tc.getAdapterMemo().getTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
                         if (mControlTurnout != null) {
@@ -115,12 +111,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                             } else {
                                 // turnout feedback isn't monitoring, but listen in case it changes
                                 mControlTurnout.addPropertyChangeListener(this);
-                                if (debugTurnoutMonitor) {
-                                    if (log.isDebugEnabled()) {
-                                        log.debug("add turnout to listener NT" + NTnum
-                                                + " Feed back mode: " + mControlTurnout.getFeedbackMode());
-                                    }
-                                }
+                                log.trace("add turnout to listener NT{} Feed back mode: {}", NTnum, mControlTurnout.getFeedbackMode());
                             }
                         }
                     }
@@ -136,16 +127,16 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
         // Set up a separate thread to notify state changes in turnouts
         // This protects pollMessage (xmt) and reply threads if there's lockup!
-        if (NceTurnoutMonitorThread == null) {
-            NceTurnoutMonitorThread = new Thread(new Runnable() {
+        if (nceTurnoutMonitorThread == null) {
+            nceTurnoutMonitorThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     turnoutUpdate();
                 }
             });
-            NceTurnoutMonitorThread.setName("NCE Turnout Monitor");
-            NceTurnoutMonitorThread.setPriority(Thread.MIN_PRIORITY);
-            NceTurnoutMonitorThread.start();
+            nceTurnoutMonitorThread.setName("NCE Turnout Monitor");
+            nceTurnoutMonitorThread.setPriority(Thread.MIN_PRIORITY);
+            nceTurnoutMonitorThread.start();
         }
 
         // now try to build a poll message if there are any defined turnouts to scan
@@ -156,11 +147,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             }
 
             if (activeBlock[currentBlock]) {
-                if (debugTurnoutMonitor) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("found turnouts block " + currentBlock);
-                    }
-                }
+                log.trace("found turnouts block " + currentBlock);
 
                 // Read NCE CS memory
                 int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
@@ -183,12 +170,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 
-            if (debugTurnoutMonitor) {
-                if (log.isDebugEnabled()) {
-                    log.debug("memory poll reply received for memory block "
-                            + currentBlock + ": " + r.toString());
-                }
-            }
+            log.trace("memory poll reply received for memory block {}: {}", currentBlock, r);
             // Copy receive data into buffer and process later
             for (int i = 0; i < REPLY_LEN; i++) {
                 dataBuffer[i + currentBlock * BLOCK_LEN] = (byte) r.getElement(i);
@@ -202,7 +184,6 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         } else {
             log.warn("wrong number of read bytes for memory poll");
         }
-
     }
 
     // Thread to process turnout changes, protects receive and xmt threads
@@ -260,14 +241,14 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                         }
                         // this wait is used to add some animation to the panel displays
                         // it does not slow down the rate that this thread can process
-                        // turnout changes, it only delays the response by the POLL_TIME 
+                        // turnout changes, it only delays the response by the POLL_TIME
                         synchronized (this) {
                             try {
                                 wait(POLL_TIME);
                             } catch (InterruptedException e) {
                             }
                         }
-                        // now process again but for turnout KnownState 
+                        // now process again but for turnout KnownState
                         for (int byteIndex = 0; byteIndex < REPLY_LEN; byteIndex++) {
                             // CS memory byte
                             byte recMemByte = dataBuffer[byteIndex + block * BLOCK_LEN];
@@ -336,19 +317,10 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             nceAccyClosed = NCE_ACCY_THROWN;
         }
 
-        if (debugTurnoutMonitor) {
-            if (log.isDebugEnabled()) {
-                log.debug("turnout exists NT" + NTnum + " state: " + tCommandedState
-                        + " Feed back mode: " + rControlTurnout.getFeedbackMode());
-            }
-        }
+        log.trace("turnout exists NT{} state: {} Feed back mode: {}", NTnum, tCommandedState, rControlTurnout.getFeedbackMode());
 
         // Show the byte read from NCE CS
-        if (debugTurnoutMonitor) {
-            if (log.isDebugEnabled()) {
-                log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
-            }
-        }
+        log.trace("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
 
         // test for closed or thrown, normally 0 = closed, 1 = thrown
         int nceAccState = (recMemByte >> bit) & 0x01;
@@ -392,19 +364,10 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             nceAccyClosed = NCE_ACCY_THROWN;
         }
 
-        if (debugTurnoutMonitor) {
-            if (log.isDebugEnabled()) {
-                log.debug("turnout exists NT" + NTnum + " state: " + tKnownState
-                        + " Feed back mode: " + rControlTurnout.getFeedbackMode());
-            }
-        }
+        log.trace("turnout exists NT{} state: {} Feed back mode: {}", NTnum, tKnownState, rControlTurnout.getFeedbackMode());
 
         // Show the byte read from NCE CS
-        if (debugTurnoutMonitor) {
-            if (log.isDebugEnabled()) {
-                log.debug("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
-            }
-        }
+        log.trace("memory byte: {}", Integer.toHexString(recMemByte & 0xFF));
 
         // test for closed or thrown, normally 0 = closed, 1 = thrown
         int nceAccState = (recMemByte >> bit) & 0x01;
@@ -412,23 +375,16 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
             if (rControlTurnout.getLocked(Turnout.CABLOCKOUT) && tCommandedState == Turnout.CLOSED) {
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Turnout NT" + NTnum + " is locked,"
-                            + " will negate THROW turnout command from layout");
-                }
+                log.debug("Turnout NT{} is locked, will negate THROW turnout command from layout", NTnum);
                 rControlTurnout.forwardCommandChangeToLayout(Turnout.CLOSED);
 
                 if (rControlTurnout.getReportLocked()) {
-                    log.info("Turnout NT" + NTnum + " is locked,"
-                            + " JMRI has canceled THROW turnout command from cab");
+                    log.info("Turnout NT{} is locked, JMRI has canceled THROW turnout command from cab", NTnum);
                 }
 
             } else {
 
-                if (log.isDebugEnabled()) {
-                    log.debug("turnout discrepancy, NT" + NTnum
-                            + " KnownState is now THROWN");
-                }
+                log.debug("turnout discrepancy, NT{} KnownState is now THROWN", NTnum);
                 // change JMRI's knowledge of the turnout state to match
                 // observed
                 rControlTurnout.setKnownStateFromCS(Turnout.THROWN);
@@ -439,15 +395,11 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
             if (rControlTurnout.getLocked(Turnout.CABLOCKOUT) && tCommandedState == Turnout.THROWN) {
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Turnout NT" + NTnum + " is locked,"
-                            + " will negate CLOSE turnout command from layout");
-                }
+                log.debug("Turnout NT{} is locked, will negate CLOSE turnout command from layout", NTnum);
                 rControlTurnout.forwardCommandChangeToLayout(Turnout.THROWN);
 
                 if (rControlTurnout.getReportLocked()) {
-                    log.info("Turnout NT" + NTnum + " is locked,"
-                            + " JMRI has canceled CLOSE turnout command from cab");
+                    log.info("Turnout NT{} is locked, JMRI has canceled CLOSE turnout command from cab", NTnum);
                 }
 
             } else {
@@ -466,14 +418,12 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("feedbackchange")) {
-            if (((Integer) e.getNewValue()).intValue() == Turnout.MONITORING) {
-                FeedbackChange = true;
+            if (((Integer) e.getNewValue()) == Turnout.MONITORING) {
+                feedbackChange = true;
             }
         }
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(NceTurnoutMonitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutMonitor.class);
 
 }
-

@@ -1,14 +1,12 @@
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
+import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +14,16 @@ import org.slf4j.LoggerFactory;
  * Lightweight abstract class to denote that a system is active, and provide
  * general information.
  * <p>
- * Objects of specific subtypes of this are registered in the {@link jmri.InstanceManager} to
- * activate their particular system.
+ * Objects of specific subtypes of this are registered in the
+ * {@link InstanceManager} to activate their particular system.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-abstract public class SystemConnectionMemo {
+abstract public class SystemConnectionMemo extends Bean {
 
+    public static final String DISABLED = "ConnectionDisabled";
+    public static final String USER_NAME = "ConnectionNameChanged";
+    public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
     private String prefix;
@@ -30,25 +31,22 @@ abstract public class SystemConnectionMemo {
     private String userName;
     private String userNameAsLoaded;
 
-    protected SystemConnectionMemo(String prefix, String userName) {
+    protected SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         log.debug("SystemConnectionMemo created for prefix \"{}\" user name \"{}\"", prefix, userName);
-        initialise();
         if (!setSystemPrefix(prefix)) {
-            for (int x = 2; x < 50; x++) {
-                if (setSystemPrefix(prefix + x)) {
-                    log.debug("created system prefix {}", prefix+x);
-                    break;
-                }
+            int x = 2;
+            while (!setSystemPrefix(prefix + x)) {
+                x++;
             }
+            log.debug("created system prefix {}", prefix + x);
         }
 
         if (!setUserName(userName)) {
-            for (int x = 2; x < 50; x++) {
-                if (setUserName(userName + x)) {
-                    log.debug("created user name {}", prefix+x);
-                    break;
-                }
+            int x = 2;
+            while (!setUserName(userName + x)) {
+                x++;
             }
+            log.debug("created user name {}", prefix + x);
         }
         addToActionList();
         // reset to null so these get set by the first setPrefix/setUserName
@@ -58,86 +56,17 @@ abstract public class SystemConnectionMemo {
     }
 
     /**
-     * Provides a method to reserve System Names and prefixes at creation
-     */
-    private static void initialise() {
-        log.debug("initialise called");
-    }
-
-    /**
-     * For use in testing, undo any initialization that's been done.
-     */
-    public static void reset() {
-        userNames = new ArrayList<>();
-        sysPrefixes = new ArrayList<>();
-        listeners = new HashSet<>();
-    }
-    
-    protected static ArrayList<String> userNames = new ArrayList<>();
-    protected static ArrayList<String> sysPrefixes = new ArrayList<>();
-
-    private synchronized static boolean addUserName(String userName) {
-        if (userNames.contains(userName)) {
-            return false;
-        }
-
-        userNames.add(userName);
-        return true;
-    }
-
-    //This should probably throwing an exception
-    private synchronized static boolean addSystemPrefix(String systemPrefix) {
-        if (sysPrefixes.contains(systemPrefix)) {
-            return false;
-        }
-        sysPrefixes.add(systemPrefix);
-        return true;
-    }
-
-    private synchronized static void removeUserName(String userName) {
-        if (userNames != null) {
-            if (userNames.contains(userName)) {
-                int index = userNames.indexOf(userName);
-                userNames.remove(index);
-            }
-        }
-    }
-
-    private synchronized static void removeSystemPrefix(String systemPrefix) {
-        if (sysPrefixes != null) {
-            if (sysPrefixes.contains(systemPrefix)) {
-                int index = sysPrefixes.indexOf(systemPrefix);
-                sysPrefixes.remove(index);
-            }
-        }
-    }
-
-    /**
      * Store in InstanceManager with proper ID for later retrieval as a generic
-     * system
+     * system.
      */
     public void register() {
         log.debug("register as SystemConnectionMemo, really of type {}", this.getClass());
-        
-        // check for special case
-        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if ((list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
-            // last is internal, so insert before that one
-            log.debug("   putting one before end");
-            SystemConnectionMemo old = list.get(list.size()-1);
-            jmri.InstanceManager.deregister(old, SystemConnectionMemo.class);
-            jmri.InstanceManager.store(this, SystemConnectionMemo.class);
-            jmri.InstanceManager.store(old, SystemConnectionMemo.class);
-        } else {
-            // just add on end
-            jmri.InstanceManager.store(this, SystemConnectionMemo.class);
-        }
-        notifyPropertyChangeListener("ConnectionAdded", null, null);
+        SystemConnectionMemoManager.getDefault().register(this);
     }
 
     /**
-     * Provides access to the system prefix string. This was previously called
-     * the "System letter"
+     * Provide access to the system prefix string.
+     * This was previously called the "System letter".
      *
      * @return System prefix
      */
@@ -153,9 +82,8 @@ abstract public class SystemConnectionMemo {
      * @return true if the system prefix could be set
      */
     public final boolean setSystemPrefix(@Nonnull String systemPrefix) {
-        if (systemPrefix == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(systemPrefix);
+        // return true if systemPrefix is not being changed
         if (systemPrefix.equals(prefix)) {
             if (this.prefixAsLoaded == null) {
                 this.prefixAsLoaded = systemPrefix;
@@ -163,13 +91,12 @@ abstract public class SystemConnectionMemo {
             return true;
         }
         String oldPrefix = prefix;
-        if (addSystemPrefix(systemPrefix)) {
+        if (SystemConnectionMemoManager.getDefault().isSystemPrefixAvailable(systemPrefix)) {
             prefix = systemPrefix;
             if (this.prefixAsLoaded == null) {
                 this.prefixAsLoaded = systemPrefix;
             }
-            removeSystemPrefix(oldPrefix);
-            notifyPropertyChangeListener("ConnectionPrefixChanged", oldPrefix, systemPrefix);
+            this.propertyChangeSupport.firePropertyChange(SYSTEM_PREFIX, oldPrefix, systemPrefix);
             return true;
         }
         log.debug("setSystemPrefix false for \"{}\"", systemPrefix);
@@ -177,8 +104,8 @@ abstract public class SystemConnectionMemo {
     }
 
     /**
-     * Provides access to the system user name string. This was previously fixed
-     * at configuration time.
+     * Provide access to the system user name string.
+     * This was previously fixed at configuration time.
      *
      * @return User name
      */
@@ -189,28 +116,25 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the user name for the system connection.
      *
-     * @param name user name to use for this system connection
+     * @param userName user name to use for this system connection
      * @throws java.lang.NullPointerException if name is null
      * @return true if the user name could be set.
      */
-    public final boolean setUserName(@Nonnull String name) {
-        if (name == null) {
-            throw new NullPointerException();
-        }
-        if (name.equals(userName)) {
+    public final boolean setUserName(@Nonnull String userName) {
+        Objects.requireNonNull(userName);
+        if (userName.equals(this.userName)) {
             if (this.userNameAsLoaded == null) {
-                this.userNameAsLoaded = name;
+                this.userNameAsLoaded = userName;
             }
             return true;
         }
         String oldUserName = this.userName;
-        if (addUserName(name)) {
-            this.userName = name;
+        if (SystemConnectionMemoManager.getDefault().isUserNameAvailable(userName)) {
+            this.userName = userName;
             if (this.userNameAsLoaded == null) {
-                this.userNameAsLoaded = name;
+                this.userNameAsLoaded = userName;
             }
-            removeUserName(oldUserName);
-            notifyPropertyChangeListener("ConnectionNameChanged", oldUserName, name);
+            this.propertyChangeSupport.firePropertyChange(USER_NAME, oldUserName, userName);
             return true;
         }
         return false;
@@ -239,10 +163,7 @@ abstract public class SystemConnectionMemo {
 
     public void dispose() {
         removeFromActionList();
-        removeUserName(userName);
-        removeSystemPrefix(prefix);
-        jmri.InstanceManager.deregister(this, SystemConnectionMemo.class);
-        notifyPropertyChangeListener("ConnectionRemoved", userName, null);
+        SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
     public boolean getDisabled() {
@@ -259,39 +180,7 @@ abstract public class SystemConnectionMemo {
         }
         boolean oldDisabled = this.disabled;
         this.disabled = disabled;
-        notifyPropertyChangeListener("ConnectionDisabled", oldDisabled, disabled);
-    }
-
-    public static void removePropertyChangeListener(PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.remove(l);
-        }
-    }
-
-    public static void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!listeners.contains(l)) {
-            listeners.add(l);
-        }
-    }
-
-    /**
-     * Trigger the notification of all PropertyChangeListeners
-     *
-     * @param property The property name
-     * @param oldValue The property's old value
-     * @param newValue The property's new value
-     */
-    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Set<PropertyChangeListener> v;
-        synchronized (this) {
-            v = new HashSet<>(listeners);
-        }
-        // forward to all listeners
-        for (PropertyChangeListener listener : v) {
-            listener.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
-        }
+        this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
     }
 
     abstract protected ResourceBundle getActionModelResourceBundle();
@@ -344,8 +233,5 @@ abstract public class SystemConnectionMemo {
         return this.isDirty();
     }
 
-    // data members to hold contact with the property listeners
-    private static Set<PropertyChangeListener> listeners = new HashSet<>();
-
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
 }

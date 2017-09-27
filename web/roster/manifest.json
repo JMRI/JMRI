@@ -1,0 +1,28 @@
+{
+  "dependencies":[
+    "pascalprecht.translate",
+    "patternfly.table",
+    "patternfly.toolbars"
+  ],
+  "navigation":[
+    {
+      "path": "roster",
+      "href": "/roster",
+      "iconClass": "fa fa-train",
+      "title": "translate:ROSTER.ROSTER"
+    }
+  ],
+  "routes":[
+    {
+      "when": "/roster",
+      "template": "/web/roster/index.html",
+      "controller": "RosterCtrl"
+    }
+  ],
+  "sources":[
+    "web/roster/script.js"
+  ],
+  "translations":[
+    "web/roster/locale-*.json"
+  ]
+}

@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -23,8 +24,7 @@ public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
         l = new EcosReporterManager(memo);
@@ -33,8 +33,7 @@ public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -62,8 +63,8 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 
     // text field
     // combo boxes
-    JComboBox<String> comboBoxTypes = CarTypes.instance().getComboBox();
-    JComboBox<String> comboBoxLoads = CarLoads.instance().getComboBox(null);
+    JComboBox<String> comboBoxTypes = InstanceManager.getDefault(CarTypes.class).getComboBox();
+    JComboBox<String> comboBoxLoads = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
 
     public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -178,8 +179,8 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         updateLoadNames();
 
         // get notified if car roads, loads, and owners gets modified
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarLoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
         loadAndTypeCheckBox.setSelected(loadAndType);
 
         initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight400));
@@ -310,7 +311,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
     }
 
     private void updateTypeComboBoxes() {
-        CarTypes.instance().updateComboBox(comboBoxTypes);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(comboBoxTypes);
         // remove types not serviced by this train
         for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
             String type = comboBoxTypes.getItemAt(i);
@@ -322,13 +323,13 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 
     private void updateLoadComboBoxes() {
         String carType = (String) comboBoxTypes.getSelectedItem();
-        CarLoads.instance().updateComboBox(carType, comboBoxLoads);
+        InstanceManager.getDefault(CarLoads.class).updateComboBox(carType, comboBoxLoads);
     }
 
     @Override
     public void dispose() {
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarLoads.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }
@@ -352,5 +353,5 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainLoadOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainLoadOptionsFrame.class);
 }

@@ -346,7 +346,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 
     /**
      * We need to calculate the locomotive address when doing the translations
-     * back to text. XPressNet Messages will have these as two elements, which
+     * back to text. XpressNet Messages will have these as two elements, which
      * need to get translated back into a single address by reversing the
      * formulas used to calculate them in the first place.
      */
@@ -379,6 +379,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppMonPane.class);
 
 }

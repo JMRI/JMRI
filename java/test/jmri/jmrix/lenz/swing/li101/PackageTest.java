@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     LI101FrameTest.class,
-    LI101ActionTest.class
+    LI101ActionTest.class,
+    BundleTest.class
 })
 public class PackageTest {
 }

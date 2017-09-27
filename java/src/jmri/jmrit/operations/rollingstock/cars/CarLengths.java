@@ -1,17 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the lengths that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
-public class CarLengths extends RollingStockAttribute {
+public class CarLengths extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     private static final String LENGTHS = Bundle.getMessage("carLengths");
     public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths"; // NOI18N
@@ -21,20 +20,15 @@ public class CarLengths extends RollingStockAttribute {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static CarLengths _instance = null;
-
+    @Deprecated
     public static synchronized CarLengths instance() {
-        if (_instance == null) {
-            log.debug("CarLengths creating instance");
-            // create and load
-            _instance = new CarLengths();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("CarLengths returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(CarLengths.class);
     }
 
     @Override
@@ -83,10 +77,10 @@ public class CarLengths extends RollingStockAttribute {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        CarManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarLengths.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(CarLengths.class);
 
 }

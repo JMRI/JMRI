@@ -13,13 +13,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 import jmri.CatalogTreeManager;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A file system directory searcher to locate Image files to include in an Image
- * Catalog. This is a singleton class.
+ * Catalog.
  * <BR>
  * <hr>
  * This file is part of JMRI.
@@ -34,27 +36,22 @@ import org.slf4j.LoggerFactory;
  * </P>
  *
  * @author Pete Cressman Copyright 2010
- *
  */
-public class DirectorySearcher {
+public class DirectorySearcher implements InstanceManagerAutoDefault {
 
     // For choosing image directories
-    static JFileChooser _directoryChooser = null;
-    static DirectorySearcher _instance;
+    private JFileChooser _directoryChooser = null;
 
     PreviewDialog _previewDialog = null;
     Seacher _searcher;
     JFrame _waitDialog;
     JLabel _waitText;
 
-    private DirectorySearcher() {
+    public DirectorySearcher() {
     }
 
     public static DirectorySearcher instance() {
-        if (_instance == null) {
-            _instance = new DirectorySearcher();
-        }
-        return _instance;
+        return InstanceManager.getDefault(DirectorySearcher.class);
     }
 
     /**
@@ -66,7 +63,7 @@ public class DirectorySearcher {
      *                directory so user can continue looking
      * @return chosen directory or null to cancel operation
      */
-    private static File getDirectory(String msg, boolean recurse) {
+    private File getDirectory(String msg, boolean recurse) {
         if (_directoryChooser == null) {
             _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
@@ -273,7 +270,7 @@ public class DirectorySearcher {
                     ThreadingUtil.runOnGUI(() -> {
                         showWaitFrame("searchWait", f);
                     });
-//                    if (log.isDebugEnabled()) log.debug("getImageDirectory SubDir= {} of {} has {} files", 
+//                    if (log.isDebugEnabled()) log.debug("getImageDirectory SubDir= {} of {} has {} files",
 //                            files[k].getName(), dir.getName(), numImageFiles(files[k]));
                     getImageDirectory(files[k], filter);
                 }
@@ -281,7 +278,7 @@ public class DirectorySearcher {
         }
     }
 
-    // More action.  Directory dir has too many icons - display in separate windows 
+    // More action.  Directory dir has too many icons - display in separate windows
     class MActionListener implements ActionListener {
 
         File dir;
@@ -388,5 +385,5 @@ public class DirectorySearcher {
         cancelLooking();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class);
 }

@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.Action;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -64,7 +63,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
         new SignalHeadTableAction().actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalTable"), true, true);
         Assert.assertNotNull("found frame", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Override
@@ -87,8 +86,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
@@ -99,7 +97,6 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     @After
     public void tearDown() {
         a = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -59,7 +59,100 @@
       Sensor that follows the "123 ON" and "345 OFF" CBUS events to
       change state. Depending on which CBUS event-IDs are used on a
       particular layout, these system names can get very long, in
-      which case the "user names" become much more useful.</p>
+       which case the "user names" become much more useful.</p>
+
+      <h3>Adding an item to the table</h3>
+      <p>When you add an item to one of the tables, many times you only
+      have to fill in the numbers to have JMRI construct
+      the complete system name.<br>
+      Here's a summary, split up for outputs (eg. Turnouts) and
+      inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>200018M07</td>
+          <td>listen to Events 18 .. 1F</td>
+          <td>MS200018M07</td>
+          <td>+ M + hex mask</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>X91012;X91019</td>
+          <td>hex CAN frame msg. Active; Inactive</td>
+          <td>MTX91012;X91019</td>
+          <td>hex ; hex</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18</td>
+          <td>event 18 On; 18 Off</td>
+          <td>MT18</td>
+          <td>integer</td>
+          <td>+18;-18</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18;21</td>
+          <td>event 18 On; 21 On</td>
+          <td>MT18;21</td>
+          <td>integer ; integer</td>
+          <td>+18;+21</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>+18;-21</td>
+          <td>event 18 On; 21 Off</td>
+          <td>MT+18;-21</td>
+          <td>idem signed</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>2000018</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MT200018</td>
+          <td>node + (5 digits)</td>
+          <td>N2E18</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>N2E18</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MTN2E18</td>
+          <td>N + number + E + number</td>
+          <td>2000018</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        </tbody></table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
 
       <h3>Sensors</h3>
 
@@ -111,7 +204,7 @@
       number which should (usually) be ignored.</p>
 
       <p>Finally, it's possible to connect a Sensor to arbitrary
-      can frames by specifying their data content as a hex string,
+      CAN frames by specifying their data content as a hex string,
       indicated by "X":<br>
       <code>MSX9100000000000012;X9100000000000019</code><br>
       This allows the Sensor to disregard any intrinsic meaning to
@@ -145,20 +238,20 @@
 
       <h3>Turnouts</h3>
 
-      <p>(To be written, but the scheme is similar to Sensors
+      <p>(To be written; the scheme is similar to Sensors
       above, except JMRI is emitting the CBUS frames instead of
       receiving them, and the type letter is "T" instead of "S",
       e.g. <code>MT-18;+21</code>)</p>
 
       <h3>Lights</h3>
 
-      <p>(To be written, but the scheme is similar to Turnouts
+      <p>(To be written; the scheme is similar to Turnouts
       above, except the type letter is "L" instead of "T", e.g.
       <code>ML-18;+21</code>) <a name="tools" id="tools"></a></p>
 
       <h2>JMRI MERG CBUS Tools</h2><img src=
       "../images/MERG_Menu.png" alt="MERG menu" align="right"
-      height="132" width="227">
+      height="134" width="188">
 
       <p>The MERG menu contains 5 tools:</p>
 
@@ -175,27 +268,35 @@
         "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
         Event Capture Tool</a></li>
 
-        <li>Event Table</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
+        Event Table</a></li>
 
         <li><a href=
-        "../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+        "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
         Node Config Tool</a></li>
-      </ul><a name="documentation" id="documentation"></a>
-
+      </ul>
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
-
       <ul>
-        <li>Naming of CBUS inputs and outputs is described <a href=
-        "Names.shtml">here</a>.</li>
+        <li><a href="Names.shtml">Naming of CBUS inputs and outputs</a></li>
 
         <li><a href="Details.shtml">Technical details of CBUS
         Support</a></li>
 
         <li><a href="../index.shtml">Main CAN Support Help page</a>
         including links to more tools.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <h3>Third Party/Support</h3>
+      <ul>
+        <li><a href="http://www.merg.org.uk/merg_resources/cbus-dcc.php">
+        The Model Electronic Railway Group MERG-DCC help page</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

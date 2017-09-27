@@ -1,13 +1,16 @@
 package apps;
 
 import apps.startup.AbstractStartupActionFactory;
+import apps.startup.StartupActionFactory;
 import java.util.Locale;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory to register Restart action as a startup action.
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@ServiceProvider(service = StartupActionFactory.class)
 public class RestartStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override

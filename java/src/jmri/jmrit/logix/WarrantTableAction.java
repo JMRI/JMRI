@@ -278,18 +278,19 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
+        if (_openFrame != null) {
+            _openFrame.mouseClickedOnBlock(block);
+            return;
+        }
+
         NXFrame nxFrame = NXFrame.getDefault();
         if (nxFrame.isVisible() && nxFrame.isRouteSeaching()) {
             nxFrame.mouseClickedOnBlock(block);
             return;
         }
 
-        if (_openFrame != null) {
-            _openFrame.mouseClickedOnBlock(block);
-            return;
-        }
-
-        if (_trackerTable != null && TrackerTableAction.mouseClickedOnBlock(block)) {
+        if (_trackerTable != null) {
+            InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
         }
     }
 
@@ -688,5 +689,5 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class);
 }

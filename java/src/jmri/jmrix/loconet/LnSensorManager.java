@@ -38,6 +38,17 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
+        Thread t = thread;
+        if (t != null) {
+            try {
+                t.interrupt();
+                t.join();
+            } catch (InterruptedException ex) {
+                log.warn("dispose interrupted");
+            } finally {
+                thread = null;
+            }
+        }
         super.dispose();
     }
 
@@ -83,6 +94,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
+    volatile LnSensorUpdateThread thread;
+    
     /**
      * Requests status updates from all layout sensors.
      */
@@ -90,7 +103,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public void updateAll() {
         if (!busy) {
             setUpdateBusy();
-            LnSensorUpdateThread thread = new LnSensorUpdateThread(this, tc);
+            thread = new LnSensorUpdateThread(this, tc);
+            thread.setName("LnSensorUpdateThread");
             thread.start();
         }
     }
@@ -160,6 +174,46 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
     int iName;
 
+    /**
+     * Get the bit address from the system name.
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
+            // here if an illegal loconet light system name
+            log.error("illegal character in header field of loconet sensor system name: " + systemName);
+            return (0);
+        }
+        // name must be in the LSnnnnn format (L is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.error("illegal character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.error("invalid loconet sensor system name: " + systemName);
+            return (0);
+        } else if (num > 4096) {
+            log.error("bit number out of range in loconet sensor system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0);
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
@@ -190,7 +244,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
 
     /**
      * Class providing a thread to update sensor states
@@ -223,6 +284,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
+                    sm.setUpdateNotBusy();
+                    return;
                 }
                 m.setElement(1, sw1[k]);
                 m.setElement(2, sw2[k]);
@@ -235,5 +298,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         private LnTrafficController tc = null;
 
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class);
 
 }

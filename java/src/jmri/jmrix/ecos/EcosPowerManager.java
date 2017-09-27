@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PowerManager implementation for controlling layout power.
+ * PowerManager implementation for controlling ECoS layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
   */
@@ -31,7 +31,7 @@ public class EcosPowerManager implements PowerManager, EcosListener {
 
     @Override
     public String getUserName() {
-        return "Ecos";
+        return "ECoS";
     }
 
     int power = UNKNOWN;
@@ -110,8 +110,6 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class);
+
 }
-
-
-

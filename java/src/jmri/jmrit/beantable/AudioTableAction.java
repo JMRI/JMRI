@@ -255,7 +255,7 @@ public class AudioTableAction extends AbstractTableAction {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class);
 
     /**
      * Define abstract AudioTableDataModel

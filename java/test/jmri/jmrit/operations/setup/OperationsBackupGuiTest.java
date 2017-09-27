@@ -1,25 +1,25 @@
 //OperationsBackupGuiTest.java
 package jmri.jmrit.operations.setup;
 
+import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * Tests for the Operations Setup Backup GUI class.
- *
+ * <p>
  * Test have NOT been written to exercise the Backup and Restore menu items on
  * the Setup frame. These operations call the main backup and restore classes,
  * which have tests.
- *
+ * <p>
  * There are only simple tests to ensure that the dialogs can be created and
  * initialized.
- *
+ * <p>
  * The dialog based classes are very simple, so there is not much value in
  * playing around with using the GUI controls to exercise the backup classes.
  *
@@ -45,36 +45,45 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     public void testCreateBackupDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         BackupDialog dlg = new BackupDialog();
-        dlg.setLocationRelativeTo(null);
+        // frame to own the dialog so SwingUtilities$SharedOwnerFrame is not the owner
+        Frame owner = new Frame();
+        dlg.setLocationRelativeTo(owner);
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
     @Test
     public void testCreateRestoreDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RestoreDialog dlg = new RestoreDialog();
-        dlg.setLocationRelativeTo(null);
+        // frame to own the dialog so SwingUtilities$SharedOwnerFrame is not the owner
+        Frame owner = new Frame();
+        dlg.setLocationRelativeTo(owner);
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
     @Test
     public void testCreateManageBackupsDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ManageBackupsDialog dlg = new ManageBackupsDialog();
-        dlg.setLocationRelativeTo(null);
+        // frame to own the dialog so SwingUtilities$SharedOwnerFrame is not the owner
+        Frame owner = new Frame();
+        dlg.setLocationRelativeTo(owner);
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
-	// private Frame findFrameByClassName(String className) {
+    // private Frame findFrameByClassName(String className) {
     // // This probably should move to some utility class.......
     // Frame[] frames = Frame.getFrames();
     //
@@ -115,8 +124,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
     // setName);
     //
-    // bf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(bf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testBackupButtonWithSuppliedName() {
     // OperationsSetupFrame f = new OperationsSetupFrame();
@@ -146,8 +155,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
     // setName);
     //
-    // bf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(bf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testRestoreButtonWithDefaultName() throws IOException {
     // // Get the name that will be used for the backup
@@ -182,8 +191,8 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.verifyBackupSetAgainst(defaultBackupRoot, setName, operationsRoot,
     // "");
     //
-    // rf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(rf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testVerifyBackupSetNameListAndRestore() throws IOException {
     //
@@ -245,6 +254,6 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // operationsRoot,
     // "", tester.getRegularBackupSetFileNames());
     //
-    // rf.dispose();
+    // JUnitUtil.dispose(rf);
     // }
 }

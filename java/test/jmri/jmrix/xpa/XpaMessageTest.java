@@ -1,9 +1,10 @@
 package jmri.jmrix.xpa;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * XpaMessageTest.java
@@ -30,7 +31,7 @@ public class XpaMessageTest extends TestCase {
     public void testDefaultCtor() {
         XpaMessage m = new XpaMessage();
         Assert.assertNotNull("Length Constructor Succeeded",m);
-        Assert.assertEquals("length", XpaMessage.maxSize, m.getNumDataElements());
+        Assert.assertEquals("length", XpaMessage.MAX_SIZE, m.getNumDataElements());
     }
 
     public void testCopyCtor(){
@@ -39,7 +40,7 @@ public class XpaMessageTest extends TestCase {
         XpaMessage m2 = new XpaMessage(m);
         Assert.assertNotNull("String Constructor Succeeded",m2);
         Assert.assertEquals("length", m.getNumDataElements(), m2.getNumDataElements());
-        Assert.assertTrue("content", m.Equals(m2));
+        Assert.assertTrue("content", m.equals(m2));
     }
 
     public void testGetNumDataElements(){
@@ -65,8 +66,8 @@ public class XpaMessageTest extends TestCase {
        XpaMessage m2 = new XpaMessage(s1);
        String s2 = "ATDT1;";
        XpaMessage m3 = new XpaMessage(s2);
-       Assert.assertTrue("Messaes Equal",m1.Equals(m2));
-       Assert.assertFalse("Messaes Not Equal",m1.Equals(m3));
+       Assert.assertTrue("Messaes Equal",m1.equals(m2));
+       Assert.assertFalse("Messaes Not Equal",m1.equals(m3));
     }
 
 
@@ -181,12 +182,12 @@ public class XpaMessageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

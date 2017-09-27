@@ -167,5 +167,5 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     @Override
     void readOutput() { }
 
-    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class);
 }

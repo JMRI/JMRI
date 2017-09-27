@@ -1,15 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations RollingStock Cars Loads class Last manually cross-checked
- * on 20090131
- *
+ * Tests for the Operations RollingStock Cars Loads class Last manually
+ * cross-checked on 20090131
+ * <p>
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
@@ -17,12 +18,12 @@ import junit.framework.TestSuite;
 public class CarLoadsTest extends OperationsTestCase {
 
     public void testCarLoads() {
-        CarLoads cl = CarLoads.instance();
-        
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+
         // confirm proper defaults
         Assert.assertEquals("Default car empty", "E", cl.getDefaultEmptyName());
         Assert.assertEquals("Default car load", "L", cl.getDefaultLoadName());
-        
+
         List<String> names = cl.getNames("BoXcaR");
 
         Assert.assertEquals("Two default names", 2, names.size());
@@ -129,6 +130,6 @@ public class CarLoadsTest extends OperationsTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
     }
 }

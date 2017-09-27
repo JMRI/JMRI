@@ -3,9 +3,9 @@ package jmri.jmrix.cmri.serial;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -44,7 +44,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Return the C/MRI system letter
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
@@ -151,11 +151,17 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
@@ -203,9 +209,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     int bitNum = 0;
     int nAddress = 0;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
 
         String tmpSName = "";
@@ -218,7 +227,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
             return null;
         }
-
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
@@ -241,5 +249,31 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return _memo.validSystemNameFormat(systemName, 'S');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return _memo.normalizeSystemName(systemName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+
 }

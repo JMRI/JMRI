@@ -214,10 +214,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _dccNumBox.addActionListener((ActionEvent e) -> {
             setTrainInfo(_dccNumBox.getText());
         });
-        /*        JPanel x = new JPanel();
-        x.setLayout(new BoxLayout(x, BoxLayout.PAGE_AXIS));
-        x.add(trainPanel);
-        return x;*/
         return trainPanel;
     }
 
@@ -250,11 +246,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
-        if (speedProfile != null) {
-            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getTrainId());
-            _spTable.setVisible(true);
-            return;
+        if (_speedUtil.profileHasSpeedInfo(true) || _speedUtil.profileHasSpeedInfo(false)) {
+            RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
+            if (speedProfile != null) {
+                _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+                _spTable.setVisible(true);
+                return;
+            }            
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
     }
@@ -272,7 +270,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _rosterBox.setSelectedIndex(0);
         if (_speedUtil.setDccAddress(name)) {
             _dccNumBox.setText(_speedUtil.getDccAddress().toString());
-            _rosterBox.setSelectedItem(name);
+            _rosterBox.setSelectedItem(_speedUtil.getRosterId());
             if (_trainNameBox.getText() == null) {
                 if (_speedUtil.getRosterEntry()!=null) {
                     setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
@@ -301,6 +299,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     
     protected void setAddress() {
         _speedUtil.setDccAddress(_dccNumBox.getText());
+        _rosterBox.setSelectedItem(_speedUtil.getRosterId());
     }
 
     protected String getAddress() {
@@ -413,7 +412,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.setLayout(new BorderLayout());
         p.setToolTipText(Bundle.getMessage(tooltip));
         box.setToolTipText(Bundle.getMessage(tooltip));
-        p.add(new JLabel(PAD + Bundle.getMessage(title) + PAD), BorderLayout.NORTH);
+        JLabel l = new JLabel(PAD + Bundle.getMessage(title) + PAD);
+        p.add(l, BorderLayout.NORTH);
+        l.setLabelFor(box);
         p.add(box, BorderLayout.CENTER);
         box.setBackground(Color.white);
         box.addActionListener(this);
@@ -495,7 +496,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             p.setLayout(new BorderLayout());
             p.setToolTipText(Bundle.getMessage(tooltip));
             blockBox.setToolTipText(Bundle.getMessage(tooltip));
-            p.add(new JLabel(Bundle.getMessage("BlockName")), BorderLayout.NORTH);
+            JLabel l = new JLabel(Bundle.getMessage("BlockName"));
+            p.add(l, BorderLayout.NORTH);
+            l.setLabelFor(blockBox);
             p.add(blockBox, BorderLayout.CENTER);
             return p;
         }
@@ -584,7 +587,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             blockBox.setText(text);
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
             if (block == null && text.length() > 0) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("BlockNotFound", text),
+                JOptionPane.showMessageDialog(blockBox.getParent(), Bundle.getMessage("BlockNotFound", text),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
             return block;
@@ -1310,15 +1313,55 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             comp.setBackground(Color.white);
         }
         if (tooltip != null) {
-            panel.setToolTipText(tooltip);
-            comp.setToolTipText(Bundle.getMessage(tooltip));
-            l.setToolTipText(Bundle.getMessage(tooltip));
+            String tipText = Bundle.getMessage(tooltip);
+            panel.setToolTipText(tipText);
+            comp.setToolTipText(tipText);
+            l.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
         return panel;
     }
 
+    /**
+     * Puts label message to the Left, 2nd component (button) to the right
+     *
+     * @param comp     Component to put into JPanel
+     * @param button   2nd Component for panel, usually a button
+     * @param label    Bundle keyword for label message
+     * @param tooltip  Bundle keyword for tooltip message
+     * @return Panel containing Component
+     */
+    static protected JPanel makeTextAndButtonPanel(JComponent comp, JComponent button, String label, String tooltip) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        JLabel l = new JLabel(Bundle.getMessage(label));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        comp.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(l);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(Box.createHorizontalGlue());
+
+        panel.add(comp);
+        if (comp instanceof JTextField || comp instanceof JComboBox) {
+            comp.setBackground(Color.white);
+        }
+        button.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        panel.add(button);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        
+        if (tooltip != null) {
+            String tipText = Bundle.getMessage(tooltip);
+            panel.setToolTipText(tipText);
+            button.setToolTipText(tipText);
+            comp.setToolTipText(tipText);
+            l.setToolTipText(tipText);
+        }
+        panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
+        panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
+        return panel;        
+    }
     /**
      * Puts label message to the Right
      *
@@ -1346,13 +1389,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         if (tooltip != null) {
-            panel.setToolTipText(tooltip);
-            comp.setToolTipText(Bundle.getMessage(tooltip));
+            String tipText = Bundle.getMessage(tooltip);
+            panel.setToolTipText(tipText);
+            comp.setToolTipText(tipText);
         }
         panel.setMaximumSize(new Dimension(350, comp.getPreferredSize().height));
         panel.setMinimumSize(new Dimension(80, comp.getPreferredSize().height));
         return panel;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantRoute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantRoute.class);
 }

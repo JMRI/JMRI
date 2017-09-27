@@ -1,6 +1,5 @@
 package jmri.jmrix.nce.usbinterface;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,15 +19,30 @@ public class UsbInterfacePanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        UsbInterfacePanel t = new UsbInterfacePanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        UsbInterfacePanel t = new UsbInterfacePanel();
+        Assert.assertEquals("title","NCE_: USB Interface Configuration", t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        UsbInterfacePanel t = new UsbInterfacePanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

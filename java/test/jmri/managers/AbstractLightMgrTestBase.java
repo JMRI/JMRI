@@ -75,14 +75,14 @@ public abstract class AbstractLightMgrTestBase {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            Light t = l.provideLight("");
+            l.provideLight("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
-        Assert.assertTrue("Exception thrown properly", correct);        
+        Assert.assertTrue("Exception thrown properly", correct);
     }
-    
+
     @Test
     public void testSingleObject() {
         // test that you always get the same representation

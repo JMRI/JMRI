@@ -82,6 +82,7 @@ public class PollTablePane extends javax.swing.JPanel {
 
         polling = new JCheckBox(Bundle.getMessage("LabelPoll"));
         polling.setSelected(Engine.instance().getPolling());
+        polling.setToolTipText(Bundle.getMessage("PollToolTip"));
         p.add(polling);
         polling.addActionListener(new ActionListener() {
             @Override
@@ -133,6 +134,7 @@ public class PollTablePane extends javax.swing.JPanel {
         p.add(new JLabel(Bundle.getMessage("LabelDelay")));
         delay = new JTextField(5);
         delay.setText("" + Engine.instance().getPollingInterval());
+        delay.setToolTipText(Bundle.getMessage("IntervalToolTip"));
         p.add(delay);
         delay.addActionListener(new ActionListener() {
             @Override
@@ -211,6 +213,6 @@ public class PollTablePane extends javax.swing.JPanel {
         pollModel.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PollTablePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollTablePane.class);
 
 }

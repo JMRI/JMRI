@@ -54,7 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.macro.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.usbinterface.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.ncemon.PackageTest.class));
-        suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.packetgen.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceNetworkPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NcePortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.swing.PackageTest.class));

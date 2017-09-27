@@ -41,13 +41,9 @@ public class WarrantTest {
     public void testWarrant() {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
-        bWest.setLength(1);
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
-        bEast.setLength(1);
         OBlock bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
-        bNorth.setLength(1);
         OBlock bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
-        bSouth.setLength(1);
         Assert.assertEquals("OBlock", bNorth, _OBlockMgr.getOBlock("North"));
         Assert.assertEquals("OBlock", bEast, _OBlockMgr.getOBlock("OB2"));
         
@@ -186,6 +182,9 @@ public class WarrantTest {
         Assert.assertNull("checkStartBlock - "+msg, msg);
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - "+msg, msg);
+        SpeedUtil su = warrant.getSpeedUtil();
+        Assert.assertNotNull("SpeedUtil null", su);
+        su.setOrders(orders);
         
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
@@ -199,30 +198,27 @@ public class WarrantTest {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #2.");
         }, "Train starts to move after 2nd command");
-        jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sWest.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
+        jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sSouth.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
-        jmri.util.JUnitUtil.releaseThread(this);
-
-        // confirm one message logged
-//        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+        jmri.util.JUnitUtil.releaseThread(this, 100);
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
-
-        msg = warrant.getRunningMessage();
-        Assert.assertEquals("getRunningMessage", "Idle", msg);
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
+        
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }
     
     
@@ -260,13 +256,13 @@ public class WarrantTest {
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initShutDownManager();
 //        JUnitUtil.initWarrantManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

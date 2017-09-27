@@ -18,7 +18,7 @@ public class SystemInfoAction extends AbstractXPressNetAction {
     }
 
     public SystemInfoAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this(Bundle.getMessage("SystemInfoFrameTitle"), memo);
+        this(Bundle.getMessage("MenuItemXNetSystemInformation"), memo);
     }
 
     @Override

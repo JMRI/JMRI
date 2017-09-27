@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin.swing.monitor;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,18 +19,30 @@ public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull("exists", pane );
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        Assert.assertNull("help target",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        Assert.assertEquals("title",Bundle.getMessage("MarklinMonitorTitle"), pane.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        // we are just making sure that initComponents doesn't cause an exception.
+        pane.initComponents();
+    }
+
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         pane = new MarklinMonPane();
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

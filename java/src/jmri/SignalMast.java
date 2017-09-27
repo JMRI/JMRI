@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.Vector;
+import javax.annotation.Nonnull;
 
 /**
  * Represent a signal mast. A signal mast is one or more signal heads that are
@@ -15,15 +16,12 @@ import java.util.Vector;
  * <DT>Aspect<DD>The specific aspect being shown.
  * <p>
  * Aspects are named by a user defined String name.
- *
  * <DT>Lit<DD>Whether the mast's lamps are lit or left dark.
- * <P>
  * This differs from the DARK color defined for the appearance parameter, in
  * that it's independent of that. Lit is intended to allow you to extinquish a
  * signal mast for approach lighting, while still allowing it's color to be set
  * to a definite value for e.g. display on a panel or evaluation in higher level
  * logic.
- *
  * <DT>Held<DD>Whether the mast's lamps should be forced to a specific aspect,
  * e.g. Stop, in higher-level logic.
  * <P>
@@ -49,7 +47,7 @@ import java.util.Vector;
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  * @author Pete Cressman Copyright (C) 2009
  */
-public interface SignalMast extends NamedBean {
+public interface SignalMast extends NamedBean {  // to eventually be Signal
 
     /**
      * Set aspect to a valid name in the current signal system definition.
@@ -67,6 +65,12 @@ public interface SignalMast extends NamedBean {
      */
     public String getAspect();
 
+    /**
+     * Get an alphabetically sorted list of valid aspects that have not been disabled.
+     *
+     * @return sorted list of valid aspects; may be empty
+     */
+    @Nonnull
     public Vector<String> getValidAspects();
 
     public SignalSystem getSignalSystem();

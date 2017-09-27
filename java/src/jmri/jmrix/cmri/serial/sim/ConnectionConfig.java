@@ -3,14 +3,15 @@ package jmri.jmrix.cmri.serial.sim;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI
  * Simulator object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -23,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -43,11 +44,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure C/MRI nodes");
+        JButton b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo())); //c2
+//        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 

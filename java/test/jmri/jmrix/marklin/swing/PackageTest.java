@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.marklin.swing.packetgen.PackageTest.class,
     jmri.jmrix.marklin.swing.monitor.PackageTest.class,
     MarklinComponentFactoryTest.class,
-    MarklinMenuTest.class
+    MarklinMenuTest.class,
+    BundleTest.class,
+    MarklinNamedPaneActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin.swing package.
@@ -33,6 +35,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

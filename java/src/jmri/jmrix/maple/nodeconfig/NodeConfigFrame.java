@@ -12,8 +12,6 @@ import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user configuration of Maple panel nodes
@@ -744,6 +742,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //        // successful
 //        return true;
 //    }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

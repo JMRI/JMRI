@@ -3,10 +3,11 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,14 +123,14 @@ public class ComboCheckBoxTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ComboCheckBoxTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboCheckBoxTest.class);
 
 }

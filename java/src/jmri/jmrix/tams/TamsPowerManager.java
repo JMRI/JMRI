@@ -43,7 +43,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
     }
 
     TamsTrafficController tc;
-    Thread TamsPowerMonitorThread;
+    Thread tamsPowerMonitorThread;
 
     @Override
     public String getUserName() {
@@ -163,7 +163,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsPowerManager.class);
 }
 
 

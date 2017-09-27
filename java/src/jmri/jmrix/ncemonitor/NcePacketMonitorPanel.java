@@ -515,6 +515,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     public synchronized String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -593,7 +595,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class);
 
     /**
      * Internal class to handle the separate character-receive thread

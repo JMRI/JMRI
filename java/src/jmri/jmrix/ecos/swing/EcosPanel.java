@@ -14,7 +14,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 abstract public class EcosPanel extends jmri.util.swing.JmriPanel implements EcosPanelInterface {
 
     /**
-     * make "memo" object available as convenience
+     * Make "memo" object available as convenience.
      */
     protected EcosSystemConnectionMemo memo;
 

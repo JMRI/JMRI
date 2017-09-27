@@ -65,6 +65,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     /**
      * Public method to notify user of Turnout creation error.
      */
@@ -73,6 +78,24 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 + bitNum + ", is currently assigned to " + conflict + ". Turnout can not be "
                 + "created as you specified.", " Assignment Conflict",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+    }
+
+    /**
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     /**
@@ -151,6 +174,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //     "you specified.","Assignment Conflict",
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
+
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();
@@ -159,8 +183,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
     static SerialTurnoutManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-

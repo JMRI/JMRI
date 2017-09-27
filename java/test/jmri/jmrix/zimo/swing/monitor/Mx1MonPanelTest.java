@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo.swing.monitor;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,15 +19,30 @@ public class Mx1MonPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        Mx1MonPanel pane = new Mx1MonPanel();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        Mx1MonPanel pane = new Mx1MonPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        Mx1MonPanel pane = new Mx1MonPanel();
+        Assert.assertEquals("title","Mx1_: Command Monitor" ,pane.getTitle());
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2004-2010
- *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
 
@@ -33,7 +32,9 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     }
 
 
-    /* store the last sender */
+    /**
+     * Store the last sender
+     */
     XNetListener lastSender = null;
 
     /**
@@ -56,7 +57,9 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
         notify(m);
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
@@ -109,8 +112,6 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
         lastSender = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class);
+
 }
-
-
-

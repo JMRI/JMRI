@@ -1,6 +1,3 @@
-/**
- * LIUSBEthernetXNetPacketizer.java
- */
 package jmri.jmrix.lenz.liusbethernet;
 
 import org.slf4j.Logger;
@@ -20,17 +17,15 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
 
     public LIUSBEthernetXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation pCommandStation) {
         super(pCommandStation);
-        if (log.isDebugEnabled()) {
-            log.debug("Loading LIUSB Ethernet Extension to XNetPacketizer");
-        }
+        log.debug("Loading LIUSB Ethernet Extension to XNetPacketizer");
     }
 
     /**
      * Determine how much many bytes the entire message will take, including
-     * space for header and trailer
+     * space for header and trailer.
      *
-     * @param m The message to be sent
-     * @return Number of bytes
+     * @param m the message to be sent
+     * @return number of bytes
      */
     @Override
     protected int lengthOfByteStream(jmri.jmrix.AbstractMRMessage m) {
@@ -45,7 +40,7 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
     /**
      * Add header to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg the output byte stream
      * @return next location in the stream to fill
      */
     @Override
@@ -73,9 +68,7 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
         byte lastbyte = (byte) 0xFF;
-        if (log.isDebugEnabled()) {
-            log.debug("loading characters from port");
-        }
+        log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
             // This is a test for the LIUSB device
@@ -102,7 +95,6 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizer.class);
+
 }
-
-

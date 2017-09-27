@@ -75,7 +75,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         _automation = automation;
 
         // load managers
-        automationManager = AutomationManager.instance();
+        automationManager = InstanceManager.getDefault(AutomationManager.class);
 
         // tool tips
         stepActionButton.setToolTipText(Bundle.getMessage("TipStepAutomation"));
@@ -386,5 +386,5 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationTableFrame.class);
 }

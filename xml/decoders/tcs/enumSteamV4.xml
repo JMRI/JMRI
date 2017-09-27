@@ -675,5 +675,5 @@
 		<enumChoice choice="Western Maryland K2 #204 3 Chime Stop" value="1658"/>
 		<enumChoice choice="World War II era 3 Chime Stop" value="1659"/>
 	</enumChoiceGroup>
-	<enumChoice choice="None" value="2140"/>
+	<enumChoice choice="None" value="65535"/>
 </enumVal>

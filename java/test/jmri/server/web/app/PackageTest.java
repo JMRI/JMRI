@@ -12,7 +12,10 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     BundleTest.class,
     JsonMenuItemTest.class,
-    WebAppConfigurationTest.class
+    WebAppConfigurationTest.class,
+    JsonManifestTest.class,
+    WebAppManagerTest.class,
+    WebAppServletTest.class
 })
 public class PackageTest {
 }

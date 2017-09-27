@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public abstract class AbstractLightManager extends AbstractManager
+public abstract class AbstractLightManager extends AbstractManager<Light>
         implements LightManager, java.beans.PropertyChangeListener {
 
     public AbstractLightManager() {
@@ -77,7 +77,7 @@ public abstract class AbstractLightManager extends AbstractManager
      */
     @Override
     public Light getBySystemName(String name) {
-        return (Light) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class AbstractLightManager extends AbstractManager
      */
     @Override
     public Light getByUserName(String key) {
-        return (Light) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
@@ -147,7 +147,7 @@ public abstract class AbstractLightManager extends AbstractManager
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
@@ -194,6 +194,19 @@ public abstract class AbstractLightManager extends AbstractManager
     }
 
     /**
+     * Validate system name format.
+     *
+     * @since 2.9.3
+     * @see jmri.jmrit.beantable.LightTableAction.CheckedTextField
+     * @param systemName proposed complete system name incl. prefix
+     * @return always 'true' to let undocumented connection system managers pass entry validation.
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return true;
+    }
+
+    /**
      * Normalize the system name
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
@@ -235,8 +248,10 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
+     * range box in the add Light window.
      *
+     * @param systemName configured system connection name
+     * @return false as default, unless overridden by implementations as supported
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -248,5 +263,15 @@ public abstract class AbstractLightManager extends AbstractManager
         return Bundle.getMessage("BeanNameLight");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
+    /**
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class);
+
 }

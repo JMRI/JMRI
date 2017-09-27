@@ -5,7 +5,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   BundleTest.class
+   BundleTest.class,
+   AudioBufferFrameTest.class,
+   AudioListenerFrameTest.class,
+   AudioSourceFrameTest.class
 })
 
 /**

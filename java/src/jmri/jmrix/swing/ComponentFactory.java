@@ -19,5 +19,3 @@ abstract public class ComponentFactory {
     abstract public JMenu getMenu();
 
 }
-
-

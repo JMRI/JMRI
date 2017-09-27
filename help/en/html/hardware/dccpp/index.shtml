@@ -363,7 +363,8 @@
 
         <li><a href="http://www.sparkfun.com">Sparkfun</a> - one of
         many places to acquire hardware</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

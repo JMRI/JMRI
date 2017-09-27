@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 /**
@@ -36,6 +37,10 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
     RosterSpeedProfile speedProfile;
     // divided by layout scale, gives a rough conversion for throttle setting to track speed
     static float SCALE = jmri.jmrit.logix.SpeedUtil.SCALE_FACTOR;
+
+    public SpeedProfileTable(RosterEntry re) {
+        this(re.getSpeedProfile(), re.getId());
+    }
 
     public SpeedProfileTable(RosterSpeedProfile sp, String id) {
         super(false, true);
@@ -162,7 +167,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             default:
                 str = "track";
         }
-        description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));;
+        description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
         model.fireTableDataChanged();
     }
 

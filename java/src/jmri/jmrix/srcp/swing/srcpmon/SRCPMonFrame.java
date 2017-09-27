@@ -3,8 +3,8 @@ package jmri.jmrix.srcp.swing.srcpmon;
 import jmri.jmrix.srcp.SRCPListener;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
-import jmri.jmrix.srcp.SRCPTrafficController;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.srcp.SRCPTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +60,6 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
         reply(new SRCPReply(n));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class);
 
 }

@@ -1,28 +1,32 @@
 package jmri.jmrix.nce.packetgen;
 
 import jmri.jmrix.nce.NceMessage;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  *
  * @author	Bob Jacobsen
  */
-public class NcePacketGenPanelTest extends TestCase {
+public class NcePacketGenPanelTest {
 
+    @Test
     public void testPanelCreate() {
         new NcePacketGenPanel();
     }
 
+    @Test
     public void testPacketNull() {
         NcePacketGenPanel t = new NcePacketGenPanel();
         NceMessage m = t.createPacket("");
         Assert.assertEquals("null pointer", null, m);
     }
 
+    @Test
     public void testPacketCreate() {
         NcePacketGenPanel t = new NcePacketGenPanel();
         NceMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
@@ -37,21 +41,31 @@ public class NcePacketGenPanelTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
-    // from here down is testing infrastructure
-    public NcePacketGenPanelTest(String s) {
-        super(s);
+    @Test
+    public void testGetHelpTarget() {
+        NcePacketGenPanel t = new NcePacketGenPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.packetgen.NcePacketGenFrame",t.getHelpTarget());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NcePacketGenPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testGetTitle() {
+        NcePacketGenPanel t = new NcePacketGenPanel();
+        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("Title"),t.getTitle());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NcePacketGenPanelTest.class);
-        return suite;
+    @Test
+    public void testInitComponents() throws Exception {
+        NcePacketGenPanel t = new NcePacketGenPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
     }
+
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

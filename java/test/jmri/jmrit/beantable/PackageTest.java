@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -27,7 +28,8 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
         suite.addTest(new JUnit4TestAdapter(BlockTableActionTest.class));
-        suite.addTest(LogixTableActionTest.suite());
+        suite.addTest(LightTableWindowTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LogixTableActionTest.class));
         suite.addTest(LRouteTableActionTest.suite());
         suite.addTest(OBlockTableActionTest.suite());
         suite.addTest(new JUnit4TestAdapter(RouteTableActionTest.class));
@@ -39,7 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.signalmast.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.oblock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.beanedit.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.usermessagepreferences.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(MemoryTableActionTest.class));
         suite.addTest(new JUnit4TestAdapter(AudioTableActionTest.class));
@@ -64,21 +66,23 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TurnoutTableActionTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutTableTabActionTest.class));
         suite.addTest(new JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(AudioTablePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AudioTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewBeanPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewDevicePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(AddNewHardwareDevicePanelTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @Override
     protected void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

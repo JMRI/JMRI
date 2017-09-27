@@ -434,7 +434,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 log.debug("Font size " + v.getFont().getSize());
             }
             float newSize = v.getFont().getSize() * 0.8f;
-            v.setFont(jmri.util.FontUtil.deriveFont(v.getFont(), newSize));
+            v.setFont(v.getFont().deriveFont(newSize));
             j.add(v);
 
             cs.gridy++;
@@ -946,6 +946,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class);
 
 }

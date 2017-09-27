@@ -64,7 +64,7 @@ public class SignalHeadSignalMastXml
             m = InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideSignalMast(sys);
         } catch (Exception e) {
-            log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());
+            log.error("An error occurred while trying to create the signal '" + sys + "' " + e.toString());
             return false;
         }
         if (getUserName(shared) != null) {
@@ -97,5 +97,5 @@ public class SignalHeadSignalMastXml
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class);
 }

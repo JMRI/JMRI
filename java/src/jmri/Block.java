@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
@@ -18,39 +19,33 @@ import org.slf4j.LoggerFactory;
  * <P>
  * A Block (at least in this implementation) corresponds exactly to the track
  * covered by at most one sensor. That could be generalized in the future.
- *
  * <p>
  * As trains move around the layout, a set of Block objects that are attached to
  * sensors can interact to keep track of which train is where, going in which
  * direction. As a result of this, the set of Block objects pass around "token"
  * (value) Objects representing the trains. This could be e.g. a Throttle to
  * control the train, or something else.
- *
  * <p>
  * A block maintains a "direction" flag that is set from the direction of the
  * incoming train. When an arriving train is detected via the connected sensor
  * and the Block's status information is sufficient to determine that it is
  * arriving via a particular Path, that Path's getFromBlockDirection becomes the
  * direction of the train in this Block. This only works
- *
  * <p>
  * Optionally, a Block can be associated with a Reporter. In this case, the
  * Reporter will provide the Block with the "token" (value). This could be e.g
  * an RFID reader reading an ID tag attached to a locomotive. Depending on the
  * specific Reporter implementation, either the current reported value or the
  * last reported value will be relevant - this can be configured
- *
  * <p>
  * Objects of this class are Named Beans, so can be manipulated through tables,
  * have listeners, etc.
- *
  * <p>
  * There is no functional requirement for a type letter in the System Name, but
  * by convention we use 'B' for 'Block'. The default implementation is not
  * system-specific, so a system letter of 'I' is appropriate. This leads to
  * system names like "IB201".
- *
- * <P>
+ * <p>
  * Issues:
  * <UL>
  * <LI>The tracking doesn't handle a train pulling in behind another well:
@@ -73,13 +68,11 @@ import org.slf4j.LoggerFactory;
  * direction of this block (b2 in the example) is not updated. In other words,
  * we're not noticing that the train must have reversed to go back out.
  * </UL>
- *
- * <P>
+ * <p>
  * Do not assume that a Block object uniquely represents a piece of track. To
  * allow independent development, it must be possible for multiple Block objects
  * to take care of a particular section of track.
- *
- * <P>
+ * <p>
  * Possible state values:
  * <ul>
  * <li>UNKNOWN - The sensor shows UNKNOWN, so this block doesn't know if it's
@@ -92,8 +85,7 @@ import org.slf4j.LoggerFactory;
  * unoccupied.
  * <li>UNDETECTED - No sensor configured.
  * </ul>
- *
- * <P>
+ * <p>
  * Possible Curvature attributes (optional) User can set the curvature if
  * desired. For use in automatic running of trains, to indicate where slow down
  * is required.
@@ -104,8 +96,7 @@ import org.slf4j.LoggerFactory;
  * <li>TIGHT - Tight curve in Block track - Train should slow down some
  * <li>SEVERE - Severe curve in Block track - Train should slow down a lot
  * </ul>
- *
- * <P>
+ * <p>
  * The length of the block may also optionally be entered if desired. This
  * attribute is for use in automatic running of trains. Length should be the
  * actual length of model railroad track in the block. It is always stored here
@@ -136,31 +127,35 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int SEVERE = 0x04;
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         String result = getFullyFormattedDisplayName() + " ";
         switch (getState()) {
             case UNDETECTED: {
-                    result += "UNDETECTED";
+                result += "UNDETECTED";
                 break;
             }
             case UNOCCUPIED: {
-                    result += "UNOCCUPIED";
+                result += "UNOCCUPIED";
                 break;
             }
             case OCCUPIED: {
-                    result += "OCCUPIED";
+                result += "OCCUPIED";
                 break;
             }
             default: {
-                    result += "unknown " + getState();
+                result += "unknown " + getState();
                 break;
             }
         }
         return result;
     }
 
-    /*
-     * return true if a Sensor is set
+    /**
+     * Set the sensor by name.
+     *
+     * @param pName the name of the Sensor to set
+     * @return true if a Sensor is set; false otherwise
      */
     public boolean setSensor(String pName) {
         if (pName == null || pName.equals("")) {
@@ -174,7 +169,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 return true;
             } catch (IllegalArgumentException ex) {
                 setNamedSensor(null);
-                log.error("Sensor '" + pName + "' not available");
+                log.error("Sensor '{}' not available", pName);
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -373,10 +368,13 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * block must be added to the deny list of the other block. By default no
      * block is barred, so traffic flow is bi-directional.
      *
-     * @param pName name of the block to add
+     * @param pName name of the block to add, which must exist
      */
-    public void addBlockDenyList(String pName) {
+    public void addBlockDenyList(@Nonnull String pName) {
         Block blk = InstanceManager.getDefault(BlockManager.class).getBlock(pName);
+        if (blk == null) {
+            throw new IllegalArgumentException("addBlockDenyList requests block \"" + pName + "\" exists");
+        }
         NamedBeanHandle<Block> namedBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
         if (!blockDenyList.contains(namedBlock)) {
             blockDenyList.add(namedBlock);
@@ -558,7 +556,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             if (!b.getSystemName().equals(this.getSystemName())) {
                 return false;
             }
-
         }
         return true;
     }
@@ -584,21 +581,21 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private boolean _reportingCurrent = false;
 
     private Path pListOfPossibleEntrancePaths[] = null;
-    private int CntOfPossibleEntrancePaths = 0;
+    private int cntOfPossibleEntrancePaths = 0;
 
-    void ResetCandidateEntrancePaths() {
+    void resetCandidateEntrancePaths() {
         pListOfPossibleEntrancePaths = null;
-        CntOfPossibleEntrancePaths = 0;
+        cntOfPossibleEntrancePaths = 0;
     }
 
-    boolean SetAsEntryBlockIfPossible(Block b) {
-        for (int i = 0; i < CntOfPossibleEntrancePaths; i++) {
+    boolean setAsEntryBlockIfPossible(Block b) {
+        for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
             Block CandidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
             if (CandidateBlock == b) {
                 setValue(CandidateBlock.getValue());
                 setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
                 log.info("Block {} gets LATE new value from {}, direction= {}", getDisplayName(), CandidateBlock.getDisplayName(), Path.decodeDirection(getDirection()));
-                ResetCandidateEntrancePaths();
+                resetCandidateEntrancePaths();
                 return true;
             }
         }
@@ -663,7 +660,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         for (int i = 0; i < currPathCnt; i++) {
             Block b = paths.get(i).getBlock();
             if (b != null) {
-                b.SetAsEntryBlockIfPossible(this);
+                b.setAsEntryBlockIfPossible(this);
             }
         }
         setValue(null);
@@ -683,7 +680,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return;
         }
         log.debug("Block {} goes OCCUPIED", getDisplayName());
-        ResetCandidateEntrancePaths();
+        resetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
         Path next = null;
@@ -717,12 +714,12 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 if (null != _previousValue) {
                     setValue(_previousValue);
                     if (infoMessageCount < maxInfoMessages) {
-                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getDisplayName() + ". Restoring previous value.");
+                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Restoring previous value.", getDisplayName());
                         infoMessageCount++;
                     }
                 } else {
                     if (infoMessageCount < maxInfoMessages) {
-                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getDisplayName() + ". Value not set.");
+                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block {}. Value not set.", getDisplayName());
                         infoMessageCount++;
                     }
                 }
@@ -739,9 +736,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             next.getBlock().getDisplayName(),
                             Path.decodeDirection(getDirection()));
                 } else if (next == null) {
-                    log.error("unexpected next==null processing block " + getDisplayName());
+                    log.error("unexpected next==null processing block {}", getDisplayName());
                 } else if (next.getBlock() == null) {
-                    log.error("unexpected next.getBlock()=null processing block " + getDisplayName());
+                    log.error("unexpected next.getBlock()=null processing block {}", getDisplayName());
                 }
                 break;
             default:
@@ -778,14 +775,13 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
                 } else {
                     // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                    log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getDisplayName()
-                            + " but maybe it can be determined when another block becomes free");
+                    log.warn("count of {} ACTIVE neightbors with proper direction can't be handled for block {} but maybe it can be determined when another block becomes free", count, getDisplayName());
                     pListOfPossibleEntrancePaths = new Path[currPathCnt];
-                    CntOfPossibleEntrancePaths = 0;
+                    cntOfPossibleEntrancePaths = 0;
                     for (int i = 0; i < currPathCnt; i++) {
                         if (isSet[i] && isActive[i]) {
-                            pListOfPossibleEntrancePaths[CntOfPossibleEntrancePaths] = pList[i];
-                            CntOfPossibleEntrancePaths++;
+                            pListOfPossibleEntrancePaths[cntOfPossibleEntrancePaths] = pList[i];
+                            cntOfPossibleEntrancePaths++;
                         }
                     }
                 }
@@ -797,7 +793,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     /**
      * Find which path this Block became Active, without actually modifying the
      * state of this block.
-     *
+     * <p>
      * (this is largely a copy of the 'Search' part of the logic from
      * goingActive())
      *
@@ -858,7 +854,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 // found one block with proper direction, assume that
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.warn("count of " + count + " ACTIVE neighbors with proper direction can't be handled for block " + getDisplayName());
+                log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for block {}", count, getDisplayName());
             }
         }
         // in any case, go OCCUPIED
@@ -904,12 +900,12 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         } else {
             // Assume a LocoNet-style report.  This is (nascent) support for handling of Faller cars
             // for Dave Merrill's project.
-            log.debug("report string: " + rep);
+            log.debug("report string: {}", rep);
             // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
-                log.debug("Parsed address: " + m.group(1));
+                log.debug("Parsed address: {}", m.group(1));
                 return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
             } else {
                 return (null);
@@ -938,12 +934,12 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
             return (((PhysicalLocationReporter) this.getReporter()).getDirection(rep));
         } else {
-            log.debug("report string: " + rep);
+            log.debug("report string: {}", rep);
             // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
-                log.debug("Parsed direction: " + m.group(2));
+                log.debug("Parsed direction: {}", m.group(2));
                 switch (m.group(2)) {
                     case "enter":
                         // LocoNet Enter message
@@ -1019,5 +1015,5 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Block.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Block.class);
 }

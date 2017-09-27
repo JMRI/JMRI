@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -43,9 +44,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JScrollPane switchPane;
 
     // load managers
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
     List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
-    List<JComboBox<String>> locationComboBoxes = new ArrayList<JComboBox<String>>();
+    List<JComboBox<String>> locationComboBoxes = new ArrayList<>();
     JPanel locationPanelCheckBoxes = new JPanel();
 
     // checkboxes
@@ -269,7 +270,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             }
         }
         // set trains switch lists unknown, any built trains should remain on the switch lists
-        TrainManager.instance().setTrainsSwitchListStatus(Train.UNKNOWN);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.UNKNOWN);
     }
 
     // save printer selection
@@ -336,7 +337,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             }
         }
         // set trains switch lists printed
-        TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
     }
 
     private void selectCheckboxes(boolean enable) {
@@ -471,25 +472,25 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     return;
                 }
 
-                TrainCustomSwitchList.instance().addCVSFile(csvFile);
+                InstanceManager.getDefault(TrainCustomSwitchList.class).addCVSFile(csvFile);
             }
         }
         // Processes the CSV Manifest files using an external custom program.
-        if (!TrainCustomSwitchList.instance().excelFileExists()) {
+        if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
             log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
-                    TrainCustomSwitchList.instance()
+                    InstanceManager.getDefault(TrainCustomSwitchList.class)
                             .getDirectoryName(),
-                    TrainCustomSwitchList.instance().getFileName());
+                    InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                    new Object[]{TrainCustomSwitchList.instance().getDirectoryName(),
-                            TrainCustomSwitchList.instance().getFileName()}),
+                    new Object[]{InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
+                            InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName()}),
                     Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // Now run the user specified custom Switch List processor program
-        TrainCustomSwitchList.instance().process();
+        InstanceManager.getDefault(TrainCustomSwitchList.class).process();
         // set trains switch lists printed
-        TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
+        InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
     }
 
     private void enableSaveButton(boolean enable) {
@@ -655,5 +656,5 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class);
 }

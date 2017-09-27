@@ -2,16 +2,17 @@ package jmri.web.servlet.panel;
 
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
-import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "SwitchboardServlet",
         urlPatterns = {"/panel/Switchboard"})
+@ServiceProvider(service = HttpServlet.class)
 public class SwitchboardServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
@@ -46,7 +48,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
             // add more properties
-            panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
+            panel.setAttribute("showtooltips", (editor.showToolTip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
 
             panel.setAttribute("hideunconnected", (editor.hideUnconnected()) ? "yes" : "no");

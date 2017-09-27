@@ -46,14 +46,14 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);
         this.top = Integer.parseInt(top);
-        this.addrCV = Integer.parseInt(addrCV);
+        this.addrCV = addrCV;
         this.cvFactor = Integer.parseInt(cvFactor);
         this.modulo = Integer.parseInt(modulo);
         this.indicator = Integer.parseInt(indicator);
     }
 
     int top;
-    int addrCV;
+    String addrCV;
     int cvFactor;
     int modulo;
     int indicator;
@@ -61,12 +61,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     // members for handling the programmer interface
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
-
-    // programming interface
-    @Override
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        writeCV("" + CV, val, p);
-    }
 
     @Override
     public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -76,22 +70,12 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         useProgrammer(p);
         if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.writeCV(_cv, val, this);
+            prog.writeCV(CV, val, this);
         } else {
             // write index first
             state = ProgState.FINISHWRITE;
             prog.writeCV(addrCV, (_cv / modulo) * cvFactor + indicator, this);
         }
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
-    }
-
-    @Override
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV("" + CV, p);
     }
 
     @Override
@@ -101,7 +85,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(CV, this);
         } else {
             // write index first
             state = ProgState.FINISHREAD;
@@ -158,7 +142,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             case FINISHREAD:
                 try {
                     state = ProgState.RESET;
-                    prog.readCV(_cv % modulo, this);
+                    prog.readCV(""+(_cv % modulo), this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final read", e);
                 }
@@ -166,7 +150,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             case FINISHWRITE:
                 try {
                     state = ProgState.RESET;
-                    prog.writeCV(_cv % modulo, _val, this);
+                    prog.writeCV(""+(_cv % modulo), _val, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing final write", e);
                 }
@@ -218,6 +202,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         return Integer.parseInt(addr) <= 1024;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacade.class);
 
 }

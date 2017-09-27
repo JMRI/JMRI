@@ -33,8 +33,8 @@ import org.openlcb.swing.networktree.TreePane;
  * <li>Node 5 sends Event C to node 6
  * </ul>
  * <p>
- * NOTE: This file actually Demonstrates the openLCB TreePane class. 
- * <p> 
+ * NOTE: This file actually Demonstrates the openLCB TreePane class.
+ * <p>
  *
  * @author Bob Jacobsen Copyright 2009
  */
@@ -76,19 +76,19 @@ public class TreePaneDemo {
         pane = new TreePane();
         pane.initComponents(store, null, null,
                 new NodeTreeRep.SelectionKeyLoader() {
+            @Override
+            public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {
+                return new NodeTreeRep.SelectionKey(name, node) {
                     @Override
-                    public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {
-                        return new NodeTreeRep.SelectionKey(name, node) {
-                            @Override
-                            public void select(DefaultMutableTreeNode rep) {
-                                System.out.println("Making special fuss over: " + rep + " for " + name + " on " + node);
-                            }
-                        };
+                    public void select(DefaultMutableTreeNode rep) {
+                        System.out.println("Making special fuss over: " + rep + " for " + name + " on " + node);
                     }
-                });
+                };
+            }
+        });
 
-        if(GraphicsEnvironment.isHeadless()) {
-           return; // don't bother setting up a frame in headless.
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // don't bother setting up a frame in headless.
         }
         // Test is really popping a window before doing all else
         frame = new JFrame();
@@ -102,17 +102,18 @@ public class TreePaneDemo {
 
     @After
     public void tearDown() {
-        store=null;
-        if(GraphicsEnvironment.isHeadless()) {
-           return; // don't bother tearing down a frame in headless.
+        store = null;
+        jmri.util.JUnitUtil.resetWindows(false, false);
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // don't bother tearing down a frame in headless.
         }
         frame.setVisible(false);
     }
 
     @Test
-    public void testCTor(){
-       // constructor in setUp
-       Assert.assertNotNull(pane);
+    public void testCTor() {
+        // constructor in setUp
+        Assert.assertNotNull(pane);
     }
 
     @Test

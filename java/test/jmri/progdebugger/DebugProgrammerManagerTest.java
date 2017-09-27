@@ -2,10 +2,10 @@ package jmri.progdebugger;
 
 import jmri.InstanceManager;
 import jmri.Programmer;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the DebugProgrammerManager class.

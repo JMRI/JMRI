@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.li100;
 
-import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -22,13 +21,6 @@ public class LI100XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        tc = null;
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }

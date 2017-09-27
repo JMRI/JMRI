@@ -32,12 +32,14 @@ import jmri.jmrit.beantable.TransitTableAction;
 import jmri.jmrit.beantable.TurnoutTableAction;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Pane to show User Message Preferences
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class UserMessagePreferencesPane extends JmriPanel implements PreferencesPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");

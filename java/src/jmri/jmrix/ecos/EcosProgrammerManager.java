@@ -1,4 +1,3 @@
-/* EcosProgrammerManager.java */
 package jmri.jmrix.ecos;
 
 import jmri.Programmer;
@@ -10,7 +9,7 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author Karl Johan Lisby Copyright (C) 2015
-  */
+ */
 public class EcosProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;
@@ -19,7 +18,7 @@ public class EcosProgrammerManager extends DefaultProgrammerManager {
     }
     
     /**
-     * Ecos command station does not provide Ops Mode on the LAN interface
+     * ECoS command station does not provide Ops Mode on the LAN interface.
      *
      * @return false
      */
@@ -33,8 +32,6 @@ public class EcosProgrammerManager extends DefaultProgrammerManager {
         java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
         retval.add(DIRECTBYTEMODE);
         return retval;
-    } 
+    }
+
 }
-
-
-

@@ -1,10 +1,8 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.Assert;
 
 /**
  * Note: Standalone only allows _one_ NamedBean, named e.g. RR1, which means certain tests
@@ -24,9 +22,8 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
     // The minimal setup for log4J
     @Before
     @Override
-    public void setUp() {   
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
         tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo(){
         });
         l = new StandaloneReporterManager(tc,"R"){
@@ -42,8 +39,7 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
     @After
     public void tearDown() {
         tc = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override

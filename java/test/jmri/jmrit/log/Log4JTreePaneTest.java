@@ -2,6 +2,7 @@ package jmri.jmrit.log;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -29,18 +30,39 @@ public class Log4JTreePaneTest {
                 "jmri.jmrit.log.Log4JTreePane").actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLogTreeAction"), true, true);
         Assert.assertNotNull(f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
+
+    @Test
+    public void testGetHelpTarget() {
+        Log4JTreePane t = new Log4JTreePane();
+        Assert.assertEquals("help target","package.jmri.jmrit.log.Log4JTreePane",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        Log4JTreePane t = new Log4JTreePane();
+        Assert.assertEquals("title",Bundle.getMessage("MenuItemLogTreeAction"),t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        Log4JTreePane t = new Log4JTreePane();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
+
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

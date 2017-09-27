@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -15,12 +14,11 @@ public class MarklinMenu extends JMenu {
     public MarklinMenu(MarklinSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinBundle");
         String title;
         if (memo != null) {
             title = memo.getUserName();
         } else {
-            title = rb.getString("MenuMarklin");
+            title = Bundle.getMessage("MenuMarklin");
         }
 
         setText(title);
@@ -31,7 +29,7 @@ public class MarklinMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new MarklinNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new MarklinNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 
@@ -60,5 +58,5 @@ public class MarklinMenu extends JMenu {
         String load;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class);
 }

@@ -17,6 +17,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -25,6 +26,7 @@ import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
@@ -49,6 +52,10 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static final String INTERPRETATION = "interpretation"; // NOI18N
     public static final String APPEARANCE_PREFS = "appearancePrefs"; // NOI18N
     public static final String APPEARANCES = "appearances"; // NOI18N
+    public static final String SHUT_DOWN = "shutdown"; // NOI18N
+    public static final String NO_MERGE = "NO_MERGE";
+    public static final String PROMPT   = "PROMPT";
+    public static final String MERGE_ALL = "MERGE_ALL";
     /**
      * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
      */
@@ -119,8 +126,12 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
-    private int _msIncrTime = 500;          // time in milliseconds between speed changes ramping up or down
-    private float _throttleIncr = 0.03f;    // throttle increment for each ramp speed change
+    private int _msIncrTime = 1000;          // time in milliseconds between speed changes ramping up or down
+    private float _throttleIncr = 0.0238f;  // throttle increment for each ramp speed change - 3 steps
+
+    public enum Shutdown {NO_MERGE, PROMPT, MERGE_ALL}
+    private Shutdown _shutdown = Shutdown.PROMPT;     // choice for handling session RosterSpeedProfiles
+    private float _mf = 0.8f;    // momentum factor (guess) for speed change
 
     /**
      * Get the default instance.
@@ -165,12 +176,12 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         }
     }
 
-    public void loadLayoutParams(Element child) {
-        if (child == null) {
+    public void loadLayoutParams(Element layoutParm) {
+        if (layoutParm == null) {
             return;
         }
         Attribute a;
-        if ((a = child.getAttribute(LAYOUT_SCALE)) != null) {
+        if ((a = layoutParm.getAttribute(LAYOUT_SCALE)) != null) {
             try {
                 setScale(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -178,12 +189,23 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute(SEARCH_DEPTH)) != null) {
+        if ((a = layoutParm.getAttribute(SEARCH_DEPTH)) != null) {
             try {
                 _searchDepth = a.getIntValue();
             } catch (DataConversionException ex) {
                 _searchDepth = 20;
                 log.error("Unable to read route search depth. Setting to default value (20).", ex);
+            }
+        }
+        Element shutdown = layoutParm.getChild(SHUT_DOWN);
+        if (shutdown != null) {
+            String choice = shutdown.getText();
+            if (MERGE_ALL.equals(choice)) {
+                _shutdown = Shutdown.MERGE_ALL;
+            } else if (NO_MERGE.equals(choice)) {
+                _shutdown = Shutdown.NO_MERGE;
+            } else {
+                _shutdown = Shutdown.PROMPT;
             }
         }
     }
@@ -347,6 +369,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         try {
             prefs.setAttribute(LAYOUT_SCALE, Float.toString(getLayoutScale()));
             prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
+            Element shutdownPref = new Element(SHUT_DOWN);
+            shutdownPref.setText(_shutdown.toString());
+            prefs.addContent(shutdownPref);
             root.addContent(prefs);
 
             prefs = new Element(SPEED_MAP_PARAMS);
@@ -641,6 +666,22 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public float getThrottleIncrement() {
         return _throttleIncr;
     }
+    
+    /**
+     * Get momentum factor
+     */
+    public float getMomentumFactor() {
+//      _mf = 1f - 22167 / ((_intervalTime / _throttleIncr) + 21667); // .1->.3 2->.9 *
+//      _mf = 1f - 33833 / ((_intervalTime / _throttleIncr) + 38333); // .1->.3 3->.9
+//      _mf = 1f - 45500 / ((_intervalTime / _throttleIncr) + 55000); // .1->.3 4->.9 **
+//      _mf = 1f - 44571 / ((_intervalTime / _throttleIncr) + 45714); // .1->.2 4->.9
+//      _mf = 1f - 100000 / ((_msIncrTime / _throttleIncr) + 187409); // excel **
+      _mf = 1f - 56297 / ((_msIncrTime / _throttleIncr) + 100000); // excel
+      if (_mf < 0.45f) {
+          _mf = 0.45f;            
+      }
+       return _mf; 
+    }
 
     /**
      * Set the throttle increment.
@@ -661,6 +702,13 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             this.openFile(FileUtil.getUserFilesPath() + "signal" + File.separator + "WarrantPreferences.xml");
             this.setInitialized(profile, true);
         }
+    }
+
+    protected void setShutdown(Shutdown set) {
+        _shutdown = set;
+    }
+    public Shutdown getShutdown() {
+        return _shutdown;
     }
 
     @Override

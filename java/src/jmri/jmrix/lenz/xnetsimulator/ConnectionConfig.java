@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.xnetsimulator;
 
 /**
- * Handle configuring an XPressNet layout connection via a XNetSimulator
+ * Handle configuring an XpressNet layout connection via a XNetSimulator
  * adapter.
  * <P>
  * This uses the {@link XNetSimulatorAdapter} class to do the actual connection.
@@ -22,7 +22,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -30,10 +30,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public String name() {
-        return "XPressNet Simulator";
+        return Bundle.getMessage("XNetSimulatorName");
     }
 
-    String manufacturerName = "Lenz";
+    String manufacturerName = "Lenz"; // NOI18N
 
     @Override
     public String getManufacturer() {
@@ -51,4 +51,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
             adapter = new XNetSimulatorAdapter();
         }
     }
+
 }

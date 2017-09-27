@@ -42,5 +42,5 @@ public class OlcbSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXml.class);
 }

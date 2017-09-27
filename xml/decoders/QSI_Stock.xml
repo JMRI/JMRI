@@ -923,16 +923,7 @@
         <splitVal highCV="56.254.15" factor="256"/>
       </variable>
     </variables>
-    <resets>
-      <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
-      <ifactReset label="Reset Individual Sounds" CVname="56.128.52" CV="56" PI="128" SI="52" default="113" item="CV56.128.52"/>
-      <ifactReset label="Reset Function Output Mappings" CVname="56.128.53" CV="56" PI="128" SI="53" default="113" item="CV56.128.53"/>
-      <ifactReset label="Reset QSI Feature Control" CVname="56.128.55" CV="56" PI="128" SI="55" default="113" item="CV56.128.55"/>
-      <ifactReset label="Reset QSI Configuration" CVname="56.128.56" CV="56" PI="128" SI="56" default="113" item="CV56.128.56"/>
-      <ifactReset label="Reset all standard NMRA CV's" CVname="56.128.253" CV="56" PI="128" SI="253" default="113" item="CV56.128.253"/>
-      <ifactReset label="Reset all QSI CV's" CVname="56.128.254" CV="56" PI="128" SI="254" default="113" item="CV56.128.254"/>
-      <ifactReset label="Reset all CV's" CVname="56.128.255" CV="56" PI="128" SI="255" default="113" item="CV56.128.255"/>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/qsi/ResetStandard.xml"/>
   </decoder>
   <pane>
     <column>

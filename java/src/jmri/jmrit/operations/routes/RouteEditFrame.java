@@ -64,7 +64,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     JTextField commentTextField = new JTextField(35);
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
     public static final String NAME = Bundle.getMessage("Name");
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -84,7 +84,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         String routeName = null;
 
         // load managers
-        routeManager = RouteManager.instance();
+        routeManager = InstanceManager.getDefault(RouteManager.class);
 
         // Set up the jtable in a Scroll Pane..
         routePane = new JScrollPane(routeTable);
@@ -94,10 +94,12 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         routeModel.initTable(this, routeTable, _route);
 
         if (_route != null) {
+            _route.addPropertyChangeListener(this);
             routeName = _route.getName();
             routeNameTextField.setText(routeName);
             commentTextField.setText(_route.getComment());
-            enableButtons(true);
+            enableButtons(!route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
+            addRouteButton.setEnabled(false); // override and disable
         } else {
             setTitle(Bundle.getMessage("TitleRouteAdd"));
             enableButtons(false);
@@ -212,7 +214,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
 
         // get notified if combo box gets modified
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
 
         // set frame size and route for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
@@ -321,11 +323,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         Route route = routeManager.newRoute(routeNameTextField.getText());
         routeModel.initTable(this, routeTable, route);
         _route = route;
-        // enable checkboxes
         enableButtons(true);
         // assign route to a train?
         if (_train != null) {
             _train.setRoute(route);
+        }
+        if (_route != null) {
+            _route.addPropertyChangeListener(this);
         }
         saveRoute();
     }
@@ -392,12 +396,15 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
             tpm.stopPersisting(routeTable);
         });
+        if (_route != null) {
+            _route.removePropertyChangeListener(this);
+        }
         routeModel.dispose();
         super.dispose();
     }
 
     private void updateComboBoxes() {
-        LocationManager.instance().updateComboBox(locationBox);
+        InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
     }
 
     // if the route has a departure time in the first location set the showDepartTime radio button
@@ -421,7 +428,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateComboBoxes();
         }
+        if (e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
+            enableButtons(!_route.getStatus().equals(Route.TRAIN_BUILT)); // do not allow user to modify a built train
+            addRouteButton.setEnabled(false); // override and disable
+        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteEditFrame.class);
 }

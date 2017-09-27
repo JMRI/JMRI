@@ -15,8 +15,7 @@ public class DCCppSerialPortControllerTest extends jmri.jmrix.AbstractSerialPort
     @Override
     @Before
     public void setUp(){
-       apps.tests.Log4JFixture.setUp();
-       JUnitUtil.resetInstanceManager();
+       JUnitUtil.setUp();
        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
        apc = new DCCppSerialPortController(){
@@ -59,8 +58,7 @@ public class DCCppSerialPortControllerTest extends jmri.jmrix.AbstractSerialPort
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+       JUnitUtil.tearDown();
     }
 
 }

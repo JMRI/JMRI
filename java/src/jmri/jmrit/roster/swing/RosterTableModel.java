@@ -358,5 +358,5 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
     }
-    private final static Logger log = LoggerFactory.getLogger(RosterTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterTableModel.class);
 }

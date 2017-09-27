@@ -8,7 +8,7 @@ import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 /**
- * Frame for user input of Ecos messages
+ * Frame for user input of ECoS messages
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
@@ -29,15 +29,15 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
         {
-            jLabel1.setText("Command: ");
+            jLabel1.setText(Bundle.getMessage("CommandLabel"));
             jLabel1.setVisible(true);
 
-            sendButton.setText("Send");
+            sendButton.setText(Bundle.getMessage("ButtonSend"));
             sendButton.setVisible(true);
-            sendButton.setToolTipText("Send packet");
+            sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
             packetTextField.setText("");
-            packetTextField.setToolTipText("Enter command");
+            packetTextField.setToolTipText(Bundle.getMessage("EnterASCIIToolTip"));
             packetTextField.setMaximumSize(new Dimension(packetTextField
                     .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
@@ -62,9 +62,9 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
     @Override
     public String getTitle() {
         if (memo != null) {
-            return "Send " + memo.getUserName() + " command";
+            return Bundle.getMessage("SendXCommandTitle", memo.getUserName());
         }
-        return "Send ECOS command";
+        return Bundle.getMessage("MenuItemSendPacket");
     }
 
     @Override

@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.configurexml;
 
-import jmri.jmrix.cmri.serial.SerialTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,5 +34,6 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerXml.class);
+
 }

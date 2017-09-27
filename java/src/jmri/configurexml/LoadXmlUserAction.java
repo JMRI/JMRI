@@ -37,7 +37,8 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("LoadPanelTitle"));
+        userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonOpen")); // is in jmri.NBBundle
+        // Cancel button can't be localized like userFileChooser.setCancelButtonText() TODO
         userFileChooser.setDialogTitle(rb.getString("LoadPanelTitle"));
 
         boolean results = loadFile(userFileChooser);
@@ -71,6 +72,6 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadXmlUserAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadXmlUserAction.class);
 
 }

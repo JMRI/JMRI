@@ -794,7 +794,19 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Edit Conditional </a>
+<a href="package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Add/Edit Conditionals using the List Editor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Add/Edit Conditionals using the Tree Editor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/conditional/StateVariableActionList.shtml">Conditional State Variable and Action List </a>
 <ul></ul>
 </li>
 
@@ -1008,7 +1020,7 @@
 
   
 <li>
-<a href="">Handling Errors </a>
+<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors </a>
 <ul></ul>
 </li>
 
@@ -1666,12 +1678,6 @@
 <ul>
   
 <li>
-<a href="package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code  Button </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower </a>
 <ul></ul>
 </li>
@@ -1679,18 +1685,6 @@
   
 <li>
 <a href="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever </a>
 <ul></ul>
 </li>
 

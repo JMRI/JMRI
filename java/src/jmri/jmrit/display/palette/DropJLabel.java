@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
@@ -120,7 +121,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
 //        _catalog.setBackground(label);
         _iconMap.put(label.getName(), newIcon);
         if (!_update) {  // only prompt for save from palette
-            ImageIndexEditor.indexChanged(true);
+            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
         e.dropComplete(true);
         if (log.isDebugEnabled()) {
@@ -129,5 +130,5 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DropJLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DropJLabel.class);
 }

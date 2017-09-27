@@ -22,12 +22,15 @@
     <div id="mainContent">
       <h1>Adding/Editing Turnouts</h1>
 
-      <p>When adding a Turnout, from the drop down list select the
-      System (hardware connection) to which the Turnout is
-      attached.</p><img src="images/AddTurnout.png">
+      <p>When adding a Turnout, from the "System connection:"
+      drop down list select the hardware connection this
+      Turnout is attached to.</p><img src="images/AddTurnout.png">
 
-      <p>Enter a valid Hardware Address for that Turnout and if
-      desired enter a User Name.</p>
+      <p>Enter a valid Hardware Address for the Turnout (look at
+      the <a href="../../../../html/doc/Technical/Names.shtml#entrysummary">Tooltip</a>
+      for accepted input options per system).
+      If desired, enter a User Name which can be anything you
+      wish to describe the Turnout.</p>
 
       <p>One of the newer options for the System, <a href=
       "../../../../html/hardware/can/cbus/index.shtml">MERG</a>,

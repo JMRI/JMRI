@@ -2,12 +2,15 @@ package jmri.jmrix.grapevine.nodeconfig;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import jmri.jmrix.grapevine.ActiveFlag;
 import jmri.jmrix.grapevine.SerialMessage;
@@ -25,23 +28,21 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodeconfig.NodeConfigBundle");
-
-    protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
-    protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
+    protected JTextField nodeAddrField = new JTextField(3);
+    protected JLabel nodeAddrStatic = new JLabel("000");
     protected javax.swing.JComboBox<String> nodeTypeBox;
 
-    protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
-    protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
-    protected javax.swing.JButton deleteButton = new javax.swing.JButton(rb.getString("ButtonDelete"));
-    protected javax.swing.JButton initButton = new javax.swing.JButton(rb.getString("ButtonInit"));
-    protected javax.swing.JButton doneButton = new javax.swing.JButton(rb.getString("ButtonDone"));
-    protected javax.swing.JButton updateButton = new javax.swing.JButton(rb.getString("ButtonUpdate"));
-    protected javax.swing.JButton cancelButton = new javax.swing.JButton(rb.getString("ButtonCancel"));
+    protected JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    protected JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    protected JButton initButton = new JButton(Bundle.getMessage("ButtonInit"));
+    protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+    protected JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    protected JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
-    protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
+    protected JLabel statusText1 = new JLabel();
+    protected JLabel statusText2 = new JLabel();
+    protected JLabel statusText3 = new JLabel();
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
@@ -52,12 +53,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected boolean errorInStatus1 = false;
     protected boolean errorInStatus2 = false;
-    protected String stdStatus1 = rb.getString("NotesStd1");
-    protected String stdStatus2 = rb.getString("NotesStd2");
-    protected String stdStatus3 = rb.getString("NotesStd3");
-    protected String editStatus1 = rb.getString("NotesEdit1");
-    protected String editStatus2 = rb.getString("NotesEdit2");
-    protected String editStatus3 = rb.getString("NotesEdit3");
+    protected String stdStatus1 = Bundle.getMessage("NotesStd1");
+    protected String stdStatus2 = Bundle.getMessage("NotesStd2");
+    protected String stdStatus3 = Bundle.getMessage("NotesStd3");
+    protected String editStatus1 = Bundle.getMessage("NotesEdit1");
+    protected String editStatus2 = Bundle.getMessage("NotesEdit2");
+    protected String editStatus3 = Bundle.getMessage("NotesEdit3");
 
     /**
      * Constructor method
@@ -71,7 +72,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     @Override
     public void initComponents() {
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("ConfigNodesTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -83,16 +84,16 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // panel11 is the node address and type
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
-        panel11.add(new JLabel(rb.getString("LabelNodeAddress") + " "));
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
         panel11.add(nodeAddrField);
-        nodeAddrField.setToolTipText(rb.getString("TipNodeAddress"));
+        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         nodeAddrField.setText("1");
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
-        panel11.add(new JLabel("   " + rb.getString("LabelNodeType") + " "));
+        panel11.add(new JLabel("   " + Bundle.getMessage("LabelNodeType") + " "));
         nodeTypeBox = new JComboBox<String>(SerialNode.getBoardNames());
         panel11.add(nodeTypeBox);
-        nodeTypeBox.setToolTipText(rb.getString("TipNodeType"));
+        nodeTypeBox.setToolTipText(Bundle.getMessage("TipNodeType"));
         contentPane.add(panel11);
 
         // Set up the notes panel
@@ -118,91 +119,91 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel3.add(panel33);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                rb.getString("BoxLabelNotes"));
+                Bundle.getMessage("BoxLabelNotes"));
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
 
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        addButton.setText(rb.getString("ButtonAdd"));
+        addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
-        addButton.setToolTipText(rb.getString("TipAddButton"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
+        addButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 addButtonActionPerformed();
             }
         });
         panel4.add(addButton);
-        editButton.setText(rb.getString("ButtonEdit"));
+        editButton.setText(Bundle.getMessage("ButtonEdit"));
         editButton.setVisible(true);
-        editButton.setToolTipText(rb.getString("TipEditButton"));
+        editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         panel4.add(editButton);
-        editButton.addActionListener(new java.awt.event.ActionListener() {
+        editButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 editButtonActionPerformed();
             }
         });
         panel4.add(deleteButton);
-        deleteButton.setText(rb.getString("ButtonDelete"));
+        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
-        deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
+        deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         panel4.add(deleteButton);
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 deleteButtonActionPerformed();
             }
         });
 
         panel4.add(doneButton);
-        doneButton.setText(rb.getString("ButtonDone"));
+        doneButton.setText(Bundle.getMessage("ButtonDone"));
         doneButton.setVisible(true);
-        doneButton.setToolTipText(rb.getString("TipDoneButton"));
+        doneButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         panel4.add(doneButton);
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
+        doneButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 doneButtonActionPerformed();
             }
         });
 
         panel4.add(updateButton);
-        updateButton.setText(rb.getString("ButtonUpdate"));
+        updateButton.setText(Bundle.getMessage("ButtonUpdate"));
         updateButton.setVisible(true);
-        updateButton.setToolTipText(rb.getString("TipUpdateButton"));
+        updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         panel4.add(updateButton);
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 updateButtonActionPerformed();
             }
         });
         updateButton.setVisible(false);
 
         panel4.add(initButton);
-        initButton.setText(rb.getString("ButtonInit"));
+        initButton.setText(Bundle.getMessage("ButtonInit"));
         initButton.setVisible(true);
-        initButton.setToolTipText(rb.getString("TipInitButton"));
+        initButton.setToolTipText(Bundle.getMessage("TipInitButton"));
         panel4.add(initButton);
-        initButton.addActionListener(new java.awt.event.ActionListener() {
+        initButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 initButtonActionPerformed();
             }
         });
         initButton.setVisible(ActiveFlag.isActive());
 
         panel4.add(cancelButton);
-        cancelButton.setText(rb.getString("ButtonCancel"));
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
-        cancelButton.setToolTipText(rb.getString("TipCancelButton"));
+        cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 cancelButtonActionPerformed();
             }
         });
@@ -236,8 +237,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get a SerialNode corresponding to this node address if one exists
         curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            statusText1.setText(rb.getString("Error1") + Integer.toString(nodeAddress)
-                    + rb.getString("Error2"));
+            statusText1.setText(Bundle.getMessage("Error1") + Integer.toString(nodeAddress)
+                    + Bundle.getMessage("Error2"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -256,7 +257,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         resetNotes();
         changedNode = true;
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackAdd") + " "
+        statusText1.setText(Bundle.getMessage("FeedBackAdd") + " "
                 + Integer.toString(nodeAddress));
         errorInStatus1 = true;
     }
@@ -273,7 +274,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the SerialNode corresponding to this node address
         curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -312,7 +313,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the SerialNode corresponding to this node address
         curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -334,7 +335,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the SerialNode corresponding to this node address
         curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -342,15 +343,15 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // confirm deletion with the user
         if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
-                this, rb.getString("ConfirmDelete1") + "\n"
-                + rb.getString("ConfirmDelete2"), rb.getString("ConfirmDeleteTitle"),
+                this, Bundle.getMessage("ConfirmDelete1") + "\n"
+                + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"),
                 javax.swing.JOptionPane.OK_CANCEL_OPTION,
                 javax.swing.JOptionPane.WARNING_MESSAGE)) {
             // delete this node
             SerialTrafficController.instance().deleteNode(nodeAddress);
             // provide user feedback
             resetNotes();
-            statusText1.setText(rb.getString("FeedBackDelete") + " "
+            statusText1.setText(Bundle.getMessage("FeedBackDelete") + " "
                     + Integer.toString(nodeAddress));
             errorInStatus1 = true;
             changedNode = true;
@@ -381,8 +382,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (changedNode) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
-                    rb.getString("Reminder1") + "\n" + rb.getString("Reminder2"),
-                    rb.getString("ReminderTitle"),
+                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
@@ -419,7 +420,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText2.setText(stdStatus2);
         statusText3.setText(stdStatus3);
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackUpdate") + " "
+        statusText1.setText(Bundle.getMessage("FeedBackUpdate") + " "
                 + Integer.toString(nodeAddress));
         errorInStatus1 = true;
     }
@@ -505,14 +506,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         try {
             addr = Integer.parseInt(nodeAddrField.getText());
         } catch (Exception e) {
-            statusText1.setText(rb.getString("Error5"));
+            statusText1.setText(Bundle.getMessage("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
             return -1;
         }
         if ((addr < 0) || (addr > 255)) {
-            statusText1.setText(rb.getString("Error6"));
+            statusText1.setText(Bundle.getMessage("Error6"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -521,6 +522,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         return (addr);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

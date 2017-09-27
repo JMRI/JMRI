@@ -29,10 +29,10 @@ public class Z21MonFrame extends jmri.jmrix.AbstractMonFrame implements Z21Liste
 
     @Override
     protected String title() {
-        return "Z21 Traffic";
+        return Bundle.getMessage("Z21TrafficTitle");
     }
 
-    // ieee802.15.4 Listener methods
+    // Z21 Listener methods
     @Override
     public void message(Z21Message m) {
         nextLine(m.toMonitorString() + "\n", m.toString() + "\n");

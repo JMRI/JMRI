@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing.packetgen;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,15 +20,30 @@ public class PacketGenPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        PacketGenPanel t = new PacketGenPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        PacketGenPanel t = new PacketGenPanel();
+        Assert.assertEquals("title","Send Tams command",t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        PacketGenPanel t = new PacketGenPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

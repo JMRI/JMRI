@@ -1,12 +1,10 @@
 package jmri.jmrix.nce.consist;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -20,19 +18,36 @@ public class NceConsistEditPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        NceConsistEditPanel t = new NceConsistEditPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.consist.NceConsistEditFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        NceConsistEditPanel t = new NceConsistEditPanel();
+        Assert.assertEquals("title","NCE_: Edit NCE Consist",t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        NceConsistEditPanel t = new NceConsistEditPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsistEditPanelTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(NceConsistEditPanelTest.class);
 
 }

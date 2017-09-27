@@ -35,8 +35,8 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
     public void message(XNetMessage msg);
 
     /**
-     * Member function invoked by an XNetInterface implementation to notify * a
-     * sender that an outgoing message timed out and was dropped from the *
+     * Member function invoked by an XNetInterface implementation to notify a
+     * sender that an outgoing message timed out and was dropped from the
      * queue.
      */
     public void notifyTimeout(XNetMessage msg);

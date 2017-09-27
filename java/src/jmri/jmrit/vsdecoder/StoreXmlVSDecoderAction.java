@@ -87,10 +87,10 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
      // Throttle-specific stuff below.  Kept for reference
      /*
              // throttle list window
-             children.add(ThrottleFrameManager.instance().getThrottlesListPanel().getXml() );
+             children.add(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getXml() );
      
              // throttle windows
-             for (Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleWindows(); i.hasNext();) {
+             for (Iterator<ThrottleWindow> i = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottleWindows(); i.hasNext();) {
              ThrottleWindow tw = i.next();
              Element throttleElement = tw.getXml();
              children.add(throttleElement);
@@ -119,6 +119,6 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderAction.class);
 
 }

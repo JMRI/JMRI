@@ -39,7 +39,7 @@ public class JythonSiglet extends Siglet {
      * <LI>Run the python defineIO routine
      * </UL>
      * Initialization of the Python in the actual script file is deferred until
-     * the {@link #handle} method.
+     * the {@link #defineIO} method.
      */
     @Override
     public void defineIO() {
@@ -120,6 +120,6 @@ public class JythonSiglet extends Siglet {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JythonSiglet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JythonSiglet.class);
 
 }

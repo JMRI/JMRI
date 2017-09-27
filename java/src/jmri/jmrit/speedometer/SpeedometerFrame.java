@@ -116,10 +116,6 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     public SpeedometerFrame() {
         super(false, false);
-        //Install the named bean handle if not installed, which can happen if opened from DP3
-        if (jmri.InstanceManager.getNullableDefault(jmri.NamedBeanHandleManager.class) == null) {
-            jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        }
 
         setInputBehavior(true, true, true);
 
@@ -134,7 +130,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         setTitle(Bundle.getMessage("TitleSpeedometer"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        // need a captive panel editor for 
+        // need a captive panel editor for
         // the sensor icons to work
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor();
         editor.makePrivateWindow();
@@ -852,5 +848,5 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SpeedometerFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SpeedometerFrame.class);
 }

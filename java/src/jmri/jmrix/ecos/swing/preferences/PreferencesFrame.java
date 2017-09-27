@@ -23,7 +23,7 @@ public class PreferencesFrame extends jmri.util.JmriJFrame {
 
         preferencesPane = new PreferencesPane(adaptermemo.getPreferenceManager());
 
-        setTitle("ECoS User Preferences");
+        setTitle(Bundle.getMessage("MenuItemECoSPrefs"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(preferencesPane);

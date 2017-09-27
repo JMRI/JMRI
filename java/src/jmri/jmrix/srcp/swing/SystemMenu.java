@@ -3,8 +3,8 @@ package jmri.jmrix.srcp.swing;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
-import jmri.jmrix.srcp.swing.srcpmon.SRCPMonAction;
 import jmri.jmrix.srcp.swing.packetgen.PacketGenAction;
+import jmri.jmrix.srcp.swing.srcpmon.SRCPMonAction;
 
 /**
  * Create a "Systems" menu containing the system-specific tools

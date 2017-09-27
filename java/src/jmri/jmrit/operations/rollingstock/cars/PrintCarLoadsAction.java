@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarLoadsAction extends AbstractAction {
 
-    CarManager manager = CarManager.instance();
+    CarManager manager = InstanceManager.getDefault(CarManager.class);
 
     public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {
         super(actionName);
@@ -68,11 +69,11 @@ public class PrintCarLoadsAction extends AbstractAction {
             }
 
             // Loop through the Roster, printing as needed
-            String[] carTypes = CarTypes.instance().getNames();
-            Hashtable<String, List<CarLoad>> list = CarLoads.instance().getList();
+            String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
+            Hashtable<String, List<CarLoad>> list = InstanceManager.getDefault(CarLoads.class).getList();
             try {
                 String s = Bundle.getMessage("Type") + TAB
-                        + tabString(Bundle.getMessage("Load"), CarLoads.instance().getMaxNameLength() + 1)
+                        + tabString(Bundle.getMessage("Load"), InstanceManager.getDefault(CarLoads.class).getMaxNameLength() + 1)
                         + Bundle.getMessage("Type") + "  " + Bundle.getMessage("Priority") + "  "
                         + Bundle.getMessage("LoadPickupMessage") + "   " + Bundle.getMessage("LoadDropMessage")
                         + NEW_LINE;
@@ -85,8 +86,8 @@ public class PrintCarLoadsAction extends AbstractAction {
                     boolean printType = true;
                     for (CarLoad carLoad : carLoads) {
                         // don't print out default load or empty
-                        if ((carLoad.getName().equals(CarLoads.instance().getDefaultEmptyName()) || carLoad.getName()
-                                .equals(CarLoads.instance().getDefaultLoadName()))
+                        if ((carLoad.getName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) || carLoad.getName()
+                                .equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName()))
                                 && carLoad.getPickupComment().equals(CarLoad.NONE)
                                 && carLoad.getDropComment().equals(CarLoad.NONE)
                                 && carLoad.getPriority().equals(CarLoad.PRIORITY_LOW)) {
@@ -98,7 +99,7 @@ public class PrintCarLoadsAction extends AbstractAction {
                             printType = false;
                         }
                         StringBuffer buf = new StringBuffer(TAB);
-                        buf.append(tabString(carLoad.getName(), CarLoads.instance().getMaxNameLength() + 1));
+                        buf.append(tabString(carLoad.getName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength() + 1));
                         buf.append(tabString(carLoad.getLoadType(), 6)); // load or empty
                         buf.append(tabString(carLoad.getPriority(), 5)); // low or high
                         buf.append(tabString(carLoad.getPickupComment(), 27));
@@ -125,5 +126,5 @@ public class PrintCarLoadsAction extends AbstractAction {
         return buf.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);
 }

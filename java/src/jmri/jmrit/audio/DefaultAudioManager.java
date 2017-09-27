@@ -6,7 +6,6 @@ import java.util.List;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.managers.AbstractAudioManager;
@@ -37,7 +36,9 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static int countBuffers = 0;
 
     /**
-     * Reference to the currently active AudioFactory
+     * Reference to the currently active AudioFactory. 
+     * Because of underlying (external to Java) implementation details,
+     * JMRI only ever has one AudioFactory, so we make this static.
      */
     private static AudioFactory activeAudioFactory = null;
 
@@ -163,7 +164,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.getDefault(jmri.AudioManager.class).cleanUp();
+                        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
                         return true;
                     }
                 };
@@ -182,33 +183,29 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")
-    public synchronized void deregister(NamedBean s) {
+    public synchronized void deregister(Audio s) {
         super.deregister(s);
-        if (s instanceof Audio) {
-            // Decrement the relevant Audio object counter
-            switch (((Audio) s).getSubType()) {
-                case (Audio.BUFFER): {
-                    countBuffers--;
-                    break;
-                }
-                case (Audio.SOURCE): {
-                    countSources--;
-                    break;
-                }
-                case (Audio.LISTENER): {
-                    countListeners--;
-                    break;
-                }
-                default:
-                    throw new IllegalArgumentException();
+        // Decrement the relevant Audio object counter
+        switch (s.getSubType()) {
+            case (Audio.BUFFER): {
+                countBuffers--;
+                break;
             }
-        } else {
-            throw new IllegalArgumentException(s.getSystemName() + " is not an Audio object");
+            case (Audio.SOURCE): {
+                countSources--;
+                break;
+            }
+            case (Audio.LISTENER): {
+                countListeners--;
+                break;
+            }
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
     @Override
-    public void cleanUp() {
+    public void cleanup() {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
         activeAudioFactory.cleanup();
@@ -235,6 +232,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private volatile static DefaultAudioManager _instance;
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 
 }

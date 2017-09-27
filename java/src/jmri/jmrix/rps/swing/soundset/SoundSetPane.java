@@ -139,7 +139,7 @@ public class SoundSetPane extends JPanel
     public void notify(Reading r) {
         try {
             // right ID?
-            if (!r.getID().equals(id.getText())) {
+            if (!r.getId().equals(id.getText())) {
                 return;
             }
 
@@ -184,5 +184,5 @@ public class SoundSetPane extends JPanel
         // don't have to do anything
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class);
 }

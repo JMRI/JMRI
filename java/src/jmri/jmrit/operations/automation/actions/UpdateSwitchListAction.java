@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
@@ -15,9 +16,9 @@ public class UpdateSwitchListAction extends Action {
 
     @Override
     public String getName() {
-        if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled()) {
+        if (Setup.isSwitchListRealTime() && !InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled()) {
             return Bundle.getMessage("PrintSwitchListChanges");
-        } else if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled()) {
+        } else if (Setup.isSwitchListRealTime() && InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled()) {
             return Bundle.getMessage("PreviewSwitchListChanges");
         } else {
             return Bundle.getMessage("UpdateSwitchList");
@@ -28,7 +29,7 @@ public class UpdateSwitchListAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             setRunning(true);
-            TrainScheduleManager.instance().buildSwitchLists();
+            InstanceManager.getDefault(TrainScheduleManager.class).buildSwitchLists();
             finishAction(true);
         }
     }

@@ -26,6 +26,8 @@ public abstract class Jynstrument extends JPanel {
     /**
      * Access to the context object to which this Jynstrument was attached when
      * it was created.
+     *
+     * @return the context object
      */
     public Object getContext() {
         return mContext;
@@ -44,8 +46,9 @@ public abstract class Jynstrument extends JPanel {
     }
 
     /**
-     * Access to folder containing defining Jython script, e.g. for other
-     * resources
+     * Get the folder containing the defining Jython script.
+     *
+     * @return the parent folder of the script
      */
     public String getFolder() {
         return jynstrumentFolder;
@@ -81,8 +84,7 @@ public abstract class Jynstrument extends JPanel {
         try {
             return (Class.forName(getExpectedContextClassName()).isAssignableFrom(mContext.getClass()));
         } catch (ClassNotFoundException e) {
-            log.error("Class " + getExpectedContextClassName() + " not found " + e);
-            e.printStackTrace();
+            log.error("Class {} not found.", getExpectedContextClassName(), e);
         }
         return false;
     }
@@ -93,7 +95,7 @@ public abstract class Jynstrument extends JPanel {
 
     protected abstract void quit();
 
-    private final static Logger log = LoggerFactory.getLogger(Jynstrument.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Jynstrument.class);
 
     public JPopupMenu getPopUpMenu() {
         return myPopUpMenu;
@@ -104,7 +106,7 @@ public abstract class Jynstrument extends JPanel {
     }
 
     public void setXml(Element e) {
-        return;
+        // do nothing by default
     }
 
     public Element getXml() {

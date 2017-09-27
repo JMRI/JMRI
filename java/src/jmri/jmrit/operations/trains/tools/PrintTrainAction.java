@@ -111,5 +111,5 @@ public class PrintTrainAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintTrainAction.class);
 }

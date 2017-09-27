@@ -1,9 +1,10 @@
 package jmri.jmrix.can.cbus.swing.console;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,23 +15,59 @@ import org.junit.Test;
  */
 public class CbusConsolePaneTest {
 
+    jmri.jmrix.can.CanSystemConnectionMemo memo = null;
+    jmri.jmrix.can.TrafficController tc = null;
+
     @Test
     public void testCtor() {
         CbusConsolePane pane = new CbusConsolePane();
         Assert.assertNotNull("exists", pane);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        CbusConsolePane pane = new CbusConsolePane();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents(memo);
+    }
+
+    @Test
+    public void testInitComponentsNoArgs() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        CbusConsolePane pane = new CbusConsolePane();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
+    public void testInitContext() throws Exception {
+        CbusConsolePane pane = new CbusConsolePane();
+        // for now, just makes ure there isn't an exception.
+        pane.initContext(memo);
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        CbusConsolePane pane = new CbusConsolePane();
+        Assert.assertEquals("help target","package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        CbusConsolePane pane = new CbusConsolePane();
+        Assert.assertEquals("title","CBUS Console",pane.getTitle());
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        memo = new jmri.jmrix.can.CanSystemConnectionMemo();
+        tc = new jmri.jmrix.can.TrafficControllerScaffold();
+        memo.setTrafficController(tc);
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 
 }

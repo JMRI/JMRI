@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
+<!-- version 1.2 - Ronald Kuhn - add more german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Servos</name>
   <name xml:lang="it">Comandi Servo</name>
@@ -42,6 +43,7 @@
           <label>Function Allocation</label>
           <label xml:lang="it">Allocazione Funzioni</label>
           <label xml:lang="cs">Přiřazení funkcí</label>
+          <label xml:lang="de">Funktionszuordnung</label>
         </display>
         <label>
           <text> </text>
@@ -52,6 +54,7 @@
               <label>Rotation Speed</label>
               <label xml:lang="it">Velocità di Rotazione</label>
               <label xml:lang="cs">Rychlost otáčení</label>
+              <label xml:lang="de">Umlaufzeit</label>
             </display>
           </column>
           <column>
@@ -70,16 +73,19 @@
           <label>Left Stop</label>
           <label xml:lang="it">Stop Sinistro</label>
           <label xml:lang="cs">Levá pozice</label>
+          <label xml:lang="de">Endstellung links</label>
         </display>
         <display item="Servo 1 Centre">
           <label>Centre</label>
           <label xml:lang="it">Centro</label>
           <label xml:lang="cs">Střed</label>
+          <label xml:lang="de">Mittelstellung</label>
         </display>
         <display item="Servo 1 Right Stop">
           <label>Right Stop</label>
           <label xml:lang="it">Stop destro</label>
           <label xml:lang="cs">Pravá pozice</label>
+          <label xml:lang="de">Endstellung rechts</label>
         </display>
         <label>
           <text> </text>
@@ -104,6 +110,7 @@
           <label>Function Allocation</label>
           <label xml:lang="it">Allocazione Funzioni</label>
           <label xml:lang="cs">Přiřazení funkcí</label>
+          <label xml:lang="de">Funktionszuordnung</label>
         </display>
         <label>
           <text> </text>
@@ -114,6 +121,7 @@
               <label>Rotation Speed</label>
               <label xml:lang="it">Velocità di Rotazione</label>
               <label xml:lang="cs">Rychlost otáčení</label>
+              <label xml:lang="de">Umlaufzeit</label>
             </display>
           </column>
           <column>
@@ -132,16 +140,19 @@
           <label>Left Stop</label>
           <label xml:lang="it">Stop Sinistro</label>
           <label xml:lang="cs">Levá pozice</label>
+          <label xml:lang="de">Endstellung links</label>
         </display>
         <display item="Servo 2 Centre">
           <label>Centre</label>
           <label xml:lang="it">Centro</label>
           <label xml:lang="cs">Střed</label>
+          <label xml:lang="de">Mittelstellung</label>
         </display>
         <display item="Servo 2 Right Stop">
           <label>Right Stop</label>
           <label xml:lang="it">Stop destro</label>
           <label xml:lang="cs">Pravá pozice</label>
+          <label xml:lang="de">Endstellung rechts</label>
         </display>
         <label>
           <text> </text>

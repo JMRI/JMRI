@@ -273,8 +273,7 @@
       Also the entire status row can be removed by the <b>Delete
       Status</b> button - or restored by the <b>Add Missing
       Status</b> button.</p>
-
-      <p><!--#include virtual="/Footer" --></p>
+      <p><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

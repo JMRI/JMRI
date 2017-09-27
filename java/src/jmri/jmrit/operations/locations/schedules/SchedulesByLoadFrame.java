@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // combo box
-    JComboBox<String> typesComboBox = CarTypes.instance().getComboBox();
+    JComboBox<String> typesComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
     JComboBox<String> loadsComboBox = new JComboBox<>();
 
     // panels
@@ -45,7 +46,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     JCheckBox allTypesCheckBox = new JCheckBox(Bundle.getMessage("allTypes"));
 
     // managers'
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public SchedulesByLoadFrame() {
         super(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
@@ -90,8 +91,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
         // property changes
         locationManager.addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarLoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -129,10 +130,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
     private void updateLoadComboBox() {
         if (allTypesCheckBox.isSelected()) {
-            CarLoads.instance().updateComboBox(loadsComboBox);
+            InstanceManager.getDefault(CarLoads.class).updateComboBox(loadsComboBox);
         } else if (typesComboBox.getSelectedItem() != null) {
             String type = (String) typesComboBox.getSelectedItem();
-            CarLoads.instance().updateComboBox(type, loadsComboBox);
+            InstanceManager.getDefault(CarLoads.class).updateComboBox(type, loadsComboBox);
         }
     }
 
@@ -181,11 +182,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         // create string Receive(type, delivery, road, load)
                         String s = si.getTypeName();
                         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
-                                TrainScheduleManager.instance()
+                                InstanceManager.getDefault(TrainScheduleManager.class)
                                         .getScheduleById(si.getSetoutTrainScheduleId()) != null) {
                             s = s +
                                     ", " +
-                                    TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId())
+                                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getSetoutTrainScheduleId())
                                             .getName();
                         } else {
                             s = s + ",";
@@ -200,10 +201,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         // create string Ship(load, pickup)
                         s = "";
                         if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
-                                TrainScheduleManager.instance()
+                                InstanceManager.getDefault(TrainScheduleManager.class)
                                         .getScheduleById(si.getPickupTrainScheduleId()) != null) {
                             s = ", " +
-                                    TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId())
+                                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getPickupTrainScheduleId())
                                             .getName();
                         }
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") +
@@ -238,8 +239,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarLoads.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
         for (Track spur : locationManager.getTracks(Track.SPUR)) {
             Schedule sch = spur.getSchedule();
             if (sch == null) {
@@ -256,10 +257,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
-            CarTypes.instance().updateComboBox(typesComboBox);
+            InstanceManager.getDefault(CarTypes.class).updateComboBox(typesComboBox);
         }
         if (e.getSource().getClass().equals(CarLoads.class)) {
-            CarLoads.instance().updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
+            InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
         }
         if (e.getSource().getClass().equals(Schedule.class) ||
                 e.getSource().getClass().equals(LocationManager.class) ||
@@ -268,6 +269,6 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
 
 }

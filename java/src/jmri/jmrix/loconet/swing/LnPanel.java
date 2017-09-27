@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPanelInterface {
 
     /**
-     * make "memo" object available as convenience
+     * Make "memo" object available as convenience.
      */
     protected LocoNetSystemConnectionMemo memo;
 
@@ -33,7 +33,9 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
     public String getTitle(String menuTitle) { return getTitleHelper(memo, menuTitle); }
     
     /**
-     * Static to allow code to be shared by other LnPanelInterface implementations
+     * Create menu title from connection name.
+     * <p>
+     * Static to allow code to be shared by other LnPanelInterface implementations.
      */
     public static String getTitleHelper(LocoNetSystemConnectionMemo memo, String menuTitle) {
         String uName = "";

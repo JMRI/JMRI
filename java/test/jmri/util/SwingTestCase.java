@@ -27,9 +27,9 @@ public class SwingTestCase extends JFCTestCase {
 
     /**
      * Get the displayed content of a JComponent.
-     *
+     * <p>
      * static so that it can in invoked outside SwingTestCases subclasses
-     *
+     * <p>
      * Note: this does no adjustment, e.g. pack, etc. That should have been
      * already been done as required.
      *

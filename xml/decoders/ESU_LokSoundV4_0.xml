@@ -27,13 +27,13 @@
     <version author="Dave Heap" version="6" lastUpdated="20121230"/>
     <!-- ver7 added support for new mfx&reg; speed table -->
     <version author="Dave Heap" version="7" lastUpdated="20130105"/>
-    <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
-    moved all non-indexed CVs to v4standardCVs.xml 
-    created new xi:include /xml/decoders/esu/v4cv21.22.xml 
-    created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
-    added new items to /xml/programmers/parts/AnalogControlsPane.xml 
-    corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
-    moved many items to more appropriate panes 
+    <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
     updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
     <version author="Dave Heap" version="8" lastUpdated="20130429"/>
     <!-- ver9 indexed CV fixes -->
@@ -54,6 +54,10 @@
     <version author="Dave Heap" version="16" lastUpdated="20150427"/>
     <!-- ver17 added LokSound V4.0 M4,LokSound V4.0 M4 OEM -->
     <version author="Dave Heap" version="17" lastUpdated="20161101"/>
+    <!-- ver18 added German translation -->
+    <version author="Ronald Kuhn" version="18" lastUpdated="20170722"/>
+    <!-- ver19 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
+    <version author="Dave Heap" version="19" lastUpdated="20170819"/>
     <decoder>
         <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
@@ -97,32 +101,7 @@
             </model>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Light</functionlabel>
-                <functionlabel num="1" lockable="true">Snd</functionlabel>
-                <functionlabel num="2" lockable="false">SS3</functionlabel>
-                <functionlabel num="3" lockable="true">SS4</functionlabel>
-                <functionlabel num="4" lockable="true">AUX2+SS5</functionlabel>
-                <functionlabel num="5" lockable="true">SS6</functionlabel>
-                <functionlabel num="6" lockable="true">Switching</functionlabel>
-                <functionlabel num="7" lockable="true">SS15</functionlabel>
-                <functionlabel num="8" lockable="true">AUX1</functionlabel>
-                <functionlabel num="9" lockable="true">SS9</functionlabel>
-                <functionlabel num="10" lockable="true">SS10</functionlabel>
-                <functionlabel num="11" lockable="true">SS8</functionlabel>
-                <functionlabel num="12" lockable="true">SS11</functionlabel>
-                <functionlabel num="13" lockable="true">SS13</functionlabel>
-                <functionlabel num="14" lockable="true">SS7</functionlabel>
-                <functionlabel num="15" lockable="true">SS16</functionlabel>
-                <functionlabel num="16" lockable="true">SS12</functionlabel>
-                <functionlabel num="17" lockable="true">SS17+SS18</functionlabel>
-                <functionlabel num="18" lockable="true">SS15</functionlabel>
-                <functionlabel num="19" lockable="true">SS19</functionlabel>
-                <functionlabel num="20" lockable="true">SS20</functionlabel>
-                <functionlabel num="21" lockable="true">SS21</functionlabel>
-                <functionlabel num="22" lockable="true"/>
-                <functionlabel num="23" lockable="true"/>
-                <functionlabel num="24" lockable="true"/>
-                <functionlabel num="25" lockable="true"/>
-                <functionlabel num="26" lockable="true"/>
+                <functionlabel num="2" lockable="false">Horn</functionlabel>
             </functionlabels>
             <soundlabels>
                 <soundlabel num="25">Random sounds</soundlabel>
@@ -152,6 +131,7 @@
             <variable CV="48" item="Sound Option 2" default="0">
                 <decVal/>
                 <label>Sound Configuration Number</label>
+                <label xml:lang="de">Gewählte Soundkonfiguration</label>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>
@@ -160,6 +140,7 @@
         </resets>
     </decoder>
     <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>

@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SPROG implementation of a ThrottleManager.
- * <P>
- * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
+ * <p>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  */
@@ -64,8 +64,8 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * What speed modes are supported by this system? value should be or of
-     * possible modes specified by the DccThrottle interface
+     * What speed modes are supported by this system? Value should be one of
+     * possible modes specified by the DccThrottle interface.
      */
     @Override
     public int supportedSpeedModes() {
@@ -73,8 +73,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Addresses 0-10239 can be long
-     *
+     * Addresses 0-10239 can be long.
      */
     @Override
     public boolean canBeLongAddress(int address) {
@@ -82,8 +81,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * The short addresses 1-127 are available
-     *
+     * The short addresses 1-127 are available.
      */
     @Override
     public boolean canBeShortAddress(int address) {
@@ -107,6 +105,6 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogThrottleManager.class);
 
 }

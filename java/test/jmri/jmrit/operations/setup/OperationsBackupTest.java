@@ -6,45 +6,46 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the new Operations Setup Backup classes used for copying and
  * restoring file backup sets. These test the AutoBackup and DefaultBackup
  * classes that are derived from BackupBase.
- *
+ * <p>
  * These tests use dummy XML files for the copying to make testing the outcomes
  * easier. It is assumed that there are other tests to verify that the correct
  * format XML files get created. This only tests the copying parts of the Backup
  * and Restore operations.
- *
+ * <p>
  * Tests include: - copying to / from regular backup location - copying to /
  * from automatic backup location
- *
+ * <p>
  * Source files are in Operations / JUnitTests.
- *
+ * <p>
  * Backup dirs are in: Operations / JUnitTests / backups and
- *
+ * <p>
  * Operations / JUnitTests / autoBackups
- *
- *
+ * <p>
+ * <p>
  * Still to do: - Need file comparison method to verify exactly that the files
  * are the same.
  *
  *
  * @author Gregory Madsen Copyright (C) 2012
- * 
+ *
  */
 public class OperationsBackupTest extends TestCase {
 
@@ -68,7 +69,7 @@ public class OperationsBackupTest extends TestCase {
 
     private String[] regularBackupSetFileNames;
 
-	// public String[] getRegularBackupSetFileNames() {
+    // public String[] getRegularBackupSetFileNames() {
     // return regularBackupSetFileNames;
     // }
     // private String[] testBackupSetFileNames;
@@ -133,7 +134,7 @@ public class OperationsBackupTest extends TestCase {
     protected void setUp() throws IOException {
         apps.tests.Log4JFixture.setUp();
 
-                // set the file location to temp (in the root of the build directory).
+        // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
 
         // Repoint OperationsSetupXml to JUnitTest subdirectory
@@ -142,12 +143,12 @@ public class OperationsBackupTest extends TestCase {
             OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
         }
         // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        InstanceManager.getDefault(OperationsSetupXml.class).setOperationsFileName("OperationsJUnitTest.xml");
+        InstanceManager.getDefault(RouteManagerXml.class).setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        InstanceManager.getDefault(EngineManagerXml.class).setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        InstanceManager.getDefault(CarManagerXml.class).setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        InstanceManager.getDefault(LocationManagerXml.class).setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
         FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
@@ -264,7 +265,7 @@ public class OperationsBackupTest extends TestCase {
 
     public void verifyBackupSetAgainst(File srcDir, String srcSet, File dstDir,
             String dstSet, String[] fileNames) {
-		// Does a number of tests on the files in a backup set directory and
+        // Does a number of tests on the files in a backup set directory and
         // compares them to the source directory.
         // Both source and destination can have a setName as we have to test
         // both copies and restores.
@@ -315,7 +316,7 @@ public class OperationsBackupTest extends TestCase {
         // this is necessary if the file sizes and dates match.
     }
 
-	// And now the actual tests themselves.....
+    // And now the actual tests themselves.....
     // First some common tests of BackupBase
     // Need to instantiate DefaultBackup as BackupBase is abstract.
     // Make sure that we are working with the exact set of file names that we
@@ -347,7 +348,7 @@ public class OperationsBackupTest extends TestCase {
     // Assert.assertEquals("NEW_TEST_OperationsTrainRoster.xml", names[5]);
     // }
     public void testTestFilesCreated() {
-		// Make sure we can create our test files correctly
+        // Make sure we can create our test files correctly
 
         // Make sure the directories exist
         Assert.assertTrue("Test directory must exist", operationsRoot.exists());
@@ -422,7 +423,7 @@ public class OperationsBackupTest extends TestCase {
         createDummyXmlFile(operationsRoot, regularBackupSetFileNames[0]);
 
         backup.copyBackupSet(operationsRoot, setDir);
-        jmri.util.JUnitAppender.assertWarnMessage("Only 1 file(s) found in directory "+operationsRoot.getAbsolutePath());
+        jmri.util.JUnitAppender.assertWarnMessage("Only 1 file(s) found in directory " + operationsRoot.getAbsolutePath());
 
         // Should NOT throw an exception, and the destination dir should exist.
         Boolean exists = existsFile(defaultBackupRoot, setName);

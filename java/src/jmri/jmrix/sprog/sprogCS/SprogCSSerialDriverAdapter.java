@@ -1,8 +1,6 @@
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -20,9 +18,11 @@ public class SprogCSSerialDriverAdapter
 
     public SprogCSSerialDriverAdapter() {
         super(SprogMode.OPS);
-        options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
+        options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
+                new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
+                true)); // first element (TrackPowerState) NOI18N
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("SPROG Command Station");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogCSTitle"));
     }
 
     /**
@@ -33,6 +33,6 @@ public class SprogCSSerialDriverAdapter
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
 
 }

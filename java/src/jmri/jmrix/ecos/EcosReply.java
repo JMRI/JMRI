@@ -31,7 +31,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     // these can be very large
     @Override
     public int maxSize() {
-        return 5000;
+        return 10000;
     }
 
     // no need to do anything
@@ -263,7 +263,6 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         return line.substring(startval, endval);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosReply.class);
+
 }
-
-

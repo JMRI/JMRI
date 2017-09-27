@@ -6,7 +6,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Abstract base for classes representing a XNet communications port
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010,2014
@@ -54,10 +53,10 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     }
 
     /**
-     * Indiciate the command station is currently providing a timeslot to this
+     * Indicate whether the Command Station is currently providing a timeslot to this
      * port controller.
      *
-     * @return true if the command station is currently providing a timeslot.
+     * @return true if the Command Station is currently providing a timeslot.
      */
     @Override
     public boolean hasTimeSlot(){
@@ -65,20 +64,16 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     }
 
     /**
-     * <p>
      * Set a variable indicating whether or not the command station is
      * providing a timeslot.
-     * </p>
      * <p>
      * This method should be called with the paramter set to false if
      * a "Command Station No Longer Providing a timeslot for communications"
      * (01 05 04) is received.
-     * </p>
      * <p>
      * This method should be called with the parameter set to true if
      * a "Command Station is providing a timeslot for communications again."
      * (01 07 06) is received.
-     * </p>
      *
      * @param timeslot true if a timeslot is being sent, false otherwise.
      */
@@ -87,18 +82,12 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
        timeSlot = timeslot;
     }  
 
-    
-
     /**
-     * we need a way to say if the output buffer is empty or full this should
-     * only be set to false by external processes
-     *
+     * We need a way to say if the output buffer is empty or full this should
+     * only be set to false by external processes.
      */
     @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
     }
 
 }
-
-
-

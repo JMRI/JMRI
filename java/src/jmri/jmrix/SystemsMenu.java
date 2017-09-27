@@ -78,7 +78,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.srcp.SystemMenu");
         addMenu("jmri.jmrix.tmcc.TMCCMenu");
         addMenu("jmri.jmrix.wangrow.WangrowMenu");
-        // XPressNet Allows Multiple Connections now
+        // XpressNet Allows Multiple Connections now
         add(new jmri.jmrix.lenz.swing.XNetMenu(null));
         add(new jmri.jmrix.xpa.swing.XpaMenu(null));
         addMenu("jmri.jmrix.zimo.Mx1Menu");
@@ -114,5 +114,5 @@ public class SystemsMenu extends JMenu {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class);
 }

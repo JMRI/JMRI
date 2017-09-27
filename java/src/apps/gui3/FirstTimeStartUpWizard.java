@@ -203,14 +203,14 @@ public class FirstTimeStartUpWizard {
                 wizPage.get(currentScreen).getHelpDetails().setVisible(false);
             }
             finish.setVisible(false);
-            
+
             currentScreen = currentScreen - 1;
             if (currentScreen != -1) {
                 wizPage.get(currentScreen).getPanel().setVisible(true);
                 wizPage.get(currentScreen).getHelpDetails().setVisible(true);
                 header.setText(wizPage.get(currentScreen).getHeaderText());
                 header.setFont(header.getFont().deriveFont(14f));
-                
+
                 if (currentScreen == 0) {
                     previous.setEnabled(false);
                 }
@@ -279,19 +279,23 @@ public class FirstTimeStartUpWizard {
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
                     JOptionPane.showMessageDialog(null,
-                            "An error occured while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
+                            "An error occurred while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
                             "Error Opening Connection",
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
             Profile project = ProfileManager.getDefault().getActiveProfile();
-            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
-            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
-            InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
-            InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);
-            connectionConfigPane.savePreferences();
-            InstanceManager.getDefault(ConfigureManager.class).storePrefs();
+            if (project != null) {
+                InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
+                InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);
+                connectionConfigPane.savePreferences();
+                InstanceManager.getDefault(ConfigureManager.class).storePrefs();
+            } else {
+                log.error("Unable to save first time preferences due to missing profile.");
+            }
             dispose();
         }
     }
@@ -390,6 +394,6 @@ public class FirstTimeStartUpWizard {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class);
 
 }

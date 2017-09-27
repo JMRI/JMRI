@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Process a JMRI decoder file, removing the label attribute from a       -->
 <!-- variable element if an item attribute or default-language label        -->

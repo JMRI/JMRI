@@ -249,7 +249,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
+        InstanceManager.setProgrammerManager(
                 getProgrammerManager());
 
         InstanceManager.setReporterManager(
@@ -414,5 +414,5 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);
 }

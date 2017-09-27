@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * This is a AcelaListener to handle the replies to poll messages. Those are
  * forwarded to the specific AcelaNode object corresponding to their origin for
  * processing of the data.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
  *
@@ -98,6 +98,16 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public boolean validSystemNameFormat(String systemName) {
+        return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+    }
+
+    /**
      * Dummy routine
      */
     @Override
@@ -106,14 +116,14 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process a reply to a poll of Sensors of one node
+     * Process a reply to a poll of Sensors of one node.
      */
     @Override
     public void reply(AcelaReply r) {
-        // Determine which state we are in: Initiallizing Acela Network or Polling Sensors
+        // Determine which state we are in: Initializing Acela Network or Polling Sensors
         boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();
         //  Flag to indicate which state we are in: 
-        //  false == Initiallizing Acela Network
+        //  false == Initializing Acela Network
         //  true == Polling Sensors
         if (!currentstate) {
             int replysize = r.getNumDataElements();
@@ -184,13 +194,13 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             int replysize = r.getNumDataElements();
             if (replysize > 1) {  // Bob C: not good if only one sensor module !!
-                AcelaTrafficController.instance().updateSensorsFromPoll(r);
+                _memo.getTrafficController().updateSensorsFromPoll(r);
             }
         }
     }
 
     /**
-     * Method to register any orphan Sensors when a new Acela Node is created
+     * Method to register any orphan Sensors when a new Acela Node is created.
      */
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
@@ -218,12 +228,13 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     /**
-     * static function returning the AcelaSensorManager instance to use.
+     * Static function returning the AcelaSensorManager instance to use.
      *
      * @return The registered AcelaSensorManager instance for general use, if
      *         need be creating one.
@@ -234,5 +245,6 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class);
+
 }

@@ -1,17 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the owner names that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
-public class CarOwners extends RollingStockAttribute {
+public class CarOwners extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     public static final String CAROWNERS_NAME_CHANGED_PROPERTY = "CarOwners Name"; // NOI18N
     public static final String CAROWNERS_CHANGED_PROPERTY = "CarOwners Length"; // NOI18N
@@ -20,20 +19,15 @@ public class CarOwners extends RollingStockAttribute {
     }
 
     /**
-     * record the single instance *
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    private static CarOwners _instance = null;
-
+    @Deprecated
     public static synchronized CarOwners instance() {
-        if (_instance == null) {
-            log.debug("CarOwners creating instance");
-            // create and load
-            _instance = new CarOwners();
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("CarOwners returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(CarOwners.class);
     }
 
     @Override
@@ -62,7 +56,7 @@ public class CarOwners extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
-     * 
+     *
      * @param root The common Element for operations-cars.dtd.
      *
      */
@@ -76,10 +70,10 @@ public class CarOwners extends RollingStockAttribute {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        CarManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarOwners.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(CarOwners.class);
 
 }

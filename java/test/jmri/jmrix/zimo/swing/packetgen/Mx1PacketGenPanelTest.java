@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo.swing.packetgen;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,15 +19,30 @@ public class Mx1PacketGenPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
+        Assert.assertEquals("title","MX1_: " + Bundle.getMessage("Title"),pane.getTitle());
+    }
+
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }
