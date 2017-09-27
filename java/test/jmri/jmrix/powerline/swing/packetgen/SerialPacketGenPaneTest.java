@@ -23,6 +23,25 @@ public class SerialPacketGenPaneTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        SerialPacketGenPane t = new SerialPacketGenPane();
+        Assert.assertEquals("help target","package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        SerialPacketGenPane t = new SerialPacketGenPane();
+        Assert.assertEquals("title","Powerline_: Command Generator",t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        SerialPacketGenPane t = new SerialPacketGenPane();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
