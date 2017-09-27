@@ -19,6 +19,25 @@ public class NceMacroEditPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        NceMacroEditPanel t = new NceMacroEditPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.nce.macro.NceMacroEditFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        NceMacroEditPanel t = new NceMacroEditPanel();
+        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("TitleEditNCEMacro"), t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        NceMacroEditPanel t = new NceMacroEditPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
