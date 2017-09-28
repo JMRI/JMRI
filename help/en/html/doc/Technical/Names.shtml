@@ -111,12 +111,14 @@
       these "system names". JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
-      <h2>System Name Format</h2>A system name is formed from a
+      <h2>System Name Format</h2>
+      
+      A system name is formed from a
       short prefix representing the hardware system, followed by a
-      single upper case letter indicating the type, followed by
-      system- and type-specific string identifying a specific
-      object. The string is meant to be related to the hardware
-      addressing, but is otherwise unconstrained.
+      single upper case letter indicating the type, followed by a
+      system- and type-specific suffix string identifying a specific
+      object. The suffix string is meant to be related to the hardware
+      addressing for the specific hardware system, but is otherwise unconstrained.
 
       <p>Examples:</p>
 
@@ -292,16 +294,17 @@
       </ul>
 
       <a name="systeminfo" id="systeminfo"></a>
-      <h3>System-specific info</h3>
+      <h3>System-specific suffix</h3>
       <p>"Internal" objects can also be addressed and manipulated,
         but they don't have a strict correspondence with some
         hardware on the layout. For example, if a signal head is
         implemented as three different outputs, LT1, LT2 and LT3, the
-        signal head object might be called IH3. <a name="special" id=
+        signal head object might be called IH3. 
+        <a name="special" id=
                 "special"></a></p>
 
       <p>Each different hardware system
-      can specify the "string" that follows the system and type
+      can specify the "suffix string" that follows the system and type
       letters. Generally, these are small numbers, but their exact
       meaning is very system-specific. For more information, please
         see the specific pages for</p>
@@ -329,12 +332,13 @@
         e.g, X10, Insteon</a></li>
       </ul>
 
-      <p>(If you find any missing or see ommissions in the following
+      <p>(If you find any missing or see omissions in the following
       summary, please <a href="getgitcode.shtml#propose">add
       a reference</a>)</p>
 
       <a name="entrysummary" id="entrysummary"></a>
       <h4>Adding an item to the table - Entry Format Summary</h4>
+      
       <p>When you add an item to one of the tables, many times you only
       have to enter the numbers and have JMRI construct
       the complete system name.<br>
