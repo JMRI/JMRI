@@ -24,7 +24,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for CMRI.
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
@@ -84,12 +84,10 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return _memo.validSystemNameFormat(systemName, 'L');
     }
 
@@ -126,7 +124,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

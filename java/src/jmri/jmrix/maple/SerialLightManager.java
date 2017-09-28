@@ -22,7 +22,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter.
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
@@ -30,12 +30,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name.
-     * Assumes calling method has
-     * checked that a Light with this system name does not already exist.
-     *
-     * @return null if the system name is not in a valid format or if the
-     * system name does not correspond to a configured digital output bit
+     * {@inheritDoc}
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -83,18 +78,15 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'L'));
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * {@inheritDoc}
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -102,10 +94,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     * <P>
-     * Returns a normalized system name if system name has a valid format, else
-     * returns "".
+     * {@inheritDoc}
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -113,7 +102,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
