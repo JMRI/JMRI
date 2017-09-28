@@ -111,7 +111,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Work out the details for Cbus hardware address validation
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     * Logging of handled cases no higher than WARN.
      *
      * @param address the hardware address to check
      * @throws IllegalArgumentException when delimiter is not found

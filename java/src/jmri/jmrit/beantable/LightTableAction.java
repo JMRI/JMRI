@@ -529,6 +529,7 @@ public class LightTableAction extends AbstractTableAction {
     JButton update;
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton addControl;
+    PropertyChangeListener colorChangeListener;
 
     ArrayList<LightControl> controlList = new ArrayList<>();
     String sensorControl = Bundle.getMessage("LightSensorControl");
@@ -590,9 +591,23 @@ public class LightTableAction extends AbstractTableAction {
             panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(hardwareAddressTextField);
             hardwareAddressTextField.setText(""); // reset from possible previous use
-            hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
+            hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
+            // Define PropertyChangeListener
+            colorChangeListener = new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                    String property = propertyChangeEvent.getPropertyName();
+                    if ("background".equals(property)) {
+                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
+                            create.setEnabled(true);
+                        } else { // invalid
+                            create.setEnabled(false);
+                        }
+                    }
+                }
+            };
+            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(numberToAdd);
@@ -730,7 +745,8 @@ public class LightTableAction extends AbstractTableAction {
                 cancelPressed(null);
             }
         });
-        hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setBackground(Color.yellow);
+        create.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
         status1.setForeground(Color.gray);
@@ -810,6 +826,8 @@ public class LightTableAction extends AbstractTableAction {
                     + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights"))
                     + "<br>" + addEntryToolTip + "</html>");
         }
+        hardwareAddressTextField.setBackground(Color.yellow); // reset
+        create.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -883,7 +901,7 @@ public class LightTableAction extends AbstractTableAction {
             status1.setText(Bundle.getMessage("LightError17"));
             status1.setForeground(Color.red);
             status2.setVisible(false);
-            hardwareAddressTextField.setBackground(Color.red);
+            hardwareAddressTextField.setBackground(Color.orange);
             addFrame.pack();
             addFrame.setVisible(true);
             return;
@@ -903,10 +921,9 @@ public class LightTableAction extends AbstractTableAction {
             status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
-            hardwareAddressTextField.setBackground(Color.red);
+            hardwareAddressTextField.setBackground(Color.orange);
             addFrame.pack();
             addFrame.setVisible(true);
-            hardwareAddressTextField.setBackground(Color.red);
             return;
         } else {
             hardwareAddressTextField.setBackground(Color.white);
@@ -1283,6 +1300,7 @@ public class LightTableAction extends AbstractTableAction {
         if (addFrame != null) {
             addFrame.dispose();
             addFrame = null;
+            create.removePropertyChangeListener(colorChangeListener);
         }
     }
 
@@ -1294,7 +1312,7 @@ public class LightTableAction extends AbstractTableAction {
         lightControlTableModel.fireTableDataChanged();
     }
 
-    // items for add/edit Light Control pane
+    // items for Add/Edit Light Control pane
     private JmriJFrame addControlFrame = null;
     private JComboBox<String> typeBox;
     private final JLabel typeBoxLabel = new JLabel(Bundle.getMessage("LightControlType"));
@@ -2316,14 +2334,16 @@ public class LightTableAction extends AbstractTableAction {
                 return true;
             } else {
                 boolean validFormat = false;
-//                try {
+                    // try {
                     validFormat = InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value);
-//                } catch (jmri.JmriException e) {
+                    // } catch (jmri.JmriException e) {
                     // use it for the status bar?
-//                }
+                    // }
                 if (validFormat) {
+                    // create.setEnabled(true); // a bit too severe until we fully support validation
                     return true;
                 } else {
+                    // create.setEnabled(false); // a bit too severe until we fully support validation
                     return false;
                 }
             }

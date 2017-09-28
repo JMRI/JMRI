@@ -127,7 +127,7 @@ public class SerialAddress {
 
     /**
      * Public static method to validate system name format.
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     * Logging of handled cases no higher than WARN.
      *
      * @param systemName name to test
      * @param type S, L, T for either sensor, light, turnout

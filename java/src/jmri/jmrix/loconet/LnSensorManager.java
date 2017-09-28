@@ -176,7 +176,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     /**
      * Get the bit address from the system name.
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     * Logging of handled cases no higher than WARN.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

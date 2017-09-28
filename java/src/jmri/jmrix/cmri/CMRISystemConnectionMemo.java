@@ -319,8 +319,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Public static method to validate system name format.
      * Does not check whether that node is defined on current system.
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
-     * Warning dialog is presented upon creation, not from this method.
+     * Logging of handled cases no higher than WARN.
      *
      * @return 'true' if system name has a valid format,
      * else returns 'false'.

@@ -52,7 +52,7 @@ public class XNetAddress {
 
     /**
      * Public static method to validate system name format.
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
+     * Logging of handled cases no higher than WARN.
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */

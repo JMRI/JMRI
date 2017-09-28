@@ -227,7 +227,7 @@ public class ReporterTableAction extends AbstractTableAction {
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
-            ActionListener okListener = new ActionListener() {
+            ActionListener createListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
@@ -270,7 +270,7 @@ public class ReporterTableAction extends AbstractTableAction {
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            addButton.setEnabled(false);
+            addButton.addActionListener(createListener);
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -286,13 +286,16 @@ public class ReporterTableAction extends AbstractTableAction {
             };
             hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
-                    okListener, cancelListener, rangeListener, statusBar));
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
         hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.yellow);
+        if (addButton != null ) {
+            addButton.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
+        }
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -305,6 +308,7 @@ public class ReporterTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     void createPressed(ActionEvent e) {
@@ -399,7 +403,7 @@ public class ReporterTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
-        addButton = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     private String addEntryToolTip;
@@ -441,6 +445,8 @@ public class ReporterTableAction extends AbstractTableAction {
         hardwareAddressTextField.setToolTipText("<html>"
                 + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
                 + "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setBackground(Color.yellow); // reset
+        addButton.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
     }
 
     void handleCreateException(String sysName) {
@@ -513,14 +519,16 @@ public class ReporterTableAction extends AbstractTableAction {
                 return true;
             } else {
                 boolean validFormat = false;
-//                try {
+                    // try {
                     validFormat = InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value);
-//                } catch (jmri.JmriException e) {
-                    // perhaps use it for the status bar?
-//                }
+                    // } catch (jmri.JmriException e) {
+                    // use it for the status bar?
+                    // }
                 if (validFormat) {
+                    // addButton.setEnabled(true); // a bit too severe until we fully support validation
                     return true;
                 } else {
+                    // addButton.setEnabled(false); // a bit too severe until we fully support validation
                     return false;
                 }
             }

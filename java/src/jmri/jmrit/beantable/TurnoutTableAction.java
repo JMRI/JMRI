@@ -1026,7 +1026,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             prefixBox.setName("prefixBox"); // NOI18N
             // set up validation, zero text = false
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            addButton.setEnabled(false);
+            addButton.addActionListener(createListener);
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -1042,12 +1042,15 @@ public class TurnoutTableAction extends AbstractTableAction {
             };
             hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
-                    addButton, createListener, cancelListener, rangeListener, statusBar));
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
         hardwareAddressTextField.setBackground(Color.yellow);
+        if (addButton != null ) {
+            addButton.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
+        }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -1573,6 +1576,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     /**
@@ -1761,7 +1765,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.dispose();
         addFrame = null;
         addButton.removePropertyChangeListener(colorChangeListener);
-        addButton = null;
     }
 
     private String addEntryToolTip;
@@ -1801,10 +1804,11 @@ public class TurnoutTableAction extends AbstractTableAction {
             log.debug("TurnoutManager tip");
         }
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
-//        addEntryToolTip = InstanceManager.turnoutManagerInstance().getSystemConnectionMemo().getEntryToolTip("Turnout");
         hardwareAddressTextField.setToolTipText("<html>"
                 + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts"))
                 + "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setBackground(Color.yellow); // reset
+        addButton.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
     }
 
     void handleCreateException(Exception ex, String sysName) {
@@ -1938,14 +1942,16 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return true;
             } else {
                 boolean validFormat = false;
-//                try {
+                    // try {
                     validFormat = InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value);
-//                } catch (jmri.JmriException e) {
+                    // } catch (jmri.JmriException e) {
                     // use it for the status bar?
-//                }
+                    // }
                 if (validFormat) {
+                    // addButton.setEnabled(true); // a bit too severe until we fully support validation
                     return true;
                 } else {
+                    // addButton.setEnabled(false); // a bit too severe until we fully support validation
                     return false;
                 }
             }
