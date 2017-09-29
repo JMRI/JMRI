@@ -34,7 +34,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     @Override
-    protected void addHelpMenu() {
+    protected void addHelpItem() {
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 

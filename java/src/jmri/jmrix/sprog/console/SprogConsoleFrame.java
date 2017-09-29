@@ -280,7 +280,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * desired.
      */
     @Override
-    protected void addHelpMenu() {
+    protected void addHelpItem() {
         addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
     }
 
