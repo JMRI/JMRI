@@ -265,7 +265,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         init();
 
         // add help menu to window
-        addHelpMenu();
+        addHelpItem();
 
         // prevent button areas from expanding
         pack();
@@ -280,7 +280,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
      * Specific implementations can override this to show their own help page if
      * desired.
      */
-    protected void addHelpMenu() {
+    protected void addHelpItem() {
         addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true); // NOI18N
     }
 
