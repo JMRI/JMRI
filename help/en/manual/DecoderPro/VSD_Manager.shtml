@@ -35,7 +35,7 @@
 
       <p><span id="product-desc">The VSDecoder Manager window
       provides a consolidated window to manage all the VSDecoders
-      running on a system. Each active VSDecoder apepars as a
+      running on a system. Each active VSDecoder appears as a
       "control panel" within the Manager window, and all of the key
       controls required are at the user's fingertips.</span></p>
 
@@ -46,8 +46,8 @@
       simple window will appear, with a blank panel, a volume/mute
       control, and an "Add Decoder" button.</p>
 
-      <p><img src="images/VSD_Manager01.png" width="489" height=
-      "173"></p>
+      <p><img src="images/VSD_Manager01.png" width="423" height=
+      "147"></p>
 
       <p>To create a new VSDecoder, click "Add Decoder". This will
       open a Configuration Dialog ("Config Dialog") where you can
@@ -60,11 +60,11 @@
       clicking the "Delete" button.</p>
 
       <p><img src="images/VSD_Manager04.png" alt=
-      "VSDecoder Manager" width="530" height="150" border="4"></p>
+      "VSDecoder Manager" width="442" height="157"></p>
 
       <p>Once you have added a Control Panel, the VSDecoder will
       respond to throttle and function button presses from a
-      throttle assigned to the locomotive's addres, or to button
+      throttle assigned to the locomotive's address, or to button
       presses on the Control Panel.</p>
 
       <h4>Configuration Dialog</h4><img src=
@@ -117,14 +117,14 @@
 
         <li>Sound activation buttons</li>
 
-        <li>Configuration, Options, and Delete buttons</li>
+        <li>Options and Delete buttons</li>
       </ul><img src="images/VSD_Manager05.png" alt=
-      "Two Control Panels" width="530" height="249" border="4">
+      "Two Control Panels" width="631" height="231">
 
       <p>The left section shows the assigned Loco Address and
       Profile Name. The center section provides buttons for
       activating sounds. The right section has buttons for
-      controlling or deleting the Control Panel.</p>
+      Options or deleting the Control Panel.</p>
 
       <p>Sounds can also be activated by a throttle assigned to the
       same address as the VSDecoder.</p>

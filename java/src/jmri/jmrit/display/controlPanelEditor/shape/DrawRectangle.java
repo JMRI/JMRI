@@ -5,12 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.Editor;
 
 /**
  * @author Pete Cressman Copyright (c) 2012
@@ -22,14 +21,14 @@ public class DrawRectangle extends DrawFrame {
     JTextField _widthText;
     JTextField _heightText;
 
-    public DrawRectangle(String which, String title, ShapeDrawer parent) {
-        super(which, title, parent);
+    public DrawRectangle(String which, String title, PositionableShape ps) {
+        super(which, title, ps);
         _lineWidth = 3;
     }
 
     @Override
-    protected JPanel makeParamsPanel(PositionableShape ps) {
-        JPanel panel = super.makeParamsPanel(ps);
+    protected JPanel makeParamsPanel() {
+        JPanel panel = super.makeParamsPanel();
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         JPanel pp = new JPanel();
@@ -41,7 +40,7 @@ public class DrawRectangle extends DrawFrame {
         pp.add(new JLabel(Bundle.getMessage("width")));
 
         p.add(pp);
-        p.add(Box.createHorizontalStrut(STRUT_SIZE));
+//        p.add(Box.createHorizontalStrut(STRUT_SIZE));
         _widthText.addActionListener((ActionEvent e) -> {
             _shape.setWidth(Integer.parseInt(_widthText.getText()));
             updateShape();
@@ -78,38 +77,34 @@ public class DrawRectangle extends DrawFrame {
         });
 
         panel.add(p);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         return panel;
     }
 
     @Override
-    protected boolean makeFigure(MouseEvent event) {
-        ControlPanelEditor ed = _parent.getEditor();
+    protected void makeFigure(MouseEvent event, Editor ed) {
         Rectangle r = ed.getSelectRect();
         if (r != null) {
             _width = r.width;
             _height = r.height;
             Rectangle2D.Double rr = new Rectangle2D.Double(0, 0, _width, _height);
-            PositionableShape ps = new PositionableRectangle(ed, rr);
-            ps.setLocation(r.x, r.y);
-            ps.updateSize();
-            setDisplayParams(ps);
-            ps.setEditFrame(this);
-            ed.putItem(ps);
+            _shape = new PositionableRectangle(ed, rr);
+            _shape.setLocation(r.x, r.y);
+            _shape.updateSize();
+            _shape.setEditFrame(this);
+            setDisplayParams();
+            ed.putItem(_shape);
         }
-        return true;
     }
 
     /**
      * Set parameters on the popup that will edit the PositionableShape.
-     *
-     * @param p the shape to edit
      */
     @Override
-    protected void setDisplayParams(PositionableShape p) {
-        super.setDisplayParams(p);
-        _width = p.getWidth();
-        _height = p.getHeight();
+    protected void setDisplayParams() {
+        _width = _shape.getWidth();
+        _height = _shape.getHeight();
+        super.setDisplayParams();
     }
 
     @Override
