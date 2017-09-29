@@ -675,7 +675,7 @@ public class LayoutSlipTest {
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        // First, try miss…
+        // First, try miss
         int hitType = lts.findHitPointType(MathUtil.zeroPoint2D, true, false);
         Assert.assertTrue("lts.findHitPointType equals NONE", hitType == LayoutEditor.NONE);
 

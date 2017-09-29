@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Acela systems
+ * Implement light manager for Acela systems.
  * <P>
  * System names are "ALnnn", where nnn is the bit number without padding.
  * <P>
@@ -42,7 +42,7 @@ public class AcelaLightManager extends AbstractLightManager {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName,_memo);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, _memo);
         if (nAddress == -1) {
             return (null);
         }
@@ -52,7 +52,7 @@ public class AcelaLightManager extends AbstractLightManager {
         }
 
 // Bob C: Fix this up  
-/*
+         /*
          conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum,_memo);
          if ( conflict != "" ) {
             log.error("Assignment conflict with "+conflict+".  Light not created.");
@@ -61,14 +61,14 @@ public class AcelaLightManager extends AbstractLightManager {
          */
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
-            lgt = new AcelaLight(systemName, userName,_memo);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'L',_memo)) {
-                log.warn("Light system Name does not refer to configured hardware: "
+            lgt = new AcelaLight(systemName, userName, _memo);
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'L', _memo)) {
+                log.warn("Light System Name does not refer to configured hardware: "
                         + systemName);
             }
         } else {
             log.error("Invalid Light system Name format: " + systemName);
-            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
+            throw new IllegalArgumentException("Invalid Light System Name format: " + systemName);
         }
         return lgt;
     }
@@ -91,14 +91,14 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'L',_memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'L', _memo));
     }
 
     /**
-     * Public method to normalize a system name
-     * <P>
-     * Returns a normalized system name if system name has a valid format,
-     * else returns "".
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format,
+     * else return ""
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -107,7 +107,7 @@ public class AcelaLightManager extends AbstractLightManager {
 
     /**
      * Public method to convert system name to its alternate format
-     * <P>
+     *
      * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return ""
      */

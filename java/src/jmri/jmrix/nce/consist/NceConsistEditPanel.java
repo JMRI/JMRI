@@ -729,11 +729,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             return;
         }
         String entry = "";
-        try {
-            entry = conRosterBox.getSelectedItem().toString();
-        } catch (Exception e) {
-
-        }
+        entry = conRosterBox.getSelectedItem().toString();
         log.debug("load consist " + entry + " from roster ");
         if (entry.equals("")) {
             changeButtons(false);

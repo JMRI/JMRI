@@ -18,6 +18,25 @@ public class LocoStatsPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        LocoStatsPanel pane = new LocoStatsPanel();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        LocoStatsPanel pane = new LocoStatsPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.loconet.locostats.LocoStatsFrame",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        LocoStatsPanel pane = new LocoStatsPanel();
+        Assert.assertEquals("title",Bundle.getMessage("MenuItemLocoStats") ,pane.getTitle());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
