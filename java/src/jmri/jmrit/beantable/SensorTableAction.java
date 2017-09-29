@@ -184,9 +184,8 @@ public class SensorTableAction extends AbstractTableAction {
         }
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         hardwareAddressTextField.setBackground(Color.yellow);
-        if (addButton != null ) {
-            addButton.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
-        }
+        addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
+        addButton.setName("createButton"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -353,7 +352,7 @@ public class SensorTableAction extends AbstractTableAction {
                 + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
                 + "<br>" + addEntryToolTip + "</html>");
         hardwareAddressTextField.setBackground(Color.yellow); // reset
-        addButton.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
+        addButton.setEnabled(true); // ambiguous, so start enabled
     }
 
     void handleCreateException(String hwAddress) {
@@ -625,10 +624,10 @@ public class SensorTableAction extends AbstractTableAction {
                     // use it for the status bar?
                     // }
                 if (validFormat) {
-                    // addButton.setEnabled(true); // a bit too severe until we fully support validation
+                    addButton.setEnabled(true); // directly update Create button
                     return true;
                 } else {
-                    // addButton.setEnabled(false); // a bit too severe until we fully support validation
+                    addButton.setEnabled(false); // directly update Create button
                     return false;
                 }
             }

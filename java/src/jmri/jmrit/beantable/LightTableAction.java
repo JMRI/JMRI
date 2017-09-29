@@ -731,6 +731,7 @@ public class LightTableAction extends AbstractTableAction {
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(this::createPressed);
             create.setToolTipText(Bundle.getMessage("LightCreateButtonHint"));
+            create.setName("createButton"); // for GUI test NOI18N
             panel5.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(this::updatePressed);
             update.setToolTipText(Bundle.getMessage("LightUpdateButtonHint"));
@@ -746,7 +747,7 @@ public class LightTableAction extends AbstractTableAction {
             }
         });
         hardwareAddressTextField.setBackground(Color.yellow);
-        create.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
+        create.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
         status1.setForeground(Color.gray);
@@ -2340,10 +2341,10 @@ public class LightTableAction extends AbstractTableAction {
                     // use it for the status bar?
                     // }
                 if (validFormat) {
-                    // create.setEnabled(true); // a bit too severe until we fully support validation
+                    create.setEnabled(true); // directly update Create button
                     return true;
                 } else {
-                    // create.setEnabled(false); // a bit too severe until we fully support validation
+                    create.setEnabled(false); // directly update Create button
                     return false;
                 }
             }
