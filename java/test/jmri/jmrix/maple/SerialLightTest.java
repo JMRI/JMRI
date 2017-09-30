@@ -22,6 +22,12 @@ public class SerialLightTest {
         Assert.assertNotNull("exists", l);
     }
 
+    @Test
+    public void testCTor2() {
+        SerialLight l2 = new SerialLight("KL2", "light2", _memo);
+        Assert.assertNotNull("exists", l2);
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

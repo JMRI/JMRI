@@ -33,6 +33,7 @@ public class SerialSensorTest {
 
     @After
     public void tearDown() {
+
         JUnitUtil.tearDown();
     }
 

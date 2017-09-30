@@ -151,7 +151,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System name null during register Sensor");
             } else {
                 log.debug("system name is {}", sName);
-                if ((sName.charAt(0) == 'K') && (sName.charAt(1) == 'S')) { // EBR multi char prefix
+                if ((sName.charAt(0) == 'K') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a valid Sensor - make sure it is registered
                     InputBits.instance().registerSensor(getBySystemName(sName),
                             (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));

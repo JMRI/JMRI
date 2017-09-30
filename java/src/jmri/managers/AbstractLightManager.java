@@ -26,7 +26,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Returns the second letter in the system name for a Light
+     * Returns the type letter in the system name for a Light
      */
     @Override
     public char typeLetter() {

@@ -21,11 +21,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager(CMRISystemConnectionMemo memo) {
        _memo = memo;
+
     }
 
     @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
+
     }
 
     @Override

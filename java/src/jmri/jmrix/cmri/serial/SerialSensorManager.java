@@ -138,9 +138,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System name null during register Sensor");
             } else {
                 log.debug("system name is {}", sName);
-                if ((sName.charAt(0) == 'C') && (sName.charAt(1) == 'S')) {
+                if ((sName.charAt(0) == 'C') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a C/MRI Sensor
-                    tNode = _memo.getNodeFromSystemName(sName,_memo.getTrafficController());
+                    tNode = _memo.getNodeFromSystemName(sName, _memo.getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
                         node.registerSensor(getBySystemName(sName),

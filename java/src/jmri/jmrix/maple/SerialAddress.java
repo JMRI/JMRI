@@ -286,7 +286,7 @@ public class SerialAddress {
             return "";
         }
         // check for a valid system name
-        if ((systemName.length() < (prefix.length() + 2)) || (!systemName.startsWith(prefix))) { // use multi char prefix, cf. Acela
+        if ((systemName.length() < (prefix.length() + 2)) || (!systemName.startsWith(prefix))) { // use multi char prefix
             // not a valid system name
             return ("");
         }

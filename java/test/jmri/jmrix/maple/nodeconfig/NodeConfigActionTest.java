@@ -33,9 +33,13 @@ public class NodeConfigActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+
+        JUnitUtil.tearDown();
+    }
 
 }

@@ -22,6 +22,7 @@ public class NodeConfigAction extends AbstractAction {
 
     public NodeConfigAction(MapleSystemConnectionMemo memo) {
         this(Bundle.getMessage("WindowTitle"), memo);
+
     }
 
     @Override

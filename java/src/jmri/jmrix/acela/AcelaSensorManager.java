@@ -214,7 +214,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      */
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
-        log.info("Trying to register sensor from Manager 2: ASxx");
+        log.info("Trying to register sensor from Manager 2: {}Sxx", getSystemPrefix()); // multichar prefix
         java.util.Iterator<String> iter
                 = getSystemNameList().iterator();
         // Iterate through the sensors
@@ -225,8 +225,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System Name null during register Sensor");
             } else {
                 log.debug("system Name is {}", sName);
-                if ((sName.charAt(0) == 'A') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
-                    // This is a Acela Sensor
+                if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
+                    // This is an Acela Sensor
                     tNode = AcelaAddress.getNodeFromSystemName(sName, _memo);
                     if (tNode == node) {
                         // This sensor is for this new Acela Node - register it

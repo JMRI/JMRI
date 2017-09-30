@@ -14,10 +14,6 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-//    public SerialTurnoutManager() {
-//        _memo = memo;
-//    }
-
     public SerialTurnoutManager(MapleSystemConnectionMemo memo) {
         _memo = memo;
 

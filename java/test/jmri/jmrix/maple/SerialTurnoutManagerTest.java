@@ -27,7 +27,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void testConstructor() {
         // create and register the manager object
         SerialTurnoutManager atm = new SerialTurnoutManager(new MapleSystemConnectionMemo());
-        Assert.assertNotNull("Maple Turnout Manager creation", atm);
+        Assert.assertNotNull("Maple Turnout Manager creation with memo", atm);
     }
 
     @Test

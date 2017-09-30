@@ -47,8 +47,13 @@ public class NodeConfigFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         memo = new MapleSystemConnectionMemo();
+
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+
+        memo.dispose();
+        JUnitUtil.tearDown();
+    }
 }
