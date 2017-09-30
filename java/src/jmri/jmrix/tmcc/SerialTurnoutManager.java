@@ -181,7 +181,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'T'));
     }
 
