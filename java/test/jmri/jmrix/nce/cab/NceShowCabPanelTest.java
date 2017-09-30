@@ -11,38 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NceShowCabPanelTest {
+public class NceShowCabPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        NceShowCabPanel action = new NceShowCabPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testInitComponents() throws Exception{
-        NceShowCabPanel pane = new NceShowCabPanel();
-        // for now, just makes ure there isn't an exception.
-        pane.initComponents();
-    }
-
-    @Test
-    public void testGetHelpTarget(){
-        NceShowCabPanel pane = new NceShowCabPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.nce.cab.NceShowCabFrame",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        NceShowCabPanel pane = new NceShowCabPanel();
-        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("Title"),pane.getTitle());
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new NceShowCabPanel();
+        helpTarget="package.jmri.jmrix.nce.cab.NceShowCabFrame";
+        title="NCE_: " + Bundle.getMessage("Title");
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

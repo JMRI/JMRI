@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
-public class Log4JTreePaneTest {
+public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testShow() {
@@ -33,34 +33,18 @@ public class Log4JTreePaneTest {
         JUnitUtil.dispose(f);
     }
 
-    @Test
-    public void testGetHelpTarget() {
-        Log4JTreePane t = new Log4JTreePane();
-        Assert.assertEquals("help target","package.jmri.jmrit.log.Log4JTreePane",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        Log4JTreePane t = new Log4JTreePane();
-        Assert.assertEquals("title",Bundle.getMessage("MenuItemLogTreeAction"),t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        Log4JTreePane t = new Log4JTreePane();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
-
-
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Log4JTreePane();
+        title=Bundle.getMessage("MenuItemLogTreeAction");
+        helpTarget="package.jmri.jmrit.log.Log4JTreePane";
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
