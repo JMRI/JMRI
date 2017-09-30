@@ -155,7 +155,7 @@ public class SerialAddressTest extends TestCase {
     //////////////////////////////////////////////
     // service routine for testing validSystemNameFormat
     void checkValidSystemNameFormatName(String name, char letter, boolean OK) {
-        Assert.assertTrue((OK ? "" : "in") + "valid format - " + name, !SerialAddress.validSystemNameFormat(name, letter) ^ OK);
+        Assert.assertTrue((OK ? "" : "in") + "valid format - " + name, (SerialAddress.validSystemNameFormat(name, letter) != jmri.Manager.NameValidity.VALID) ^ OK);
     }
 
     public void testValidateSystemNameFormat() {

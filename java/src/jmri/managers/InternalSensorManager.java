@@ -59,8 +59,8 @@ public class InternalSensorManager extends AbstractSensorManager {
     protected String prefix = "I";
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     @Override

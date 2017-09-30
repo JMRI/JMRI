@@ -18,8 +18,11 @@ public class ThrottleFramePropertyEditorTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor();
+        ThrottleWindow frame = new ThrottleWindow();
+        frame.setVisible(true);
+        ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor(frame);
         Assert.assertNotNull("exists", dialog);
+        JUnitUtil.dispose(frame);
     }
 
     @Before
