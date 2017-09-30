@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.util.ColorUtil;
@@ -21,9 +20,6 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017
  */
 public abstract class LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // hit point types
     public static final int NONE = 0;
