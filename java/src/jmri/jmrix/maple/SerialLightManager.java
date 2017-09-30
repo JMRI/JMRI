@@ -53,7 +53,7 @@ public class SerialLightManager extends AbstractLightManager {
             log.error("error when normalizing system name " + systemName);
             return null;
         }
-        if (SerialAddress.validSystemNameFormat(systemName, 'L')) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = new SerialLight(sysName, userName);
             if (!SerialAddress.validSystemNameConfig(sysName, 'L')) {
                 log.warn("Light system Name '" + sysName + "' does not refer to configured hardware.");

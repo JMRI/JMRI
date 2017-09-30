@@ -37,10 +37,10 @@ public class JsonClientLightManager extends AbstractLightManager implements Json
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (systemName.startsWith(this.getSystemPrefix())
                 && systemName.substring(this.getSystemPrefix().length(), this.getSystemPrefix().length() + 1).equalsIgnoreCase("L")
-                && Integer.parseInt(systemName.substring(this.getSystemPrefix().length() + 1)) > 0);
+                && Integer.parseInt(systemName.substring(this.getSystemPrefix().length() + 1)) > 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     @Override
