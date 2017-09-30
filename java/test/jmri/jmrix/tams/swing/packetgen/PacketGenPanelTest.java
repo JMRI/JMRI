@@ -20,6 +20,25 @@ public class PacketGenPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        PacketGenPanel t = new PacketGenPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        PacketGenPanel t = new PacketGenPanel();
+        Assert.assertEquals("title","Send Tams command",t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        PacketGenPanel t = new PacketGenPanel();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

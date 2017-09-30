@@ -96,6 +96,16 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
          f.dispose();
     }
 
+    @Test
+    public void testGetHelpTarget(){
+        Assert.assertNull("help target",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        Assert.assertEquals("title","NCE: Command Monitor",pane.getTitle());
+    }
+
 
 
     @Override

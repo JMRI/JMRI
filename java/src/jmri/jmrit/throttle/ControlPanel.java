@@ -1425,6 +1425,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         if ((throttle != null) && (_displaySlider != STEPDISPLAY)) { // Update UI depending on function state
             try {
+                // this uses reflection because the user is allowed to name a 
+                // throttle function that triggers this action. 
                 java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
 
                 Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
@@ -1434,7 +1436,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     setSpeedController(SLIDERDISPLAY);
                 }
 
-            } catch (java.lang.Exception ex) {
+            } catch (IllegalAccessException|NoSuchMethodException|java.lang.reflect.InvocationTargetException ex) {
                 log.debug("Exception in setSwitchSliderFunction: " + ex + " while looking for function " + switchSliderFunction);
             }
         }
