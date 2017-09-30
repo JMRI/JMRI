@@ -247,6 +247,18 @@ public class DecoderIndexFile extends XmlFile {
      * @throws java.io.IOException     if unable to read decoder index
      */
     static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
+        switch (FileUtil.findFiles(defaultDecoderIndexFilename(), ".").size()) {
+            case 0:
+                log.debug("creating decoder index");
+                forceCreationOfNewIndex();
+                return true; // no index exists, so create one
+            case 1:
+                return false; // only one index, so nothing to compare
+            default:
+                // multiple indexes, so continue with more specific checks
+                break;
+        }
+
         // get version from master index; if not found, give up
         String masterVersion = null;
         DecoderIndexFile masterXmlFile = new DecoderIndexFile();
