@@ -1,5 +1,6 @@
 package jmri.jmrix.maple;
 
+import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
@@ -51,30 +52,30 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testValidateSystemNameFormat() {
-        Assert.assertTrue("valid format - KL2", SerialAddress.validSystemNameFormat("KL2", 'L'));
+        Assert.assertTrue("valid format - KL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL2", 'L'));
 
-        Assert.assertTrue("invalid format - KL", !SerialAddress.validSystemNameFormat("KL", 'L'));
+        Assert.assertTrue("invalid format - KL", NameValidity.VALID != SerialAddress.validSystemNameFormat("KL", 'L'));
         JUnitAppender.assertErrorMessage("illegal character in number field of system name: KL");
 
-        Assert.assertTrue("valid format - KL2005", SerialAddress.validSystemNameFormat("KL2005", 'L'));
-        Assert.assertTrue("valid format - KT2005", SerialAddress.validSystemNameFormat("KT2005", 'T'));
-        Assert.assertTrue("valid format - KS205", SerialAddress.validSystemNameFormat("KS205", 'S'));
+        Assert.assertTrue("valid format - KL2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL2005", 'L'));
+        Assert.assertTrue("valid format - KT2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("KT2005", 'T'));
+        Assert.assertTrue("valid format - KS205", NameValidity.VALID == SerialAddress.validSystemNameFormat("KS205", 'S'));
 
-        Assert.assertTrue("invalid format - KY2005", !SerialAddress.validSystemNameFormat("KY2005", 'L'));
+        Assert.assertTrue("invalid format - KY2005", NameValidity.VALID != SerialAddress.validSystemNameFormat("KY2005", 'L'));
         JUnitAppender.assertErrorMessage("illegal character in header field of system name: KY2005");
 
-        Assert.assertTrue("valid format - KL1", SerialAddress.validSystemNameFormat("KL1", 'L'));
-        Assert.assertTrue("valid format - KL1000", SerialAddress.validSystemNameFormat("KL1000", 'L'));
+        Assert.assertTrue("valid format - KL1", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL1", 'L'));
+        Assert.assertTrue("valid format - KL1000", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL1000", 'L'));
 
         // note: address format is invalid (out of range) as checked upon user input
-        Assert.assertTrue("invalid format - KL0", !SerialAddress.validSystemNameFormat("KL0", 'L'));
+        Assert.assertTrue("invalid format - KL0", NameValidity.VALID != SerialAddress.validSystemNameFormat("KL0", 'L'));
         JUnitAppender.assertErrorMessage("node address field out of range in system name - KL0");
 
-        Assert.assertTrue("valid format - KL2999", SerialAddress.validSystemNameFormat("KL2999", 'L'));
+        Assert.assertTrue("valid format - KL2999", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL2999", 'L'));
 
-        Assert.assertTrue("valid format - KL7999", SerialAddress.validSystemNameFormat("KL7999", 'L'));
+        Assert.assertTrue("valid format - KL7999", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL7999", 'L'));
 
-        Assert.assertTrue("invalid format - KL2oo5", !SerialAddress.validSystemNameFormat("KL2oo5", 'L'));
+        Assert.assertTrue("invalid format - KL2oo5", NameValidity.VALID != SerialAddress.validSystemNameFormat("KL2oo5", 'L'));
         JUnitAppender.assertErrorMessage("illegal character in number field of system name: KL2oo5");
     }
 

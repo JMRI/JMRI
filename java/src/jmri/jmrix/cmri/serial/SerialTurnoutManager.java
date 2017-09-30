@@ -23,11 +23,17 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
        _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
@@ -220,16 +226,25 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isNumControlBitsSupported(String systemName) {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isControlTypeSupported(String systemName) {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         int seperator = 0;
@@ -286,7 +301,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int nAddress = 0;
 
     /**
-     * Return the next valid free turnout hardware address.
+     * {@inheritDoc}
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -336,19 +351,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return _memo.validSystemNameFormat(systemName, 'T');
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else return "".
+     * * {@inheritDoc}
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -356,7 +367,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

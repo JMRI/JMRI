@@ -87,8 +87,8 @@ public class LnLightManager extends AbstractLightManager {
      * name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID; 
     }
 
     /**
