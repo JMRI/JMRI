@@ -85,16 +85,16 @@ public class CbusReporterManager extends AbstractReporterManager implements
      * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
         try {
             // try to parse the string; success returns true
             Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1, systemName.length()));
         } catch (NumberFormatException e) {
             log.debug("Warning: illegal character in number field of system name: {}", systemName);
-            return false;
+            return NameValidity.INVALID;
         }
-        return true;
+        return NameValidity.VALID;
     }
 
     /**

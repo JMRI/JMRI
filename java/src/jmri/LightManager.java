@@ -113,15 +113,6 @@ public interface LightManager extends Manager<Light> {
     public Light getBySystemName(@Nonnull String s);
 
     /**
-     * Test if parameter is a properly formatted system name.
-     *
-     * @param systemName the system name
-     * @return true if formatted correctly; false otherwise
-     */
-    @CheckReturnValue
-    public boolean validSystemNameFormat(@Nonnull String systemName);
-
-    /**
      * Test if parameter is a valid system name for current configuration.
      *
      * @param systemName the system name

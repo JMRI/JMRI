@@ -237,20 +237,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return prefix + typeLetter() + curAddress;
     }
 
-    /**
-     * Validate system name format.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.TurnoutTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system 
-     *         managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
-    }
-
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can

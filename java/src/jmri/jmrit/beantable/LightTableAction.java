@@ -894,7 +894,7 @@ public class LightTableAction extends AbstractTableAction {
             uName = null;   // a blank field means no user name
         }
         // Does System Name have a valid format
-        if (!InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName)) {
+        if (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName) != Manager.NameValidity.VALID) {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: {}", suName);
             status1.setText(Bundle.getMessage("LightError3"));
