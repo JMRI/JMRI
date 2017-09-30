@@ -1065,17 +1065,18 @@
     <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
         <property name="antargline" value="PanelProConfig2.xml"/>
         <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
+        <startprofiler/>
+        <nbprofiledirect>
+            <classpath>
+                <pathelement location="dist/test.jar"/>
+                <pathelement path="${java.class.path}"/>
+                <!-- <pathelement path="${target}"/> -->
+            </classpath>
+        </nbprofiledirect>
         <echo message="Saw: ${profiler.info.jvmargs.agent}"/>
-        <!-- <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail> -->
+        <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
-            <nbprofiledirect>
-                <classpath>
-                    <pathelement location="dist/test.jar"/>
-                    <pathelement path="${java.class.path}"/>
-                    <!-- <pathelement path="${target}"/> -->
-                </classpath>
-            </nbprofiledirect>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
@@ -1088,7 +1089,8 @@
             <jvmarg line="${profiler.info.jvmargs}"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
-            <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
+            <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
+            <!-- for JTune -->
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
