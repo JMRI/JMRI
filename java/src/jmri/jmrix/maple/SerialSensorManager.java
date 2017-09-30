@@ -96,7 +96,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'S'));
     }
 

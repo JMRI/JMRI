@@ -236,15 +236,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
      *
      * @return if a manager is found, return its determination of validity of
-     * system name format. Return false if no manager exists.
+     * system name format. Return INVALID if no manager exists.
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).validSystemNameFormat(systemName);
         }
-        return false;
+        return NameValidity.INVALID;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package jmri.jmrix.maple;
 
+import jmri.Manager.NameValidity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,13 +60,13 @@ public class SerialAddress {
      * @return 'true' if system name has a valid format,
      * else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type) {
+    public static NameValidity validSystemNameFormat(String systemName, char type) {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'K') || (systemName.charAt(1) != type)) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: "
                     + systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
 
         // This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK
@@ -75,14 +77,14 @@ public class SerialAddress {
         } catch (Exception e) {
             log.error("illegal character in number field of system name: "
                     + systemName);
-            return false;
+            return NameValidity.INVALID;
         }
         // now check range
         if ((bitNum <= 0) || (type == 'S' && bitNum > 1000) || (bitNum > 8000)) {
             log.error("node address field out of range in system name - " + systemName);
-            return false;
+            return NameValidity.INVALID;
         }
-        return true;
+        return NameValidity.VALID;
     }
 
     /**
@@ -92,7 +94,7 @@ public class SerialAddress {
      * else returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
-        if (!validSystemNameFormat(systemName, type)) {
+        if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return false;
         }
@@ -129,7 +131,7 @@ public class SerialAddress {
      */
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (validSystemNameFormat(systemName, systemName.charAt(1)) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }

@@ -154,7 +154,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'T'));
     }
 

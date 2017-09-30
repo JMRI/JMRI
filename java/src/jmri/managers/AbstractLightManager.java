@@ -120,7 +120,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!validSystemNameFormat(systemName)) {
+        if ( validSystemNameFormat(systemName) != NameValidity.VALID) {
             log.error("Invalid system name for newLight: " + systemName);
             throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
@@ -194,23 +194,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Validate system name format.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.LightTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
-    }
-
-    /**
      * Normalize the system name
-     * <P>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one C/MRI bit, by removing extra zeros inserted by the user.
      * <P>
      * If a system implementation has names that could be normalized, the
      * system-specific Light Manager should override this routine and supply a
@@ -225,7 +209,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * Convert the system name to a normalized alternate name
      * <P>
      * This routine is to allow testing to ensure that two Lights with alternate
-     * names that refer to the same output bit are not created.
+     * names that refer to the same output bit are not created in systems with multiple name formats.
      * <P>
      * If a system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.
