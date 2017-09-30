@@ -98,7 +98,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
             log.debug("Warning: {}", e.getMessage());
-            return false;
             return NameValidity.INVALID;
         }
         return NameValidity.VALID;
