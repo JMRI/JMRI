@@ -1,6 +1,5 @@
 package jmri.jmrit.powerpanel;
 
-import java.util.ResourceBundle;
 import javax.swing.Action;
 import jmri.PowerManager;
 
@@ -18,7 +17,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     }
 
     public PowerButtonAction() {
-        this(ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonPowerOnOff"));
+        this(Bundle.getMessage("ButtonPowerOnOff"));
     }
 
     void checkManager() {
@@ -34,9 +33,9 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
         try {
             PowerManager p = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
             if (p.getPower() != PowerManager.ON) {
-                putValue(Action.NAME, ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonSetOn"));
+                putValue(Action.NAME, Bundle.getMessage("ButtonSetOn"));
             } else {
-                putValue(Action.NAME, ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonSetOff"));
+                putValue(Action.NAME, Bundle.getMessage("ButtonSetOff"));
             }
             firePropertyChange(Action.NAME, "", getValue(Action.NAME));
         } catch (jmri.JmriException ex) {

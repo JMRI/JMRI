@@ -337,10 +337,12 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 && (functionPanel.getWidth() < addressPanel.getWidth())) {
             functionPanel.setSize(addressPanel.getWidth(), functionPanel.getHeight());
         }
-        if (!(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
-                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())
-                && (functionPanel.getWidth() < addressPanel.getWidth())) {
-        }
+        // Findbugs flagged the following (apparently correctly) as a 
+        // useless control statement, so it has been commented out.
+        //if (!(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+        //        && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon())
+        //        && (functionPanel.getWidth() < addressPanel.getWidth())) {
+        //}
 
         speedPanel.setSize(addressPanel.getWidth() + controlPanel.getWidth(), addressPanel.getHeight() / 2);
         speedPanel.setLocation(0, controlPanel.getHeight());

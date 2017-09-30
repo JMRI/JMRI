@@ -19,6 +19,25 @@ public class Mx1PacketGenPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception{
+        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
+        // for now, just makes ure there isn't an exception.
+        pane.initComponents();
+    }
+
+    @Test
+    public void testGetHelpTarget(){
+        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
+        Assert.assertEquals("help target","package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel",pane.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle(){
+        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
+        Assert.assertEquals("title","MX1_: " + Bundle.getMessage("Title"),pane.getTitle());
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

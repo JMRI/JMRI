@@ -45,6 +45,8 @@
 
       <p>To configure the connection:</p>
 
+      <h4>ESU/EcoS</h4>
+      
       <ul>
         <li>Open the JMRI "Preferences" under the "Edit" menu (or
         the PanelPro menu on OS X)</li>
@@ -62,10 +64,29 @@
 
         <li>Click "Save" &amp; restart</li>
       </ul>
+      
+      <h4>Digitrax/Loconet</h4>
+      
+      <p>Providing that the Digikeijs DR5000 unit has been configured to use "Loconet over TCP/IP LBServer" protocol (Firmware version 1.3.0 when writing this documentation)</p>
 
-      <p>Turnout, Sensor, Signal and Throttle support is available
-      for a JMRI-connected DR5000 unit.</p>
+      <ul>
+       <li>Open the JMRI "Preferences" under the "Edit" menu (or the PanelPro menu on OS X)</li>
+       
+       <li>Select Digitrax as the System Manufacturer</li>
+       
+       <li>Select "Loconet over TCP" as the System Connection</li>
 
+       <li>Enter the IP address for your DR5000 unit</li>
+
+       <li>Select whatever as Command station type (DB150 Empire Builder on my side)</li>
+       
+       <li>Additional Connection settings, set port to 5550</li>       
+      </ul>
+      
+      <br>
+      
+      <p>Turnout, Sensor, Signal and Throttle support is available for a JMRI-connected DR5000 unit.</p>
+           
       <h3>Throttles</h3>
 
       <h3>Sensors</h3>

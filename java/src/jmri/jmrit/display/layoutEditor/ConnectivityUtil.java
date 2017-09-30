@@ -67,7 +67,7 @@ public class ConnectivityUtil {
     private List<Integer> companion = null;
     private TrackSegment tr = null;
     private int prevConnectType = 0;
-    private Object prevConnectObject = null;
+    private LayoutTrack prevConnectObject = null;
     private LayoutBlock currLayoutBlock = null;
     private LayoutBlock nextLayoutBlock = null;
     private LayoutBlock prevLayoutBlock = null;
@@ -274,7 +274,7 @@ public class ConnectivityUtil {
         }
         // search connectivity for turnouts by following TrackSegments to end of Block
         while (tr != null) {
-            Object cObject;
+            LayoutTrack cObject;
             // identify next connection
             if ((tr.getConnect1() == prevConnectObject) && (tr.getType1() == prevConnectType)) {
                 cType = tr.getType2();
@@ -938,8 +938,6 @@ public class ConnectivityUtil {
      * @return true if block is internal to x; false if block is external or
      *         contains a connecting track segment
      */
-    @CheckReturnValue
-    @Nullable
     public boolean blockInternalToLevelXing(
             @Nullable LevelXing x,
             @Nullable Block block) {
@@ -1316,18 +1314,18 @@ public class ConnectivityUtil {
     @CheckReturnValue
     @Nullable
     public TrackNode getTrackNode(
-            @Nonnull Object cNode,
+            @Nonnull LayoutTrack cNode,
             int cNodeType,
             @Nullable TrackSegment cTrack,
             int cNodeState) {
         // initialize
-        Object node = null;
+        LayoutTrack node = null;
         int nodeType = LayoutTurnout.NONE;
         TrackSegment track = null;
         boolean hitEnd = false;
         @SuppressWarnings("unused")
         int pType = cNodeType;
-        Object pObject = cNode;
+        LayoutTrack pObject = cNode;
         TrackSegment tTrack = null;
         switch (cNodeType) {
             case LayoutTrack.POS_POINT:
@@ -1649,7 +1647,7 @@ public class ConnectivityUtil {
 
         // follow track to anchor block boundary, turnout, or level crossing
         boolean hasNode = false;
-        Object tObject;
+        LayoutTrack tObject;
         int tType;
         if (tTrack == null) {
             log.error("Error tTrack is null!");
@@ -2358,13 +2356,13 @@ public class ConnectivityUtil {
      * if not.
      */
     private boolean trackSegmentLeadsTo(
-            @Nullable TrackSegment tsg, @Nullable Object ob) {
+            @Nullable TrackSegment tsg, @Nullable LayoutTrack ob) {
         if ((tsg == null) || (ob == null)) {
             log.error("Null argument on entry to trackSegmentLeadsTo");
             return false;
         }
         TrackSegment curTS = tsg;
-        Object curObj = ob;
+        LayoutTrack curObj = ob;
 
         if (log.isDebugEnabled()) {
             log.info("trackSegmentLeadsTo({}, {}): entry", curTS.getId(), objectToNameOrIDString(curObj));
@@ -2372,10 +2370,10 @@ public class ConnectivityUtil {
 
         // post process track segment and conObj lists
         List<TrackSegment> posTS = new ArrayList<>();
-        List<Object> posOB = new ArrayList<>();
+        List<LayoutTrack> posOB = new ArrayList<>();
 
         int conType;
-        Object conObj;
+        LayoutTrack conObj;
 
         // follow track to all exit points outside this block
         while (curTS != null) {
@@ -2755,7 +2753,7 @@ public class ConnectivityUtil {
     }
 
     @Nonnull
-    private String objectToNameOrIDString(@Nonnull Object obj) {
+    private String objectToNameOrIDString(@Nonnull LayoutTrack obj) {
         String result;
         try {
             result = ((NamedBean) obj).getDisplayName();

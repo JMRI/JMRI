@@ -1,31 +1,34 @@
 package jmri.jmrit.powerpanel;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Jmrit PowerPanel
  *
  * @author	Bob Jacobsen
  */
-public class PowerPaneTest extends TestCase {
+public class PowerPaneTest {
 
     // setup a default PowerManager interface
-    @Override
+    @Before
     public void setUp() {
         JUnitUtil.initDebugPowerManager();
     }
 
     // test creation
+    @Test
     public void testCreate() {
         PowerPane p = new PowerPane();
         Assert.assertNotNull("exists", p);
     }
 
     // test on button routine
+    @Test
     public void testPushOn() {
         PowerPane p = new PowerPane();
         p.onButtonPushed();
@@ -33,6 +36,7 @@ public class PowerPaneTest extends TestCase {
     }
 
     // test off button routine
+    @Test
     public void testPushOff() {
         PowerPane p = new PowerPane();
         p.offButtonPushed();
@@ -40,6 +44,7 @@ public class PowerPaneTest extends TestCase {
     }
 
     // click on button
+    @Test
     public void testOnClicked() {
         PowerPane p = new PowerPane();
         p.onButton.doClick();
@@ -47,27 +52,30 @@ public class PowerPaneTest extends TestCase {
     }
 
     // click off button
+    @Test
     public void testOffClicked() {
         PowerPane p = new PowerPane();
         p.offButton.doClick();
         Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
     }
 
-    // from here down is testing infrastructure
-    public PowerPaneTest(String s) {
-        super(s);
+    @Test
+    public void testGetHelpTarget() {
+        PowerPane t = new PowerPane();
+        Assert.assertEquals("help target","package.jmri.jmrit.powerpanel.PowerPanelFrame",t.getHelpTarget());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PowerPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testGetTitle() {
+        PowerPane t = new PowerPane();
+        Assert.assertEquals("title",Bundle.getMessage("TitlePowerPanel"),t.getTitle());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PowerPaneTest.class);
-        return suite;
+    @Test
+    public void testInitComponents() throws Exception {
+        PowerPane t = new PowerPane();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
     }
 
 }

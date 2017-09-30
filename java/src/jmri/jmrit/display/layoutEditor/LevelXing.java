@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -12,22 +10,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -35,9 +23,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -759,19 +745,15 @@ public class LevelXing extends LayoutTrack {
      */
     public void setLayoutBlockAC(LayoutBlock b) {
         blockAC = b;
-        if (b != null) {
-            blockNameAC = b.getId();
-        }
+        blockNameAC = (b == null) ? "" : b.getId();
     }
 
     public void setLayoutBlockBD(LayoutBlock b) {
         blockBD = b;
-        if (b != null) {
-            blockNameBD = b.getId();
-        }
+        blockNameBD = (b == null) ? "" : b.getId();
     }
 
-    private void updateBlockInfo() {
+    protected void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
         if (blockAC != null) {
@@ -1066,7 +1048,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLevelXing(LevelXing.this);
+                    layoutEditor.getLayoutTrackEditors().editLevelXing(LevelXing.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -1209,302 +1191,6 @@ public class LevelXing extends LayoutTrack {
             }
         }
         return boundaryBetween;
-    }
-
-    // variables for Edit Level Crossing pane
-    private JmriJFrame editLevelXingFrame = null;
-    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("HideCrossing"));
-
-    private JmriBeanComboBox block1NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox block2NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JButton xingEditDone;
-    private JButton xingEditCancel;
-    private JButton xingEdit1Block;
-    private JButton xingEdit2Block;
-    private boolean editOpen = false;
-    private boolean needsRedraw = false;
-    private boolean needsBlockUpdate = false;
-
-    /**
-     * Edit a Level Crossing
-     */
-    protected void editLevelXing(LevelXing o) {
-        if (editOpen) {
-            editLevelXingFrame.setVisible(true);
-            return;
-        }
-        // Initialize if needed
-        if (editLevelXingFrame == null) {
-            editLevelXingFrame = new JmriJFrame(Bundle.getMessage("EditXing"), false, true);
-            editLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.EditLevelXing", true);
-            editLevelXingFrame.setLocation(50, 30);
-            Container contentPane = editLevelXingFrame.getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));
-            panel33.add(hiddenBox);
-            contentPane.add(panel33);
-
-            // setup block 1 name
-            JPanel panel1 = new JPanel();
-            panel1.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
-            panel1.add(block1NameLabel);
-            panel1.add(block1NameComboBox);
-            LayoutEditor.setupComboBox(block1NameComboBox, false, true);
-            block1NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
-            contentPane.add(panel1);
-
-            // setup block 2 name
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
-            panel2.add(block2NameLabel);
-            panel2.add(block2NameComboBox);
-            LayoutEditor.setupComboBox(block2NameComboBox, false, true);
-            block2NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
-            contentPane.add(panel2);
-
-            // set up Edit 1 Block and Edit 2 Block buttons
-            JPanel panel4 = new JPanel();
-            panel4.setLayout(new FlowLayout());
-            // Edit 1 Block
-            panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
-            xingEdit1Block.addActionListener((ActionEvent e) -> {
-                xingEdit1BlockPressed(e);
-            });
-            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
-            // Edit 2 Block
-            panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
-            xingEdit2Block.addActionListener((ActionEvent e) -> {
-                xingEdit2BlockPressed(e);
-            });
-            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
-            contentPane.add(panel4);
-            // set up Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            xingEditDone.addActionListener((ActionEvent e) -> {
-                xingEditDonePressed(e);
-            });
-            xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
-                rootPane.setDefaultButton(xingEditDone);
-            });
-
-            // Cancel
-            panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            xingEditCancel.addActionListener((ActionEvent e) -> {
-                xingEditCancelPressed(e);
-            });
-            xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            contentPane.add(panel5);
-        }
-
-        hiddenBox.setSelected(hidden);
-
-        // Set up for Edit
-        block1NameComboBox.setText(blockNameAC);
-        block2NameComboBox.setText(blockNameBD);
-        editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                xingEditCancelPressed(null);
-            }
-        });
-        editLevelXingFrame.pack();
-        editLevelXingFrame.setVisible(true);
-        editOpen = true;
-        needsBlockUpdate = false;
-    }
-
-    void xingEdit1BlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = block1NameComboBox.getUserName();
-        if (!blockNameAC.equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((blockAC != null) && (blockAC != blockBD)) {
-                blockAC.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameAC = newName;
-            if (!blockNameAC.isEmpty()) {
-                try {
-                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                    // decrement use if block was previously counted
-                    if ((blockAC != null) && (blockAC == blockBD)) {
-                        blockAC.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameAC = "";
-                    block1NameComboBox.setText("");
-                    block1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockAC = null;
-                blockNameAC = "";
-            }
-            needsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockAC == null) {
-            JOptionPane.showMessageDialog(editLevelXingFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockAC.editLayoutBlock(editLevelXingFrame);
-        needsRedraw = true;
-    }
-
-    void xingEdit2BlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = block2NameComboBox.getUserName();
-        if (-1 != block2NameComboBox.getSelectedIndex()) {
-            newName = block2NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
-        }
-        if (!blockNameBD.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((blockBD != null) && (blockBD != blockAC)) {
-                blockBD.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameBD = newName;
-            if (!blockNameBD.isEmpty()) {
-                try {
-                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                    // decrement use if block was previously counted
-                    if ((blockBD != null) && (blockAC == blockBD)) {
-                        blockBD.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameBD = "";
-                    block2NameComboBox.setText("");
-                    block2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockBD = null;
-                blockNameBD = "";
-            }
-            needsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockBD == null) {
-            JOptionPane.showMessageDialog(editLevelXingFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockBD.editLayoutBlock(editLevelXingFrame);
-        needsRedraw = true;
-    }
-
-    void xingEditDonePressed(ActionEvent a) {
-        // check if Blocks changed
-        String newName = block1NameComboBox.getUserName();
-        if (!blockNameAC.equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((blockAC != null) && (blockAC != blockBD)) {
-                blockAC.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameAC = newName;
-            if (!blockNameAC.isEmpty()) {
-                try {
-                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                    // decrement use if block was previously counted
-                    if ((blockAC != null) && (blockAC == blockBD)) {
-                        blockAC.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameAC = "";
-                    block1NameComboBox.setText("");
-                    block1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockAC = null;
-                blockNameAC = "";
-            }
-            needsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-        newName = block2NameComboBox.getUserName();
-        if (!blockNameBD.equals(newName)) {
-            // block 2 has changed, if old block exists, decrement use
-            if ((blockBD != null) && (blockBD != blockAC)) {
-                blockBD.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameBD = newName;
-            if (!blockNameBD.isEmpty()) {
-                try {
-                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                    // decrement use if block was previously counted
-                    if ((blockBD != null) && (blockAC == blockBD)) {
-                        blockBD.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameBD = "";
-                    block2NameComboBox.setText("");
-                    block2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockBD = null;
-                blockNameBD = "";
-            }
-            needsRedraw = true;
-            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-
-        // set hidden
-        boolean oldHidden = hidden;
-        hidden = hiddenBox.isSelected();
-        if (oldHidden != hidden) {
-            needsRedraw = true;
-        }
-
-        editOpen = false;
-        editLevelXingFrame.setVisible(false);
-        editLevelXingFrame.dispose();
-        editLevelXingFrame = null;
-        if (needsBlockUpdate) {
-            updateBlockInfo();
-        }
-        if (needsRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-
-    void xingEditCancelPressed(ActionEvent a) {
-        editOpen = false;
-        editLevelXingFrame.setVisible(false);
-        editLevelXingFrame.dispose();
-        editLevelXingFrame = null;
-        if (needsBlockUpdate) {
-            updateBlockInfo();
-        }
-        if (needsRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
     }
 
     /**

@@ -33,6 +33,27 @@ public class Log4JTreePaneTest {
         JUnitUtil.dispose(f);
     }
 
+    @Test
+    public void testGetHelpTarget() {
+        Log4JTreePane t = new Log4JTreePane();
+        Assert.assertEquals("help target","package.jmri.jmrit.log.Log4JTreePane",t.getHelpTarget());
+    }
+
+    @Test
+    public void testGetTitle() {
+        Log4JTreePane t = new Log4JTreePane();
+        Assert.assertEquals("title",Bundle.getMessage("MenuItemLogTreeAction"),t.getTitle());
+    }
+
+    @Test
+    public void testInitComponents() throws Exception {
+        Log4JTreePane t = new Log4JTreePane();
+        // we are just making sure that initComponents doesn't cause an exception.
+        t.initComponents();
+    }
+
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
