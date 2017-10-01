@@ -16,7 +16,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.text.BadLocationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,17 +31,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     String deltaTCheck = this.getClass().getName()+".DeltaT"; // NOI18N
    
     protected JButton packetfilterButton = new JButton(Bundle.getMessage("FilterPacketsText") );  // NOI18N
-    protected JCheckBox deltaTBox = new JCheckBox(Bundle.getMessage("ShowWithTimeDiffText"));   // NOI18N
-
-    protected long lastTicks = 0L;
     protected static int _DLE    = 0x10;    
    
-    private CMRISystemConnectionMemo _memo = null;
+    private CMRISystemConnectionMemo _memo = null;    
 
     public SerialMonFrame(CMRISystemConnectionMemo memo) {
         super();
-        _memo = memo;
-
+        _memo = memo;        
     }
 
 //    @Override
@@ -51,7 +48,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     protected String title() {
-        return Bundle.getMessage("SerialCommandMonTitle");
+        return Bundle.getMessage("SerialCommandMonTitle")+" "+Bundle.getMessage("Connection")+_memo.getUserName();  // NOI18N
     }
 
     @Override
@@ -68,15 +65,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         
-        deltaTBox.setText(Bundle.getMessage("ShowWithTimeDiffText"));
-        deltaTBox.setVisible(true);
-        deltaTBox.setEnabled(false);
-        deltaTBox.setToolTipText(Bundle.getMessage("ShowWithDimeDiffTip"));
-        pane1.add(deltaTBox);
-        
-        packetfilterButton.setText(Bundle.getMessage("FilterPacketsText"));
+        packetfilterButton.setText(Bundle.getMessage("FilterPacketsText"));  // NOI18N
         packetfilterButton.setVisible(true);
-        packetfilterButton.setToolTipText(Bundle.getMessage("FilterPacketTip"));
+        packetfilterButton.setToolTipText(Bundle.getMessage("FilterPacketTip"));  // NOI18N
         pane1.add(packetfilterButton);
         packetfilterButton.addActionListener(new ActionListener() {
             @Override
@@ -91,6 +82,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         pack();
         paneA.setMaximumSize(paneA.getSize());
         pack();
+        // Move the filter packets button to the middle
         getContentPane().setComponentZOrder(paneA,1);
     }
     
@@ -133,7 +125,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 		f.initComponents();
             }
 	catch (Exception ex) {
-			log.warn("SerialFilterAction starting SerialFilterFrame: Exception: "+ex.toString());
+			log.warn("SerialMonFrame starting SerialFilterFrame: Exception: "+ex.toString());
 			}
             f.setVisible(true);
 	}
@@ -357,7 +349,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500 ;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class);
 
 }
 
