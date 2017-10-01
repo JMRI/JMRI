@@ -33,8 +33,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super.dispose();
     }
 
+    /**
+     * Define system-specific help item
+     */
     @Override
-    protected void addHelpItem() {
+    protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 

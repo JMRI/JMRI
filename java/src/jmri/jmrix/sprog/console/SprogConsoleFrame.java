@@ -273,14 +273,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Define help menu for this window.
-     * <p>
-     * By default, provides a generic help page that covers general features.
-     * Specific implementations can override this to show their own help page if
-     * desired.
+     * Define system-specific help item
      */
     @Override
-    protected void addHelpItem() {
+    protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
     }
 
