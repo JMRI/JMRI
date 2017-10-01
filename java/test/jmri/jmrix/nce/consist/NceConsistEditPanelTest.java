@@ -10,39 +10,19 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class NceConsistEditPanelTest {
-
-    @Test
-    public void testCTor() {
-        NceConsistEditPanel t = new NceConsistEditPanel();
-        Assert.assertNotNull("exists",t);
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        NceConsistEditPanel t = new NceConsistEditPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.nce.consist.NceConsistEditFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        NceConsistEditPanel t = new NceConsistEditPanel();
-        Assert.assertEquals("title","NCE_: Edit NCE Consist",t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        NceConsistEditPanel t = new NceConsistEditPanel();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
+public class NceConsistEditPanelTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new NceConsistEditPanel();
+        helpTarget="package.jmri.jmrix.nce.consist.NceConsistEditFrame";
+        title="NCE_: Edit NCE Consist";
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

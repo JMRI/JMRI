@@ -17,33 +17,14 @@ public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     private SerialTrafficControlScaffold tc = null;
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists",pane);
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        Assert.assertNull("help target",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        Assert.assertEquals("title","Powerline_: Communication Monitor",pane.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        // we are just making sure that initComponents doesn't cause an exception.
-        pane.initComponents();
-    }
-
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
-        pane = new SerialMonPane();
+        // pane for AbstractMonPaneTestBase, panel for JmriPanel
+        panel = pane = new SerialMonPane();
+        title="Powerline_: Communication Monitor";
     }
 
     @Override
