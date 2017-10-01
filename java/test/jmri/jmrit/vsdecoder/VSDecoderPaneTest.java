@@ -14,9 +14,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class VSDecoderPaneTest {
+public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
@@ -26,6 +27,7 @@ public class VSDecoderPaneTest {
     }
 
     @Test
+    @Override
     public void testGetHelpTarget() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
@@ -35,6 +37,7 @@ public class VSDecoderPaneTest {
     }
 
     @Test
+    @Override
     public void testGetTitle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
@@ -44,6 +47,7 @@ public class VSDecoderPaneTest {
     }
 
     @Test
+    @Override
     public void testInitComponents() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDecoderFrame vf = new VSDecoderFrame();
@@ -55,11 +59,13 @@ public class VSDecoderPaneTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -12,23 +12,18 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  */
-public class NcePacketGenPanelTest {
-
-    @Test
-    public void testPanelCreate() {
-        new NcePacketGenPanel();
-    }
+public class NcePacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testPacketNull() {
-        NcePacketGenPanel t = new NcePacketGenPanel();
+        NcePacketGenPanel t = (NcePacketGenPanel) panel;
         NceMessage m = t.createPacket("");
         Assert.assertEquals("null pointer", null, m);
     }
 
     @Test
     public void testPacketCreate() {
-        NcePacketGenPanel t = new NcePacketGenPanel();
+        NcePacketGenPanel t = (NcePacketGenPanel) panel;
         NceMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 0x12, m.getElement(0) & 0xFF);
@@ -41,30 +36,16 @@ public class NcePacketGenPanelTest {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
-    @Test
-    public void testGetHelpTarget() {
-        NcePacketGenPanel t = new NcePacketGenPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.nce.packetgen.NcePacketGenFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        NcePacketGenPanel t = new NcePacketGenPanel();
-        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("Title"),t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        NcePacketGenPanel t = new NcePacketGenPanel();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new NcePacketGenPanel();
+        title="NCE_: " + Bundle.getMessage("Title");
+        helpTarget="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 

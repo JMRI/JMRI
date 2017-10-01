@@ -14,26 +14,9 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SlotMonPaneTest {
+public class SlotMonPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        SlotMonPane t = new SlotMonPane();
-        Assert.assertNotNull("exists",t);
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        SlotMonPane t = new SlotMonPane();
-        Assert.assertEquals("help target","package.jmri.jmrix.loconet.slotmon.SlotMonFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        SlotMonPane t = new SlotMonPane();
-        Assert.assertEquals("title",Bundle.getMessage("MenuItemSlotMonitor"),t.getTitle());
-    }
-
+    @Override
     @Test
     public void testInitComponents() {
         SlotMonPane t = new SlotMonPane();
@@ -45,11 +28,16 @@ public class SlotMonPaneTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new SlotMonPane();
+        helpTarget="package.jmri.jmrix.loconet.slotmon.SlotMonFrame";
+        title=Bundle.getMessage("MenuItemSlotMonitor");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

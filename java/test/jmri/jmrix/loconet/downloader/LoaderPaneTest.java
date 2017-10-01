@@ -15,42 +15,23 @@ import jmri.jmrix.loconet.SlotManager;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LoaderPaneTest {
+public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
-   private LnTrafficController lnis = null;
-   private LocoNetSystemConnectionMemo memo = null;
-   private SlotManager slotmanager = null;
+    private LnTrafficController lnis = null;
+    private LocoNetSystemConnectionMemo memo = null;
+    private SlotManager slotmanager = null;
 
-    @Test
-    public void testCTor() {
-        LoaderPane t = new LoaderPane();
-        Assert.assertNotNull("exists",t);
-    }
-
+    @Override
     @Test
     public void testInitComponents() throws Exception{
-        LoaderPane t = new LoaderPane();
         // for now, just makes ure there isn't an exception.
-        t.initComponents(memo);
+        ((LoaderPane) panel).initComponents(memo);
     }
 
     @Test
     public void testInitContext() throws Exception {
-        LoaderPane t = new LoaderPane();
         // for now, just makes ure there isn't an exception.
-        t.initContext(memo);
-    }
-
-    @Test
-    public void testGetHelpTarget(){
-        LoaderPane t = new LoaderPane();
-        Assert.assertEquals("help target","package.jmri.jmrix.loconet.downloader.LoaderFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        LoaderPane t = new LoaderPane();
-        Assert.assertEquals("title","Firmware Downloader",t.getTitle());
+        ((LoaderPane)panel).initContext(memo);
     }
 
     // The minimal setup for log4J
@@ -60,6 +41,9 @@ public class LoaderPaneTest {
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        panel = new LoaderPane();
+        helpTarget="package.jmri.jmrix.loconet.downloader.LoaderFrame";
+        title="Firmware Downloader";
     }
 
     @After
