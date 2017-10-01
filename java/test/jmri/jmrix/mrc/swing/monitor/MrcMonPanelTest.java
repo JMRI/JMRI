@@ -20,11 +20,6 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane);
-    }
-
     // Test checking the AutoScroll checkbox.
     // for some reason the MrcMonPanel has the checkbox value reversed on
     // startup compared to other AbstractMonPane derivatives.
@@ -62,8 +57,11 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.jmrix.mrc.MrcInterfaceScaffold tc = new jmri.jmrix.mrc.MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, jmri.jmrix.mrc.MrcSystemConnectionMemo.class);
-        pane = new MrcMonPanel();
-        ((MrcMonPanel)pane).initContext(memo); 
+        // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
+        panel = pane = new MrcMonPanel();
+        ((MrcMonPanel)pane).initContext(memo);
+        helpTarget = "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
+        title = "Open MRC Monitor"; 
     }
 
     @Override

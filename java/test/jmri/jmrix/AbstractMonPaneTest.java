@@ -10,11 +10,15 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AbstractMonPaneTest {
+public class AbstractMonPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        AbstractMonPane t = new AbstractMonPane(){
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        panel = new AbstractMonPane(){
            @Override
            public String getTitle(){
               return "test";
@@ -23,17 +27,12 @@ public class AbstractMonPaneTest {
            public void init(){
            }
         };
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        title = "test";
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
