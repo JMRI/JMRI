@@ -18,6 +18,8 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         panel = new LoaderPane();
+        title = "Firmware Downloader";
+        helpTarget = "package.jmri.jmrix.openlcb.swing.downloader.LoaderFrame";
     }
 
     @After
