@@ -1039,7 +1039,6 @@
     <!-- NetBeans targets: profiling et al                                             -->
     <!-- ============================================================================= -->
 
-
     <!-- Note if modifying the profile target, please be sure to up date the -->
     <!-- NetBeans IDE profile target in this file -->
     <target name="profile"
@@ -1062,20 +1061,62 @@
     <!-- can use other info defined in this file -->
     <!-- The profiler is not so well integrated into the IDE and requires -->
     <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
+
+    <target name="profile-nb"
+            description="profile PanelPro app"
+            depends="debug">
+        <antcall target="profile-nbX">
+            <param name="application.classname" value="apps.PanelPro.PanelPro"/>
+            <param name="antargline" value="PanelProConfig2.xml"/>
+        </antcall>
+    </target>
+
+    <target name="profile-nbX" depends="runtime-library-selection" description="build and run app with NetBeans profiling">
+        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
+        <startprofiler/>
+        <nbprofiledirect>
+            <classpath>
+                <pathelement location="${jartarget}/jmri.jar"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </nbprofiledirect>
+        <echo message="Saw: ${profiler.info.jvmargs.agent}"/>
+        <!-- <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail> -->
+        <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
+            <classpath refid="project.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="java.library.path" path=".:${arch.lib.path}:${libdir}"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
+            <!-- commenting out this next line prevents the "can't find main class..." message -->
+            <!-- <jvmarg value="${profiler.info.jvmargs.agent}"/> -->
+            <jvmarg line="${profiler.info.jvmargs}"/>
+            <jvmarg value="-Xms256m"/>
+            <jvmarg value="-Xmx640m"/>
+            <jvmarg line="${jvm.args}"/>
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
+
+
+
+
+
+
+
+    <target name="profile-nbZ" depends="runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
         <property name="antargline" value="PanelProConfig2.xml"/>
         <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
         <startprofiler/>
         <nbprofiledirect>
             <classpath>
-                <pathelement location="dist/test.jar"/>
+                <pathelement location="${jartarget}/jmri.jar"/>
                 <pathelement path="${java.class.path}"/>
-                <!-- <pathelement path="${target}"/> -->
             </classpath>
         </nbprofiledirect>
         <echo message="Saw: ${profiler.info.jvmargs.agent}"/>
-        <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail>
-        <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
+        <!-- <fail unless="profiler.info.jvmargs.agent">Must set profiler agent JVM arguments in profiler.info.jvmargs.agent</fail> -->
+        <java classname="apps.PanelPro.PanelPro" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1085,12 +1126,8 @@
             <sysproperty key="java.library.path" path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="file.encoding" value="UTF-8"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <jvmarg value="${profiler.info.jvmargs.agent}"/>
+            <!-- <jvmarg value="${profiler.info.jvmargs.agent}"/> -->
             <jvmarg line="${profiler.info.jvmargs}"/>
-            <!-- <jvmarg value="-verbose"/> -->
-            <!-- <jvmarg value="-verbosegc"/> -->
-            <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
-            <!-- for JTune -->
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
