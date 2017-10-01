@@ -62,7 +62,7 @@ public class LinkingLabelTest {
         // close the frame.
         JFrameOperator jfo = new JFrameOperator(jf);
         jfo.requestClose();
-        jfp.waitClosed();
+        jfo.waitClosed();
 
     }
 
