@@ -19,6 +19,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -330,8 +331,8 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         if (Setup.isCarLoggerEnabled() && !carLog) {
             log.debug("Rolling Stock Logger adding car listerners");
             carLog = true;
-            List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getList();
-            for (RollingStock car : cars) {
+            List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
+            for (Car car : cars) {
                 car.addPropertyChangeListener(this);
             }
             // listen for new rolling stock being added
@@ -343,8 +344,8 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         if (Setup.isEngineLoggerEnabled() && !engLog) {
             engLog = true;
             log.debug("Rolling Stock Logger adding engine listerners");
-            List<RollingStock> engines = InstanceManager.getDefault(EngineManager.class).getList();
-            for (RollingStock engine : engines) {
+            List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList();
+            for (Engine engine : engines) {
                 engine.addPropertyChangeListener(this);
             }
             // listen for new rolling stock being added
@@ -355,8 +356,8 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
     private void removeCarListeners() {
         if (carLog) {
             log.debug("Rolling Stock Logger removing car listerners");
-            List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getList();
-            for (RollingStock car : cars) {
+            List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
+            for (Car car : cars) {
                 car.removePropertyChangeListener(this);
             }
             InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(this);
@@ -367,8 +368,8 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
     private void removeEngineListeners() {
         if (engLog) {
             log.debug("Rolling Stock Logger removing engine listerners");
-            List<RollingStock> engines = InstanceManager.getDefault(EngineManager.class).getList();
-            for (RollingStock engine : engines) {
+            List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList();
+            for (Engine engine : engines) {
                 engine.removePropertyChangeListener(this);
             }
             InstanceManager.getDefault(EngineManager.class).removePropertyChangeListener(this);
