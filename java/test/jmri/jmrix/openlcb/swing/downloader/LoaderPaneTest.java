@@ -10,21 +10,20 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LoaderPaneTest {
-
-    @Test
-    public void testCTor() {
-        LoaderPane t = new LoaderPane();
-        Assert.assertNotNull("exists",t);
-    }
+public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new LoaderPane();
+        title = "Firmware Downloader";
+        helpTarget = "package.jmri.jmrix.openlcb.swing.downloader.LoaderFrame";
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

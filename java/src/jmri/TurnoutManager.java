@@ -231,8 +231,8 @@ public interface TurnoutManager extends Manager<Turnout> {
 //    /**
 //     * Test if parameter is a properly formatted hardware address
 //     *
-//     * @param systemName the system name
-//     * @return enum indicating current validity, which might be just as a prefix
+//     * @param address the system name suffix
+//     * @return enum indicating current validity
 //     */
     //@CheckReturnValue
     //public NameValidity validAddressFormat(@Nonnull String address);

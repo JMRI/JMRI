@@ -227,7 +227,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         if (col == USEGLOBALDELAY) {
             return true;
         }
-        //Need to do something here to make it disable 
+        //Need to do something here to make it disable
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
             if (sen.getUseDefaultTimerSettings()) {
                 return false;

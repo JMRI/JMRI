@@ -120,7 +120,7 @@ public class AcelaAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
-            log.error("invalid character in header field of system name: {}", systemName);
+            log.debug("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
         int num;

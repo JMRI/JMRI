@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri;
 
 import jmri.Manager.NameValidity;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

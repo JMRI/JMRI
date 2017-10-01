@@ -145,7 +145,7 @@ public class FileUtilSupport extends Bean {
         try {
             return uri.toURL();
         } catch (MalformedURLException | IllegalArgumentException ex) {
-            log.warn("Unable to get URL from {}", uri.toString());
+            log.warn("Unable to get URL from {}", uri);
             return null;
         } catch (NullPointerException ex) {
             log.warn("Unable to get URL from null object.", ex);
@@ -246,7 +246,8 @@ public class FileUtilSupport extends Bean {
                     @Override
                     public FileVisitResult preVisitDirectory(final Path dir,
                             final BasicFileAttributes attrs) throws IOException {
-                        if (name.equals(dir.getFileName().toString())) {
+                        Path fn = dir.getFileName();
+                        if (fn != null && name.equals(fn.toString())) {
                             files.add(dir.toFile().getCanonicalFile());
                         }
                         return FileVisitResult.CONTINUE;
@@ -256,7 +257,8 @@ public class FileUtilSupport extends Bean {
                     public FileVisitResult visitFile(final Path file,
                             final BasicFileAttributes attrs) throws IOException {
                         // TODO: accept glob patterns
-                        if (name.equals(file.getFileName().toString())) {
+                        Path fn = file.getFileName();
+                        if (fn != null && name.equals(fn.toString())) {
                             files.add(file.toFile().getCanonicalFile());
                         }
                         return FileVisitResult.CONTINUE;

@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Manager.NameValidity;
-
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;

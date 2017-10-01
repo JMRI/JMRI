@@ -12,70 +12,45 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  */
-public class PowerPaneTest {
+public class PowerPaneTest extends jmri.util.swing.JmriPanelTest {
 
     // setup a default PowerManager interface
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.initDebugPowerManager();
-    }
-
-    // test creation
-    @Test
-    public void testCreate() {
-        PowerPane p = new PowerPane();
-        Assert.assertNotNull("exists", p);
+        panel = new PowerPane();
+        helpTarget="package.jmri.jmrit.powerpanel.PowerPanelFrame";
+        title=Bundle.getMessage("TitlePowerPanel");
     }
 
     // test on button routine
     @Test
     public void testPushOn() {
-        PowerPane p = new PowerPane();
-        p.onButtonPushed();
-        Assert.assertEquals("Testing shown on/off", "On", p.onOffStatus.getText());
+        ((PowerPane) panel).onButtonPushed();
+        Assert.assertEquals("Testing shown on/off", "On", ((PowerPane) panel).onOffStatus.getText());
     }
 
     // test off button routine
     @Test
     public void testPushOff() {
-        PowerPane p = new PowerPane();
-        p.offButtonPushed();
-        Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
+        ((PowerPane) panel).offButtonPushed();
+        Assert.assertEquals("Testing shown on/off", "Off", ((PowerPane) panel).onOffStatus.getText());
     }
 
     // click on button
     @Test
     public void testOnClicked() {
-        PowerPane p = new PowerPane();
-        p.onButton.doClick();
-        Assert.assertEquals("Testing shown on/off", "On", p.onOffStatus.getText());
+        ((PowerPane) panel).onButton.doClick();
+        Assert.assertEquals("Testing shown on/off", "On", ((PowerPane) panel).onOffStatus.getText());
     }
 
     // click off button
     @Test
     public void testOffClicked() {
-        PowerPane p = new PowerPane();
-        p.offButton.doClick();
-        Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
+        ((PowerPane) panel).offButton.doClick();
+        Assert.assertEquals("Testing shown on/off", "Off", ((PowerPane) panel).onOffStatus.getText());
     }
 
-    @Test
-    public void testGetHelpTarget() {
-        PowerPane t = new PowerPane();
-        Assert.assertEquals("help target","package.jmri.jmrit.powerpanel.PowerPanelFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        PowerPane t = new PowerPane();
-        Assert.assertEquals("title",Bundle.getMessage("TitlePowerPanel"),t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        PowerPane t = new PowerPane();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
 
 }

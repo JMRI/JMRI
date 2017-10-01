@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author Bob Jacobsen
  * @author Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractMonPaneTestBase {
+public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelTest {
 
     // implementing classes must set pane to the pane under test in setUp.
     protected AbstractMonPane pane = null;

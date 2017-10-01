@@ -261,14 +261,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /**
      * {@inheritDoc}
-     *
-     * @return always 'VALID'
+     * 
+     * @return always 'VALID' 
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return NameValidity.VALID;
     }
-
 
     /**
      * Enforces, and as a user convenience converts to, the standard form for a system name

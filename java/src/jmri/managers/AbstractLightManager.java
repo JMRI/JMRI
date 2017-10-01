@@ -209,7 +209,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * Convert the system name to a normalized alternate name
      * <P>
      * This routine is to allow testing to ensure that two Lights with alternate
-     * names that refer to the same output bit are not created.
+     * names that refer to the same output bit are not created in systems with multiple name formats.
      * <P>
      * If a system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.

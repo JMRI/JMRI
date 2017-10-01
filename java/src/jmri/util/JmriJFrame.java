@@ -1,6 +1,7 @@
 package jmri.util;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Insets;
@@ -837,8 +838,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * When window is finally destroyed, remove it from the list of windows.
      * <P>
      * Subclasses that over-ride this method must invoke this implementation
-     * with super.dispose()
+     * with super.dispose() right before returning.
      */
+    @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {

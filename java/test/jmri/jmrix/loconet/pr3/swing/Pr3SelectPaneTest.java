@@ -10,20 +10,20 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Pr3SelectPaneTest {
+public class Pr3SelectPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        Pr3SelectPane t = new Pr3SelectPane();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Pr3SelectPane();
+        helpTarget="package.jmri.jmrix.loconet.pr3.swing.Pr3Select";
+        title=Bundle.getMessage("MenuItemPr3ModeSelect");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
