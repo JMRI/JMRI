@@ -521,7 +521,8 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the user's files directory. If not set by the user, this is the same
-     * as the profile path; if all else fails, the program directory. 
+     * as the profile path. Note that if the profile path has been set to null,
+     * that returns the preferences directory, see {@link #getProfilePath()}.
      *
      * @see #getProfilePath()
      * @return User's files directory as a String - never null
@@ -530,8 +531,7 @@ public class FileUtilSupport extends Bean {
     @CheckReturnValue
     public String getUserFilesPath() {
         if (userFilesPath != null) return userFilesPath;
-        if (getProfilePath() != null) return getProfilePath();
-        return getProgramPath();
+        return getProfilePath();
     }
 
     /**
@@ -553,13 +553,13 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the profile directory. If not set, this is the same as the
+     * Get the profile directory. If not set, provide the
      * preferences path.
      *
      * @see #getPreferencesPath()
      * @return Profile directory as a String using system-specific separators
      */
-    @CheckForNull
+    @Nonnull
     @CheckReturnValue
     public String getProfilePath() {
         return (this.profilePath != null) ? this.profilePath : this.getPreferencesPath();
@@ -570,7 +570,8 @@ public class FileUtilSupport extends Bean {
      *
      * @see #getProfilePath()
      * @param path The path to the profile directory using system-specific
-     *             separators.
+     *             separators. If null, this will cause  {@link #getProfilePath()} to 
+     *             provide the preferences directory via {@link #getPreferencesPath()}.
      */
     public void setProfilePath(@CheckForNull String path) {
         String old = this.profilePath;
@@ -1443,7 +1444,7 @@ public class FileUtilSupport extends Bean {
      * @throws IllegalArgumentException if max is less than one
      * @see #backup(java.io.File)
      */
-    public void rotate(@Nonnull File file, int max, @Nonnull String extension) throws IOException {
+    public void rotate(@Nonnull File file, int max, @CheckForNull String extension) throws IOException {
         if (max < 1) {
             throw new IllegalArgumentException();
         }
