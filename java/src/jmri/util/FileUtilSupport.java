@@ -774,7 +774,8 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the path to the scripts directory.
+     * Get the path to the scripts directory. If not set previously with
+     * {@see #setScriptsPath}, this is the "jython" subdirectory in the program directory.
      *
      * @return the scriptsPath using system-specific separators
      */
@@ -794,11 +795,11 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Set the path to python scripts.
+     * Set the path to python scripts. 
      *
-     * @param path the scriptsPath to set
+     * @param path the scriptsPath to set. Null resets to the default, defined in {@link #getScriptsPath()}
      */
-    public void setScriptsPath(@Nonnull String path) {
+    public void setScriptsPath(@CheckForNull String path) {
         String old = this.scriptsPath;
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
