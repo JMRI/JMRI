@@ -11,51 +11,37 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CanSendPaneTest {
+public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 
     jmri.jmrix.can.CanSystemConnectionMemo memo = null;
     jmri.jmrix.can.TrafficController tc = null;
 
     @Test
-    public void testCtor() {
-        CanSendPane pane = new CanSendPane();
-        Assert.assertNotNull("exists", pane);
-    }
-
-    @Test
+    @Override
     public void testInitComponents() throws Exception{
-        CanSendPane pane = new CanSendPane();
         // for now, just makes ure there isn't an exception.
-        pane.initComponents(memo);
+        ((CanSendPane) panel).initComponents(memo);
     }
 
     @Test
     public void testInitContext() throws Exception {
-        CanSendPane pane = new CanSendPane();
         // for now, just makes ure there isn't an exception.
-        pane.initContext(memo);
+        ((CanSendPane) panel).initContext(memo);
     }
 
-    @Test
-    public void testGetHelpTarget(){
-        CanSendPane pane = new CanSendPane();
-        Assert.assertEquals("help target","package.jmri.jmrix.can.swing.send.CanSendFrame",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        CanSendPane pane = new CanSendPane();
-        Assert.assertEquals("title","Send CAN Frame",pane.getTitle());
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         tc = new jmri.jmrix.can.TrafficControllerScaffold();
         memo.setTrafficController(tc);
+        panel = new CanSendPane();
+        helpTarget="package.jmri.jmrix.can.swing.send.CanSendFrame";
+        title="Send CAN Frame";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 

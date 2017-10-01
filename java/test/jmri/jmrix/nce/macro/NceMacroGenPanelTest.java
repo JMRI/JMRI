@@ -11,38 +11,19 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NceMacroGenPanelTest {
+public class NceMacroGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        NceMacroGenPanel action = new NceMacroGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
 
-    @Test
-    public void testGetHelpTarget() {
-        NceMacroGenPanel t = new NceMacroGenPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.nce.macro.NceMacroEditFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        NceMacroGenPanel t = new NceMacroGenPanel();
-        Assert.assertEquals("title","NCE_: " + Bundle.getMessage("TitleNceMacroGen"), t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        NceMacroGenPanel t = new NceMacroGenPanel();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new NceMacroGenPanel();
+        helpTarget="package.jmri.jmrix.nce.macro.NceMacroEditFrame";
+        title="NCE_: " + Bundle.getMessage("TitleNceMacroGen");
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

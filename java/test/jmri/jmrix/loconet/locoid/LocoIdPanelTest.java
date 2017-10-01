@@ -10,20 +10,19 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LocoIdPanelTest {
-
-    @Test
-    public void testCTor() {
-        LocoIdPanel t = new LocoIdPanel();
-        Assert.assertNotNull("exists",t);
-    }
+public class LocoIdPanelTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new LocoIdPanel();
+        helpTarget = "package.jmri.jmrix.loconet.locoid.LocoIdFrame";
+        title = Bundle.getMessage("MenuItemSetID");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

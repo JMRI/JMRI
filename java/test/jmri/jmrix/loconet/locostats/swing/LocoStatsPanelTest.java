@@ -10,40 +10,20 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LocoStatsPanelTest {
-
-    @Test
-    public void testCTor() {
-        LocoStatsPanel t = new LocoStatsPanel();
-        Assert.assertNotNull("exists",t);
-    }
-
-    @Test
-    public void testInitComponents() throws Exception{
-        LocoStatsPanel pane = new LocoStatsPanel();
-        // for now, just makes ure there isn't an exception.
-        pane.initComponents();
-    }
-
-    @Test
-    public void testGetHelpTarget(){
-        LocoStatsPanel pane = new LocoStatsPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.loconet.locostats.LocoStatsFrame",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        LocoStatsPanel pane = new LocoStatsPanel();
-        Assert.assertEquals("title",Bundle.getMessage("MenuItemLocoStats") ,pane.getTitle());
-    }
+public class LocoStatsPanelTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new LocoStatsPanel();
+        title = Bundle.getMessage("MenuItemLocoStats");
+        helpTarget = "package.jmri.jmrix.loconet.locostats.LocoStatsFrame";
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

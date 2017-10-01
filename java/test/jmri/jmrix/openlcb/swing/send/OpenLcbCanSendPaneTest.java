@@ -10,45 +10,27 @@ import org.junit.Test;
  * @author Bob Jacobsen Copyright 2013
  * @author Paul Bender Copyright (C) 2016
  */
-public class OpenLcbCanSendPaneTest {
+public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 
     jmri.jmrix.can.CanSystemConnectionMemo memo;
     jmri.jmrix.can.TrafficController tc;
 
     @Test
-    public void testCtor() {
-        OpenLcbCanSendPane p = new OpenLcbCanSendPane();
-        Assert.assertNotNull("Pane object non-null", p);
-    }
-
-    @Test
+    @Override
     public void testInitComponents() throws Exception{
-        OpenLcbCanSendPane p = new OpenLcbCanSendPane();
         // for now, just makes ure there isn't an exception.
-        p.initComponents(memo);
+        ((OpenLcbCanSendPane)panel).initComponents(memo);
     }
 
     @Test
     public void testInitContext() throws Exception {
-        OpenLcbCanSendPane p = new OpenLcbCanSendPane();
         // for now, just makes ure there isn't an exception.
-        p.initContext(memo);
-    }
-
-    @Test
-    public void testGetHelpTarget(){
-        OpenLcbCanSendPane p = new OpenLcbCanSendPane();
-        Assert.assertEquals("help target","package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane",p.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        OpenLcbCanSendPane p = new OpenLcbCanSendPane();
-        Assert.assertEquals("title","Send CAN Frames and OpenLCB Messages",p.getTitle());
+        ((OpenLcbCanSendPane)panel).initContext(memo);
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
@@ -56,9 +38,13 @@ public class OpenLcbCanSendPaneTest {
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.configureManagers();
+        panel = new OpenLcbCanSendPane();
+        helpTarget="package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane";
+        title="Send CAN Frames and OpenLCB Messages";
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

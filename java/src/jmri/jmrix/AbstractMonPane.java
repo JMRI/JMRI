@@ -208,16 +208,17 @@ public abstract class AbstractMonPane extends JmriPanel {
         filterField.setMaximumSize(currentMaximumSize);
         try {
             filterField.setText(pm.getProperty(filterFieldCheck, filterFieldCheck).toString());  //restore prev values
-        } catch (Exception e1) {  //leave blank if previous value not retrieved
+        } catch (NullPointerException e1) {
+            // leave blank if previous value not retrieved
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            final static String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            final private static String PATTERN = "[0-9a-fA-F ]*+"; // typing inserts individual characters
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
                     AttributeSet attrs) throws BadLocationException {
-                if (text.matches(pattern)) { // NOI18N
+                if (text.matches(PATTERN)) { // NOI18N
                     fb.insertString(offset, text.toUpperCase(), attrs);
                 } else {
                     fb.insertString(offset, "", attrs);
@@ -227,7 +228,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text,
                     AttributeSet attrs) throws BadLocationException {
-                if (text.matches(pattern)) { // NOI18N
+                if (text.matches(PATTERN)) { // NOI18N
                     fb.replace(offset, length, text.toUpperCase(), attrs);
                 } else {
                     fb.replace(offset, length, "", attrs);
@@ -642,10 +643,10 @@ public abstract class AbstractMonPane extends JmriPanel {
         });
     }
 
-    volatile PrintStream logStream = null;
+    private volatile PrintStream logStream = null;
 
     // to get a time string
-    DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
+    private DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
     protected StringBuffer linesBuffer = new StringBuffer();
     private static final int MAX_LINES = 500;

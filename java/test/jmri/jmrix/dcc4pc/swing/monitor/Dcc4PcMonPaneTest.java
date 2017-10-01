@@ -13,32 +13,14 @@ import org.junit.Test;
  */
 public class Dcc4PcMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-    @Test
-    public void testMemoCtor() {
-        Assert.assertNotNull("exists", pane);
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        Assert.assertNull("help target",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        Assert.assertEquals("title","Dcc4PC Command Monitor",pane.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        // we are just making sure that initComponents doesn't cause an exception.
-        pane.initComponents();
-    }
 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        pane = new Dcc4PcMonPane();
+        // panel is for the AbstractMonPaneTestBase, pane is for it's parent (JmriPanelTest )
+        panel = pane = new Dcc4PcMonPane();
+        title="Dcc4PC Command Monitor";
     }
 
     @Override

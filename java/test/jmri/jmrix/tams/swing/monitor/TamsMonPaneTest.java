@@ -14,32 +14,13 @@ import org.junit.Test;
 public class TamsMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane );
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        Assert.assertNull("help target",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        Assert.assertEquals("title","Tams Command Monitor",pane.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        // we are just making sure that initComponents doesn't cause an exception.
-        pane.initComponents();
-    }
-
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        pane = new TamsMonPane();
+        // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
+        panel = pane = new TamsMonPane();
+        title="Tams Command Monitor";
     }
 
     @Override

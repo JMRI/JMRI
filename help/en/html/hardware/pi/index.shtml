@@ -31,7 +31,7 @@
       <p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a>
       is a family of inexpensive credit card size single board
       computers that have many applications in embedded
-      electronics. This page describe's the use of the Raspberry
+      electronics. This page describes the use of the Raspberry
       Pi's GPIO pins under JMRI. Since the Raspberry Pi runs Linux
       natively, other connections are also possible using either a
       <a href="../USBtoSerial.shtml">USB connection</a> or via the
@@ -54,12 +54,9 @@
 
       <h2>Connecting</h2>
 
-      <h3>Wiring</h3>
-
       <p>Underlying support for the Raspberry Pi's GPIO connections
       is provided using the <a href="http://pi4j.com/">Pi4J library
       for Java</a>.</p>
-
 
       <p><b>Version 1.0 of the Pi4J Library, used with JMRI version
       4.5.4 and earlier, <i>require that applications using GPIO pins
@@ -82,6 +79,50 @@
       JMRI</b></p>.  
      <p>For more information, please see the relavent portions of 
      <a href="http://www.savagehomeautomation.com/projects/pi4j-now-supports-non-privileged-access-no-more-rootsudo.html">the pi4j web page</a>.</p>
+
+      <h3>Pi4j 1.1 and Raspbian Stretch</h3>
+
+      <p>It has been brought to our attention that the linux kernel used in 
+      Raspbian Stretch and Pi4j version 1.1 have a slight incompatability.  
+      This incompatability is caused by Pi4J's interface with the hardware is
+      doesn't recognize the CPU reported by the kernel.  This section describes
+      how to determine if you are experiencing this issue and how to correct 
+      the problem on your Raspberry Pi.</p>
+
+      <h4>Determining if the incompatability is a problem</h4>
+
+      <p>If the incompatability is an issue, JMRI will crash when attempting to 
+      create a Raspberry Pi connection and the following error message will 
+      appear in the console log:</p> 
+
+      <code>
+      <p>Unable to determine hardware version. I see: Hardware	: BCM2835</p>
+      <p>,</p>
+      <p>- expecting BCM2708 or BCM2709.</p>
+      <p>If this is a genuine Raspberry Pi then please report this</p>
+      <p>to projects@drogon.net. If this is not a Raspberry Pi then you</p>
+      <p>are on your own as wiringPi is designed to support the</p>
+      <p>Raspberry Pi ONLY.</p>
+      </code>
+
+      <h4>How to correct for this issue</h4>
+
+      <p>To correct for this issue, there are two steps you need to complete. 
+      First, you need to install a recent version of the wiringPi library, whic
+      Pi4J uses to talk to the Raspberry Pi's hardware.  You can do this by 
+      running the following command in a terminal:</p>
+
+      <p><code>sudo apt-get install wiringpi</code></p>
+
+      <p>Second, we need to configure Pi4j to use the library you just installed
+      instead of the one that is included with Pi4j.  To tell JMRI to use Pi4j 
+      in this mode, we are going need to run the following command in a terminal as the user who starts the JMRI application(s):</p>
+
+      <p><code>echo "default_options=\"-Dpi4j.linking=dynamic\"" > ~/.jmri/jmri.conf</code></p>
+
+      <p>After completing these steps, JMRI will be able to configure and use Raspberry Pi hardware normally.</p>
+
+      <h3>Wiring</h3>
 
       <p>JMRI currently supports inputs (Sensors) and outputs
       (Turnouts) via the Raspberry Pi's GPIO pins.</p>
