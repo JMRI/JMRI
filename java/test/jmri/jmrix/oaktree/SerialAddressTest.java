@@ -1,5 +1,6 @@
 package jmri.jmrix.oaktree;
 
+import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
@@ -16,59 +17,59 @@ import org.junit.Assert;
 public class SerialAddressTest extends TestCase {
 
     public void testValidateSystemNameFormat() {
-        Assert.assertTrue("valid format - OL2", SerialAddress.validSystemNameFormat("OL2", 'L', "O"));
-        Assert.assertTrue("valid format - OL0B2", SerialAddress.validSystemNameFormat("OL0B2", 'L', "O"));
-        Assert.assertTrue("invalid format - OL", !SerialAddress.validSystemNameFormat("OL", 'L', "O"));
+        Assert.assertTrue("valid format - OL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2", 'L', "O"));
+        Assert.assertTrue("valid format - OL0B2", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL0B2", 'L', "O"));
+        Assert.assertTrue("invalid format - OL", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OLB2", !SerialAddress.validSystemNameFormat("OLB2", 'L', "O"));
+        Assert.assertTrue("invalid format - OLB2", NameValidity.VALID != SerialAddress.validSystemNameFormat("OLB2", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in number field system name: OL");
         JUnitAppender.assertWarnMessage("no node address before 'B' in system name: OLB2");
 
-        Assert.assertTrue("valid format - OL2005", SerialAddress.validSystemNameFormat("OL2005", 'L', "O"));
-        Assert.assertTrue("valid format - OL2B5", SerialAddress.validSystemNameFormat("OL2B5", 'L', "O"));
-        Assert.assertTrue("valid format - OT2005", SerialAddress.validSystemNameFormat("OT2005", 'T', "O"));
-        Assert.assertTrue("valid format - OT2B5", SerialAddress.validSystemNameFormat("OT2B5", 'T', "O"));
-        Assert.assertTrue("valid format - OS2005", SerialAddress.validSystemNameFormat("OS2005", 'S', "O"));
-        Assert.assertTrue("valid format - OS2B5", SerialAddress.validSystemNameFormat("OS2B5", 'S', "O"));
+        Assert.assertTrue("valid format - OL2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2005", 'L', "O"));
+        Assert.assertTrue("valid format - OL2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2B5", 'L', "O"));
+        Assert.assertTrue("valid format - OT2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("OT2005", 'T', "O"));
+        Assert.assertTrue("valid format - OT2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("OT2B5", 'T', "O"));
+        Assert.assertTrue("valid format - OS2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("OS2005", 'S', "O"));
+        Assert.assertTrue("valid format - OS2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("OS2B5", 'S', "O"));
 
-        Assert.assertTrue("invalid format - OY2005", !SerialAddress.validSystemNameFormat("OY2005", 'L', "O"));
+        Assert.assertTrue("invalid format - OY2005", NameValidity.VALID != SerialAddress.validSystemNameFormat("OY2005", 'L', "O"));
         JUnitAppender.assertErrorMessage("invalid character in header field system name: OY2005");
 
-        Assert.assertTrue("invalid format - OY2B5", !SerialAddress.validSystemNameFormat("OY2B5", 'L', "O"));
+        Assert.assertTrue("invalid format - OY2B5", NameValidity.VALID != SerialAddress.validSystemNameFormat("OY2B5", 'L', "O"));
         JUnitAppender.assertErrorMessage("invalid character in header field system name: OY2B5");
 
-        Assert.assertTrue("valid format - OL22001", SerialAddress.validSystemNameFormat("OL22001", 'L', "O"));
-        Assert.assertTrue("valid format - OL22B1", SerialAddress.validSystemNameFormat("OL22B1", 'L', "O"));
+        Assert.assertTrue("valid format - OL22001", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL22001", 'L', "O"));
+        Assert.assertTrue("valid format - OL22B1", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL22B1", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL22000", !SerialAddress.validSystemNameFormat("OL22000", 'L', "O"));
+        Assert.assertTrue("invalid format - OL22000", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL22000", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in system name: OL22000");
 
-        Assert.assertTrue("invalid format - OL22B0", !SerialAddress.validSystemNameFormat("OL22B0", 'L', "O"));
+        Assert.assertTrue("invalid format - OL22B0", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL22B0", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number field out of range in system name: OL22B0");
 
-        Assert.assertTrue("valid format - OL2999", SerialAddress.validSystemNameFormat("OL2999", 'L', "O"));
-        Assert.assertTrue("valid format - OL2B2048", SerialAddress.validSystemNameFormat("OL2B2048", 'L', "O"));
+        Assert.assertTrue("valid format - OL2999", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2999", 'L', "O"));
+        Assert.assertTrue("valid format - OL2B2048", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2B2048", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL2B2049", !SerialAddress.validSystemNameFormat("OL2B2049", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2B2049", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2B2049", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number field out of range in system name: OL2B2049");
 
-        Assert.assertTrue("valid format - OL127999", SerialAddress.validSystemNameFormat("OL127999", 'L', "O"));
+        Assert.assertTrue("valid format - OL127999", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL127999", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL128000", !SerialAddress.validSystemNameFormat("OL128000", 'L', "O"));
+        Assert.assertTrue("invalid format - OL128000", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL128000", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in system name: OL128000");
 
-        Assert.assertTrue("valid format - OL127B7", SerialAddress.validSystemNameFormat("OL127B7", 'L', "O"));
+        Assert.assertTrue("valid format - OL127B7", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL127B7", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL128B7", !SerialAddress.validSystemNameFormat("OL128B7", 'L', "O"));
+        Assert.assertTrue("invalid format - OL128B7", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL128B7", 'L', "O"));
         JUnitAppender.assertWarnMessage("node address field out of range in system name: OL128B7");
 
-        Assert.assertTrue("invalid format - OL2oo5", !SerialAddress.validSystemNameFormat("OL2oo5", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2oo5", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2oo5", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in number field system name: OL2oo5");
 
-        Assert.assertTrue("invalid format - OL2aB5", !SerialAddress.validSystemNameFormat("OL2aB5", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2aB5", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2aB5", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in node address field of system name: OL2aB5");
 
-        Assert.assertTrue("invalid format - OL2B5x", !SerialAddress.validSystemNameFormat("OL2B5x", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2B5x", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2B5x", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in bit number field of system name: OL2B5x");
     }
 

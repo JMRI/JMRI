@@ -125,7 +125,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
             // create node (they register themselves)
             AcelaNode node = new AcelaNode(addr, type, ((jmri.jmrix.acela.serialdriver.SerialDriverAdapter) adapter).getSystemConnectionMemo().getTrafficController());
-            log.info("Created a new Acela Node [{}] as a result of a configuration file of type: ", type);
+            log.info("Created a new Acela Node [{}] as a result of a configuration file of type: {}", addr, type);
 
             if (type == AcelaNode.TB) {
                 for (int s = 0; s < 4; s++) {

@@ -187,13 +187,12 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * Get the bit address from the system name.
-     * Logging of handled cases no higher than WARN.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

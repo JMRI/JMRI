@@ -51,7 +51,7 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if (SerialAddress.validSystemNameFormat(systemName, 'L', prefix)) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', prefix) == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName, _memo);
             if (!SerialAddress.validSystemNameConfig(systemName, 'L', _memo)) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
@@ -67,7 +67,7 @@ public class SerialLightManager extends AbstractLightManager {
      * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'L', prefix));
     }
 
@@ -106,7 +106,9 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Allow access to SerialLightManager.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialLightManager instance() {
         if (_instance == null) {
             _instance = new SerialLightManager();

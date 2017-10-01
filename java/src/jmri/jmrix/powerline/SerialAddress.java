@@ -1,5 +1,6 @@
 package jmri.jmrix.powerline;
 
+import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -41,24 +42,23 @@ public class SerialAddress {
      *
      * @param systemName name to test
      * @param type Letter indicating device type expected
-     * @return 'true' if system name has a valid format, else returns 'false'
-
+     * @return VALID if system name has a valid format, else return INVALID
      */
-    public boolean validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(String systemName, char type) {
         // validate the System Name leader characters
         boolean aTest = aCodes.reset(systemName).matches();
         boolean hTest = hCodes.reset(systemName).matches();
         boolean iTest = iCodes.reset(systemName).matches();
-        if ((!aTest) || (aCodes.group(2).charAt(0) != type)) {
+        if ((!aTest) || (aCodes.group(2).charAt(0) != type)) { // TODO multichar prefix
             // here if an illegal format 
             log.error("invalid character in header field system name: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
         if (hTest && hCodes.groupCount() == 4) {
             // This is a PLaxx address - validate the house code and unit address fields
             if (hCodes.group(3).charAt(0) < minHouseCode || hCodes.group(3).charAt(0) > maxHouseCode) {
                 log.warn("house code field out of range in system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             int num;
             try {
@@ -66,14 +66,14 @@ public class SerialAddress {
             } catch (Exception e) {
                 log.warn("invalid character in unit address field of system name: "
                         + systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             if ((num < 1) || (num > 16)) {
                 log.warn("unit address field out of range in system name: "
                         + systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
-            return (true);
+            return NameValidity.VALID;
         }
         
         assert aTest;
@@ -82,14 +82,14 @@ public class SerialAddress {
         if (!iTest) {
             // here if an invalid format
             log.warn("address did not match any valid forms: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         } else {
             if (iCodes.groupCount() != 5) {
                 // here if an invalid format
                 log.warn("invalid format - {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             } else {
-                return (true);
+                return NameValidity.VALID;
             }
         }
     }
@@ -104,7 +104,7 @@ public class SerialAddress {
      * @return  true for valid names
      */
     public boolean validSystemNameConfig(String systemName, char type) {
-        if (!validSystemNameFormat(systemName, type)) {
+        if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             log.warn("{} invalid; bad format", systemName);
             return false;
@@ -122,7 +122,7 @@ public class SerialAddress {
      */
     public boolean isInsteon(String systemName) {
         // ensure that input system name has a valid format
-        if ((!aCodes.reset(systemName).matches()) || (!validSystemNameFormat(systemName, aCodes.group(2).charAt(0)))) {
+        if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
             return false;
         } else {
@@ -162,20 +162,20 @@ public class SerialAddress {
         int hCount = hCodes.groupCount();
         boolean iMatch = iCodes.reset(systemName).matches();
         int iCount = iCodes.groupCount();
-        if (!aMatch || aCount != 2 || (!validSystemNameFormat(systemName, aCodes.group(2).charAt(0)))) {
+        if (!aMatch || aCount != 2 || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
         String nName = "";
         // check for the presence of a char to differentiate the two address formats
         if (hMatch && hCount == 4) {
-            // This is a PLaxx address 
+            // This is a PLaxx address
             nName = hCodes.group(1) + hCodes.group(2) + hCodes.group(3) + Integer.toString(Integer.parseInt(hCodes.group(4)));
         }
         if (nName.equals("")) {
             // check for the presence of a char to differentiate the two address formats
             if (iMatch && iCount == 5) {
-                // This is a PLaa.bb.cc Insteon address 
+                // This is a PLaa.bb.cc Insteon address
                 nName = iCodes.group(1) + iCodes.group(2) + iCodes.group(3) + "." + iCodes.group(4) + "." + iCodes.group(5);
             } else {
                 if (log.isDebugEnabled()) {
@@ -198,7 +198,7 @@ public class SerialAddress {
     public String houseCodeFromSystemName(String systemName) {
         String hCode = "";
         // ensure that input system name has a valid format
-        if ((!aCodes.reset(systemName).matches()) || (!validSystemNameFormat(systemName, aCodes.group(2).charAt(0)))) {
+        if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
@@ -224,7 +224,7 @@ public class SerialAddress {
     public String deviceCodeFromSystemName(String systemName) {
         String dCode = "";
         // ensure that input system name has a valid format
-        if ((!aCodes.reset(systemName).matches()) || (!validSystemNameFormat(systemName, aCodes.group(2).charAt(0)))) {
+        if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (hCodes.reset(systemName).matches()) {
@@ -261,7 +261,7 @@ public class SerialAddress {
     public int houseCodeAsValueFromSystemName(String systemName) {
         int hCode = -1;
         // ensure that input system name has a valid format
-        if ((!aCodes.reset(systemName).matches()) || (!validSystemNameFormat(systemName, aCodes.group(2).charAt(0)))) {
+        if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 4) {
@@ -289,7 +289,7 @@ public class SerialAddress {
     public int deviceCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
-        if ((!aCodes.reset(systemName).matches()) || (!validSystemNameFormat(systemName, aCodes.group(2).charAt(0)))) {
+        if ((!aCodes.reset(systemName).matches()) || (validSystemNameFormat(systemName, aCodes.group(2).charAt(0)) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 4) {
@@ -317,7 +317,7 @@ public class SerialAddress {
     public int idHighCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
-        if (!iCodes.reset(systemName).matches() || !validSystemNameFormat(systemName, iCodes.group(2).charAt(0))) {
+        if (!iCodes.reset(systemName).matches() || validSystemNameFormat(systemName, iCodes.group(2).charAt(0)) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (iCodes.groupCount() == 5) {
@@ -345,7 +345,7 @@ public class SerialAddress {
     public int idMiddleCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
-        if (!iCodes.reset(systemName).matches() || !validSystemNameFormat(systemName, iCodes.group(2).charAt(0))) {
+        if (!iCodes.reset(systemName).matches() || validSystemNameFormat(systemName, iCodes.group(2).charAt(0)) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (iCodes.groupCount() == 5) {
@@ -373,7 +373,7 @@ public class SerialAddress {
     public int idLowCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
         // ensure that input system name has a valid format
-        if (!iCodes.reset(systemName).matches() || !validSystemNameFormat(systemName, iCodes.group(2).charAt(0))) {
+        if (!iCodes.reset(systemName).matches() || validSystemNameFormat(systemName, iCodes.group(2).charAt(0)) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
         } else {
             if (iCodes.groupCount() == 5) {

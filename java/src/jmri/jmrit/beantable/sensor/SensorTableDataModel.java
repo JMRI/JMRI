@@ -167,7 +167,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
               return Bundle.getMessage("SensorActiveDebounce");
            case INACTIVEDELAY:
               return Bundle.getMessage("SensorInActiveDebounce");
-           case PULLUPCOL: 
+           case PULLUPCOL:
               return Bundle.getMessage("SensorPullUp");
            default:
               return super.getColumnName(col);

@@ -1,5 +1,7 @@
 package jmri.jmrix.oaktree;
 
+import jmri.Manager.NameValidity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -138,12 +140,12 @@ public class SerialAddress {
      * @param type Letter indicating device type expected
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
             log.error("invalid character in header field system name: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
         // check for the presence of a 'B' to differentiate the two address formats
         String s = "";
@@ -163,46 +165,46 @@ public class SerialAddress {
                 num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
             } catch (Exception e) {
                 log.warn("invalid character in number field system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             if ((num < 1) || (num >= 256000)) {
                 log.warn("number field out of range in system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
                 log.warn("bit number not in range 1 - 999 in system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
         } else {
             // This is a OLnnnBxxxx address - validate the node address field
             if (s.length() == 0) {
                 log.warn("no node address before 'B' in system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             int num;
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
                 log.warn("invalid character in node address field of system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             if ((num < 0) || (num >= 128)) {
                 log.warn("node address field out of range in system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             // validate the bit number field
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
             } catch (Exception e) {
                 log.warn("invalid character in bit number field of system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
             if ((num < 1) || (num > 2048)) {
                 log.warn("bit number field out of range in system name: {}", systemName);
-                return (false);
+                return NameValidity.INVALID;
             }
         }
-        return true;
+        return NameValidity.VALID;
     }
 
     /**
@@ -212,7 +214,7 @@ public class SerialAddress {
      * return 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type, OakTreeSystemConnectionMemo memo) {
-        if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix())) {
+        if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             log.warn("invalid system name {}; bad format", systemName);
             return false;
@@ -253,7 +255,7 @@ public class SerialAddress {
      */
     public static String convertSystemNameToAlternate(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
+        if (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return "";
         }
@@ -304,7 +306,7 @@ public class SerialAddress {
             return "";
         }
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
+        if (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }

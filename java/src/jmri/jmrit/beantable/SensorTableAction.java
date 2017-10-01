@@ -619,7 +619,7 @@ public class SensorTableAction extends AbstractTableAction {
             } else {
                 boolean validFormat = false;
                     // try {
-                    validFormat = InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value);
+                    validFormat = (InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value) == Manager.NameValidity.VALID);
                     // } catch (jmri.JmriException e) {
                     // use it for the status bar?
                     // }

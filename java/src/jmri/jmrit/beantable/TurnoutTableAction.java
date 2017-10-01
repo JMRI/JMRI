@@ -1920,8 +1920,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         /**
          * Validate the field information. Does not make any GUI changes.
          * <p>
-         * During validation, logging is capped at the Error level to keep the Console clean from repeated validation.
-         * This is reset to default level afterwards.
+         * During validation, keep the Console clean from repeated validation.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -1942,7 +1941,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 boolean validFormat = false;
                     // try {
-                    validFormat = InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value);
+                    validFormat = (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value) == Manager.NameValidity.VALID);
                     // } catch (jmri.JmriException e) {
                     // use it for the status bar?
                     // }

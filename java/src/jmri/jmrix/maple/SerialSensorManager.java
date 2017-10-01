@@ -33,19 +33,25 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     static final int SENSORSPERUA = 1000;
 
+    MapleSystemConnectionMemo _memo = null;
+    protected String prefix = "M";
+
+    public SerialSensorManager() {
+
+    }
+
     public SerialSensorManager(MapleSystemConnectionMemo memo) {
         super();
         _memo = memo;
+        prefix = memo.getSystemPrefix();
     }
-
-    MapleSystemConnectionMemo _memo = null;
 
     /**
      * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+        return prefix;
     }
 
     /**
@@ -97,7 +103,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 
@@ -225,12 +231,16 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Allow access to SerialTurnoutManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * Static function returning the SerialSensorManager instance to use.
+     *
+     * @return The registered SerialSensorManager instance for general use, if
+     *         need be creating one.
      */
-    @Deprecated
     static public SerialSensorManager instance() {
-        return null;
+        if (_instance == null) {
+            _instance = new SerialSensorManager();
+        }
+        return _instance;
     }
 
     static SerialSensorManager _instance = null;

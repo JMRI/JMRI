@@ -105,7 +105,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
@@ -236,21 +236,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix + typeLetter() + curAddress;
-    }
-
-    /**
-     * Validate system name format.
-     * Logging should not be higher than WARN to keep silent when used for in line validation.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.TurnoutTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system 
-     *         managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
     }
 
     @Override

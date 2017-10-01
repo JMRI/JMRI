@@ -1,5 +1,6 @@
 package jmri.jmrix.maple;
 
+import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,29 +65,25 @@ public class SerialAddress {
      * @return 'true' if system name has a valid format,
      * else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
-        if (prefix.length() < 1) {
-            log.error("invalid system name prefix: {}", prefix);
-            return false;
-        }
+    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format
             log.error("invalid character in header field of system name: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
         if (systemName.length() <= prefix.length() + 1) {
             log.warn("missing numerical node address in system name: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
         // This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK
         int bit = getBitFromSystemName(systemName, prefix);
         // now check range
         if ((bit <= 0) || (type == 'S' && bit > 1000) || (bit > 8000)) {
             log.warn("node address field out of range in system name - {}", systemName);
-            return false;
+            return NameValidity.INVALID;
         }
-        return true;
+        return NameValidity.VALID;
     }
 
     /**
@@ -96,7 +93,7 @@ public class SerialAddress {
      * else returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type, MapleSystemConnectionMemo memo) {
-        if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix())) {
+        if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return false;
         }
@@ -145,7 +142,7 @@ public class SerialAddress {
         // ensure that input system name has a valid format
         // precheck startsWith(prefix) to pass jmri.managers.AbstractSensorMgrTestBase line 95/96 calling "foo" and "bar"
         if ((systemName.length() < prefix.length() + 1) || (!systemName.startsWith(prefix)) ||
-                (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix))) {
+                (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID)) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }

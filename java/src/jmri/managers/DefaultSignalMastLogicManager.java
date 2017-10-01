@@ -267,6 +267,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @return always 'VALID'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
+    }
+
+
+    /**
      * Enforces, and as a user convenience converts to, the standard form for a system name
      * for the NamedBeans handled by this manager.
      *

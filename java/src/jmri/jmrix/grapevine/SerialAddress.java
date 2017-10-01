@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine;
 
+import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -279,23 +280,22 @@ public class SerialAddress {
 
     /**
      * Public static method to validate system name format.
-     * Logging of handled cases no higher than WARN.
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      * @param systemName name to check
      * @param type       expected device type letter
      */
-    public static boolean validSystemNameFormat(String systemName, char type) {
-        // validate the System Name prefix characters
+    public static NameValidity validSystemNameFormat(String systemName, char type) {
+        // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format, e.g. another system letter
             // which happens all the time due to how proxy managers work
-            return false;
+            return NameValidity.INVALID;
         }
         if (matcher.group(2).charAt(0) != type) {
             log.warn("type in {} does not match type {}", systemName, type);
-            return false;
+            return NameValidity.INVALID;
         }
         Pattern p;
         if (type == 'L') {
@@ -308,7 +308,7 @@ public class SerialAddress {
             p = getSensorPattern();
         } else {
             log.error("cannot match type in {}, which is unexpected", systemName);
-            return false;
+            return NameValidity.INVALID;
         }
 
         // check format
@@ -316,7 +316,7 @@ public class SerialAddress {
         if (!m2.matches()) {
             // here if cannot parse specifically
             log.warn("invalid system name format: {} for type {}", systemName, type);
-            return (false);
+            return NameValidity.INVALID;
         }
 
         // check for the two different formats
@@ -330,7 +330,7 @@ public class SerialAddress {
                 bit = num % 1000;
             } else {
                 log.warn("invalid value in system name: {}", systemName);
-                return false;
+                return NameValidity.INVALID;
             }
         } else {
             // This is a Gtnnaxxxx address, get values
@@ -342,7 +342,7 @@ public class SerialAddress {
         // check values
         if ((node < 1) || (node > 127)) {
             log.warn("invalid node number {} in {}", node, systemName);
-            return false;
+            return NameValidity.INVALID;
         }
 
         // check bit numbers
@@ -352,7 +352,7 @@ public class SerialAddress {
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
                 log.warn("invalid bit number {} in {}", bit, systemName);
-                return false;
+                return NameValidity.INVALID;
             }
         } else { 
             assert type == 'S'; // see earlier decoding
@@ -361,9 +361,9 @@ public class SerialAddress {
             if (subtype == null) { // no subtype, just look at total
                 if ((bit < 1) || (bit > 224)) {
                     log.warn("invalid bit number {} in {}", bit, systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 } else {
-                    return true;
+                    return NameValidity.VALID;
                 }
             }
             subtype = subtype.toUpperCase();
@@ -371,29 +371,29 @@ public class SerialAddress {
                 // advanced serial occ
                 if ((bit < 1) || (bit > 24)) {
                     log.warn("invalid bit number {} in {}", bit, systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             } else if (subtype.equals("M")) { 
                 // advanced serial motion 
                 if ((bit < 1) || (bit > 24)) {
                     log.warn("invalid bit number {} in  {}", bit, systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             } else if (subtype.equals("S")) {// old serial
                 if ((bit < 1) || (bit > 24)) {
                     log.warn("invalid bit number {} in {}", bit, systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             } else if (subtype.equals("P")) { // parallel
                 if ((bit < 1) || (bit > 96)) {
                     log.warn("invalid bit number {} in {}", bit, systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             }
         }
 
-        // finally, return true
-        return true;
+        // finally, return VALID
+        return NameValidity.VALID;
     }
 
     /**
@@ -403,7 +403,7 @@ public class SerialAddress {
      * returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
-        if (!validSystemNameFormat(systemName, type)) {
+        if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             log.warn("invalid system name {}", systemName);
             return false;
@@ -443,7 +443,7 @@ public class SerialAddress {
      */
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (validSystemNameFormat(systemName, systemName.charAt(1)) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
@@ -474,7 +474,7 @@ public class SerialAddress {
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
         try {
-           if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+           if (validSystemNameFormat(systemName, systemName.charAt(1)) != NameValidity.VALID) {
                // No point in normalizing if a valid system name format is not present
                return "";
            }

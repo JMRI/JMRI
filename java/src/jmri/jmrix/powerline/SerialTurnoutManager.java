@@ -45,7 +45,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         // This bit deals with handling the curAddress, and how to get the next address.
         int iName = 0;
-        //Address starts with a single letter called a house code.
+        // Address starts with a single letter called a House Code.
         String houseCode = curAddress.substring(0, 1);
         try {
             iName = Integer.parseInt(curAddress.substring(1));
@@ -57,8 +57,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         s = getBySystemName(prefix + typeLetter() + curAddress);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -105,7 +105,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'T'));
     }
 

@@ -99,10 +99,10 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Public method to validate system name format.
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * @return VALID if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 

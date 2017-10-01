@@ -14,19 +14,24 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager(MapleSystemConnectionMemo memo) {
-        _memo = memo;
+    MapleSystemConnectionMemo _memo = null;
+    protected String prefix = "M";
+
+    public SerialTurnoutManager() {
 
     }
 
-    MapleSystemConnectionMemo _memo = null;
+    public SerialTurnoutManager(MapleSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = memo.getSystemPrefix();
+    }
 
     /**
      * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+        return prefix;
     }
 
     @Override
@@ -91,7 +96,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
@@ -192,13 +197,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
 
-    /**
-     * Allow access to SerialTurnoutManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
     static public SerialTurnoutManager instance() {
-        return null;
+        if (_instance == null) {
+            _instance = new SerialTurnoutManager();
+        }
+        return _instance;
     }
     static SerialTurnoutManager _instance = null;
 

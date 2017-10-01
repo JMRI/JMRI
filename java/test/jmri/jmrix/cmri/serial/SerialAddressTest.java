@@ -1,5 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
+import jmri.Manager.NameValidity;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
@@ -67,60 +69,60 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testValidateSystemNameFormat() {
-        Assert.assertTrue("valid format - CL2", memo.validSystemNameFormat("CL2", 'L'));
-        Assert.assertTrue("valid format - CL0B2", memo.validSystemNameFormat("CL0B2", 'L'));
+        Assert.assertTrue("valid format - CL2", NameValidity.VALID == memo.validSystemNameFormat("CL2", 'L'));
+        Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo.validSystemNameFormat("CL0B2", 'L'));
 
-        Assert.assertTrue("invalid format - CL", !memo.validSystemNameFormat("CL", 'L'));
+        Assert.assertTrue("invalid format - CL", NameValidity.VALID != memo.validSystemNameFormat("CL", 'L'));
         JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CL");
 
-        Assert.assertTrue("invalid format - CLB2", !memo.validSystemNameFormat("CLB2", 'L'));
+        Assert.assertTrue("invalid format - CLB2", NameValidity.VALID != memo.validSystemNameFormat("CLB2", 'L'));
         JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB2");
 
-        Assert.assertTrue("valid format - CL2005", memo.validSystemNameFormat("CL2005", 'L'));
-        Assert.assertTrue("valid format - CL2B5", memo.validSystemNameFormat("CL2B5", 'L'));
-        Assert.assertTrue("valid format - CT2005", memo.validSystemNameFormat("CT2005", 'T'));
-        Assert.assertTrue("valid format - CT2B5", memo.validSystemNameFormat("CT2B5", 'T'));
-        Assert.assertTrue("valid format - CS2005", memo.validSystemNameFormat("CS2005", 'S'));
-        Assert.assertTrue("valid format - CS2B5", memo.validSystemNameFormat("CS2B5", 'S'));
+        Assert.assertTrue("valid format - CL2005", NameValidity.VALID == memo.validSystemNameFormat("CL2005", 'L'));
+        Assert.assertTrue("valid format - CL2B5", NameValidity.VALID == memo.validSystemNameFormat("CL2B5", 'L'));
+        Assert.assertTrue("valid format - CT2005", NameValidity.VALID == memo.validSystemNameFormat("CT2005", 'T'));
+        Assert.assertTrue("valid format - CT2B5", NameValidity.VALID == memo.validSystemNameFormat("CT2B5", 'T'));
+        Assert.assertTrue("valid format - CS2005", NameValidity.VALID == memo.validSystemNameFormat("CS2005", 'S'));
+        Assert.assertTrue("valid format - CS2B5", NameValidity.VALID == memo.validSystemNameFormat("CS2B5", 'S'));
 
-        Assert.assertTrue("invalid format - CY2005", !memo.validSystemNameFormat("CY2005", 'L'));
+        Assert.assertTrue("invalid format - CY2005", NameValidity.VALID != memo.validSystemNameFormat("CY2005", 'L'));
         JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
 
-        Assert.assertTrue("invalid format - CY2B5", !memo.validSystemNameFormat("CY2B5", 'L'));
+        Assert.assertTrue("invalid format - CY2B5", NameValidity.VALID != memo.validSystemNameFormat("CY2B5", 'L'));
         JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
 
-        Assert.assertTrue("valid format - CL22001", memo.validSystemNameFormat("CL22001", 'L'));
-        Assert.assertTrue("valid format - CL22B1", memo.validSystemNameFormat("CL22B1", 'L'));
+        Assert.assertTrue("valid format - CL22001", NameValidity.VALID == memo.validSystemNameFormat("CL22001", 'L'));
+        Assert.assertTrue("valid format - CL22B1", NameValidity.VALID == memo.validSystemNameFormat("CL22B1", 'L'));
 
-        Assert.assertTrue("invalid format - CL22000", !memo.validSystemNameFormat("CL22000", 'L'));
+        Assert.assertTrue("invalid format - CL22000", NameValidity.VALID != memo.validSystemNameFormat("CL22000", 'L'));
         JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CL22000");
 
-        Assert.assertTrue("invalid format - CL22B0", !memo.validSystemNameFormat("CL22B0", 'L'));
+        Assert.assertTrue("invalid format - CL22B0", NameValidity.VALID != memo.validSystemNameFormat("CL22B0", 'L'));
         JUnitAppender.assertWarnMessage("bit number field out of range in CMRI system name: CL22B0");
 
-        Assert.assertTrue("valid format - CL2999", memo.validSystemNameFormat("CL2999", 'L'));
-        Assert.assertTrue("valid format - CL2B2048", memo.validSystemNameFormat("CL2B2048", 'L'));
+        Assert.assertTrue("valid format - CL2999", NameValidity.VALID == memo.validSystemNameFormat("CL2999", 'L'));
+        Assert.assertTrue("valid format - CL2B2048", NameValidity.VALID == memo.validSystemNameFormat("CL2B2048", 'L'));
 
-        Assert.assertTrue("invalid format - CL2B2049", !memo.validSystemNameFormat("CL2B2049", 'L'));
+        Assert.assertTrue("invalid format - CL2B2049", NameValidity.VALID != memo.validSystemNameFormat("CL2B2049", 'L'));
         JUnitAppender.assertWarnMessage("bit number field out of range in CMRI system name: CL2B2049");
 
-        Assert.assertTrue("valid format - CL127999", memo.validSystemNameFormat("CL127999", 'L'));
+        Assert.assertTrue("valid format - CL127999", NameValidity.VALID == memo.validSystemNameFormat("CL127999", 'L'));
 
-        Assert.assertTrue("invalid format - CL128000", !memo.validSystemNameFormat("CL128000", 'L'));
+        Assert.assertTrue("invalid format - CL128000", NameValidity.VALID != memo.validSystemNameFormat("CL128000", 'L'));
         JUnitAppender.assertWarnMessage("number field out of range in CMRI system name: CL128000");
 
-        Assert.assertTrue("valid format - CL127B7", memo.validSystemNameFormat("CL127B7", 'L'));
+        Assert.assertTrue("valid format - CL127B7", NameValidity.VALID == memo.validSystemNameFormat("CL127B7", 'L'));
 
-        Assert.assertTrue("invalid format - CL128B7", !memo.validSystemNameFormat("CL128B7", 'L'));
+        Assert.assertTrue("invalid format - CL128B7", NameValidity.VALID != memo.validSystemNameFormat("CL128B7", 'L'));
         JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
 
-        Assert.assertTrue("invalid format - CL2oo5", !memo.validSystemNameFormat("CL2oo5", 'L'));
+        Assert.assertTrue("invalid format - CL2oo5", NameValidity.VALID != memo.validSystemNameFormat("CL2oo5", 'L'));
         JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CL2oo5");
 
-        Assert.assertTrue("invalid format - CL2aB5", !memo.validSystemNameFormat("CL2aB5", 'L'));
+        Assert.assertTrue("invalid format - CL2aB5", NameValidity.VALID != memo.validSystemNameFormat("CL2aB5", 'L'));
         JUnitAppender.assertWarnMessage("invalid character in node address field of CMRI system name: CL2aB5");
 
-        Assert.assertTrue("invalid format - CL2B5x", !memo.validSystemNameFormat("CL2B5x", 'L'));
+        Assert.assertTrue("invalid format - CL2B5x", NameValidity.VALID != memo.validSystemNameFormat("CL2B5x", 'L'));
         JUnitAppender.assertWarnMessage("invalid character in bit number field of CMRI system name: CL2B5x");
     }
 

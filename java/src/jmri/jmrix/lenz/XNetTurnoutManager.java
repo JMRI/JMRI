@@ -148,9 +148,9 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * Validate Turnout system name format.
      * Logging of handled cases no higher than WARN.
      *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * @return VALID if system name has a valid format, else return INVALID
      */
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 

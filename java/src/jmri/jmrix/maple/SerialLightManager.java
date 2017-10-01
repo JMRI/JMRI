@@ -17,32 +17,28 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialLightManager extends AbstractLightManager {
 
-//    public SerialLightManager() {
-//
-//    }
+    MapleSystemConnectionMemo _memo = null;
+    protected String prefix = "M";
+
+    public SerialLightManager() {
+
+    }
 
     public SerialLightManager(MapleSystemConnectionMemo memo) {
         _memo = memo;
-
+        prefix = memo.getSystemPrefix();
     }
 
-    MapleSystemConnectionMemo _memo = null;
-
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+        return prefix;
     }
 
     /**
-     * Method to create a new Light based on the system name.
-     * Assumes calling method has
-     * checked that a Light with this system name does not already exist.
-     *
-     * @return null if the system name is not in a valid format or if the
-     * system name does not correspond to a configured digital output bit
+     * {@inheritDoc}
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -65,7 +61,7 @@ public class SerialLightManager extends AbstractLightManager {
             log.error("error when normalizing system name {}", systemName);
             return null;
         }
-        if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
             lgt = new SerialLight(sysName, userName, _memo);
             if (!SerialAddress.validSystemNameConfig(sysName, 'L', _memo)) {
                 log.warn("Light system Name '{}' does not refer to configured hardware.", sysName);
@@ -90,18 +86,15 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false'
+     * {@inheritDoc}
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -109,10 +102,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     * <P>
-     * Returns a normalized system name if system name has a valid format, else
-     * returns "".
+     * {@inheritDoc}
      */
     @Override
     public String normalizeSystemName(String systemName) {
@@ -120,7 +110,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -134,7 +124,10 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Deprecated
     static public SerialLightManager instance() {
-        return null;
+        if (_instance == null) {
+            _instance = new SerialLightManager();
+        }
+        return _instance;
     }
     static SerialLightManager _instance = null;
 

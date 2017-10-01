@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement sensor manager for Lenz (XpresssNet) connections.
+ * Manage the XpressNet specific Sensor implementation.
  * <p>
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
@@ -127,9 +127,9 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * Validate Sensor system name format.
      * Logging of handled cases no higher than WARN.
      *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * @return VALID if system name has a valid format, else return INVALID
      */
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 

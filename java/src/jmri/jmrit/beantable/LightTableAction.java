@@ -915,7 +915,7 @@ public class LightTableAction extends AbstractTableAction {
             uName = null;   // a blank field means no user name
         }
         // Does System Name have a valid format
-        if (!InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName)) {
+        if (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(suName) != Manager.NameValidity.VALID) {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: {}", suName);
             status1.setText(Bundle.getMessage("LightError3"));
@@ -2336,7 +2336,7 @@ public class LightTableAction extends AbstractTableAction {
             } else {
                 boolean validFormat = false;
                     // try {
-                    validFormat = InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value);
+                    validFormat = (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value) == Manager.NameValidity.VALID);
                     // } catch (jmri.JmriException e) {
                     // use it for the status bar?
                     // }

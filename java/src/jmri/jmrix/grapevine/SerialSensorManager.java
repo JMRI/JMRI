@@ -124,7 +124,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'S'));
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,7 @@ public class AcelaAddress {
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
-        if (!validSystemNameFormat(systemName, systemName.charAt(memo.getSystemPrefix().length()), memo.getSystemPrefix())) {
+        if (validSystemNameFormat(systemName, systemName.charAt(memo.getSystemPrefix().length()), memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return (-1);
         }
@@ -115,17 +116,26 @@ public class AcelaAddress {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
             log.error("invalid character in header field of system name: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
-        if (getBitFromSystemName(systemName, prefix) > 0) {
-            return true;
+        int num;
+        try {
+            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        } catch (Exception e) {
+            log.debug("invalid character in number field of system name: " + systemName);
+            return NameValidity.INVALID;
+        }
+        if (num >= 0) {
+            // This is a ALnnxxx address
+            return NameValidity.VALID;
         } else {
-            return false;
+            log.debug("invalid Acela system name: {}", systemName);
+            return NameValidity.INVALID;
         }
     }
 
@@ -136,7 +146,7 @@ public class AcelaAddress {
      * configuration, else return 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type, AcelaSystemConnectionMemo memo) {
-        if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix() )) {
+        if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return false;
         }
@@ -184,7 +194,7 @@ public class AcelaAddress {
      */
     public static String convertSystemNameToAlternate(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
+        if (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             return "";
         }
@@ -205,7 +215,7 @@ public class AcelaAddress {
      */
     public static String normalizeSystemName(String systemName, String prefix) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix)) {
+        if (validSystemNameFormat(systemName, systemName.charAt(prefix.length()), prefix) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }

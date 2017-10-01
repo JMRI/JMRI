@@ -520,7 +520,7 @@ public class ReporterTableAction extends AbstractTableAction {
             } else {
                 boolean validFormat = false;
                     // try {
-                    validFormat = InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value);
+                    validFormat = (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value) == Manager.NameValidity.VALID);
                     // } catch (jmri.JmriException e) {
                     // use it for the status bar?
                     // }

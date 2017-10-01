@@ -69,7 +69,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         this.memo = memo;
         // connect to the LnTrafficController
         if (memo.getMx1TrafficController() == null) {
-            log.error("No traffic controller is available"); // NOIN18N
+            log.error("No traffic controller is available"); // NOI18N
             return;
         }
         memo.getMx1TrafficController().addMx1Listener(~0, this);

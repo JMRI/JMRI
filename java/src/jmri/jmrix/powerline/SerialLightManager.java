@@ -46,7 +46,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L')) {
+        if (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = createNewSpecificLight(systemName, userName);
             if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName, 'L')) {
                 log.warn("Light system Name does not refer to configured hardware: "
@@ -69,17 +69,17 @@ abstract public class SerialLightManager extends AbstractLightManager {
     /**
      * Public method to validate system name format
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L'));
     }
 
     /**
      * Public method to validate system name for configuration
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -90,7 +90,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * Public method to normalize a system name
      *
      * @return a normalized system name if system name has a valid format, else
-     * returns ""
+     * return ""
      */
     @Override
     public String normalizeSystemName(String systemName) {

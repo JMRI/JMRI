@@ -39,7 +39,7 @@ public abstract class AbstractNode {
         } else {
             log.error("illegal node address: {}", Integer.toString(address));
             nodeAddress = 0;
-            throw new IllegalArgumentException("Attempt to set address to invalid value: []" + address);
+            throw new IllegalArgumentException("Attempt to set address to invalid value: " + address);
         }
     }
 

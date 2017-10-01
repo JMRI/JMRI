@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,17 +57,17 @@ public class XNetAddress {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
             log.error("invalid character in header field of system name: {}", systemName);
-            return (false);
+            return NameValidity.INVALID;
         }
         if (getBitFromSystemName(systemName, prefix) > 0) {
-            return true;
+            return NameValidity.VALID;
         } else {
-            return false;
+            return NameValidity.INVALID;
         }
     }
 
