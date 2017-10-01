@@ -254,6 +254,8 @@ public class JUnitAppenderTest extends TestCase {
     @Override
     protected void tearDown() {
 
+        apps.tests.Log4JFixture.tearDown();     
+
         // continue the testUnexpectedCheck test
         if (testingUnexpected) {
             Assert.assertFalse("post FATAL", JUnitAppender.unexpectedMessageSeen(Level.FATAL));
@@ -269,9 +271,6 @@ public class JUnitAppenderTest extends TestCase {
             
             testingUnexpected = false;
         }
-
-        apps.tests.Log4JFixture.tearDown();
-x`        
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class);
