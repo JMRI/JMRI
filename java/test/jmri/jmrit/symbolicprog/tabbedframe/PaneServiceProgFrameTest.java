@@ -30,6 +30,7 @@ public class PaneServiceProgFrameTest {
         RosterEntry re = new RosterEntry();
         PaneServiceProgFrame t = new PaneServiceProgFrame(df,re,"test frame", "programmers/Basic.xml",p);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
