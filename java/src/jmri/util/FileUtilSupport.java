@@ -391,14 +391,14 @@ public class FileUtilSupport extends Bean {
         
         // compare full path name to see if same as preferences
         if (!ignoreUserFilesPath) {
-            if (getUserFilesPath() != null && filename.startsWith(getUserFilesPath())) {
+            if (filename.startsWith(getUserFilesPath())) {
                 return PREFERENCES + filename.substring(getUserFilesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
             }
         }
 
         if (!ignoreProfilePath) {
             // compare full path name to see if same as profile
-            if (getProfilePath() != null && filename.startsWith(getProfilePath())) {
+            if (filename.startsWith(getProfilePath())) {
                 return PROFILE + filename.substring(getProfilePath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
             }
         }
@@ -543,11 +543,11 @@ public class FileUtilSupport extends Bean {
      */
     public void setUserFilesPath(@Nonnull String path) {
         String old = this.userFilesPath;
-        if (path != null && !path.endsWith(File.separator)) {
+        if (!path.endsWith(File.separator)) {
             path = path + File.separator;
         }
         this.userFilesPath = path;
-        if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
+        if ((old != null && !old.equals(path)) || (!path.equals(old))) {
             this.firePropertyChange(FileUtil.PREFERENCES, old, path);
         }
     }
@@ -775,7 +775,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the path to the scripts directory. If not set previously with
-     * {@see #setScriptsPath}, this is the "jython" subdirectory in the program directory.
+     * {@link #setScriptsPath}, this is the "jython" subdirectory in the program directory.
      *
      * @return the scriptsPath using system-specific separators
      */
