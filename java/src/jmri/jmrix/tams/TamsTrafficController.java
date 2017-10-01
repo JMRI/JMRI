@@ -503,8 +503,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         log.trace("End of Message = {}", endReached);
         if (endReached) {
             if (!tmq.isEmpty()) {
-                log.trace("Going to remove this message: {}", tmq.peek());
-                tmq.poll();
+                TamsMessage m = tmq.poll();
+                log.trace("Removed this message: {}", m);
             }
             if (!tmq.isEmpty()) {
                 log.trace("This message is at the head: {}", tmq.peek());

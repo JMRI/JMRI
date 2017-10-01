@@ -11,38 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Mx1MonPanelTest {
+public class Mx1MonPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testMemoCtor() {
-        Mx1MonPanel action = new Mx1MonPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testInitComponents() throws Exception{
-        Mx1MonPanel pane = new Mx1MonPanel();
-        // for now, just makes ure there isn't an exception.
-        pane.initComponents();
-    }
-
-    @Test
-    public void testGetHelpTarget(){
-        Mx1MonPanel pane = new Mx1MonPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        Mx1MonPanel pane = new Mx1MonPanel();
-        Assert.assertEquals("title","Mx1_: Command Monitor" ,pane.getTitle());
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Mx1MonPanel();
+        helpTarget="package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel";
+        title="Mx1_: Command Monitor";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

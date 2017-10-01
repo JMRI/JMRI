@@ -11,38 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class PacketGenPanelTest {
-
-    @Test
-    public void testMemoCtor() {
-        PacketGenPanel action = new PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        PacketGenPanel t = new PacketGenPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.dcc4pc.swing.packetgen.PacketGenFrame",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        PacketGenPanel t = new PacketGenPanel();
-        Assert.assertEquals("title","Send DCC4PC command",t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        PacketGenPanel t = new PacketGenPanel();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
+public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new PacketGenPanel();
+        title="Send DCC4PC command";
+        helpTarget="package.jmri.jmrix.dcc4pc.swing.packetgen.PacketGenFrame";
     }
 
     @After
+    @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 }
