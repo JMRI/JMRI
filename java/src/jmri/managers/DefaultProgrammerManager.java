@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.ProgrammerManager;
@@ -10,11 +11,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a very basic implementation of ProgrammerManager. You give it a
- * service-mode Programmer (perhaps null) at construction time that it returns when requested; 
- * Ops Mode requests get a null in response to a request, showing there's no programmer
- * of that type.
- *<p>
- * This class also defines basic ProgrammingMode constants for the NMRA-defined modes
+ * service-mode Programmer (perhaps null) at construction time that it returns
+ * when requested; Ops Mode requests get a null in response to a request,
+ * showing there's no programmer of that type.
+ * <p>
+ * This class also defines basic ProgrammingMode constants for the NMRA-defined
+ * modes
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2015, 2016
@@ -103,22 +105,35 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     //     public static final ProgrammingMode OPSACCBITMODE   = new ProgrammingMode("OPSACCBITMODE", 112);
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
-    
     private Programmer mProgrammer;
 
     /**
-     * For case where no global programmer is available
+     * For case where no global programmer is available.
      */
     public DefaultProgrammerManager() {
-        mProgrammer = null;  // indicates not present
-    }
-     
-    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer) {
-        mProgrammer = pProgrammer;
+        this(null);  // indicates not present
     }
 
-    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
-        this(pProgrammer);
+    /**
+     * Case where no SystemConnectionMemo has been created.
+     *
+     * @param programmer the programmer to associate this manager with; null if
+     *                   no programmer is available
+     */
+    public DefaultProgrammerManager(@Nullable Programmer programmer) {
+        mProgrammer = programmer;
+    }
+
+    /**
+     * Create a new programmer manager.
+     *
+     * @param programmer the programmer to associate this manager with; null if
+     *                   no programmer is available
+     * @param memo       the memo for the system connection this manager is
+     *                   associated with
+     */
+    public DefaultProgrammerManager(@Nullable Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
+        this(programmer);
         this.userName = memo.getUserName();
     }
 
@@ -126,8 +141,8 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in user interface components, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface components, so it should
+     * return a user-provided name for this particular one.
      */
     @Override
     public String getUserName() {
@@ -136,8 +151,8 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in user interface components, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface components, so it should
+     * return a user-provided name for this particular one.
      */
     @Override
     public String toString() {
@@ -146,7 +161,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     @Override
     public Programmer getGlobalProgrammer() {
-        log.debug("return default service-mode programmer of type {}", (mProgrammer != null ? mProgrammer.getClass() : "(null)") );
+        log.debug("return default service-mode programmer of type {}", (mProgrammer != null ? mProgrammer.getClass() : "(null)"));
         return mProgrammer;
     }
 
@@ -161,7 +176,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     @Override
-    public void releaseGlobalProgrammer(@Nonnull  Programmer p) {
+    public void releaseGlobalProgrammer(@Nonnull Programmer p) {
     }
 
     @Override
@@ -216,4 +231,3 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }
-

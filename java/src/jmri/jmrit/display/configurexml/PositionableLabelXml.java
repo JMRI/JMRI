@@ -448,7 +448,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             level = element.getAttribute("level").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse level attribute!");
-        } catch (NullPointerException e) {  // considered normal if the attribute not present
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
 
@@ -456,27 +457,31 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             boolean value = element.getAttribute("hidden").getBooleanValue();
             l.setHidden(value);
             l.setVisible(!value);
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert positionable label hidden attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
         try {
             l.setPositionable(element.getAttribute("positionable").getBooleanValue());
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert positionable label positionable attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
         try {
             l.setShowToolTip(element.getAttribute("showtooltip").getBooleanValue());
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert positionable label showtooltip attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
         try {
             l.setEditable(element.getAttribute("editable").getBooleanValue());
-        } catch (DataConversionException e1) {
+        } catch (DataConversionException e) {
             log.warn("unable to convert positionable label editable attribute");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
 
         Attribute a = element.getAttribute("degrees");
