@@ -103,7 +103,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 
@@ -116,7 +116,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process a reply to a poll of Sensors of one node
+     * Process a reply to a poll of Sensors of one node.
      */
     @Override
     public void reply(AcelaReply r) {
@@ -200,7 +200,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Acela Node is created
+     * Method to register any orphan Sensors when a new Acela Node is created.
      */
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors

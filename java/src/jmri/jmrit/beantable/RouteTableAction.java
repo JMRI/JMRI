@@ -1451,7 +1451,7 @@ public class RouteTableAction extends AbstractTableAction {
         String cUserName;
 
         ///////////////// Make Trigger Conditionals //////////////////////
-        //ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
+        //ArrayList <ConditionalVariable> onChangeList = new ArrayList<>();
         int numConds = 1; // passed through all these, with new value returned each time
         numConds = makeSensorConditional(sensor1, sensor1mode, numConds, false,
                 actionList, vetoList, logix, logixSystemName, uName);

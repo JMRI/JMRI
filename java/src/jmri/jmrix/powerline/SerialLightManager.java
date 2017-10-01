@@ -46,7 +46,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L')) {
+        if (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = createNewSpecificLight(systemName, userName);
             if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName, 'L')) {
                 log.warn("Light system Name does not refer to configured hardware: "
@@ -71,7 +71,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L'));
     }
 

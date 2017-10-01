@@ -257,7 +257,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // read setup data - Node(UA) field
         try {
             ua = Integer.parseInt(uaAddrField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("DiagnosticError1"));
             statusText1.setVisible(true);
             return (false);

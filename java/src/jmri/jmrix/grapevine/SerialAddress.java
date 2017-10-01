@@ -1,5 +1,7 @@
 package jmri.jmrix.grapevine;
 
+import jmri.Manager.NameValidity;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -284,17 +286,17 @@ public class SerialAddress {
      * @param systemName name to check
      * @param type       expected device type letter
      */
-    public static boolean validSystemNameFormat(String systemName, char type) {
+    public static NameValidity validSystemNameFormat(String systemName, char type) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
             // here if an illegal format, e.g. another system letter
             // which happens all the time due to how proxy managers work
-            return false;
+            return NameValidity.INVALID;
         }
         if (matcher.group(2).charAt(0) != type) {
             log.error("type in " + systemName + " does not match " + type);
-            return false;
+            return NameValidity.INVALID;
         }
         Pattern p;
         if (type == 'L') {
@@ -307,7 +309,7 @@ public class SerialAddress {
             p = getSensorPattern();
         } else {
             log.error("cannot match type in " + systemName + ", which is unexpected");
-            return false;
+            return NameValidity.INVALID;
         }
 
         // check format
@@ -315,7 +317,7 @@ public class SerialAddress {
         if (!m2.matches()) {
             // here if cannot parse specifically
             log.error("illegal system name format: " + systemName + " for type " + type);
-            return (false);
+            return NameValidity.INVALID;
         }
 
         // check for the two different formats
@@ -329,7 +331,7 @@ public class SerialAddress {
                 bit = num % 1000;
             } else {
                 log.error("invalid value in system name: " + systemName);
-                return false;
+                return NameValidity.INVALID;
             }
         } else {
             // This is a Gtnnaxxxx address, get values
@@ -341,7 +343,7 @@ public class SerialAddress {
         // check values
         if ((node < 1) || (node > 127)) {
             log.error("invalid node number " + node + " in " + systemName);
-            return false;
+            return NameValidity.INVALID;
         }
 
         // check bit numbers
@@ -351,7 +353,7 @@ public class SerialAddress {
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
                 log.error("invalid bit number " + bit + " in " + systemName);
-                return false;
+                return NameValidity.INVALID;
             }
         } else { 
             assert type == 'S'; // see earlier decoding
@@ -360,9 +362,9 @@ public class SerialAddress {
             if (subtype == null) { // no subtype, just look at total
                 if ((bit < 1) || (bit > 224)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 } else {
-                    return true;
+                    return NameValidity.VALID;
                 }
             }
             subtype = subtype.toUpperCase();
@@ -370,29 +372,29 @@ public class SerialAddress {
                 // advanced serial occ
                 if ((bit < 1) || (bit > 24)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             } else if (subtype.equals("M")) { 
                 // advanced serial motion 
                 if ((bit < 1) || (bit > 24)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             } else if (subtype.equals("S")) {// old serial
                 if ((bit < 1) || (bit > 24)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             } else if (subtype.equals("P")) { // parallel
                 if ((bit < 1) || (bit > 96)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
-                    return false;
+                    return NameValidity.INVALID;
                 }
             }
         }
 
-        // finally, return true
-        return true;
+        // finally, return VALID
+        return NameValidity.VALID;
     }
 
     /**
@@ -402,7 +404,7 @@ public class SerialAddress {
      * returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
-        if (!validSystemNameFormat(systemName, type)) {
+        if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
             log.warn(systemName + " invalid");
             return false;
@@ -442,7 +444,7 @@ public class SerialAddress {
      */
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (validSystemNameFormat(systemName, systemName.charAt(1)) != NameValidity.VALID) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
@@ -473,7 +475,7 @@ public class SerialAddress {
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
         try {
-           if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+           if (validSystemNameFormat(systemName, systemName.charAt(1))  != NameValidity.VALID) {
                // No point in normalizing if a valid system name format is not present
                return "";
            }

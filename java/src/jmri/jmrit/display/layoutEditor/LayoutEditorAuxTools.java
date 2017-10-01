@@ -98,9 +98,7 @@ public class LayoutEditorAuxTools {
                     || (lt instanceof TrackSegment)
                     || (lt instanceof LayoutTurnout)) { // <== includes LayoutSlips
                 lcs = lt.getLayoutConnectivity();
-                if (lcs != null) {
-                    cList.addAll(lcs); // append to list
-                }
+                cList.addAll(lcs); // append to list
             }
         }
         initialized = true;
@@ -120,44 +118,36 @@ public class LayoutEditorAuxTools {
         // Check for block boundaries at positionable points.
         for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
             lcs = p.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // Check for block boundaries at layout turnouts and level crossings
         for (TrackSegment ts : layoutEditor.getTrackSegments()) {
             lcs = ts.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // check for block boundaries internal to crossover turnouts
         for (LayoutTurnout lt : layoutEditor.getLayoutTurnouts()) {
             lcs = lt.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
         // check for block boundaries internal to slips
         for (LayoutSlip ls : layoutEditor.getLayoutSlips()) {
             lcs = ls.getLayoutConnectivity();
-            if (lcs != null) {
-                for (LayoutConnectivity lc : lcs) {
-                    // add to list, if not already present
-                    checkConnectivity(lc, found);
-                }
+            for (LayoutConnectivity lc : lcs) {
+                // add to list, if not already present
+                checkConnectivity(lc, found);
             }
         }
 
@@ -184,7 +174,7 @@ public class LayoutEditorAuxTools {
         int rDir = c.getReverseDirection();
 
         TrackSegment track = c.getTrackSegment();
-        Object connected = c.getConnectedObject();
+        LayoutTrack connected = c.getConnectedObject();
         int type = c.getConnectedType();
 
         LayoutTurnout xOver = c.getXover();
@@ -245,15 +235,15 @@ public class LayoutEditorAuxTools {
      */
     public void addBeanSettings(Path p, LayoutConnectivity lc, LayoutBlock layoutBlock) {
         p.clearSettings();
-        Object curConnection = null;
-        Object prevConnection = null;
+        LayoutTrack curConnection = null;
+        LayoutTrack prevConnection = null;
         int typeCurConnection = 0;
         BeanSetting bs = null;
         LayoutTurnout lt = null;
-        // process object at block boundary
+        // process track at block boundary
         if (lc.getBlock1() == layoutBlock) {    // block1 is this LayoutBlock
             curConnection = lc.getTrackSegment();
-            if (curConnection != null) {        // connected object in this block is a track segment
+            if (curConnection != null) {        // connected track in this block is a track segment
                 prevConnection = lc.getConnectedObject();
                 typeCurConnection = LayoutTrack.TRACK;
                 // is this Track Segment connected to a RH, LH, or WYE turnout at the continuing or diverging track?

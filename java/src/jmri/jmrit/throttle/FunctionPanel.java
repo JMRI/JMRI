@@ -307,14 +307,16 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 }
                 rosterEntry.setFunctionLabel(functionNumber, text);
             }
-            if (rosterEntry.getFunctionLabel(functionNumber) != null && lockable != rosterEntry.getFunctionLockable(functionNumber)) {
-                rosterEntry.setFunctionLockable(functionNumber, lockable);
-            }
-            if (rosterEntry.getFunctionLabel(functionNumber) != null && imagePath != null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0) {
-                rosterEntry.setFunctionImage(functionNumber, imagePath);
-            }
-            if (rosterEntry.getFunctionLabel(functionNumber) != null && imageSelectedPath != null && imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber)) != 0) {
-                rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
+            if (rosterEntry.getFunctionLabel(functionNumber) != null ) {
+                if( lockable != rosterEntry.getFunctionLockable(functionNumber)) {
+                   rosterEntry.setFunctionLockable(functionNumber, lockable);
+                }
+                if ( imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0) {
+                   rosterEntry.setFunctionImage(functionNumber, imagePath);
+                }
+                if ( imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber)) != 0) {
+                   rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
+                }
             }
         }
         Roster.getDefault().writeRoster();

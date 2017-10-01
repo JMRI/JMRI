@@ -162,8 +162,8 @@
       </ul>
       
       <h2><a id="schema" name="schema">Schema
-      Management</a></h2><a id="schema" name="schema">JMRI controls
-      XML semantics using</a> <a href="XmlSchema.shtml">XML
+      Management</a></h2>JMRI controls
+      XML semantics using <a href="XmlSchema.shtml">XML
       Schema</a>.
 
       <p>For example, layout information is stored in XML files as
