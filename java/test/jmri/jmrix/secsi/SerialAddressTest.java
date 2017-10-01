@@ -70,7 +70,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: VL128B7");
 
         Assert.assertTrue("invalid format - VL2oo5", NameValidity.VALID != SerialAddress.validSystemNameFormat("VL2oo5", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in number field system name: VL2oo5");
+        JUnitAppender.assertWarnMessage("invalid character in number field system name: VL2oo5");
 
         Assert.assertTrue("invalid format - VL2aB5", NameValidity.VALID != SerialAddress.validSystemNameFormat("VL2aB5", 'L'));
         JUnitAppender.assertWarnMessage("invalid character in node address field of system name: VL2aB5");
