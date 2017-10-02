@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,7 +12,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -30,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Builds a train's manifest using Comma Separated Values (csv).
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2015
- * 
+ *
  */
 public class TrainCsvManifest extends TrainCsvCommon {
 
@@ -40,7 +38,6 @@ public class TrainCsvManifest extends TrainCsvCommon {
 
     private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public TrainCsvManifest(Train train) {
         // create comma separated value manifest file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainCsvManifestFile(train.getName());
@@ -190,11 +187,11 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 }
             }
             // car holds
-            List<RollingStock> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
-            List<Car> cList = new ArrayList<Car>();
-            for (RollingStock rs : rsByLocation) {
+            List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
+            List<Car> cList = new ArrayList<>();
+            for (Car rs : rsByLocation) {
                 if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {
-                    cList.add((Car) rs);
+                    cList.add(rs);
                 }
             }
             clearUtilityCarTypes(); // list utility cars by quantity
