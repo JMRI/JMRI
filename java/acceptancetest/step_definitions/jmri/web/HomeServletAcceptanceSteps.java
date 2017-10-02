@@ -5,6 +5,8 @@ import cucumber.api.PendingException;
 import org.junit.Assert;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import jmri.web.server.WebServer;
 
 /**
@@ -21,7 +23,9 @@ public class HomeServletAcceptanceSteps implements En {
    public HomeServletAcceptanceSteps() {
 
       Before(tags,()->{
-         webDriver = new EventFiringWebDriver(new FirefoxDriver());
+         Class<? extends WebDriver> driverClass = FirefoxDriver.class;
+         WebDriverManager.getInstance(driverClass).setup();
+         webDriver = driverClass.newInstance();
       });
 
       When("^I ask for the /index\\.html$", () -> {
