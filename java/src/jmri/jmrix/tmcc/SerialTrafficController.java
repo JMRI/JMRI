@@ -267,7 +267,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             log.warn("sendMessage: Exception:", e);
         }
     }

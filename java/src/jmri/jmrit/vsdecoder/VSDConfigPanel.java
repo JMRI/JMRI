@@ -513,7 +513,7 @@ public class VSDConfigPanel extends JmriPanel {
         busy_dialog.start();
         try {
             rv = sw.get();
-        } catch (Exception e) {
+        } catch (InterruptedException | java.util.concurrent.ExecutionException | RuntimeException e) {
             // Way too loose  Should be more specific about exceptions caught.
             rv = null;
         }

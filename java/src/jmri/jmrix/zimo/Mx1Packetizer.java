@@ -322,16 +322,12 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("schedule notify of incoming packet");
                         javax.swing.SwingUtilities.invokeLater(r);
 
-                    } // done with this one // done with this one
-                    /*catch (java.io.EOFException e) {
-                     // posted from idle port when enableReceiveTimeout used
-                     log.debug("EOFException, is serial I/O using timeouts?");
-                     }*/ catch (java.io.IOException e) {
+                    } catch (java.io.IOException e) {
                         // fired when write-end of HexFile reaches end
                         log.debug("IOException, should only happen with HexFIle", e);
                         disconnectPort(controller);
                         return;
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         log.warn("run: unexpected exception:", e);
                     }
                 }
@@ -379,8 +375,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             log.debug("schedule notify of incoming packet");
                             javax.swing.SwingUtilities.invokeLater(r);
                         }
-                    } // done with this one // done with this one
-                    catch (java.io.EOFException e) {
+                    } catch (java.io.EOFException e) {
                         // posted from idle port when enableReceiveTimeout used
                         log.debug("EOFException, is serial I/O using timeouts?");
                     } catch (java.io.IOException e) {
@@ -388,7 +383,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("IOException, should only happen with HexFIle: " + e);
                         disconnectPort(controller);
                         return;
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         log.warn("run: unexpected exception: " + e);
                     }
                 } // end of permanent loop
