@@ -146,7 +146,7 @@ public class SwingTestCase extends JFCTestCase {
         // setHelper( new RobotTestHelper( ) ); // Uses the OS Event Queue.
     }
 
-    protected void leaveAllWindowsOpen()  throws org.apache.regexp.RESyntaxException {
+    protected void leaveAllWindowsOpen() {
         TestHelper.addSystemWindow(".");  // all windows left open
     }
 
