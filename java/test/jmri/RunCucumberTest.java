@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"junit:cucumber-results.xml","progress"},
-                 features="java/acceptancetest/features")
+                 features="java/acceptancetest/features",
+                 tags = {"~@webtest"})
 public class RunCucumberTest {
 }
