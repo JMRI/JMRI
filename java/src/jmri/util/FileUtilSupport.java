@@ -499,7 +499,7 @@ public class FileUtilSupport extends Bean {
      * @param filename the name to test
      * @return true if filename is portable
      */
-    public boolean isPortableFilename(String filename) {
+    public boolean isPortableFilename(@Nonnull String filename) {
         return (filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
                 || filename.startsWith(PREFERENCES)
@@ -573,7 +573,7 @@ public class FileUtilSupport extends Bean {
      *             separators. If null, this will cause  {@link #getProfilePath()} to 
      *             provide the preferences directory via {@link #getPreferencesPath()}.
      */
-    public void setProfilePath(String path) {
+    public void setProfilePath(@CheckForNull String path) {
         String old = this.profilePath;
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
@@ -1300,6 +1300,7 @@ public class FileUtilSupport extends Bean {
      * @param name The filename to be sanitized.
      * @return The sanitized filename.
      */
+    @Nonnull
     public String sanitizeFilename(@Nonnull String name) {
         name = name.trim().replaceAll(" ", "_").replaceAll("[.]+", ".");
         StringBuilder filename = new StringBuilder();
