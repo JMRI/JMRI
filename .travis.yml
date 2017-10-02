@@ -5,6 +5,7 @@ addons:
     packages:
     - graphviz
     - libalut0
+  firefox: latest
 
 before_install:
   # ensure no unwanted defaults are set
@@ -15,7 +16,8 @@ before_install:
   # install graphviz on macOS
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
-
+  # install gechodriver on linux
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget https://github.com/mozilla/geckodriver/releases/download/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz ; mkdir geckodriver ; tar -xzf geckodriver-v0.19.0-linux64.tar.gz -C geckodriver ; export PATH=$PATH:$PWD/geckodriver ; fi
 install:
   - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
