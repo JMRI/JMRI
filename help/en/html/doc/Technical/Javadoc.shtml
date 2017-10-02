@@ -43,7 +43,9 @@
       doclet to automatically create the UML diagrams in our
       Javadoc pages.</p>
 
-      <h2>Javadoc for Developers</h2>The <a href=
+      <h2>Javadoc for Developers</h2>
+      
+      The <a href=
       "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
       Javadoc tutorial</a> is a good, but somewhat long, <a href=
       "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
@@ -71,6 +73,9 @@
       "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">
       "How and When To Deprecate APIs" page</a>.</p>
 
+    <a name="html" item="html"></a>
+    <h3>HTML in Javadoc</h3>
+    
       <p>The Javadoc content is interpreted as HTML 4.01, so it
       should be valid HTML 4.01. If it's not, it probably won't
       display properly when somebody wants to understand your code,
@@ -83,8 +88,7 @@
 
       <p>You also have to (sometimes) end your paragraph tags to
       start another type of element, e.g. lists:</p>
-      <pre>
-<code>
+ <pre style="font-family: monospace;">
  * Some text that forms a paragraph
  * &lt;p&gt;
  * Some more text. 
@@ -93,8 +97,8 @@
  * &lt;/p&gt;&lt;ul&gt;
  *    &lt;li&gt;List item
  * &lt;/ul&gt;
-</code>
-</pre>Note that HTML 4.01 wants paragraph tags to be ended with
+</pre>
+Note that HTML 4.01 wants paragraph tags to be ended with
 &lt;/p&gt;, and that you can't have a list inside a paragraph.
 
       <p>Some error messages and their translations:</p>
@@ -113,22 +117,60 @@
         If so, replace with "&amp;gt;" or wrap the line with
         @literal</dd>
       </dl>Finally, note that this Javadoc line is malformed:
-      <pre>
-<code>
- * @param foo
-</code>
-</pre>because it doesn't include any explanatory text. The line
+ <pre style="font-family: monospace;">
+  * @param foo
+</pre>
+because it doesn't include any explanatory text. The line
 should include explanatory text:
-      <pre>
-<code>
+ <pre style="font-family: monospace;">
  * @param foo holds the latest Bar instance
-</code>
-</pre>.
+</pre>
 
-      <p>We are currently suppressing the "missing" class of
+    <a name="inherit" id="inherit"></a>
+    <h3>Inheriting Javadoc comments</h3>
+    <p>When you write a method that overrides a method (or signature) in a superclass,
+        you should always use the <code>@Overrides</code> annotation to 
+        indicate that:
+<pre style="font-family: monospace;">
+  @Override
+  public void methodName() {
+    // doing something
+  }
+</pre>
+      <p>If the method is similar enough to the superclass method, you can just "inherit" the Javadoc from the superclass:
+<pre style="font-family: monospace;">
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void methodName() {
+    // doing something
+  }
+</pre>
+    <p>(I there's no Javadoc in the superclass, consider adding your comments there instead of on your new method and inheriting them;
+    that kills two birds with one stone!)
+    <p> You can add or replace some of the documentation, e.g. 
+<pre style="font-family: monospace;">
+  /**
+   * {@inheritDoc}
+   * 
+   * This implementation uses the ReallyMarvelous algorithm for improved speed.
+   */
+  @Override
+  public void methodName() {
+    // doing something
+  }
+</pre>             
+    <p>General comments add to the documentation from the superclass; 
+     @param and @return tags replace the documentation from the superclass.
+     
+    <a name="missing" id="missing"></a>
+    <h3>Reducing the Number of Missing Comments</h3>
+     <p>We are currently suppressing the "missing" class of
       warnings, which warns of missing @param or @return tags. Note that
       Javadoc will throw an error if the number of "missing" warnings
-      exceeds 3975 (as of 2017-02-20). Once the number of these warnings
+      exceeds 2300 (as of 2017-10-01, down from 3975 on 2017-02-20; progress!). 
+      Once the number of these warnings
       is reduced to a managable level, we will stop suppressing them.</p>
 
       <p>For a summary of current Javadoc errors in the code, see
@@ -180,7 +222,9 @@ should include explanatory text:
       </pre>
       A .png with the diagram will be created alongside the source.
 
-      <h2>Processing</h2>The standard JMRI Ant build provides three
+      <h2>Processing</h2>
+      
+      The standard JMRI Ant build provides three
       documentation targets:
 
       <dl>
@@ -203,7 +247,8 @@ should include explanatory text:
         generally don't have to deal with it.</dd>
       </dl>
 
-      <h3>Manual Diagrams</h3><!--#include virtual="/Footer" -->
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
