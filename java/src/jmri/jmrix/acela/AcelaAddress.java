@@ -37,23 +37,8 @@ public class AcelaAddress {
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
-<<<<<<< HEAD
-        if ((systemName.charAt(0) != 'A') || ((systemName.charAt(1) != 'L')
-                && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
-                && (systemName.charAt(1) != 'H'))) {
-            // here if an illegal format 
-            log.error("illegal character in header field of system name: " + systemName);
-            return (-1);
-        }
-        int num;
-        try {
-            num = Integer.valueOf(systemName.substring(2)).intValue();
-        } catch (NumberFormatException e) {
-            log.error("illegal character in number field of system name: " + systemName);
-=======
         if (validSystemNameFormat(systemName, systemName.charAt(memo.getSystemPrefix().length()), memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
->>>>>>> master
             return (-1);
         }
         int num = getBitFromSystemName(systemName, memo.getSystemPrefix());
