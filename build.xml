@@ -143,6 +143,7 @@
     <property name="target"       value="${maventarget}/classes"/>
     <property name="testtarget"   value="${maventarget}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
+    <property name="acceptancetest" value="${javadir}/acceptancetest"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
     <property name="lineendtmp"   value="${tmptarget}/lineend"/>
@@ -251,6 +252,17 @@
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
+        <!-- cucumber and it's dependencies -->
+        <pathelement location="${libdir}/cucumber-core-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-java-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-java8-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-junit-1.2.5.jar"/>
+        <pathelement location="${libdir}/cucumber-jvm-deps-1.0.5.jar"/>
+        <pathelement location="${libdir}/gherkin-2.12.2.jar"/>
+        <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
+        <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
+        <!-- Selenium and it's dependencies -->
+        <pathelement location="${libdir}/selenium-server-standalone-3.5.3.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -424,6 +436,7 @@
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="junit-results.xml"/>
+            <fileset file="cucumber-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
         </delete>
@@ -620,7 +633,7 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <java-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
+        <java-compile javac.source="${test};${acceptancetest}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
         <copy todir="${testtarget}">
