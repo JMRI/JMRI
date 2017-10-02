@@ -67,10 +67,7 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
     /**
-     * Check to see if PortController object can be sent to.
-     *
-     * @return true if ready, false otherwise
-     * @throws Exception when the XNet connection fails
+     * {@inheritDoc}
      */
     @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) {

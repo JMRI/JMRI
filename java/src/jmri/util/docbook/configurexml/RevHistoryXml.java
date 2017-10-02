@@ -70,16 +70,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     /**
-     * Create a set of configured objects from their XML description, using an
-     * auxiliary object.
-     * <P>
-     * For example, the auxilary object o might be a manager or GUI of some type
-     * that needs to be informed as each object is created.
-     *
-     * @param e Top-level XML element containing the description
-     * @param o Implementation-specific Object needed for the conversion
-     * @throws Exception when a error prevents creating the objects as as
-     *                   required by the input XML.
+     * This method is not implemented: See class comment above for more discussion.
      */
     @Override
     public void load(Element e, Object o) {
@@ -87,12 +78,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     /**
-     * Store the
-     *
-     * @param o The object to be recorded. Specific XmlAdapter implementations
-     *          will require this to be of a specific type; that binding is done
-     *          in ConfigXmlManager.
-     * @return The XML representation Element
+     * {@inheritDoc}
      */
     @Override
     public Element store(Object o) {
