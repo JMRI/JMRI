@@ -23,13 +23,6 @@ import org.junit.Test;
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
-    public void testLifeCycle() throws Exception {
-        // test runs lifecycle through setup, shutdown
-        pane.initComponents();
-        Assert.assertNotNull("exists",pane);
-    }
-
-    @Test
     public void testInput() throws Exception {
         pane.initComponents();
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
@@ -117,8 +110,10 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        
-        pane = new LocoMonPane();  
+        // pane for AbstractMonFrameTestBase, panel for JmriPanelTest
+        panel = pane = new LocoMonPane();
+        helpTarget = "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
+        title = Bundle.getMessage("MenuItemLocoNetMonitor"); 
     }
 
     @Override

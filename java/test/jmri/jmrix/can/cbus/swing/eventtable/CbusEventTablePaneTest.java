@@ -11,19 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusEventTablePaneTest {
+public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        CbusEventTablePane pane = new CbusEventTablePane();
-        Assert.assertNotNull("exists", pane);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new CbusEventTablePane();
+        title = "Event Table";
+        helpTarget = "package.jmri.jmrix.can.cbus.CbusEventTablePane";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 

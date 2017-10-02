@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +115,8 @@ public class MultiThrottle {
             return false;
         }
         if (key.equals("*")) {
-            throttles.keySet().forEach((throttle) -> {
+            ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+            throttleKeys.forEach((throttle) -> {
                 removeThrottleController(throttle, action);
                 //  Runs each loco through this method individually
             });
@@ -148,7 +150,8 @@ public class MultiThrottle {
         }
 
         if (key.equals("*")) {
-            throttles.keySet().forEach((throttle) -> {
+            ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+            throttleKeys.forEach((throttle) -> {
                 passActionsToControllers(throttle, action);
                 //  Runs each loco through this method individually
             });
@@ -185,7 +188,8 @@ public class MultiThrottle {
         if (throttles == null) {
             return;
         }
-        throttles.keySet().forEach((throttle) -> {
+        ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+        throttleKeys.forEach((throttle) -> {
             removeThrottleController(throttle, "r");
         });
     }
@@ -194,7 +198,8 @@ public class MultiThrottle {
         if (throttles == null) {
             return;
         }
-        throttles.keySet().forEach((throttle) -> {
+        ArrayList<String> throttleKeys = new ArrayList<String>(throttles.keySet());  //copy to avoid concurrentModificationException
+        throttleKeys.forEach((throttle) -> {
             passActionsToControllers(throttle, "X");
         });
     }

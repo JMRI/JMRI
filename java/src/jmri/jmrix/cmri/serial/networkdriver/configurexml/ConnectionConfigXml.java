@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -48,9 +47,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      *
      * @param e Element being extended
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     protected void extendElement(Element e) {
         SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
@@ -67,16 +63,16 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             n.addContent(makeParameter("transmissiondelay", "" + node.getTransmissionDelay()));
             n.addContent(makeParameter("num2lsearchlights", "" + node.getNum2LSearchLights()));
             n.addContent(makeParameter("pulsewidth", "" + node.getPulseWidth()));
-            String value = "";
+            StringBuilder value = new StringBuilder("");
             for (int i = 0; i < node.getLocSearchLightBits().length; i++) {
-                value = value + Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF);
+                value.append(Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF));
             }
-            n.addContent(makeParameter("locsearchlightbits", "" + value));
-            value = "";
+            n.addContent(makeParameter("locsearchlightbits", value.toString()));
+            value = new StringBuilder("");
             for (int i = 0; i < node.getCardTypeLocation().length; i++) {
-                value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
+                value.append(Integer.toHexString(node.getCardTypeLocation()[i] & 0xF));
             }
-            n.addContent(makeParameter("cardtypelocation", "" + value));
+            n.addContent(makeParameter("cardtypelocation", value.toString()));
 
             // look for the next node
             node = (SerialNode) tc.getNode(index);

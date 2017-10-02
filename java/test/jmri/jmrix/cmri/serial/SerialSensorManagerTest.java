@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -62,6 +63,23 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue("3rd UA 2", n0.getSensorsActive());
     }
 
+    @Test
+    public void testValidSystemNameFormat() {
+        Assert.assertEquals(NameValidity.VALID, l.validSystemNameFormat("CS1"));
+        Assert.assertEquals(NameValidity.VALID, l.validSystemNameFormat("CS21"));
+        Assert.assertEquals(NameValidity.VALID, l.validSystemNameFormat("CS2001"));
+        Assert.assertEquals(NameValidity.VALID, l.validSystemNameFormat("CS21001"));
+
+        Assert.assertEquals(NameValidity.INVALID, l.validSystemNameFormat("CSx"));
+        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CSx");
+        
+        Assert.assertEquals(NameValidity.INVALID, l.validSystemNameFormat("CS2000"));
+        jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
+        
+        Assert.assertEquals(NameValidity.INVALID, l.validSystemNameFormat("CS"));
+        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CS");
+    }
+    
     @Test
     public void testDefinitions() {
         Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,

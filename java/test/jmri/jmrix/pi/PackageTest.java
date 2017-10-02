@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
    jmri.jmrix.pi.configurexml.PackageTest.class,
    RaspberryPiConnectionTypeListTest.class,
    RaspberryPiSensorTest.class,
-   RaspberryPiTurnoutTest.class
+   RaspberryPiTurnoutTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

@@ -43,7 +43,6 @@ public class SpeedUtil {
     private RosterEntry _rosterEntry;
     private List<BlockOrder> _orders;
 
-//    private TreeMap<Integer, SpeedStep> _speedTree;
     private DccThrottle _throttle;
     private float _stepIncrement;   // decoder throttle step interval
     private float _stepRampThrottleIncrement;
@@ -321,6 +320,11 @@ public class SpeedUtil {
         _throttle = throttle;
         _stepIncrement = _throttle.getSpeedIncrement();
         getSpeedProfile();
+    }
+    
+    protected float getSpeedIncrement() {
+        _stepIncrement = _throttle.getSpeedIncrement();
+        return _stepIncrement;
     }
     /**
      * Calculates the scale speed of the current throttle setting for display

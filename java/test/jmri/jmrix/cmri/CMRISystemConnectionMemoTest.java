@@ -1,5 +1,7 @@
 package jmri.jmrix.cmri;
 
+import jmri.Manager.NameValidity;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,6 +19,39 @@ public class CMRISystemConnectionMemoTest {
     @Test public void constructorTest() {
         CMRISystemConnectionMemo m = new CMRISystemConnectionMemo();
         Assert.assertNotNull(m);
+    }
+
+    @Test
+    public void testValidSystemNameFormat() {
+        CMRISystemConnectionMemo m = new CMRISystemConnectionMemo();
+
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS2",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS2001",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21001",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127001",'S'));    
+
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS999",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS2999",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21999",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127999",'S'));    
+
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B1",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B001",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS21B1024",'S'));    
+          
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B001",'S'));    
+        Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1024",'S'));    
+
+        Assert.assertEquals(NameValidity.INVALID, m.validSystemNameFormat("CSx",'S'));  
+        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CSx");
+
+        Assert.assertEquals(NameValidity.INVALID, m.validSystemNameFormat("CS2000",'S'));  
+        jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
+
+        Assert.assertEquals(NameValidity.INVALID, m.validSystemNameFormat("CS",'S'));  
+        jmri.util.JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CS");
     }
 
     @Test public void systemPrefixTest() {

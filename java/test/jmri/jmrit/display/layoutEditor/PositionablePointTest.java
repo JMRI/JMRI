@@ -230,11 +230,11 @@ public class PositionablePointTest {
         PositionablePoint pp = new PositionablePoint("test", PositionablePoint.ANCHOR, thePoint, le);
         Assert.assertNotNull("exists", pp);
 
-        // first, try hit…
+        // first, try hit
         int hitType = pp.findHitPointType(thePoint, true, false);
         Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == LayoutEditor.POS_POINT);
 
-        // Now, try miss…
+        // Now, try miss
         hitType = pp.findHitPointType(MathUtil.zeroPoint2D, true, false);
         Assert.assertTrue("pp.findHitPointType equals NONE", hitType == LayoutEditor.NONE);
     }

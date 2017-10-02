@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import java.awt.*;
@@ -728,13 +724,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION")
-        // Only used occasionally, so inefficient String processing not really a problem
-        // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[])
         {
             String columnString = "";
-            String lineString = "";
+            StringBuilder lineString = new StringBuilder("");
             String[] spaces = new String[NUM_COLUMNS];
             // create base strings the width of each of the columns
             for (int k = 0; k < NUM_COLUMNS; k++)
@@ -778,10 +771,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
                     columnStrings[i] = "";
                 }
-                lineString = lineString + columnString + " ";
+                lineString.append(columnString).append(" ");
             }
             try {
-                    w.write(lineString);
+                    w.write(lineString.toString());
                     //write vertical dividing lines
                     int iLine = w.getCurrentLineNumber();
                     for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) if (k!=SELECT_COLUMN){
@@ -793,12 +786,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                                 i = w.getCharactersPerLine();
                         }
                     }
-                    lineString = "\n";
-                    w.write(lineString);
-                    lineString = "";
+                    w.write("\n");
+                    lineString = new StringBuilder("");
             }
             catch (IOException e) {
-                    log.warn("error during printing: "+e);
+                    log.warn("error during printing: ", e);
             }
         }
     }
@@ -1433,7 +1425,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         // register any orphan sensors that this node may have
         //----------------------------------------------------
-        if (_memo != null && _memo.getSensorManager() != null)
+        if (_memo.getSensorManager() != null)
             (_memo.getSensorManager()).registerSensorsForNode(curNode);
 
         // reset text displays after succefully adding node
