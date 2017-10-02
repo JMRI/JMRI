@@ -24,6 +24,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import jmri.jmrix.maple.InputBits;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialAddress;
 import jmri.jmrix.maple.SerialNode;
@@ -77,9 +78,12 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     ListFrame curFrame;
 
-    public ListFrame() {
+    private MapleSystemConnectionMemo _memo = null;
+
+    public ListFrame(MapleSystemConnectionMemo memo) {
         super();
         curFrame = this;
+        _memo = memo;
     }
 
     @Override
@@ -358,9 +362,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
-                        sName = SerialAddress.isInputBitFree((r + 1));
+                        sName = SerialAddress.isInputBitFree((r + 1), _memo.getSystemPrefix());
                     } else {
-                        sName = SerialAddress.isOutputBitFree((r + 1));
+                        sName = SerialAddress.isOutputBitFree((r + 1), _memo.getSystemPrefix());
                     }
                     curRow = r;
                     curRowSysName = sName;
@@ -376,9 +380,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
-                        sName = SerialAddress.isInputBitFree((r + 1));
+                        sName = SerialAddress.isInputBitFree((r + 1), _memo.getSystemPrefix());
                     } else {
-                        sName = SerialAddress.isOutputBitFree((r + 1));
+                        sName = SerialAddress.isOutputBitFree((r + 1), _memo.getSystemPrefix());
                     }
                     curRow = r;
                     curRowSysName = sName;
@@ -388,7 +392,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 if (sName == null) {
                     return ("");
                 } else {
-                    return (SerialAddress.getUserNameFromSystemName(sName));
+                    return (SerialAddress.getUserNameFromSystemName(sName, _memo.getSystemPrefix()));
                 }
             }
             return "";

@@ -16,6 +16,7 @@ import org.junit.Assert;
  */
 public class SerialNodeTest extends TestCase {
 
+    private OakTreeSystemConnectionMemo memo = null;
     //private SerialNode a = new SerialNode(1,SerialNode.IO48);
     SerialNode b = new SerialNode();
 
@@ -68,7 +69,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChanges() {
         SerialSensor s1 = new SerialSensor("OS1", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("OS1"));
+        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("OS1", memo.getSystemPrefix()));
         SerialSensor s2 = new SerialSensor("OS2", "ab");
         SerialSensor s3 = new SerialSensor("OS3", "abc");
         b.registerSensor(s1, 0);
@@ -104,6 +105,7 @@ public class SerialNodeTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        memo = new OakTreeSystemConnectionMemo();
     }
 
     @Override

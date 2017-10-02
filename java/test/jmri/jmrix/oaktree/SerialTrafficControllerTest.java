@@ -59,17 +59,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
-        c.setSerialOutput("OL5B2", false);
-        c.setSerialOutput("OL5B1", false);
-        c.setSerialOutput("OL5B23", false);
-        c.setSerialOutput("OL5B22", false);
-        c.setSerialOutput("OL5B21", false);
-        c.setSerialOutput("OL5B2", true);
-        c.setSerialOutput("OL5B19", false);
-        c.setSerialOutput("OL5B5", false);
-        c.setSerialOutput("OL5B20", false);
-        c.setSerialOutput("OL5B17", false);
-        Assert.assertTrue("must Send on", g.mustSend());
+        // c.setSerialOutput("OL5B2", false); // test and 12 year old method removed, called nowhere as of 4.9.4
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 5, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));

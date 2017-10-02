@@ -3,6 +3,7 @@ package jmri.jmrix.oaktree.serialdriver;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.nodeconfig.NodeConfigAction;
 
 /**
@@ -38,11 +39,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure nodes");
+        JButton b = new JButton(Bundle.getMessage("WindowTitle"));
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((OakTreeSystemConnectionMemo) adapter.getSystemConnectionMemo()));
 
     }
 
@@ -55,4 +56,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }
+
 }

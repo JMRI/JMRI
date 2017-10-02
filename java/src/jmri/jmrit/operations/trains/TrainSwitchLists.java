@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,7 +12,6 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -34,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Builds a switch list for a location on the railroad
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015
- * 
+ *
  *
  */
 public class TrainSwitchLists extends TrainCommon {
@@ -52,15 +50,13 @@ public class TrainSwitchLists extends TrainCommon {
      * which can cause an IllegalArgumentException. Some messages have more
      * arguments than the default message allowing the user to customize the
      * message to their liking.
-     * 
+     *
      * There also an option to list all of the car work by track name. This option
      * is only available in real time and is shown after the switch list by
      * train.
      *
      * @param location The Location needing a switch list
      */
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "CarManager only provides Car Objects") // NOI18N
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time
         boolean newTrainsOnly = !Setup.isSwitchListRealTime();
@@ -339,19 +335,19 @@ public class TrainSwitchLists extends TrainCommon {
                 }
                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                         .getStringSwitchListByTrack(), new Object[]{splitString(location.getName())}));
-                
+
                 // we only need the cars delivered to or at this location
-                List<RollingStock> rsList = carManager.getByTrainList();
-                List<Car> carList = new ArrayList<Car>();
-                for (RollingStock rs : rsList) {
+                List<Car> rsList = carManager.getByTrainList();
+                List<Car> carList = new ArrayList<>();
+                for (Car rs : rsList) {
                     if ((rs.getLocation() != null &&
                             splitString(rs.getLocation().getName()).equals(splitString(location.getName()))) ||
                             (rs.getDestination() != null &&
                                     splitString(rs.getDestination().getName()).equals(splitString(location.getName()))))
-                        carList.add((Car) rs);
+                        carList.add(rs);
                 }
-                
-                List<String> trackNames = new ArrayList<String>(); // locations and tracks can have "similar" names, only list track names once
+
+                List<String> trackNames = new ArrayList<>(); // locations and tracks can have "similar" names, only list track names once
                 for (Location loc : locationManager.getLocationsByNameList()) {
                     if (!splitString(loc.getName()).equals(splitString(location.getName())))
                         continue;
@@ -360,8 +356,8 @@ public class TrainSwitchLists extends TrainCommon {
                         if (trackNames.contains(trackName))
                             continue;
                         trackNames.add(trackName);
-                        
-                        String trainName = ""; // for printing train message once                     
+
+                        String trainName = ""; // for printing train message once
                         newLine(fileOut);
                         newLine(fileOut, trackName); // print out just the track name
                         // now show the cars pickup and holds for this track

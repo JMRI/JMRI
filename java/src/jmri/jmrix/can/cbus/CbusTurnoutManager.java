@@ -103,6 +103,13 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return NameValidity.VALID;
     }
 
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging of handled cases no higher than WARN.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();

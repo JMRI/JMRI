@@ -51,12 +51,13 @@ public class AcelaLight extends AbstractLight {
 
     /**
      * Sets up system dependent instance variables and sets system independent
-     * instance variables to default values Note: most instance variables are in
-     * AbstractLight.java
+     * instance variables to default values.
+     * <p>
+     * Note: most instance variables are in AbstractLight.java
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
-        mBit = AcelaAddress.getBitFromSystemName(systemName);
+        mBit = AcelaAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
         // Set initial state
         AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName, _memo);
 

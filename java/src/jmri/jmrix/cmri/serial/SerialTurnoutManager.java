@@ -21,6 +21,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager(CMRISystemConnectionMemo memo) {
        _memo = memo;
+
     }
 
     /**
@@ -29,6 +30,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
+
     }
 
     /**
@@ -77,7 +79,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         t = new SerialTurnout(sName, userName,_memo);
 
         // does system name correspond to configured hardware
-        if (!_memo.validSystemNameConfig(sName, 'T',_memo.getTrafficController())) {
+        if (!_memo.validSystemNameConfig(sName, 'T', _memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }

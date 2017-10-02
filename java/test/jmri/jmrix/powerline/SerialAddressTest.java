@@ -28,65 +28,65 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - PTK3", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PTK3", 'T'));
 
         Assert.assertTrue("invalid format - PL2", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2");
         Assert.assertTrue("invalid format - PL0B2", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL0B2", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL0B2");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL0B2");
         Assert.assertTrue("invalid format - PL", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL");
 
         Assert.assertTrue("valid format - PLB2", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLB2", 'L'));
 
         Assert.assertTrue("invalid format - PY2005", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PY2005", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in header field system name: PY2005");
+        JUnitAppender.assertErrorMessage("invalid character in header field system name: PY2005");
 
         Assert.assertTrue("invalid format - PY2B5", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in header field system name: PY2B5");
+        JUnitAppender.assertErrorMessage("invalid character in header field system name: PY2B5");
 
         Assert.assertTrue("invalid format - PL22001", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL22001", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL22001");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL22001");
         Assert.assertTrue("invalid format - PL22B1", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL22B1", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL22B1");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL22B1");
 
         Assert.assertTrue("invalid format - PL22000", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL22000", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL22000");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL22000");
 
         Assert.assertTrue("invalid format - PL22B0", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL22B0", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL22B0");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL22B0");
 
         Assert.assertTrue("invalid format - PL2999", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2999", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2999");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2999");
         Assert.assertTrue("invalid format - PL2B2048", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2B2048", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2B2048");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2B2048");
 
         Assert.assertTrue("invalid format - PL2B2049", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2B2049", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2B2049");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2B2049");
 
         Assert.assertTrue("invalid format - PL2B33", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2B33", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2B33");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2B33");
 
         Assert.assertTrue("invalid format - PL127032", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL127032", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL127032");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL127032");
 
         Assert.assertTrue("invalid format - PL127001", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL127001", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL127001");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL127001");
 
         Assert.assertTrue("invalid format - PL127000", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL127000", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL127000");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL127000");
 
         Assert.assertTrue("invalid format - PL127B7", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL127B7", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL127B7");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL127B7");
 
         Assert.assertTrue("invalid format - PL128B7", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL128B7", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL128B7");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL128B7");
 
         Assert.assertTrue("invalid format - PL2oo5", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2oo5", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2oo5");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2oo5");
 
         Assert.assertTrue("invalid format - PL2aB5", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2aB5", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2aB5");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2aB5");
 
         Assert.assertTrue("invalid format - PL2B5x", NameValidity.VALID != tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2B5x", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL2B5x");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL2B5x");
     }
 
     public void testValidSystemNameConfig() {
@@ -94,11 +94,11 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid config PLB7", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PLB7", 'L'));
 
         Assert.assertTrue("invalid config PL4007", !tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PL4007", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL4007");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL4007");
         JUnitAppender.assertWarnMessage("PL4007 invalid; bad format");
 
         Assert.assertTrue("invalid config PL10033", !tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PL10033", 'L'));
-        JUnitAppender.assertErrorMessage("address did not match any valid forms: PL10033");
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PL10033");
         JUnitAppender.assertWarnMessage("PL10033 invalid; bad format");
 
         Assert.assertTrue("valid config PSK16", tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PSK16", 'S'));
