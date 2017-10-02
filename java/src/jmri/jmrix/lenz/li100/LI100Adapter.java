@@ -233,7 +233,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean status() {
