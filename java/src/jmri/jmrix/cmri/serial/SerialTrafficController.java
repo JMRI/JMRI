@@ -71,7 +71,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for C/MRI serial");
+        log.warn("enterProgMode doesn't make sense for C/MRI serial");
         return null;
     }
 

@@ -6,7 +6,7 @@ import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers on XPressNet
+ * Extend DefaultProgrammerManager to provide ops mode programmers on XpressNet
  * @see jmri.ProgrammerManager
  * @author Paul Bender Copyright (C) 2003
  * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
@@ -22,7 +22,7 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
     }
 
     /**
-     * XPressNet command station does provide Ops Mode.
+     * XpressNet command station does provide Ops Mode.
      * @return we should make this return false based on what command station
      * we're using but for now, we'll return true
      */

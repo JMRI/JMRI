@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.Manager.NameValidity;
-
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
@@ -73,7 +72,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo.validSystemNameFormat("CL0B2", 'L'));
 
         Assert.assertTrue("invalid format - CL", NameValidity.VALID != memo.validSystemNameFormat("CL", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL");
+        JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CL");
 
         Assert.assertTrue("invalid format - CLB2", NameValidity.VALID != memo.validSystemNameFormat("CLB2", 'L'));
         JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB2");
@@ -86,10 +85,10 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - CS2B5", NameValidity.VALID == memo.validSystemNameFormat("CS2B5", 'S'));
 
         Assert.assertTrue("invalid format - CY2005", NameValidity.VALID != memo.validSystemNameFormat("CY2005", 'L'));
-        JUnitAppender.assertErrorMessage("illegal type character in CMRI system name: CY2005");
+        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
 
         Assert.assertTrue("invalid format - CY2B5", NameValidity.VALID != memo.validSystemNameFormat("CY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal type character in CMRI system name: CY2B5");
+        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
 
         Assert.assertTrue("valid format - CL22001", NameValidity.VALID == memo.validSystemNameFormat("CL22001", 'L'));
         Assert.assertTrue("valid format - CL22B1", NameValidity.VALID == memo.validSystemNameFormat("CL22B1", 'L'));
@@ -117,13 +116,13 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
 
         Assert.assertTrue("invalid format - CL2oo5", NameValidity.VALID != memo.validSystemNameFormat("CL2oo5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL2oo5");
+        JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CL2oo5");
 
         Assert.assertTrue("invalid format - CL2aB5", NameValidity.VALID != memo.validSystemNameFormat("CL2aB5", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in node address field of CMRI system name: CL2aB5");
+        JUnitAppender.assertWarnMessage("invalid character in node address field of CMRI system name: CL2aB5");
 
         Assert.assertTrue("invalid format - CL2B5x", NameValidity.VALID != memo.validSystemNameFormat("CL2B5x", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in bit number field of CMRI system name: CL2B5x");
+        JUnitAppender.assertWarnMessage("invalid character in bit number field of CMRI system name: CL2B5x");
     }
 
     public void testGetBitFromSystemName() {
@@ -135,7 +134,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("CL2999", 999, memo.getBitFromSystemName("CL2999"));
 
         Assert.assertEquals("CL29O9", 0, memo.getBitFromSystemName("CL29O9"));
-        JUnitAppender.assertErrorMessage("illegal character in number field of system name: CL29O9");
+        JUnitAppender.assertWarnMessage("invalid character in number field of system name: CL29O9");
 
         Assert.assertEquals("CL0B7", 7, memo.getBitFromSystemName("CL0B7"));
         Assert.assertEquals("CL2B7", 7, memo.getBitFromSystemName("CL2B7"));
@@ -168,10 +167,10 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("CL7", 0, memo.getNodeAddressFromSystemName("CL7"));
 
         Assert.assertEquals("CLB7", -1, memo.getNodeAddressFromSystemName("CLB7"));
-        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: CLB7");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB7");
 
         Assert.assertEquals("CR7", -1, memo.getNodeAddressFromSystemName("CR7"));
-        JUnitAppender.assertErrorMessage("illegal character in header field of system name: CR7");
+        JUnitAppender.assertErrorMessage("invalid character in header field of system name: CR7");
     }
 
     public void testValidSystemNameConfig() {
@@ -240,14 +239,14 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("make CL14007", "CL14007", memo.makeSystemName("L", 14, 7));
         Assert.assertEquals("make CT7", "CT7", memo.makeSystemName("T", 0, 7));
 
-        Assert.assertEquals("make illegal 1", "", memo.makeSystemName("L", 0, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number proposed for system name");
+        Assert.assertEquals("make invalid 1", "", memo.makeSystemName("L", 0, 0));
+        JUnitAppender.assertWarnMessage("invalid bit number proposed for system name");
 
-        Assert.assertEquals("make illegal 2", "", memo.makeSystemName("L", 128, 7));
-        JUnitAppender.assertErrorMessage("illegal node adddress proposed for system name");
+        Assert.assertEquals("make invalid 2", "", memo.makeSystemName("L", 128, 7));
+        JUnitAppender.assertWarnMessage("invalid node address proposed for system name");
 
-        Assert.assertEquals("make illegal 3", "", memo.makeSystemName("R", 120, 7));
-        JUnitAppender.assertErrorMessage("illegal type character proposed for system name");
+        Assert.assertEquals("make invalid 3", "", memo.makeSystemName("R", 120, 7));
+        JUnitAppender.assertErrorMessage("invalid type character proposed for system name");
 
         Assert.assertEquals("make CL0B1770", "CL0B1770", memo.makeSystemName("L", 0, 1770));
         Assert.assertEquals("make CS127999", "CS127999", memo.makeSystemName("S", 127, 999));
@@ -286,10 +285,10 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("test bit 2000", "", memo.isOutputBitFree(18, 2000));
 
         Assert.assertEquals("test bit bad bit", "", memo.isOutputBitFree(18, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
+        JUnitAppender.assertWarnMessage("invalid bit number in free bit test");
 
         Assert.assertEquals("test bit bad node address", "", memo.isOutputBitFree(129, 34));
-        JUnitAppender.assertErrorMessage("illegal node adddress in free bit test");
+        JUnitAppender.assertWarnMessage("invalid node address in free bit test");
     }
 
     public void testIsInputBitFree() {
@@ -316,10 +315,10 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("test bit 18", "", memo.isInputBitFree(18, 18));
 
         Assert.assertEquals("test bit bad bit", "", memo.isInputBitFree(18, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
+        JUnitAppender.assertWarnMessage("invalid bit number in free bit test");
 
         Assert.assertEquals("test bit bad node address", "", memo.isInputBitFree(129, 34));
-        JUnitAppender.assertErrorMessage("illegal node adddress in free bit test");
+        JUnitAppender.assertWarnMessage("invalid node address in free bit test");
     }
 
     public void testGetUserNameFromSystemName() {

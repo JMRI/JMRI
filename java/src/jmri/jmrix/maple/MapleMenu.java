@@ -10,25 +10,30 @@ import javax.swing.JMenu;
  */
 public class MapleMenu extends JMenu {
 
-    public MapleMenu(String name) {
-        this();
+    MapleSystemConnectionMemo _memo = null;
+
+    public MapleMenu(String name, MapleSystemConnectionMemo memo) {
+        this(memo);
         setText(name);
     }
 
-    public MapleMenu() {
+    public MapleMenu(MapleSystemConnectionMemo memo) {
 
         super();
+        _memo = memo;
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.MapleBundle");
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuMaple"));
+        }
 
-        setText(rb.getString("MenuMaple"));
-
-        add(new jmri.jmrix.maple.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
+        add(new jmri.jmrix.maple.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"))); // TODO more memo, cf CMRI
+        add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand")));
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction());
+        add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction(_memo));
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.maple.assignment.ListAction(rb.getString("MenuItemAssignments")));
+        add(new jmri.jmrix.maple.assignment.ListAction(Bundle.getMessage("MenuItemAssignments"), _memo));
     }
 
 }

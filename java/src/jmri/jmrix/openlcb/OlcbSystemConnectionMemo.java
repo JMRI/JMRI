@@ -24,10 +24,8 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
-
-
     /**
-     * Tells which managers this provides by class
+     * Tells which managers are provides by class
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -169,7 +167,5 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         }
         super.dispose();
     }
+
 }
-
-
-

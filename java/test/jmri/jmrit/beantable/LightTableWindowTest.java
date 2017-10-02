@@ -57,6 +57,9 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
         // The following line works on the CI servers, but not in some standalone cases
         //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
         hwAddressField.setText("1"); // workaround
+        NamedComponentFinder ncfinder2 = new NamedComponentFinder(JComponent.class, "createButton");
+        JButton createButton = (JButton) ncfinder2.find(fa, 0);
+        createButton.setEnabled(true); // skip validation
 
         flushAWT();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
