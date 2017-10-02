@@ -406,7 +406,7 @@
                       </goals>
                       <configuration>
                          <sources>
-                             <source>java/acceptancetests/step_definitions</source>
+                             <source>${basedir}/java/acceptancetests/step_definitions</source>
                          </sources>
                       </configuration>
                    </execution>
