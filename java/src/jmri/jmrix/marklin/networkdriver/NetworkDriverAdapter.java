@@ -41,7 +41,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         opened = false;
 
         if (m_HostName == null) {

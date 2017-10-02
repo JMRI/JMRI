@@ -38,7 +38,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         try {
             result = super.load(shared, perNode);

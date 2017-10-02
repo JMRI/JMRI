@@ -33,6 +33,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         tc.addSerialListener(this);
     }
 
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.powerline.serialmon.SerialMonFrame", true);  // NOI18N
+    }
+
     @Override
     public void dispose() {
         tc.removeSerialListener(this);

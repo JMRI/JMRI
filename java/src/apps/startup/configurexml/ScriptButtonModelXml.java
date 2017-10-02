@@ -62,7 +62,7 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         // Should the script engines be pre-loaded here?
         boolean result = false;
         ScriptButtonModel model = new ScriptButtonModel();
