@@ -31,6 +31,7 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -796,7 +797,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
-                String val = fn.getText();
+                String val = LocaleSelector.getAttribute(fn,"text");
+                if (val == null){
+                    val = fn.getText();
+                }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
                     this.setFunctionLockable(num, lock.equals("true"));
@@ -861,7 +865,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             List<Element> l = e3.getChildren(RosterEntry.SOUND_LABEL);
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
-                String val = fn.getText();
+                String val = LocaleSelector.getAttribute(fn,"text");
+                if (val == null){
+                    val = fn.getText();
+                }
                 if ((this.getSoundLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setSoundLabel(num, val);
                 }
