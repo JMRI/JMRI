@@ -682,10 +682,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
-        ret.add(DefaultProgrammerManager.ADDRESSMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
+        ret.add(ProgrammingMode.ADDRESSMODE);
         return ret;
     }
 
@@ -800,12 +800,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = true;
         // parse the programming command
         int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
-        } else if (getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
-        } else if (getMode().equals(DefaultProgrammerManager.REGISTERMODE)
-                || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
+        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N
@@ -847,12 +847,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = true;
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
-        } else if (getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
-        } else if (getMode().equals(DefaultProgrammerManager.REGISTERMODE)
-                || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
+        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N
@@ -906,12 +906,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mServiceMode = true;
         // parse the programming command
         int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
-        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
             pcmd = pcmd | 0x20;
-        } else if (getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
-        } else if (getMode().equals(DefaultProgrammerManager.REGISTERMODE)
-                || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
+        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N

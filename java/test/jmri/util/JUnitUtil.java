@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.annotation.Nonnull;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
@@ -437,7 +438,8 @@ public class JUnitUtil {
 
     public static void initDebugProgrammerManager() {
         DebugProgrammerManager m = new DebugProgrammerManager();
-        InstanceManager.setProgrammerManager(m);
+        InstanceManager.setAddressedProgrammerManager(m);
+        InstanceManager.store(m, GlobalProgrammerManager.class);
     }
 
     public static void initDebugPowerManager() {

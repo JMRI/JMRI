@@ -1,19 +1,16 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.GraphicsEnvironment;
+import javax.swing.JLabel;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JLabel;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class FactoryResetActionTest {
 
@@ -21,7 +18,7 @@ public class FactoryResetActionTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JLabel jl = new JLabel("test table model");
-        ResetTableModel rtm = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer());
+        ResetTableModel rtm = new ResetTableModel(jl,jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("factory reset action test");
         FactoryResetAction t = new FactoryResetAction("Test Action",rtm,jf);
         Assert.assertNotNull("exists",t);
