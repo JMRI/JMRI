@@ -59,7 +59,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
             log.error("No host name or port set : {}:{}", m_HostName, m_port);

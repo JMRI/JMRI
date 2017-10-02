@@ -22,7 +22,7 @@ public interface XmlAdapter {
      *                   required by the input XML.
      * @return true if successful
      */
-    public boolean load(Element e) throws Exception;
+    public boolean load(Element e) throws JmriConfigureXmlException;
 
     /**
      * Create a set of configured objects from their XML description.
@@ -35,7 +35,7 @@ public interface XmlAdapter {
      *                   required by the input XML
      * @return true if successful
      */
-    public boolean load(Element shared, Element perNode) throws Exception;
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException;
 
     /**
      * Determine if this set of configured objects should be loaded after basic
@@ -58,7 +58,7 @@ public interface XmlAdapter {
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML
      */
-    public void load(Element e, Object o) throws Exception;
+    public void load(Element e, Object o) throws JmriConfigureXmlException;
 
     /**
      * Create a set of configured objects from their XML description, using an
@@ -73,7 +73,7 @@ public interface XmlAdapter {
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML
      */
-    public void load(Element shared, Element perNode, Object o) throws Exception;
+    public void load(Element shared, Element perNode, Object o) throws JmriConfigureXmlException;
 
     /**
      * Store the object in XML

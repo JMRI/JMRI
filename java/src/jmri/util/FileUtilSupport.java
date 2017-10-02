@@ -573,7 +573,7 @@ public class FileUtilSupport extends Bean {
      *             separators. If null, this will cause  {@link #getProfilePath()} to 
      *             provide the preferences directory via {@link #getPreferencesPath()}.
      */
-    public void setProfilePath(@CheckForNull String path) {
+    public void setProfilePath(String path) {
         String old = this.profilePath;
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;

@@ -231,8 +231,6 @@ public class ProgDebugger implements AddressedProgrammer {
 
             @Override
             public void run() {
-                // log.debug("read CV reply - start sleep");
-                // try { Thread.sleep(100); } catch (Exception e) {}
                 log.debug("read CV reply");
                 l.programmingOpReply(retval, 0);
             }  // 0 is OK status

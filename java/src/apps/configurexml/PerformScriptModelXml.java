@@ -50,7 +50,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String fileName = shared.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);

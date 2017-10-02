@@ -62,7 +62,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
+            } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
 
@@ -133,7 +133,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             );
             try {
                 activeSerialPort.notifyOnFramingError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnFramingError: " + e);
                 }
@@ -141,7 +141,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnBreakInterrupt(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnBreakInterrupt: " + e);
                 }
@@ -149,7 +149,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnParityError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnParityError: " + e);
                 }
@@ -157,7 +157,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnOutputEmpty(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnOutputEmpty: " + e);
                 }
@@ -165,7 +165,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnOverrunError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnOverrunError: " + e);
                 }

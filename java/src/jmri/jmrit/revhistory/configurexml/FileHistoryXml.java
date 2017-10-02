@@ -20,7 +20,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * content is explicitly loaded from the file
      */
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 
@@ -99,8 +99,8 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      *                   required by the input XML.
      */
     @Override
-    public void load(Element e, Object o) throws Exception {
-        throw new Exception("Method not coded");
+    public void load(Element e, Object o) {
+        throw new UnsupportedOperationException("Method not coded");
     }
 
     /**

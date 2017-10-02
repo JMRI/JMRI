@@ -47,7 +47,7 @@ public class AcelaAddress {
         int num;
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("illegal character in number field of system name: " + systemName);
             return (-1);
         }
@@ -115,7 +115,7 @@ public class AcelaAddress {
         int num;
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("illegal character in number field of system name: " + systemName);
             return (-1);
         }
@@ -143,7 +143,7 @@ public class AcelaAddress {
         int num;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("invalid character in number field of system name: " + systemName);
             return NameValidity.INVALID;
         }
@@ -259,7 +259,7 @@ public class AcelaAddress {
         int num;
         try {
             num = Integer.valueOf(systemName.substring(2)).intValue();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.error("illegal character in number field of system name: " + systemName);
             return "";
         }

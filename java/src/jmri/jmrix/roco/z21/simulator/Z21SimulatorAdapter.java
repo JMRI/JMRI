@@ -64,7 +64,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         log.debug("connect called");
 
        setHostAddress("localhost"); // always localhost for the simulation.

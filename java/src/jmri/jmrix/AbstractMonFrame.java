@@ -368,7 +368,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             // start logging
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
-            } catch (Exception ex) {
+            } catch (java.io.FileNotFoundException ex) {
                 log.error("exception " + ex);
             }
         }

@@ -73,7 +73,7 @@ public class XNetPacketizer extends XNetTrafficController {
      * @throws Exception when the XNet connection fails
      */
     @Override
-    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) {
         if( !(p instanceof XNetPortController)) {
             return false;
         }
