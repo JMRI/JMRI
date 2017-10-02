@@ -22,7 +22,7 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
     }
 
     /**
-     * XPressNet command station does provide Ops Mode.
+     * XpressNet command station does provide Ops Mode.
      * @return we should make this return false based on what command station
      * we're using but for now, we'll return true
      */

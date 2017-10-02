@@ -56,7 +56,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
                 addr = "+" + addr;
             }
         } catch (NumberFormatException ex) {
-            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+            log.debug("Unable to convert {} into Cbus format +nn", addr);
         }
 
         // OK, make
@@ -91,26 +91,33 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         // always return this (the current) name without change
         try {
             validateSystemNameFormat(curAddress);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + e, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
         return curAddress;
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
             log.debug("Warning: " + e.getMessage());
-            return false;
+            return NameValidity.INVALID;
         }
-        return true;
+        return NameValidity.VALID;
     }
 
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging of handled cases no higher than WARN.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
@@ -123,7 +130,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
                 try {
                     unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
-                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                    log.debug("Unable to convert {} into Cbus format +nn", address);
                 }
                 if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;

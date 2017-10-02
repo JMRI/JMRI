@@ -79,25 +79,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Deprecated
     static SerialTurnoutManager _instance = null;
 
-    /**
-     * A method that creates an array of systems names to allow bulk creation of
-     * turnouts.
-     *
-     * @param start initial turnout name
-     * @param numberToAdd fixed at 1 currently
-     * @param prefix connection prefix
-     * @return array of new turnout names
-     */
-    //further work needs to be done on how to format a number of TMCC turnouts, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++) {
-            range[x] = prefix + "T" + start;
-        }
-        return range;
-    }
-
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName;
@@ -134,9 +115,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -181,7 +163,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'T'));
     }
 

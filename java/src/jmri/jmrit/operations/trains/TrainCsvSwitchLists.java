@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -27,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * railroad.
  *
  * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014, 2015
- * 
+ *
  *
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
@@ -38,7 +36,6 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
      *
      * @return File
      */
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public File buildSwitchList(Location location) {
 
         // create csv switch list file
@@ -240,14 +237,14 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             }
         }
         addLine(fileOut, END); // done with switch list
-        
+
         // now list hold cars
-        List<RollingStock> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
-        List<Car> carList = new ArrayList<Car>();
-        for (RollingStock rs : rsByLocation) {
-            if (rs.getLocation() != null && splitString(rs.getLocation().getName()).equals(splitString(location.getName())) 
+        List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
+        List<Car> carList = new ArrayList<>();
+        for (Car rs : rsByLocation) {
+            if (rs.getLocation() != null && splitString(rs.getLocation().getName()).equals(splitString(location.getName()))
                     && rs.getRouteLocation() == null) {
-                carList.add((Car)rs);
+                carList.add(rs);
             }
         }
         clearUtilityCarTypes(); // list utility cars by quantity
@@ -262,7 +259,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             fileOutCsvCar(fileOut, car, HOLD, count);
         }
         addLine(fileOut, END); // done with hold cars
-        
+
         // Are there any cars that need to be found?
         listCarsLocationUnknown(fileOut);
         fileOut.flush();

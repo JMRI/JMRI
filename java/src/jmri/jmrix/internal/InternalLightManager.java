@@ -44,8 +44,8 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
     }
 
     @Override

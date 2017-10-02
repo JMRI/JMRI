@@ -44,12 +44,17 @@ public class PositionableRectangle extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawRectangle("editShape", "Rectangle", null);
-                    setEditParams();
-                }
+                makeEditFrame();
             }
         });
         return true;
     }
+    
+    private void makeEditFrame() {
+        if (_editFrame == null) {
+            _editFrame = new DrawRectangle("editShape", "Rectangle", this);
+            setEditParams();
+        }
+    }
+        
 }

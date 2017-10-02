@@ -12,7 +12,6 @@ import jmri.InstanceManager;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2012
- * 
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -183,7 +182,5 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         super.dispose();
     }
+
 }
-
-
-

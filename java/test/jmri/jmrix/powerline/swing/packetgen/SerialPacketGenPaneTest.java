@@ -12,23 +12,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialPacketGenPaneTest {
+public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
 
 
     private SerialTrafficControlScaffold tc = null;
 
-    @Test
-    public void testCtor() {
-        SerialPacketGenPane action = new SerialPacketGenPane();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
+        panel = new SerialPacketGenPane();
+        title = "Powerline_: Command Generator";
+        helpTarget="package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }

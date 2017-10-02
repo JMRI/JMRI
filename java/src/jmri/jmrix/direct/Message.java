@@ -81,22 +81,22 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
     static public Message getEnableMain() {
-        log.error("getEnableMain doesnt have a reasonable implementation yet");
+        log.error("getEnableMain doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getKillMain() {
-        log.error("getKillMain doesnt have a reasonable implementation yet");
+        log.error("getKillMain doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getProgMode() {
-        log.error("getProgMode doesnt have a reasonable implementation yet");
+        log.error("getProgMode doesn't have a reasonable implementation yet");
         return null;
     }
 
     static public Message getExitProgMode() {
-        log.error("getExitProgMode doesnt have a reasonable implementation yet");
+        log.error("getExitProgMode doesn't have a reasonable implementation yet");
         return null;
     }
 

@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,9 +43,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
     private int _degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
-    private int _saveLevel = 5;   // default level set in popup
+    private int _saveLevel = 5; // default level set in popup
     private int _changeLevel = 5;
-    private boolean _doHide;  // whether sensor controls show/hide or change level
+    private boolean _doHide; // whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
     protected int _hitIndex = -1; // dual use! also is index of polygon's vertices
@@ -55,6 +54,8 @@ public abstract class PositionableShape extends PositionableJComponent implement
     // params for shape's bounding box
     protected int _width;
     protected int _height;
+    protected boolean _editing = false;
+
     static final int TOP = 0;
     static final int RIGHT = 1;
     static final int BOTTOM = 2;
@@ -183,9 +184,11 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Cast required due to how Graphics2D was implemented in Java 1.2")
     public void paint(Graphics g) {
         if (!getEditor().isEditable() && !isVisible()) {
+            return;
+        }
+        if (!(g instanceof Graphics2D)) {
             return;
         }
         Graphics2D g2d = (Graphics2D) g;
@@ -232,7 +235,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
             r.width += _lineWidth;
             r.height += _lineWidth;
             g2d.draw(r);
-//         g2d.fill(r);
+            //         g2d.fill(r);
             for (Rectangle handle : _handles) {
                 if (handle != null) {
                     g2d.setColor(Color.RED);
@@ -249,8 +252,10 @@ public abstract class PositionableShape extends PositionableJComponent implement
 
     protected Positionable finishClone(PositionableShape pos) {
         pos._lineWidth = _lineWidth;
-        pos._fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
-        pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
+        pos._fillColor =
+                new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
+        pos._lineColor =
+                new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
         pos.setControlSensor(getSensorName(), _doHide, _changeLevel);
         pos.setWidth(_width);
         pos.setHeight(_height);
@@ -296,8 +301,8 @@ public abstract class PositionableShape extends PositionableJComponent implement
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (super.getDisplayLevel() > Editor.BKG) {
-//             popup.add(CoordinateEdit.getRotateEditAction(this));
-//             return true;
+            //             popup.add(CoordinateEdit.getRotateEditAction(this));
+            //             return true;
             return _editor.setShowRotationMenu(this, popup);
         }
         return false;
@@ -370,7 +375,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
      * Attach a named sensor to shape
      *
      * @param pName Used as a system/user name to lookup the sensor object
-     * @param hide  true if sensor should be hidden
+     * @param hide true if sensor should be hidden
      * @param level level at which sensor is placed
      * @return error message, if any
      */
@@ -465,14 +470,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     protected void setEditParams() {
-        _editFrame.setDisplayParams(this);
+        _editFrame.setDisplayParams();
         _editFrame.makeCopy(this);
         drawHandles();
-    }
-
-    protected void closeEditFrame() {
-        _editFrame = null;
-        removeHandles();
     }
 
     public void removeHandles() {
@@ -503,6 +503,10 @@ public abstract class PositionableShape extends PositionableJComponent implement
             return new Point(Math.round(pt[0]), Math.round(pt[1]));
         }
         return new Point(x, y);
+    }
+
+    protected void editing(boolean edit) {
+        _editing = edit;
     }
 
     @Override

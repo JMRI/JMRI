@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,14 +19,23 @@ public class DrawRoundRectTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        ShapeDrawer s = new ShapeDrawer(frame);
-        DrawRoundRect t = new DrawRoundRect("newShape", "roundRect", s);
+        DrawRoundRect t = new DrawRoundRect("newShape", "roundRect", null);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
     }
 
-    // The minimal setup for log4J
+    public void testCTorEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        PositionableRoundRect ps =  new PositionableRoundRect(frame);
+        DrawRoundRect t = new DrawRoundRect("editShape", "roundRect", ps);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
+    }
+
+   // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

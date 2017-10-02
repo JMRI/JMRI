@@ -11,6 +11,7 @@ import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class XNetSystemConnectionMemo extends SystemConnectionMemo {
 
     public XNetSystemConnectionMemo(XNetTrafficController xt) {
         super("X", Bundle.getMessage("MenuXpressNet"));
@@ -90,7 +91,6 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             throttleManager = new XNetThrottleManager(this);
         }
         return throttleManager;
-
     }
 
     public void setThrottleManager(ThrottleManager t) {
@@ -107,7 +107,6 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             powerManager = new XNetPowerManager(this);
         }
         return powerManager;
-
     }
 
     public void setPowerManager(PowerManager p) {

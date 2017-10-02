@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
 
     public AcelaSystemConnectionMemo() {
-        this("A", AcelaConnectionTypeList.CTI);
+        this("A", AcelaConnectionTypeList.CTI); // default to A
     }
 
     public AcelaSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
@@ -35,7 +35,7 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public AcelaSystemConnectionMemo(AcelaTrafficController tc) {
-        super("A", AcelaConnectionTypeList.CTI);
+        super("A", AcelaConnectionTypeList.CTI); // default to A
         this.tc = tc;
 
         register(); // registers general type

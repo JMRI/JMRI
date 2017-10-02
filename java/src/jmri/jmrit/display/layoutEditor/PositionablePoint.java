@@ -962,10 +962,7 @@ public class PositionablePoint extends LayoutTrack {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    String where(MouseEvent e) {
-        return "" + e.getX() + "," + e.getY();
-    }
-
+    
     /**
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
@@ -998,17 +995,17 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * Removes this object from display and persistance
      */
-    void remove() {
+    private void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
 
-    boolean active = true;
+    private boolean active = true;
 
     /**
      * "active" means that the object is still displayed, and should be stored.
      */
-    public boolean isActive() {
+    protected boolean isActive() {
         return active;
     }
 
@@ -1066,7 +1063,8 @@ public class PositionablePoint extends LayoutTrack {
         editLink.setModal(false);
         editLink.setVisible(true);
     }
-    ArrayList<PositionablePoint> pointList;
+
+    private ArrayList<PositionablePoint> pointList;
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();

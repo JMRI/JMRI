@@ -67,6 +67,40 @@ public interface Manager<E extends NamedBean> {
     public String makeSystemName(@Nonnull String s);
 
     /**
+     * Code the validity (including just as a prefix)
+     * of a proposed name string.
+     * @since 4.9.5
+     */
+    enum NameValidity {
+        /**
+         * Indicates the name is valid as is,
+         * and can also be a valid prefix for longer names
+         */
+        VALID,
+         /**
+          * Indicates name is not valid as-is, nor
+          * can it be made valid by adding more characters;
+          * just a bad start.
+          */
+        INVALID,
+        /**
+         * Indicates that adding additional characters might (or might not)
+         * turn this into a valid name; it is not a valid name now.
+         */
+        VALID_AS_PREFIX_ONLY
+    }
+
+    /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @since 4.9.5, although similar methods existed previously in lower-level classes
+     * @param systemName the system name
+     * @return enum indicating current validity, which might be just as a prefix
+     */
+    @CheckReturnValue
+    public NameValidity validSystemNameFormat(@Nonnull String systemName);
+
+    /**
      * Free resources when no longer used. Specifically, remove all references
      * to and from this object, so it can be garbage-collected.
      */

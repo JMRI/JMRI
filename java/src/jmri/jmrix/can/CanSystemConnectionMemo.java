@@ -11,7 +11,7 @@ import jmri.InstanceManager;
  * memo is generic for all adapters, it then uses a ConfigurationManager for
  * each of the CAN Bus systems. Any requests for provision or configuration is
  * passed on to the relevant ConfigurationManager to handle.
- * <p>
+ *
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {

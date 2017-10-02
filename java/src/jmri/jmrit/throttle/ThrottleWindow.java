@@ -519,10 +519,7 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     private void editPreferences() {
-        ThrottleFramePropertyEditor editor = new ThrottleFramePropertyEditor();
-        editor.setThrottleFrame(this);
-        editor.setLocation(this.getLocationOnScreen());
-        editor.setLocationRelativeTo(this);
+        ThrottleFramePropertyEditor editor = new ThrottleFramePropertyEditor(this);
         editor.setVisible(true);
     }
 

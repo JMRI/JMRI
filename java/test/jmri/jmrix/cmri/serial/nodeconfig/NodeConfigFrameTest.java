@@ -29,7 +29,7 @@ public class NodeConfigFrameTest {
     public void testInitComponents() throws Exception{
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         NodeConfigFrame t = new NodeConfigFrame(memo);
-        // for now, just makes ure there isn't an exception.
+        // for now, just makes sure there isn't an exception.
         t.initComponents();
         t.dispose();
     }
@@ -39,7 +39,7 @@ public class NodeConfigFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         NodeConfigFrame t = new NodeConfigFrame(memo);
         t.initComponents();
-        Assert.assertEquals("title","Configure Nodes",t.getTitle());
+        Assert.assertEquals("title", "Configure Nodes", t.getTitle());
         t.dispose();
     }
 

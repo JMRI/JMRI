@@ -48,6 +48,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provides access to the SlotManager for this particular connection.
+     *
+     * @return the slot manager or null if no valid slot manager is available
      */
     public SlotManager getSlotManager() {
         if (sm == null) {
@@ -59,6 +61,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
+     * @return the LocoNet-specific TrafficController
      */
     public LnTrafficController getLnTrafficController() {
         return lt;
@@ -117,19 +121,16 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         sm = type.getSlotManager(lt);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
+
+            sm.setCommandStationType(type);
+            sm.setSystemConnectionMemo(this);
+
+            // store as CommandStation object
+            jmri.InstanceManager.setCommandStation(sm);
         }
-
-        sm.setCommandStationType(type);
-        sm.setSystemConnectionMemo(this);
-
-        // store as CommandStation object
-        jmri.InstanceManager.setCommandStation(sm);
 
     }
 
-    /**
-     * Tells which managers this provides by class
-     */
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -224,10 +225,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
-            log.debug("set turnout retry: " + mTurnoutNoRetry);
+            log.debug("set turnout retry: {}", mTurnoutNoRetry);
         }
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
