@@ -65,10 +65,10 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSACCBYTEMODE);
-        ret.add(DefaultProgrammerManager.OPSACCBITMODE);
-        ret.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
-        ret.add(DefaultProgrammerManager.OPSACCEXTBITMODE);
+        ret.add(ProgrammingMode.OPSACCBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCBITMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBYTEMODE);
+        ret.add(ProgrammingMode.OPSACCEXTBITMODE);
         return ret;
     }
 

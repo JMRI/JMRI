@@ -26,6 +26,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Abstract base class for Frames displaying communications monitor information.
@@ -46,6 +47,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected abstract void init();
 
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
+    @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());

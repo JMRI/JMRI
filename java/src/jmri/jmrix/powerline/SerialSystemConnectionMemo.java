@@ -2,7 +2,6 @@ package jmri.jmrix.powerline;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -55,22 +54,6 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     public void setSerialAddress(SerialAddress sa) {
         serialAddress = sa;
-    }
-
-    /**
-     * Always null as powerline doesn't have a programmer
-     *
-     * @return null
-     */
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
-        //Do not want to return a programmer ever
-        return null;
-    }
-
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
-        // no programmer supported, should I throw an Exception??
     }
 
     /**

@@ -51,7 +51,7 @@ public class RaspberryPiSystemConnectionMemoTest {
     @Test
     public void checkProvidesOtherManager() {
         RaspberryPiSystemConnectionMemo m = new RaspberryPiSystemConnectionMemo();
-        Assert.assertFalse(m.provides(jmri.ProgrammerManager.class));
+        Assert.assertFalse(m.provides(jmri.GlobalProgrammerManager.class));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class RaspberryPiSystemConnectionMemoTest {
     public void checkGetOtherManager() {
         RaspberryPiSystemConnectionMemo m = new RaspberryPiSystemConnectionMemo();
         m.configureManagers();
-        Assert.assertNull(m.get(jmri.ProgrammerManager.class));
+        Assert.assertNull(m.get(jmri.GlobalProgrammerManager.class));
     }
 
     @Test
