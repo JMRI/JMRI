@@ -33,7 +33,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * <P>
      * Then adds, instead of replacing, the history information
      */
-    public boolean loadDirectly(Element e) throws Exception {
+    public boolean loadDirectly(Element e) {
         if (!e.getName().equals("filehistory")) {
             throw new Exception("Unexpected element name: " + e.getName());
         }

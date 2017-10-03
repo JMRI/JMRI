@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright: Copyright (c) 2009
  *
  */
-public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.configurexml.AbstractXmlAdapter */ {
+public class DefaultCatalogTreeManagerXml extends XmlFile {
 
     private final static String DEFAULT_FILE_NAME = FileUtil.getUserFilesPath() + "catalogTrees.xml";
 
@@ -205,9 +205,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
         } catch (org.jdom2.JDOMException | java.io.IOException jde) {
             log.error("Exception reading CatalogTrees: " + jde);
         }
-    }
-
-    public void load(Element element, Object o) throws Exception {
     }
 
     /**

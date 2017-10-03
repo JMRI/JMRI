@@ -351,11 +351,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /**
      * By default, Swing components should be created an installed in this
      * method, rather than in the ctor itself.
-     *
-     * @throws Exception may throw an Exception if an overriding class
-     *                             encounters an Exception
      */
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     /**
