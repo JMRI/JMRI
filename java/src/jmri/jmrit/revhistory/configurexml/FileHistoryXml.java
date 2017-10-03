@@ -35,7 +35,8 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     public boolean loadDirectly(Element e) {
         if (!e.getName().equals("filehistory")) {
-            throw new Exception("Unexpected element name: " + e.getName());
+            log.error("Unexpected element name: {}", e.getName());
+            return false;
         }
 
         FileHistory rmain = jmri.InstanceManager.getDefault(FileHistory.class);
@@ -175,4 +176,6 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
         return rev;
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileHistoryXml.class);
 }
