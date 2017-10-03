@@ -26,6 +26,7 @@ public class PanedInterfaceTest {
         );
         PanedInterface t = new PanedInterface(w);
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitUtil.dispose(w);
     }
 
     // The minimal setup for log4J

@@ -48,7 +48,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int INACTIVEDELAY = ACTIVEDELAY + 1;
     static public final int PULLUPCOL = INACTIVEDELAY + 1;
 
-    SensorManager senManager = InstanceManager.sensorManagerInstance();
+    SensorManager senManager = null;
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 

@@ -117,7 +117,7 @@ public final class SystemConsole extends JTextArea {
         if (instance == null) {
             try {
                 instance = new SystemConsole();
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 log.error("failed to complete Console redirection", ex);
             }
         }

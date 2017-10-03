@@ -1031,9 +1031,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 p = null;
             } else {
                 p = FileUtil.getAbsoluteFilename(p);
-                if (p == null) {
-                    throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", f)); // NOI18N
-                }
                 if (!p.endsWith(File.separator)) {
                     p = p + File.separator;
                 }

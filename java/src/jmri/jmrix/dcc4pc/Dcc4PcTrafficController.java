@@ -224,7 +224,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             xmtException = true;

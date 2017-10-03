@@ -37,9 +37,16 @@ public class Z21SystemConnectionMemoTest {
 
     @Test
     @Ignore("needs more setup")
-    public void testProvidesProgrammerManager() {
+    public void testProvidesAddressedProgrammerManager() {
         Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
-        Assert.assertTrue(a.provides(jmri.ProgrammerManager.class));
+        Assert.assertTrue(a.provides(jmri.AddressedProgrammerManager.class));
+    }
+
+    @Test
+    @Ignore("needs more setup")
+    public void testProvidesGlobalProgrammerManager() {
+        Z21SystemConnectionMemo a = new Z21SystemConnectionMemo();
+        Assert.assertTrue(a.provides(jmri.GlobalProgrammerManager.class));
     }
 
     // The minimal setup for log4J

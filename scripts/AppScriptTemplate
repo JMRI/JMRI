@@ -131,7 +131,7 @@ function heap_size() {
     heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
     heap=$( expr ${heap} / 1048576 ) # bytes to MB
     # Java heap defaults to 1/4 total memory size
-    # if <= 768MB (1/4 of 3MB), set it ourselves
+    # if <= 768MB (1/4 of 3GB), set it ourselves
     if [ ${heap} -le 768 ] ; then
         case "$( uname )" in
             Linux*)
@@ -157,7 +157,7 @@ function heap_size() {
           heap=$( expr $mem \* 1 / 2 )
         fi
         if [ $heap -lt 192 ] ; then
-            heap=192
+            heap=192 # 3/4 of 256MB
         fi
     fi
     echo $heap
@@ -359,6 +359,11 @@ fi
 if [ -z "${jmri_xms:-}" ] ; then
     # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
     jmri_xms="-Xms96m"
+fi
+
+# permit Java 9 illegal access
+if [[ $( "${JAVACMD}" -version 2>&1 | grep version ) =~ \"9 ]] ; then
+    jmri_options="${jmri_options} --illegal-access=warn"
 fi
 
 # define JMRI_HOME if it is not defined

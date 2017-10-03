@@ -37,6 +37,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         // open the port in XpressNet mode, check ability to set moderators
@@ -62,7 +65,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
+            } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
 
@@ -133,7 +136,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             );
             try {
                 activeSerialPort.notifyOnFramingError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnFramingError: " + e);
                 }
@@ -141,7 +144,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnBreakInterrupt(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnBreakInterrupt: " + e);
                 }
@@ -149,7 +152,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnParityError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnParityError: " + e);
                 }
@@ -157,7 +160,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnOutputEmpty(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnOutputEmpty: " + e);
                 }
@@ -165,7 +168,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
             try {
                 activeSerialPort.notifyOnOverrunError(true);
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Could not notifyOnOverrunError: " + e);
                 }
@@ -201,7 +204,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         new LI100XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
-    // base class methods for the XNetSerialPortController interface
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -211,6 +216,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -224,6 +232,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -256,6 +267,9 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
          checkBuffer = true;*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);

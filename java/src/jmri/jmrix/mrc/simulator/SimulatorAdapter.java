@@ -129,8 +129,9 @@ public class SimulatorAdapter extends MrcPortController implements
                 synchronized (this) {
                     wait(100);
                 }
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
+                log.debug("Interrupted, ending");
+                return;
             }
             MrcMessage m = readMessage();
             if (log.isDebugEnabled()) {

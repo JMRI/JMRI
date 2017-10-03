@@ -90,7 +90,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
 

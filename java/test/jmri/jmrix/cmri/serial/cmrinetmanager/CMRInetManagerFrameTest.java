@@ -26,9 +26,11 @@ public class CMRInetManagerFrameTest {
     @Test
     public void testInitComponents() throws Exception{
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetManagerFrame action = new CMRInetManagerFrame(new CMRISystemConnectionMemo()); 
+        CMRInetManagerFrame frame = new CMRInetManagerFrame(new CMRISystemConnectionMemo()); 
         // verify that initCompoents doesn't cause an exception
-        action.initComponents();
+        frame.initComponents();
+        // close
+        frame.dispose();
     }
 
     @Before

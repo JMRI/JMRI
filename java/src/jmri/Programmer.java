@@ -23,8 +23,9 @@ import javax.annotation.Nonnull;
  * Depending on which type you have, only certain modes can be set. Valid modes
  * are specified by the class static constants.
  * <P>
- * You get a Programmer object from a {@link ProgrammerManager}, which in turn
- * can be located from the {@link InstanceManager}.
+ * You get a Programmer object from a {@link GlobalProgrammerManager} or an
+ * {@link AddressedProgrammerManager}, which in turn can be located from the
+ * {@link InstanceManager}.
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
  * methods that use ints for CV addresses will later be deprecated.
@@ -39,7 +40,8 @@ import javax.annotation.Nonnull;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @see jmri.ProgrammerManager
+ * @see jmri.GlobalProgrammerManager
+ * @see jmri.AddressedProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  */
 public interface Programmer {
@@ -224,31 +226,39 @@ public interface Programmer {
     /**
      * Checks the general write capability, regardless of mode, for a specific
      * address
+     *
      * @param addr the address to write to
      * @return true if the address can be written to; false otherwise
      */
     public boolean getCanWrite(String addr);
 
     /**
-     * Learn about whether the programmer does any kind of verification of write operations
+     * Learn about whether the programmer does any kind of verification of write
+     * operations
      *
-     * @param addr A CV address to check (in case this varies with CV range) or null for any
-     * @return The confirmation behavior that can be counted on (might be better in some cases)
+     * @param addr A CV address to check (in case this varies with CV range) or
+     *             null for any
+     * @return The confirmation behavior that can be counted on (might be better
+     *         in some cases)
      */
     @Nonnull
     public WriteConfirmMode getWriteConfirmMode(String addr);
-    
+
     enum WriteConfirmMode {
-        /** No verification available, writes are blind */
+        /**
+         * No verification available, writes are blind
+         */
         NotVerified,
-        
-        /** Programmer signals error if there's no reply from the device */
+        /**
+         * Programmer signals error if there's no reply from the device
+         */
         DecoderReply,
-        
-        /** Programmer does a read after write to verify */
+        /**
+         * Programmer does a read after write to verify
+         */
         ReadAfterWrite
     }
-    
+
     public void addPropertyChangeListener(PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);
