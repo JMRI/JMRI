@@ -20,7 +20,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget https://github.com/mozilla/geckodriver/releases/download/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz ; mkdir geckodriver ; tar -xzf geckodriver-v0.19.0-linux64.tar.gz -C geckodriver ; export PATH=$PATH:$PWD/geckodriver ; fi
 
 install:
-  - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -Dcucumber.options="--plugin progress java/acceptancetest/features" -B -V
+  - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -Dcucumber.options="--tags ~@Ignore" -B -V
 
 before_script:
   # setup a display on linux ( the sleep gives xvfb some time to start )
