@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import java.awt.GraphicsEnvironment;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
@@ -175,7 +174,7 @@ public class SignalSystemTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
-        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
+        JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
