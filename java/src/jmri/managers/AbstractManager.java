@@ -435,8 +435,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * {@inheritDoc}
-     * 
-     * @return always 'VALID' to let undocumented connection system 
+     *
+     * @return always 'VALID' to let undocumented connection system
      *         managers pass entry validation.
      */
     @Override

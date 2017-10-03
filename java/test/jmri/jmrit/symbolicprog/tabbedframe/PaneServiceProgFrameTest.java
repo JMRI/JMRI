@@ -1,35 +1,35 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.roster.RosterEntry;
-import java.awt.GraphicsEnvironment;
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PaneServiceProgFrameTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         DecoderFile df = new DecoderFile("NMRA", "", "NMRA standard CV definitions", "0", "255",
                 "NMRA standard CV definitions", "0NMRA.xml", 16, 3, root);
         RosterEntry re = new RosterEntry();
         PaneServiceProgFrame t = new PaneServiceProgFrame(df,re,"test frame", "programmers/Basic.xml",p);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

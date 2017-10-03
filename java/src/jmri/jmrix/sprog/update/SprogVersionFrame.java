@@ -19,8 +19,11 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         _memo = memo;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    synchronized public void initComponents() throws Exception {
+    synchronized public void initComponents() {
         setTitle(Bundle.getMessage("SprogVersionTitle"));
 
         // add help menu to window
@@ -31,6 +34,9 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         query.requestVersion(this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         log.debug("Version {} notified", v.toString());

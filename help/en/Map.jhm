@@ -654,8 +654,6 @@
 
 <mapID target="html.tools.signaling.IntroToSignalingYourMRR__Equipment_Types" url="html/tools/signaling/IntroToSignalingYourMRR.html#_Equipment_Types"/>
 
-<mapID target="package.jmri.jmrix.acela.serialmon.SerialMonFrame" url="package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_TrainBuildOptions" url="package/jmri/jmrit/operations/Operations.shtml#TrainBuildOptions"/>
 
 <mapID target="manual.DecoderPro.Comp_LightFX" url="manual/DecoderPro/Comp_LightFX.shtml"/>
@@ -1833,6 +1831,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditRoutes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditRoutes.shtml#Top"/>
 
 <mapID target="html.apps.DecoderPro.Roster" url="html/apps/DecoderPro/Roster.shtml"/>
+
+<mapID target="html.doc.Technical.I8N_testing" url="html/doc/Technical/I8N.shtml#testing"/>
 
 <mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml"/>
 
@@ -3184,6 +3184,8 @@
 
 <mapID target="TemplatePlain" url="TemplatePlain.shtml"/>
 
+<mapID target="package.jmri.jmrix.acela.acelamon.SerialMonFrame" url="package/jmri/jmrix/acela/acelamon/SerialMonFrame.shtml"/>
+
 <mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Main_Main_Top" url="manual/JMRI_OPS_UsersGuide/Main_Main.shtml#Top"/>
@@ -3197,6 +3199,8 @@
 <mapID target="manual.DecoderPro3.Programmer_Setup_Setting Up" url="manual/DecoderPro3/Programmer_Setup.shtml#Setting Up"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditEngines_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditEngines.shtml#Top"/>
+
+<mapID target="html.doc.Technical.I8N_dev" url="html/doc/Technical/I8N.shtml#dev"/>
 
 <mapID target="manual.DecoderPro.VSD_LocationsMgr" url="manual/DecoderPro/VSD_LocationsMgr.shtml"/>
 

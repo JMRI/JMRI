@@ -164,7 +164,6 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
             hide = element.getAttribute("hideOnSensor").getBooleanValue();
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape hideOnSensor attribute");
-        } catch (Exception e) {
         }
 
         int changeLevel = -1;

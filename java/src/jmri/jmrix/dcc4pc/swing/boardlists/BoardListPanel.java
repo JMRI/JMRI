@@ -44,6 +44,9 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -77,15 +80,20 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         add(footer, BorderLayout.SOUTH);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     JLabel sourceLabel = new JLabel();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-
     }
 
     private List<Integer> _boardListCount;

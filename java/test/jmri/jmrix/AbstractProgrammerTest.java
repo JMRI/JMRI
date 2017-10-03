@@ -22,7 +22,7 @@ public class AbstractProgrammerTest extends TestCase {
     AbstractProgrammer abstractprogrammer;
 
     public void testDefault() {
-        Assert.assertEquals("Check Default", DefaultProgrammerManager.DIRECTMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
                 abstractprogrammer.getMode());        
     }
     
@@ -34,15 +34,15 @@ public class AbstractProgrammerTest extends TestCase {
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
-                retval.add(DefaultProgrammerManager.DIRECTMODE);
-                retval.add(DefaultProgrammerManager.PAGEMODE);
-                retval.add(DefaultProgrammerManager.REGISTERMODE);
+                retval.add(ProgrammingMode.DIRECTMODE);
+                retval.add(ProgrammingMode.PAGEMODE);
+                retval.add(ProgrammingMode.REGISTERMODE);
 
                 return retval;
             }
 
             @Override
-            public ProgrammingMode getBestMode() { return DefaultProgrammerManager.REGISTERMODE; }
+            public ProgrammingMode getBestMode() { return ProgrammingMode.REGISTERMODE; }
             
             @Override
             public void writeCV(int i, int j, ProgListener l) {}
@@ -56,13 +56,13 @@ public class AbstractProgrammerTest extends TestCase {
             public boolean getCanRead() { return true;}
         };
 
-        Assert.assertEquals("Check Default", DefaultProgrammerManager.REGISTERMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.REGISTERMODE,
                 abstractprogrammer.getMode());        
     }
     
     public void testSetGetMode() {
-        abstractprogrammer.setMode(DefaultProgrammerManager.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", DefaultProgrammerManager.REGISTERMODE,
+        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
                 abstractprogrammer.getMode());        
     }
     
@@ -138,9 +138,9 @@ public class AbstractProgrammerTest extends TestCase {
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
-                retval.add(DefaultProgrammerManager.DIRECTMODE);
-                retval.add(DefaultProgrammerManager.PAGEMODE);
-                retval.add(DefaultProgrammerManager.REGISTERMODE);
+                retval.add(ProgrammingMode.DIRECTMODE);
+                retval.add(ProgrammingMode.PAGEMODE);
+                retval.add(ProgrammingMode.REGISTERMODE);
 
                 return retval;
             }

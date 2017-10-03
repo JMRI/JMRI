@@ -49,7 +49,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     @Override
     protected AbstractMRMessage enterProgMode() {
-        log.warn("enterProgMode doesnt make sense for TMCC serial");
+        log.warn("enterProgMode doesn't make sense for TMCC serial");
         return null;
     }
 
@@ -267,7 +267,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             log.warn("sendMessage: Exception:", e);
         }
     }

@@ -22,7 +22,7 @@ public class ConsumerTablePane extends JPanel {
     protected JTable table = null;
     protected ConsumerTableModel tableModel = null;
 
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setSize(500, 300);

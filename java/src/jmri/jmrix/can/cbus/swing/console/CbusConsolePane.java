@@ -117,6 +117,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         _filterFrame = null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         if (memo != null) {
@@ -126,6 +129,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         return Bundle.getMessage("CbusConsoleTitle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame";
@@ -134,6 +140,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     public void init() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         if (tc != null) {
@@ -142,6 +151,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -149,8 +161,11 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         tc.addCanListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
         _sent = 0;
         _rcvd = 0;
@@ -285,9 +300,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         sendEvButton.setVisible(true);
         sendEvButton.setToolTipText(Bundle.getMessage("TooltipSendEvent"));
 
-        //setTitle(getTitle());
-        // Panels will be added downwards
-//        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
 
         // add items to GUI
@@ -348,7 +360,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         statsPane.add(sentCountField);
         statsPane.add(rcvdCountField);
         statsPane.add(statsClearButton);
-//        getContentPane().add(statsPane);
+
         southPane.add(statsPane);
         showStatsCheckBox.addActionListener(new ActionListener() {
             @Override
@@ -435,7 +447,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         sendPane.add(sendButton);
         sendPane.add(dataClearButton);
         sendPane.setVisible(false);
-//        getContentPane().add(sendPane);
+
         southPane.add(sendPane);
 
         showPacketCheckBox.setSelected(false);

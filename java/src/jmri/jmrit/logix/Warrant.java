@@ -896,6 +896,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             }
                         }
                         ret = setMovement(MID);
+                    } else if (runState == WAIT_FOR_TRAIN) { // bump up speed one speed step
+                        float speed = _engineer.getSpeedSetting();
+                        speed += _speedUtil.getSpeedIncrement();
+                        _engineer.setSpeed(speed);
                     } // else? train must be lost. maybe fall through to retry?
                     break;
                 case RETRY: // Force move into next block, which should be seen as rogue occupied

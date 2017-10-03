@@ -12,20 +12,30 @@ import org.junit.Test;
  */
 public class SerialLightTest {
 
+    private OakTreeSystemConnectionMemo _memo = null;
+
     @Test
     public void testCTor() {
-        SerialLight t = new SerialLight("OL1");
+        SerialLight t = new SerialLight("OL1", _memo);
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testCTor2() {
+        SerialLight t2 = new SerialLight("OL2", "L2", _memo);
+        Assert.assertNotNull("exists",t2);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-    }
+        // prepare an interface
+        _memo = new OakTreeSystemConnectionMemo("O", "Oaktree");    }
 
     @After
     public void tearDown() {
+
         JUnitUtil.tearDown();
     }
 

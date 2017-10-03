@@ -98,7 +98,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo1.validSystemNameFormat("CL0B2", 'L'));
 
         Assert.assertTrue("invalid format - CL", NameValidity.VALID != memo1.validSystemNameFormat("CL", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL");
+        JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CL");
 
         Assert.assertTrue("invalid format - CLB2", NameValidity.VALID != memo1.validSystemNameFormat("CLB2", 'L'));
         JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB2");
@@ -111,10 +111,10 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertTrue("valid format - CS2B5", NameValidity.VALID == memo1.validSystemNameFormat("CS2B5", 'S'));
 
         Assert.assertTrue("invalid format - CY2005", NameValidity.VALID != memo1.validSystemNameFormat("CY2005", 'L'));
-        JUnitAppender.assertErrorMessage("illegal type character in CMRI system name: CY2005");
+        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
 
         Assert.assertTrue("invalid format - CY2B5", NameValidity.VALID != memo1.validSystemNameFormat("CY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal type character in CMRI system name: CY2B5");
+        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
 
         Assert.assertTrue("valid format - CL22001", NameValidity.VALID == memo1.validSystemNameFormat("CL22001", 'L'));
         Assert.assertTrue("valid format - CL22B1", NameValidity.VALID == memo1.validSystemNameFormat("CL22B1", 'L'));
@@ -142,13 +142,13 @@ public class SerialAddressTwoSystemTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
 
         Assert.assertTrue("invalid format - CL2oo5", NameValidity.VALID != memo1.validSystemNameFormat("CL2oo5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field of CMRI system name: CL2oo5");
+        JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CL2oo5");
 
         Assert.assertTrue("invalid format - CL2aB5", NameValidity.VALID != memo1.validSystemNameFormat("CL2aB5", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in node address field of CMRI system name: CL2aB5");
+        JUnitAppender.assertWarnMessage("invalid character in node address field of CMRI system name: CL2aB5");
 
         Assert.assertTrue("invalid format - CL2B5x", NameValidity.VALID != memo1.validSystemNameFormat("CL2B5x", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in bit number field of CMRI system name: CL2B5x");
+        JUnitAppender.assertWarnMessage("invalid character in bit number field of CMRI system name: CL2B5x");
     }
 
     public void testGetBitFromSystemName() {
@@ -160,7 +160,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("CL2999", 999, memo1.getBitFromSystemName("CL2999"));
 
         Assert.assertEquals("CL29O9", 0, memo1.getBitFromSystemName("CL29O9"));
-        JUnitAppender.assertErrorMessage("illegal character in number field of system name: CL29O9");
+        JUnitAppender.assertWarnMessage("invalid character in number field of system name: CL29O9");
 
         Assert.assertEquals("CL0B7", 7, memo1.getBitFromSystemName("CL0B7"));
         Assert.assertEquals("CL2B7", 7, memo1.getBitFromSystemName("CL2B7"));
@@ -179,7 +179,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("K2L2999", 999, memo2.getBitFromSystemName("K2L2999"));
 
         Assert.assertEquals("K2L29O9", 0, memo2.getBitFromSystemName("K2L29O9"));
-        JUnitAppender.assertErrorMessage("illegal character in number field of system name: K2L29O9");
+        JUnitAppender.assertWarnMessage("invalid character in number field of system name: K2L29O9");
 
         Assert.assertEquals("K2L0B7", 7, memo2.getBitFromSystemName("K2L0B7"));
         Assert.assertEquals("K2L2B7", 7, memo2.getBitFromSystemName("K2L2B7"));
@@ -226,10 +226,10 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("CL7", 0, memo1.getNodeAddressFromSystemName("CL7"));
 
         Assert.assertEquals("CLB7", -1, memo1.getNodeAddressFromSystemName("CLB7"));
-        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: CLB7");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: CLB7");
 
         Assert.assertEquals("CR7", -1, memo1.getNodeAddressFromSystemName("CR7"));
-        JUnitAppender.assertErrorMessage("illegal character in header field of system name: CR7");
+        JUnitAppender.assertErrorMessage("invalid character in header field of system name: CR7");
     }
 
     public void testGetNodeAddressFromSystemName2() {
@@ -241,10 +241,10 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("K2L7", 0, memo2.getNodeAddressFromSystemName("K2L7"));
 
         Assert.assertEquals("K2LB7", -1, memo2.getNodeAddressFromSystemName("K2LB7"));
-        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: K2LB7");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in CMRI system name: K2LB7");
 
         Assert.assertEquals("K2R7", -1, memo2.getNodeAddressFromSystemName("K2R7"));
-        JUnitAppender.assertErrorMessage("illegal character in header field of system name: K2R7");
+        JUnitAppender.assertErrorMessage("invalid character in header field of system name: K2R7");
     }
 
     public void testValidSystemNameConfig() {
@@ -339,14 +339,14 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("make CL14007", "CL14007", memo1.makeSystemName("L", 14, 7));
         Assert.assertEquals("make CT7", "CT7", memo1.makeSystemName("T", 0, 7));
 
-        Assert.assertEquals("make illegal 1", "", memo1.makeSystemName("L", 0, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number proposed for system name");
+        Assert.assertEquals("make invalid 1", "", memo1.makeSystemName("L", 0, 0));
+        JUnitAppender.assertWarnMessage("invalid bit number proposed for system name");
 
-        Assert.assertEquals("make illegal 2", "", memo1.makeSystemName("L", 128, 7));
-        JUnitAppender.assertErrorMessage("illegal node adddress proposed for system name");
+        Assert.assertEquals("make invalid 2", "", memo1.makeSystemName("L", 128, 7));
+        JUnitAppender.assertWarnMessage("invalid node address proposed for system name");
 
-        Assert.assertEquals("make illegal 3", "", memo1.makeSystemName("R", 120, 7));
-        JUnitAppender.assertErrorMessage("illegal type character proposed for system name");
+        Assert.assertEquals("make invalid 3", "", memo1.makeSystemName("R", 120, 7));
+        JUnitAppender.assertErrorMessage("invalid type character proposed for system name");
 
         Assert.assertEquals("make CL0B1770", "CL0B1770", memo1.makeSystemName("L", 0, 1770));
         Assert.assertEquals("make CS127999", "CS127999", memo1.makeSystemName("S", 127, 999));
@@ -357,14 +357,14 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("make K2L14007", "K2L14007", memo2.makeSystemName("L", 14, 7));
         Assert.assertEquals("make K2T7", "K2T7", memo2.makeSystemName("T", 0, 7));
 
-        Assert.assertEquals("make illegal 1", "", memo2.makeSystemName("L", 0, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number proposed for system name");
+        Assert.assertEquals("make invalid 1", "", memo2.makeSystemName("L", 0, 0));
+        JUnitAppender.assertWarnMessage("invalid bit number proposed for system name");
 
-        Assert.assertEquals("make illegal 2", "", memo2.makeSystemName("L", 128, 7));
-        JUnitAppender.assertErrorMessage("illegal node adddress proposed for system name");
+        Assert.assertEquals("make invalid 2", "", memo2.makeSystemName("L", 128, 7));
+        JUnitAppender.assertWarnMessage("invalid node address proposed for system name");
 
-        Assert.assertEquals("make illegal 3", "", memo2.makeSystemName("R", 120, 7));
-        JUnitAppender.assertErrorMessage("illegal type character proposed for system name");
+        Assert.assertEquals("make invalid 3", "", memo2.makeSystemName("R", 120, 7));
+        JUnitAppender.assertErrorMessage("invalid type character proposed for system name");
 
         Assert.assertEquals("make K2L0B1770", "K2L0B1770", memo2.makeSystemName("L", 0, 1770));
         Assert.assertEquals("make K2S127999", "K2S127999", memo2.makeSystemName("S", 127, 999));
@@ -403,10 +403,10 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("test bit 2000", "", memo1.isOutputBitFree(18, 2000));
 
         Assert.assertEquals("test bit bad bit", "", memo1.isOutputBitFree(18, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
+        JUnitAppender.assertWarnMessage("invalid bit number in free bit test");
 
         Assert.assertEquals("test bit bad node address", "", memo1.isOutputBitFree(129, 34));
-        JUnitAppender.assertErrorMessage("illegal node adddress in free bit test");
+        JUnitAppender.assertWarnMessage("invalid node address in free bit test");
     }
 
     public void testIsInputBitFree() {
@@ -433,10 +433,10 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("test bit 18", "", memo1.isInputBitFree(18, 18));
 
         Assert.assertEquals("test bit bad bit", "", memo1.isInputBitFree(18, 0));
-        JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
+        JUnitAppender.assertWarnMessage("invalid bit number in free bit test");
 
         Assert.assertEquals("test bit bad node address", "", memo1.isInputBitFree(129, 34));
-        JUnitAppender.assertErrorMessage("illegal node adddress in free bit test");
+        JUnitAppender.assertWarnMessage("invalid node address in free bit test");
     }
 
     public void testGetUserNameFromSystemName() {

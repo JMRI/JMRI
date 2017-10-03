@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Lenz (XPresssNet) connections.
+ * Implement turnout manager for Lenz (XpresssNet) connections.
  * <p>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
-    protected XNetTrafficController tc = null;
-
     // ctor has to register for XNet events
     public XNetTurnoutManager(XNetTrafficController controller, String prefix) {
         super();
@@ -25,18 +23,35 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
+    protected XNetTrafficController tc = null;
+    protected String prefix = null;
+
+    /**
+     * Return the system letter for XpressNet.
+     */
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
 
     // XNet-specific methods
 
+    /**
+     * Create a new Turnout based on the system name.
+     * Assumes calling method has checked that a Turnout with this
+     * system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
+     */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        Turnout t = new XNetTurnout(prefix, addr, tc);
+        // check if the output bit is available
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        if (bitNum == -1) {
+            return (null);
+        }
+        // create the new Turnout object
+        Turnout t = new XNetTurnout(prefix, bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -96,7 +111,6 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
-
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
      * Allows text other than "CLOSED" to be use with certain hardware system to
@@ -130,13 +144,23 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
+    /**
+     * Validate Turnout system name format.
+     * Logging of handled cases no higher than WARN.
+     *
+     * @return VALID if system name has a valid format, else return INVALID
+     */
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (XNetAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+    }
+
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

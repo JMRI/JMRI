@@ -28,6 +28,6 @@ public abstract class TurnoutOperator extends Thread {
      * operator is running. This implies that another operation has been started
      * and that this one should just quietly stop doing its thing.
      */
-    static public class TurnoutOperatorException extends java.lang.Exception {
+    static public class TurnoutOperatorException extends Exception {
     }
 }

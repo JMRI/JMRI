@@ -76,7 +76,7 @@ public final class InstanceManager {
     private final HashMap<Class<?>, InstanceInitializer> initializers = new HashMap<>();
     private final HashMap<Class<?>, StateHolder> initState = new HashMap<>();
 
-        
+
     /* properties */
     /**
      *
@@ -86,14 +86,6 @@ public final class InstanceManager {
      */
     @Deprecated
     public static final String CONSIST_MANAGER = "consistmanager"; // NOI18N
-    /**
-     *
-     * @deprecated since 4.5.4 use
-     * {@code InstanceManager.getDefaultsPropertyName(ProgrammerManager.class)}
-     * instead.
-     */
-    @Deprecated
-    public static final String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
 
     /**
      * Store an object of a particular type for later retrieval via
@@ -113,6 +105,7 @@ public final class InstanceManager {
         }
         List<T> l = getList(type);
         l.add(item);
+        getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), l.indexOf(item), null, item);
     }
 
     /**
@@ -161,7 +154,9 @@ public final class InstanceManager {
             getDefault().pcs.fireIndexedPropertyChange(getListPropertyName(type), index, item, null);
         }
         // if removing last, will have to initialize laster
-        if (l.isEmpty()) getDefault().setInitializationState(type, InitializationState.NOTSET);
+        if (l.isEmpty()) {
+            getDefault().setInitializationState(type, InitializationState.NOTSET);
+        }
     }
 
     /**
@@ -225,23 +220,25 @@ public final class InstanceManager {
 
             // example of tracing where something is being initialized
             //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
-
-            if (traceFileActive) { traceFilePrint("Start initialization: "+type.toString()); traceFileIndent++; }
+            if (traceFileActive) {
+                traceFilePrint("Start initialization: " + type.toString());
+                traceFileIndent++;
+            }
 
             // check whether already working on this type
             InitializationState working = getDefault().getInitializationState(type);
             Exception except = getDefault().getInitializationException(type);
             getDefault().setInitializationState(type, InitializationState.STARTED);
             if (working == InitializationState.STARTED) {
-                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \""+Thread.currentThread().getName()+"\""));
+                log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
                 log.error("    Prior initialization:", except);
-                if (traceFileActive) { 
+                if (traceFileActive) {
                     traceFilePrint("*** Already in process ***");
                 }
             } else if (working == InitializationState.DONE) {
-                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \""+Thread.currentThread().getName()+"\""));
+                log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
             }
-  
+
             // see if can autocreate
             log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
@@ -256,11 +253,17 @@ public final class InstanceManager {
                 } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
                     getDefault().setInitializationState(type, InitializationState.FAILED);
-                    if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization (no object) A: "+type.toString());}
+                    if (traceFileActive) {
+                        traceFileIndent--;
+                        traceFilePrint("End initialization (no object) A: " + type.toString());
+                    }
                     return null;
                 }
                 getDefault().setInitializationState(type, InitializationState.DONE);
-                if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization A: "+type.toString());}
+                if (traceFileActive) {
+                    traceFileIndent--;
+                    traceFilePrint("End initialization A: " + type.toString());
+                }
                 return l.get(l.size() - 1);
             }
             // see if initializer can handle
@@ -276,7 +279,10 @@ public final class InstanceManager {
                         ((InstanceManagerAutoInitialize) obj).initialize();
                     }
                     getDefault().setInitializationState(type, InitializationState.DONE);
-                    if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization I: "+type.toString());}
+                    if (traceFileActive) {
+                        traceFileIndent--;
+                        traceFilePrint("End initialization I: " + type.toString());
+                    }
                     return l.get(l.size() - 1);
                 } catch (IllegalArgumentException ex) {
                     log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
@@ -287,7 +293,10 @@ public final class InstanceManager {
 
             // don't have, can't make
             getDefault().setInitializationState(type, InitializationState.FAILED);
-            if (traceFileActive) { traceFileIndent--; traceFilePrint("End initialization (no object) E: "+type.toString());}
+            if (traceFileActive) {
+                traceFileIndent--;
+                traceFilePrint("End initialization (no object) E: " + type.toString());
+            }
             return null;
         }
         return l.get(l.size() - 1);
@@ -346,7 +355,7 @@ public final class InstanceManager {
         l.remove(item);
         l.add(item);
         if (oldDefault == null || !oldDefault.equals(item)) {
-            notifyPropertyChangeListener(getDefaultsPropertyName(type), oldDefault, item);
+            getDefault().pcs.firePropertyChange(getDefaultsPropertyName(type), oldDefault, item);
         }
         return getDefault(type);
     }
@@ -424,10 +433,6 @@ public final class InstanceManager {
      */
     public static synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
         getDefault().pcs.addPropertyChangeListener(propertyName, l);
-    }
-
-    protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        getDefault().pcs.firePropertyChange(property, oldValue, newValue);
     }
 
     /**
@@ -535,17 +540,6 @@ public final class InstanceManager {
     @Deprecated
     static public PowerManager powerManagerInstance() {
         return getDefault(PowerManager.class);
-    }
-
-    /**
-     * @return the default programmer manager. May not be the only instance.
-     * @deprecated Since 3.11.1, use @{link #getDefault} for either
-     * GlobalProgrammerManager or AddressedProgrammerManager directly
-     * @deprecated 4.5.1
-     */
-    @Deprecated
-    static public ProgrammerManager programmerManagerInstance() {
-        return getDefault(ProgrammerManager.class);
     }
 
     /**
@@ -702,7 +696,7 @@ public final class InstanceManager {
     //
     static public void setConsistManager(ConsistManager p) {
         store(p, ConsistManager.class);
-        notifyPropertyChangeListener(CONSIST_MANAGER, null, null);
+        getDefault().pcs.firePropertyChange(CONSIST_MANAGER, null, null);
     }
 
     // Needs to have proxy manager converted to work
@@ -726,27 +720,16 @@ public final class InstanceManager {
     // the 30+ classes that reference it? Or maybe have a default of the
     // DccConsistManager that's smarter?
     //
-    //
-    // This provides notification services, which
-    // must be migrated before this method can be
-    // deprecated.
-    //
-    static public void setProgrammerManager(ProgrammerManager p) {
-        if (p.isAddressedModePossible()) {
-            store(p, AddressedProgrammerManager.class);
-        }
-        if (p.isGlobalProgrammerAvailable()) {
-            store(p, GlobalProgrammerManager.class);
-        }
+    static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
+        store(p, AddressedProgrammerManager.class);
 
         // Now that we have a programmer manager, install the default
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
-        if (programmerManagerInstance().isAddressedModePossible()
+        if (getDefault(AddressedProgrammerManager.class).isAddressedModePossible()
                 && getNullableDefault(ConsistManager.class) == null) {
             setConsistManager(new DccConsistManager());
         }
-        notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
     }
 
     // Needs to have proxy manager converted to work
@@ -895,33 +878,43 @@ public final class InstanceManager {
         FAILED,
         DONE
     }
+
     static private final class StateHolder {
+
         InitializationState state;
         Exception exception;
+
         StateHolder(InitializationState state, Exception exception) {
             this.state = state;
             this.exception = exception;
         }
     }
+
     private void setInitializationState(Class<?> type, InitializationState state) {
         log.trace("set state {} for {}", type, state);
         if (state == InitializationState.STARTED) {
-            initState.put(type, new StateHolder(state, new Exception("Thread "+Thread.currentThread().getName())));
+            initState.put(type, new StateHolder(state, new Exception("Thread " + Thread.currentThread().getName())));
         } else {
             initState.put(type, new StateHolder(state, null));
         }
-    }    
+    }
+
     private InitializationState getInitializationState(Class<?> type) {
         StateHolder holder = initState.get(type);
-        if (holder == null) return InitializationState.NOTSET;
+        if (holder == null) {
+            return InitializationState.NOTSET;
+        }
         return holder.state;
-    }    
+    }
+
     private Exception getInitializationException(Class<?> type) {
         StateHolder holder = initState.get(type);
-        if (holder == null) return null;
+        if (holder == null) {
+            return null;
+        }
         return holder.exception;
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class);
 
     // support creating a file with initialization summary information
@@ -930,11 +923,12 @@ public final class InstanceManager {
     private static int traceFileIndent = 1; // used to track overlap, but note that threads are parallel
     private static final String traceFileName = "instanceManagerSequence.txt";  // use a standalone name
     private static java.io.PrintWriter traceFileWriter;
+
     static {
         java.io.PrintWriter tempWriter = null;
         try {
-            tempWriter = (traceFileActive ? 
-                    new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(traceFileName, traceFileAppend))) 
+            tempWriter = (traceFileActive
+                    ? new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(traceFileName, traceFileAppend)))
                     : null);
         } catch (java.io.IOException e) {
             log.error("failed to open log file", e);
@@ -942,11 +936,12 @@ public final class InstanceManager {
             traceFileWriter = tempWriter;
         }
     }
+
     static private void traceFilePrint(String msg) {
-        String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent*2);
-        String threadName = "["+Thread.currentThread().getName()+"]";
-        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25-threadName.length(), 0));
-        String text = threadName+threadNamePad+"|"+pad+msg;
+        String pad = org.apache.commons.lang3.StringUtils.repeat(' ', traceFileIndent * 2);
+        String threadName = "[" + Thread.currentThread().getName() + "]";
+        String threadNamePad = org.apache.commons.lang3.StringUtils.repeat(' ', Math.max(25 - threadName.length(), 0));
+        String text = threadName + threadNamePad + "|" + pad + msg;
         traceFileWriter.println(text);
         traceFileWriter.flush();
         log.trace(text);

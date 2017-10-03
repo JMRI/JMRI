@@ -13,7 +13,7 @@ import org.openlcb.OlcbInterface;
  * Turnouts must be manually created.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  * @since 2.3.1
+ * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 

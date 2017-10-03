@@ -56,7 +56,7 @@ public class SerialTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName,CMRISystemConnectionMemo memo) {
+    public SerialTurnout(String systemName, String userName, CMRISystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;

@@ -181,7 +181,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Hardware Address passed should be a number", ex);
+            log.warn("Hardware Address passed should be a number, was {}", curAddress);
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix + typeLetter() + curAddress;

@@ -26,7 +26,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Returns the second letter in the system name for a Light
+     * Returns the type letter in the system name for a Light
      */
     @Override
     public char typeLetter() {
@@ -120,8 +120,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if ( validSystemNameFormat(systemName) != NameValidity.VALID) {
-            log.error("Invalid system name for newLight: " + systemName);
+        if (validSystemNameFormat(systemName) != NameValidity.VALID) {
+            log.error("Invalid system name for newLight: {}", systemName);
             throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
 
@@ -129,8 +129,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         Light s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name ("
-                        + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
+                        userName, systemName, s.getSystemName());
             }
             return s;
         }
@@ -138,8 +138,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found light via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found light via system name '{}' with non-null user name '{}'",
+                        systemName, userName);
             }
             return s;
         }

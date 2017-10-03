@@ -296,10 +296,8 @@ public class AutoAllocate {
                         }
                     }
                 }
-            } catch (Exception e) {
-                log.warn(
-                        "scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??" +
-                                e.toString());
+            } catch (RuntimeException e) {
+                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??" + e.toString());
                 continue;
             }
         }

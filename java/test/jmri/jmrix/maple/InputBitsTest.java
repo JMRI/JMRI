@@ -27,7 +27,7 @@ public class InputBitsTest extends TestCase {
 
     public void testMarkChangesInitial() {
         SerialSensor s1 = new SerialSensor("KS1", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("KS1"));
+        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("KS1", "K"));
         SerialSensor s2 = new SerialSensor("KS2", "ab");
         SerialSensor s3 = new SerialSensor("KS3", "abc");
         SerialSensor s6 = new SerialSensor("KS6", "abcd");
@@ -195,6 +195,7 @@ public class InputBitsTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        ibit = null;
         JUnitUtil.tearDown();
     }
 

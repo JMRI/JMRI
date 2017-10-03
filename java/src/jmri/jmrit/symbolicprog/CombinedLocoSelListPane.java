@@ -13,7 +13,9 @@ import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.progsupport.ProgModeSelector;
@@ -103,12 +105,13 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         pane1a.add(new JScrollPane(mDecoderList));
         iddecoder = new JToggleButton("Ident");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
-                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
-                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
-            // can't read, disable the button
-            iddecoder.setEnabled(false);
-            iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+            Programmer p = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+            if (p != null && !p.getCanRead()) {
+                // can't read, disable the button
+                iddecoder.setEnabled(false);
+                iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
+            }
         }
         iddecoder.addActionListener(new ActionListener() {
             @Override
@@ -146,8 +149,8 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
             // matches the specific name
             if ((specific != null && (allMfgList.get(i).equals(specific)))
                     || (0 != InstanceManager.getDefault(DecoderIndexFile.class)
-                    .matchingDecoderList(allMfgList.get(i), null, null, null, null, null)
-                    .size())) {
+                            .matchingDecoderList(allMfgList.get(i), null, null, null, null, null)
+                            .size())) {
                 theMfgList.add(allMfgList.get(i));
             }
         }

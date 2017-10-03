@@ -54,11 +54,17 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         openPort(mPort, "JMRI app");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPort(String port) {
         log.debug("Setting port to "+port);
@@ -66,6 +72,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
     protected String mPort = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCurrentPortName() {
         if (mPort == null) {
@@ -115,7 +124,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
     
     /**
-     * Set the baud rate. This records it for later.
+     * {@inheritDoc}
      */
     @Override
     public void configureBaudRate(String rate) {
@@ -123,6 +132,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
     protected String mBaudRate = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCurrentBaudRate() {
         if (mBaudRate == null) {
@@ -184,6 +196,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     Vector<String> portNameVector = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
@@ -203,6 +218,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return portNameVector;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         super.dispose();
@@ -220,7 +238,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         opened = false;
         try {
             closeConnection();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
         }
         reconnect();
     }
@@ -228,7 +246,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /*Each serial port adapter should handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
 
-    protected void closeConnection() throws Exception {
+    protected void closeConnection() {
         System.out.println("crap Called");
     }
 
@@ -297,7 +315,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             }
                         }
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {

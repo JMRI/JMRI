@@ -1,23 +1,20 @@
 package jmri.jmrit.symbolicprog;
 
+import javax.swing.JLabel;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DccAddressPanelTest {
 
     @Test
     public void testCTor() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         VariableTableModel vtm = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},

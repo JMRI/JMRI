@@ -33,8 +33,7 @@ import org.junit.runners.Suite;
     DefaultSignalMastLogicManagerTest.class,
     DefaultSignalMastManagerTest.class,
     DeferringProgrammerManagerTest.class,
-    InternalTurnoutManagerTest.class,
-    WarningProgrammerManagerTest.class
+    InternalTurnoutManagerTest.class
 })
 
 /**

@@ -28,25 +28,46 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
+    /**
+     * Create XNet sensor using fixed connection prefix
+     * @deprecated JMRI Since 4.9.5
+     */
     public XNetSensor(String systemName, String userName, XNetTrafficController controller) {
         super(systemName, userName);
         tc = controller;
-        init(systemName);
-    }
-
-    public XNetSensor(String systemName, XNetTrafficController controller) {
-        super(systemName);
-        tc = controller;
-        init(systemName);
+        init(systemName, "X"); // Should not give Null
     }
 
     /**
-     * Common initialization for both constructors.
+     * Create XNet sensor using fixed connection prefix
+     * @deprecated JMRI Since 4.9.5
      */
-    private void init(String id) {
+    @Deprecated
+    public XNetSensor(String systemName, XNetTrafficController controller) {
+        super(systemName);
+        tc = controller;
+        init(systemName, "X");
+    }
+
+    public XNetSensor(String systemName, String userName, XNetTrafficController controller, String prefix) {
+        super(systemName, userName);
+        tc = controller;
+        init(systemName, prefix);
+    }
+
+    public XNetSensor(String systemName, XNetTrafficController controller, String prefix) {
+        super(systemName);
+        tc = controller;
+        init(systemName, prefix);
+    }
+
+    /**
+     * Common initialization for all constructors.
+     */
+    private void init(String id, String prefix) {
         // store address
         systemName = id;
-        address = Integer.parseInt(id.substring(2, id.length()));
+        address = XNetAddress.getBitFromSystemName(systemName, prefix);
         // calculate the base address, the nibble, and the bit to examine
         baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;
@@ -73,13 +94,12 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                 nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
-            log.debug("Created Sensor " + systemName
-                    + " (Address " + baseaddress
-                    + " position " + (((address - 1) % 8) + 1)
-                    + ")");
+            log.debug("Created Sensor {} (Address {},  position {})",
+                    systemName, baseaddress,
+                    (((address - 1) % 8) + 1)
+            );
         }
         // Finally, request the current state from the layout.
-        //this.requestUpdateFromLayout();
         tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
     }
 
@@ -107,7 +127,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     /**
      * initmessage is a package protected class which allows the Manger to send
-     * a feedback message at initilization without changing the state of the
+     * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
      */

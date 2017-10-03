@@ -51,7 +51,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
 
     @Override
-    public void initComponents(CanSystemConnectionMemo memo) throws Exception {
+    public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
         this.connection = memo.get(Connection.class);
         this.mcs = memo.get(MemoryConfigurationService.class);

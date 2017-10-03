@@ -23,9 +23,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.ColorUtil;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -526,7 +524,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | jmri.configurexml.JmriConfigureXmlException
+                    | RuntimeException e) {
                 log.error("Exception while loading " + item.getName() + ":" + e);
                 result = false;
                 e.printStackTrace();

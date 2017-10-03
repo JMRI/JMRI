@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents a single command or response on the XPressNet.
+ * Represents a single command or response on the XpressNet.
  * <P>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
@@ -19,7 +19,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     static private int _nRetries = 5;
 
-    /* According to the specification, XPressNet has a maximum timing 
+    /* According to the specification, XpressNet has a maximum timing
      interval of 500 milliseconds durring normal communications */
     static protected final int XNetProgrammingTimeout = 10000;
     static private int XNetMessageTimeout = 5000;
@@ -157,7 +157,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Set the default number of retries for an XPressNet message.
+     * Set the default number of retries for an XpressNet message.
      *
      * @param t number of retries to attempt
      */
@@ -166,7 +166,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /**
-     * Set the default timeout for an XPressNet message.
+     * Set the default timeout for an XpressNet message.
      *
      * @param t Timeout in milliseconds
      */
@@ -199,11 +199,11 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     // create messages of a particular form
 
     /**
-     * Encapsulate an NMRA DCC packet in an XPressNet message.
+     * Encapsulate an NMRA DCC packet in an XpressNet message.
      * <p>
      * On Current (v3.5) Lenz command stations, the Operations Mode
      *     Programming Request is implemented by sending a packet directly
-     *     to the rails.  This packet is not checked by the XPressNet
+     *     to the rails.  This packet is not checked by the XpressNet
      *     protocol, and is just the track packet with an added header
      *     byte.
      *     <p>
@@ -499,7 +499,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /*
-     * Next, we have routines to generate XPressNet Messages for building 
+     * Next, we have routines to generate XpressNet Messages for building
      * and tearing down a consist or a double header.
      */
 
@@ -575,7 +575,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
 
     /*
-     * Next, we have routines to generate XPressNet Messages for search
+     * Next, we have routines to generate XpressNet Messages for search
      * and manipulation of the Command Station Database
      */
 

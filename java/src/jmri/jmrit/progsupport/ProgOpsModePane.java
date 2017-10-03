@@ -242,14 +242,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             modes.addAll(((AddressedProgrammerManager) progBox.getSelectedItem()).getDefaultModes());
         }
         // add OPSACCBYTEMODE & OPSACCEXTBYTEMODE if possible
-        if (modes.contains(DefaultProgrammerManager.OPSBYTEMODE)) {
-            if (!modes.contains(DefaultProgrammerManager.OPSACCBYTEMODE)) {
-                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCBYTEMODE);
-                modes.add(DefaultProgrammerManager.OPSACCBYTEMODE);
+        if (modes.contains(ProgrammingMode.OPSBYTEMODE)) {
+            if (!modes.contains(ProgrammingMode.OPSACCBYTEMODE)) {
+                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", ProgrammingMode.OPSACCBYTEMODE);
+                modes.add(ProgrammingMode.OPSACCBYTEMODE);
             }
-            if (!modes.contains(DefaultProgrammerManager.OPSACCEXTBYTEMODE)) {
-                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", DefaultProgrammerManager.OPSACCEXTBYTEMODE);
-                modes.add(DefaultProgrammerManager.OPSACCEXTBYTEMODE);
+            if (!modes.contains(ProgrammingMode.OPSACCEXTBYTEMODE)) {
+                log.debug("   adding button for {} via AccessoryOpsModeProgrammerFacade", ProgrammingMode.OPSACCEXTBYTEMODE);
+                modes.add(ProgrammingMode.OPSACCEXTBYTEMODE);
             }
         }
         log.debug("   has {} modes", modes.size());
@@ -290,11 +290,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                 log.debug("      setting mode {} on {}", mode.toString(), getProgrammer());
                 if (getProgrammer() != null) {
                     log.debug("getProgrammer() != null");
-                    if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
+                    if (mode == ProgrammingMode.OPSACCBYTEMODE) {
                         log.debug("OPS ACCY was selected in actionPerformed");
                         opsAccyMode = true;
                         opsSigMode = false;
-                    } else if (mode == DefaultProgrammerManager.OPSACCEXTBYTEMODE) {
+                    } else if (mode == ProgrammingMode.OPSACCEXTBYTEMODE) {
                         log.debug("OPS SIG was selected in actionPerformed");
                         opsAccyMode = false;
                         opsSigMode = true;
@@ -319,11 +319,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     ) {
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (buttonMap.get(mode).isSelected()) {
-                if (mode == DefaultProgrammerManager.OPSACCBYTEMODE) {
+                if (mode == ProgrammingMode.OPSACCBYTEMODE) {
                     log.debug("OPS ACCY was selected in setProgrammerFromGui");
                     opsAccyMode = true;
                     opsSigMode = false;
-                } else if (mode == DefaultProgrammerManager.OPSACCEXTBYTEMODE) {
+                } else if (mode == ProgrammingMode.OPSACCEXTBYTEMODE) {
                     log.debug("OPS SIG was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = true;
@@ -366,9 +366,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
         ProgrammingMode mode = getProgrammer().getMode();
         if (opsAccyMode) {
-            mode = DefaultProgrammerManager.OPSACCBYTEMODE;
+            mode = ProgrammingMode.OPSACCBYTEMODE;
         } else if (opsSigMode) {
-            mode = DefaultProgrammerManager.OPSACCEXTBYTEMODE;
+            mode = ProgrammingMode.OPSACCEXTBYTEMODE;
         }
         JRadioButton button = buttonMap.get(mode);
         if (button == null) {

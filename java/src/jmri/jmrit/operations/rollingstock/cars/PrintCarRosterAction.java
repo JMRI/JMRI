@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -19,7 +18,6 @@ import javax.swing.JScrollPane;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -68,7 +66,6 @@ public class PrintCarRosterAction extends AbstractAction {
 
     int numberCharPerLine;
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void printCars() {
 
         boolean landscape = false;
@@ -76,7 +73,7 @@ public class PrintCarRosterAction extends AbstractAction {
                 && manifestOrientationComboBox.getSelectedItem() == Setup.LANDSCAPE) {
             landscape = true;
         }
-        
+
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
@@ -88,7 +85,7 @@ public class PrintCarRosterAction extends AbstractAction {
             log.debug("Print cancelled");
             return;
         }
-        
+
         numberCharPerLine = writer.getCharactersPerLine();
 
         // Loop through the Roster, printing as needed
@@ -117,9 +114,8 @@ public class PrintCarRosterAction extends AbstractAction {
         try {
             printTitleLine(writer);
             String previousLocation = null;
-            List<RollingStock> cars = panel.carsTableModel.getCarList(sortByComboBox.getSelectedIndex());
-            for (RollingStock rs : cars) {
-                Car car = (Car) rs;
+            List<Car> cars = panel.carsTableModel.getCarList(sortByComboBox.getSelectedIndex());
+            for (Car car : cars) {
                 if (printCarsWithLocation.isSelected() && car.getLocation() == null) {
                     continue; // car doesn't have a location skip
                 }
@@ -331,19 +327,19 @@ public class PrintCarRosterAction extends AbstractAction {
             JPanel pOrientation = new JPanel();
             pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOrientation")));
             pOrientation.add(manifestOrientationComboBox);
-            
+
             manifestOrientationComboBox.addItem(Setup.PORTRAIT);
             manifestOrientationComboBox.addItem(Setup.LANDSCAPE);
-            
+
             JPanel pFontSize = new JPanel();
             pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
             pFontSize.add(fontSizeComboBox);
-            
+
             // load font sizes 5 through 14
             for (int i = 5; i < 15; i++) {
                 fontSizeComboBox.addItem(i);
             }
-            
+
             fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
             JPanel pPanel = new JPanel();
@@ -447,7 +443,7 @@ public class PrintCarRosterAction extends AbstractAction {
             setVisible(false);
             pcr.printCars();
         }
-        
+
         @Override
         public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
             if (sortByComboBox.getSelectedItem() != null && sortByComboBox.getSelectedItem().equals(panel.carsTableModel.getSortByName(panel.carsTableModel.SORTBY_LOCATION))) {

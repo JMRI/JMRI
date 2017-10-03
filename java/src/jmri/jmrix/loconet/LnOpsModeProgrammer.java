@@ -259,7 +259,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
     
     // handle mode
-    protected ProgrammingMode mode = DefaultProgrammerManager.OPSBYTEMODE;
+    protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
 
     @Override
     public final void setMode(ProgrammingMode m) {
@@ -282,7 +282,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         return ret;
@@ -299,7 +299,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     @Nonnull
     @Override
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
-        if (getMode().equals(DefaultProgrammerManager.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
         return WriteConfirmMode.DecoderReply;
     }
 

@@ -59,7 +59,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         sensor = InstanceManager.sensorManagerInstance().
                 provideSensor(sensorName);
 
-        programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        programmer = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(locoLong, locoNumber);
 
         // set up the initial correlation

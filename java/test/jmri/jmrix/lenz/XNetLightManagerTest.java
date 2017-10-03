@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  *
