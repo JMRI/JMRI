@@ -38,11 +38,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     public void connect(String host, int port) throws IOException {
         setHostName(host);
         setPort(port);
-        try {
-            connect();
-        } catch (RuntimeException e) {
-            throw e;
-        }
+        connect();
     }
 
     @Override
@@ -348,6 +344,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             while (reply) {
                 safeSleep(reconnectinterval, "Waiting");
                 count++;
+
                 try {
                     // if the device allows autoConfiguration,
                     // we need to run the autoConfigure() call
@@ -356,9 +353,11 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                         autoConfigure();
                     }
                     connect();
-                } catch (IOException e) {
-                    log.trace("Unable to reconnect", e);
+                } catch (IOException ex) {
+                    log.error("restart failed", ex);
+                    return;
                 }
+                
                 reply = !opened;
                 if (count >= retryAttempts) {
                     log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);

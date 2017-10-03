@@ -192,8 +192,11 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             try {
                 initComponents((NceSystemConnectionMemo) context);
@@ -203,11 +206,17 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.clockmon.ClockMonFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -221,8 +230,11 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
 

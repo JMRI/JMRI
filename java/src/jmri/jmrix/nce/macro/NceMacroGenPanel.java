@@ -41,8 +41,11 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             try {
                 initComponents((NceSystemConnectionMemo) context);
@@ -52,11 +55,17 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.macro.NceMacroEditFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -70,8 +79,11 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo memo) throws Exception {
+    public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         tc = memo.getNceTrafficController();
         // the following code sets the frame's initial state

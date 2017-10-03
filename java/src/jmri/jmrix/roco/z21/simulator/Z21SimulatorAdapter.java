@@ -64,6 +64,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         this.getSystemConnectionMemo().configureManagers();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void connect() throws java.io.IOException {
         log.debug("connect called");
@@ -95,6 +98,9 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
     
     static class LogoffException extends JmriException {}
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void run() {
         // The server just opens a DatagramSocket using the specified port number,
