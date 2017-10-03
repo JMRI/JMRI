@@ -84,7 +84,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                 xmtList.addLast(msg);
                 xmtHandler.notify();
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: " + e);
         }
     }
@@ -250,7 +250,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                     return;
                 } // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
-                catch (Exception e) {
+                catch (RuntimeException e) {
                     log.warn("run: unexpected Exception: " + e);
                     e.printStackTrace();
                 }
