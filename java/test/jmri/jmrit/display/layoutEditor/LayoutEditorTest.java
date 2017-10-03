@@ -369,16 +369,24 @@ public class LayoutEditorTest {
     @Test
     public void testGetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // default to true
+        le.setShowHelpBar(true);
         Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        le.setShowHelpBar(false);
+        Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
     }
 
     @Test
     public void testSetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // default to true, so set to false.
+        // toggle a couple of times
         le.setShowHelpBar(false);
         Assert.assertFalse("getShowHelpBar after set", le.getShowHelpBar());
+        le.setShowHelpBar(true);
+        Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        le.setShowHelpBar(false);
+        Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+        le.setShowHelpBar(true);
+        Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
     }
 
     @Test

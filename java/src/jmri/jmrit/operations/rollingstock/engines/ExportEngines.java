@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +11,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -63,8 +61,6 @@ public class ExportEngines extends XmlFile {
         }
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "EngineManager only provides Engine Objects")
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
@@ -84,7 +80,7 @@ public class ExportEngines extends XmlFile {
         }
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
-        List<RollingStock> engineList = manager.getByNumberList();
+        List<Engine> engineList = manager.getByNumberList();
         String line = "";
         // check for delimiter in the following Engine fields
         String engineModel;
@@ -123,8 +119,7 @@ public class ExportEngines extends XmlFile {
         fileOut.println(header);
 
         // store engine number, road, model, length, owner, built date, location and track
-        for (RollingStock rs : engineList) {
-            Engine engine = (Engine) rs;
+        for (Engine engine : engineList) {
             engineModel = engine.getModel();
             if (engineModel.contains(del)) {
                 engineModel = ESC + engine.getModel() + ESC;

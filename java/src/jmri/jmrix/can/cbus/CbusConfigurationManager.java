@@ -1,8 +1,8 @@
 package jmri.jmrix.can.cbus;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
@@ -21,7 +21,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
@@ -51,8 +50,12 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
-                getProgrammerManager());
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
         jmri.InstanceManager.setCommandStation(getCommandStation());
 
@@ -71,8 +74,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public boolean provides(Class<?> type) {
         if (adapterMemo.getDisabled()) {
             return false;
-        } else if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
+        } else if (type.equals(jmri.AddressedProgrammerManager.class)) {
+            return getProgrammerManager().isAddressedModePossible();
+        } else if (type.equals(jmri.GlobalProgrammerManager.class)) {
+            return getProgrammerManager().isGlobalProgrammerAvailable();
         } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
@@ -96,7 +101,11 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {
             return null;
-        } else if (T.equals(jmri.ProgrammerManager.class)) {
+        } else if (T.equals(jmri.AddressedProgrammerManager.class)
+                && getProgrammerManager().isAddressedModePossible()) {
+            return (T) getProgrammerManager();
+        } else if (T.equals(jmri.GlobalProgrammerManager.class)
+                && getProgrammerManager().isGlobalProgrammerAvailable()) {
             return (T) getProgrammerManager();
         } else if (T.equals(jmri.ThrottleManager.class)) {
             return (T) getThrottleManager();
@@ -117,17 +126,17 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return null; // nothing, by default
     }
 
-    private ProgrammerManager programmerManager;
+    private CbusDccProgrammerManager programmerManager;
 
-    public ProgrammerManager getProgrammerManager() {
+    public CbusDccProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new CbusDccProgrammerManager(
-                    new jmri.jmrix.can.cbus.CbusDccProgrammer(adapterMemo.getTrafficController()), adapterMemo);
+                    new CbusDccProgrammer(adapterMemo.getTrafficController()), adapterMemo);
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(CbusDccProgrammerManager p) {
         programmerManager = p;
     }
 

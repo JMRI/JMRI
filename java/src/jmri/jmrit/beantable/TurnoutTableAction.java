@@ -11,6 +11,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -121,7 +123,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
     String noneText = "None";
-    String connectionChoice = "";
 
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
@@ -958,9 +959,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
 
     CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
-    // add a JSpinner for numerical entry? TODO
-    // SpinnerNumberModel addressSpinner = new SpinnerNumberModel(1, 1, 2048, 1); // initially configured for LocoNet
-    // JSpinner hardwareAddressSpinner = new JSpinner(addressSpinner);
     // initially allow any 20 char string, updated to prefixBox selection by canAddRange()
     JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
@@ -969,8 +967,10 @@ public class TurnoutTableAction extends AbstractTableAction {
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
+    PropertyChangeListener colorChangeListener;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
+    String connectionChoice = "";
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -1006,7 +1006,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
-                    //Simple test not to add a system with a duplicate System prefix
+                    // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
                         if (prefixBox.getItemAt(i).equals(manuName)) {
                             addToPrefix = false;
@@ -1024,15 +1024,33 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
+            // set up validation, zero text = false
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range,
-                    addButton, createListener, cancelListener, rangeListener, statusBar));
+            addButton.addActionListener(createListener);
+            // Define PropertyChangeListener
+            colorChangeListener = new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                    String property = propertyChangeEvent.getPropertyName();
+                    if ("background".equals(property)) {
+                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
+                            addButton.setEnabled(true);
+                        } else { // invalid
+                            addButton.setEnabled(false);
+                        }
+                    }
+                }
+            };
+            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            // create panel
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
-
         }
-        hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setBackground(Color.yellow);
+        addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
+        addButton.setName("createButton"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -1557,6 +1575,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     /**
@@ -1744,7 +1763,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
-        addButton = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     private String addEntryToolTip;
@@ -1784,10 +1803,11 @@ public class TurnoutTableAction extends AbstractTableAction {
             log.debug("TurnoutManager tip");
         }
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
-//        addEntryToolTip = InstanceManager.turnoutManagerInstance().getSystemConnectionMemo().getEntryToolTip("Turnout");
         hardwareAddressTextField.setToolTipText("<html>"
                 + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Turnouts"))
                 + "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setBackground(Color.yellow); // reset
+        addButton.setEnabled(true); // ambiguous, so start enabled
     }
 
     void handleCreateException(Exception ex, String sysName) {
@@ -1861,7 +1881,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on
+     * @author Egbert Broerse 2017, based on
      * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
@@ -1899,6 +1919,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         /**
          * Validate the field information. Does not make any GUI changes.
+         * <p>
+         * During validation, keep the Console clean from repeated validation.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -1916,11 +1938,20 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-//            } else if (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value)) {
-//                // get prefixSelectedItem
-//                return true;
             } else {
-                return true; //false; // TODO temporarily disabled checking format while adding user feedback
+                boolean validFormat = false;
+                    // try {
+                    validFormat = (InstanceManager.getDefault(TurnoutManager.class).validSystemNameFormat(prefix + "T" + value) == Manager.NameValidity.VALID);
+                    // } catch (jmri.JmriException e) {
+                    // use it for the status bar?
+                    // }
+                if (validFormat) {
+                    addButton.setEnabled(true); // directly update Create button
+                    return true;
+                } else {
+                    addButton.setEnabled(false); // directly update Create button
+                    return false;
+                }
             }
         }
 

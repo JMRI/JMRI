@@ -185,7 +185,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {

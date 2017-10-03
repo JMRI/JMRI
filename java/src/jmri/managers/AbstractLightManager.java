@@ -26,7 +26,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Returns the second letter in the system name for a Light
+     * Returns the type letter in the system name for a Light
      */
     @Override
     public char typeLetter() {
@@ -120,8 +120,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!validSystemNameFormat(systemName)) {
-            log.error("Invalid system name for newLight: " + systemName);
+        if (validSystemNameFormat(systemName) != NameValidity.VALID) {
+            log.error("Invalid system name for newLight: {}", systemName);
             throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
 
@@ -129,8 +129,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         Light s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name ("
-                        + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
+                        userName, systemName, s.getSystemName());
             }
             return s;
         }
@@ -138,8 +138,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found light via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found light via system name '{}' with non-null user name '{}'",
+                        systemName, userName);
             }
             return s;
         }
@@ -194,23 +194,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     }
 
     /**
-     * Validate system name format.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.LightTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
-    }
-
-    /**
      * Normalize the system name
-     * <P>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one C/MRI bit, by removing extra zeros inserted by the user.
      * <P>
      * If a system implementation has names that could be normalized, the
      * system-specific Light Manager should override this routine and supply a
@@ -225,7 +209,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * Convert the system name to a normalized alternate name
      * <P>
      * This routine is to allow testing to ensure that two Lights with alternate
-     * names that refer to the same output bit are not created.
+     * names that refer to the same output bit are not created in systems with multiple name formats.
      * <P>
      * If a system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.

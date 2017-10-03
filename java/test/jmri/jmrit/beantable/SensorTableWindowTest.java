@@ -37,7 +37,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // Find the add button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add...");
+        AbstractButtonFinder abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonAdd"));
         JButton button = (JButton) abfinder.find(ft, 0);
         Assert.assertNotNull(button);
 
@@ -57,6 +57,9 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         // The following line works on the CI servers, but not in some standalone cases
         //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
         hwAddressField.setText("1"); // workaround
+        NamedComponentFinder ncfinder2 = new NamedComponentFinder(JComponent.class, "createButton");
+        JButton createButton = (JButton) ncfinder2.find(fa, 0);
+        createButton.setEnabled(true); // skip validation
 
         flushAWT();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
@@ -70,7 +73,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
 
         // Find the Create button
-        abfinder = new AbstractButtonFinder("Create");
+        abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCreate"));
         button = (JButton) abfinder.find(fa, 0);
         Assert.assertNotNull(button);
 

@@ -69,25 +69,25 @@ public class XBeeLightManager extends AbstractLightManager {
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
                 if (tc.getNodeFromAddress(Integer.parseInt(addressFromSystemName(systemName))) == null) {
-                    return false;
+                    return NameValidity.INVALID;
                 } else {
                     return (pinFromSystemName(systemName) >= 0
-                            && pinFromSystemName(systemName) <= 7);
+                            && pinFromSystemName(systemName) <= 7) ? NameValidity.VALID : NameValidity.INVALID;
                 }
             } catch (java.lang.NumberFormatException nfe) {
                 // if there was a number format exception, we couldn't find the node.
                 log.error("Unable to convert " + systemName + " into the Xbee node and pin format of nn:xx");
-                return false;
+                return NameValidity.INVALID;
             }
 
         } else {
             return (pinFromSystemName(systemName) >= 0
-                    && pinFromSystemName(systemName) <= 7);
+                    && pinFromSystemName(systemName) <= 7) ? NameValidity.VALID : NameValidity.INVALID;
         }
     }
 

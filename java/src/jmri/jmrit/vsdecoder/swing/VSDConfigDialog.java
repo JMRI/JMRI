@@ -40,14 +40,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
@@ -482,7 +482,7 @@ public class VSDConfigDialog extends JDialog {
         log.debug("storeFile starts");
         // We need to create a programmer, a cvTableModel, and a variableTableModel.
         // Doesn't matter which, so we'll use the Global programmer.
-        Programmer p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
         VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel);
 

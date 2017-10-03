@@ -63,7 +63,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     }
 
     /**
-     * Initilize the light object's parameters.
+     * Initialize the light object's parameters.
      */
     private synchronized void initializeLight(String systemName) {
         // Extract the Bit from the name
@@ -79,6 +79,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * instance variables to default values.
      * Note: most instance variables are in AbstractLight.java
      */
+
     /**
      * System dependent instance variables
      */
@@ -203,4 +204,5 @@ public class XNetLight extends AbstractLight implements XNetListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetLight.class);
+
 }

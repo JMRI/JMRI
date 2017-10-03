@@ -3,7 +3,7 @@ package jmri.jmrix.roco.z21;
 import java.util.ResourceBundle;
 import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
+import jmri.jmrix.lenz.XNetProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /*
-     * Override the init function for any subtype specific 
+     * Override the init function for any subtype specific
      * registration into init.  init is called by the generic contstructor.
      */
     protected void init() {
@@ -71,15 +71,15 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21ReporterManager _rm = null;
 
-    public ProgrammerManager getProgrammerManager() {
+    public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
         }
         return null;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(XNetProgrammerManager p) {
     }
 
     /**
@@ -95,7 +95,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
         }
         return false; // nothing, by default
     }
@@ -114,7 +114,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);
         }
         return null; // nothing, by default
     }
@@ -146,7 +146,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
            setReporterManager(new Z21ReporterManager(this));
            jmri.InstanceManager.store(getReporterManager(),jmri.ReporterManager.class);
         }
- 
+
    }
 
     @Override

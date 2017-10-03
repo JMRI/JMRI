@@ -11,11 +11,6 @@ import org.junit.Test;
  */
 public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("XpaMonPane exists",pane );
-    }
-
     // The minimal setup for log4J
     @Override
     @Before
@@ -24,7 +19,10 @@ public class XpaMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         jmri.jmrix.xpa.XpaSystemConnectionMemo memo = new jmri.jmrix.xpa.XpaSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.xpa.XpaSystemConnectionMemo.class,memo);
-        pane = new XpaMonPane();
+        // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
+        panel = pane = new XpaMonPane();
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
+        title = Bundle.getMessage("XpaMonFrameTitle");
     }
 
     @Override

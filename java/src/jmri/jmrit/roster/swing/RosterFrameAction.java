@@ -52,7 +52,7 @@ public class RosterFrameAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        mainFrame = new RosterFrame();
+        RosterFrame mainFrame = new RosterFrame();
         UserPreferencesManager p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new Dimension(1024, 600));
@@ -71,6 +71,4 @@ public class RosterFrameAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-
-    RosterFrame mainFrame;
 }

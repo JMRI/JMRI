@@ -2,6 +2,7 @@ package jmri.jmrix.acela;
 
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
+import jmri.Manager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for Acela
+     * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
@@ -46,28 +47,19 @@ public class AcelaLightManager extends AbstractLightManager {
         if (nAddress == -1) {
             return (null);
         }
-        int bitNum = AcelaAddress.getBitFromSystemName(systemName);
+        int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
 
-// Bob C: Fix this up  
-         /*
-         conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum,_memo);
-         if ( conflict != "" ) {
-            log.error("Assignment conflict with "+conflict+".  Light not created.");
-            throw new IllegalArgumentException("Assignment conflict with "+conflict+".  Light not created.");
-         }
-         */
         // Validate the systemName
-        if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix())) {
+        if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
             lgt = new AcelaLight(systemName, userName, _memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'L', _memo)) {
-                log.warn("Light System Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light System Name format: " + systemName);
             throw new IllegalArgumentException("Invalid Light System Name format: " + systemName);
         }
         return lgt;
@@ -79,7 +71,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
@@ -102,7 +94,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName));
+        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -113,7 +105,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return (AcelaAddress.convertSystemNameToAlternate(systemName));
+        return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     /**

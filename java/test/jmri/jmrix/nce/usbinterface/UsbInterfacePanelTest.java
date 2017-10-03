@@ -11,19 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class UsbInterfacePanelTest {
+public class UsbInterfacePanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        UsbInterfacePanel action = new UsbInterfacePanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new UsbInterfacePanel();
+        helpTarget="package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel";
+        title="NCE_: USB Interface Configuration";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -39,7 +39,7 @@ public interface PortAdapter {
     /**
      * Open the connection.
      *
-     * @throws java.lang.Exception if unable to connect
+     * @throws Exception if unable to connect
      */
     // TODO: this needs to use more specific exceptions
     public void connect() throws Exception;

@@ -189,10 +189,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     protected boolean skipIncludedTurnout = false;
 
-    //TODO: @deprecated // now private; use public getLEAuxTools() accessor instead
-    private transient LayoutEditorAuxTools auxTools = null;
-    private transient ConnectivityUtil conTools = null;
-
     private transient Font toolBarFont = null;
 
     private transient ButtonGroup itemGroup = null;
@@ -2130,8 +2126,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //initStringsToVTCodes
 
-    private transient LayoutEditorTools tools = null;
-    private AddEntryExitPairAction entryExit = null;
+    private transient AddEntryExitPairAction entryExit = null;
 
     protected void setupToolsMenu(@Nonnull JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
@@ -8785,6 +8780,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //
     // singleton (one per-LayoutEditor) accessors
     //
+    private transient ConnectivityUtil conTools = null;
     public ConnectivityUtil getConnectivityUtil() {
         if (conTools == null) {
             conTools = new ConnectivityUtil(this);
@@ -8792,6 +8788,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return conTools;
     } //getConnectivityUtil
 
+    private transient LayoutEditorTools tools = null;
     public LayoutEditorTools getLETools() {
         if (tools == null) {
             tools = new LayoutEditorTools(this);
@@ -8799,12 +8796,21 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         return tools;
     } //getLETools
 
+    private transient LayoutEditorAuxTools auxTools = null;
     public LayoutEditorAuxTools getLEAuxTools() {
         if (auxTools == null) {
             auxTools = new LayoutEditorAuxTools(this);
         }
         return auxTools;
     } //getLEAuxTools
+
+    private transient LayoutTrackEditors layoutTrackEditors = null;
+    public LayoutTrackEditors getLayoutTrackEditors() {
+        if (layoutTrackEditors == null) {
+            layoutTrackEditors = new LayoutTrackEditors(this);
+        }
+        return layoutTrackEditors;
+    }   // getLayoutTrackEditors
 
     /**
      * Invoked by DeletePanel menu item Validate user intent before deleting

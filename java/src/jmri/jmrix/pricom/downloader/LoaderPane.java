@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+import purejavacomm.*;
 
 /**
  * Pane for downloading software updates to PRICOM products
@@ -488,7 +488,7 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             //opened = true;
-        } catch (Exception ex) {
+        } catch (NoSuchPortException | UnsupportedCommOperationException | IOException | RuntimeException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;

@@ -137,7 +137,7 @@ public class AbstractAutomaton implements Runnable {
      * This is invoked on currentThread.
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE",
                 justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
     public void run() {
         try {
@@ -190,7 +190,7 @@ public class AbstractAutomaton implements Runnable {
 
         Thread stoppingThread = currentThread;
         currentThread = null;
-        
+
         try {
             stoppingThread.stop();
         } catch (java.lang.ThreadDeath e) {
@@ -315,16 +315,16 @@ public class AbstractAutomaton implements Runnable {
         return waiting;
     }
 
-    /** 
-     * Internal common routine to handle 
+    /**
+     * Internal common routine to handle
      * start-of-wait bookkeeping.
      */
     final private void startWait() {
         waiting = true;
     }
-     
-    /** 
-     * Internal common routine to handle 
+
+    /**
+     * Internal common routine to handle
      * end-of-wait bookkeeping.
      */
     final private void endWait() {
@@ -333,7 +333,7 @@ public class AbstractAutomaton implements Runnable {
         }
         waiting = false;
     }
-     
+
     /**
      * Part of the internal implementation, not intended for users.
      * <P>
@@ -757,7 +757,7 @@ public class AbstractAutomaton implements Runnable {
      * signal heads and/or turnouts) to change their state.
      * <p>
      * Registers a listener on each of the NamedBeans listed.
-     * The listener is likely to run in another thread. 
+     * The listener is likely to run in another thread.
      * Each fired listener then queues a check to the automaton's thread.
      *
      * @param mInputs  Array of NamedBeans to watch
@@ -768,7 +768,7 @@ public class AbstractAutomaton implements Runnable {
         if (!inThread) {
             log.warn("waitChange invoked from invalid context");
         }
-        
+
         int i;
         int[] tempState = waitChangePrecheckStates;
         // do we need to create it now?
@@ -795,7 +795,7 @@ public class AbstractAutomaton implements Runnable {
         } else {
             recreate = true;
         }
-        
+
         if (recreate) {
             // here, have to create a new state array
             log.trace("recreate state array");
@@ -805,12 +805,12 @@ public class AbstractAutomaton implements Runnable {
             }
         }
         waitChangePrecheckBeans = null;
-        waitChangePrecheckStates  = null;        
+        waitChangePrecheckStates  = null;
         final int[] initialState = tempState; // needs to be final for off-thread references
-        
+
         log.debug("waitChange[] starts for {} listeners", mInputs.length);
         waitChangeQueue.clear();
-        
+
         // register listeners
         PropertyChangeListener[] listeners = new PropertyChangeListener[mInputs.length];
         for (i = 0; i < mInputs.length; i++) {
@@ -821,7 +821,7 @@ public class AbstractAutomaton implements Runnable {
         }
 
         log.trace("waitChange[] listeners registered");
-        
+
         // queue a check for whether there was a change while registering
         jmri.util.ThreadingUtil.runOnLayoutEventually(
             () -> {
@@ -867,7 +867,7 @@ public class AbstractAutomaton implements Runnable {
 
     NamedBean[] waitChangePrecheckBeans = null;
     int[] waitChangePrecheckStates  = null;
-    java.util.concurrent.BlockingQueue<PropertyChangeEvent> waitChangeQueue = 
+    java.util.concurrent.BlockingQueue<PropertyChangeEvent> waitChangeQueue =
             new java.util.concurrent.ArrayBlockingQueue<PropertyChangeEvent>(5);
 
     /**
@@ -882,9 +882,9 @@ public class AbstractAutomaton implements Runnable {
         for (int i = 0 ; i < mInputs.length; i++) {
             waitChangePrecheckBeans[i] = mInputs[i];
             waitChangePrecheckStates[i] = mInputs[i].getState();
-        }       
+        }
     }
-    
+
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads
      * and/or turnouts) to change, or for a specific time to pass.
@@ -1085,7 +1085,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public boolean writeServiceModeCV(String CV, int value) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        Programmer programmer = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
 
         if (programmer == null) {
@@ -1120,7 +1120,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public int readServiceModeCV(String CV) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        Programmer programmer = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
 
         if (programmer == null) {
@@ -1157,7 +1157,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public boolean writeOpsModeCV(String CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        Programmer programmer = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(longAddress, loco);
 
         if (programmer == null) {

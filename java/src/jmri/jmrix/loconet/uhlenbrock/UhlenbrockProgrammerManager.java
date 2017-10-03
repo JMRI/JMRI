@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.SlotManager;
  * Extend LnProgrammerManager to disable on-the-track programming, which is not
  * supported by IB-COM or Intellibox II
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author Lisby Copyright (C) 2014
  * 
  */

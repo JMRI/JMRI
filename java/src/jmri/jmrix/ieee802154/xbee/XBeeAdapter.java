@@ -12,7 +12,7 @@ import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
 import purejavacomm.SerialPortEvent;
 import purejavacomm.SerialPortEventListener;
-import purejavacomm.UnsupportedCommOperationException;
+import purejavacomm.*;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial comm port.
@@ -168,40 +168,21 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         
 
         if (log.isDebugEnabled()) {
-            try {
-                activeSerialPort.notifyOnFramingError(true);
-            } catch (Exception e) {
-                log.debug("Could not notifyOnFramingError: " + e);
-            }
-            try {
-                activeSerialPort.notifyOnBreakInterrupt(true);
-            } catch (Exception e) {
-                log.debug("Could not notifyOnBreakInterrupt: " + e);
-            }
-            try {
-                activeSerialPort.notifyOnParityError(true);
-            } catch (Exception e) {
-                log.debug("Could not notifyOnParityError: " + e);
-            }
-            try {
-                activeSerialPort.notifyOnOverrunError(true);
-            } catch (Exception e) {
-                log.debug("Could not notifyOnOverrunError: " + e);
-            }
+            activeSerialPort.notifyOnFramingError(true);
+            activeSerialPort.notifyOnBreakInterrupt(true);
+            activeSerialPort.notifyOnParityError(true);
+            activeSerialPort.notifyOnOverrunError(true);
         }
 
         activeSerialPort.enableReceiveTimeout(10);
 
         // The following are required for the XBee API's input thread.
-        try {
-           activeSerialPort.notifyOnDataAvailable(true);
-        } catch (Exception e) {
-           log.debug("Could not notifyOnDataAvailable: " + e);
-        }
+        activeSerialPort.notifyOnDataAvailable(true);
+
         // arrange to notify later
         try {
             activeSerialPort.addEventListener(this);
-        } catch (java.lang.Exception e) {
+        } catch (java.util.TooManyListenersException e) {
             log.error("Exception adding listener " + e);
         }
     }

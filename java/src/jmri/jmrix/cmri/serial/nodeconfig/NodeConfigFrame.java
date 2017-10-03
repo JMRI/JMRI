@@ -6,11 +6,14 @@ import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
@@ -30,27 +33,27 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
-    protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000"); // NOI18N
-    protected javax.swing.JComboBox<String> nodeTypeBox;
-    protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
-    protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
-    protected javax.swing.JComboBox<String> cardSizeBox;
-    protected javax.swing.JLabel cardSizeText = new javax.swing.JLabel("   " + Bundle.getMessage("LabelCardSize")); // NOI18N
+    protected JTextField nodeAddrField = new JTextField(3);
+    protected JLabel nodeAddrStatic = new JLabel("000"); // NOI18N
+    protected JComboBox<String> nodeTypeBox;
+    protected JTextField receiveDelayField = new JTextField(3);
+    protected JTextField pulseWidthField = new JTextField(4);
+    protected JComboBox<String> cardSizeBox;
+    protected JLabel cardSizeText = new JLabel("   " + Bundle.getMessage("LabelCardSize")); // NOI18N
 
-    protected javax.swing.JButton addButton = new javax.swing.JButton(Bundle.getMessage("ButtonAdd")); // NOI18N
-    protected javax.swing.JButton editButton = new javax.swing.JButton(Bundle.getMessage("ButtonEdit")); // NOI18N
-    protected javax.swing.JButton deleteButton = new javax.swing.JButton(Bundle.getMessage("ButtonDelete")); // NOI18N
-    protected javax.swing.JButton doneButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone")); // NOI18N
-    protected javax.swing.JButton updateButton = new javax.swing.JButton(Bundle.getMessage("ButtonUpdate")); // NOI18N
-    protected javax.swing.JButton cancelButton = new javax.swing.JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
+    protected JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // NOI18N
+    protected JButton editButton = new JButton(Bundle.getMessage("ButtonEdit")); // NOI18N
+    protected JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete")); // NOI18N
+    protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone")); // NOI18N
+    protected JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate")); // NOI18N
+    protected JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
 
-    protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
+    protected JLabel statusText1 = new JLabel();
+    protected JLabel statusText2 = new JLabel();
+    protected JLabel statusText3 = new JLabel();
 
-    protected javax.swing.JPanel panel2 = new JPanel();
-    protected javax.swing.JPanel panel2a = new JPanel();
+    protected JPanel panel2 = new JPanel();
+    protected JPanel panel2a = new JPanel();
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
@@ -76,9 +79,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     private CMRISystemConnectionMemo _memo = null;
 
-    /**
-     * Constructor method
-     */
     public NodeConfigFrame(CMRISystemConnectionMemo memo) {
         super();
         _memo = memo;
@@ -120,7 +120,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("SMINI"); // NOI18N
         nodeTypeBox.addItem("USIC_SUSIC"); // NOI18N
-// Here add code for other types of nodes
+        // Here add code for other types of nodes
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
@@ -138,7 +138,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     cardSizeBox.setVisible(true);
                     nodeType = SerialNode.USIC_SUSIC;
                 }
-// Here add code for other types of nodes
+                // Here add code for other types of nodes
                 // reset notes as appropriate
                 resetNotes();
             }
@@ -155,7 +155,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel12.add(cardSizeBox);
         cardSizeBox.addItem(Bundle.getMessage("CardSize24")); // NOI18N
         cardSizeBox.addItem(Bundle.getMessage("CardSize32")); // NOI18N
-// here add code for other node types, if required
+        // here add code for other node types, if required
         cardSizeBox.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent event) {
@@ -355,11 +355,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // error if a SerialNode corresponding to this node address exists
-        if ( _memo == null || _memo.getTrafficController() == null) {
+        if (_memo == null || _memo.getTrafficController() == null) {
             // shouldn't happen
-            log.error("Not properly set up: _memo {}", _memo, new Exception("Traceback"));
+            log.error("Not properly set up: _memo {}", _memo, new NullPointerException());
+            return;
         }
-        
+
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
             statusText1.setText(Bundle.getMessage("Error1") + Integer.toString(nodeAddress) // NOI18N
@@ -382,13 +383,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // all ready, create the new node
-        curNode = new SerialNode(nodeAddress, nodeType,_memo.getTrafficController());
+        curNode = new SerialNode(nodeAddress, nodeType, _memo.getTrafficController());
 
         // configure the new node
         setNodeParameters();
         // register any orphan sensors that this node may have
-        if (_memo != null && _memo.getSensorManager() != null)
-            ((SerialSensorManager)_memo.getSensorManager()).registerSensorsForNode(curNode);
+        if (_memo != null && _memo.getSensorManager() != null) {
+            ((SerialSensorManager) _memo.getSensorManager()).registerSensorsForNode(curNode);
+        }
         // reset after succefully adding node
         resetNotes();
         changedNode = true;
@@ -480,7 +482,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         } else if (nodeType == SerialNode.SMINI) {
             panel2a.setVisible(true);
         }
-// here insert code for other node types        
+// here insert code for other node types
         // Switch buttons
         editMode = true;
         addButton.setVisible(false);
@@ -514,11 +516,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // confirm deletion with the user
-        if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
-                this, Bundle.getMessage("ConfirmDelete1") + "\n"        // NOI18N
+        if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+                this, Bundle.getMessage("ConfirmDelete1") + "\n" // NOI18N
                 + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"), // NOI18N
-                javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE)) {
             // delete this node
             _memo.getTrafficController().deleteNode(nodeAddress);
             // provide user feedback
@@ -538,7 +540,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
-            // Reset 
+            // Reset
             editMode = false;
             curNode = null;
             // Switch buttons
@@ -553,10 +555,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         if (changedNode) {
             // Remind user to Save new configuration
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2", Bundle.getMessage("ButtonSave")), // NOI18N
                     Bundle.getMessage("ReminderTitle"), // NOI18N
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
         dispose();
@@ -594,7 +596,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again 
+        // make node address editable again
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -610,7 +612,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Handle click on the Cancel button.
      */
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         editMode = false;
         curNode = null;
         // Switch buttons
@@ -620,7 +622,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again 
+        // make node address editable again
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -639,9 +641,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set node parameters.
-     * The node must exist, and be in 'curNode'
-     * Also, the node type must be set and in 'nodeType'.
+     * Set node parameters. The node must exist, and be in 'curNode' Also, the
+     * node type must be set and in 'nodeType'.
      */
     void setNodeParameters() {
         // receive delay is common for all node types
@@ -667,7 +668,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         }
                     }
                 }
-                // Add needed searchlights that are not already configured    
+                // Add needed searchlights that are not already configured
                 for (int i = 0; i < 47; i++) {
                     if (firstSearchlight[i]) {
                         if (!curNode.isSearchLightBit(i)) {
@@ -750,9 +751,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Read node address and check for legal range.
      *
-     * @return if successful, a node address in the range
-     * 0-127 is returned. If not successful, -1 is returned
-     * and an appropriate error message is placed in statusText1.
+     * @return if successful, a node address in the range 0-127 is returned. If
+     *         not successful, -1 is returned and an appropriate error message
+     *         is placed in statusText1.
      */
     private int readNodeAddress() {
         int addr = -1;
@@ -776,9 +777,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read receive delay from window.
-     * If an error is detected, a suitable error message is placed
-     * in the Notes area.
+     * Read receive delay from window. If an error is detected, a suitable error
+     * message is placed in the Notes area.
      *
      * @return 'true' if successful, 'false' if an error was detected.
      */
@@ -815,9 +815,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read pulse width from window.
-     * If an error is detected, a suitable error message is placed
-     * in the Notes area.
+     * Read pulse width from window. If an error is detected, a suitable error
+     * message is placed in the Notes area.
      *
      * @return 'true' if successful, 'false' if an error was detected.
      */
@@ -856,9 +855,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Check for consistency errors by node type.
-     * If an error is detected, a suitable error message is placed
-     * in the Notes area.
+     * Check for consistency errors by node type. If an error is detected, a
+     * suitable error message is placed in the Notes area.
      *
      * @return 'true' if successful, 'false' if an error was detected.
      */
@@ -928,14 +926,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     int numInput = curNode.numInputCards();
                     // will the number of cards be reduced by this edit?
                     if (numCards < (numOutput + numInput)) {
-                        if (javax.swing.JOptionPane.NO_OPTION
-                                == javax.swing.JOptionPane.showConfirmDialog(this,
+                        if (JOptionPane.NO_OPTION
+                                == JOptionPane.showConfirmDialog(this,
                                         Bundle.getMessage("ConfirmUpdate1") + "\n" // NOI18N
                                         + Bundle.getMessage("ConfirmUpdate2") + "\n" // NOI18N
                                         + Bundle.getMessage("ConfirmUpdate3"), // NOI18N
                                         Bundle.getMessage("ConfirmUpdateTitle"), // NOI18N
-                                        javax.swing.JOptionPane.YES_NO_OPTION,
-                                        javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                                        JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.WARNING_MESSAGE)) {
                             // user said don't update - cancel the update
                             return (false);
                         }
@@ -1001,7 +999,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public static final int TYPE_COLUMN = 1;
     }
     private String[] cardConfigColumnNames = {Bundle.getMessage("HeadingCardAddress"),
-            Bundle.getMessage("HeadingCardType")};
+        Bundle.getMessage("HeadingCardType")};
     private String[] cardType = new String[64];
 
     /**

@@ -33,7 +33,7 @@ public class PanelMenu extends JMenu {
      */
     public PanelMenu() {
 
-        this.setText(Bundle.getMessage("MenuPanels"));
+        super.setText(Bundle.getMessage("MenuPanels"));
 
         // new panel is a submenu
         //add(new jmri.jmrit.display.NewPanelAction());
@@ -42,23 +42,23 @@ public class PanelMenu extends JMenu {
         newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(Bundle.getMessage("ControlPanelEditor")));
         newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(Bundle.getMessage("LayoutEditor")));
         newPanel.add(new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction(Bundle.getMessage("SwitchboardEditor")));
-        add(newPanel);
+        super.add(newPanel);
 
-        add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
-        add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
-        add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("MenuItemShowHistory")));
-        add(new JSeparator());
+        super.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
+        super.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        super.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("MenuItemShowHistory")));
+        super.add(new JSeparator());
         panelsSubMenu = new JMenu(Bundle.getMessage("MenuShowPanel"));
         // Add the 'No Panels' item to the sub-menu
         noPanelsItem = new JMenuItem(Bundle.getMessage("MenuItemNoPanels"));
         noPanelsItem.setEnabled(false);
         panelsSubMenu.add(noPanelsItem);
-        add(panelsSubMenu);
-        add(new JSeparator());
-        add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemScript")));
-        add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
-        add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
-        add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
+        super.add(panelsSubMenu);
+        super.add(new JSeparator());
+        super.add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemScript")));
+        super.add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
+        super.add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
+        super.add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
     }
 
     // operational variables
@@ -215,12 +215,9 @@ public class PanelMenu extends JMenu {
             return false;
         }
         for (int i = 0; i < panelsList.size(); i++) {
-            try {
-                Editor editor = panelsList.get(i);
-                if (editor.getTargetFrame().getTitle().equals(name)) {
-                    return true;
-                }
-            } catch (Exception e) {
+            Editor editor = panelsList.get(i);
+            if (editor.getTargetFrame().getTitle().equals(name)) {
+                return true;
             }
         }
         return false;
@@ -231,12 +228,9 @@ public class PanelMenu extends JMenu {
             return null;
         }
         for (int i = 0; (i < panelsList.size()); i++) {
-            try {
-                Editor editor = panelsList.get(i);
-                if (editor.getTargetFrame().getTitle().equals(name)) {
-                    return editor;
-                }
-            } catch (Exception e) {
+            Editor editor = panelsList.get(i);
+            if (editor.getTargetFrame().getTitle().equals(name)) {
+                return editor;
             }
         }
         return null;
@@ -248,13 +242,9 @@ public class PanelMenu extends JMenu {
 
     public ArrayList<LayoutEditor> getLayoutEditorPanelList() {
         ArrayList<LayoutEditor> lePanelsList = new ArrayList<>();
-        for (int i = 0; (i < panelsList.size()); i++) {
-            try {
-                LayoutEditor le = (LayoutEditor) panelsList.get(i);
-                lePanelsList.add(le);
-            } catch (Exception e) {
-            }
-        }
+        panelsList.stream().filter((e) -> (e instanceof LayoutEditor)).forEachOrdered((e) -> {
+            lePanelsList.add((LayoutEditor) e);
+        });
         return lePanelsList;
     }
 

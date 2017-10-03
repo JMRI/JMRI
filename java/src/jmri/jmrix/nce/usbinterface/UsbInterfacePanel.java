@@ -71,13 +71,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("UsbInterface initContext failed");
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 
@@ -100,7 +96,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     @Override
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
 
@@ -185,8 +181,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             } else {
                 statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabIdEntered"), i));
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             // presume it failed to convert.
+            log.debug("failed to convert {}", i);
         }
     }
 

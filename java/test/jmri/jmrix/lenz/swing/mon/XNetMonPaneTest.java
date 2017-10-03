@@ -18,11 +18,6 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
     @Test
-    public void testCtor() {
-        Assert.assertNotNull(pane);
-    }
-
-    @Test
     public void testDefault() {
         jmri.util.swing.JmriNamedPaneAction f = new XNetMonPane.Default();
         Assert.assertNotNull(f);
@@ -36,7 +31,10 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
         jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
         jmri.InstanceManager.store(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
-        pane = new XNetMonPane();
+        // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
+        panel = pane = new XNetMonPane();
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
+        title = Bundle.getMessage("MenuItemXNetCommandMonitor");
     }
 
     @After

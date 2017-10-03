@@ -978,6 +978,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
         } else {
+            String ending = " " + Bundle.getMessage("LabelEditor");
+            if (name.endsWith(ending)) {
+                name = name.substring(0, name.length() - ending.length());
+            }
             super.setTitle(name);
         }
     }
@@ -1184,13 +1188,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         repaint();
     }
 
-    /**
-     * Handle mouse events.
-     *
-     * @param event the moust event to handle
-     */
+    ///////////////// Handle mouse events ////////////////
+
+    private long _mouseDownTime = 0;
     @Override
     public void mousePressed(MouseEvent event) {
+        _mouseDownTime = System.currentTimeMillis();
         setToolTip(null); // ends tooltip if displayed
         log.debug("mousePressed at ({},{}) _dragging={}", event.getX(), event.getY(), _dragging);
         //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
@@ -1231,6 +1234,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void mouseReleased(MouseEvent event) {
+        _mouseDownTime = 0;
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) { // avoid string concatination if not debug
             log.debug("mouseReleased at ({},{}) dragging={}, pastePending={}, selectRect is{} null",
@@ -1254,9 +1258,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 pasteItems();
             }
             if (isEditable()) {
-                if (_shapeDrawer.doMouseReleased(selection, event)) {
-                    _selectRect = null;
-                }
+                _shapeDrawer.doMouseReleased(selection, event, this);
+                
                 if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
                     if (selection != null) {
                         if (!_dragging) {
@@ -1312,7 +1315,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         log.debug("mouseClicked at ({},{})", event.getX(), event.getY());
 
         Positionable selection = getCurrentSelection(event);
-        if (_shapeDrawer.doMouseClicked(event)) {
+        if (_shapeDrawer.doMouseClicked(event, this)) {
             return;
         }
 
@@ -1341,6 +1344,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void mouseDragged(MouseEvent event) {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")");
         setToolTip(null); // ends tooltip if displayed
+
+        long time = System.currentTimeMillis();
+        if (time - _mouseDownTime < 50) {
+            return;     // don't drag until sure mouse down was not just a select click
+        }
 
         if (_circuitBuilder.doMouseDragged(_currentSelection, event)) {
             return;
@@ -1444,11 +1452,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     @Override
     protected void paintTargetPanel(Graphics g) {
         // needed to create PositionablePolygon
-        _shapeDrawer.paint(g);
-        if (_secondSelectionGroup != null) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(new Color(150, 150, 255));
-            g2d.setStroke(new java.awt.BasicStroke(2.0f));
+        _shapeDrawer.paint(g);  // adds to rubber band line
+        if (_secondSelectionGroup != null) {    // CircuitBuilder highlights
+            if (g instanceof Graphics2D) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setStroke(new java.awt.BasicStroke(2.0f));
+                
+            }
+            g.setColor(new Color(150, 150, 255));
             for (Positionable p : _secondSelectionGroup) {
                 if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
                     g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
