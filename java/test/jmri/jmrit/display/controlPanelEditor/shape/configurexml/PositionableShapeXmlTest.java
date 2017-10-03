@@ -20,7 +20,7 @@ public class PositionableShapeXmlTest {
     public void testCtor() {
         Assert.assertNotNull("PositionableShapeXml constructor", new PositionableShapeXml() {
             @Override
-            public void load(Element e, Object o) throws Exception {
+            public void load(Element e, Object o) {
                 // do nothing
             }
         });

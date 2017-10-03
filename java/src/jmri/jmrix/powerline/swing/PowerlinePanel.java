@@ -19,13 +19,19 @@ abstract public class PowerlinePanel extends jmri.util.swing.JmriPanel implement
      */
     protected SerialSystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(SerialSystemConnectionMemo memo) throws Exception {
+    public void initComponents(SerialSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof SerialSystemConnectionMemo) {
             try {
                 initComponents((SerialSystemConnectionMemo) context);

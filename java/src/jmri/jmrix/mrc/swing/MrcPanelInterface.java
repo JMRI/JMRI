@@ -18,8 +18,7 @@ public interface MrcPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      * @param memo system connection memo
-     * @throws Exception float exceptions upwards
      */
-    public void initComponents(MrcSystemConnectionMemo memo) throws Exception;
+    public void initComponents(MrcSystemConnectionMemo memo);
 
 }

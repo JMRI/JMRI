@@ -7,7 +7,7 @@ import jmri.managers.DefaultProgrammerManager;
 /**
  * Extend DefaultProgrammerManager to provide node variable programmer for CBUS
  *
- * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusProgrammerManager extends DefaultProgrammerManager {

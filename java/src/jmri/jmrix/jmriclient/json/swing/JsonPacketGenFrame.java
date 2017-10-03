@@ -37,8 +37,11 @@ class JsonPacketGenFrame extends JmriJFrame implements JsonClientListener {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // set the frame's initial state
 
         this.jLabel1.setText("Command:");
@@ -82,10 +85,16 @@ class JsonPacketGenFrame extends JmriJFrame implements JsonClientListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(JsonClientMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(JsonClientReply r) {
     } // ignore replies
@@ -95,11 +104,17 @@ class JsonPacketGenFrame extends JmriJFrame implements JsonClientListener {
         this.trafficController = t;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(JsonNode message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(JsonNode reply) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -56,8 +56,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     int previousGroupChannel;
 //    Dimension channelTextSize;
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         int i;
         int j;
         int minWindowWidth = 0;
@@ -166,16 +169,25 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel"; // NOI18N
     } // NOI18N
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return rb.getString("Title");
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);

@@ -86,8 +86,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(rb.getString("WindowTitle"));
@@ -323,31 +326,49 @@ public class ListFrame extends jmri.util.JmriJFrame {
         private int curRow = -1;
         private String curRowSysName = "";
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public String getColumnName(int c) {
             return assignmentTableColumnNames[c];
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public boolean isCellEditable(int r, int c) {
             return false;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public int getColumnCount() {
             return 4;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public int getRowCount() {
             return numBits;
         }
 
+        /** 
+         * {@inheritDoc}
+         */
         @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {

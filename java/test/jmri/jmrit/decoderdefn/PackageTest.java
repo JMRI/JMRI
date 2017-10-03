@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn");
-        suite.addTest(IdentifyDecoderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IdentifyDecoderTest.class));
         suite.addTest(DecoderIndexFileTest.suite());
         suite.addTest(DecoderFileTest.suite());
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));

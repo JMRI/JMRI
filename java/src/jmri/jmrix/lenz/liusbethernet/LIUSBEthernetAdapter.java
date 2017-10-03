@@ -39,7 +39,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
         keepAliveTimer();

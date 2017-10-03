@@ -29,8 +29,11 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText(Bundle.getMessage("CommandLabel"));
@@ -55,13 +58,15 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
 
+            /**
+             * {@inheritDoc}
+             */
             @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendButtonActionPerformed(e);
                     }
                 }
         );
-
 
         // pack for display
         pack();
@@ -126,10 +131,16 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(AcelaMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(AcelaReply r) {
     } // ignore replies

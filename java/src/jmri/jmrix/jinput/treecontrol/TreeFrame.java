@@ -14,8 +14,11 @@ public class TreeFrame extends JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(rb.getString("WindowTitle"));

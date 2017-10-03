@@ -18,7 +18,7 @@ public class PreferencesFrame extends jmri.util.JmriJFrame {
     JButton sendButton;
     PreferencesPane preferencesPane;
 
-    public void initComponents(EcosSystemConnectionMemo adaptermemo) throws Exception {
+    public void initComponents(EcosSystemConnectionMemo adaptermemo) {
         // the following code sets the frame's initial state
 
         preferencesPane = new PreferencesPane(adaptermemo.getPreferenceManager());

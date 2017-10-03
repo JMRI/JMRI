@@ -26,8 +26,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         _memo = memo;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -85,12 +88,20 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
         return m;
     }
 
+    /** 
+     * {@inheritDoc}
+     * Ignores messages.
+     */
     @Override
     public void message(QsiMessage m) {
-    }  // ignore replies
+    }
 
+    /** 
+     * {@inheritDoc}
+     * Ignores replies.
+     */
     @Override
     public void reply(QsiReply r) {
-    } // ignore replies
+    }
 
 }

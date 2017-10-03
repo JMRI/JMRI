@@ -41,7 +41,7 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = false;
         StartupPauseModel model = new StartupPauseModel();
         int delay = 0;

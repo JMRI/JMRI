@@ -102,7 +102,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     static public Message getReadCV(int cv, ProgrammingMode mode) {
         Message m = new Message(5);
-        if (mode.equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');
@@ -114,7 +114,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     static public Message getWriteCV(int cv, int val, ProgrammingMode mode) {
         Message m = new Message(9);
-        if (mode.equals(DefaultProgrammerManager.PAGEMODE)) {
+        if (mode.equals(ProgrammingMode.PAGEMODE)) {
             m.setOpCode('V');
         } else { // Bit direct mode
             m.setOpCode('C');

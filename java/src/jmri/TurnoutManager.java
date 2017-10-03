@@ -228,15 +228,6 @@ public interface TurnoutManager extends Manager<Turnout> {
      */
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
-//    /**
-//     * Test if parameter is a properly formatted hardware address
-//     *
-//     * @param address the system name suffix
-//     * @return enum indicating current validity
-//     */
-    //@CheckReturnValue
-    //public NameValidity validAddressFormat(@Nonnull String address);
-
     /**
      * Determine if the address supplied is valid and free, if not then it shall
      * return the next free valid address up to a maximum of 10 address away

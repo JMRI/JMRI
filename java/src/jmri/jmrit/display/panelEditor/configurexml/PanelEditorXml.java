@@ -75,7 +75,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                     if (e != null) {
                         panel.addContent(e);
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error("Error storing panel element: " + e);
                     e.printStackTrace();
                 }
@@ -208,7 +208,9 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                        | jmri.configurexml.JmriConfigureXmlException 
+                        | RuntimeException e) {
                 log.error("Exception while loading " + item.getName() + ":" + e);
                 result = false;
                 e.printStackTrace();

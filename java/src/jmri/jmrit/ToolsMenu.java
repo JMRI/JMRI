@@ -3,6 +3,7 @@ package jmri.jmrit;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
+import jmri.InstanceManager;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -34,7 +35,8 @@ public class ToolsMenu extends JMenu {
         add(programmerMenu);
 
         // disable programmer menu if there's no programmer manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null) {
+        if (InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
+                && InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null) {
             programmerMenu.setEnabled(false);
         }
 

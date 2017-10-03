@@ -92,7 +92,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         // Connect to the choosen XpressNet/TCP interface
         int ind;
         // Retrieve XnTcp interface name from Option1
