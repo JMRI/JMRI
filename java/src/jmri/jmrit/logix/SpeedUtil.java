@@ -1,24 +1,22 @@
 package jmri.jmrit.logix;
 
-import java.awt.event.ActionEvent;
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +44,14 @@ public class SpeedUtil {
 //    private TreeMap<Integer, SpeedStep> _speedTree;
     private DccThrottle _throttle;
     private float _stepIncrement;   // decoder throttle step interval
-    private float _stepRampThrottleIncrement;
-    private int _stepRampTimeIncrement;
+    private float _stepRampThrottleIncrement;   // user specified throttle increment for ramping
+    private int _stepRampTimeIncrement; // user specified time for ramp step increment
     private RosterSpeedProfile _speedProfile; // merge of existing Roster speeedProfile and session speeedProfile
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap; 
-    private float _mf;
+    private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount 
+    private int _md;  // milliseconds needed to decrease speed by _stepRampThrottleIncrement amount
+    private int _mp;  // default milliseconds needed to change speed by _stepRampThrottleIncrement amount
 
     public static float SCALE_FACTOR = 125; // divided by _scale, gives a rough correction for track speed
 
@@ -92,6 +92,7 @@ public class SpeedUtil {
             if (id != null) {
                 _rosterId = id;
                 makeSpeedTree();
+                makeRampParameters();
             } else {
                 _rosterId = null;
                 _rosterEntry = null;
@@ -190,66 +191,30 @@ public class SpeedUtil {
 
     // Possibly customize these ramping values per warrant or loco later
     // for now use global values set in WarrantPreferences
+    // user's ramp speed increase amount
     protected float getRampThrottleIncrement() {
         return _stepRampThrottleIncrement;
     }
     protected int getRampTimeIncrement() {
         return _stepRampTimeIncrement;
     }
-    protected float getMomentumFactor() {
-        return _mf;
-    }
-
-    /**
-     * Must be called from eventThread
-     * @param frame JmriJFrame caller
-     * @return speedProfile
-     */
-    protected RosterSpeedProfile getValidSpeedProfile(java.awt.Frame frame) {
-        RosterSpeedProfile speedProfile = getSpeedProfile();
-        HashMap<Integer, Boolean> anomalies = MergePrompt.validateSpeedProfile(speedProfile, _rosterId);
-        if (anomalies.size() > 0) {
-            if (log.isDebugEnabled()) log.debug("getValidSpeedProfile for {} #anomalies={} on Gui {}",
-                    _rosterId, anomalies.size(), jmri.util.ThreadingUtil.isLayoutThread());
-            if (jmri.util.ThreadingUtil.isLayoutThread()) { // safety
-                JDialog dialog = new JDialog(frame, Bundle.getMessage("viewTitle", _rosterId), true);
-                JButton ok = new JButton(Bundle.getMessage("ButtonDone"));
-                ok.addActionListener((ActionEvent evt) -> {
-                    dialog.dispose();
-                });
-                JPanel p = new JPanel();
-                p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-                JLabel l = new JLabel(Bundle.getMessage("anomaly",_rosterId));
-                l.setForeground(java.awt.Color.RED);
-                l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-                p.add(l);
-                JLabel label = new JLabel(Bundle.getMessage("deletePrompt1"));
-                label.setForeground(java.awt.Color.RED);
-                label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-                p.add(label);
-                label = new JLabel(Bundle.getMessage("deletePrompt2"));
-                label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-                p.add(label);
-                label = new JLabel(Bundle.getMessage("deletePrompt3"));
-                label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-                p.add(label);
-
-                JPanel panel = new JPanel();
-                panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-                panel.add(p);
-                panel.add(new SpeedProfilePanel(speedProfile, anomalies));
-                panel.add(ok);
-                dialog.getContentPane().add(panel);
-                dialog.pack();
-                dialog.setVisible(true);
-            }
+    protected float getMomentumTime(boolean increasing) {
+        if (increasing) {
+            return _ma;            
+        } else {
+            return _md;
         }
-        return _speedProfile;
     }
 
-    private RosterSpeedProfile getSpeedProfile() {
+    // throttle's minimum speed increase amount 
+    protected float getSpeedStep() {
+        return _stepIncrement;
+    }
+
+    protected RosterSpeedProfile getSpeedProfile() {
         if (_speedProfile == null) {
             makeSpeedTree();
+            makeRampParameters();
         }
         return _speedProfile;
     }
@@ -278,15 +243,98 @@ public class SpeedUtil {
                 }
             }
         }
-        WarrantPreferences preferences = WarrantPreferences.getDefault();
-        _stepRampTimeIncrement = preferences.getTimeIncrement();
-        _stepRampThrottleIncrement = preferences.getThrottleIncrement();
-        _mf = preferences.getMomentumFactor();
         _signalSpeedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
         if (log.isDebugEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to m/s= {}",
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
                 _signalSpeedMap.getDefaultThrottleFactor() * _signalSpeedMap.getLayoutScale() / SCALE_FACTOR);
+    }
+    
+    private void makeRampParameters() {
+        WarrantPreferences preferences = WarrantPreferences.getDefault();
+        _stepRampTimeIncrement = preferences.getTimeIncrement();
+        _stepRampThrottleIncrement = preferences.getThrottleIncrement();
+        // Can't use actual speed step amount since these numbers are needed before throttle is acquired
+        // Nevertheless throttle % is a reasonable approximation
+        // default cv setting of momentum speed change per 1% of throttle increment
+        _mp = (int)(6300 * _stepRampThrottleIncrement);
+        _ma = _mp;  // acceleration momentum time
+        _md = _mp;  // deceleration momentum time
+        if (_stepRampTimeIncrement < _mp) {
+            _stepRampTimeIncrement = _mp;
+        }
+        if (_rosterEntry!=null) {
+            String fileName = jmri.jmrit.roster.LocoFile.getFileLocation() + _rosterEntry.getFileName();
+            File file;
+            Element root;
+            XmlFile xmlFile = new XmlFile() {};
+            try {
+                file = new File(fileName);
+                if (file.length() == 0) {
+                    return;
+                }
+                root = xmlFile.rootFromFile(file);
+            } catch (NullPointerException npe) { 
+                return;
+            } catch (IOException | JDOMException eb) {
+                log.error("Exception while loading warrant preferences: " + eb);
+                return;
+            }
+            if (root == null) {
+                return;
+            }
+            Element child = root.getChild("locomotive");
+            if (child == null) {
+                return;
+            }
+            child = child.getChild("values");
+            if (child == null) {
+                return;
+            }
+            List<Element> list = child.getChildren("CVvalue");
+            int count = 0;
+            for (Element cv : list) {
+                Attribute attr = cv.getAttribute("name");
+                if (attr != null) {
+                    if (attr.getValue().equals("3")) {
+                        _ma = getMomentumFactor(cv);
+                        if (_stepRampTimeIncrement < _ma) {
+                            _stepRampTimeIncrement = _ma;
+                        }
+                       count++;
+                    }
+                    if (attr.getValue().equals("4")) {
+                        _md = getMomentumFactor(cv);
+                        if (_stepRampTimeIncrement < _md) {
+                            _stepRampTimeIncrement = _md;
+                        }
+                        count++;
+                    }
+                }
+                if (count > 1) {
+                    break;
+                }
+            }
+            if (log.isDebugEnabled()) log.debug("makeRampParameters for {} _mp= {}ms, _ma= {}ms, _md= {}ms. rampIncr= {}",
+                    _rosterId, _mp, _ma, _md, _stepRampThrottleIncrement);
+        }
+    }
+    
+    private int getMomentumFactor(Element cv) {
+        Attribute attr = cv.getAttribute("value");
+        if (attr != null) {
+            try {
+                int num = Integer.parseInt( attr.getValue());
+                // even with instant speed change, allow some time for new speed to be attained
+                // therefore .896 factor is ignored and 30ms added per 1% of throttle increment
+                return (int) ((num + 1) * _stepRampThrottleIncrement * 896); 
+            } catch (NumberFormatException nfe) {
+                return _mp;
+            }
+        } else {
+            return _mp;
+        }
+       
     }
     
     protected boolean profileHasSpeedInfo(boolean isForward) {
@@ -482,7 +530,7 @@ public class SpeedUtil {
     }
 
     /**
-     * Get time needed to travel a distance.
+     * Get time needed to travel a distance at a constant speed.
      * @param throttleSetting Throttle setting
      * @param distance in millimeters
      * @param isForward direction
@@ -505,7 +553,8 @@ public class SpeedUtil {
      * @param isForward direction
      * @return distance in millimeters
      */
-    protected float rampLengthForSpeedChange(float curSetting, String curSpeedType, String toSpeedType, boolean isForward) {
+    protected float rampLengthForRampDown(float curSetting, String curSpeedType, String toSpeedType,
+            boolean isForward) {
         if (curSpeedType.equals(toSpeedType)) {
             return 0.0f;
         }
@@ -516,36 +565,60 @@ public class SpeedUtil {
             fromSpeed = toSpeed;
             toSpeed = tmp;
         }
+        return rampLengthForSpeedChange(fromSpeed, toSpeed, isForward);
+    }
+
+    protected float rampLengthForSpeedChange(float fromSpeed, float toSpeed, boolean isForward) {
         float rampLength = 0.0f;
-        int deltaTime = getRampTimeIncrement();
+        float deltaTime = getRampTimeIncrement();
         float deltaThrottle = getRampThrottleIncrement();
-        float mf = getMomentumFactor();
-        float speed = toSpeed;
         int numSteps = 0;
-        while (speed + deltaThrottle <= fromSpeed) {
-            speed += deltaThrottle;
-            deltaThrottle *= NXFrame.INCRE_RATE;
-            numSteps++;
+        boolean increasing = (fromSpeed <= toSpeed);
+        float momentumTime = getMomentumTime(increasing);
+
+        if (!increasing) {
+            float speed = toSpeed;
+            while (speed + deltaThrottle <= fromSpeed) {
+                speed += deltaThrottle;
+                deltaThrottle *= NXFrame.INCRE_RATE;
+            }            
         }
-        speed = fromSpeed;
-        while (speed >= toSpeed) {
-            float dist = getTrackSpeed(speed - deltaThrottle*mf, isForward) * deltaTime;
-            if (dist <= 0.0f) {
-                break;
+        if (increasing) {
+            while (fromSpeed <= toSpeed) {
+                float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
+                        + getTrackSpeed(fromSpeed + deltaThrottle, isForward) * (deltaTime - momentumTime);
+                if (dist <= 0.0f) {
+                    break;
+                }
+                fromSpeed += deltaThrottle;
+                if (fromSpeed <= toSpeed) {
+                    rampLength += dist;
+                } else {
+                    rampLength += (toSpeed - fromSpeed) * dist / deltaThrottle;
+                }
+                deltaThrottle *= NXFrame.INCRE_RATE;
+                numSteps++;
             }
-            speed -= deltaThrottle;
-            if (speed >= toSpeed) {
-                rampLength += dist;
-            } else {
-                rampLength += (speed + deltaThrottle - toSpeed) * dist / deltaThrottle;
+        } else {
+            while (fromSpeed >= toSpeed) {
+                float dist = getTrackSpeed(fromSpeed, isForward) * momentumTime
+                        + getTrackSpeed(fromSpeed - deltaThrottle, isForward) * (deltaTime - momentumTime);
+                if (dist <= 0.0f) {
+                    break;
+                }
+                fromSpeed -= deltaThrottle;
+                if (fromSpeed >= toSpeed) {
+                    rampLength += dist;
+                } else {
+                    rampLength += (fromSpeed + deltaThrottle - toSpeed) * dist / deltaThrottle;
+                }
+                deltaThrottle /= NXFrame.INCRE_RATE;
+                numSteps++;
             }
-            deltaThrottle /= NXFrame.INCRE_RATE;
-            numSteps++;
         }
-        int rampTime = deltaTime*numSteps;
-        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {}",
-                rampLength, rampTime, fromSpeed, curSpeedType, toSpeedType, toSpeed);
-        return rampLength;   // add 1cm for safety (all scales)
+        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms from speed= {} to speed= {}",
+                rampLength, deltaTime*numSteps, fromSpeed, toSpeed);
+        return rampLength;
     }
     
     /*************** dynamic calibration ***********************/
