@@ -81,10 +81,10 @@ public class VSDecoderPreferences {
         // Try to load preferences from the file
         try {
             root = prefs.rootFromFile(file);
-        } catch (JDOMException | IOException e2) {
+        } catch (IOException e2) {
             log.info("Did not find VSDecoder preferences file.  This is normal if you haven't save the preferences before");
             root = null;
-        } catch (RuntimeException e) {
+        } catch (JDOMException | RuntimeException e) {
             log.error("Exception while loading VSDecoder preferences: " + e);
             root = null;
         }
