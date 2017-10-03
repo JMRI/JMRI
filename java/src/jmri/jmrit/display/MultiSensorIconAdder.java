@@ -30,6 +30,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
+import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
@@ -105,10 +106,6 @@ public class MultiSensorIconAdder extends IconAdder {
         }
     }
 
-    /**
-     * Only called from MultiSensorIcon popup
-     *
-     */
     void setMultiIcon(List<MultiSensorIcon.Entry> icons) {
         for (int i = 0; i < icons.size(); i++) {
             MultiSensorIcon.Entry entry = icons.get(i);
@@ -337,7 +334,7 @@ public class MultiSensorIconAdder extends IconAdder {
         valueChanged(null);
         if (!_update) {
             _defaultIcons.addLeaf(label, path);
-            ImageIndexEditor.indexChanged(true);
+            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
         makeIconPanel(!_update);
         this.invalidate();
@@ -363,9 +360,6 @@ public class MultiSensorIconAdder extends IconAdder {
         }
     }
 
-    /**
-     *
-     */
     void delete(String key) {
         _iconMap.remove(key);
         _sensorMap.remove(key);
@@ -384,7 +378,7 @@ public class MultiSensorIconAdder extends IconAdder {
 //                    break;
                 }
             }
-            ImageIndexEditor.indexChanged(true);
+            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         }
         makeIconPanel(!_update);
     }
@@ -519,5 +513,5 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class);
 }

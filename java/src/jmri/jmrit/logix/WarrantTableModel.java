@@ -527,6 +527,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
+                    } else if (setting.equals(WarrantTableFrame.ramp)) {
+                        s = Warrant.RAMP_HALT;
                     }
                     w.controlRunTrain(s);
                 }

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.Icon;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.swing.JmriAbstractAction;
@@ -40,7 +41,7 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
             String model = entry.getDecoderModel();
 
             // check if replaced
-            List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, family, null, null, null, model);
+            List<DecoderFile> decoders = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, family, null, null, null, model);
             log.info("Found " + decoders.size() + " decoders matching family \"" + family + "\" model \"" + model + "\" from roster entry \"" + entry.getId() + "\"");
 
             String replacementFamily = null;
@@ -89,5 +90,5 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionAction.class);
 }

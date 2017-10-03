@@ -16,9 +16,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     public AbstractNetworkConnectionConfigXml() {
     }
 
-    final static protected java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-
     protected NetworkPortAdapter adapter;
 
     protected void getInstance(Object object) {
@@ -65,14 +62,14 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             if (adapter.getHostName() != null) {
                 e.setAttribute("address", adapter.getHostName());
             } else {
-                e.setAttribute("address", rb.getString("noneSelected"));
+                e.setAttribute("address", Bundle.getMessage("noneSelected"));
             }
 
             // write the port only if we are not using automatic configuration.
             if (adapter.getPort() != 0) {
                 e.setAttribute("port", "" + adapter.getPort());
             } else {
-                e.setAttribute("port", rb.getString("noneSelected"));
+                e.setAttribute("port", Bundle.getMessage("noneSelected"));
             }
         }
 
@@ -93,7 +90,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
 
@@ -189,6 +186,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class);
 
 }

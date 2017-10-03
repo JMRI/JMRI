@@ -1,5 +1,8 @@
 package jmri.jmrix.wangrow;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
  * Returns a list of valid lenz XpressNet Connection Types
  * <P>
@@ -7,6 +10,7 @@ package jmri.jmrix.wangrow;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class WangrowConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String WANGROW = "Wangrow";

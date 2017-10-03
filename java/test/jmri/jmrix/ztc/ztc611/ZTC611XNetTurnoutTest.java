@@ -1,8 +1,9 @@
 package jmri.jmrix.ztc.ztc611;
 
+import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,10 +100,9 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     @Override
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class);
 
 }

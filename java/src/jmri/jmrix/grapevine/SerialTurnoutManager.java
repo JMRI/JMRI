@@ -62,9 +62,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
     static SerialTurnoutManager _instance = null;
 
-    //Turnout address format is more than a simple number.
-    public boolean allowMultipleAdditions() {
-        return false;
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return false; //Turnout address format is more than a simple number.
     }
 
     @Override
@@ -103,7 +103,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int nNode = 0;
 
     /**
-     * A method that returns the next valid free turnout hardware address
+     * A method that returns the next valid free turnout hardware address.
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
@@ -115,7 +115,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             throw ex;
         }
 
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
@@ -146,7 +146,39 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+    }
+
+    /**
+     * Public method to normalize a system name.
+     *
+     * @return a normalized system name if system name has a valid format, else
+     * returns ""
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return (SerialAddress.normalizeSystemName(systemName));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
 

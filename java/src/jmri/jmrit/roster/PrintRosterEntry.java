@@ -14,11 +14,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneContainer;
@@ -27,8 +27,7 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +50,7 @@ public class PrintRosterEntry implements PaneContainer {
      *
      * @param rosterEntry Roster item, either as a selection or object
      * @param parent window over which this dialog will be centered
-     * @param filename xml file name for the user's Roster entry
+     * @param filename xml file name for programmer used in printing.
      */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String filename) {
         _rosterEntry = rosterEntry;
@@ -77,7 +76,7 @@ public class PrintRosterEntry implements PaneContainer {
                 return;
             }
             log.debug("Success: xml file top element is 'programmer'");
-        } catch (Exception e) {
+        } catch (JDOMException | java.io.IOException e) {
             log.error("exception reading programmer file: " + filename, e);
             // provide traceback too
             e.printStackTrace();
@@ -85,10 +84,8 @@ public class PrintRosterEntry implements PaneContainer {
         }
 
         CvTableModel cvModel = new CvTableModel(progStatus, mProgrammer);
-        IndexedCvTableModel iCvModel = new IndexedCvTableModel(progStatus, mProgrammer);
 
-        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"},
-                cvModel, iCvModel); // NOI18N
+        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"}, cvModel); // NOI18N
 
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
@@ -97,14 +94,14 @@ public class PrintRosterEntry implements PaneContainer {
             log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
         }
         // locate a decoder like that.
-        List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) {
             log.debug("found {} matches", l.size());
         }
-        if (l.size() == 0) {
+        if (l.isEmpty()) {
             log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
-            l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, decoderModel);
+            l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
             if (log.isDebugEnabled()) {
                 log.debug("found {} matches without family key", l.size());
             }
@@ -126,23 +123,17 @@ public class PrintRosterEntry implements PaneContainer {
         }
         Element decoderRoot;
         try {
-            decoderRoot = d.rootFromName(DecoderFile.fileLocation + d.getFilename());
+            decoderRoot = d.rootFromName(DecoderFile.fileLocation + d.getFileName());
 
         } catch (org.jdom2.JDOMException exj) {
-            log.error("could not parse " + d.getFilename() + ": " + exj.getMessage());
+            log.error("could not parse " + d.getFileName() + ": " + exj.getMessage());
             return;
         } catch (java.io.IOException exj) {
-            log.error("could not read " + d.getFilename() + ": " + exj.getMessage());
+            log.error("could not read " + d.getFileName() + ": " + exj.getMessage());
             return;
         }
 
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
-        if (!variableModel.piCv().equals("")) {
-            resetModel.setPiCv(variableModel.piCv());
-        }
-        if (!variableModel.siCv().equals("")) {
-            resetModel.setSiCv(variableModel.siCv());
-        }
         d.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
         @SuppressWarnings("unchecked")
@@ -160,7 +151,7 @@ public class PrintRosterEntry implements PaneContainer {
             } else {
                 log.debug("Did not find name element in pane");
             }
-            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
+            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, d.getModelElement(), _rosterEntry);
             // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 278)
             _paneList.add(p);
             log.debug("_paneList size = {}", _paneList.size());
@@ -361,5 +352,5 @@ public class PrintRosterEntry implements PaneContainer {
         w.setFontStyle(Font.PLAIN);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);
 }

@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -74,28 +73,26 @@ import org.slf4j.LoggerFactory;
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
-
     private int macroNum = 0;      // macro being worked
     private int replyLen = 0;      // expected byte length
     private int waiting = 0;      // to catch responses not intended for this module
     private static final int firstTimeSleep = 3000;  // delay first operation to let panel build
     private boolean firstTime = true; // wait for panel to display
 
-    private static final String QUESTION = rb.getString("Add");// The three possible states for a turnout
+    private static final String QUESTION = Bundle.getMessage("Add");// The three possible states for a turnout
     private static final String CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static final String THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
-    private static final String CLOSED_NCE = rb.getString("Normal");
-    private static final String THROWN_NCE = rb.getString("Reverse");
+    private static final String CLOSED_NCE = Bundle.getMessage("Normal");
+    private static final String THROWN_NCE = Bundle.getMessage("Reverse");
 
-    private static final String DELETE = rb.getString("Delete");
+    private static final String DELETE = Bundle.getMessage("Delete");
 
-    private static final String EMPTY = rb.getString("empty"); // One of two accessory states
-    private static final String ACCESSORY = rb.getString("accessory");
+    private static final String EMPTY = Bundle.getMessage("empty"); // One of two accessory states
+    private static final String ACCESSORY = Bundle.getMessage("accessory");
 
-    private static final String LINK = rb.getString("LinkMacro");// Line 10 alternative to Delete
+    private static final String LINK = Bundle.getMessage("LinkMacro");// Line 10 alternative to Delete
 
-    Thread NceMemoryThread;
+    Thread nceMemoryThread;
     private boolean readRequested = false;
     private boolean writeRequested = false;
 
@@ -105,21 +102,21 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private boolean macroModified = false;  // when true, macro has been modified by user
 
     // member declarations
-    JLabel textMacro = new JLabel(rb.getString("Macro"));
-    JLabel textReply = new JLabel(rb.getString("Reply"));
+    JLabel textMacro = new JLabel(Bundle.getMessage("Macro"));
+    JLabel textReply = new JLabel(Bundle.getMessage("Reply"));
     JLabel macroReply = new JLabel();
 
     // major buttons
-    JButton previousButton = new JButton(rb.getString("Previous"));
-    JButton nextButton = new JButton(rb.getString("Next"));
-    JButton getButton = new JButton(rb.getString("Get"));
-    JButton saveButton = new JButton(rb.getString("Save"));
-    JButton backUpButton = new JButton(rb.getString("Backup"));
-    JButton restoreButton = new JButton(rb.getString("Restore"));
+    JButton previousButton = new JButton(Bundle.getMessage("Previous"));
+    JButton nextButton = new JButton(Bundle.getMessage("Next"));
+    JButton getButton = new JButton(Bundle.getMessage("Get"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton backUpButton = new JButton(Bundle.getMessage("Backup"));
+    JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
 
     // check boxes
-    JCheckBox checkBoxEmpty = new JCheckBox(rb.getString("EmptyMacro"));
-    JCheckBox checkBoxNce = new JCheckBox(rb.getString("NCETurnout"));
+    JCheckBox checkBoxEmpty = new JCheckBox(Bundle.getMessage("EmptyMacro"));
+    JCheckBox checkBoxNce = new JCheckBox(Bundle.getMessage("NCETurnout"));
 
     // macro text field
     JTextField macroTextField = new JTextField(4);
@@ -212,18 +209,27 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.macro.NceMacroEditFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -233,12 +239,15 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("TitleEditNCEMacro"));
+        x.append(Bundle.getMessage("TitleEditNCEMacro"));
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo memo) throws Exception {
+    public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         this.tc = memo.getNceTrafficController();
         maxNumMacros = CabMemorySerial.CS_MAX_MACRO;
@@ -255,24 +264,24 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         // the following code sets the frame's initial state
         // default at startup
-        macroReply.setText(rb.getString("unknown"));
+        macroReply.setText(Bundle.getMessage("unknown"));
         macroTextField.setText("");
         saveButton.setEnabled(false);
 
         // load tool tips
-        previousButton.setToolTipText(rb.getString("toolTipSearchDecrementing"));
-        nextButton.setToolTipText(rb.getString("toolTipSearchIncrementing"));
-        getButton.setToolTipText(rb.getString("toolTipReadMacro"));
+        previousButton.setToolTipText(Bundle.getMessage("toolTipSearchDecrementing"));
+        nextButton.setToolTipText(Bundle.getMessage("toolTipSearchIncrementing"));
+        getButton.setToolTipText(Bundle.getMessage("toolTipReadMacro"));
         if (isUsb) {
-            macroTextField.setToolTipText(rb.getString("toolTipEnterMacroUsb"));
+            macroTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacroUsb"));
         } else {
-            macroTextField.setToolTipText(rb.getString("toolTipEnterMacroSerial"));
+            macroTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacroSerial"));
         }
-        saveButton.setToolTipText(rb.getString("toolTipUpdateMacro"));
-        backUpButton.setToolTipText(rb.getString("toolTipBackUp"));
-        restoreButton.setToolTipText(rb.getString("toolTipRestore"));
-        checkBoxEmpty.setToolTipText(rb.getString("toolTipSearchEmpty"));
-        checkBoxNce.setToolTipText(rb.getString("toolTipUseNce"));
+        saveButton.setToolTipText(Bundle.getMessage("toolTipUpdateMacro"));
+        backUpButton.setToolTipText(Bundle.getMessage("toolTipBackUp"));
+        restoreButton.setToolTipText(Bundle.getMessage("toolTipRestore"));
+        checkBoxEmpty.setToolTipText(Bundle.getMessage("toolTipSearchEmpty"));
+        checkBoxNce.setToolTipText(Bundle.getMessage("toolTipUseNce"));
 
         initAccyFields();
 
@@ -424,7 +433,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (macroModified) {
             // warn user that macro has been modified
             JOptionPane.showMessageDialog(this,
-                    rb.getString("MacroModified"), rb.getString("NceMacro"),
+                    Bundle.getMessage("MacroModified"), Bundle.getMessage("NceMacro"),
                     JOptionPane.WARNING_MESSAGE);
             macroModified = false;  // only one warning!!!
 
@@ -580,14 +589,14 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             if (deleteButton10.getText().equals(LINK)) {
                 if (macroValid == false) { // Error user input incorrect
                     JOptionPane.showMessageDialog(this,
-                            rb.getString("GetMacroNumber"), rb.getString("NceMacro"),
+                            Bundle.getMessage("GetMacroNumber"), Bundle.getMessage("NceMacro"),
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 int linkMacro = validMacro(accyTextField10.getText());
                 if (linkMacro == -1) {
                     JOptionPane.showMessageDialog(this,
-                            rb.getString("EnterMacroNumberLine10"), rb.getString("NceMacro"),
+                            Bundle.getMessage("EnterMacroNumberLine10"), Bundle.getMessage("NceMacro"),
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -596,7 +605,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 textAccy10.setText(LINK);
                 cmdButton10.setVisible(false);
                 deleteButton10.setText(DELETE);
-                deleteButton10.setToolTipText(rb.getString("toolTipRemoveMacroLink"));
+                deleteButton10.setToolTipText(Bundle.getMessage("toolTipRemoveMacroLink"));
 
                 // user wants to delete a accessory address or a link 
             } else {
@@ -630,15 +639,15 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         int mN = validMacro(m);
         if (mN < 0) {
-            macroReply.setText(rb.getString("error"));
+            macroReply.setText(Bundle.getMessage("error"));
             JOptionPane.showMessageDialog(this,
-                    rb.getString("EnterMacroNumber"), rb.getString("NceMacro"),
+                    Bundle.getMessage("EnterMacroNumber"), Bundle.getMessage("NceMacro"),
                     JOptionPane.ERROR_MESSAGE);
             macroValid = false;
             return mN;
         }
         if (macroSearchInc || macroSearchDec) {
-            macroReply.setText(rb.getString("searching"));
+            macroReply.setText(Bundle.getMessage("searching"));
             if (macroSearchInc) {
                 mN++;
                 if (mN >= maxNumMacros + 1) {
@@ -652,7 +661,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         } else {
-            macroReply.setText(rb.getString("waiting"));
+            macroReply.setText(Bundle.getMessage("waiting"));
         }
 
         return mN;
@@ -746,7 +755,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         accyNum = getAccyRow(macroAccy, index, textAccy10, accyTextField10, cmdButton10);
         if (accyNum < 0) {
             JOptionPane.showMessageDialog(this,
-                    rb.getString("EnterMacroNumberLine10"), rb.getString("NceMacro"),
+                    Bundle.getMessage("EnterMacroNumberLine10"), Bundle.getMessage("NceMacro"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -768,10 +777,10 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             }
         }
         // Set up a separate thread to access CS memory
-        if (NceMemoryThread != null && NceMemoryThread.isAlive()) {
+        if (nceMemoryThread != null && nceMemoryThread.isAlive()) {
             return; // thread is already running
         }
-        NceMemoryThread = new Thread(new Runnable() {
+        nceMemoryThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (readRequested) {
@@ -783,7 +792,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                         if (entriesRead == 0) {
                             // Macro is empty so init the accessory fields
                             initAccyFields();
-                            macroReply.setText(rb.getString("macroEmpty"));
+                            macroReply.setText(Bundle.getMessage("macroEmpty"));
                             if (checkBoxEmpty.isSelected()) {
                                 macroValid = true;
                                 macroSearchInc = false;
@@ -791,13 +800,13 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                                 break;
                             }
                         } else if (entriesRead < 0) {
-                            macroReply.setText(rb.getString("error"));
+                            macroReply.setText(Bundle.getMessage("error"));
                             macroValid = false;
                             macroSearchInc = false;
                             macroSearchDec = false;
                             break;
                         } else {
-                            macroReply.setText(rb.getString("macroFound"));
+                            macroReply.setText(Bundle.getMessage("macroFound"));
                             if (checkBoxEmpty.isSelected() == false) {
                                 macroSearchInc = false;
                                 macroSearchDec = false;
@@ -826,9 +835,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         });
-        NceMemoryThread.setName(rb.getString("ThreadTitle"));
-        NceMemoryThread.setPriority(Thread.MIN_PRIORITY);
-        NceMemoryThread.start();
+        nceMemoryThread.setName(Bundle.getMessage("ThreadTitle"));
+        nceMemoryThread.setPriority(Thread.MIN_PRIORITY);
+        nceMemoryThread.start();
     }
 
     // Reads 16/20 bytes of NCE macro memory
@@ -1058,7 +1067,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private void updateAccyCmdPerformed(JTextField accyTextField, JButton cmdButton, JLabel textAccy, JButton deleteButton) {
         if (macroValid == false) { // Error user input incorrect
             JOptionPane.showMessageDialog(this,
-                    rb.getString("GetMacroNumber"), rb.getString("NceMacro"),
+                    Bundle.getMessage("GetMacroNumber"), Bundle.getMessage("NceMacro"),
                     JOptionPane.ERROR_MESSAGE);
         } else {
             String accyText = accyTextField.getText();
@@ -1071,7 +1080,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
             if (accyNum < 1 || accyNum > 2044) {
                 JOptionPane.showMessageDialog(this,
-                        rb.getString("EnterAccessoryNumber"), rb.getString("NceMacroAddress"),
+                        Bundle.getMessage("EnterAccessoryNumber"), Bundle.getMessage("NceMacroAddress"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -1101,7 +1110,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             setSaveButton(true);
             textAccy.setText(ACCESSORY);
             deleteButton.setText(DELETE);
-            deleteButton.setToolTipText(rb.getString("toolTipRemoveAcessory"));
+            deleteButton.setToolTipText(Bundle.getMessage("toolTipRemoveAcessory"));
             deleteButton.setEnabled(true);
         }
     }
@@ -1159,7 +1168,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         if (accyNum < 1 || accyNum > 2044) {
             JOptionPane.showMessageDialog(this,
-                    rb.getString("EnterAccessoryNumber"), rb.getString("NceMacroAddress"),
+                    Bundle.getMessage("EnterAccessoryNumber"), Bundle.getMessage("NceMacroAddress"),
                     JOptionPane.ERROR_MESSAGE);
             accyNum = -1;
         }
@@ -1214,7 +1223,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         accyTextField10.setText(Integer.toString(accyAddr));
         cmdButton10.setVisible(false);
         deleteButton10.setText(DELETE);
-        deleteButton10.setToolTipText(rb.getString("toolTipRemoveMacroLink"));
+        deleteButton10.setToolTipText(Bundle.getMessage("toolTipRemoveMacroLink"));
     }
 
     // loads one row with a macro's accessory address and command
@@ -1339,9 +1348,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     //   // Looking for proper response
     //   int recChar = r.getElement(0);
     //   if (recChar == '!')
-    //    macroReply.setText(rb.getString("okay"));
+    //    macroReply.setText(Bundle.getMessage("okay"));
     //   if (recChar == '0')
-    //    macroReply.setText(rb.getString("macroEmpty"));
+    //    macroReply.setText(Bundle.getMessage("macroEmpty"));
     //  }
     //  // Macro memory read
     //  if (replyLen == NceMessage.REPLY_16) {
@@ -1364,7 +1373,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     //      }
     //     }
     //     // Macro is empty so init the accessory fields
-    //     macroReply.setText(rb.getString("macroEmpty"));
+    //     macroReply.setText(Bundle.getMessage("macroEmpty"));
     //     initAccyFields();
     //     macroValid = true;
     //    } else {
@@ -1374,7 +1383,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     //       macroSearchDec = false;
     //      }
     //     }
-    //     macroReply.setText(rb.getString("macroFound"));
+    //     macroReply.setText(Bundle.getMessage("macroFound"));
     //     secondRead = loadAccy1to8(r);
     //     macroValid = true;
     //    }
@@ -1614,13 +1623,13 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         textAccy.setVisible(true);
         cmdButton.setText(QUESTION);
         cmdButton.setVisible(true);
-        cmdButton.setToolTipText(rb.getString("toolTipSetCommand"));
+        cmdButton.setToolTipText(Bundle.getMessage("toolTipSetCommand"));
         deleteButton.setText(DELETE);
         deleteButton.setVisible(true);
         deleteButton.setEnabled(false);
-        deleteButton.setToolTipText(rb.getString("toolTipRemoveAcessory"));
+        deleteButton.setToolTipText(Bundle.getMessage("toolTipRemoveAcessory"));
         accyTextField.setText("");
-        accyTextField.setToolTipText(rb.getString("EnterAccessoryNumber"));
+        accyTextField.setToolTipText(Bundle.getMessage("EnterAccessoryNumber"));
         accyTextField.setMaximumSize(new Dimension(accyTextField
                 .getMaximumSize().width,
                 accyTextField.getPreferredSize().height));
@@ -1633,8 +1642,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         cmdButton10.setVisible(true);
         deleteButton10.setText(LINK);
         deleteButton10.setEnabled(true);
-        deleteButton10.setToolTipText(rb.getString("toolTipLink"));
-        accyTextField10.setToolTipText(rb.getString("toolTip10"));
+        deleteButton10.setToolTipText(Bundle.getMessage("toolTipLink"));
+        accyTextField10.setToolTipText(Bundle.getMessage("toolTip10"));
     }
 
     /**
@@ -1650,5 +1659,5 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class);
 }

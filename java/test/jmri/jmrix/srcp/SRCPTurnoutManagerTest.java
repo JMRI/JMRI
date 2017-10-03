@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,14 +35,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        SRCPTrafficController et = new SRCPTrafficController() {
-            @Override
-            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
-                // we aren't actually sending anything to a layout.
-            }
-        };
+        JUnitUtil.setUp();
         SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
@@ -54,7 +48,6 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -2,11 +2,12 @@ package jmri.jmris.json;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.server.json.JsonMockConnection;
+import java.io.DataOutputStream;
 
 /**
  *
@@ -16,32 +17,19 @@ public class JsonProgrammerServerTest {
 
     @Test
     public void testCTor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                });
-        JsonConnection jc = new JsonConnection(output);
-        JsonProgrammerServer t = new JsonProgrammerServer(jc);
+        JsonProgrammerServer t = new JsonProgrammerServer(new JsonMockConnection((DataOutputStream) null));
         Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(JsonProgrammerServerTest.class.getName());
 
 }

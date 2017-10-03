@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    CarManager manager = CarManager.instance(); // There is only one manager
+    CarManager manager = InstanceManager.getDefault(CarManager.class); // There is only one manager
 
     // Defines the columns
     private static final int SELECT_COLUMN = 0;
@@ -79,7 +79,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int _sort = SORTBY_NUMBER;
 
-    List<RollingStock> sysList = null; // list of cars
+    List<Car> sysList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
     String locationName = null; // only show cars with this location
     String trackName = null; // only show cars with this track
@@ -210,7 +210,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void resetCheckboxes() {
-        for (RollingStock car : sysList) {
+        for (Car car : sysList) {
             car.setSelected(false);
         }
     }
@@ -281,14 +281,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         addPropertyChangeCars();
     }
 
-    public List<RollingStock> getSelectedCarList() {
+    public List<Car> getSelectedCarList() {
         return getCarList(_sort);
     }
 
     @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
             justification = "default case is sort by number") // NOI18N
-    public List<RollingStock> getCarList(int sort) {
-        List<RollingStock> list;
+    public List<Car> getCarList(int sort) {
+        List<Car> list;
         switch (sort) {
             case SORTBY_NUMBER:
                 list = manager.getByNumberList();
@@ -354,7 +354,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return list;
     }
 
-    private void filterList(List<RollingStock> list) {
+    private void filterList(List<Car> list) {
         if (showAllCars) {
             return;
         }
@@ -721,13 +721,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     private void addPropertyChangeCars() {
-        for (RollingStock car : manager.getList()) {
+        for (Car car : manager.getList()) {
             car.addPropertyChangeListener(this);
         }
     }
 
     private void removePropertyChangeCars() {
-        for (RollingStock car : manager.getList()) {
+        for (Car car : manager.getList()) {
             car.removePropertyChangeListener(this);
         }
     }
@@ -758,5 +758,5 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class);
 }

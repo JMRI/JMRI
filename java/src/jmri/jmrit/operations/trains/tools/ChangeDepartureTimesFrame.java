@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -68,7 +69,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == changeButton) {
             log.debug("change button activated");
-            TrainManager trainManager = TrainManager.instance();
+            TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
             List<Train> trains = trainManager.getTrainsByIdList();
             for (Train train : trains) {
                 train.setDepartureTime(adjustHour(train.getDepartureTimeHour()), train.getDepartureTimeMinute());
@@ -91,5 +92,5 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
         return Integer.toString(hour);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrame.class);
 }

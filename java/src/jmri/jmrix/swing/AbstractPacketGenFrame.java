@@ -1,7 +1,12 @@
 package jmri.jmrix.swing;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Frame for user input of XpressNet messages
@@ -11,33 +16,39 @@ import javax.swing.BoxLayout;
 public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 
     // member declarations
-    protected javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-    protected javax.swing.JButton sendButton = new javax.swing.JButton();
-    protected javax.swing.JComboBox<String> packetTextField = new javax.swing.JComboBox<String>();
+    protected JLabel jLabel1 = new JLabel();
+    protected JButton sendButton = new JButton();
+    protected JComboBox<String> packetTextField = new JComboBox<String>();
 
     public AbstractPacketGenFrame() {
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
+        setTitle("Send Packet"); // NOI18N
 
-        jLabel1.setText("Packet:");
-        jLabel1.setVisible(true);
+        JPanel packetPane = new JPanel();
+        packetPane.setBorder(BorderFactory.createEtchedBorder());
+        jLabel1.setText(Bundle.getMessage("PacketLabel"));
+        packetPane.add(jLabel1);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("SendPacketTitle"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
-        packetTextField.setToolTipText("Enter packet as hex pairs, for example, 82 7D");
+        packetTextField.setPreferredSize(new JButton("XXXXXXXXXXXXXXXXXXXXXXXXX").getPreferredSize());
+        packetTextField.setToolTipText(Bundle.getMessage("EnterHexBytesToolTip"));
         packetTextField.setMaximumRowCount(5); // set the maximum number of items in the history.
         packetTextField.setEditable(true);
-        setTitle("Send Packet");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        packetPane.add(packetTextField);
 
-        getContentPane().add(jLabel1);
-        getContentPane().add(packetTextField);
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().add(packetPane);
         getContentPane().add(sendButton);
         getContentPane().add(Box.createVerticalGlue());
 

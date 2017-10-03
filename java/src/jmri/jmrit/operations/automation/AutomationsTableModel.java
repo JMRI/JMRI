@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
@@ -45,7 +46,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 
     public AutomationsTableModel() {
         super();
-        automationManager = AutomationManager.instance();
+        automationManager = InstanceManager.getDefault(AutomationManager.class);
         automationManager.addPropertyChangeListener(this);
         updateList();
     }
@@ -328,5 +329,5 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationsTableModel.class);
 }

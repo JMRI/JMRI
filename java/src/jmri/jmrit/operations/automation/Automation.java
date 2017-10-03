@@ -3,10 +3,10 @@ package jmri.jmrit.operations.automation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
@@ -31,7 +31,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     protected boolean _running = false;
 
     // stores AutomationItems for this automation
-    protected Hashtable<String, AutomationItem> _automationHashTable = new Hashtable<String, AutomationItem>();
+    protected HashMap<String, AutomationItem> _automationHashTable = new HashMap<>();
     protected int _IdNumber = 0; // each item in a automation gets its own unique id
 
     public static final String REGEX = "c"; // NOI18N
@@ -129,7 +129,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Used to determine if automation is at the start of its sequence.
-     * 
+     *
      * @return true if the current action is the first action in the list.
      */
     public boolean isReadyToRun() {
@@ -148,9 +148,9 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
-            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class) &&
-                    getCurrentAutomationItem().isActionRan() &&
-                    getCurrentAutomationItem() != getItemsBySequenceList().get(0)) {
+            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)
+                    && getCurrentAutomationItem().isActionRan()
+                    && getCurrentAutomationItem() != getItemsBySequenceList().get(0)) {
                 setNextAutomationItem();
             }
             if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
@@ -167,11 +167,8 @@ public class Automation implements java.beans.PropertyChangeListener {
             log.debug("Perform action ({}) item id: {}", item.getAction().getName(), item.getId());
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
-            Thread runAction = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    item.getAction().doAction();
-                }
+            Thread runAction = new Thread(() -> {
+                item.getAction().doAction();
             });
             runAction.setName("Run action item: " + item.getId()); // NOI18N
             runAction.start();
@@ -326,6 +323,7 @@ public class Automation implements java.beans.PropertyChangeListener {
      * Add a automation item at a specific place (sequence) in the automation
      * Allowable sequence numbers are 0 to max size of automation. 0 = start of
      * list.
+     *
      * @param sequence where to add a new item in the automation
      *
      * @return automation item
@@ -343,6 +341,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
      * @param item the item to be added to this automation.
      */
     public void register(AutomationItem item) {
@@ -361,6 +360,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Delete a AutomationItem
+     *
      * @param item The item to be deleted.
      *
      */
@@ -396,6 +396,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Get a AutomationItem by id
+     *
      * @param id The string id of the item.
      *
      * @return automation item
@@ -405,17 +406,10 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     private List<AutomationItem> getItemsByIdList() {
-        String[] arr = new String[getSize()];
-        List<AutomationItem> out = new ArrayList<AutomationItem>();
-        Enumeration<String> en = _automationHashTable.keys();
-        int i = 0;
-        while (en.hasMoreElements()) {
-            arr[i++] = en.nextElement();
-        }
-        jmri.util.StringUtil.sort(arr);
-        for (i = 0; i < arr.length; i++) {
-            out.add(getItemById(arr[i]));
-        }
+        List<AutomationItem> out = new ArrayList<>();
+        _automationHashTable.keySet().stream().sorted().forEach((id) -> {
+            out.add(getItemById(id));
+        });
         return out;
     }
 
@@ -425,7 +419,7 @@ public class Automation implements java.beans.PropertyChangeListener {
      * @return list of AutomationItems ordered by sequence
      */
     public List<AutomationItem> getItemsBySequenceList() {
-        List<AutomationItem> items = new ArrayList<AutomationItem>();
+        List<AutomationItem> items = new ArrayList<>();
         for (AutomationItem item : getItemsByIdList()) {
             for (int j = 0; j < items.size(); j++) {
                 if (item.getSequenceId() < items.get(j).getSequenceId()) {
@@ -455,6 +449,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Places a AutomationItem earlier in the automation
+     *
      * @param item The item to move up one position in the automation.
      *
      */
@@ -478,6 +473,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Places a AutomationItem later in the automation.
+     *
      * @param item The item to move later in the automation.
      *
      */
@@ -510,7 +506,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Copies automation.
-     * 
+     *
      * @param automation the automation to copy
      */
     public void copyAutomation(Automation automation) {
@@ -583,10 +579,10 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"},
-            justification = "Need to plause for user action")
-    private void CheckForActionPropertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
-                evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+            justification = "Need to pause for user action")
+    private void checkForActionPropertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)
+                || evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
             Action action = (Action) evt.getSource();
             action.removePropertyChangeListener(this);
         }
@@ -607,8 +603,8 @@ public class Automation implements java.beans.PropertyChangeListener {
             }
         }
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() == evt.getSource()) {
-            if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
-                    evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+            if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)
+                    || evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
                 getCurrentAutomationItem().getAction().cancelAction();
                 if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)) {
                     setNextAutomationItem();
@@ -647,10 +643,11 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY)
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
-        CheckForActionPropertyChange(e);
+        }
+        checkForActionPropertyChange(e);
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -669,10 +666,10 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Automation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Automation.class);
 
 }

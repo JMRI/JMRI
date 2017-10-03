@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.trains.timetable;
 
-import java.awt.Component;
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -10,9 +10,10 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,14 +31,14 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.setVisible(true);
 
         Assert.assertNotNull("frame exists", f);
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testTrainsScheduleEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
-        TrainScheduleManager tsm = TrainScheduleManager.instance();
+        TrainScheduleManager tsm = InstanceManager.getDefault(TrainScheduleManager.class);
         Assert.assertNotNull("frame exists", f);
         f.setVisible(true);
 
@@ -55,7 +56,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
-        f.dispose();
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J
@@ -69,7 +70,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     private void loadTrains() {
         // Add some cars for the various tests in this suite
-        CarManager cm = CarManager.instance();
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
         // add caboose to the roster
         Car c = cm.newCar("NH", "687");
         c.setCaboose(true);
@@ -77,7 +78,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         c.setCaboose(true);
 
         // load engines
-        EngineManager emanager = EngineManager.instance();
+        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = emanager.newEngine("E", "1");
         e1.setModel("GP40");
         Engine e2 = emanager.newEngine("E", "2");
@@ -87,7 +88,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Engine e4 = emanager.newEngine("UP", "4");
         e4.setModel("FT");
 
-        TrainManager tmanager = TrainManager.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         // turn off build fail messages
         tmanager.setBuildMessagesEnabled(true);
         // turn off print preview
@@ -100,15 +101,15 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         // load 6 locations
         for (int i = 0; i < 6; i++) {
-            LocationManager.instance().newLocation("Test_Location " + i);
+            InstanceManager.getDefault(LocationManager.class).newLocation("Test_Location " + i);
         }
 
         // load 5 routes
-        RouteManager.instance().newRoute("Test Route A");
-        RouteManager.instance().newRoute("Test Route B");
-        RouteManager.instance().newRoute("Test Route C");
-        RouteManager.instance().newRoute("Test Route D");
-        RouteManager.instance().newRoute("Test Route E");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route A");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route B");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route C");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route D");
+        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route E");
     }
 
     @Override

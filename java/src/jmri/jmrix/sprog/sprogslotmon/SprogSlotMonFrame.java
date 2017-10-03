@@ -18,7 +18,6 @@ import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
@@ -35,17 +34,17 @@ import org.slf4j.LoggerFactory;
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogListener {
 
     /**
-     * Controls whether not-in-use slots are shown
+     * Controls whether not-in-use slots are shown.
      */
     javax.swing.JCheckBox showAllCheckBox = new javax.swing.JCheckBox();
 
-    JButton estopAllButton = new JButton("estop all");
+    JButton estopAllButton = new JButton(Bundle.getMessage("ButtonEstopAll"));
     SprogSlotMonDataModel slotModel = null;
 
     JTable slotTable;
     JScrollPane slotScroll;
 
-    JTextArea status = new JTextArea("Track Current: ---A");
+    JTextArea status = new JTextArea(Bundle.getMessage("TrackCurrentXString", "---"));
 
     SprogSystemConnectionMemo _memo = null;
     private SprogTrafficController tc = null;
@@ -64,10 +63,10 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
-        showAllCheckBox.setText("Show unused slots");
+        showAllCheckBox.setText(Bundle.getMessage("ButtonShowUnusedSlots"));
         showAllCheckBox.setVisible(true);
         showAllCheckBox.setSelected(true);
-        showAllCheckBox.setToolTipText("if checked, even empty/idle slots will appear");
+        showAllCheckBox.setToolTipText(Bundle.getMessage("ButtonShowSlotsTooltip"));
 
         slotModel.configureTable(slotTable);
 
@@ -116,7 +115,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         slotModel.showAllSlots(showAllCheckBox.isSelected());
 
         // general GUI config
-        setTitle("SPROG Slot Monitor");
+        setTitle(Bundle.getMessage("SprogSlotMonitorTitle"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -130,19 +129,22 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         getContentPane().add(pane1);
         getContentPane().add(slotScroll);
 
+        setHelp();
+        
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();
     }
 
-    @Override
-    public void initComponents() {
-        // add help menu to window
-        addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);  // NOI18N
     }
 
     /**
-     * method to find the existing SprogSlotMonFrame object
+     * Find the existing SprogSlotMonFrame object.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -155,13 +157,13 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     }
 
     public void updateStatus(String a) {
-        status.setText("Track Current: " + a + " A");
+        status.setText(Bundle.getMessage("TrackCurrentXString", a));
     }
 
     private boolean mShown = false;
 
-    /*
-     * Listen to outgoing messages
+    /**
+     * Listen to outgoing messages.
      *
      * @param m the sprog message received
      */
@@ -171,7 +173,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
     }
 
     /**
-     * Listen for status replies
+     * Listen for status replies.
      * 
      * @param m The SprogReply to be handled
      */
@@ -226,6 +228,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class);
 
 }

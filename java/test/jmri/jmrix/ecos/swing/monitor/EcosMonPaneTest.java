@@ -1,15 +1,14 @@
 package jmri.jmrix.ecos.swing.monitor;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
-import jmri.util.JmriJFrame;
-import jmri.jmrix.AbstractMonPaneScaffold;
 
 
 /**
@@ -20,11 +19,6 @@ import jmri.jmrix.AbstractMonPaneScaffold;
 public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.ecos.EcosSystemConnectionMemo memo = null;
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane);
-    }
 
     // Test checking the AutoScroll checkbox.
     // for some reason the EcosMonPane has the checkbox value reversed on
@@ -59,20 +53,18 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrix.ecos.EcosInterfaceScaffold tc = new jmri.jmrix.ecos.EcosInterfaceScaffold();
         memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc);
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
-        pane = new EcosMonPane();
+        // pane for AbstactMonPaneBase, panel for JmriJPanel
+        panel = pane = new EcosMonPane();
         ((EcosMonPane)pane).initContext(memo); 
+        title = "ECoS Command Monitor";
     }
 
     @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -105,8 +106,8 @@ public class Location implements java.beans.PropertyChangeListener {
         _name = name;
         _id = id;
         // a new location accepts all types
-        setTypeNames(CarTypes.instance().getNames());
-        setTypeNames(EngineTypes.instance().getNames());
+        setTypeNames(InstanceManager.getDefault(CarTypes.class).getNames());
+        setTypeNames(InstanceManager.getDefault(EngineTypes.class).getNames());
         addPropertyChangeListeners();
     }
 
@@ -123,7 +124,7 @@ public class Location implements java.beans.PropertyChangeListener {
         String old = _name;
         _name = name;
         if (!old.equals(name)) {
-            LocationManager.instance().resetNameLengths(); // recalculate max location name length for manifests
+            InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max location name length for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
@@ -184,7 +185,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     public void setPhysicalLocation(PhysicalLocation l) {
         _physicalLocation = l;
-        LocationManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
     }
 
     /**
@@ -636,7 +637,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if (types.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(types);
+        java.util.Arrays.sort(types);
         for (String type : types) {
             _listTypes.add(type);
         }
@@ -686,7 +687,7 @@ public class Location implements java.beans.PropertyChangeListener {
             String id = _id + "s" + Integer.toString(_IdNumber);
             log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
             track = new Track(id, name, type, this);
-            LocationManager.instance().resetNameLengths(); // recalculate max track name length for manifests
+            InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length for manifests
             register(track);
         }
         resetMoves(); // give all of the tracks equal weighting
@@ -768,7 +769,7 @@ public class Location implements java.beans.PropertyChangeListener {
             arr[i] = en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(arr[i]);
         }
@@ -1232,18 +1233,18 @@ public class Location implements java.beans.PropertyChangeListener {
         for (Track track : tracks) {
             deleteTrack(track);
         }
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarRoads.instance().removePropertyChangeListener(this);
-        EngineTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
         // Change name in case object is still in use, for example Schedules
         setName(MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{getName()}));
         setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
 
     private void addPropertyChangeListeners() {
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarRoads.instance().addPropertyChangeListener(this);
-        EngineTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
     }
 
     /**
@@ -1429,7 +1430,7 @@ public class Location implements java.beans.PropertyChangeListener {
             StringBuffer buf = new StringBuffer();
             for (String type : types) {
                 // remove types that have been deleted by user
-                if (CarTypes.instance().containsName(type) || EngineTypes.instance().containsName(type)) {
+                if (InstanceManager.getDefault(CarTypes.class).containsName(type) || InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
                     buf.append(type + "%%"); // NOI18N
                 }
             }
@@ -1439,11 +1440,11 @@ public class Location implements java.beans.PropertyChangeListener {
         Element eTypes = new Element(Xml.TYPES);
         for (String type : types) {
             // don't save types that have been deleted by user
-            if (EngineTypes.instance().containsName(type)) {
+            if (InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
                 Element eType = new Element(Xml.LOCO_TYPE);
                 eType.setAttribute(Xml.NAME, type);
                 eTypes.addContent(eType);
-            } else if (CarTypes.instance().containsName(type)) {
+            } else if (InstanceManager.getDefault(CarTypes.class).containsName(type)) {
                 Element eType = new Element(Xml.CAR_TYPE);
                 eType.setAttribute(Xml.NAME, type);
                 eTypes.addContent(eType);
@@ -1563,10 +1564,10 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        LocationManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Location.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Location.class);
 
 }

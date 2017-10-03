@@ -2,8 +2,8 @@ package jmri.jmrix.xpa.swing.xpamon;
 
 import jmri.jmrix.xpa.XpaListener;
 import jmri.jmrix.xpa.XpaMessage;
-import jmri.jmrix.xpa.XpaTrafficController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
+import jmri.jmrix.xpa.XpaTrafficController;
 
 /**
  * Panel displaying (and logging) Xpa+Modem command messages.  
@@ -13,16 +13,12 @@ import jmri.jmrix.xpa.XpaSystemConnectionMemo;
  */
 public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListener {
 
-    final java.util.ResourceBundle rb
-            = java.util.ResourceBundle.
-            getBundle("jmri.jmrix.xpa.swing.XpaSwingBundle");
-
     protected XpaTrafficController tc = null;
     protected XpaSystemConnectionMemo memo = null;
 
     @Override
     public String getTitle() {
-        return (rb.getString("XpaMonFrameTitle"));
+        return (Bundle.getMessage("XpaMonFrameTitle"));
     }
 
     @Override
@@ -52,7 +48,7 @@ public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListene
 
     @Override
     public synchronized void reply(XpaMessage l) {  // receive a reply message and log it
-        nextLine("Recieved: \"" + l.toString() + "\"\n", "");
+        nextLine("Received: \"" + l.toString() + "\"\n", "");
     }
 
    /**

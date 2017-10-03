@@ -25,10 +25,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>CBUS Console Tool</h1><a href=
-      "../../../../../../../html/hardware/can/images/console.jpg"><img src="../../../../../../../html/hardware/can/images/console.jpg"
-      width="443" height="265" alt="Console Tool Screen" align=
-      "right"></a>
+      <h1>CBUS Console Tool</h1>
+      <a href="../../../../../../../html/hardware/can/images/MergConsoleCompact.png">
+      <img src="../../../../../../../html/hardware/can/images/MergConsoleCompact.png"
+      width="471" height="237" alt="Initial Console Tool Screen showing time stamp" align="right"></a>
 
       <p>JMRI provides a communications monitor window so you can
       see what's happening on the communications link between the
@@ -122,6 +122,11 @@
       data byte which is the CBUS opcode and the remaining, up to
       seven, data bytes.
 
+      <a href="../../../../../../../html/hardware/can/images/MergConsole.png">
+        <img src="../../../../../../../html/hardware/can/images/MergConsole.png"
+        width="471" height="287" alt="Expanded Console Tool Screen showing Events and other options"
+        align="right"></a>
+
       <h3>Buttons</h3>
 
       <dl>
@@ -131,12 +136,13 @@
         packet data fields.</dd>
       </dl><a name="cbusSend" id="cbusSend"></a>
 
-      <h1>Send Packet</h1>It the bottom part of the Console, you
-      can construct a packet to be sent to the layout. For normal
-      operation, do not edit the preloaded values in the dynamic
-      and normal priority fields.<br>
+      <h1>Send Event</h1>
+      <p>At the bottom part of the Console, you can construct an Event
+      packet to be sent to the layout. For normal operation, do not
+      edit the preloaded values in the dynamic and normal priority
+      fields.<br>
       Enter the opcode and the correct number of data bytes
-      (depending upon the opcode).
+      (depending upon the opcode).</p>
 
       <p>If the decimal data entry/display checkbox is not selected
       then data entry will, by default, be treated as hexadecimal.

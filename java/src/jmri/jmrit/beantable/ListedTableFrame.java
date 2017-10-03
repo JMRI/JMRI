@@ -1,16 +1,14 @@
 package jmri.jmrit.beantable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -35,6 +33,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.RowSorterUtil;
+import jmri.util.AlphanumComparator;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +53,8 @@ public class ListedTableFrame extends BeanTableFrame {
         return true;
     }
 
-    static ArrayList<TabbedTableItemListArray> TabbedTableItemListArrayArray = new ArrayList<TabbedTableItemListArray>();
-    ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<TabbedTableItem>();
+    static ArrayList<TabbedTableItemListArray> tabbedTableItemListArrayArray = new ArrayList<TabbedTableItemListArray>();
+    ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<>();
 
     final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
     JSplitPane cardHolder;
@@ -65,7 +64,6 @@ public class ListedTableFrame extends BeanTableFrame {
     JPanel detailpanel;
     static boolean init = false;
     TabbedTableItem itemBeingAdded = null;
-    static int lastdivider;
 
     public ListedTableFrame() {
         this(Bundle.getMessage("TitleListedTable"));
@@ -78,8 +76,8 @@ public class ListedTableFrame extends BeanTableFrame {
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
         if (!init) {
-            /*Add the default tables to the static list array, this should only be done
-             once when first loaded*/
+            // Add the default tables to the static list array,
+            // this should only be done once when first loaded
             addTable("jmri.jmrit.beantable.TurnoutTableTabAction", Bundle.getMessage("MenuItemTurnoutTable"), false);
             addTable("jmri.jmrit.beantable.SensorTableTabAction", Bundle.getMessage("MenuItemSensorTable"), false);
             addTable("jmri.jmrit.beantable.LightTableTabAction", Bundle.getMessage("MenuItemLightTable"), false);
@@ -108,11 +106,10 @@ public class ListedTableFrame extends BeanTableFrame {
 
         detailpanel = new JPanel();
         detailpanel.setLayout(new CardLayout());
-        tabbedTableArray = new ArrayList<TabbedTableItem>(TabbedTableItemListArrayArray.size());
-        ArrayList<TabbedTableItemListArray> removeItem = new ArrayList<TabbedTableItemListArray>(5);
-        for (int x = 0; x < TabbedTableItemListArrayArray.size(); x++) {
-            /* Here we add all the tables into the panel*/
-            TabbedTableItemListArray item = TabbedTableItemListArrayArray.get(x);
+        tabbedTableArray = new ArrayList<>(tabbedTableItemListArrayArray.size());
+        ArrayList<TabbedTableItemListArray> removeItem = new ArrayList<>(5);
+        for (TabbedTableItemListArray item : tabbedTableItemListArrayArray) {
+            // Here we add all the tables into the panel
             try {
                 TabbedTableItem itemModel = new TabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
                 itemBeingAdded = itemModel;
@@ -121,17 +118,16 @@ public class ListedTableFrame extends BeanTableFrame {
                 itemBeingAdded.getAAClass().addToFrame(this);
             } catch (Exception ex) {
                 detailpanel.add(errorPanel(item.getItemString()), item.getClassAsString());
-                log.error("Error when adding " + item.getClassAsString() + " to display\n" + ex);
-                ex.printStackTrace();
+                log.error("Error when adding {} to display", item.getClassAsString(), ex);
                 removeItem.add(item);
             }
         }
 
         for (TabbedTableItemListArray dead : removeItem) {
-            TabbedTableItemListArrayArray.remove(dead);
+            tabbedTableItemListArrayArray.remove(dead);
         }
 
-        list = new JList<String>(new Vector<String>(getChoices()));
+        list = new JList<>(new Vector<>(getChoices()));
         listScroller = new JScrollPane(list);
 
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -150,19 +146,15 @@ public class ListedTableFrame extends BeanTableFrame {
                 buttonpanel, detailpanel);
 
         cardHolder.setDividerSize(8);
-        if (lastdivider != 0) {
-            cardHolder.setDividerLocation(lastdivider);
+        if (this.getDividerLocation() != 0) {
+            cardHolder.setDividerLocation(this.getDividerLocation());
         } else { // if no specific size has been given we set it to the lists preferred width
             cardHolder.setDividerLocation(listScroller.getPreferredSize().width);
         }
-        cardHolder.addPropertyChangeListener(new PropertyChangeListener() {
-            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                    justification = "We only intend to use/save the last position of the Split frame")
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("dividerLocation")) {
-                    lastdivider = (Integer) e.getNewValue();
-                }
+        cardHolder.addPropertyChangeListener((PropertyChangeEvent e) -> {
+            if (e.getPropertyName().equals("dividerLocation")) {
+                InstanceManager.getDefault(UserPreferencesManager.class)
+                        .setProperty(ListedTableFrame.class.getName(), "dividerLocation", (Integer) e.getNewValue());
             }
         });
 
@@ -188,31 +180,31 @@ public class ListedTableFrame extends BeanTableFrame {
                     return;
                 }
             } catch (Exception ex) {
-                log.error("An error occurred in the goto list for " + selection);
+                log.error("An error occurred in the goto list for {}", selection);
             }
         }
     }
 
     public void addTable(String aaClass, String choice, boolean stdModel) {
         TabbedTableItemListArray itemBeingAdded = null;
-        for (int x = 0; x < TabbedTableItemListArrayArray.size(); x++) {
-            if (TabbedTableItemListArrayArray.get(x).getClassAsString().equals(aaClass)) {
-                log.info("Class " + aaClass + " is already added");
-                itemBeingAdded = TabbedTableItemListArrayArray.get(x);
+        for (TabbedTableItemListArray ttila : tabbedTableItemListArrayArray) {
+            if (ttila.getClassAsString().equals(aaClass)) {
+                log.info("Class {} is already added", aaClass);
+                itemBeingAdded = ttila;
                 break;
             }
         }
         if (itemBeingAdded == null) {
             itemBeingAdded = new TabbedTableItemListArray(aaClass, choice, stdModel);
-            TabbedTableItemListArrayArray.add(itemBeingAdded);
+            tabbedTableItemListArrayArray.add(itemBeingAdded);
         }
     }
 
     @Override
     public void dispose() {
         pref.disallowSave();
-        for (int x = 0; x < tabbedTableArray.size(); x++) {
-            tabbedTableArray.get(x).dispose();
+        for (TabbedTableItem tti : tabbedTableArray) {
+            tti.dispose();
         }
         if (list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
@@ -229,47 +221,38 @@ public class ListedTableFrame extends BeanTableFrame {
 
         JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));
         fileMenu.add(newItem);
-        newItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actionList.openNewTableWindow(list.getSelectedIndex());
-            }
+        newItem.addActionListener((ActionEvent e) -> {
+            actionList.openNewTableWindow(list.getSelectedIndex());
         });
 
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
         JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
         fileMenu.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    if (item.getStandardTableModel()) {
-                        item.getDataTable().print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                    } else {
-                        item.getAAClass().print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                    }
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
-                } catch (NullPointerException ex) {
-                    log.error("Trying to print returned a NPE error");
+        printItem.addActionListener((ActionEvent e) -> {
+            try {
+                // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
+                MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                if (item.getStandardTableModel()) {
+                    item.getDataTable().print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                } else {
+                    item.getAAClass().print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 }
+            } catch (java.awt.print.PrinterException e1) {
+                log.warn("Printing error", e1);
+            } catch (NullPointerException ex) {
+                log.error("Trying to print returned a NPE error");
             }
         });
 
         JMenu viewMenu = new JMenu(Bundle.getMessage("MenuView"));
         menuBar.add(viewMenu);
-        for (int i = 0; i < TabbedTableItemListArrayArray.size(); i++) {
-            final TabbedTableItemListArray itemList = TabbedTableItemListArrayArray.get(i);
+        for (int i = 0; i < tabbedTableItemListArrayArray.size(); i++) {
+            final TabbedTableItemListArray itemList = tabbedTableItemListArrayArray.get(i);
             JMenuItem viewItem = new JMenuItem(itemList.getItemString());
             viewMenu.add(viewItem);
-            viewItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    gotoListItem(itemList.getClassAsString());
-                }
+            viewItem.addActionListener((ActionEvent e) -> {
+                gotoListItem(itemList.getClassAsString());
             });
         }
 
@@ -278,7 +261,7 @@ public class ListedTableFrame extends BeanTableFrame {
             item.getAAClass().setMenuBar(this);
             this.addHelpMenu(item.getAAClass().helpTarget(), true);
         } catch (Exception ex) {
-            log.error("Error when trying to set menu bar for " + item.getClassAsString() + "\n" + ex);
+            log.error("Error when trying to set menu bar for {}\n{}", item.getClassAsString(), ex);
         }
         this.revalidate();
     }
@@ -292,34 +275,39 @@ public class ListedTableFrame extends BeanTableFrame {
     //@TODO Sort out the procedure to add to bottom box
     @Override
     protected void addToBottomBox(Component comp, String c) {
-        for (int x = 0; x < tabbedTableArray.size(); x++) {
-            if (tabbedTableArray.get(x).getClassAsString().equals(c)) {
-                tabbedTableArray.get(x).addToBottomBox(comp);
+        for (TabbedTableItem tti : tabbedTableArray) {
+            if (tti.getClassAsString().equals(c)) {
+                tti.addToBottomBox(comp);
                 return;
             }
         }
     }
 
     protected static ArrayList<String> getChoices() {
-        ArrayList<String> choices = new ArrayList<String>();
-        for (int x = 0; x < TabbedTableItemListArrayArray.size(); x++) {
-            choices.add(TabbedTableItemListArrayArray.get(x).getItemString());
+        ArrayList<String> choices = new ArrayList<>();
+        for (TabbedTableItemListArray ttila : tabbedTableItemListArrayArray) {
+            choices.add(ttila.getItemString());
         }
         return choices;
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "We only intend to use/save the last position of the Split frame")
     public void setDividerLocation(int loc) {
         if (loc == 0) {
             return;
         }
         cardHolder.setDividerLocation(loc);
-        lastdivider = loc;
+        InstanceManager.getDefault(UserPreferencesManager.class)
+                .setProperty(ListedTableFrame.class.getName(), "dividerLocation", loc);
     }
 
     public int getDividerLocation() {
-        return lastdivider;
+        try {
+            return Integer.parseInt(InstanceManager.getDefault(UserPreferencesManager.class)
+                    .getProperty(ListedTableFrame.class.getName(), "dividerLocation").toString());
+        } catch (NullPointerException | NumberFormatException ex) {
+            // ignore, this means the divider location has never been saved
+            return 0;
+        }
     }
 
     static class TabbedTableItem {
@@ -351,20 +339,17 @@ public class ListedTableFrame extends BeanTableFrame {
                 Class<?> cl = Class.forName(aaClass);
                 java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[]{String.class});
                 tableAction = (AbstractTableAction) co.newInstance(choice);
-            } catch (ClassNotFoundException e1) {
-                log.error("Not a valid class : " + aaClass);
+            } catch (ClassNotFoundException | InstantiationException e1) {
+                log.error("Not a valid class : {}", aaClass);
                 return;
             } catch (NoSuchMethodException e2) {
-                log.error("Not such method : " + aaClass);
-                return;
-            } catch (InstantiationException e3) {
-                log.error("Not a valid class : " + aaClass);
+                log.error("Not such method : {}", aaClass);
                 return;
             } catch (ClassCastException e4) {
-                log.error("Not part of the abstractTableActions : " + aaClass);
+                log.error("Not part of the abstractTableActions : {}", aaClass);
                 return;
-            } catch (Exception e) {
-                log.error("Exception " + e.toString());
+            } catch (IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException e) {
+                log.error("Exception accessing {}: {}", aaClass, e.getMessage());
                 return;
             }
 
@@ -387,6 +372,9 @@ public class ListedTableFrame extends BeanTableFrame {
             sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
 
+            sorter.setComparator(BeanTableDataModel.USERNAMECOL, new AlphanumComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.USERNAMECOL, SortOrder.ASCENDING);
+
             dataModel.configureTable(dataTable);
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
@@ -405,11 +393,8 @@ public class ListedTableFrame extends BeanTableFrame {
             if (tableAction.includeAddButton()) {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton);
-                addButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        tableAction.addPressed(e);
-                    }
+                addButton.addActionListener((ActionEvent e) -> {
+                    tableAction.addPressed(e);
                 });
             }
             dataModel.persistTable(dataTable);
@@ -420,8 +405,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
                 dataPanel.add(bottomBox, BorderLayout.SOUTH);
             } catch (NullPointerException e) {
-                log.error("An error occured while trying to create the table for " + itemText + " " + e.toString());
-                e.printStackTrace();
+                log.error("An error occurred while trying to create the table for {}", itemText, e);
             }
         }
 
@@ -513,19 +497,16 @@ public class ListedTableFrame extends BeanTableFrame {
             popUp = new JPopupMenu();
             menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
-            menuItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    openNewTableWindow(mouseItem);
-                }
+            menuItem.addActionListener((ActionEvent e) -> {
+                openNewTableWindow(mouseItem);
             });
             try {
                 Object p2 = Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
                 if (p2 != null) {
-                    clickDelay = ((Integer) p2).intValue();
+                    clickDelay = ((Integer) p2);
                 }
             } catch (Exception e1) {
-                log.debug("Cannot parse DesktopProperty awt.multiClickInterval to set double click interval ", e1.toString());
+                log.debug("Cannot parse DesktopProperty awt.multiClickInterval to set double click interval {}", e1.getMessage());
             }
             currentItemSelected = 0;
         }
@@ -536,14 +517,14 @@ public class ListedTableFrame extends BeanTableFrame {
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
-                showPopUp(e);
+                showPopup(e);
             }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
-                showPopUp(e);
+                showPopup(e);
             }
         }
 
@@ -552,7 +533,7 @@ public class ListedTableFrame extends BeanTableFrame {
         //Records the item index that the mouse is currently over
         int mouseItem;
 
-        void showPopUp(MouseEvent e) {
+        void showPopup(MouseEvent e) {
             popUp.show(e.getComponent(), e.getX(), e.getY());
             mouseItem = list.locationToIndex(e.getPoint());
         }
@@ -569,15 +550,12 @@ public class ListedTableFrame extends BeanTableFrame {
                 return;
             }
             if (e.isPopupTrigger()) {
-                showPopUp(e);
+                showPopup(e);
                 return;
             }
             if (clickTimer == null) {
-                clickTimer = new Timer(clickDelay, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        selectListItem(mouseItem);
-                    }
+                clickTimer = new Timer(clickDelay, (ActionEvent e1) -> {
+                    selectListItem(mouseItem);
                 });
                 clickTimer.setRepeats(false);
             }
@@ -628,5 +606,5 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ListedTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListedTableFrame.class);
 }

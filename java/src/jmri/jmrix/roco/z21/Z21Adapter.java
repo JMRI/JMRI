@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapter representing a Z21 communication port Note: This connection uses UDP
- * for communication.
+ * Adapter representing a Z21 communication port.
  * <p>
+ * Note: This connection uses UDP for communication.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010,2011,2014
@@ -59,7 +59,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
             log.error("No host name or port set : {}:{}", m_HostName, m_port);
@@ -158,6 +158,6 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
                                         // result in not allowing reconnection.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class);
 
 }

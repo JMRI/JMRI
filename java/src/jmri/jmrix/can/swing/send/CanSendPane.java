@@ -1,14 +1,18 @@
 package jmri.jmrix.can.swing.send;
 
 import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerNumberModel;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -33,65 +37,74 @@ import org.slf4j.LoggerFactory;
 public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     // member declarations
-    javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-    javax.swing.JButton sendButton = new javax.swing.JButton();
-    javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+    JLabel jLabel1 = new JLabel();
+    JButton sendButton = new JButton();
+    JTextField packetTextField = new JTextField(12);
 
     public CanSendPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // handle single-packet part
-        add(new JLabel("Send one frame:"));
-        {
-            JPanel pane1 = new JPanel();
-            pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+        // Handle single-packet part
+        JPanel topPane = new JPanel();
+        // Add a nice border
+        topPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("SendFrameTitle")));
+        add(topPane);
 
-            jLabel1.setText("Frame:");
-            jLabel1.setVisible(true);
+        JPanel pane1 = new JPanel();
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 
-            sendButton.setText("Send");
-            sendButton.setVisible(true);
-            sendButton.setToolTipText("Send frame");
+        JPanel entry = new JPanel();
+        jLabel1.setText(Bundle.getMessage("FrameLabel"));
+        jLabel1.setVisible(true);
 
-            packetTextField.setToolTipText("Frame packet as hex pairs, e.g. 82 7D; checksum should be present but is recalculated");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
+        sendButton.setVisible(true);
+        sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
-            pane1.add(jLabel1);
-            pane1.add(packetTextField);
-            pane1.add(sendButton);
-            pane1.add(Box.createVerticalGlue());
+        entry.add(jLabel1);
+        entry.add(packetTextField);
+        packetTextField.setToolTipText(Bundle.getMessage("PacketToolTip"));
+        pane1.add(entry);
 
-            sendButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+        pane1.add(sendButton);
+        pane1.add(Box.createVerticalGlue());
 
-            add(pane1);
-        }
-
-        add(new JSeparator());
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
+        topPane.add(pane1);
 
         // Configure the sequence
-        add(new JLabel("Send sequence of frames:"));
+        JPanel bottomPane = new JPanel();
+        // Add a nice border
+        bottomPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("SendSeqTitle")));
+        bottomPane.setLayout(new BoxLayout(bottomPane, BoxLayout.Y_AXIS));
+        add(bottomPane);
         JPanel pane2 = new JPanel();
-        pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 4));
+        pane2.setLayout(new GridLayout(MAXSEQUENCE + 1, 4));
         pane2.add(new JLabel(""));
-        pane2.add(new JLabel("Send"));
-        pane2.add(new JLabel("packet"));
-        pane2.add(new JLabel("wait (msec)"));
+        pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
+        pane2.add(new JLabel(Bundle.getMessage("PacketLabel")));
+        pane2.add(new JLabel(Bundle.getMessage("WaitLabel")));
         for (int i = 0; i < MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i + 1)));
             mUseField[i] = new JCheckBox();
             mPacketField[i] = new JTextField(10);
-            mDelayField[i] = new JTextField(10);
-            mDelayField[i].setText("1");
+            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
-            pane2.add(mDelayField[i]);
+            mPacketField[i].setToolTipText(Bundle.getMessage("PacketToolTip"));
+            pane2.add(numberSpinner[i]);
         }
-        pane2.add(mRunButton); // starts a new row in layout
-        add(pane2);
+        bottomPane.add(pane2);
+        bottomPane.add(Box.createVerticalGlue()); // starts a new row in layout
+        bottomPane.add(mRunButton);
+        mRunButton.setToolTipText(Bundle.getMessage("StartToolTip"));
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -105,8 +118,8 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     static final int MAXSEQUENCE = 4;
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton("Go");
+    JSpinner numberSpinner[] =  new JSpinner[MAXSEQUENCE];
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonStart"));
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -123,9 +136,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Send Can Frame");
+            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemSendFrame"));
         }
-        return "Send Can Frame";
+        return Bundle.getMessage("MenuItemSendFrame");
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -164,8 +177,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     }
 
     /**
-     * Run button pressed down, start the sequence operation
-     *
+     * Run button pressed down, start the sequence operation.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -180,6 +192,8 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         }
         if (!ok) {
             mRunButton.setSelected(false);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSelectionDialog"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // start the operation
@@ -188,12 +202,12 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     }
 
     /**
-     * Echo has been heard, start delay for next packet
+     * Echo has been heard, start delay for next packet.
      */
     void startSequenceDelay() {
         // at the start, mNextSequenceElement contains index we're
         // working on
-        int delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
+        int delay = (Integer) numberSpinner[mNextSequenceElement].getValue();
         // increment to next line at completion
         mNextSequenceElement++;
         // start timer
@@ -229,7 +243,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     }
 
     /**
-     * Create a well-formed message from a String String is expected to be space
+     * Create a well-formed message from a String. String is expected to be space
      * seperated hex bytes or CbusAddress, e.g.: 12 34 56 +n4e1
      *
      * @return The packet, with contents filled-in
@@ -295,17 +309,17 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     private TrafficController tc = null;
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Send Can Frame",
+            super(Bundle.getMessage("MenuItemSendFrame"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     CanSendPane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class);
 
 }

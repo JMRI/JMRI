@@ -30,5 +30,5 @@ public class EasyDccPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenAction.class);
 }

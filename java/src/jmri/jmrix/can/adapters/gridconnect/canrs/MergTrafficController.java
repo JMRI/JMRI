@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Traffic controller for the MERG varient of the GridConnect protocol.
+ * Traffic controller for the MERG variant of the GridConnect protocol.
  * <P>
  * MERG CAN-RS/CAN-USB uses messages transmitted as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
@@ -65,7 +65,7 @@ public class MergTrafficController extends GcTrafficController {
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class);
 }
 
 

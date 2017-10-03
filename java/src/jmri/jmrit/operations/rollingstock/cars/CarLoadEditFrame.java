@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -33,7 +34,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     public static final String NONE = "";
 
-    CarLoads carLoads = CarLoads.instance();
+    CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
 
     // labels
     JLabel textSep = new JLabel();
@@ -245,7 +246,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
             carLoads.setPriority(_type, (String) loadComboBox.getSelectedItem(), (String) priorityComboBox.getSelectedItem());
             carLoads.setPickupComment(_type, (String) loadComboBox.getSelectedItem(), pickupCommentTextField.getText());
             carLoads.setDropComment(_type, (String) loadComboBox.getSelectedItem(), dropCommentTextField.getText());
-            //CarManagerXml.instance().setDirty(true); // save car files
+            //InstanceManager.getDefault(CarManagerXml.class).setDirty(true); // save car files
             OperationsXml.save(); // save all files that have been modified;
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
@@ -264,7 +265,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     // replace the default empty and load for all car types
     private void replaceAllLoads(String oldLoad, String newLoad) {
-        for (String type : CarTypes.instance().getNames()) {
+        for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
             addLoadToCombobox(type, newLoad);
             replaceLoad(type, oldLoad, newLoad);
             deleteLoadFromCombobox(type, oldLoad);
@@ -281,13 +282,13 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     private void replaceLoad(String type, String oldLoad, String newLoad) {
         // adjust all cars
-        CarManager.instance().replaceLoad(type, oldLoad, newLoad);
+        InstanceManager.getDefault(CarManager.class).replaceLoad(type, oldLoad, newLoad);
         // now adjust schedules
-        ScheduleManager.instance().replaceLoad(type, oldLoad, newLoad);
+        InstanceManager.getDefault(ScheduleManager.class).replaceLoad(type, oldLoad, newLoad);
         // now adjust trains
-        TrainManager.instance().replaceLoad(type, oldLoad, newLoad);
+        InstanceManager.getDefault(TrainManager.class).replaceLoad(type, oldLoad, newLoad);
         // now adjust tracks
-        LocationManager.instance().replaceLoad(type, oldLoad, newLoad);
+        InstanceManager.getDefault(LocationManager.class).replaceLoad(type, oldLoad, newLoad);
     }
 
     private void loadComboboxes() {
@@ -314,7 +315,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
         int number = 0;
         String item = (String) loadComboBox.getSelectedItem();
-        for (RollingStock rs : CarManager.instance().getList()) {
+        for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList()) {
             Car car = (Car) rs;
             if (car.getLoadName().equals(item)) {
                 number++;
@@ -327,7 +328,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         String loadName = (String) loadComboBox.getSelectedItem();
         loadTypeComboBox.setSelectedItem(carLoads.getLoadType(_type, loadName));
         if (loadName != null
-                && (loadName.equals(CarLoads.instance().getDefaultEmptyName()) || loadName.equals(CarLoads.instance()
+                && (loadName.equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) || loadName.equals(InstanceManager.getDefault(CarLoads.class)
                         .getDefaultLoadName()))) {
             loadTypeComboBox.setEnabled(false);
         } else {
@@ -370,5 +371,5 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 // public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
 //  pcs.removePropertyChangeListener(l);
 // }
-    private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class);
 }

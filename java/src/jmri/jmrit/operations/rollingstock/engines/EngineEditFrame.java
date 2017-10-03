@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import jmri.IdTag;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -34,12 +35,12 @@ import org.slf4j.LoggerFactory;
  */
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    EngineManager manager = EngineManager.instance();
-    EngineManagerXml managerXml = EngineManagerXml.instance();
-    EngineModels engineModels = EngineModels.instance();
-    EngineTypes engineTypes = EngineTypes.instance();
-    EngineLengths engineLengths = EngineLengths.instance();
-    LocationManager locationManager = LocationManager.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+    EngineManagerXml managerXml = InstanceManager.getDefault(EngineManagerXml.class);
+    EngineModels engineModels = InstanceManager.getDefault(EngineModels.class);
+    EngineTypes engineTypes = InstanceManager.getDefault(EngineTypes.class);
+    EngineLengths engineLengths = InstanceManager.getDefault(EngineLengths.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     Engine _engine;
 
@@ -69,11 +70,11 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     JTextField valueTextField = new JTextField(8);
 
     // combo boxes
-    JComboBox<String> roadComboBox = CarRoads.instance().getComboBox();
+    JComboBox<String> roadComboBox = InstanceManager.getDefault(CarRoads.class).getComboBox();
     JComboBox<String> modelComboBox = engineModels.getComboBox();
     JComboBox<String> typeComboBox = engineTypes.getComboBox();
     JComboBox<String> lengthComboBox = engineLengths.getComboBox();
-    JComboBox<String> ownerComboBox = CarOwners.instance().getComboBox();
+    JComboBox<String> ownerComboBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
     JComboBox<Location> locationBox = locationManager.getComboBox();
     JComboBox<Track> trackLocationBox = new JComboBox<>();
     JComboBox<String> consistComboBox = manager.getConsistComboBox();
@@ -232,7 +233,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
             jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList()
-                    .forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+                    .forEach((tag) -> rfidComboBox.addItem(tag));
             rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank in the list, for the default.
             rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
@@ -279,11 +280,11 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesAdd", true); // NOI18N
 
         // get notified if combo box gets modified
-        CarRoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         engineModels.addPropertyChangeListener(this);
         engineTypes.addPropertyChangeListener(this);
         engineLengths.addPropertyChangeListener(this);
-        CarOwners.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         locationManager.addPropertyChangeListener(this);
         manager.addPropertyChangeListener(this);
 
@@ -297,12 +298,12 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         deleteButton.setEnabled(true);
         saveButton.setEnabled(true);
 
-        if (!CarRoads.instance().containsName(engine.getRoadName())) {
+        if (!InstanceManager.getDefault(CarRoads.class).containsName(engine.getRoadName())) {
             String msg = MessageFormat.format(Bundle.getMessage("roadNameNotExist"), new Object[]{engine
                     .getRoadName()});
             if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("rsAddRoad"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarRoads.instance().addName(engine.getRoadName());
+                InstanceManager.getDefault(CarRoads.class).addName(engine.getRoadName());
             }
         }
         roadComboBox.setSelectedItem(engine.getRoadName());
@@ -354,12 +355,12 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
         builtTextField.setText(engine.getBuilt());
 
-        if (!CarOwners.instance().containsName(engine.getOwner())) {
+        if (!InstanceManager.getDefault(CarOwners.class).containsName(engine.getOwner())) {
             String msg = MessageFormat.format(Bundle.getMessage("ownerNameNotExist"),
                     new Object[]{engine.getOwner()});
             if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("addOwner"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                CarOwners.instance().addName(engine.getOwner());
+                InstanceManager.getDefault(CarOwners.class).addName(engine.getOwner());
             }
         }
         consistComboBox.setSelectedItem(engine.getConsistName());
@@ -652,11 +653,11 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     }
 
     private void removePropertyChangeListeners() {
-        CarRoads.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
         engineModels.removePropertyChangeListener(this);
         engineTypes.removePropertyChangeListener(this);
         engineLengths.removePropertyChangeListener(this);
-        CarOwners.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         locationManager.removePropertyChangeListener(this);
         manager.removePropertyChangeListener(this);
     }
@@ -668,7 +669,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                     .getNewValue());
         }
         if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
-            CarRoads.instance().updateComboBox(roadComboBox);
+            InstanceManager.getDefault(CarRoads.class).updateComboBox(roadComboBox);
             if (_engine != null) {
                 roadComboBox.setSelectedItem(_engine.getRoadName());
             }
@@ -698,13 +699,13 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
-            CarOwners.instance().updateComboBox(ownerComboBox);
+            InstanceManager.getDefault(CarOwners.class).updateComboBox(ownerComboBox);
             if (_engine != null) {
                 ownerComboBox.setSelectedItem(_engine.getOwner());
             }
         }
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
-            LocationManager.instance().updateComboBox(locationBox);
+            InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
             if (_engine != null) {
                 locationBox.setSelectedItem(_engine.getLocation());
             }
@@ -714,5 +715,5 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineEditFrame.class);
 }

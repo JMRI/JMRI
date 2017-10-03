@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -51,9 +52,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     protected JCheckBox unlockCheckBox = new JCheckBox();
 
     protected ButtonGroup speedGroup = new ButtonGroup();
-    protected JRadioButton speed14Button = new JRadioButton("14 step");
-    protected JRadioButton speed28Button = new JRadioButton("28 step");
-    protected JRadioButton speed128Button = new JRadioButton("128 step");
+    protected javax.swing.JLabel speedLabel = new javax.swing.JLabel();
+    protected JRadioButton speed14Button = new JRadioButton(Bundle.getMessage("ButtonXStep", 14)); // i18n using shared sprogBundle
+    protected JRadioButton speed28Button = new JRadioButton(Bundle.getMessage("ButtonXStep", 28));
+    protected JRadioButton speed128Button = new JRadioButton(Bundle.getMessage("ButtonXStep", 128));
 
     protected int modeWord;
     protected int currentLimit = SprogConstants.DEFAULT_I;
@@ -91,11 +93,17 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String title() {
-        return "Sprog Console";
+        return Bundle.getMessage("SprogConsoleTitle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void init() {
         // connect to TrafficController
@@ -103,22 +111,28 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         tc.addSprogListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         tc.removeSprogListener(this);
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Ignore unsynchronized access to state
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         //SprogMessage msg;
         super.initComponents();
 
         // Add a nice border to super class
         super.jScrollPane1.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Command History"));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("CommandHistoryTitle")));
 
         // Let user press return to enter message
         entryField.addActionListener(new java.awt.event.ActionListener() {
@@ -133,18 +147,18 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
          */
         JPanel cmdPane1 = new JPanel();
         cmdPane1.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Send Command"));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("SendCommandTitle")));
         cmdPane1.setLayout(new FlowLayout());
 
-        cmdLabel.setText("Command:");
+        cmdLabel.setText(Bundle.getMessage("CommandLabel"));
         cmdLabel.setVisible(true);
 
-        sendButton.setText("Send");
+        sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");
+        sendButton.setToolTipText(Bundle.getMessage("SendPacketTooltip"));
 
         cmdTextField.setText("");
-        cmdTextField.setToolTipText("Enter a SPROG command");
+        cmdTextField.setToolTipText(Bundle.getMessage("EnterSPROGCommandTooltip", Bundle.getMessage("ButtonSend")));
         cmdTextField.setMaximumSize(
                 new Dimension(cmdTextField.getMaximumSize().width,
                         cmdTextField.getPreferredSize().height)
@@ -171,38 +185,40 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         getContentPane().add(cmdPane1);
 
         /*
-         * Address Panel
+         * Speed Step Panel
          */
         JPanel speedPanel = new JPanel();
-        speedPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Speed Step Mode for SPROG Throttle"));
+        speedPanel.setBorder(BorderFactory.createEtchedBorder());
+        speedLabel.setText(Bundle.getMessage("SpeedStepModeLabel"));
+        speedPanel.add(speedLabel);
         speedPanel.add(speed14Button);
         speedPanel.add(speed28Button);
         speedPanel.add(speed128Button);
         speedGroup.add(speed14Button);
         speedGroup.add(speed28Button);
         speedGroup.add(speed128Button);
-        speed14Button.setToolTipText("Set 14 speed steps for SPROG throttle");
-        speed28Button.setToolTipText("Set 28 speed steps for SPROG throttle");
-        speed128Button.setToolTipText("Set 128 speed steps for SPROG throttle");
+        speed14Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 14));
+        speed28Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 28));
+        speed128Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 128));
 
-        getContentPane().add(speedPanel);
+//        getContentPane().add(speedPanel); // now embedded inside "Configuration" frame
 
         /*
          * Configuration panel
          */
         JPanel configPanel = new JPanel();
-        configPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Configuration"));
-        configPanel.setLayout(new FlowLayout());
+        // is now embedded inside "Configuration" frame:
+//        configPanel.setBorder(BorderFactory.createTitledBorder(
+//                BorderFactory.createEtchedBorder(), Bundle.getMessage("ConfigurationTitle")));
+//        configPanel.setLayout(new FlowLayout());
 
         // *** Which versions support current limit ???
-        currentLabel.setText("Current Limit (mA):");
+        currentLabel.setText(Bundle.getMessage("CurrentLimitLabel"));
         currentLabel.setVisible(true);
 
         currentTextField.setText("");
         currentTextField.setEnabled(false);
-        currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 1000)");
+        currentTextField.setToolTipText(Bundle.getMessage("CurrentLimitFieldTooltip"));
         currentTextField.setMaximumSize(
                 new Dimension(currentTextField.getMaximumSize().width,
                         currentTextField.getPreferredSize().height
@@ -214,19 +230,19 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 //                validateCurrent();
 //            }
 //        });
-        ztcCheckBox.setText("Set ZTC mode");
+        ztcCheckBox.setText(Bundle.getMessage("ButtonSetZTCMode"));
         ztcCheckBox.setVisible(true);
-        ztcCheckBox.setToolTipText("Use this when programming older ZTC decoders");
+        ztcCheckBox.setToolTipText(Bundle.getMessage("ButtonSetZTCModeTooltip"));
 
-        blueCheckBox.setText("Set Blueline mode");
+        blueCheckBox.setText(Bundle.getMessage("ButtonSetBluelineMode"));
         blueCheckBox.setVisible(true);
         blueCheckBox.setEnabled(false);
-        blueCheckBox.setToolTipText("Use this when programming blueline decoders - programming will be slower");
+        blueCheckBox.setToolTipText(Bundle.getMessage("ButtonSetBluelineModeTooltip"));
 
-        unlockCheckBox.setText("Unlock firmware");
+        unlockCheckBox.setText(Bundle.getMessage("ButtonUnlockFirmware"));
         unlockCheckBox.setVisible(true);
         unlockCheckBox.setEnabled(false);
-        unlockCheckBox.setToolTipText("Use this only if you are about to update the SPROG firmware");
+        unlockCheckBox.setToolTipText(Bundle.getMessage("ButtonUnlockFirmwareTooltip"));
 
         configPanel.add(currentLabel);
         configPanel.add(currentTextField);
@@ -234,19 +250,19 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         configPanel.add(blueCheckBox);
         configPanel.add(unlockCheckBox);
 
-        getContentPane().add(configPanel);
+//        getContentPane().add(configPanel);
 
         /*
          * Status Panel
          */
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Save/Load Configuration"));
-        statusPanel.setLayout(new FlowLayout());
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("ConfigurationTitle")));
+        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
 
-        saveButton.setText("Save");
+        saveButton.setText(Bundle.getMessage("ButtonApply"));
         saveButton.setVisible(true);
-        saveButton.setToolTipText("Save SPROG configuration (in the SPROG EEPROM)");
+        saveButton.setToolTipText(Bundle.getMessage("ButtonApplyTooltip"));
 
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -255,6 +271,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             }
         });
 
+        statusPanel.add(speedPanel);
+        statusPanel.add(configPanel);
         statusPanel.add(saveButton);
 
         getContentPane().add(statusPanel);
@@ -267,18 +285,16 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Define help menu for this window.
-     * <p>
-     * By default, provides a generic help page that covers general features.
-     * Specific implementations can override this to show their own help page if
-     * desired.
+     * {@inheritDoc}
      */
     @Override
-    protected void addHelpMenu() {
+    protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
     }
 
-    // Override superclass to append return
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
         nextLine(entryField.getText() + "\n", "");
@@ -303,16 +319,14 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         try {
             currentLimit = Integer.parseInt(currentTextField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid Current Limit Entered\n"
-                    + "Please enter a value in the range " + currentRange,
-                    "SPROG Console", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
+                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
             currentLimit = validLimit;
             return;
         }
         if ((currentLimit > validLimit) || (currentLimit < 200)) {
-            JOptionPane.showMessageDialog(null, "Invalid Current Limit Entered\n"
-                    + "Please enter a value in the range " + currentRange,
-                    "SPROG Console", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("CurrentLimitDialogString", currentRange),
+                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
             currentLimit = validLimit;
         }
     }
@@ -366,6 +380,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         return sv.hasZTCMode();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
@@ -419,6 +436,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 // Set default and get the mode word
                 currentLimit = (int) (SprogConstants.DEFAULT_I * sv.sprogType.getCurrentMultiplier());
                 currentTextField.setText(String.valueOf(SprogConstants.DEFAULT_I));
+                //currentField.setValue(Integer.valueOf(SprogConstants.DEFAULT_I)); // TODO use JSpinner so int
                 state = State.MODEQUERYSENT;
                 msg = new SprogMessage(1);
                 msg.setOpCode('M');
@@ -429,11 +447,17 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
         nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyReply(SprogReply l) {  // receive a reply message and log it
         SprogMessage msg;
@@ -568,7 +592,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle a timeout
+     * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
         JOptionPane.showMessageDialog(null, "Timeout talking to SPROG",
@@ -588,7 +612,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     protected void stopTimer() {
         if (timer != null) {
@@ -615,6 +639,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogConsoleFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogConsoleFrame.class);
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.hexfile;
 
+import jmri.GlobalProgrammerManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ public class HexFileServer {
 
     // member declarations
     // to find and remember the log file
-//    final javax.swing.JFileChooser inputFileChooser = 
+//    final javax.swing.JFileChooser inputFileChooser =
 //            jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
     public HexFileServer() {
     }
@@ -49,8 +50,12 @@ public class HexFileServer {
         // Install a debug programmer, replacing the existing LocoNet one
         port.getSystemConnectionMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
-        jmri.InstanceManager.setProgrammerManager(
-                port.getSystemConnectionMemo().getProgrammerManager());
+        if (port.getSystemConnectionMemo().getProgrammerManager().isAddressedModePossible()) {
+            jmri.InstanceManager.setAddressedProgrammerManager(port.getSystemConnectionMemo().getProgrammerManager());
+        }
+        if (port.getSystemConnectionMemo().getProgrammerManager().isGlobalProgrammerAvailable()) {
+            jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
         // Install a debug throttle manager, replacing the existing LocoNet one
         port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
@@ -75,6 +80,6 @@ public class HexFileServer {
     }
     private LnHexFilePort port = null;
 
-    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class);
 
 }

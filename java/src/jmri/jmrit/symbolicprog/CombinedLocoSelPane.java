@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ListIterator;
+import javax.annotation.*;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -23,7 +26,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import javax.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,8 +36,7 @@ import org.slf4j.LoggerFactory;
  * continue, the startProgrammer method is invoked. This should be overridden
  * (e.g. in a local anonymous class) to create the programmer frame you're
  * interested in.
- *
- * <P>
+ * <p>
  * To override this class to use a different decoder-selection GUI, replace
  * members:
  * <UL>
@@ -59,7 +60,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     ProgModeSelector selector;
-    
+
     /**
      * Create the panel used to select the decoder
      *
@@ -69,7 +70,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
-        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        decoderBox = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
         decoderBox.insertItemAt("<from locomotive settings>", 0);
         decoderBox.setSelectedIndex(0);
         decoderBox.addActionListener(new ActionListener() {
@@ -99,22 +100,23 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     JToggleButton addDecoderIdentButton() {
-        JToggleButton iddecoder = new JToggleButton(Bundle.getMessage("ButtonReadType"));
-        iddecoder.setToolTipText(Bundle.getMessage("TipSelectType"));
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
-                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
-                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
-            // can't read, disable the button
-            iddecoder.setEnabled(false);
-            iddecoder.setToolTipText(Bundle.getMessage("TipNoRead"));
+        JToggleButton button = new JToggleButton(Bundle.getMessage("ButtonReadType"));
+        button.setToolTipText(Bundle.getMessage("TipSelectType"));
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+            Programmer p = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+            if (p != null && !p.getCanRead()) {
+                // can't read, disable the button
+                button.setEnabled(false);
+                button.setToolTipText(Bundle.getMessage("TipNoRead"));
+            }
         }
-        iddecoder.addActionListener(new ActionListener() {
+        button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startIdentifyDecoder();
             }
         });
-        return iddecoder;
+        return button;
     }
 
     /**
@@ -178,12 +180,13 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         idloco = new JToggleButton(Bundle.getMessage("IDENT"));
         idloco.setToolTipText(Bundle.getMessage("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
-                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
-                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
-            // can't read, disable the button
-            idloco.setEnabled(false);
-            idloco.setToolTipText(Bundle.getMessage("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+            Programmer p = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+            if (p != null && !p.getCanRead()) {
+                // can't read, disable the button
+                idloco.setEnabled(false);
+                idloco.setToolTipText(Bundle.getMessage("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
+            }
         }
         idloco.addActionListener(new ActionListener() {
             @Override
@@ -263,22 +266,20 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     protected void startIdentifyLoco() {
         // start identifying a loco
-        final CombinedLocoSelPane me = this;
         Programmer p = null;
         if (selector != null && selector.isSelected()) {
             p = selector.getProgrammer();
         }
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+            p = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyLoco id = new IdentifyLoco(p) {
-            private CombinedLocoSelPane who = me;
 
             @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
-                who.selectLoco(dccAddress);
+                CombinedLocoSelPane.this.selectLoco(dccAddress);
             }
 
             @Override
@@ -303,22 +304,20 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     protected void startIdentifyDecoder() {
         // start identifying a decoder
-        final CombinedLocoSelPane me = this;
         Programmer p = null;
         if (selector != null && selector.isSelected()) {
             p = selector.getProgrammer();
         }
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+            p = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyDecoder id = new IdentifyDecoder(p) {
-            private CombinedLocoSelPane who = me;
 
             @Override
             protected void done(int mfg, int model, int productID) {
                 // if Done, updated the selected decoder
-                who.selectDecoder(mfg, model, productID);
+                CombinedLocoSelPane.this.selectDecoder(mfg, model, productID);
             }
 
             @Override
@@ -352,6 +351,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
      *
+     * @param dccAddress the address to select
      */
     protected void selectLoco(int dccAddress) {
         // raise the button again
@@ -369,7 +369,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             }
             locoBox.setSelectedItem(r);
         } else {
-            log.warn("Read address " + dccAddress + ", but no such loco in roster");
+            log.warn("Read address {}, but no such loco in roster", dccAddress);
             _statusLabel.setText(Bundle.getMessage("READ ADDRESS ") + dccAddress + Bundle.getMessage(", BUT NO SUCH LOCO IN ROSTER"));
         }
     }
@@ -390,18 +390,18 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // if productID present, try with that
         if (productID != -1) {
             String sz_productID = Integer.toString(productID);
-            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
             if (temp.isEmpty()) {
-                log.debug("selectDecoder found no items with product ID " + productID);
+                log.debug("selectDecoder found no items with product ID {}", productID);
                 temp = null;
             } else {
-                log.debug("selectDecoder found " + temp.size() + " matches with productID " + productID);
+                log.debug("selectDecoder found {} matches with productID {}", temp.size(), productID);
             }
         }
 
         // try without product ID if needed
         if (temp == null) {  // i.e. if no match previously
-            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             if (log.isDebugEnabled()) {
                 log.debug("selectDecoder without productID found " + temp.size() + " matches");
             }
@@ -449,7 +449,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (tempOriginalSize > 0 && temp.isEmpty()) {
             log.debug("Filtering removed all matches so reverting to coarse match with mfgID='{}' & modelID='{}'",
                     Integer.toString(mfgID), Integer.toString(modelID));
-            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             log.debug("selectDecoder without productID found {} matches", temp.size());
         }
 
@@ -457,7 +457,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = DecoderIndexFile.instance().mfgNameFromId(Integer.toString(mfgID));
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(Integer.toString(mfgID));
             if (mfg == null) {
                 updateForDecoderNotID(mfgID, modelID);
             } else {
@@ -489,7 +489,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.warn(msg);
         _statusLabel.setText(msg);
         // try to select all decoders from that MFG
-        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
+        JComboBox<String> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) {
             log.debug("mfg-only selectDecoder found " + temp.getItemCount() + " matches");
         }
@@ -500,7 +500,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             decoderBox.setSelectedIndex(1);
         } else {
             // if there are none from this mfg, go back to showing everything
-            temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+            temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
             decoderBox.setModel(temp.getModel());
             decoderBox.insertItemAt("<from locomotive settings>", 0);
             decoderBox.setSelectedIndex(1);
@@ -511,8 +511,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Decoder identify did not match anything, warn and show all
      */
     void updateForDecoderNotID(int pMfgID, int pModelID) {
-        log.warn("Found mfg " + pMfgID + " version " + pModelID + "; no such manufacterer defined");
-        JComboBox<String> temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
+        log.warn("Found mfg {} version {}; no such manufacterer defined", pMfgID, pModelID);
+        JComboBox<String> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingComboBox(null, null, null, null, null, null);
         decoderBox.setModel(temp.getModel());
         decoderBox.insertItemAt("<from locomotive settings>", 0);
         decoderBox.setSelectedIndex(1);
@@ -567,9 +567,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     protected void openNewLoco() {
         // find the decoderFile object
-        DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+        DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         if (log.isDebugEnabled()) {
-            log.debug("decoder file: " + decoderFile.getFilename());
+            log.debug("decoder file: " + decoderFile.getFileName());
         }
 
         // create a dummy RosterEntry with the decoder info
@@ -593,12 +593,12 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * @param progName    name of the programmer (Layout connection) being used
      */
     // TODO: Fix inheritance.  This is both a base class (where startProgrammer really isn't part of the contract_
-    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be 
+    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be
     //       made abstract:  CombinedLocoSelListPane and CombinedLocoSelTreePane have no need for it.
     protected void startProgrammer(@CheckForNull DecoderFile decoderFile, @Nonnull RosterEntry r, @Nonnull String progName) {
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelPane.class);
 
 }

@@ -1,6 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
+import java.awt.Font;
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -63,12 +66,21 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * uses (subclasses) of PositionableLabel flip back and forth between icon
      * and text, and want to remember their formatting.
      *
-     * @param p the icon to store
+     * @param p       the icon to store
      * @param element the XML representation of the icon
      */
     protected void storeTextInfo(Positionable p, Element element) {
         //if (p.getText()!=null) element.setAttribute("text", p.getText());
         PositionablePopupUtil util = p.getPopupUtility();
+
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+        String defaultFontName = manager.getDefaultFont().getFontName();
+
+        String fontName = util.getFont().getFontName();
+        if (!fontName.equals(defaultFontName)) {
+            element.setAttribute("fontname", "" + util.getFont().getFontName());
+        }
+
         element.setAttribute("size", "" + util.getFontSize());
         element.setAttribute("style", "" + util.getFontStyle());
 
@@ -135,7 +147,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     /**
      * Default implementation for storing the common contents of an Icon
      *
-     * @param p the icon to store
+     * @param p       the icon to store
      * @param element the XML representation of the icon
      */
     public void storeCommonAttributes(Positionable p, Element element) {
@@ -146,9 +158,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("forcecontroloff", !p.isControlling() ? "true" : "false");
         element.setAttribute("hidden", p.isHidden() ? "yes" : "no");
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
-        element.setAttribute("showtooltip", p.showTooltip() ? "true" : "false");
+        element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
-        ToolTip tip = p.getTooltip();
+        ToolTip tip = p.getToolTip();
         String txt = tip.getText();
         if (txt != null) {
             Element elem = new Element("tooltip").addContent(txt); // was written as "toolTip" 3.5.1 and before
@@ -204,14 +216,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 if (icon == null) {
                     icon = editor.loadFailed("PositionableLabel", name);
                     if (icon == null) {
-                        log.info("PositionableLabel icon removed for url= " + name);
+                        log.info("PositionableLabel icon removed for url= {}", name);
                         return;
                     }
                 }
             }
             // abort if name != yes and have null icon
             if (icon == null && !name.equals("yes")) {
-                log.info("PositionableLabel icon removed for url= " + name);
+                log.info("PositionableLabel icon removed for url= {}", name);
                 return;
             }
             l = new PositionableLabel(icon, editor);
@@ -229,7 +241,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 if (nIcon != null) {
                     l.updateIcon(nIcon);
                 } else {
-                    log.info("PositionableLabel icon removed for url= " + name);
+                    log.info("PositionableLabel icon removed for url= {}", name);
                     return;
                 }
             } else {
@@ -273,9 +285,10 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
         jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
         if (util == null) {
-            log.warn("PositionablePopupUtil is null! " + element.toString());
+            log.warn("PositionablePopupUtil is null! {}", element);
             return;
         }
+
         Attribute a = element.getAttribute("size");
         try {
             if (a != null) {
@@ -284,6 +297,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
+
         a = element.getAttribute("style");
         try {
             if (a != null) {
@@ -304,6 +318,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             }
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
+        }
+
+        a = element.getAttribute("fontname");
+        try {
+            if (a != null) {
+                util.setFont(new Font(a.getValue(), util.getFontStyle(), util.getFontSize()));
+            }
+        } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
         // set color if needed
@@ -402,11 +424,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
 
     public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setControlling(false);
-        } else {
-            l.setControlling(true);
+        try {
+            l.setControlling(!element.getAttribute("forcecontroloff").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert positionable label forcecontroloff attribute");
+        } catch (Exception e) {
         }
 
         // find coordinates
@@ -426,37 +448,43 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             level = element.getAttribute("level").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse level attribute!");
-        } catch (NullPointerException e) {  // considered normal if the attribute not present
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
 
-        a = element.getAttribute("hidden");
-        if ((a != null) && a.getValue().equals("yes")) {
-            l.setHidden(true);
-            l.setVisible(false);
+        try {
+            boolean value = element.getAttribute("hidden").getBooleanValue();
+            l.setHidden(value);
+            l.setVisible(!value);
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label hidden attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
-        a = element.getAttribute("positionable");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setPositionable(true);
-        } else {
-            l.setPositionable(false);
+        try {
+            l.setPositionable(element.getAttribute("positionable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label positionable attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+        try {
+            l.setShowToolTip(element.getAttribute("showtooltip").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label showtooltip attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+        try {
+            l.setEditable(element.getAttribute("editable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label editable attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
         }
 
-        a = element.getAttribute("showtooltip");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setShowTooltip(true);
-        } else {
-            l.setShowTooltip(false);
-        }
-
-        a = element.getAttribute("editable");
-        if ((a != null) && a.getValue().equals("true")) {
-            l.setEditable(true);
-        } else {
-            l.setEditable(false);
-        }
-
-        a = element.getAttribute("degrees");
+        Attribute a = element.getAttribute("degrees");
         if (a != null && l instanceof PositionableLabel) {
             try {
                 int deg = a.getIntValue();
@@ -470,7 +498,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             elem = element.getChild("toolTip"); // pre JMRI 3.5.2
         }
         if (elem != null) {
-            ToolTip tip = l.getTooltip();
+            ToolTip tip = l.getToolTip();
             if (tip != null) {
                 tip.setText(elem.getText());
             }
@@ -530,14 +558,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             if (icon == null) {
                 icon = ed.loadFailed(name, iconName);
                 if (icon == null) {
-                    log.info(name + " removed for url= " + iconName);
+                    log.info("{} removed for url= {}", name, iconName);
                 }
             }
         } else {
-            log.debug("getNamedIcon: child element \"" + childName + "\" not found in element " + element.getName());
+            log.debug("getNamedIcon: child element \"{}\" not found in element {}", childName, element.getName());
         }
         return icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class);
 }

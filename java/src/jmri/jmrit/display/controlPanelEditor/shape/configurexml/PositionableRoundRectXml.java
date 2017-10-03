@@ -7,7 +7,7 @@ import org.jdom2.Element;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableRoundRectXml extends PositionableShapeXml {
 

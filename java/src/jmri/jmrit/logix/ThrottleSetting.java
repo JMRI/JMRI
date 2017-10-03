@@ -15,6 +15,7 @@ public class ThrottleSetting {
     private String _value;
     // _namedHandle may be of 3 different types
     private NamedBeanHandle <? extends NamedBean> _namedHandle = null;
+    private float _speed;   // track speed of the train (millimeters per second)
 
     public ThrottleSetting() {
     }
@@ -23,7 +24,16 @@ public class ThrottleSetting {
         _time = time;
         _command = command;
         _value = value;
-        setNamedBean(command, beanName); 
+        setNamedBean(command, beanName);
+        _speed = 0;
+    }
+
+    public ThrottleSetting(long time, String command, String value, String beanName, float sp) {
+        _time = time;
+        _command = command;
+        _value = value;
+        setNamedBean(command, beanName);
+        _speed = sp;
     }
 
     public ThrottleSetting(ThrottleSetting ts) {
@@ -31,6 +41,7 @@ public class ThrottleSetting {
         _command = ts.getCommand();
         _value = ts.getValue();
         _namedHandle = ts.getNamedBeanHandle();
+        _speed = ts.getSpeed();
     }
 
     /**
@@ -61,6 +72,14 @@ public class ThrottleSetting {
 
     public String getValue() {
         return _value;
+    }
+
+    public void setSpeed(float s) {
+        _speed = s;
+    }
+
+    public float getSpeed() {
+        return _speed;
     }
 
     //_namedHandle may be of 3 different types
@@ -112,7 +131,7 @@ public class ThrottleSetting {
         }
         return _namedHandle.getBean().getSystemName();
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ThrottleSetting: wait ");
@@ -123,9 +142,11 @@ public class ThrottleSetting {
         sb.append(_value);
         sb.append(" for bean \"");
         sb.append( getBeanDisplayName());
+        sb.append("\" at trackSpeed ");
+        sb.append( getSpeed());
         sb.append("\"");
         return sb.toString();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class);
 }

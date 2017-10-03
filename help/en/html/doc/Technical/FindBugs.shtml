@@ -56,33 +56,30 @@
       <p>If FindBugs is finding a false positive, a bug that's not
       really a bug, you can turn it off with an annotation such
       as:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
-</code>
-</pre>Note that this should be all on one line. Although Java
-itself considers it optional, we require the second "justification"
-argument. Explaining why you've added this annotation to suppress a
-message will help whoever comes after you and is trying to
-understand the code. It will also help make sure you properly
-understand the cause of the underlying bug report: Sometimes what
-seems a false positive really isn't. Annotations without a
-justification clause will periodically be removed.
+</pre>
+      Note that this should be all on one line. Although Java
+      itself considers it optional, we require the second "justification"
+      argument. Explaining why you've added this annotation to suppress a
+      message will help whoever comes after you and is trying to
+      understand the code. It will also help make sure you properly
+      understand the cause of the underlying bug report: Sometimes what
+      seems a false positive really isn't. Annotations without a
+      justification clause will periodically be removed.
 
       <p>For clarity, this annotation also supports the form:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floats, as even tiny differences should trigger update")
-</code>
-</pre>This can make it easier to see what is what when quickly
+
+</pre>
+    This can make it easier to see what is what when quickly
 scanning through the code.
 
       <p>If you need to put more than one message type in an
       annotation, use array syntax:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
-</code>
 </pre>
 
       <p>There are also Java and FindBugs annotations that can help
@@ -110,8 +107,13 @@ scanning through the code.
         element must not be null. Annotated fields must not be null
         after construction has completed. Annotated methods must
         have non-null return values. Use
-        javax.annotation.ParametersAreNonnullByDefault to set it
-        for an entire class.</li>
+        <a href="http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/ParametersAreNonnullByDefault.html">javax.annotation.ParametersAreNonnullByDefault</a>
+        on the class declaration (the start of the class)
+        to set @Nonnull for an entire class.
+        Note that FindBugs won't let you compare an @Nonnull value to 
+        null; that's an error that Findbugs wants to find via static analysis.
+        If you want to double-check at runtime, use 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Objects.html#requireNonNull-T-">Objects.requireNonNull(..)</a></li>
 
         <li><a href=
         "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckForNull.html">
@@ -128,11 +130,6 @@ scanning through the code.
           - Used to annotate a method that, if overridden, must (or
           should) be invoke super in the overriding method.
           Examples of such methods include finalize() and clone().
-          The argument to the method indicates when the super
-          invocation should occur: at any time (ANYTIME), at the
-          beginning of the overriding method (FIRST), or at the end
-          of the overriding method (LAST), defaulting to any time,
-          e.g. <code>@OverrideMustInvoke(value=ANYTIME)</code>
 
           <p>Note this replaces the deprecated <a href=
           "http://findbugs.sourceforge.net/manual/annotations.html">
@@ -194,13 +191,15 @@ scanning through the code.
         "http://findbugs.sourceforge.net/manual/annotations.html"><code>
         javax.annotation.Nullable</code></a> - This doesn't really
         mean what people think it does, as FindBugs doesn't really
-        check anything when this is used. From the documentation:
-        FindBugs will treat the annotated items as though they had
-        no annotation. In practice this annotation is useful only
-        for overriding an overarching NonNull annotation. Use
-        javax.annotation.ParametersAreNullableByDefault to set it
-        for an entire class. Prefer the use of
-        <code>CheckForNull</code>.</li>
+        check anything when this is used. From the FindBugs documentation:
+        <blockquote>
+            FindBugs will treat the annotated items as though they had
+            no annotation. In practice this annotation is useful only
+            for overriding an overarching NonNull annotation. Use
+            javax.annotation.ParametersAreNullableByDefault to set it
+            for an entire class. Prefer the use of
+            <code>CheckForNull</code>.</li>
+        </blockquote>
       </ul>
 
       <h3>Suppressed Warnings</h3>We have turned off the routine
@@ -292,11 +291,12 @@ scanning through the code.
         to the java/lib directory</li>
 
         <li>either run
-          <pre>
+<pre style="font-family: monospace;">
 ant -Dfindbugs.home=C:/findbugs-1.3.8 findbugs  (replacing the parameter with your install location)
-</pre>or edit the build.xml and modified the current commented out
-parameter findbugs.home to your install location and then run
-          <pre>
+</pre>
+      or edit the build.xml and modified the current commented out
+      parameter findbugs.home to your install location and then run
+<pre style="font-family: monospace;">
 ant findbugs
 </pre>
         </li>

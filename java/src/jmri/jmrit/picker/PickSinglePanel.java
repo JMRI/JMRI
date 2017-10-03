@@ -1,16 +1,10 @@
 package jmri.jmrit.picker;
 
-import jmri.*;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.*;
 
 /**
  * Container with a single PickList table
@@ -133,5 +127,5 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PickSinglePanel.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PickSinglePanel.class);
 }

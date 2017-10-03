@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -31,8 +30,6 @@ public class DccSpeedProfile {
     // index of last valid data point, -1 means no data
     protected int _lastPoint;
     protected List<String> dccProfileData = new ArrayList<String>();
-
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     public DccSpeedProfile(int len) {
         _length = len;
@@ -103,8 +100,8 @@ public class DccSpeedProfile {
             today = new Date();
             result = formatter.format(today);
             // title 
-            String annotate = "Bachrus MTS-DCC " + rb.getString("ProfileFor") + " "
-                    + address + " " + rb.getString("CreatedOn")
+            String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
+                    + address + " " + Bundle.getMessage("CreatedOn")
                     + " " + result;
             p.print(annotate);
             p.println();
@@ -272,5 +269,6 @@ public class DccSpeedProfile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class);
+
 }

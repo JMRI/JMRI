@@ -2,13 +2,13 @@ package jmri.jmrix.lenz;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
@@ -16,8 +16,8 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (c) 2003
  */
 public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
-        
-    private XNetInterfaceScaffold xnis; 
+
+    private XNetInterfaceScaffold xnis;
 
     @Override
     public String getSystemName(int i) {
@@ -54,12 +54,12 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testXNetMessages() {
         // send messages for feedbak encoder 22
-        // notify the XPressNet that somebody else changed it...
+        // notify the XpressNet that somebody else changed it...
         XNetReply m1 = new XNetReply();
         m1.setElement(0, 0x42);     // Opcode for feedback response
         m1.setElement(1, 0x02);     // The feedback encoder address
-        m1.setElement(2, 0x51);     // A bit pattern telling which 
-        // bits of the upper nibble 
+        m1.setElement(2, 0x51);     // A bit pattern telling which
+        // bits of the upper nibble
         // are on in the message.
         m1.setElement(3, 0x11);     // The XOR of everything above
         xnis.sendTestMessage(m1);
@@ -78,16 +78,16 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor o = t.newSensor("XS21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received sensor value " + o);
+            log.debug("received sensor value {}", o);
         }
         Assert.assertTrue(null != (XNetSensor) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("XS21"));
+            log.debug("by system name: {}", t.getBySystemName("XS21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name: {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("XS21"));
@@ -96,26 +96,23 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
-    public void testGetSystemPrefix(){
-        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    public void testGetSystemPrefix() {
+        Assert.assertEquals("prefix", "X", l.getSystemPrefix());
     }
 
     @Test
-    public void testAllowMultipleAdditions(){
+    public void testAllowMultipleAdditions() {
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
-
     // from here down is testing infrastructure
-
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // prepare an interface
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
@@ -125,8 +122,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

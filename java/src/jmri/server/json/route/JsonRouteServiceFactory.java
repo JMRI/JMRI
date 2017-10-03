@@ -5,12 +5,14 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Factory for JSON service providers for handling {@link jmri.Route}s.
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = JsonServiceFactory.class)
 public class JsonRouteServiceFactory implements JsonServiceFactory {
 
     public static final String ROUTE = "route"; // NOI18N

@@ -1,10 +1,14 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.annotation.CheckForNull;
@@ -16,43 +20,46 @@ import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.PowerManager;
-import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Records and executes a desired set of defaults for the JMRI InstanceManager
- * and ProxyManagers
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author Randall Wood Copyright (C) 2015
+ * and ProxyManagers.
+ * <p>
+ * Provided that a connection provides a default, this verifies, unless the
+ * per-profile property {@code jmri-managers.allInternalDefaults} is
+ * {@code true}, that a non-Internal connection (other than type None in the
+ * preferences window) is the default for at least one type of manager.
+ *
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Randall Wood Copyright (C) 2015, 2017
  * @since 2.9.4
+ * @see jmri.jmrix.SystemConnectionMemo#provides(java.lang.Class)
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
-    public final Hashtable<Class<?>, String> defaults = new Hashtable<>();
+    public final HashMap<Class<?>, String> defaults = new HashMap<>();
+    private PropertyChangeListener memoListener;
+    private boolean allInternalDefaultsValid = false;
+    public final static String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
+    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class);
 
     public ManagerDefaultSelector() {
-        SystemConnectionMemo.addPropertyChangeListener((PropertyChangeEvent e) -> {
+        memoListener = (PropertyChangeEvent e) -> {
             switch (e.getPropertyName()) {
-                case "ConnectionNameChanged":
+                case SystemConnectionMemo.USER_NAME:
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
                     log.debug("ConnectionNameChanged from \"{}\" to \"{}\"", oldName, newName);
@@ -62,35 +69,76 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                             ManagerDefaultSelector.this.defaults.put(c, newName);
                         }
                     });
+                    this.firePropertyChange("Updated", null, null);
                     break;
-                case "ConnectionDisabled":
+                case SystemConnectionMemo.DISABLED:
                     Boolean newState = (Boolean) e.getNewValue();
                     if (newState) {
-                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getSource();
-                        String disabledName = memo.getUserName();
+                        String disabledName = ((SystemConnectionMemo) e.getSource()).getUserName();
                         log.debug("ConnectionDisabled true: \"{}\"", disabledName);
                         removeConnectionAsDefault(disabledName);
-                    }
-                    break;
-                case "ConnectionRemoved":
-                    String removedName = (String) e.getOldValue();
-                    log.debug("ConnectionRemoved for \"{}\"", removedName);
-                    removeConnectionAsDefault(removedName);
-                    break;
-                case "ConnectionAdded":
-                    // check for special case of anything else then Internal
-                    List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
-                    if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
-                        log.debug("First real system added, reset defaults");
-                        String name = list.get(1).getUserName();
-                        removeConnectionAsDefault(name);
                     }
                     break;
                 default:
                     log.debug("ignoring notification of \"{}\"", e.getPropertyName());
                     break;
             }
-            this.firePropertyChange("Updated", null, null);
+        };
+        SystemConnectionMemoManager.getDefault().addPropertyChangeListener((PropertyChangeEvent e) -> {
+            //
+            // Note that when JMRI is starting, this listener does
+            // trigger as connections are added, but that after the
+            // configured connections are set, the defaults are reset
+            // when configure(Profile) is called. We do, however,
+            // want these to be set immediately when a new profile
+            // is launched for the first time, so these listeners
+            // need to be in place as early as possible.
+            //
+            switch (e.getPropertyName()) {
+                case SystemConnectionMemoManager.CONNECTION_REMOVED:
+                    if (e.getOldValue() instanceof SystemConnectionMemo) {
+                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getOldValue();
+                        String removedName = ((SystemConnectionMemo) e.getOldValue()).getUserName();
+                        log.debug("ConnectionRemoved for \"{}\"", removedName);
+                        removeConnectionAsDefault(removedName);
+                        memo.removePropertyChangeListener(this.memoListener);
+                    }
+                    break;
+                case SystemConnectionMemoManager.CONNECTION_ADDED:
+                    if (e.getNewValue() instanceof SystemConnectionMemo) {
+                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getNewValue();
+                        memo.addPropertyChangeListener(this.memoListener);
+                        // check for special case of anything else then Internal
+                        // and set first system to be default for all provided defaults
+                        List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
+                        if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
+                            // first real system added gets defaults for everything it supports
+                            log.debug("First real system added, reset defaults");
+                            for (Item item : knownManagers) {
+                                if (memo.provides(item.managerClass)) {
+                                    this.setDefault(item.managerClass, memo.getUserName());
+                                }
+                            }
+                        }
+                        // any new connection that provides a missing default
+                        // gets set as the default for that missing default
+                        // use new HashSet over this.defaults.keySet to avoid
+                        // ConcurrentModificationException on this.defaults
+                        new HashSet<>(defaults.keySet()).forEach((cls) -> {
+                            String userName = defaults.get(cls);
+                            if (userName == null && memo.provides(cls)) {
+                                this.setDefault(cls, memo.getUserName());
+                            }
+                        });
+                    }
+                    break;
+                default:
+                    log.debug("ignoring notification of \"{}\"", e.getPropertyName());
+                    break;
+            }
+        });
+        InstanceManager.getList(SystemConnectionMemo.class).forEach((memo) -> {
+            memo.addPropertyChangeListener(this.memoListener);
         });
     }
 
@@ -100,13 +148,14 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         defaults.keySet().stream().forEach((c) -> {
             String connectionName = ManagerDefaultSelector.this.defaults.get(c);
             if (connectionName.equals(removedName)) {
-                log.debug("Connection " + removedName + " has been removed as the default for " + c);
+                log.debug("Connection {} has been removed as the default for {}", removedName, c);
                 tmpArray.add(c);
             }
         });
         tmpArray.stream().forEach((tmpArray1) -> {
             ManagerDefaultSelector.this.defaults.remove(tmpArray1);
         });
+        this.firePropertyChange("Updated", null, null);
     }
 
     /**
@@ -147,11 +196,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     /**
      * Load into InstanceManager
      *
+     * @param profile the profile to configure against
      * @return an exception that can be passed to the user or null if no errors
      *         occur
      */
     @CheckForNull
-    public InitializationException configure() {
+    public InitializationException configure(Profile profile) {
         InitializationException error = null;
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
@@ -188,18 +238,19 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.getNullableDefault(ThrottleManager.class) != null) {
+                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(ThrottleManager.class).isPresent()) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.getNullableDefault(PowerManager.class) != null) {
+                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class).isPresent()) {
                     currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getNullableDefault(ProgrammerManager.class) != null) {
-                    currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
-                    log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
+                    log.warn("The configured {} for {} can not be found so will use the default {}", connectionName, c, currentName);
                     this.defaults.put(c, currentName);
                 }
             }
+        }
+        if (!this.isPreferencesValid(profile, connList)) {
+            error = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "ManagerDefaultSelector.AllInternal"), Bundle.getMessage("ManagerDefaultSelector.AllInternal"));
         }
         return error;
     }
@@ -219,10 +270,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
-            Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
+            Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true); // NOI18N
+            Preferences defaultsPreferences = preferences.node("defaults");
             try {
-                for (String name : settings.keys()) {
-                    String connection = settings.get(name, null);
+                for (String name : defaultsPreferences.keys()) {
+                    String connection = defaultsPreferences.get(name, null);
                     Class<?> cls = this.classForName(name);
                     log.debug("Loading default {} for {}", connection, name);
                     if (cls != null) {
@@ -230,16 +282,17 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         log.debug("Loaded default {} for {}", connection, cls);
                     }
                 }
+                this.allInternalDefaultsValid = preferences.getBoolean(ALL_INTERNAL_DEFAULTS, this.allInternalDefaultsValid);
             } catch (BackingStoreException ex) {
                 log.info("Unable to read preferences for Default Selector.");
             }
-            InitializationException ex = this.configure();
-            ConfigureManager manager = InstanceManager.getNullableDefault(ConfigureManager.class);
-            if (manager != null) {
+            InitializationException ex = this.configure(profile);
+            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((manager) -> {
                 manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
-            }
+            });
             this.setInitialized(profile, true);
             if (ex != null) {
+                this.addInitializationException(profile, ex);
                 throw ex;
             }
         }
@@ -247,15 +300,80 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     @Override
     public void savePreferences(Profile profile) {
-        Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
+        Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true); // NOI18N
+        Preferences defaultsPreferences = preferences.node("defaults");
         try {
             this.defaults.keySet().stream().forEach((cls) -> {
-                settings.put(this.nameForClass(cls), this.defaults.get(cls));
+                defaultsPreferences.put(this.nameForClass(cls), this.defaults.get(cls));
             });
-            settings.sync();
+            preferences.putBoolean(ALL_INTERNAL_DEFAULTS, this.allInternalDefaultsValid);
+            preferences.sync();
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences for Default Selector.", ex);
         }
+    }
+
+    private boolean isPreferencesValid(Profile profile, List<SystemConnectionMemo> connections) {
+        if (this.allInternalDefaultsValid) {
+            return true;
+        }
+        boolean usesExternalConnections = false;
+        // list of defaults to check that an external connection is providing
+        Map<Class<?>, Set<SystemConnectionMemo>> providing = new HashMap<>();
+        // list of all external providers
+        Set<SystemConnectionMemo> providers = new HashSet<>();
+        if (connections.size() > 1) {
+            connections.stream().filter((memo) -> (!(memo instanceof InternalSystemConnectionMemo))).forEachOrdered((memo) -> {
+                // populate providers by adding all external connections that provide at least one default
+                for (Item item : knownManagers) {
+                    if (memo.provides(item.managerClass)) {
+                        providers.add(memo);
+                        break;
+                    }
+                }
+            });
+            // if there are no external providers, no further checks are needed
+            if (providers.size() >= 1) {
+                // build a list of defaults provided by external connections
+                providers.stream().forEach((memo) -> {
+                    for (Item item : knownManagers) {
+                        if (memo.provides(item.managerClass)) {
+                            Set<SystemConnectionMemo> provides = providing.getOrDefault(item.managerClass, new HashSet<>());
+                            provides.add(memo);
+                            providing.put(item.managerClass, provides);
+                        }
+                    }
+                });
+                if (log.isDebugEnabled()) {
+                    // avoid unneeded overhead of looping through providers
+                    providing.forEach((cls, clsProviders) -> {
+                        log.debug("{} is provided by:", cls.getName());
+                        clsProviders.forEach((provider) -> {
+                            log.debug("    {}", provider.getUserName());
+                        });
+                    });
+                }
+                for (SystemConnectionMemo memo : providers) {
+                    if (providing.keySet().stream().filter((cls) -> {
+                        Set<SystemConnectionMemo> provides = providing.get(cls);
+                        log.debug("{} is provided by {} out of {} connections", cls.getName(), provides.size(), providers.size());
+                        return (provides.size() > 0);
+                    }).anyMatch((cls) -> {
+                        log.debug("{} has an external default", cls);
+                        return memo.getUserName().equals(defaults.get(cls));
+                    })) {
+                        usesExternalConnections = true;
+                        // no need to check further
+                        break;
+                    }
+                }
+            }
+        }
+        return providers.size() >= 1 ? usesExternalConnections : true;
+    }
+
+    public boolean isPreferencesValid(Profile profile) {
+        return this.isPreferencesValid(profile, InstanceManager.getList(SystemConnectionMemo.class));
     }
 
     public static class Item {
@@ -282,5 +400,25 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
+    /**
+     * Check if having all defaults assigned to internal connections should be
+     * considered is valid in the presence of an external System Connection.
+     *
+     * @return true if having all internal defaults should be valid; false
+     *         otherwise
+     */
+    public boolean isAllInternalDefaultsValid() {
+        return allInternalDefaultsValid;
+    }
+
+    /**
+     * Set if having all defaults assigned to internal connections should be
+     * considered is valid in the presence of an external System Connection.
+     *
+     * @param isAllInternalDefaultsValid true if having all internal defaults
+     *                                   should be valid; false otherwise
+     */
+    public void setAllInternalDefaultsValid(boolean isAllInternalDefaultsValid) {
+        this.allInternalDefaultsValid = isAllInternalDefaultsValid;
+    }
 }

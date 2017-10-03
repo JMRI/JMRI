@@ -107,7 +107,7 @@ change the "co" command to "update -d"
       them!!! If you contribute your changes to the project, those
       line have to be intact in the contributed file.
 
-      <h3><a name="update" id="update">How do I update an existing
+      <h3><a name="update1" id="update1">How do I update an existing
       copy of the source to the current version?</a></h3>As the
       common code changes, you might want to update your copy to
       contain the lastest version. To do that, use:
@@ -150,7 +150,7 @@ you should then be up-to-date with your own changes still present.
       </ol>
 
       <h3><a name="structure" id="structure">How is JMRI stored in
-      CVS?</a></h3><a name="structure" id="structure">JMRI consists
+      CVS?</a></h3>JMRI consists
       of two large code trees, and a number of auxiliary
       directories. The code is divided into "jmri", the main JMRI
       code, and "test", the set of automated tests. These are kept
@@ -158,7 +158,7 @@ you should then be up-to-date with your own changes still present.
       software, without including the test code. (If you directly
       look at the CVS repository, you'll also see "jmrit" and
       "jmrix" directories; these are obsolete, and kept only for
-      historical reasons.)</a>
+      historical reasons.)
 
       <p>Similarly, auxilary information is kept in separate "lib",
       "xml", "resources", "jython", etc. directories.</p>
@@ -177,11 +177,11 @@ you should then be up-to-date with your own changes still present.
       straight-forward build.</p>
 
       <h3><a name="lcok" id="lcok">Some files appear to be
-      read-only, why is that?</a></h3><a name="lcok" id="lcok">As
+      read-only, why is that?</a></h3>As
       the software evolves, sometimes files become obsolete. If
       they're not needed at all, CVS allows us to delete them from
       future releases. In that case, they don't show up at all when
-      you check out a current copy.</a>
+      you check out a current copy.
 
       <p>But sometimes the file needs to remain, but we don't want
       it to be modified any more. For example, an older schema or

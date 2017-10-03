@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ImportRosterEngines extends Thread {
 
-    EngineManager manager = EngineManager.instance();
+    EngineManager manager = InstanceManager.getDefault(EngineManager.class);
     private static String defaultEngineLength = Bundle.getMessage("engineDefaultLength");
     private static String defaultEngineType = Bundle.getMessage("engineDefaultType");
     private static String defaultEngineHp = Bundle.getMessage("engineDefaultHp");
@@ -104,5 +105,5 @@ public class ImportRosterEngines extends Thread {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(ImportRosterEngines.class.getName());
+            .getLogger(ImportRosterEngines.class);
 }

@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -30,7 +31,7 @@ public abstract class TrainCustomCommon {
 
     public void setFileName(String name) {
         mcAppName = name;
-        TrainManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
     }
 
     public String getCommonFileName() {
@@ -62,7 +63,7 @@ public abstract class TrainCustomCommon {
         }
         
         // once the process starts, we can't add files to the common file
-        while (TrainCustomManifest.instance().isProcessAlive() || TrainCustomSwitchList.instance().isProcessAlive()) {
+        while (InstanceManager.getDefault(TrainCustomManifest.class).isProcessAlive() || InstanceManager.getDefault(TrainCustomSwitchList.class).isProcessAlive()) {
             synchronized (this) {
                 try {
                     wait(1000); // 1 sec
@@ -105,7 +106,7 @@ public abstract class TrainCustomCommon {
         }
         
         // only one copy of the excel program is allowed to run.  Two copies running in parallel has issues.
-        while (TrainCustomManifest.instance().isProcessAlive() || TrainCustomSwitchList.instance().isProcessAlive()) {
+        while (InstanceManager.getDefault(TrainCustomManifest.class).isProcessAlive() || InstanceManager.getDefault(TrainCustomSwitchList.class).isProcessAlive()) {
             synchronized (this) {
                 try {
                     wait(1000); // 1 sec
@@ -243,5 +244,5 @@ public abstract class TrainCustomCommon {
         mc.addContent(common);
     }
 
-        private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class.getName());
+        private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,11 +54,11 @@ public class RocoZ21CommandStationTest {
    @Test
    public void XPressNetFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
-      Assert.assertFalse("initial XPressNet Flag",rcs.getXPressNetMessagesFlag());
+      Assert.assertFalse("initial XpressNet Flag",rcs.getXPressNetMessagesFlag());
       rcs.setXPressNetMessagesFlag(true);
-      Assert.assertTrue("XPressNet Flag after set",rcs.getXPressNetMessagesFlag());
+      Assert.assertTrue("XpressNet Flag after set",rcs.getXPressNetMessagesFlag());
       rcs.setXPressNetMessagesFlag(false);
-      Assert.assertFalse("XPressNet Flag after reset",rcs.getXPressNetMessagesFlag());
+      Assert.assertFalse("XpressNet Flag after reset",rcs.getXPressNetMessagesFlag());
    }
 
    @Test
@@ -69,7 +70,6 @@ public class RocoZ21CommandStationTest {
       rcs.setRMBusMessagesFlag(false);
       Assert.assertFalse("RMBus Flag after reset",rcs.getRMBusMessagesFlag());
    }
-
 
    @Test
    public void RailComFlag(){
@@ -94,11 +94,11 @@ public class RocoZ21CommandStationTest {
    @Test
    public void XPressNetLocoMotiveFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
-      Assert.assertFalse("initial XPressNet Locomotive Flag",rcs.getXPressNetLocomotiveMessagesFlag());
+      Assert.assertFalse("initial XpressNet Locomotive Flag",rcs.getXPressNetLocomotiveMessagesFlag());
       rcs.setXPressNetLocomotiveMessagesFlag(true);
-      Assert.assertTrue("XPressNet Locomotive Flag after set",rcs.getXPressNetLocomotiveMessagesFlag());
+      Assert.assertTrue("XpressNet Locomotive Flag after set",rcs.getXPressNetLocomotiveMessagesFlag());
       rcs.setXPressNetLocomotiveMessagesFlag(false);
-      Assert.assertFalse("XPressNet Locomotive Flag after reset",rcs.getXPressNetLocomotiveMessagesFlag());
+      Assert.assertFalse("XpressNet Locomotive Flag after reset",rcs.getXPressNetLocomotiveMessagesFlag());
    }
 
    @Test
@@ -142,16 +142,15 @@ public class RocoZ21CommandStationTest {
    }
 
    @Before
-   public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+   public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @After
    public void tearDown(){
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
    }
 
 }

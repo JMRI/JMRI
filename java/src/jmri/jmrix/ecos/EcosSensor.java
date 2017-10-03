@@ -3,8 +3,8 @@ package jmri.jmrix.ecos;
 import jmri.implementation.AbstractSensor;
 
 /**
- * Implement a Sensor via Ecos communications.
- * <P>
+ * Implement a Sensor via ECoS communications.
+ * <p>
  * This object doesn't listen to the Ecos communications. This is because it
  * should be the only object that is sending messages for this sensor; more than
  * one Sensor object pointing to a single device is not allowed.
@@ -42,6 +42,5 @@ public class EcosSensor extends AbstractSensor {
     public int getObject() {
         return objectNumber;
     }
+
 }
-
-

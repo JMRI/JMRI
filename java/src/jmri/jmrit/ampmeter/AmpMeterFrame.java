@@ -102,7 +102,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         getContentPane().add(d3);
         getContentPane().add(percent);
 
-        getContentPane().add(b = new JButton("Stop"));
+        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
         b.addActionListener(new ButtonListener());
         // since Run/Stop button looks crummy, don't display for now
         b.setVisible(false);
@@ -224,5 +224,5 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class);
 }

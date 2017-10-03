@@ -1,6 +1,5 @@
 package jmri.jmrix.nce.macro;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,23 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NceMacroEditPanelTest {
+public class NceMacroEditPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        NceMacroEditPanel action = new NceMacroEditPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new NceMacroEditPanel();
+        helpTarget="package.jmri.jmrix.nce.macro.NceMacroEditFrame";
+        title="NCE_: " + Bundle.getMessage("TitleEditNCEMacro");
     }
 
+    @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

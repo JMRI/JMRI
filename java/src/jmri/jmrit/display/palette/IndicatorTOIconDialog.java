@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +95,7 @@ public class IndicatorTOIconDialog extends IconDialog {
             if (key != null) {
                 _key = key;
                 createNewStatusSet();
-//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);          
+//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);
             }
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
@@ -111,7 +113,7 @@ public class IndicatorTOIconDialog extends IconDialog {
             log.debug("createNewFamily: type= \""
                     + _type + "\", family= \"" + _family + "\" key= " + _key);
         }
-        //check text        
+        //check text
         HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
         ItemPalette.addLevel4FamilyMap(_type, _parent._family, _key, iconMap);
         addFamilySet(_parent._family, iconMap, _key);
@@ -137,7 +139,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         if (_family != null && _family.equals(subFamily)) {
             ItemPalette.removeLevel4IconMap(_type, _parent._family, subFamily);
         }
-        jmri.jmrit.catalog.ImageIndexEditor.indexChanged(true);
+        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         return addFamilySet(_parent._family, _iconMap, subFamily);
     }
 
@@ -153,5 +155,5 @@ public class IndicatorTOIconDialog extends IconDialog {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class);
 }

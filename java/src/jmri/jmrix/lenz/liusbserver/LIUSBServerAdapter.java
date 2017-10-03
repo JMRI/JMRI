@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to XPressNet via a the Lenz LIUSB Server. NOTES: The LIUSB
+ * Provide access to XpressNet via a the Lenz LIUSB Server. NOTES: The LIUSB
  * server binds only to localhost (127.0.0.1) on TCP ports 5550 and 5551. Port
  * 5550 is used for general communication. Port 5551 is used for broadcast
  * messages only. The LIUSB Server disconnects both ports if there is 60 seconds
@@ -53,18 +53,17 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
     public LIUSBServerAdapter() {
         super();
-        option1Name = "BroadcastPort";
-        options.put(option1Name, new Option("Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
+        option1Name = "BroadcastPort"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("BroadcastPortLabel")
+                , new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     @Override
-    synchronized public void connect() throws Exception {
+    synchronized public void connect() throws java.io.IOException {
         opened = false;
-        if (log.isDebugEnabled()) {
-            log.debug("connect called");
-        }
-        // open the port in XPressNet mode
+        log.debug("connect called");
+        // open the port in XpressNet mode
         try {
             bcastAdapter = new BroadCastPortAdapter(this);
             commAdapter = new CommunicationPortAdapter(this);
@@ -129,13 +128,11 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     }
 
     /**
-     * set up all of the other objects to operate with a LIUSB Server interface
+     * Set up all of the other objects to operate with a LIUSB Server interface.
      */
     @Override
     public void configure() {
-        if (log.isDebugEnabled()) {
-            log.debug("configure called");
-        }
+        log.debug("configure called");
         // connect to a packetizing traffic controller
         XNetTrafficController packets = (new LIUSBServerXNetPacketizer(new LenzCommandStation()));
         packets.connectPort(this);
@@ -161,10 +158,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                 // this thread has one task.  It repeatedly reads from the two 
                 // incomming network connections and writes the resulting 
                 // messages from the network ports and writes any data 
-                // received to the output pipe. 
-                if (log.isDebugEnabled()) {
-                    log.debug("Communication Adapter Thread Started");
-                }
+                // received to the output pipe.
+                log.debug("Communication Adapter Thread Started");
                 XNetReply r;
                 BufferedReader bufferedin
                         = new BufferedReader(
@@ -203,10 +198,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                 // this thread has one task.  It repeatedly reads from the two 
                 // incomming network connections and writes the resulting 
                 // messages from the network ports and writes any data received 
-                // to the output pipe. 
-                if (log.isDebugEnabled()) {
-                    log.debug("Broadcast Adapter Thread Started");
-                }
+                // to the output pipe.
+                log.debug("Broadcast Adapter Thread Started");
                 XNetReply r;
                 BufferedReader bufferedin
                         = new BufferedReader(
@@ -239,7 +232,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
     @Deprecated
     static public LIUSBServerAdapter instance() {
@@ -248,12 +241,11 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         }
         return mInstance;
     }
+
     volatile static LIUSBServerAdapter mInstance = null;
 
     private synchronized void writeReply(XNetReply r) {
-        if (log.isDebugEnabled()) {
-            log.debug("Write reply to outpipe: " + r.toString());
-        }
+        log.debug("Write reply to outpipe: {}", r.toString());
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
         for (i = 0; i < len; i++) {
@@ -280,9 +272,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         // These hex values are followed by a <cr><lf>
         String s = "";
         s = istream.readLine();
-        if (log.isDebugEnabled()) {
-            log.debug("Received from port: " + s);
-        }
+        log.debug("Received from port: {}", s);
         if (s == null) {
             return null;
         } else {
@@ -309,7 +299,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         this.getSystemConnectionMemo().getXNetTrafficController().connectPort(this);
     }
 
-    //Internal class for broadcast port connection
+    /**
+     * Internal class for broadcast port connection
+     */
     private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
         private LIUSBServerAdapter parent;
@@ -349,7 +341,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         }
     }
 
-    // Internal class for communication port connection
+    /**
+     * Internal class for communication port connection
+     */
     private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
         private LIUSBServerAdapter parent;
@@ -419,6 +413,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);
 
 }

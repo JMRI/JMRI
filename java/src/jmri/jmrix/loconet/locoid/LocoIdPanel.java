@@ -29,8 +29,11 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.jmrix.loconet.locoid.LocoId");
 
@@ -71,16 +74,25 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         });
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -189,6 +201,9 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         memo.getLnTrafficController().removeLocoNetListener(~0, this);

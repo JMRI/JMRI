@@ -6,10 +6,10 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of DccLocoAddressSelector

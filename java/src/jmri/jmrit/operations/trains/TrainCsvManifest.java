@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,10 +8,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -29,20 +28,19 @@ import org.slf4j.LoggerFactory;
  * Builds a train's manifest using Comma Separated Values (csv).
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2015
- * 
+ *
  */
 public class TrainCsvManifest extends TrainCsvCommon {
 
-    EngineManager engineManager = EngineManager.instance();
-    CarManager carManager = CarManager.instance();
-    LocationManager locationManager = LocationManager.instance();
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+    CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public TrainCsvManifest(Train train) {
         // create comma separated value manifest file
-        File file = TrainManagerXml.instance().createTrainCsvManifestFile(train.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainCsvManifestFile(train.getName());
 
         PrintWriter fileOut;
 
@@ -103,9 +101,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     addLine(fileOut, AT + train.getExpectedArrivalTime(rl));
                 }
                 if (rl == train.getRoute().getDepartsRouteLocation()) {
-                    addLine(fileOut, DT + train.getDepartureTime());
+                    addLine(fileOut, DT + train.getFormatedDepartureTime());
                 } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
-                    addLine(fileOut, DTR + rl.getDepartureTime());
+                    addLine(fileOut, DTR + rl.getFormatedDepartureTime());
                 } else {
                     addLine(fileOut, EDT + train.getExpectedDepartureTime(rl));
                 }
@@ -174,7 +172,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 if (car.getRouteDestination() == rl) {
                     cars--;
                     newWork = true;
-                    if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName()).equals(
                             CarLoad.LOAD_TYPE_EMPTY)) {
                         emptyCars--;
                     }
@@ -189,11 +187,11 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 }
             }
             // car holds
-            List<RollingStock> rsByLocation = CarManager.instance().getByLocationList();
-            List<Car> cList = new ArrayList<Car>();
-            for (RollingStock rs : rsByLocation) {
+            List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
+            List<Car> cList = new ArrayList<>();
+            for (Car rs : rsByLocation) {
                 if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {
-                    cList.add((Car) rs);
+                    cList.add(rs);
                 }
             }
             clearUtilityCarTypes(); // list utility cars by quantity

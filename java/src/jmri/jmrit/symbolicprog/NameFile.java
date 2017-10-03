@@ -1,10 +1,16 @@
 package jmri.jmrit.symbolicprog;
 
-import java.util.Hashtable;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +18,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a set of standard names and aliases in memory.
  * <P>
- * This class doesn't provide tools for defining the names {@literal &} aliases;
- * that's done manually, or at least not done here, to create the file.
+ * This class doesn't provide tools for defining the names and aliases; that's
+ * done manually, or at least not done here, to create the file.
  * <P>
  * Initially, we only need one of these, so we use an "instance" method to
  * locate the one associated with the "xml/names.xml" file.
@@ -27,41 +33,34 @@ public class NameFile extends XmlFile {
     //public int numNames() { return nameElementList.size(); }
     public Set<String> names() {
         //List<String> list = new ArrayList<String>();
-        //for (int i = 0; i<nameElementList.size(); i++) 
+        //for (int i = 0; i<nameElementList.size(); i++)
         //    list.add(nameElementList.get());
         return _nameHash.keySet();
     }
 
-    // hold names in a Hashtable
-    protected Hashtable<String, Element> _nameHash = new Hashtable<String, Element>();
+    // hold names in a HashMap
+    protected HashMap<String, Element> _nameHash = new HashMap<>();
 
     public Element elementFromName(String name) {
         return _nameHash.get(name);
     }
 
-    static NameFile _instance = null;
-
+    /**
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public synchronized static NameFile instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("NameFile creating instance");
-            }
-            // create and load
-            _instance = new NameFile();
-            try {
-                _instance.readFile(defaultNameFilename());
-            } catch (Exception e) {
-                log.error("Exception during name file reading: " + e);
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("NameFile returns instance " + _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(NameFile.class);
     }
 
     /**
-     * Check to see if a name is present in the file
+     * Check to see if a name is present in the file.
+     *
+     * @param name the name to check
+     * @return true if present; false otherwise
      */
     public boolean checkName(String name) {
         return (elementFromName(name) != null);
@@ -112,8 +111,10 @@ public class NameFile extends XmlFile {
     }
 
     /**
-     * Return the filename String for the default file, including location. This
-     * is here to allow easy override in tests.
+     * Get the filename for the default file, including location. This is here
+     * to allow easy override in tests.
+     *
+     * @return the default filename
      */
     protected static String defaultNameFilename() {
         return fileLocation + nameFileName;
@@ -122,6 +123,36 @@ public class NameFile extends XmlFile {
     static String fileLocation = "";
     static String nameFileName = "names.xml";
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NameFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameFile.class);
 
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(NameFile.class)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("NameFile creating instance");
+                }
+                // create and load
+                NameFile instance = new NameFile();
+                try {
+                    instance.readFile(defaultNameFilename());
+                } catch (IOException | JDOMException e) {
+                    log.error("Exception during name file reading: {}", e.getMessage());
+                }
+                log.debug("NameFile returns instance {}", instance);
+                return instance;
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set set = super.getInitalizes();
+            set.add(NameFile.class);
+            return set;
+        }
+
+    }
 }

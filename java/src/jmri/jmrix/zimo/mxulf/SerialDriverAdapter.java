@@ -21,8 +21,8 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Zimo's MX-1 on an attached
- * serial comm port. Normally controlled by the zimo.mxulf.mxulfFrame class.
+ * Provide access to Zimo's MX-1 on an attached serial comm port. Normally
+ * controlled by the zimo.mxulf.mxulfFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  *
@@ -34,7 +34,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
     public SerialDriverAdapter() {
         super(new Mx1SystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
-        option1Name = "FlowControl";
+        option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option("MXULF connection uses : ", validOption1));
         this.getSystemConnectionMemo().setConnectionType(Mx1SystemConnectionMemo.MXULF);
     }
@@ -230,7 +230,10 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
+     *
+     * @throws purejavacomm.UnsupportedCommOperationException if unable to
+     *                                                        communicate
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -242,16 +245,12 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         }
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT | SerialPort.FLOWCONTROL_RTSCTS_IN; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -264,12 +263,12 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
     protected int[] validSpeedValues = new int[]{9600, 1200, 2400, 4800, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     //protected String selectedOption1=validOption1[0];
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

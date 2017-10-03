@@ -4,10 +4,10 @@ import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.TestConsistManager;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of WiFiConsistFile
@@ -42,15 +42,13 @@ public class WiFiConsistFileTest extends TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

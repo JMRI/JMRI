@@ -31,8 +31,10 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
 
     @Override
     public void dispose() {
-        // disconnect from the LnTrafficController
-        memo.getDcc4PcTrafficController().removeDcc4PcListener(this);
+        // disconnect from the DCC4PCTrafficController
+        if(memo.getDcc4PcTrafficController()!=null){
+            memo.getDcc4PcTrafficController().removeDcc4PcListener(this);
+        }
         // and unwind swing
         super.dispose();
     }
@@ -53,8 +55,12 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
     @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         this.memo = memo;
-        // connect to the LnTrafficController
-        memo.getDcc4PcTrafficController().addDcc4PcListener(this);
+        // connect to the DCC4PCTrafficController
+        if(memo.getDcc4PcTrafficController()!=null){
+            memo.getDcc4PcTrafficController().addDcc4PcListener(this);
+        } else {
+            log.error("Connection has not been initiallised");
+        }
     }
 
     @Override
@@ -125,12 +131,7 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
         log.info("timeout recieved to our last message " + m.toString());
     }
 
-    @Override
-    public void processingData() {
-        //We should be increasing our timeout
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class);
 
 }
 

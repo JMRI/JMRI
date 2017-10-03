@@ -2,6 +2,8 @@ package jmri.jmrix.lenz;
 
 import java.util.ArrayList;
 import java.util.List;
+import jmri.ProgrammingMode;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,8 +17,8 @@ import org.junit.Test;
  * @author	Paul Bender
  */
 public class XNetOpsModeProgrammerTest {
-        
-    private XNetOpsModeProgrammer op = null; 
+
+    private XNetOpsModeProgrammer op = null;
     private XNetInterfaceScaffold tc = null;
     private jmri.ProgListener pl = null;
     private int lastValue;
@@ -30,9 +32,9 @@ public class XNetOpsModeProgrammerTest {
     @Test
     public void testSupportedModes(){
        // getSupportedModes() will return a list
-       // containing only DefaultProgrammerManager.OPSBYTEMODE. 
-       List<jmri.ProgrammingMode> list= new ArrayList<jmri.ProgrammingMode>();
-       list.add(jmri.managers.DefaultProgrammerManager.OPSBYTEMODE);
+       // containing only ProgrammingMode.OPSBYTEMODE.
+       List<ProgrammingMode> list= new ArrayList<>();
+       list.add(ProgrammingMode.OPSBYTEMODE);
        Assert.assertEquals("Modes",list,op.getSupportedModes());
     }
 
@@ -50,7 +52,7 @@ public class XNetOpsModeProgrammerTest {
     public void testGetAddressNumber(){
        Assert.assertEquals("address",5,op.getAddressNumber());
     }
- 
+
     @Test
     public void testGetAddress(){
        Assert.assertEquals("address","5 true",op.getAddress());
@@ -119,7 +121,7 @@ public class XNetOpsModeProgrammerTest {
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
         op.message(new XNetReply("61 80 E1")); // send "Transfer Error" message to the programmer.
-     
+
         // and now we need to check the status is right
         // these should be the defaults set in setUp.
         Assert.assertEquals("written value",-1,lastValue);
@@ -168,7 +170,7 @@ public class XNetOpsModeProgrammerTest {
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

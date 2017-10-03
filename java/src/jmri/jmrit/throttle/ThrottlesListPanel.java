@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import org.jdom2.Element;
 
@@ -74,7 +75,7 @@ public class ThrottlesListPanel extends JPanel {
         jbNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                 tf.toFront();
             }
         });

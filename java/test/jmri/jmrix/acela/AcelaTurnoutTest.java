@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +30,6 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 //        Assert.assertEquals("closed message","52 05 88 00",
 //                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
 //	Assert.assertTrue("closed message sent", tcis.outbound.size()>0);
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
 
     }
 
@@ -39,7 +39,6 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 //        Assert.assertEquals("thrown message","52 05 89 00",
 //                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
 //	Assert.assertTrue("thrown message sent", tcis.outbound.size()>0);
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     @Test
@@ -135,9 +134,9 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutTest.class);
 
 }

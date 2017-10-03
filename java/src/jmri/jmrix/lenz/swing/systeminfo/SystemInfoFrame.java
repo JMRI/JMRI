@@ -3,7 +3,12 @@ package jmri.jmrix.lenz.swing.systeminfo;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetListener;
@@ -14,55 +19,64 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame displaying Version information for Xpressnet hardware.
+ * Frame displaying Version information for XpressNet hardware.
  * <P>
  * This is a utility for reading the software version and type of the command
- * station, and, the Hardware and software versions of your XPressNet Computer
+ * station, and, the Hardware and software versions of your XpressNet Computer
  * Interface.
  * <P>
  * Some of this code may be moved to facilitate automatic enabling of features
- * that are not available on all XPressNet Command Stations (as an example, the
+ * that are not available on all XpressNet Command Stations (as an example, the
  * fact that you can't program using the computer on a Commander or Compact)
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
-  */
+ */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super("XPressNet System Information");
+        super(Bundle.getMessage("MenuItemXNetSystemInformation"));
         tc = memo.getXNetTrafficController();
-        getContentPane().setLayout(new GridLayout(0, 2));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
-        getContentPane().add(new JLabel(Bundle.getMessage("CommandStationLabel")));
-        getContentPane().add(CSType);
+        JPanel infoPane = new JPanel();
+        infoPane.setBorder(BorderFactory.createEtchedBorder());
+        infoPane.setLayout(new GridLayout(6, 2));
 
-        getContentPane().add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
-        getContentPane().add(CSSoftwareVersion);
+        infoPane.add(new JLabel(Bundle.getMessage("CommandStationLabel")));
+        infoPane.add(CSType);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("StatusLabel")));
-        getContentPane().add(CSStatus);
+        infoPane.add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
+        infoPane.add(CSSoftwareVersion);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("InterfaceLabel")));
-        getContentPane().add(LIType);
+        infoPane.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol"))));
+        infoPane.add(CSStatus);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("LIHardwareVersionLabel")));
-        getContentPane().add(LIHardwareVersion);
+        infoPane.add(new JLabel(Bundle.getMessage("InterfaceLabel")));
+        infoPane.add(LIType);
 
-        getContentPane().add(new JLabel(Bundle.getMessage("LISoftwareVersionLabel")));
-        getContentPane().add(LISoftwareVersion);
+        infoPane.add(new JLabel(Bundle.getMessage("HardwareVersionLabel")));
+        infoPane.add(LIHardwareVersion);
 
-        getContentPane().add(getSystemInfoButton);
-        getContentPane().add(closeButton);
+        infoPane.add(new JLabel(Bundle.getMessage("SoftwareVersionLabel")));
+        infoPane.add(LISoftwareVersion);
+
+        getContentPane().add(infoPane);
+        getContentPane().add(Box.createVerticalGlue());
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.add(getSystemInfoButton);
+        buttonPane.add(closeButton);
+        getContentPane().add(buttonPane);
 
         addHelpMenu("package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame", true);
 
         // and prep for display
         pack();
 
-        // initilize the display values with what the LenzCommandStation 
+        // initialize the display values with what the LenzCommandStation
         // class already knows.
         setCSVersionDisplay();
 
@@ -88,7 +102,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         if (tc != null) {
             tc.addXNetListener(~0, this);
         } else {
-            log.warn("No XPressNet connection, panel won't function");
+            log.warn("No XpressNet connection, panel won't function");
         }
 
     }
@@ -97,15 +111,17 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
     JLabel CSType = new JLabel("                ");
     JLabel CSSoftwareVersion = new JLabel("");
-    JLabel CSStatus = new JLabel("Unknown");
+    JLabel CSStatus = new JLabel(Bundle.getMessage("BeanStateUnknown"));
     JLabel LIType = new JLabel("       ");
     JLabel LIHardwareVersion = new JLabel("");
     JLabel LISoftwareVersion = new JLabel("");
 
     JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
-    JToggleButton closeButton = new JToggleButton(Bundle.getMessage("CloseButtonLabel"));
+    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
-    //Send Information request to LI100/LI101
+    /**
+     * Send Information request to LI100/LI101.
+     */
     void getSystemInfo() {
         /* First, we need to send a request for the Command Station
          hardware and software version */
@@ -123,7 +139,9 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         tc.sendXNetMessage(msg3, this);
     }
 
-    // listen for responses from the LI101
+    /**
+     * Listen for responses from the LI101.
+     */
     @Override
     public void message(XNetReply l) {
 
@@ -145,36 +163,42 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
                 int statusByte = l.getElement(2);
                 if ((statusByte & 0x01) == 0x01) {
                     // Command station is in Emergency Off Mode
-                    CSStatus.setText("Emergency Off");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusEmergencyOff"));
                 } else if ((statusByte & 0x02) == 0x02) {
                     // Command station is in Emergency Stop Mode
-                    CSStatus.setText("Emergency Stop");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusEmergencyStop"));
                 } else if ((statusByte & 0x08) == 0x08) {
                     // Command station is in Service Mode
-                    CSStatus.setText("Service Mode");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusServiceMode"));
                 } else if ((statusByte & 0x40) == 0x40) {
                     // Command station is in Power Up Mode
                     if ((statusByte & 0x04) == 0x04) {
-                        CSStatus.setText("Powering up, Auto Mode");
+                        CSStatus.setText(Bundle.getMessage("XNetCSStatusPoweringUp") + ": "
+                                + Bundle.getMessage("XNetCSStatusPowerModeAuto"));
                     } else {
-                        CSStatus.setText("Powering up, Manual Mode");
+                        CSStatus.setText(Bundle.getMessage("XNetCSStatusPoweringUp") + ": "
+                                + Bundle.getMessage("XNetCSStatusPowerModeManual"));
                     }
                 } else if ((statusByte & 0x80) == 0x80) {
                     // Command station has a experienced a ram check error
-                    CSStatus.setText("RAM check error!");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusRamCheck"));
                 } else {
-                    CSStatus.setText("Normal");
+                    CSStatus.setText(Bundle.getMessage("XNetCSStatusRamNormal"));
                 }
             }
         }
     }
 
-    // listen for the messages to the LI100/LI101
+    /**
+     * Listen for the messages to the LI100/LI101.
+     */
     @Override
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+    /**
+     * Handle a timeout notification.
+     */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
@@ -183,9 +207,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     }
 
     /**
-     * This just displays the currently known version information from the
+     * Display the currently known version information from the
      * LenzCommandStation class.
-     *
      */
     private void setCSVersionDisplay() {
         CSSoftwareVersion.setText("" + tc.getCommandStation()
@@ -202,7 +225,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
         } else {
-            CSType.setText(Bundle.getMessage("CSTypeUNKNOWN"));
+            CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }
     }
 
@@ -212,6 +235,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class);
 
 }

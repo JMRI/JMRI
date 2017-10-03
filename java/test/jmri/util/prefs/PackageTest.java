@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     JmriConfigurationProviderTest.class,
     JmriPreferencesProviderTest.class,
-    InitializationExceptionTest.class
+    InitializationExceptionTest.class,
+    JmriUserInterfaceConfigurationProviderTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.util tree

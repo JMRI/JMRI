@@ -34,7 +34,7 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public SpeedoTrafficController getTrafficController() {
         return tc;
@@ -69,7 +69,5 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         }
         super.dispose();
     }
+
 }
-
-
-

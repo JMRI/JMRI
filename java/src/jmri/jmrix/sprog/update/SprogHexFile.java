@@ -61,7 +61,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Open hex file for reading
+     * Open hex file for reading.
      *
      * @return boolean true if successful
      */
@@ -80,7 +80,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Open file for writing
+     * Open file for writing.
      *
      * @return boolean true if successful
      */
@@ -97,7 +97,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Close the currently open file
+     * Close the currently open file.
      */
     public void close() {
         try {
@@ -116,9 +116,10 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read a record (line) from the hex file. If it's an extended address
-     * record then update the address and read the next line. Returns the data
-     * length
+     * Read a record (line) from the hex file.
+     * <p>
+     * If it's an extended address record then update the address
+     * and read the next line. Returns the data length.
      *
      * @return int the data length of the record, or 0 if no data
      */
@@ -168,8 +169,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
                 return new int[]{-1};
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "I/O Error reading hex file!",
-                    "Hex File", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             if (log.isDebugEnabled()) {
                 log.debug("I/O Error reading hex file!" + e.toString());
             }
@@ -205,7 +206,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read a hex byte
+     * Read a hex byte.
      *
      * @return byte the byte that was read
      */
@@ -220,10 +221,10 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read a single hex digit. returns 16 if digit is invalid
+     * Read a single hex digit.
      *
-     * @return byte low nibble contains the hex digit read. high nibble set if
-     *         error
+     * @return 16 if digit is invalid. byte low nibble contains the hex digit read.
+     * high nibble set if error.
      */
     private int rdHexDigit() {
         int b = 0;
@@ -236,21 +237,21 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
             } else if ((b >= 'a') && (b <= 'f')) {
                 b = b - 'a' + 10;
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid hex digit at line " + lineNo,
-                        "Hex File", JOptionPane.ERROR_MESSAGE);
-                log.error("Format Error! Invalid hex digit at line " + lineNo);
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidHexDigitAtLine", lineNo),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                log.error("Format Error! Invalid hex digit at line ()", lineNo);
                 b = 16;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "I/O Error reading hex file!",
-                    "Hex File", JOptionPane.ERROR_MESSAGE);
-            log.error("I/O Error reading hex file!" + e.toString());
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            log.error("I/O Error reading hex file!"+ e.toString());
         }
         return (byte) b;
     }
 
     /**
-     * Write a line to the hex file
+     * Write a line to the hex file.
      *
      * @param addr int the starting address of the data
      * @param type byte the type of data record being written
@@ -281,7 +282,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * write an extended address record
+     * Write an extended address record.
      *
      * @param addr the extended address
      */
@@ -290,7 +291,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Write an end of file record
+     * Write an end of file record.
      *
      */
     public void wrEof() {
@@ -298,7 +299,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get the type of the last record read from the hex file
+     * Get the type of the last record read from the hex file.
      *
      * @return byte the record type
      */
@@ -307,7 +308,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get the length of the last record read from the hex file
+     * Get the length of the last record read from the hex file.
      *
      * @return byte the length
      */
@@ -316,7 +317,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get current address
+     * Get current address.
      *
      * @return int the current address
      */
@@ -325,7 +326,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get lower byte of current address
+     * Get lower byte of current address.
      *
      * @return byte the lower byte of the address
      */
@@ -334,7 +335,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get high (middle) byte of current address
+     * Get high (middle) byte of current address.
      *
      * @return byte the high (middle) byte of the address
      */
@@ -343,7 +344,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get upper byte of current address
+     * Get upper byte of current address.
      *
      * @return byte the upper byte of the address
      */
@@ -352,7 +353,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Get data from last record read
+     * Get data from last record read.
      *
      * @return byte[] array of data bytes
      */
@@ -362,7 +363,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
 
     /**
      * Write a byte array to the hex file, prepending ":" and appending checksum
-     * and carriage return
+     * and carriage return.
      *
      * @param data byte[] array of data bytes top be written
      */
@@ -386,7 +387,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Write a byte as two hex characters
+     * Write a byte as two hex characters.
      *
      * @param b byte the byte to be written
      */
@@ -401,7 +402,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Write a single hex digit
+     * Write a single hex digit.
      *
      * @param b byte low nibble contains the hex digit to be written
      */
@@ -417,6 +418,6 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SprogHexFile.class.getName());
+            .getLogger(SprogHexFile.class);
 
 }

@@ -1,16 +1,16 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer support for Lenz XpressNet.
- * <P>
+ * Z21 Programmer support for Lenz XpressNet.
+ * <p>
  * The read operation state sequence is:
  * <UL>
  * <LI>Send Register Mode / Paged mode /Direct Mode read request
@@ -51,7 +51,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
             return false;
         }
 
-        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             return true; // z21 allows us to specify the CV in 16 bits.
         } else {
             return Integer.parseInt(addr) <= 256;
@@ -72,18 +72,20 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
-        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             return true; // z21 allows us to specify the CV in 16 bits.
         } else {
             return Integer.parseInt(addr) <= 256;
         }
     }
 
-    // programming interface
+    /**
+     * Programming interface.
+     */
     @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)
-                || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
+                || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (log.isDebugEnabled()) {
                 log.debug("writeCV " + CV + " listens " + p);
             }
@@ -106,8 +108,8 @@ public class Z21XNetProgrammer extends XNetProgrammer {
 
     @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)
-                || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+        if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
+                || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             if (log.isDebugEnabled()) {
                 log.debug("readCV " + CV + " listens " + p);
             }
@@ -167,6 +169,6 @@ public class Z21XNetProgrammer extends XNetProgrammer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetProgrammer.class);
 
 }

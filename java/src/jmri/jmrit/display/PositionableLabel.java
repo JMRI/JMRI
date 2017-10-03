@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,8 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ResourceBundle;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -18,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.MathUtil;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +35,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  */
 public class PositionableLabel extends JLabel implements Positionable {
-
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     protected Editor _editor;
 
@@ -54,6 +56,10 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _rotateText = false;
     private int _degrees;
 
+    /**
+     * {@inheritDoc}
+     * @param editor where this label is displayed
+     */
     public PositionableLabel(String s, Editor editor) {
         super(s);
         _editor = editor;
@@ -65,12 +71,12 @@ public class PositionableLabel extends JLabel implements Positionable {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public PositionableLabel(NamedIcon s, Editor editor) {
+    public PositionableLabel(@Nullable NamedIcon s, Editor editor) {
         super(s);
         _editor = editor;
         _icon = true;
         _namedIcon = s;
-        log.debug("PositionableLabel ctor (icon) {}", s.getName());
+        log.debug("PositionableLabel ctor (icon) {}", s != null ? s.getName() : null);
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
@@ -96,9 +102,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = ed;
     }
 
-    /**
-     * *************** Positionable methods *********************
-     */
+    // *************** Positionable methods *********************
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
@@ -142,8 +146,10 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     @Override
     public void setHidden(boolean hide) {
-        _hidden = hide;
-        showHidden();
+        if (_hidden != hide) {
+            _hidden = hide;
+            showHidden();
+        }
     }
 
     @Override
@@ -185,22 +191,22 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     @Override
-    public void setShowTooltip(boolean set) {
+    public void setShowToolTip(boolean set) {
         _showTooltip = set;
     }
 
     @Override
-    public boolean showTooltip() {
+    public boolean showToolTip() {
         return _showTooltip;
     }
 
     @Override
-    public void setTooltip(ToolTip tip) {
+    public void setToolTip(ToolTip tip) {
         _tooltip = tip;
     }
 
     @Override
-    public ToolTip getTooltip() {
+    public ToolTip getToolTip() {
         return _tooltip;
     }
 
@@ -253,7 +259,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         pos._hidden = _hidden;
         pos._positionable = _positionable;
         pos._showTooltip = _showTooltip;
-        pos.setTooltip(getTooltip());
+        pos.setToolTip(getToolTip());
         pos._editable = _editable;
         if (getPopupUtility() == null) {
             pos.setPopupUtility(null);
@@ -397,70 +403,70 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     public int maxWidthTrue() {
-        int max = 0;
+        int result = 0;
         if (_popupUtil != null && _popupUtil.getFixedWidth() != 0) {
-            max = _popupUtil.getFixedWidth();
-            max += _popupUtil.getBorderSize() * 2;
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+            result = _popupUtil.getFixedWidth();
+            result += _popupUtil.getBorderSize() * 2;
+            if (result < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
                 _popupUtil.setFixedWidth(PositionablePopupUtil.MIN_SIZE);
-                max = PositionablePopupUtil.MIN_SIZE;
+                result = PositionablePopupUtil.MIN_SIZE;
             }
         } else {
             if (_text && getText() != null) {
                 if (getText().trim().length() == 0) {
                     // show width of 1 blank character
                     if (getFont() != null) {
-                        max = getFontMetrics(getFont()).stringWidth("0");
+                        result = getFontMetrics(getFont()).stringWidth("0");
                     }
                 } else {
-                    max = getFontMetrics(getFont()).stringWidth(getText());
+                    result = getFontMetrics(getFont()).stringWidth(getText());
                 }
             }
             if (_icon && _namedIcon != null) {
-                max = Math.max(_namedIcon.getIconWidth(), max);
+                result = Math.max(_namedIcon.getIconWidth(), result);
             }
             if (_text && _popupUtil != null) {
-                max += _popupUtil.getMargin() * 2;
-                max += _popupUtil.getBorderSize() * 2;
+                result += _popupUtil.getMargin() * 2;
+                result += _popupUtil.getBorderSize() * 2;
             }
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
-                max = PositionablePopupUtil.MIN_SIZE;
+            if (result < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                result = PositionablePopupUtil.MIN_SIZE;
             }
         }
         if (log.isTraceEnabled()) { // avoid AWT size computation
-            log.trace("maxWidth= {} preferred width= ", max, getPreferredSize().width);
+            log.trace("maxWidth= {} preferred width= {}", result, getPreferredSize().width);
         }
-        return max;
+        return result;
     }
 
     public int maxHeightTrue() {
-        int max = 0;
+        int result = 0;
         if (_popupUtil != null && _popupUtil.getFixedHeight() != 0) {
-            max = _popupUtil.getFixedHeight();
-            max += _popupUtil.getBorderSize() * 2;
-            if (max < PositionablePopupUtil.MIN_SIZE) {   // don't let item disappear
+            result = _popupUtil.getFixedHeight();
+            result += _popupUtil.getBorderSize() * 2;
+            if (result < PositionablePopupUtil.MIN_SIZE) {   // don't let item disappear
                 _popupUtil.setFixedHeight(PositionablePopupUtil.MIN_SIZE);
             }
         } else {
             //if(_text) {
             if (_text && getText() != null && getFont() != null) {
-                max = getFontMetrics(getFont()).getHeight();
+                result = getFontMetrics(getFont()).getHeight();
             }
             if (_icon && _namedIcon != null) {
-                max = Math.max(_namedIcon.getIconHeight(), max);
+                result = Math.max(_namedIcon.getIconHeight(), result);
             }
             if (_text && _popupUtil != null) {
-                max += _popupUtil.getMargin() * 2;
-                max += _popupUtil.getBorderSize() * 2;
+                result += _popupUtil.getMargin() * 2;
+                result += _popupUtil.getBorderSize() * 2;
             }
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
-                max = PositionablePopupUtil.MIN_SIZE;
+            if (result < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                result = PositionablePopupUtil.MIN_SIZE;
             }
         }
         if (log.isTraceEnabled()) { // avoid AWT size computation
-            log.trace("maxHeight= {} preferred height= {}", max, getPreferredSize().height);
+            log.trace("maxHeight= {} preferred height= {}", result, getPreferredSize().height);
         }
-        return max;
+        return result;
     }
 
     public boolean isBackground() {
@@ -475,6 +481,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _namedIcon = s;
         super.setIcon(_namedIcon);
         updateSize();
+        repaint();
     }
 
     /**
@@ -496,7 +503,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
-            popup.add(new AbstractAction(Bundle.getMessage("Rotate")) {
+            popup.add(new AbstractAction(Bundle.getMessage("RotateOrthogonal")) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -592,6 +599,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditorFrame = null;
         _iconEditor = null;
         invalidate();
+        repaint();
     }
 
     public jmri.util.JmriJFrame _paletteFrame;
@@ -618,8 +626,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public boolean setRotateMenu(JPopupMenu popup) {
         if (_displayLevel > Editor.BKG) {
-            popup.add(CoordinateEdit.getRotateEditAction(this));
-            return true;
+//             popup.add(CoordinateEdit.getRotateEditAction(this));
+            return _editor.setShowRotationMenu(this, popup);
         }
         return false;
     }
@@ -667,6 +675,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             _namedIcon.scale(s, this);
             super.setIcon(_namedIcon);
             updateSize();
+            repaint();
         }
     }
 
@@ -689,6 +698,11 @@ public class PositionableLabel extends JLabel implements Positionable {
             log.debug("rotate({}) with _rotateText {}, _text {}, _icon {}", deg, _rotateText, _text, _icon);
         }
         _degrees = deg;
+
+        if ((deg != 0) && (_popupUtil.getOrientation() != PositionablePopupUtil.HORIZONTAL)) {
+            _popupUtil.setOrientation(PositionablePopupUtil.HORIZONTAL);
+        }
+
         if (_rotateText || deg == 0) {
             if (deg == 0) {             // restore unrotated whatever
                 _rotateText = false;
@@ -703,7 +717,16 @@ public class PositionableLabel extends JLabel implements Positionable {
                     }
                     if (_namedIcon != null) {
                         String url = _namedIcon.getURL();
-                        _namedIcon = new NamedIcon(url, url);
+                        if (url == null) {
+                            if (_text & _icon) {    // create new text over icon
+                                _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
+                                _namedIcon.rotate(deg, this);
+                            } else if (_text) {
+                                _namedIcon = null;
+                            }
+                        } else {
+                            _namedIcon = new NamedIcon(url, url);
+                        }
                     }
                     super.setIcon(_namedIcon);
                 } else {
@@ -741,24 +764,29 @@ public class PositionableLabel extends JLabel implements Positionable {
             super.setIcon(_namedIcon);
         }
         updateSize();
-    }
+        repaint();
+    }   // rotate
 
     /**
      * Create an image of icon with overlaid text.
+     *
      * @param text the text to overlay
-     * @param ic the icon containing the image
+     * @param ic   the icon containing the image
      * @return the icon overlaying text on ic
      */
     protected NamedIcon makeTextOverlaidIcon(String text, NamedIcon ic) {
         String url = ic.getURL();
         NamedIcon icon = new NamedIcon(url, url);
-        int textWidth = getFontMetrics(getFont()).stringWidth(text);
+
         int iconWidth = icon.getIconWidth();
-        int textHeight = getFontMetrics(getFont()).getHeight();
         int iconHeight = icon.getIconHeight();
+
+        int textWidth = getFontMetrics(getFont()).stringWidth(text);
+        int textHeight = getFontMetrics(getFont()).getHeight();
 
         int width = Math.max(textWidth, iconWidth);
         int height = Math.max(textHeight, iconHeight);
+
         int hOffset = Math.max((textWidth - iconWidth) / 2, 0);
         int vOffset = Math.max((textHeight - iconHeight) / 2, 0);
 
@@ -800,8 +828,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+//                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
             if (_popupUtil.hasBackground()) {
@@ -816,12 +844,14 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
 
         g2d.drawImage(icon.getImage(), AffineTransform.getTranslateInstance(hOffset, vOffset + 1), this);
-        g2d.setFont(getFont());
 
-        hOffset = Math.max((width - textWidth) / 2, 0);
-        vOffset = Math.max((height - textHeight) / 2, 0) + getFontMetrics(getFont()).getAscent();
-        g2d.setColor(getForeground());
-        g2d.drawString(text, hOffset, vOffset);
+        if (false) {    //TODO: dead-strip this; the string is now drawn in paintComponent
+            g2d.setFont(getFont());
+            hOffset = Math.max((width - textWidth) / 2, 0);
+            vOffset = Math.max((height - textHeight) / 2, 0) + getFontMetrics(getFont()).getAscent();
+            g2d.setColor(getForeground());
+            g2d.drawString(text, hOffset, vOffset);
+        }
 
         icon = new NamedIcon(bufIm);
         g2d.dispose();
@@ -830,8 +860,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     /**
-     * create a text image whose bit map can be rotated
-     *
+     * Create a text image whose bit map can be rotated.
      */
     private NamedIcon makeTextIcon(String text) {
         if (text == null || text.equals("")) {
@@ -870,8 +899,13 @@ public class PositionableLabel extends JLabel implements Positionable {
                 vOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
             }
         }
+
         BufferedImage bufIm = new BufferedImage(width + 2, height + 2, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufIm.createGraphics();
+
+        g2d.setBackground(new Color(0, 0, 0, 0));
+        g2d.clearRect(0, 0, bufIm.getWidth(), bufIm.getHeight());
+
         g2d.setFont(getFont());
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
@@ -879,8 +913,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+//         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+//                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
             if (_popupUtil.hasBackground()) {
@@ -893,8 +927,10 @@ public class PositionableLabel extends JLabel implements Positionable {
                 g2d.drawRect(0, 0, width, height);
             }
         }
-        g2d.setColor(getForeground());
-        g2d.drawString(text, hOffset, vOffset);
+        if (false) {    //TODO: dead-strip this; the string is now drawn in paintComponent
+            g2d.setColor(getForeground());
+            g2d.drawString(text, hOffset, vOffset);
+        }
         NamedIcon icon = new NamedIcon(bufIm);
         g2d.dispose();
         return icon;
@@ -971,6 +1007,9 @@ public class PositionableLabel extends JLabel implements Positionable {
         switch (_popupUtil.getOrientation()) {
             case PositionablePopupUtil.VERTICAL_DOWN:
             case PositionablePopupUtil.VERTICAL_UP:
+                if (_degrees != 0) {
+                    rotate(0);
+                }
                 return new Dimension(size.height, size.width);
             default:
                 return super.getSize();
@@ -992,25 +1031,71 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_popupUtil == null) {
             super.paintComponent(g);
         } else {
-            Graphics2D gr = (Graphics2D) g.create();
+            Graphics2D g2d = (Graphics2D) g.create();
+
+            // set antialiasing hint for macOS and Windows
+            // note: antialiasing has performance problems on some variants of Linux (Raspberry pi)
+            if (SystemType.isMacOSX() || SystemType.isWindows()) {
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                        RenderingHints.VALUE_RENDER_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                        RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+//                 g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,   // Turned off due to poor performance, see Issue #3850 and PR #3855 for background
+//                         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            }
 
             switch (_popupUtil.getOrientation()) {
-                case PositionablePopupUtil.VERTICAL_UP:
-                    gr.translate(0, getSize().getHeight());
-                    gr.transform(AffineTransform.getQuadrantRotateInstance(-1));
+                case PositionablePopupUtil.VERTICAL_UP: {
+                    g2d.translate(0, getSize().getHeight());
+                    g2d.transform(AffineTransform.getQuadrantRotateInstance(-1));
                     break;
-                case PositionablePopupUtil.VERTICAL_DOWN:
-                    gr.transform(AffineTransform.getQuadrantRotateInstance(1));
-                    gr.translate(0, -getSize().getWidth());
+                }
+                case PositionablePopupUtil.VERTICAL_DOWN: {
+                    g2d.transform(AffineTransform.getQuadrantRotateInstance(1));
+                    g2d.translate(0, -getSize().getWidth());
                     break;
-                default:
+                }
             }
 
             needsRotate = true;
-            super.paintComponent(gr);
+            super.paintComponent(g2d);
             needsRotate = false;
+
+            if (_popupUtil.getOrientation() == PositionablePopupUtil.HORIZONTAL) {
+                if ((_unRotatedText != null) && (_degrees != 0)) {
+                    double angleRAD = Math.toRadians(_degrees);
+
+                    int iconWidth = getWidth();
+                    int iconHeight = getHeight();
+
+                    int textWidth = getFontMetrics(getFont()).stringWidth(_unRotatedText);
+                    int textHeight = getFontMetrics(getFont()).getHeight();
+
+                    Point2D textSizeRotated = MathUtil.rotateRAD(textWidth, textHeight, angleRAD);
+                    int textWidthRotated = (int) textSizeRotated.getX();
+                    int textHeightRotated = (int) textSizeRotated.getY();
+
+                    int width = Math.max(textWidthRotated, iconWidth);
+                    int height = Math.max(textHeightRotated, iconHeight);
+
+                    int iconOffsetX = width / 2;
+                    int iconOffsetY = height / 2;
+
+                    g2d.transform(AffineTransform.getRotateInstance(angleRAD, iconOffsetX, iconOffsetY));
+
+                    int hOffset = iconOffsetX - (textWidth / 2);
+                    //int vOffset = iconOffsetY + ((textHeight - getFontMetrics(getFont()).getAscent()) / 2);
+                    int vOffset = iconOffsetY + (textHeight / 4);   // why 4? Don't know, it just looks better
+
+                    g2d.setFont(getFont());
+                    g2d.setColor(getForeground());
+                    g2d.drawString(_unRotatedText, hOffset, vOffset);
+                }
+            }
         }
-    }
+    }   // paintComponent
 
     /**
      * Provides a generic method to return the bean associated with the
@@ -1021,6 +1106,5 @@ public class PositionableLabel extends JLabel implements Positionable {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
-
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);
 }

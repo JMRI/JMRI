@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * EcosDCC implementation of a ThrottleManager.
- * <P>
+ * <p>
  * Based on early NCE code.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005
@@ -60,7 +60,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     /**
      * Address 100 and above is a long address
-     *
      */
     @Override
     public boolean canBeLongAddress(int address) {
@@ -69,7 +68,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     /**
      * Address 99 and below is a short address
-     *
      */
     @Override
     public boolean canBeShortAddress(int address) {
@@ -77,7 +75,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     }
 
     /**
-     * Are there any ambiguous addresses (short vs long) on this system?
+     * Are there any ambiguous addresses (short vs. long) on this system?
      */
     @Override
     public boolean addressTypeUnique() {
@@ -103,7 +101,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
 
     /*
-     * Local method for deciding short/long address
+     * Decide whether given a long address or not.
      */
     static boolean isLongAddress(int num) {
         return (num >= 100);
@@ -137,6 +135,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class);
 
 }

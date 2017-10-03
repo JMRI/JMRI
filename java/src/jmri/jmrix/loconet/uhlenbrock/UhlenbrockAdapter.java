@@ -28,11 +28,12 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
         // define command station options
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
 
-        validSpeeds = new String[]{"19200", "38400", "57600", "115200"};
+        validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
+                Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
-        configureBaudRate("115200"); //Set the default baud rate
+        configureBaudRate("Baud115200"); //Set the default baud rate (localized)
     }
 
     /**
@@ -88,7 +89,8 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
+        configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
+
         log.info("Found flow control " + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
@@ -104,6 +106,6 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class);
 
 }

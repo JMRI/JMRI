@@ -9,7 +9,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Hashtable;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -41,7 +40,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractSimulatorConnectionConfig() {
@@ -137,9 +136,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
-    protected String systemPrefix;
-    protected String connectionName;
-
     /**
      * Load the adapter with an appropriate object
      * <i>unless</I> its already been set.
@@ -148,15 +144,16 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     abstract protected void setInstance();
 
     /**
-     * Returns the port the simulator is connected to which is "none";
+     * {@inheritDoc}
+     * <p>
+     * This implementation always returns the localized value for "none".
+     *
+     * @return the localized value for "none"
      */
     @Override
     public String getInfo() {
-        return rb.getString("none");
+        return Bundle.getMessage("none");
     }
-
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
     @Override
     public void loadDetails(final JPanel details) {
@@ -164,7 +161,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         setInstance();
         if (!init) {
             String[] optionsAvailable = adapter.getOptions();
-            options = new Hashtable<String, Option>();
+            options.clear();
             for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
@@ -289,5 +286,5 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class);
 }

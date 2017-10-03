@@ -20,6 +20,7 @@ import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -231,7 +232,7 @@ public class TrainPrintUtilities {
             return;
         }
         PrintWriter out;
-        File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(
                 Bundle.getMessage("Report") + " " + name);
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
@@ -382,5 +383,5 @@ public class TrainPrintUtilities {
         return ""; // no default printer specified
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class);
 }

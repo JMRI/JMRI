@@ -246,7 +246,7 @@ public class LocoIOTableModel
                     liodata.setV1(row, l, liodata.getAddr(row));
                     liodata.setV2(row, l, liodata.getAddr(row));
 
-                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpcode()) + " " // NOI18N
+                    msg[row] = "Packet: " + LnConstants.OPC_NAME(l.getOpCode()) + " " // NOI18N
                             + Integer.toHexString(liodata.getV1(row)) + " "
                             + Integer.toHexString(liodata.getV2(row)) + " <CHK>"; // NOI18N
                     if (status != null) {
@@ -274,7 +274,7 @@ public class LocoIOTableModel
                 liodata.setV1(row, l, a);
                 liodata.setV2(row, l, a);
 
-                int opcode = (l == null) ? 0 : l.getOpcode();
+                int opcode = (l == null) ? 0 : l.getOpCode();
                 msg[row] = "Packet: " + LnConstants.OPC_NAME(opcode) // NOI18N
                         + " " + Integer.toHexString(liodata.getV1(row))
                         + " " + Integer.toHexString(liodata.getV2(row))
@@ -305,5 +305,5 @@ public class LocoIOTableModel
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class);
 }

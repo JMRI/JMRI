@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.loconet.Intellibox.configurexml.PackageTest.class,
    IBLnPacketizerTest.class,
    IbxConnectionTypeListTest.class,
-   IntelliboxAdapterTest.class
+   IntelliboxAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.loconet.Intellibox package.
@@ -34,6 +35,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

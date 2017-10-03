@@ -52,11 +52,10 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String className = shared.getAttribute("name").getValue();
         PerformActionModel model = new PerformActionModel();
-        Exception exception = null;
         model.setClassName(className);
         for (Element child : shared.getChildren("property")) { // NOI18N
             if (child.getAttributeValue("name").equals("systemPrefix") // NOI18N
@@ -65,9 +64,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
             }
         }
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
-        if (exception != null) {
-            throw exception;
-        }
         return result;
     }
 
@@ -82,6 +78,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class);
 
 }

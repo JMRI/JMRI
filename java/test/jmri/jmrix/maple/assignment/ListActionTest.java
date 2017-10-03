@@ -1,13 +1,13 @@
 package jmri.jmrix.maple.assignment;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of ListAction
@@ -19,26 +19,22 @@ public class ListActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListAction action = new ListAction("Maple test Action"); 
+        ListAction action = new ListAction("Maple test Action", new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListAction action = new ListAction();
+        ListAction action = new ListAction(new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AutomationCopyFrame extends OperationsFrame {
 
-    AutomationManager automationManager = AutomationManager.instance();
+    AutomationManager automationManager = InstanceManager.getDefault(AutomationManager.class);
 
     // labels
     // text field
@@ -31,7 +32,7 @@ public class AutomationCopyFrame extends OperationsFrame {
     javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
-    JComboBox<Automation> automationBox = AutomationManager.instance().getComboBox();
+    JComboBox<Automation> automationBox = InstanceManager.getDefault(AutomationManager.class).getComboBox();
 
     public AutomationCopyFrame(Automation automation) {
         // general GUI config
@@ -137,5 +138,5 @@ public class AutomationCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class);
 }

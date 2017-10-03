@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -14,82 +15,81 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.Assert;
 
 /**
  * Tests for the Xml class Last manually cross-checked on 20090131
- *
+ * <p>
  * TrainBuilder: Everything. TrainSwitchLists: Everything.
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class XmlTest extends OperationsTestCase {
-    
+
     public void testFilePathNames() {
         // test the build report path name
         Assert.assertEquals("buildstatus", TrainManagerXml.BUILD_STATUS);
-        Assert.assertEquals(OperationsXml.getFileLocation() +
-                "operations" +
-                File.separator +
-                "JUnitTest" +
-                File.separator +
-                "buildstatus" +
-                File.separator +
-                "train (TestReportName).txt",
-                TrainManagerXml.instance().defaultBuildReportFileName("TestReportName"));
-        
+        Assert.assertEquals(OperationsXml.getFileLocation()
+                + "operations"
+                + File.separator
+                + "JUnitTest"
+                + File.separator
+                + "buildstatus"
+                + File.separator
+                + "train (TestReportName).txt",
+                InstanceManager.getDefault(TrainManagerXml.class).defaultBuildReportFileName("TestReportName"));
+
         // test the manifest path name
         Assert.assertEquals("manifests", TrainManagerXml.MANIFESTS);
-        Assert.assertEquals(OperationsXml.getFileLocation() +
-                "operations" +
-                File.separator +
-                "JUnitTest" +
-                File.separator +
-                "manifests" +
-                File.separator +
-                "train (TestManifestName).txt",
-                TrainManagerXml.instance().getDefaultManifestFileName("TestManifestName"));
-        
+        Assert.assertEquals(OperationsXml.getFileLocation()
+                + "operations"
+                + File.separator
+                + "JUnitTest"
+                + File.separator
+                + "manifests"
+                + File.separator
+                + "train (TestManifestName).txt",
+                InstanceManager.getDefault(TrainManagerXml.class).getDefaultManifestFileName("TestManifestName"));
+
         // test the manifest CSV path name
         Assert.assertEquals("csvManifests", TrainManagerXml.CSV_MANIFESTS);
-        Assert.assertEquals(OperationsXml.getFileLocation() +
-                "operations" +
-                File.separator +
-                "JUnitTest" +
-                File.separator +
-                "csvManifests" +
-                File.separator +
-                "train (TestManifestName).csv",
-                TrainManagerXml.instance().getDefaultCsvManifestFileName("TestManifestName"));
-        
+        Assert.assertEquals(OperationsXml.getFileLocation()
+                + "operations"
+                + File.separator
+                + "JUnitTest"
+                + File.separator
+                + "csvManifests"
+                + File.separator
+                + "train (TestManifestName).csv",
+                InstanceManager.getDefault(TrainManagerXml.class).getDefaultCsvManifestFileName("TestManifestName"));
+
         // test the switch list path name
         Assert.assertEquals("switchLists", TrainManagerXml.SWITCH_LISTS);
-        Assert.assertEquals(OperationsXml.getFileLocation() +
-                "operations" +
-                File.separator +
-                "JUnitTest" +
-                File.separator +
-                "switchLists" +
-                File.separator +
-                "location (TestSwitchListName).txt",
-                TrainManagerXml.instance().getDefaultSwitchListName("TestSwitchListName"));
-        
+        Assert.assertEquals(OperationsXml.getFileLocation()
+                + "operations"
+                + File.separator
+                + "JUnitTest"
+                + File.separator
+                + "switchLists"
+                + File.separator
+                + "location (TestSwitchListName).txt",
+                InstanceManager.getDefault(TrainManagerXml.class).getDefaultSwitchListName("TestSwitchListName"));
+
         // test the CSV switch list path name
         Assert.assertEquals("csvSwitchLists", TrainManagerXml.CSV_SWITCH_LISTS);
-        Assert.assertEquals(OperationsXml.getFileLocation() +
-                "operations" +
-                File.separator +
-                "JUnitTest" +
-                File.separator +
-                "csvSwitchLists" +
-                File.separator +
-                "location (TestSwitchListName).csv",
-                TrainManagerXml.instance().getDefaultCsvSwitchListFileName("TestSwitchListName"));
+        Assert.assertEquals(OperationsXml.getFileLocation()
+                + "operations"
+                + File.separator
+                + "JUnitTest"
+                + File.separator
+                + "csvSwitchLists"
+                + File.separator
+                + "location (TestSwitchListName).csv",
+                InstanceManager.getDefault(TrainManagerXml.class).getDefaultCsvSwitchListFileName("TestSwitchListName"));
     }
-
 
     /**
      * Test train XML create, read, and backup support. Originally written as
@@ -104,16 +104,16 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("test file name", "OperationsJUnitTestTrainRoster.xml", TrainManagerXml
                 .instance().getOperationsFileName());
 
-        RouteManager rmanager = RouteManager.instance();
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Route A = rmanager.newRoute("A");
         Route B = rmanager.newRoute("B");
         Route C = rmanager.newRoute("C");
-        
-        Assert.assertEquals("no locations in route A",  0 , A.getLocationsBySequenceList().size());
-        Assert.assertEquals("no locations in route B",  0 , B.getLocationsBySequenceList().size());
-        Assert.assertEquals("no locations in route C",  0 , C.getLocationsBySequenceList().size());
 
-        LocationManager lmanager = LocationManager.instance();
+        Assert.assertEquals("no locations in route A", 0, A.getLocationsBySequenceList().size());
+        Assert.assertEquals("no locations in route B", 0, B.getLocationsBySequenceList().size());
+        Assert.assertEquals("no locations in route C", 0, C.getLocationsBySequenceList().size());
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location Arlington = lmanager.newLocation("Arlington");
         Location Westford = lmanager.newLocation("Westford");
         Location Bedford = lmanager.newLocation("Bedford");
@@ -131,7 +131,7 @@ public class XmlTest extends OperationsTestCase {
         RouteLocation midC = C.addLocation(Arlington);
         RouteLocation endC = C.addLocation(Westford);
 
-        TrainManager manager = TrainManager.instance();
+        TrainManager manager = InstanceManager.getDefault(TrainManager.class);
         List<Train> temptrainList = manager.getTrainsByIdList();
 
         Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
@@ -142,7 +142,7 @@ public class XmlTest extends OperationsTestCase {
         temptrainList = manager.getTrainsByIdList();
         Assert.assertEquals("New Number of Trains", 3, temptrainList.size());
 
-        EngineManager eManager = EngineManager.instance();
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = eManager.newEngine("UP", "1");
         Engine e2 = eManager.newEngine("UP", "2");
         Engine e3 = eManager.newEngine("UP", "3");
@@ -170,7 +170,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setRoute(B);
         t3.setStatusCode(Train.CODE_UNKNOWN);
 
-        TrainManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(TrainManagerXml.class).writeOperationsFile();
 
         // Add some more trains and write file again
         // so we can test the backup facility
@@ -274,8 +274,8 @@ public class XmlTest extends OperationsTestCase {
         t5.setRoute(B);
         t5.setStatusCode(Train.CODE_UNKNOWN);
 
-        TrainManagerXml.instance().writeOperationsFile();
-        
+        InstanceManager.getDefault(TrainManagerXml.class).writeOperationsFile();
+
         // perform data check before dispose
         Assert.assertEquals("t1 build", true, t1.isBuildEnabled());
         Assert.assertEquals("t1 build failed", true, t1.getBuildFailed());
@@ -398,11 +398,11 @@ public class XmlTest extends OperationsTestCase {
         // prevent swing access when loading train icon
         Setup.setPanelName("");
 
-        manager = TrainManager.instance();
+        manager = InstanceManager.getDefault(TrainManager.class);
         temptrainList = manager.getTrainsByIdList();
 
         Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
-        
+
         // confirm that none of the trains exist
         t1 = manager.getTrainByName("Test Number 1");
         t2 = manager.getTrainByName("Test Number 2");
@@ -410,16 +410,16 @@ public class XmlTest extends OperationsTestCase {
         t4 = manager.getTrainByName("Test Number 4");
         t5 = manager.getTrainByName("Test Number 5");
         t6 = manager.getTrainByName("Test Number 6");
-        
+
         Assert.assertNull("train 1", t1);
         Assert.assertNull("train 2", t2);
         Assert.assertNull("train 3", t3);
         Assert.assertNull("train 4", t4);
         Assert.assertNull("train 5", t5);
         Assert.assertNull("train 6", t6);
-        
+
         // now reload train data from file
-        TrainManagerXml.instance().readFile(TrainManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(TrainManagerXml.class).readFile(InstanceManager.getDefault(TrainManagerXml.class).getDefaultOperationsFilename());
 
         temptrainList = manager.getTrainsByIdList();
 
@@ -556,18 +556,18 @@ public class XmlTest extends OperationsTestCase {
 
         // now test the train backup file
         manager.dispose();
-        manager = TrainManager.instance();
+        manager = InstanceManager.getDefault(TrainManager.class);
         temptrainList = manager.getTrainsByIdList();
 
         Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
 
         // set file name to backup
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml.bak");
+        InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml.bak");
 
-        TrainManagerXml.instance().readFile(TrainManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(TrainManagerXml.class).readFile(InstanceManager.getDefault(TrainManagerXml.class).getDefaultOperationsFilename());
 
         // restore file name
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
         temptrainList = manager.getTrainsByIdList();
 

@@ -3,17 +3,22 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Create the default "Panels" menu for use in a menubar.
- *
+ * <p>
  * Also manages the Show Panel menu for all Editor panels.
  *
  * @author Bob Jacobsen Copyright 2003, 2004, 2010
@@ -23,11 +28,12 @@ import org.slf4j.LoggerFactory;
 public class PanelMenu extends JMenu {
 
     /**
-     * The single PanelMenu must now be accessed via the instance() method
+     * The single PanelMenu must accessed using
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)}.
      */
-    private PanelMenu() {
+    public PanelMenu() {
 
-        this.setText(Bundle.getMessage("MenuPanels"));
+        super.setText(Bundle.getMessage("MenuPanels"));
 
         // new panel is a submenu
         //add(new jmri.jmrit.display.NewPanelAction());
@@ -36,48 +42,51 @@ public class PanelMenu extends JMenu {
         newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(Bundle.getMessage("ControlPanelEditor")));
         newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(Bundle.getMessage("LayoutEditor")));
         newPanel.add(new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction(Bundle.getMessage("SwitchboardEditor")));
-        add(newPanel);
+        super.add(newPanel);
 
-        add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
-        add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
-        add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("MenuItemShowHistory")));
-        add(new JSeparator());
+        super.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
+        super.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        super.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("MenuItemShowHistory")));
+        super.add(new JSeparator());
         panelsSubMenu = new JMenu(Bundle.getMessage("MenuShowPanel"));
         // Add the 'No Panels' item to the sub-menu
         noPanelsItem = new JMenuItem(Bundle.getMessage("MenuItemNoPanels"));
         noPanelsItem.setEnabled(false);
         panelsSubMenu.add(noPanelsItem);
-        add(panelsSubMenu);
-        add(new JSeparator());
-        add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemScript")));
-        add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
-        add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
-        add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
+        super.add(panelsSubMenu);
+        super.add(new JSeparator());
+        super.add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemScript")));
+        super.add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
+        super.add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
+        super.add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
     }
 
     // operational variables
     private JMenu panelsSubMenu = null;
     private JMenuItem noPanelsItem = null;
-    static private PanelMenu thisMenu = null;
     private final ArrayList<Editor> panelsList = new ArrayList<>();
 
     /**
      * Provide method to reference this panel menu
      *
      * @return get the single instance of this menu
+     * @deprecated since 4.9.3; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     static public PanelMenu instance() {
-        if (thisMenu == null) {
-            thisMenu = new PanelMenu();
-        }
-        return thisMenu;
+        return InstanceManager.getDefault(PanelMenu.class);
     }
 
     /**
-     * Provide method to delete the reference to this menu
+     * Has no effect; retained for backwards compatibility.
+     *
+     * @deprecated since 4.9.3; use
+     * {@link jmri.InstanceManager#reset(java.lang.Class)} instead
      */
+    @Deprecated
     static public void dispose() {
-        thisMenu = null;
+        // do nothing
     }
 
     /**
@@ -206,12 +215,9 @@ public class PanelMenu extends JMenu {
             return false;
         }
         for (int i = 0; i < panelsList.size(); i++) {
-            try {
-                Editor editor = panelsList.get(i);
-                if (editor.getTargetFrame().getTitle().equals(name)) {
-                    return true;
-                }
-            } catch (Exception e) {
+            Editor editor = panelsList.get(i);
+            if (editor.getTargetFrame().getTitle().equals(name)) {
+                return true;
             }
         }
         return false;
@@ -222,12 +228,9 @@ public class PanelMenu extends JMenu {
             return null;
         }
         for (int i = 0; (i < panelsList.size()); i++) {
-            try {
-                Editor editor = panelsList.get(i);
-                if (editor.getTargetFrame().getTitle().equals(name)) {
-                    return editor;
-                }
-            } catch (Exception e) {
+            Editor editor = panelsList.get(i);
+            if (editor.getTargetFrame().getTitle().equals(name)) {
+                return editor;
             }
         }
         return null;
@@ -239,14 +242,30 @@ public class PanelMenu extends JMenu {
 
     public ArrayList<LayoutEditor> getLayoutEditorPanelList() {
         ArrayList<LayoutEditor> lePanelsList = new ArrayList<>();
-        for (int i = 0; (i < panelsList.size()); i++) {
-            try {
-                LayoutEditor le = (LayoutEditor) panelsList.get(i);
-                lePanelsList.add(le);
-            } catch (Exception e) {
-            }
-        }
+        panelsList.stream().filter((e) -> (e instanceof LayoutEditor)).forEachOrdered((e) -> {
+            lePanelsList.add((LayoutEditor) e);
+        });
         return lePanelsList;
     }
-    private final static Logger log = LoggerFactory.getLogger(PanelMenu.class.getName());
+
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(PanelMenu.class)) {
+                return new PanelMenu();
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(PanelMenu.class);
+            return set;
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(PanelMenu.class);
 }

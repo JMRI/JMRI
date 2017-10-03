@@ -2,13 +2,11 @@ package jmri.jmrix.pi;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigTest.class,
+   RaspberryPiConnectionConfigTest.class,
    RaspberryPiAdapterTest.class,
    RaspberryPiSystemConnectionMemoTest.class,
    RaspberryPiSensorManagerTest.class,
@@ -16,7 +14,8 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.pi.configurexml.PackageTest.class,
    RaspberryPiConnectionTypeListTest.class,
    RaspberryPiSensorTest.class,
-   RaspberryPiTurnoutTest.class
+   RaspberryPiTurnoutTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package
@@ -30,6 +29,6 @@ public class PackageTest {
         org.junit.runner.JUnitCore.main(PackageTest.class.getName());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

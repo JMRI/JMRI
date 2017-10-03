@@ -1,15 +1,13 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Drive a single signal head via two "Turnout" objects.
@@ -210,5 +208,5 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class);
 }

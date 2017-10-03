@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener {
 
-    RouteManager routeManager = RouteManager.instance();
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     // labels
     JLabel textX = new JLabel("   X  ");
@@ -70,7 +71,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         if (routeName == null) {
             return;
         }
-        _route = RouteManager.instance().getRouteByName(routeName);
+        _route = InstanceManager.getDefault(RouteManager.class).getRouteByName(routeName);
         _route.addPropertyChangeListener(this);
 
         // general GUI config
@@ -158,7 +159,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             updateTrainIconCoordinates();
         }
         if (ae.getSource() == saveButton) {
-            RouteManagerXml.instance().writeOperationsFile();
+            InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -183,7 +184,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     // place test markers on panel
     private void placeTestIcons() {
-        Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+        Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
         if (editor == null) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"),
                     new Object[]{Setup.getPanelName()}), Bundle.getMessage("PanelNotFound"),
@@ -194,8 +195,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             }
             // icon
             _tIon = editor.addTrainIcon(_rl.getName());
-            _tIon.getTooltip().setText(_route.getName());
-            _tIon.getTooltip().setBackgroundColor(Color.white);
+            _tIon.getToolTip().setText(_route.getName());
+            _tIon.getToolTip().setBackgroundColor(Color.white);
             _tIon.setLocation(_rl.getTrainIconX(), _rl.getTrainIconY());
             setTrainIconNameAndColor();
             addIconListener(_tIon);
@@ -329,5 +330,5 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class);
 }

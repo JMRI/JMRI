@@ -8,11 +8,13 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = JsonServiceFactory.class)
 public class JsonMemoryServiceFactory implements JsonServiceFactory {
 
 

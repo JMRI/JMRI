@@ -1,5 +1,6 @@
 package jmri.jmrit;
 
+import jmri.util.JUnitUtil;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -37,10 +38,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.automat.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
         suite.addTest(jmri.jmrit.blockboss.PackageTest.suite());
-        suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.catalog.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.conditional.PackageTest.class));
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.PackageTest.suite());
-        suite.addTest(jmri.jmrit.display.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.PackageTest.class));
         suite.addTest(jmri.jmrit.jython.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.log.PackageTest.class));
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());
@@ -53,7 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sendpacket.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sensorgroup.PackageTest.class));
         suite.addTest(jmri.jmrit.simpleclock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.symbolicprog.PackageTest.class));
         suite.addTest(jmri.jmrit.tracker.PackageTest.suite());
         suite.addTest(jmri.jmrit.ussctc.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));
@@ -62,7 +64,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.throttle.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.audio.PackageTest.class));
-        suite.addTest(jmri.jmrit.turnoutoperations.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.turnoutoperations.PackageTest.class));
         suite.addTest(jmri.jmrit.dualdecoder.PackageTest.suite());
         suite.addTest(jmri.jmrit.nixieclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.simpleprog.PackageTest.suite());
@@ -89,12 +91,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }
 

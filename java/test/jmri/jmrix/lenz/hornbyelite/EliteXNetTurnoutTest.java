@@ -2,6 +2,7 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,14 +22,12 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "52 05 8A DD",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "52 05 8B DC",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     // Test the XNetTurnout message sequence.
@@ -112,10 +111,9 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     @Override
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class);
 
 }

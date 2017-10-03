@@ -93,7 +93,7 @@ public class CoordinateEdit extends JmriJFrame {
     }
     //////////////////////////////////////////////////////////////
 
-    public static AbstractAction getTooltipEditAction(final Positionable pos) {
+    public static AbstractAction getToolTipEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetTooltip", "...")) {
 
             @Override
@@ -158,13 +158,13 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("rotate", "...")) {
+        return new AbstractAction(Bundle.getMessage("Rotate", "...")) {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("rotate", ""), pos, true);
+                f.init(Bundle.getMessage("Rotate", ""), pos, true);
                 f.initRotate();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -236,7 +236,7 @@ public class CoordinateEdit extends JmriJFrame {
             }
         };
     }
-    ////////////////////////////////////////////////////////////// 
+    //////////////////////////////////////////////////////////////
 
     public static AbstractAction getNameEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("renamePanelMenu", "...")) {
@@ -253,7 +253,7 @@ public class CoordinateEdit extends JmriJFrame {
             }
         };
     }
-    ////////////////////////////////////////////////////////////// 
+    //////////////////////////////////////////////////////////////
 
     public CoordinateEdit() {
         super(false, false);
@@ -387,13 +387,13 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initSetTip() {
-        oldStr = pl.getTooltip().getText();
+        oldStr = pl.getToolTip().getText();
         textX = new javax.swing.JLabel();
         textX.setText(Bundle.getMessage("TooltipLabel") + ": ");
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
-        xTextField.setText(pl.getTooltip().getText());
+        xTextField.setText(pl.getToolTip().getText());
         xTextField.setToolTipText(Bundle.getMessage("EnterTooltip"));
 //  xTextField.setMaximumSize(new Dimension(
 //    xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
@@ -405,7 +405,7 @@ public class CoordinateEdit extends JmriJFrame {
         okButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.getTooltip().setText(xTextField.getText()); // is fetched from pane OK but not stored in icon pl
+                pl.getToolTip().setText(xTextField.getText()); // is fetched from pane OK but not stored in icon pl
                 dispose();
             }
         });
@@ -413,7 +413,7 @@ public class CoordinateEdit extends JmriJFrame {
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.getTooltip().setText(oldStr);
+                pl.getToolTip().setText(oldStr);
                 dispose();
             }
         });
@@ -658,9 +658,9 @@ public class CoordinateEdit extends JmriJFrame {
                 if (pp.isIcon() || hasText) {
                     pp._text = hasText;
                     if (pp instanceof SensorIcon) {
-                       ((SensorIcon)pp).setOriginalText(t); 
+                       ((SensorIcon)pp).setOriginalText(t);
                     }
-                    pp.setText(t);                        
+                    pp.setText(t);
                     pp.updateSize();
                     dispose();
                 } else {
@@ -683,13 +683,13 @@ public class CoordinateEdit extends JmriJFrame {
 
     public void initLink() {
         LinkingObject pLabel = (LinkingObject) pl;
-        oldStr = pLabel.getUrl();
+        oldStr = pLabel.getURL();
         textX = new javax.swing.JLabel();
         textX.setText(Bundle.getMessage("LinkEqual"));
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
-        xTextField.setText(pLabel.getUrl());
+        xTextField.setText(pLabel.getURL());
         xTextField.setToolTipText(Bundle.getMessage("EnterLink"));
 
         getContentPane().setLayout(new GridBagLayout());
@@ -703,7 +703,7 @@ public class CoordinateEdit extends JmriJFrame {
                 String t = xTextField.getText();
                 boolean hasText = (t != null && t.length() > 0);
                 if (hasText || oldX > 0) {
-                    pp.setUrl(t);
+                    pp.setULRL(t);
                     pp.updateSize();
                     dispose();
                 } else {
@@ -717,7 +717,7 @@ public class CoordinateEdit extends JmriJFrame {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 LinkingObject pp = (LinkingObject) pl;
-                pp.setUrl(oldStr);
+                pp.setULRL(oldStr);
                 pp.updateSize();
                 dispose();
             }
@@ -843,5 +843,5 @@ public class CoordinateEdit extends JmriJFrame {
         getContentPane().add(c, gc);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CoordinateEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CoordinateEdit.class);
 }

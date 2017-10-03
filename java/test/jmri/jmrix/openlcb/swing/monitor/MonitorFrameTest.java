@@ -1,13 +1,14 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
@@ -19,7 +20,7 @@ public class MonitorFrameTest {
     private String testFormatted;
     private String testRaw;
 
-    private TrafficControllerScaffold tcs = null; 
+    private TrafficControllerScaffold tcs = null;
     private CanSystemConnectionMemo memo = null;
 
     @Test
@@ -46,9 +47,6 @@ public class MonitorFrameTest {
         Assert.assertEquals("formatted", "S: Alias 0x678 CID 2 frame\n", testFormatted);
         Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         f.dispose();
-        
-        // accept WARN message due to defect in code as written - see #3091
-        jmri.util.JUnitAppender.assertWarnMessage("No User Preferences Manager, not saving format"); 
     }
 
     @Test
@@ -75,27 +73,23 @@ public class MonitorFrameTest {
         Assert.assertEquals("formatted", "R: Alias 0x678 CID 2 frame\n", testFormatted);
         Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         f.dispose();
-        
-        // accept WARN message due to defect in code as written - see #3091
-        jmri.util.JUnitAppender.assertWarnMessage("No User Preferences Manager, not saving format"); 
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initConfigureManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
+        jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
     }
 
     @After
     public void tearDown() {
-        memo.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.tearDown();
     }
 }

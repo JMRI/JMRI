@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.sdf;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,29 +94,26 @@ public class SdfBuffer {
             length += ops.get(i).totalLength();
         }
         buffer = new byte[length];
-        log.debug("create buffer of length " + length);
+        log.debug("create buffer of length {}", length);
         resetIndex();
         // recurse to store bytes
         for (int i = 0; i < ops.size(); i++) {
             ops.get(i).loadByteArray(this);
         }
         if (index != length) {
-            log.error("Lengths did not match: " + index + " " + length);
+            log.error("Lengths did not match: {} {}", index, length);
         }
     }
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public String toString() {
-        String out = "";
+        StringBuilder out = new StringBuilder("");
         for (int i = 0; i < ops.size(); i++) {
             SdfMacro m = ops.get(i);
 
-            out += m.allInstructionString("    ");
+            out.append(m.allInstructionString("    "));
         }
-        return out;
+        return out.toString();
     }
 
     public byte[] getByteArray() {
@@ -130,7 +126,7 @@ public class SdfBuffer {
 
     void loadMacroList() {
         resetIndex();
-        ops = new ArrayList<SdfMacro>();
+        ops = new ArrayList<>();
         while (moreData()) {
             SdfMacro m = SdfMacro.decodeInstruction(this);
             ops.add(m);
@@ -143,6 +139,6 @@ public class SdfBuffer {
     // byte[] representation
     byte[] buffer;
 
-    private final static Logger log = LoggerFactory.getLogger(SdfBuffer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfBuffer.class);
 
 }

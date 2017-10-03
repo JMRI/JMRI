@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  */
-public abstract class AbstractMemoryManager extends AbstractManager
+public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
 
     @Override
@@ -51,12 +51,12 @@ public abstract class AbstractMemoryManager extends AbstractManager
 
     @Override
     public Memory getBySystemName(String name) {
-        return (Memory) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Memory getByUserName(String key) {
-        return (Memory) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -145,5 +145,5 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return Bundle.getMessage("BeanNameMemory");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class);
 }

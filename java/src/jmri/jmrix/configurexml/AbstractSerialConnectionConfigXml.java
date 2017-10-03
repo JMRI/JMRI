@@ -76,7 +76,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
         // configure port name
@@ -123,6 +123,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfigXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfigXml.class);
 
 }

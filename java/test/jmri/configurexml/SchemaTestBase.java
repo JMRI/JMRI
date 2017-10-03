@@ -112,16 +112,14 @@ public class SchemaTestBase {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         this.validate = XmlFile.getDefaultValidate();
     }
 
     @After
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private static class XmlFileImpl extends XmlFile {

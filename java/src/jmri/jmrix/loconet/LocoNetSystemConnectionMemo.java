@@ -1,9 +1,10 @@
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +48,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provides access to the SlotManager for this particular connection.
+     *
+     * @return the slot manager or null if no valid slot manager is available
      */
     public SlotManager getSlotManager() {
         if (sm == null) {
@@ -58,6 +61,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
+     * @return the LocoNet-specific TrafficController
      */
     public LnTrafficController getLnTrafficController() {
         return lt;
@@ -77,16 +82,16 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
     private LnMessageManager lnm = null;
 
-    protected ProgrammerManager programmerManager;
+    protected DefaultProgrammerManager programmerManager;
 
-    public ProgrammerManager getProgrammerManager() {
+    public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new LnProgrammerManager(getSlotManager(), this);
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(DefaultProgrammerManager p) {
         programmerManager = p;
     }
 
@@ -116,26 +121,20 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         sm = type.getSlotManager(lt);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
+
+            sm.setCommandStationType(type);
+            sm.setSystemConnectionMemo(this);
+
+            // store as CommandStation object
+            jmri.InstanceManager.setCommandStation(sm);
         }
-
-        sm.setCommandStationType(type);
-        sm.setSystemConnectionMemo(this);
-
-        // store as CommandStation object
-        jmri.InstanceManager.setCommandStation(sm);
 
     }
 
-    /**
-     * Tells which managers this provides by class
-     */
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
@@ -179,9 +178,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -229,10 +225,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
-            log.debug("set turnout retry: " + mTurnoutNoRetry);
+            log.debug("set turnout retry: {}", mTurnoutNoRetry);
         }
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
@@ -249,8 +245,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
-                getProgrammerManager());
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
         InstanceManager.setReporterManager(
                 getReporterManager());
@@ -414,5 +414,5 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);
 }

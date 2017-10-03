@@ -43,7 +43,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrix.ecos.EcosListener;
@@ -64,12 +63,11 @@ public class EcosLocoToRoster implements EcosListener {
     RosterEntry re;
     String filename = null;
     DecoderFile pDecoderFile = null;
-    DecoderIndexFile decoderind = DecoderIndexFile.instance();
+    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
     String _ecosObject;
     int _ecosObjectInt;
     Label _statusLabel = null;
     CvTableModel cvModel = null;
-    IndexedCvTableModel iCvModel = null;
     Programmer mProgrammer;
     JLabel progStatus;
 //    Programmer pProg;
@@ -118,28 +116,28 @@ public class EcosLocoToRoster implements EcosListener {
                             @Override
                             public void run() {
                                 final JDialog dialog = new JDialog();
-                                dialog.setTitle("Add Roster Entry From JMRI?");
+                                dialog.setTitle(Bundle.getMessage("AddRosterEntryQuestion"));
                                 //dialog.setLocationRelativeTo(null);
                                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                                 JPanel container = new JPanel();
                                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                                JLabel question = new JLabel("Loco " + ecosObject.getEcosDescription() + " has been add to the " + adaptermemo.getUserName());
+                                JLabel question = new JLabel(Bundle.getMessage("LocoAddedJMessage", ecosObject.getEcosDescription(), adaptermemo.getUserName()));
                                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 container.add(question);
 
-                                question = new JLabel("Do you want to add it to JMRI?");
+                                question = new JLabel(Bundle.getMessage("AddToJMRIQuestion"));
                                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 container.add(question);
-                                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                                 remember.setFont(remember.getFont().deriveFont(10f));
                                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 //user preferences do not have the save option, but once complete the following line can be removed
                                 //Need to get the method to save connection configuration.
                                 remember.setVisible(true);
-                                JButton yesButton = new JButton("Yes");
-                                JButton noButton = new JButton("No");
+                                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                                 JPanel button = new JPanel();
                                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                                 button.add(yesButton);
@@ -191,8 +189,9 @@ public class EcosLocoToRoster implements EcosListener {
                         try {
                             WindowMaker t = new WindowMaker(tmploco);
                             javax.swing.SwingUtilities.invokeAndWait(t);
-                        } catch (Exception ex) {
-                            // Thread.currentThread().interrupt();
+                        } catch (java.lang.reflect.InvocationTargetException | InterruptedException ex) {
+                            log.warn("Exception, ending", ex);
+                            return;
                         }
                     } else {
                         waitingForComplete = true;
@@ -206,13 +205,12 @@ public class EcosLocoToRoster implements EcosListener {
                                 }
                             } catch (InterruptedException ex) {
                                 Thread.currentThread().interrupt();
-
                             }
                         }
                     };
                     Thread thr = new Thread(r);
                     thr.start();
-                    thr.setName("Ecos Loco To Roster Inner thread");
+                    thr.setName("Ecos Loco To Roster Inner thread"); // NOI18N
                     try {
                         thr.join();
                     } catch (InterruptedException ex) {
@@ -224,7 +222,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         };
         Thread thread = new Thread(run);
-        thread.setName("Ecos Loco To Roster");
+        thread.setName("Ecos Loco To Roster"); // NOI18N
         thread.start();
 
     }
@@ -254,7 +252,7 @@ public class EcosLocoToRoster implements EcosListener {
         List<DecoderFile> decoder = decoderind.matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
         if (decoder.size() == 1) {
             pDecoderFile = decoder.get(0);
-            SelectedDecoder(pDecoderFile);
+            selectedDecoder(pDecoderFile);
 
         } else {
 
@@ -434,8 +432,8 @@ public class EcosLocoToRoster implements EcosListener {
 
                     re.setFunctionLabel(functNo, functionLabel);
                     re.setFunctionLockable(functNo, !moment);
-                } catch (Exception e) {
-                    log.error("Error occured while getting the function information : " + e.toString());
+                } catch (RuntimeException e) {
+                    log.error("Error occurred while getting the function information : " + e.toString());
                 }
                 getFunctionDetails(functNo + 1);
             }
@@ -452,7 +450,7 @@ public class EcosLocoToRoster implements EcosListener {
         ecosLoco.setRosterId(re.getId());
         re.ensureFilenameExists();
 
-        re.writeFile(null, null, null);
+        re.writeFile(null, null);
 
         Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
@@ -461,7 +459,7 @@ public class EcosLocoToRoster implements EcosListener {
 //    JComboBox combo;
 
     public void comboPanel() {
-        frame.setTitle("Decoder Selection For Loco " + ecosLoco.getEcosDescription());
+        frame.setTitle(Bundle.getMessage("DecoderSelectionXTitle", ecosLoco.getEcosDescription()));
         frame.getContentPane().setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
@@ -474,8 +472,8 @@ public class EcosLocoToRoster implements EcosListener {
         topPanel.setLayout(new BorderLayout());
         //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //frame.setDefaultCloseOperation(frameclosed());
-        JLabel jLabel1 = new JLabel("Decoder installed can not be identified, please select from the list below");
-        JButton okayButton = new JButton("Okay");
+        JLabel jLabel1 = new JLabel(Bundle.getMessage("DecoderNoIDWarning"));
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         p1.add(jLabel1);
         p2.add(okayButton);
         topPanel.add(p1);
@@ -533,13 +531,13 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     private void okayButton() {
-        pDecoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
-        SelectedDecoder(pDecoderFile);
+        pDecoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
+        selectedDecoder(pDecoderFile);
         frame.dispose();
     }
 
-    private void SelectedDecoder(DecoderFile pDecoderFile) {
-        //pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+    private void selectedDecoder(DecoderFile pDecoderFile) {
+        //pDecoderFile=InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(selectedDecoderType());
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());
 
@@ -551,7 +549,7 @@ public class EcosLocoToRoster implements EcosListener {
         re.setMfg("");
         re.setModel("");
         re.setOwner(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
-        re.setComment("Automatically Imported from the Ecos");
+        re.setComment(Bundle.getMessage("LocoAutoAdded"));
         re.setDecoderComment("");
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
@@ -571,23 +569,21 @@ public class EcosLocoToRoster implements EcosListener {
 
         mProgrammer = null;
         cvModel = new CvTableModel(progStatus, mProgrammer);
-        iCvModel = new IndexedCvTableModel(progStatus, mProgrammer);
-        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"},
-                cvModel, iCvModel);
+        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"}, cvModel);
         resetModel = new ResetTableModel(progStatus, mProgrammer);
         storeloco();
         filename = "programmers" + File.separator + "Basic.xml";
         loadProgrammerFile(re);
         loadDecoderFile(pDecoderFile, re);
 
-        variableModel.findVar("Speed Step Mode").setIntValue(0);
+        variableModel.findVar("Speed Step Mode").setIntValue(0); // NOI18N
         if (ecosLoco.getECOSProtocol().equals("DCC128")) {
             variableModel.findVar("Speed Step Mode").setIntValue(1);
         }
 
-        re.writeFile(cvModel, iCvModel, variableModel);
+        re.writeFile(cvModel, variableModel);
         getFunctionDetails(0);
-        JOptionPane.showMessageDialog(frame, "Loco Added to the JMRI Roster");
+        JOptionPane.showMessageDialog(frame, Bundle.getMessage("LocoAddedJDialog"));
         waitingForComplete = true;
     }
 
@@ -633,7 +629,7 @@ public class EcosLocoToRoster implements EcosListener {
             }
         };
         dTree.setToolTipText("");
-        List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, null);
+        List<DecoderFile> decoders = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, null);
         int len = decoders.size();
         DefaultMutableTreeNode mfgElement = null;
         DefaultMutableTreeNode familyElement = null;
@@ -651,7 +647,7 @@ public class EcosLocoToRoster implements EcosListener {
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
                 // need new mfg node
                 mfgElement = new DecoderTreeNode(mfg,
-                        "CV8 = " + DecoderIndexFile.instance().mfgIdFromName(mfg), "");
+                        "CV8 = " + InstanceManager.getDefault(DecoderIndexFile.class).mfgIdFromName(mfg), "");
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
                 familyElement = null;
             }
@@ -786,7 +782,7 @@ public class EcosLocoToRoster implements EcosListener {
     protected void selectDecoder(String mfgID, String modelID) {
 
         // locate a decoder like that.
-        List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, mfgID, modelID, null, null);
+        List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, mfgID, modelID, null, null);
         if (log.isDebugEnabled()) {
             log.debug("selectDecoder found " + temp.size() + " matches");
         }
@@ -794,7 +790,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
         } else {
-            String mfg = DecoderIndexFile.instance().mfgNameFromId(mfgID);
+            String mfg = InstanceManager.getDefault(DecoderIndexFile.class).mfgNameFromId(mfgID);
             int intMfgID = Integer.parseInt(mfgID);
             int intModelID = Integer.parseInt(modelID);
             if (mfg == null) {
@@ -836,7 +832,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (log.isDebugEnabled()) {
             //String msg = "Identified "+pList.size()+" matches: ";
             StringBuilder buf = new StringBuilder();
-            buf.append("Identified ");
+            buf.append("Identified "); // NOI18N
             buf.append(pList.size());
             buf.append(" matches: ");
             for (int i = 0; i < pList.size(); i++) {
@@ -911,26 +907,19 @@ public class EcosLocoToRoster implements EcosListener {
             return;
         }
         log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                + " " + df.getFilename());
+                + " " + df.getFileName());
 
         try {
-            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (org.jdom2.JDOMException e) {
-            log.error("JDOM Exception while loading decoder XML file: " + df.getFilename());
+            log.error("JDOM Exception while loading decoder XML file: " + df.getFileName());
         } catch (java.io.IOException e) {
-            log.error("IO Exception while loading decoder XML file: " + df.getFilename());
+            log.error("IO Exception while loading decoder XML file: " + df.getFileName());
         }
         // load variables from decoder tree
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
-        // load reset from decoder tree
-        if (!variableModel.piCv().equals("")) {
-            resetModel.setPiCv(variableModel.piCv());
-        }
-        if (!variableModel.siCv().equals("")) {
-            resetModel.setSiCv(variableModel.siCv());
-        }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
         // load function names
@@ -982,18 +971,19 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class);
+
 }
 /*
  cv8 - mfgIdFromName
  cv7 - Version/family
 
- tmp1 = jmri.jmrit.decoderdefn.DecoderIndexFile.instance()
+ tmp1 = jmri.jmrit.decoderdefn.InstanceManager.getDefault(DecoderIndexFile.class)
  print tmp1.matchingDecoderList(None, None, cv8, None, None, None)
 
  matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model )
 
- tmp1 = jmri.jmrit.decoderdefn.DecoderIndexFile.instance()
+ tmp1 = jmri.jmrit.decoderdefn.InstanceManager.getDefault(DecoderIndexFile.class)
  list = tmp1.matchingDecoderList(None, None, "153", "16", None, None
  returns decoderfile.java
  print list[0].getMfg()

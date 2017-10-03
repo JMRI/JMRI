@@ -50,6 +50,20 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCheckboxesCarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ResetCheckboxesCarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarDeleteAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadAttributeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DeleteCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarRosterMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnableDestinationActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintCarLoadsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResetCarMovesActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintCarRosterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportCarsTest.class));
+
         return suite;
     }
 

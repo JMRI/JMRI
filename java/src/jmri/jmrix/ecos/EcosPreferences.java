@@ -64,16 +64,18 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         return _changeMade;
     }
 
-    //The reset is used after the preferences have been loaded for the first time
+    /**
+     * Reset is used after the preferences have been loaded for the first time.
+     */
     public void resetChangeMade() {
         _changeMade = false;
     }
+
     /**
-     * Stores the users preferance for when a loco is created in the Roster
-     * should it also be created in the ECOS, if it does not exist. Currently
+     * Store the user's preference for when a loco is created in the Roster,
+     * should it also be created in the ECoS, if it does not exist? Currently
      * not implemented.
      */
-
     private int _addlocotoecos = ASK;
 
     public int getAddLocoToEcos() {
@@ -86,7 +88,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance if a loco has been created on the Ecos,
+     * Store the user's preference if a loco has been created on the ECoS,
      * should an entry in the JMRI Roster be created. Currently not implemented.
      */
     private int _addlocotojmri = ASK;
@@ -101,8 +103,8 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance on how the ecos loco description, should be
-     * formated. Currently not implemented
+     * Store the user's preference on how the ECoS loco description, should be
+     * formatted. Currently not implemented
      */
     private String _ecoslocodescription = null;
 
@@ -116,7 +118,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * If there is a conflict in loco information between the Ecos and JMRI,
+     * If there is a conflict in loco information between the ECoS and JMRI,
      * this determines which system wins. Currently not implemented.
      */
     private static final int NOSYNC = 0x00;
@@ -134,14 +136,22 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         _locomaster = master;
     }
 
+    /**
+     * Determine system description from GUI string for how to solve
+     * conflicts between rosters in JMRI and ECoS and store in _locomaster.
+     * <p>
+     * Keep identical to {@link jmri.jmrix.ecos.swing.preferences.PreferencesPane#initializeMasterControlCombo(JComboBox)}
+     *
+     * @param master setting for conflict syncing
+     */
     public void setLocoMaster(String master) {
-        if (master.equals("NOSYNC")) {
+        if (master.equals(Bundle.getMessage("NOSYNC"))) {
             _locomaster = NOSYNC;
-        } else if (master.equals("WARN")) {
+        } else if (master.equals(Bundle.getMessage("WARNING"))) {
             _locomaster = WARN;
         } else if (master.equals("JMRI")) {
             _locomaster = JMRI;
-        } else if (master.equals("ECOS")) {
+        } else if (master.equals("ECoS")) {
             _locomaster = ECOS;
         } else {
             _locomaster = NOSYNC;
@@ -149,31 +159,39 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         changeMade();
     }
 
+    /**
+     * Determine GUI string from system description for how to solve
+     * conflicts between rosters in JMRI and ECoS.
+     * <p>
+     * Keep identical to {@link jmri.jmrix.ecos.swing.preferences.PreferencesPane#initializeMasterControlCombo(JComboBox)}
+     *
+     * @return GUI string
+     */
     public String getLocoMasterAsString() {
         String result;
         switch (_locomaster) {
             case 0x00:
-                result = "NOSYNC";
+                result = Bundle.getMessage("NOSYNC");
                 break;
             case 0x01:
-                result = "WARN";
+                result = Bundle.getMessage("WARNING");
                 break;
             case 0x02:
                 result = "JMRI";
                 break;
             case 0x03:
-                result = "ECOS";
+                result = "ECoS";
                 break;
             default:
-                result = "NOSYNC";
+                result = Bundle.getMessage("NOSYNC");
                 break;
         }
         return result;
     }
 
     /**
-     * Stores the users preferance if a loco has been created ad-hoc, on the
-     * Throttle, should the entry created for it in the ECOS be deleted.
+     * Store the user's preference if a loco has been created ad-hoc, on the
+     * Throttle, should the entry created for it in the ECoS be deleted.
      * Currently not implemented.
      */
     private int _adhoclocofromecos = ASK;
@@ -191,7 +209,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance to deal with if another device has control
+     * Store the user's preference to deal with if another device has control
      * over the loco
      */
     private int _forcecontrolfromecos = ASK;
@@ -220,7 +238,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance if a loco has been created ad-hoc, on the
+     * Store the user's preference if a loco has been created ad-hoc, on the
      * Throttle, should the entry created for it in the ECOS be deleted.
      * Currently not implemented.
      */
@@ -235,8 +253,9 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
      _defaultecosprotocol = boo;
      changeMade();
      }*/
+
     /**
-     * Stores the users preferance for deleting a loco from the roster should
+     * Store the user's preference for deleting a loco from the roster should
      * it, also be deleted from the ECOS. Currently not implemented.
      */
     //0x00 - always ask
@@ -254,7 +273,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance for deleting a loco from the ECOS should it,
+     * Store the user's preference for deleting a loco from the ECOS should it,
      * also be deleted from the JMRI Roster. Currently not implemented.
      */
     private int _removelocofromjmri = ASK;
@@ -269,7 +288,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when creating a turnout in JMRI should it
+     * Store the user's preference when creating a turnout in JMRI should it
      * also be created on the ECOS. Currently not implemented.
      */
     private int _addturnoutstoecos = ASK;
@@ -284,7 +303,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when a new turnout is created on the ECOS
+     * Store the user's preference when a new turnout is created on the ECOS
      * should it also be created in JMRI. Currently not implemented.
      */
     private int _addturnoutstojmri = ASK;
@@ -299,8 +318,8 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when a new turnout is removed from the ECOS
-     * should it also be removed from JMRI.. Currently not implemented.
+     * Store the user's preference when a new turnout is removed from the ECOS
+     * should it also be removed from JMRI. Currently not implemented.
      */
     private int _removeturnoutsfromjmri = ASK;
 
@@ -314,8 +333,8 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     }
 
     /**
-     * Stores the users preferance when a new turnout is removed from JMRI
-     * should it also be removed from the ECOS. Currently not implemented.
+     * Store the user's preference when a new turnout is removed from JMRI
+     * should it also be removed from the ECoS. Currently not implemented.
      */
     private int _removeturnoutsfromecos = ASK;
 
@@ -379,7 +398,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPreferences.class);
 
     /**
      * @return the adaptermemo

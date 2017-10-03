@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Process a JMRI decoder file, moving qualifier elements to the top of the variable element -->
 <!-- Thi sis for a JMRI 4.1.4 migration     -->

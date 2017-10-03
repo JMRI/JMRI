@@ -2,6 +2,7 @@ package jmri.jmrix.direct;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import jmri.jmrix.AbstractSerialPortController;
 import org.slf4j.Logger;
@@ -33,7 +34,8 @@ public class TrafficController implements jmri.CommandStation {
      * static function returning the instance to use.
      *
      * @return The registered instance for general use, if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public TrafficController instance() {
@@ -47,7 +49,8 @@ public class TrafficController implements jmri.CommandStation {
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static TrafficController self = null;
@@ -66,9 +69,6 @@ public class TrafficController implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission, but is ignored
      *                in the current implementation
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     @Override
     public void sendPacket(byte[] packet, int repeats) {
 
@@ -81,7 +81,7 @@ public class TrafficController implements jmri.CommandStation {
 
         if (msgAsInt[0] == 0) {
             // failed to make packet
-            log.error("Failed to convert packet to transmitable form: " + java.util.Arrays.toString(packet));
+            log.error("Failed to convert packet to transmitable form: {}", java.util.Arrays.toString(packet));
             return;
         }
 
@@ -96,20 +96,19 @@ public class TrafficController implements jmri.CommandStation {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "write message: ";
+                    StringBuilder f = new StringBuilder("write message: ");
                     for (int i = 0; i < msg.length; i++) {
-                        f = f
-                                + Integer.toHexString(0xFF & msg[i]) + " ";
+                        f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }
-                    log.debug(f);
+                    log.debug(f.toString());
                 }
                 ostream.write(msg);
             } else {
                 // no stream connected
                 log.warn("sendMessage: no connection established");
             }
-        } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+        } catch (IOException e) {
+            log.warn("sendMessage: Exception: {}", e.getMessage());
         }
 
     }
@@ -123,6 +122,8 @@ public class TrafficController implements jmri.CommandStation {
 
     /**
      * Make connection to existing PortController object.
+     *
+     * @param p the controller to connect to
      */
     public void connectPort(AbstractSerialPortController p) {
         istream = p.getInputStream();
@@ -138,6 +139,8 @@ public class TrafficController implements jmri.CommandStation {
     /**
      * Break connection to existing PortController object. Once broken, attempts
      * to send via "message" member will fail.
+     *
+     * @param p the controller to disconnect from
      */
     public void disconnectPort(AbstractSerialPortController p) {
         istream = null;
@@ -162,5 +165,5 @@ public class TrafficController implements jmri.CommandStation {
         return "N";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrafficController.class);
 }

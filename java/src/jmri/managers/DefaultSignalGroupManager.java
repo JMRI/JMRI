@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalGroupManager extends AbstractManager
+public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         implements SignalGroupManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalGroupManager() {
@@ -57,12 +57,12 @@ public class DefaultSignalGroupManager extends AbstractManager
 
     @Override
     public SignalGroup getBySystemName(String key) {
-        return (SignalGroup) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     @Override
     public SignalGroup getByUserName(String key) {
-        return (SignalGroup) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -139,5 +139,5 @@ public class DefaultSignalGroupManager extends AbstractManager
         return Bundle.getMessage("BeanNameSignalGroup");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
 }

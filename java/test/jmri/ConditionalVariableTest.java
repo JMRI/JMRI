@@ -1,9 +1,10 @@
 package jmri;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Path class
@@ -15,11 +16,11 @@ public class ConditionalVariableTest extends TestCase {
     public void testEquals() {
         ConditionalVariable c1 = new ConditionalVariable(false, 1, 2, "name", false);
         ConditionalVariable c2 = new ConditionalVariable(false, 1, 2, "name", false);
-        
+
         Assert.assertTrue("identity", c1.equals(c1));
         Assert.assertFalse("object equals, not content equals", c1.equals(c2));
     }
-    
+
     // from here down is testing infrastructure
     public ConditionalVariableTest(String s) {
         super(s);
@@ -39,13 +40,12 @@ public class ConditionalVariableTest extends TestCase {
 
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * <li>Although the program hasn't commanded a change, something on the layout
  * has made the turnout change. This could be a local electrical button, a
  * mechanical movement of the points, or something else.
- * <li>For a bus-like system, e.g. LocoNet or XPressNet, some other device might
+ * <li>For a bus-like system, e.g. LocoNet or XpressNet, some other device might
  * have sent a command to change the turnout.
  * </ul>
  * <P>
@@ -135,6 +135,12 @@ public interface Turnout extends NamedBean {
      * by from the command station).
      */
     public static final int SIGNAL = 64;
+
+    /**
+     * Constant representing "automatic delayed feedback" . This is DIRECT feedback
+     * with a fixed delay before the feedback (known state) takes effect.
+     */
+    public static final int DELAYED = 128;
 
     /**
      * Constant representing turnout lockout cab commands
@@ -272,6 +278,19 @@ public interface Turnout extends NamedBean {
      * @param toper TurnoutOperation subclass instance
      */
     public void setTurnoutOperation(@Nullable TurnoutOperation toper);
+
+    /**
+     * return the inverted state of the specified state
+     * @param inState the specified state
+     * @return the inverted state
+     */
+    public static int invertTurnoutState(int inState) {
+        int result = CLOSED;
+        if (result == inState) {
+            result = THROWN;
+        }
+        return result;
+    }
 
     /**
      * Provide Sensor objects needed for some feedback types.
@@ -412,15 +431,27 @@ public interface Turnout extends NamedBean {
     public void enableLockOperation(int turnoutLockout, boolean locked);
 
     /**
-     * Determine if turnout can be locked. A turnout can be locked to prevent it
+     * Determine if turnout can be locked as currently configured. A turnout can be locked to prevent it
      * being thrown from a cab or push button on the layout if supported by the
      * protocol.
      *
-     * @param turnoutLockout the type of lock
+     * @param turnoutLockout the type of lock, one of CABLOCKOUT, PUSHBUTTONLOCKOUT
+     * or BOTH = CABLOCKOUT | PUSHBUTTONLOCKOUT
      * @return true if turnout is locked using specified lock method; false
      *         otherwise
      */
     public boolean canLock(int turnoutLockout);
+
+    /**
+     * Provide the possible locking modes for a turnout.  
+     * These may require additional configuration, e.g. 
+     * setting of a decoder definition for PUSHBUTTONLOCKOUT,
+     * before {@link #canLock(int)} will return true.
+     *
+     * @return One of 0 for none, CABLOCKOUT, PUSHBUTTONLOCKOUT
+     * or CABLOCKOUT | PUSHBUTTONLOCKOUT for both
+     */
+    public int getPossibleLockModes();
 
     /**
      * Lock a turnout. A turnout can be locked to prevent it being thrown from a
@@ -449,21 +480,21 @@ public interface Turnout extends NamedBean {
     /**
      * Get a human readable representation of the decoder types.
      *
-     * @return a list of known stationary decoders
+     * @return a list of known stationary decoders that can be specified for locking
      */
     @Nonnull
     public String[] getValidDecoderNames();
 
     /**
-     * Get a human readable representation of the decoder type for this turnout.
+     * Get a human readable representation of the locking decoder type for this turnout.
      *
-     * @return the name of the decoder type
+     * @return the name of the decoder type; null indicates none defined
      */
     @CheckForNull
     public String getDecoderName();
 
     /**
-     * Set a human readable representation of the decoder type for this turnout.
+     * Set a human readable representation of the locking decoder type for this turnout.
      *
      * @param decoderName the name of the decoder type
      */

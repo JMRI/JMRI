@@ -45,7 +45,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     }
     
     @Override
-    public void connect() throws Exception {
+    public void connect() throws java.io.IOException {
         super.connect();
         if (log.isDebugEnabled()) {
             log.debug("openPort called");
@@ -212,6 +212,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
 
 }

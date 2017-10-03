@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -22,7 +23,7 @@ public class Engine extends RollingStock {
     private Consist _consist = null;
     private String _model = NONE;
 
-    EngineModels engineModels = EngineModels.instance();
+    EngineModels engineModels = InstanceManager.getDefault(EngineModels.class);
 
     public Engine(String road, String number) {
         super(road, number);
@@ -294,8 +295,8 @@ public class Engine extends RollingStock {
     @Override
     public void dispose() {
         setConsist(null);
-        EngineTypes.instance().removePropertyChangeListener(this);
-        EngineLengths.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(EngineLengths.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -328,7 +329,7 @@ public class Engine extends RollingStock {
             setBunit(a.getValue().equals(Xml.TRUE));
         }
         if ((a = e.getAttribute(Xml.CONSIST)) != null) {
-            Consist c = EngineManager.instance().getConsistByName(a.getValue());
+            Consist c = InstanceManager.getDefault(EngineManager.class).getConsistByName(a.getValue());
             if (c != null) {
                 setConsist(c);
                 if ((a = e.getAttribute(Xml.LEAD_CONSIST)) != null && a.getValue().equals(Xml.TRUE)) {
@@ -374,13 +375,13 @@ public class Engine extends RollingStock {
     @Override
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        EngineManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(EngineManagerXml.class).setDirty(true);
         super.setDirtyAndFirePropertyChange(p, old, n);
     }
 
     private void addPropertyChangeListeners() {
-        EngineTypes.instance().addPropertyChangeListener(this);
-        EngineLengths.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(EngineLengths.class).addPropertyChangeListener(this);
     }
 
     @Override
@@ -402,6 +403,6 @@ public class Engine extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Engine.class);
 
 }

@@ -6,8 +6,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class provides a concrete implementation of the Abstract Editor 
@@ -125,5 +123,5 @@ public class EditorScaffold extends Editor implements MouseListener, MouseMotion
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EditorScaffold.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(EditorScaffold.class);
 }

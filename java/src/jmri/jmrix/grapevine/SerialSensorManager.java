@@ -1,11 +1,9 @@
 package jmri.jmrix.grapevine;
 
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Sensor;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.NamedBean;
+import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * System names are "GSnnnn", where nnnn is the sensor number without padding.
  * <P>
  * Sensors are numbered from 1.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
  */
@@ -30,7 +28,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * <P>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
-     *
      */
     static final int SENSORSPERNODE = 1000;
 
@@ -121,6 +118,26 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'S'));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
      * Dummy routine
      */
     @Override
@@ -128,7 +145,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process a reply to a poll of Sensors of one node
+     * Process a reply to a poll of Sensors of one node.
      */
     @Override
     public void reply(SerialReply r) {
@@ -140,7 +157,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Serial Node is created
+     * Method to register any orphan Sensors when a new Serial Node is created.
      */
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
@@ -154,7 +171,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System name null during register Sensor");
             } else {
                 log.debug("system name is " + sName);
-                if ((sName.charAt(0) == 'G') && (sName.charAt(1) == 'S')) {
+                if ((sName.charAt(0) == 'G') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a Sensor
                     tNode = SerialAddress.getNodeFromSystemName(sName);
                     if (tNode == node) {
@@ -168,7 +185,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * static function returning the SerialSensorManager instance to use.
+     * Static function returning the SerialSensorManager instance to use.
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
@@ -182,5 +199,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     static SerialSensorManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+
 }

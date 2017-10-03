@@ -14,7 +14,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.util.ResourceBundle;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +36,6 @@ public class GraphPane extends JPanel implements Printable {
     protected Color[] colors = {Color.RED, Color.BLUE, Color.BLACK};
 
     protected boolean _grid = false;
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     // Use a default 28 step profile
     public GraphPane() {
@@ -85,12 +82,12 @@ public class GraphPane extends JPanel implements Printable {
 
     void setUnitsMph() {
         units = Speed.MPH;
-        setYLabel(rb.getString("SpeedMPH"));
+        setYLabel(Bundle.getMessage("SpeedMPH"));
     }
 
     void setUnitsKph() {
         units = Speed.KPH;
-        setYLabel(rb.getString("SpeedKPH"));
+        setYLabel(Bundle.getMessage("SpeedKPH"));
     }
 
     public int getUnits() {
@@ -314,5 +311,5 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GraphPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GraphPane.class);
 }

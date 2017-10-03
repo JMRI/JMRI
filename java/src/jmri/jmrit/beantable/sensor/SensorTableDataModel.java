@@ -3,20 +3,16 @@ package jmri.jmrit.beantable.sensor;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor; // for iconLabel
-import javax.swing.Icon;
+import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,7 +48,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int INACTIVEDELAY = ACTIVEDELAY + 1;
     static public final int PULLUPCOL = INACTIVEDELAY + 1;
 
-    SensorManager senManager = InstanceManager.sensorManagerInstance();
+    SensorManager senManager = null;
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
@@ -131,7 +127,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     protected NamedBean getByUserName(String name) {
-        return senManager.getByUserName(name);
+        return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 
     @Override
@@ -171,7 +167,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
               return Bundle.getMessage("SensorActiveDebounce");
            case INACTIVEDELAY:
               return Bundle.getMessage("SensorInActiveDebounce");
-           case PULLUPCOL: 
+           case PULLUPCOL:
               return Bundle.getMessage("SensorPullUp");
            default:
               return super.getColumnName(col);
@@ -231,9 +227,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
         if (col == USEGLOBALDELAY) {
             return true;
         }
-        //Need to do something here to make it disable 
+        //Need to do something here to make it disable
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            if (sen.useDefaultTimerSettings()) {
+            if (sen.getUseDefaultTimerSettings()) {
                 return false;
             } else {
                 return true;
@@ -261,7 +257,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             boolean val = s.getInverted();
             return Boolean.valueOf(val);
         } else if (col == USEGLOBALDELAY) {
-            boolean val = s.useDefaultTimerSettings();
+            boolean val = s.getUseDefaultTimerSettings();
             return Boolean.valueOf(val);
         } else if (col == ACTIVEDELAY) {
             return s.getSensorDebounceGoingActiveTimer();
@@ -301,7 +297,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             s.setInverted(b);
         } else if (col == USEGLOBALDELAY) {
             boolean b = ((Boolean) value).booleanValue();
-            s.useDefaultTimerSettings(b);
+            s.setUseDefaultTimerSettings(b);
         } else if (col == ACTIVEDELAY) {
             String val = (String) value;
             long goingActive = Long.valueOf(val);
@@ -525,7 +521,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         return jmri.jmrit.beantable.SensorTableAction.class.getName();
     }
 
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+//    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
@@ -540,5 +536,5 @@ public class SensorTableDataModel extends BeanTableDataModel {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class);
 }

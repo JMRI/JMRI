@@ -111,4 +111,5 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+
 }

@@ -1,7 +1,7 @@
 package jmri.jmrix.ztc.ztc611;
 
 /**
- * Handle configuring an XPressNet layout connection via a ZTC Controls ZTC611
+ * Handle configuring an XpressNet layout connection via a ZTC Controls ZTC611
  * command station.
  * <P>
  * This uses the {@link ZTC611Adapter} class to do the actual connection.

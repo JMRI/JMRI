@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,7 +246,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button selected");
         // can't change the build option if there are trains built
-        if (TrainManager.instance().isAnyTrainBuilt()) {
+        if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilt()) {
             setBuildOption(); // restore the correct setting
             JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"), Bundle
                     .getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
@@ -332,7 +333,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // VSD
         Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
         // write the file
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
     }
 
     @Override

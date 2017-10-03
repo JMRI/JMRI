@@ -1,6 +1,6 @@
 package jmri.jmrix.ecos.networkdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.IOException;
 import jmri.jmrix.ecos.EcosPortController;
 import jmri.jmrix.ecos.EcosTrafficController;
 import org.slf4j.Logger;
@@ -44,19 +44,18 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         return opened;
     }
 
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
-            justification = "We are closing the connection and not worried if it throws an exception as this stage")
     protected void closeConnection() {
         try {
             socketConn.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            log.trace("Unable to close socket", e);
         }
         opened = false;
     }
 
     @Override
     protected void resetupConnection() {
-        log.info("reconnected to ECOS after lost connection");
+        log.info("reconnected to ECoS after lost connection");
         if (opened) {
             this.getSystemConnectionMemo().getTrafficController().connectPort(this);
             this.getSystemConnectionMemo().getTurnoutManager().refreshItems();
@@ -65,6 +64,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

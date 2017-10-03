@@ -125,7 +125,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         setVisible(true);
     }
 
-    private JPanel MakeButtonPanel() {
+    private JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
@@ -242,7 +242,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             portalPanel.add(makeDndIconPanel());
             portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         }
-        portalPanel.add(MakeButtonPanel());
+        portalPanel.add(makeButtonPanel());
         return portalPanel;
     }
 
@@ -407,7 +407,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     /**
-     * Called after click on portal icon moved recheck block connections
+     * Called after click on portal icon moved recheck block connections.
+     *
+     * @param icon  the icon to check
+     * @param moved true if moved; false otherwise
+     * @return true if no changes to connections; false otherwise
      */
     protected boolean checkPortalIconForUpdate(PortalIcon icon, boolean moved) {
         Portal portal = icon.getPortal();
@@ -462,7 +466,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 msg = iconIntersectsBlock(icon, _adjacentBlock);
                 if (msg == null) {
                     _portalList.setSelectedValue(portal, true);
-                    return true;  // no change  in connection                        
+                    return true;  // no change  in connection
                 }
             }
             if (_adjacentBlock == null) {
@@ -501,6 +505,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _portalList.dataChange();
         return true;
     }
+
     /*
      * If icon is on the home block, find another intersecting block
      */
@@ -574,9 +579,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 block.getDisplayName(), icon.getNameString());
     }
 
-    /**
-     * ******************** DnD ****************************
-     */
+    //////////////////////////// DnD ////////////////////////////
     protected JPanel makeDndIconPanel() {
         _dndPanel = new JPanel();
 
@@ -645,5 +648,5 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class);
 }

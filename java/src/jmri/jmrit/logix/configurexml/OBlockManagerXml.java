@@ -104,7 +104,7 @@ public class OBlockManagerXml // extends XmlFile
         }
 
         return blocks;
-    }
+    }   // store
 
     static private Element storePortal(Portal portal) {
         Element elem = new Element("portal");
@@ -155,7 +155,7 @@ public class OBlockManagerXml // extends XmlFile
             elem.addContent(toElem);
         }
         return elem;
-    }
+    }   // storePortal
 
     /**
      * Key is sufficient to mark the Portal's knowledge of the path. Full path
@@ -269,7 +269,7 @@ public class OBlockManagerXml // extends XmlFile
     }
 
     @Override
-    public void load(Element element, Object o) throws Exception {
+    public void load(Element element, Object o) {
         log.error("load called. Invalid method.");
     }
 
@@ -366,7 +366,7 @@ public class OBlockManagerXml // extends XmlFile
                         + paths.get(j).getName() + "\" in block \"" + block.getSystemName() + "\"");
             }
         }
-    }
+    }   // loadBlock
 
     Portal loadPortal(Element elem) {
         String sysName = null;
@@ -494,7 +494,7 @@ public class OBlockManagerXml // extends XmlFile
             log.debug("End Load portal " + userName);
         }
         return portal;
-    }
+    }   // loadPortal
 
     OPath loadPath(Element elem, OBlock block) {
         String pName = elem.getAttribute("pathName").getValue();
@@ -562,12 +562,12 @@ public class OBlockManagerXml // extends XmlFile
             log.warn(dups + " duplicate settings not loaded for path \"" + pName + "\"");
         }
         return path;
-    }
+    }   // loadPath
 
     @Override
     public int loadOrder() {
         return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class);
+}   // class OBlockManagerXml

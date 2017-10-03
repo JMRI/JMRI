@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
    jmri.jmrix.mrc.swing.packetgen.PackageTest.class,
    jmri.jmrix.mrc.swing.monitor.PackageTest.class,
    MrcMenuTest.class,
-   MrcComponentFactoryTest.class
+   MrcComponentFactoryTest.class,
+   MrcNamedPaneActionTest.class
 })
 
 /**

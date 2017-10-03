@@ -1,6 +1,5 @@
 package jmri.jmrix.dcc4pc.swing.packetgen;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,23 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class PacketGenPanelTest {
-
-    @Test
-    public void testMemoCtor() {
-        PacketGenPanel action = new PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
+public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Before
+    @Override
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new PacketGenPanel();
+        title="Send DCC4PC command";
+        helpTarget="package.jmri.jmrix.dcc4pc.swing.packetgen.PacketGenFrame";
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    @Override
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

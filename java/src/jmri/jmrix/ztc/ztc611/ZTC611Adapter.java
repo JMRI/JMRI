@@ -1,12 +1,5 @@
 package jmri.jmrix.ztc.ztc611;
 
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
-import purejavacomm.UnsupportedCommOperationException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,9 +11,16 @@ import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XPressNet via a ZTC611 connected via an FTDI virtual comm
+ * Provide access to XpressNet via a ZTC611 connected via an FTDI virtual comm
  * port.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -30,13 +30,13 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
 
     public ZTC611Adapter() {
         super();
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("ZTC611 connection uses : ", validOption1));
+        option1Name = "FlowControl"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("CSTypeZtc640")), validOption1));
     }
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in XpressNet mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
@@ -88,60 +88,38 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                             setOutputBufferEmpty(true);
                             return;
                         case SerialPortEvent.CTS:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CTS is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CTS is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.DSR:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: DSR is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: DSR is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.RI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: RI is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: RI is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.CD:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: CD is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: CD is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.OE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.PE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: PE (parity error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: PE (parity error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.FE:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: FE (framing error) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: FE (framing error) is {}", e.getNewValue());
                             return;
                         case SerialPortEvent.BI:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                             return;
                         default:
-                            if (log.isDebugEnabled()) {
-                                log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                            }
+                            log.debug("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                             return;
                     }
                 }
@@ -271,18 +249,12 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
                 SerialPort.STOPBITS_1,
                 SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = 0; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
-        activeSerialPort.setFlowControlMode(flow);
-        /* if (getOptionState(option2Name).equals(validOption2[0]))
-         setCheckBuffer(true);*/
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     @Override
@@ -290,11 +262,11 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"19,200 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
     protected int[] validSpeedValues = new int[]{19200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"no flow control (recommended)", "hardware flow control "};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
     InputStream serialStream = null;
@@ -308,6 +280,6 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC611Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC611Adapter.class);
 
 }

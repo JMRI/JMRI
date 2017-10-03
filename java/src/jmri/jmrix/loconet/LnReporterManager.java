@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnReporterManager implements the ReporterManager.
- * <P>
+ * Manage the LocoNet-specific Reporter implementation.
  * System names are "LRnnn", where nnn is the Reporter number without padding.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -14,8 +13,6 @@ import org.slf4j.LoggerFactory;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
- * Description: Implement Reporter manager for loconet
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -59,6 +56,55 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         return t;
     }
 
+    /**
+     * Get the bit address from the system name.
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "R"))) {
+            // here if an illegal loconet light system name
+            log.error("invalid character in header field of loconet reporter system name: " + systemName);
+            return (0);
+        }
+        // name must be in the LRnnnnn format (L is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())
+            ).intValue();
+        } catch (Exception e) {
+            log.warn("invalid character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.warn("invalid loconet reporter system name: " + systemName);
+            return (0);
+        } else if (num > 4096) {
+            log.warn("bit number out of range in loconet reporter system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
     // listen for transponder messages, creating Reporters as needed
     @Override
     public void message(LocoNetMessage l) {
@@ -77,5 +123,6 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         r.message(l); // make sure it got the message
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class);
+
 }

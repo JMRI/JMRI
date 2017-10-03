@@ -1,11 +1,13 @@
 package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +16,7 @@ public class AutomationsTableFrameTest extends OperationsSwingTestCase {
     @Test
     public void testFrameCreation() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AutomationManager manager = AutomationManager.instance();
+        AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
         AutomationsTableFrame f = new AutomationsTableFrame();
@@ -31,8 +33,8 @@ public class AutomationsTableFrameTest extends OperationsSwingTestCase {
         addAutomationFrame = JmriJFrame.getFrame("Add Automation");
         Assert.assertNotNull(addAutomationFrame);
 
-        addAutomationFrame.dispose();
-        f.dispose();
+        JUnitUtil.dispose(addAutomationFrame);
+        JUnitUtil.dispose(f);
     }
 
     // Ensure minimal setup for log4J

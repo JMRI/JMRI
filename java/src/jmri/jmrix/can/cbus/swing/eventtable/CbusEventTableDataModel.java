@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanInterface;
@@ -55,7 +56,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Returns the number of rows to be displayed.
+     * Return the number of rows to be displayed.
      */
     @Override
     public int getRowCount() {
@@ -71,19 +72,19 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
-                return "CAN ID";
+                return Bundle.getMessage("ColumnID");
             case NODECOLUMN:
-                return "Node";
+                return Bundle.getMessage("ColumnNode");
             case NAMECOLUMN:
-                return "Name";
+                return Bundle.getMessage("ColumnName");
             case EVENTCOLUMN:
-                return "Event";
+                return Bundle.getMessage("ColumnEvent");
             case TYPECOLUMN:
-                return "On/Off";
+                return Bundle.getMessage("ColumnType");
             case COMMENTCOLUMN:
-                return "Comment";
+                return Bundle.getMessage("ColumnComment");
             default:
-                return "unknown";
+                return "unknown"; // NOI18N
         }
     }
 
@@ -100,7 +101,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case TYPECOLUMN:
                 return 7;
             case COMMENTCOLUMN:
-                return 0;
+                return 0; // to get writer recognize it as the last column, will fill with spaces
             default:
                 return -1;
         }
@@ -149,15 +150,15 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return _event[row];
             case TYPECOLUMN:
                 if (_type[row]) {
-                    return "On";
+                    return Bundle.getMessage("PowerStateOn");
                 } else {
-                    return "Off";
+                    return Bundle.getMessage("PowerStateOff");
                 }
             case COMMENTCOLUMN:
                 return _comment[row];
 
             default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
         }
     }
@@ -177,11 +178,13 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case COMMENTCOLUMN:
                 return new JTextField(30).getPreferredSize().width;
             default:
-                return new JLabel(" <unknown> ").getPreferredSize().width;
+                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
 
-    // Capture new comments or node names
+    /**
+     * Capture new comments or node names.
+     */
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == NAMECOLUMN) {
@@ -208,9 +211,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns.
+     * <p>
+     * This is optional, in that other table formats can use this table model.
+     * But we put it here to help keep it consistent.
      *
      */
     public void configureTable(JTable eventTable) {
@@ -229,11 +233,19 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * *** Capture node and event and add to table
+     * Report whether table has changed.
+     *
+     */
+    public boolean isTableDirty() {
+        return(_saved == false);
+    }
+
+    /**
+     * Capture node and event and add to table.
      */
     @Override
     public void message(CanMessage m) {
-        log.debug("Received new message event: " + m);
+        log.debug("Received new message event: {}", m);
         _id[_rowCount] = CbusMessage.getId(m);
         _node[_rowCount] = m.getElement(1) * 256 + m.getElement(2);
         _event[_rowCount] = m.getElement(3) * 256 + m.getElement(4);
@@ -242,11 +254,11 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * *** Capture node and event and add to table
+     * Capture node and event and add to table.
      */
     @Override
     public void reply(CanReply m) {
-        log.debug("Received new reply event: " + m);
+        log.debug("Received new reply event: {}", m);
         _id[_rowCount] = CbusMessage.getId(m);
         _node[_rowCount] = m.getElement(1) * 256 + m.getElement(2);
         _event[_rowCount] = m.getElement(3) * 256 + m.getElement(4);
@@ -255,7 +267,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Register new event
+     * Register new event.
      */
     public synchronized void addEvent() {
         if (_rowCount < CbusConstants.MAX_TABLE_EVENTS) {
@@ -279,7 +291,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         @Override
         public void run() {
             // notify that row is added
-            log.debug("Table added row: " + _row);
+            log.debug("Table added row: {}", _row);
             _model.fireTableRowsInserted(_row, _row);
         }
     }
@@ -290,9 +302,15 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Method to self save as a .csv file
+     * Self save as a .csv file.
      */
     public void saveTable() {
+        // check for empty table
+        if (this.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("EmptyTableDialogString"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (_saveFile == null) {
             saveAsTable();
         } else {
@@ -301,20 +319,24 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Method to self save as a .csv file, first prompting for a filename
+     * Self save as a .csv file, first prompting for a filename.
      */
     public void saveAsTable() {
-        // get filename
         // start at current file, show dialog
         int retVal = fileChooser.showSaveDialog(null);
 
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             _saveFileName = fileChooser.getSelectedFile().getPath();
-            _saveFile = new File(_saveFileName);
-            if (log.isDebugEnabled()) {
-                log.debug("File chosen: " + _saveFileName);
+            if (_saveFileName != null) {
+                _saveFile = new File(_saveFileName);
+                log.debug("File chosen: {}", _saveFileName);
+            } else {
+                log.debug("saveAsTable: No file name available. Aborted");
+                return;
             }
+        } else {
+            return; // cancelled or pane closed, prevent NPE
         }
         saveToCSV();
     }
@@ -323,24 +345,34 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     private void saveToCSV() {
         FileOutputStream out = null;
         PrintWriter p = null;
+        if (_saveFileName == null) {
+            log.error("saveToCSV: No file name available. Aborted");
+            return;
+        }
         try {
             // Create a print writer based on the file, so we can print to it.
             out = new FileOutputStream(_saveFileName);
             p = new PrintWriter(out, true);
         } catch (IOException e) {
-            if (log.isDebugEnabled()) {
                 log.debug("Problem creating output stream");
-            }
         }
 
         if (out == null) {
             log.debug("Null File Output Stream");
         }
-        if (p == null) {
+        if (p == null) { // certainly null if out == null
             log.error("Null Print Writer");
+            return;
         }
 
-        // Save rows
+        // Save table per row. We've checked for an empty table in SaveTable()
+        // print header labels
+        for (int i = 0; i < this.getColumnCount() - 1; i++) {
+            p.print(this.getColumnName(i));
+            p.print(",");
+        }
+        p.println(this.getColumnName(getColumnCount() - 1)); // last column, without comma
+        // print rows
         for (int i = 0; i < this.getRowCount(); i++) {
             p.print(_id[i]);
             p.print(",");
@@ -351,9 +383,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             p.print(_event[i]);
             p.print(",");
             if (_type[i]) {
-                p.print("On");
+                p.print(Bundle.getMessage("PowerStateOn"));
             } else {
-                p.print("Off");
+                p.print(Bundle.getMessage("PowerStateOff"));
             }
             p.print(",");
             if (_comment[i] == null) {
@@ -364,10 +396,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
 
         try {
-            if (p != null) {
-                p.flush();
-                p.close();
-            }
+            p.flush();
+            p.close();
             if (out != null) {
                 out.close();
             }
@@ -375,14 +405,14 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
         }
         // mark that the table has been saved
-        _saved = true;
+        _saved = true; // TODO disable the Save menu item in CbusEventTablePane
     }
 
     /**
-     * Method to self print or print preview the table.
-     *
+     * Self print or print preview the table.
+     * <p>
      * Copied from BeanTableDataModel modified to print variable column widths.
-     * Final column with size zero runs to extent of page width
+     * Final column with size zero runs to extent of page width.
      *
      * Printed with headings and vertical lines between each column. Data is
      * word wrapped within a column. Can handle data as strings, integers,
@@ -393,6 +423,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // [AC] variable column sizes
         int columnTotal = 0;
         int[] columnWidth = new int[this.getColumnCount()];
+        // in a test, thats 86 chars on a line
         for (int i = 0; i < this.getColumnCount(); i++) {
             if (this.getColumnWidth(i) == 0) {
                 // Fill to end of line
@@ -423,7 +454,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // create a base string the width of the column
         String spaces;
         StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < this.getRowCount(); i++) {
+        for (int i = 0; i < this.getRowCount() - 1; i++) {
             //spaces = "";
             for (int j = 0; j < columnWidth[i]; j++) {
                 //spaces = spaces + " ";
@@ -456,23 +487,21 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         String columnString = "";
         String lineString = "";
         String spaces;
-        StringBuffer buf = new StringBuffer();
         // loop through each column
         boolean complete = false;
         while (!complete) {
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // create a base string the width of the column
-                //spaces = "";
+                StringBuffer buf = new StringBuffer();
                 for (int j = 0; j < columnWidth[i]; j++) {
-                    //spaces = spaces + " ";
                     buf.append(" ");
                 }
                 spaces = buf.toString();
-                // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
-                // use the intial part of the text,pad it with spaces and place the remainder back in the array
-                // for further processing on next line
-                // if column string isn't too wide, pad it to column width with spaces if needed
+                // if the column string is too wide, cut it at word boundary (valid delimiters are space, - and _)
+                // Use the intial part of the text, pad it with spaces and place the remainder back in the array
+                // for further processing on next line.
+                // If column string isn't too wide, pad it to column width with spaces if needed
                 if (columnStrings[i].length() > columnWidth[i]) {
                     boolean noWord = true;
                     for (int k = columnWidth[i]; k >= 1; k--) {
@@ -480,21 +509,21 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                                 || columnStrings[i].substring(k - 1, k).equals("-")
                                 || columnStrings[i].substring(k - 1, k).equals("_")) {
                             columnString = columnStrings[i].substring(0, k)
-                                    + spaces.substring(columnStrings[i].substring(0, k).length());
+                                    + spaces.substring(k);
                             columnStrings[i] = columnStrings[i].substring(k);
                             noWord = false;
                             complete = false;
                             break;
                         }
                     }
-                    if (noWord) {
+                    if (noWord) { // not breakable, hard break
                         columnString = columnStrings[i].substring(0, columnWidth[i]);
                         columnStrings[i] = columnStrings[i].substring(columnWidth[i]);
                         complete = false;
                     }
 
                 } else {
-                    columnString = columnStrings[i] + spaces.substring(columnStrings[i].length());
+                    columnString = columnStrings[i] + spaces.substring(columnStrings[i].length()); // pad with spaces
                     columnStrings[i] = "";
                 }
                 lineString = lineString + columnString + " ";
@@ -531,5 +560,5 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     @SuppressWarnings("unused")
     private boolean _saved = false;
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);
 }

@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo.swing.monitor;
 
-import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,23 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Mx1MonPanelTest {
+public class Mx1MonPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testMemoCtor() {
-        Mx1MonPanel action = new Mx1MonPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        panel = new Mx1MonPanel();
+        helpTarget="package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel";
+        title="Mx1_: Command Monitor";
     }
 
+    @Override
     @After
-    public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 }

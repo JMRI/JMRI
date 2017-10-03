@@ -10,19 +10,23 @@ import jmri.jmrix.lenz.XNetTrafficController;
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         // all we need to do is set the title 
-        setTitle(rb.getString("PacketGenFrameTitle"));
+        setTitle(Bundle.getMessage("PacketGenFrameTitle"));
 
         // pack to cause display
         pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendXNetMessage(createPacket(packetTextField.getSelectedItem().toString()), null);

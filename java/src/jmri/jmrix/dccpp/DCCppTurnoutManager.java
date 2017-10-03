@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppBundle");
-
     protected DCCppTrafficController tc = null;
 
     // ctor has to register for DCCpp events
@@ -34,10 +32,17 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     protected String prefix = null;
 
     // DCCpp-specific methods
+
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        Turnout t = new DCCppTurnout(prefix, addr, tc);
+        Turnout t = null;
+        // check if the output bit is available
+        int bitNum = getBitFromSystemName(systemName);
+        if (bitNum == 0) {
+            return (null);
+        }
+        // make the new Turnout object
+        t = new DCCppTurnout(prefix, bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -80,7 +85,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      */
     @Override
     public String getClosedText() {
-        return rbt.getString("TurnoutStateClosed");
+        return Bundle.getMessage("TurnoutStateClosed");
     }
 
     /**
@@ -90,7 +95,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      */
     @Override
     public String getThrownText() {
-        return rbt.getString("TurnoutStateThrown");
+        return Bundle.getMessage("TurnoutStateThrown");
     }
 
     // listen for the messages to the LI100/LI101
@@ -106,13 +111,66 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         }
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * Get the bit address from the system name.
+     */
+    public int getBitFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
+            // here if an illegal DCC++ turnout system name
+            log.error("illegal character in header field of DCC++ turnout system name: {} prefix {} type {}",
+                    systemName, getSystemPrefix(), typeLetter());
+            return (0);
+        }
+        // name must be in the DCCppTnnnnn format (DCCPP is user configurable)
+        int num = 0;
+        try {
+            num = Integer.valueOf(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+        } catch (Exception e) {
+            log.debug("illegal character in number field of system name: " + systemName);
+            return (0);
+        }
+        if (num <= 0) {
+            log.warn("invalid DCC++ turnout system name: " + systemName);
+            return (0);
+        } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
+            log.warn("bit number out of range in DCC++ turnout system name: " + systemName);
+            return (0);
+        }
+        return (num);
+    }
+
+    /**
+     * Public method to validate system name format returns 'true' if system
+     * name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
     @Deprecated
     static public DCCppTurnoutManager instance() {
         //if (_instance == null) _instance = new DCCppTurnoutManager();
         return _instance;
     }
     static DCCppTurnoutManager _instance = null;
-    
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
 
 }

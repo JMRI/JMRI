@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -44,7 +45,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     JButton saveButton = new javax.swing.JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     JComboBox<Track> trackBox = new JComboBox<>();
 
     // checkboxes
@@ -109,7 +110,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         deleteTrackCheckBox.setEnabled(moveRollingStockCheckBox.isSelected());
 
         // get notified if combo box gets modified
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_CopyTrack", true); // NOI18N
@@ -201,7 +202,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                 // move rolling stock
                 moveRollingStock(fromTrack, toTrack);
                 if (deleteTrackCheckBox.isSelected()) {
-                    ScheduleManager.instance().replaceTrack(fromTrack, toTrack);
+                    InstanceManager.getDefault(ScheduleManager.class).replaceTrack(fromTrack, toTrack);
                     fromTrack.getLocation().deleteTrack(fromTrack);
                 }
             }
@@ -230,7 +231,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     protected void updateComboBoxes() {
         log.debug("update location combobox");
-        LocationManager.instance().updateComboBox(locationBox);
+        InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
     }
 
     /**
@@ -263,11 +264,11 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     }
 
     protected void moveRollingStock(Track fromTrack, Track toTrack) {
-        moveRollingStock(fromTrack, toTrack, CarManager.instance());
-        moveRollingStock(fromTrack, toTrack, EngineManager.instance());
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(CarManager.class));
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(EngineManager.class));
     }
 
-    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
+    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager<? extends RollingStock> manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
                 rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
@@ -277,7 +278,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void dispose() {
-        LocationManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
         if (_location != null) {
             _location.removePropertyChangeListener(this);
         }
@@ -295,5 +296,5 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class);
 }

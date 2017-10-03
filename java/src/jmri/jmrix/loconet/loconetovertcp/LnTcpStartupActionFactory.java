@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
 import apps.startup.AbstractStartupActionFactory;
+import apps.startup.StartupActionFactory;
 import java.util.Locale;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * {@link apps.startup.StartupActionFactory} for the
@@ -9,6 +11,7 @@ import java.util.Locale;
  *
  * @author Randall Wood Copyright (C) 2017
  */
+@ServiceProvider(service = StartupActionFactory.class)
 public class LnTcpStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
@@ -21,7 +24,7 @@ public class LnTcpStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public Class<?>[] getActionClasses() {
-        return new Class[]{LnTcpServerAction.class};
+        return new Class<?>[]{LnTcpServerAction.class};
     }
 
 }

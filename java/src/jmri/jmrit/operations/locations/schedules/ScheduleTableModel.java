@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -369,9 +370,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         // log.debug("getRoadComboBox for ScheduleItem "+si.getType());
         JComboBox<String> cb = new JComboBox<>();
         cb.addItem(ScheduleItem.NONE);
-        for (String roadName : CarRoads.instance().getNames()) {
+        for (String roadName : InstanceManager.getDefault(CarRoads.class).getNames()) {
             if (_track.acceptsRoadName(roadName)) {
-                Car car = CarManager.instance().getByTypeAndRoad(si.getTypeName(), roadName);
+                Car car = InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(), roadName);
                 if (car != null) {
                     cb.addItem(roadName);
                 }
@@ -398,8 +399,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     private JComboBox<TrainSchedule> getSetoutDayComboBox(ScheduleItem si) {
-        JComboBox<TrainSchedule> cb = TrainScheduleManager.instance().getSelectComboBox();
-        TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId());
+        JComboBox<TrainSchedule> cb = InstanceManager.getDefault(TrainScheduleManager.class).getSelectComboBox();
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getSetoutTrainScheduleId());
         if (sch != null) {
             cb.setSelectedItem(sch);
         } else if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)) {
@@ -414,8 +415,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     private JComboBox<TrainSchedule> getPickupDayComboBox(ScheduleItem si) {
-        JComboBox<TrainSchedule> cb = TrainScheduleManager.instance().getSelectComboBox();
-        TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId());
+        JComboBox<TrainSchedule> cb = InstanceManager.getDefault(TrainScheduleManager.class).getSelectComboBox();
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getPickupTrainScheduleId());
         if (sch != null) {
             cb.setSelectedItem(sch);
         } else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)) {
@@ -431,7 +432,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private JComboBox<String> getLoadComboBox(ScheduleItem si) {
         // log.debug("getLoadComboBox for ScheduleItem "+si.getType());
-        JComboBox<String> cb = CarLoads.instance().getSelectComboBox(si.getTypeName());
+        JComboBox<String> cb = InstanceManager.getDefault(CarLoads.class).getSelectComboBox(si.getTypeName());
         filterLoads(si, cb); // remove loads not accepted by this track
         cb.setSelectedItem(si.getReceiveLoadName());
         if (!cb.getSelectedItem().equals(si.getReceiveLoadName())) {
@@ -445,7 +446,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private JComboBox<String> getShipComboBox(ScheduleItem si) {
         // log.debug("getShipComboBox for ScheduleItem "+si.getType());
-        JComboBox<String> cb = CarLoads.instance().getSelectComboBox(si.getTypeName());
+        JComboBox<String> cb = InstanceManager.getDefault(CarLoads.class).getSelectComboBox(si.getTypeName());
         cb.setSelectedItem(si.getShipLoadName());
         if (!cb.getSelectedItem().equals(si.getShipLoadName())) {
             String notValid = MessageFormat
@@ -458,7 +459,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private JComboBox<Location> getDestComboBox(ScheduleItem si) {
         // log.debug("getDestComboBox for ScheduleItem "+si.getType());
-        JComboBox<Location> cb = LocationManager.instance().getComboBox();
+        JComboBox<Location> cb = InstanceManager.getDefault(LocationManager.class).getComboBox();
         filterDestinations(cb, si.getTypeName());
         cb.setSelectedItem(si.getDestination());
         if (si.getDestination() != null && cb.getSelectedIndex() == -1) {
@@ -727,5 +728,5 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class);
 }

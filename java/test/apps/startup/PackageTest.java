@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
    StartupPauseFactoryTest.class,
    TriggerRouteModelFactoryTest.class,
    TriggerRouteModelTest.class,
+   ScriptButtonPanelTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.

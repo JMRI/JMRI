@@ -221,8 +221,8 @@ public class SimulatorAdapter extends NcePortController implements
         while (true) {
             try {
                 wait(100);
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
+                log.debug("continuing after interrupt");
             }
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
@@ -496,6 +496,6 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

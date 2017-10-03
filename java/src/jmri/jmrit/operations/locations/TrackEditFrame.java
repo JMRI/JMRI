@@ -22,6 +22,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -53,9 +54,9 @@ import org.slf4j.LoggerFactory;
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // Managers
-    // LocationManagerXml managerXml = LocationManagerXml.instance();
-    TrainManager trainManager = TrainManager.instance();
-    RouteManager routeManager = RouteManager.instance();
+    // LocationManagerXml managerXml = InstanceManager.getDefault(LocationManagerXml.class);
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     public Location _location = null;
     public Track _track = null;
@@ -159,9 +160,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         // property changes
         _location.addPropertyChangeListener(this);
         // listen for car road name and type changes
-        CarRoads.instance().addPropertyChangeListener(this);
-        CarLoads.instance().addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
         routeManager.addPropertyChangeListener(this);
 
@@ -1049,8 +1050,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         panelCheckBoxes.removeAll();
         x = 0;
         y = 0; // vertical position in panel
-        loadTypes(CarTypes.instance().getNames());
-        loadTypes(EngineTypes.instance().getNames());
+        loadTypes(InstanceManager.getDefault(CarTypes.class).getNames());
+        loadTypes(InstanceManager.getDefault(EngineTypes.class).getNames());
         enableCheckboxes(_track != null);
 
         JPanel p = new JPanel();
@@ -1208,7 +1209,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             } else if (_track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
                 pDestinationOption.setVisible(true);
                 destinationOption.setText(
-                        Bundle.getMessage("Exclude") + " " + (LocationManager.instance().getNumberOfLocations() - _track
+                        Bundle.getMessage("Exclude") + " " + (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - _track
                                 .getDestinationListSize()) + " " + Bundle.getMessage("Destinations"));
             } else {
                 destinationOption.setText(Bundle.getMessage("AcceptAll"));
@@ -1224,10 +1225,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (_location !=null) {
             _location.removePropertyChangeListener(this);
         }
-        CarRoads.instance().removePropertyChangeListener(this);
-        CarLoads.instance().removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
-        ScheduleManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(ScheduleManager.class).removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         routeManager.removePropertyChangeListener(this);
         super.dispose();
@@ -1279,5 +1280,5 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackEditFrame.class);
 }

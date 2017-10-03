@@ -36,7 +36,8 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         control.connectPort(this);
 
         // start thread to notify controller when data is available
-        rcvNotice = new Thread(new rcvCheck(input, control));
+        rcvNotice = new Thread(new RcvCheck(input, control));
+        rcvNotice.setName("SPROG rcvCheck thread");
         rcvNotice.start();
 
     }
@@ -82,12 +83,12 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
 
     // internal thread to check to see if the stream has data and
     // notify the Traffic Controller.
-    static protected class rcvCheck implements Runnable {
+    static protected class RcvCheck implements Runnable {
 
         private SprogTrafficController control;
         private DataInputStream in;
 
-        public rcvCheck(DataInputStream in, SprogTrafficController control) {
+        public RcvCheck(DataInputStream in, SprogTrafficController control) {
             this.in = in;
             this.control = control;
         }
@@ -107,6 +108,6 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSStreamPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCSStreamPortController.class);
 
 }

@@ -1,12 +1,10 @@
 package jmri.jmrix.oaktree;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,25 +12,34 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManagerTest {
 
+    private OakTreeSystemConnectionMemo memo = null;
+
     @Test
     public void testCTor() {
         SerialLightManager t = new SerialLightManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+    }
+
+    @Test
+    public void testCTor2() {
+        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
+        // create and register the light manager object
+        SerialLightManager lm = new SerialLightManager(memo);
+        Assert.assertNotNull("Oaktree Light Manager creation with memo", lm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);
 
 }

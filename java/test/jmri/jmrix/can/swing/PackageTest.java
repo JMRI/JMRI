@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.can.swing.monitor.PackageTest.class,
     jmri.jmrix.can.swing.send.PackageTest.class,
     CanMenuTest.class,
-    CanComponentFactoryTest.class
+    CanComponentFactoryTest.class,
+    BundleTest.class,
+    CanNamedPaneActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.swing.monitor package.
@@ -34,6 +36,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

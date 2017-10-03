@@ -14,20 +14,31 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
+    MapleSystemConnectionMemo _memo = null;
+    protected String prefix = "M";
+
     public SerialTurnoutManager() {
 
     }
 
+    public SerialTurnoutManager(MapleSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = memo.getSystemPrefix();
+    }
+
+    /**
+     * Get the configured system prefix for this connection.
+     */
     @Override
     public String getSystemPrefix() {
-        return "K";
+        return prefix;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
-        sName = SerialAddress.normalizeSystemName(systemName);
+        sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -39,23 +50,23 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
 
         // check if the addressed output bit is available
-        int bitNum = SerialAddress.getBitFromSystemName(sName);
+        int bitNum = SerialAddress.getBitFromSystemName(sName, getSystemPrefix());
         if (bitNum == 0) {
             return (null);
         }
         String conflict = "";
-        conflict = SerialAddress.isOutputBitFree(bitNum);
+        conflict = SerialAddress.isOutputBitFree(bitNum, getSystemPrefix());
         if ((!conflict.equals("")) && (!conflict.equals(sName))) {
-            log.error(sName + " assignment conflict with " + conflict + ".");
+            log.error("{} assignment conflict with {}.", sName, conflict);
             notifyTurnoutCreationError(conflict, bitNum);
             return (null);
         }
 
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName, _memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', _memo)) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an unconfigured output bit.");
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "
@@ -63,6 +74,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
         }
         return t;
+    }
+
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
     }
 
     /**
@@ -73,6 +89,35 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 + bitNum + ", is currently assigned to " + conflict + ". Turnout can not be "
                 + "created as you specified.", " Assignment Conflict",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+    }
+
+    /**
+     * Public method to validate system name format.
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+    }
+
+    /**
+     * Public method to normalize a system name.
+     * <P>
+     * Returns a normalized system name if system name has a valid format, else
+     * returns "".
+     */
+    @Override
+    public String normalizeSystemName(String systemName) {
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     /**
@@ -151,6 +196,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //     "you specified.","Assignment Conflict",
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
+
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();
@@ -159,8 +205,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
     static SerialTurnoutManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-

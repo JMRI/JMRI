@@ -214,8 +214,7 @@ public class SignalHeadSignalMastTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     @Override
@@ -245,5 +244,5 @@ public class SignalHeadSignalMastTest {
         JUnitUtil.resetInstanceManager();
     }
 
-    static protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);
 }

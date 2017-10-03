@@ -23,7 +23,7 @@
 
 import jarray
 import jmri
-import gnu.io
+import purejavacomm
 
 class SerialPortRFID(jmri.jmrit.automat.AbstractAutomaton) :    
     # starts up the serial port
@@ -32,16 +32,16 @@ class SerialPortRFID(jmri.jmrit.automat.AbstractAutomaton) :
         
         # find the port info and open the port
         print "opening ",portname
-        self.portID = gnu.io.CommPortIdentifier.getPortIdentifier(portname)
+        self.portID = purejavacomm.CommPortIdentifier.getPortIdentifier(portname)
         self.port = self.portID.open("JMRI", 50)
         
         # set options on port
         baudrate = 9600
-        self.port.setSerialPortParams(baudrate, gnu.io.SerialPort.DATABITS_8, 
-                                    gnu.io.SerialPort.STOPBITS_1, gnu.io.SerialPort.PARITY_NONE)
+        self.port.setSerialPortParams(baudrate, purejavacomm.SerialPort.DATABITS_8, 
+                                    purejavacomm.SerialPort.STOPBITS_1, purejavacomm.SerialPort.PARITY_NONE)
         
         # the MERG Mk2 RFID concentrator uses RTS/CTS (hardware) flow control
-        self.port.setFlowControlMode(gnu.io.SerialPort.FLOWCONTROL_RTSCTS_IN)
+        self.port.setFlowControlMode(purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN)
 
         # get I/O connections for later
         self.inputStream = self.port.getInputStream()

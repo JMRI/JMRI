@@ -1,12 +1,10 @@
 package jmri.jmrix.loconet;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,8 +21,7 @@ public class LNCPSignalMastTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         jmri.InstanceManager.store(lnis,jmri.jmrix.loconet.LnTrafficController.class);
         SlotManager s = new SlotManager(lnis);
@@ -33,10 +30,9 @@ public class LNCPSignalMastTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMastTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LNCPSignalMastTest.class);
 
 }

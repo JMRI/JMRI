@@ -172,8 +172,8 @@ public class MathUtilTest extends TestCase {
         for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
             double t = a;
             while (t >= +limits) {t -= limits;}
-            while (t < 0.0) {t += limits;};
-            double c = MathUtil.normalizeAngle(a);
+            while (t < 0.0) {t += limits;}
+            double c = MathUtil.normalizeAngleDEG(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
@@ -195,8 +195,7 @@ public class MathUtilTest extends TestCase {
                 double t = a - b;
                 while (t >= theMax) {t -= theRange;}
                 while (t < theMin) {t += theRange;}
-                if (t < 0.0) { t = -t;};
-                double c = MathUtil.diffAngle(a, b);
+                double c = MathUtil.diffAngleDEG(a, b);
                 Assert.assertEquals(t, c, tolerance);
                 passed = (math.fabs(t - c) <= tolerance);
                 if (!passed) {
@@ -211,6 +210,33 @@ public class MathUtilTest extends TestCase {
     }
 
     @Test
+    public void testDouble_absDiffAngle() {
+        boolean passed = true;    // assume success (optimist!)
+
+        double theLimits = 180.0;
+        double theMin = -theLimits, theMax = +theLimits;
+        double theRange = theMax - theMin;
+        for (double a = -3.3 * theLimits; a < +3.3 * theLimits; a += theLimits / 15.0) {
+            for (double b = -3.3 * theLimits; b < +3.3 * theLimits; b += theLimits / 15.0) {
+                double t = a - b;
+                while (t >= theMax) {t -= theRange;}
+                while (t < theMin) {t += theRange;}
+                if (t < 0.0) { t = -t;}
+                double c = MathUtil.absDiffAngleDEG(a, b);
+                Assert.assertEquals(t, c, tolerance);
+                passed = (math.fabs(t - c) <= tolerance);
+                if (!passed) {
+                    break;
+                }
+            }
+            if (!passed) {
+                break;
+            }
+        }
+        Assert.assertEquals("Double absDiffAngle is good", true, passed);
+    }
+
+    @Test
     public void testDouble_pin() {
         boolean passed = true;    // assume success (optimist!)
         double limits = 180.0;
@@ -218,8 +244,8 @@ public class MathUtilTest extends TestCase {
             for (double b = -3.3 * limits; b < +3.3 * limits; b += limits / 15.0) {
                 for (double c = -3.3 * limits; c < +3.3 * limits; c += limits / 15.0) {
                     double t = a;
-                    if (t < b) {t = b;};
-                    if (t > c) {t = c;};
+                    if (t < b) {t = b;}
+                    if (t > c) {t = c;}
                     double d = MathUtil.pin(a, b, c);
                     Assert.assertEquals(t, d, tolerance);
                     passed = (math.fabs(t - d) <= tolerance);
@@ -263,5 +289,5 @@ public class MathUtilTest extends TestCase {
         return suite;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class);
 }

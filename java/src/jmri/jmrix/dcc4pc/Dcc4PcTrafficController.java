@@ -224,7 +224,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             xmtException = true;
@@ -279,7 +279,9 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
-        ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
+        if(l != null){
+            ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
+        }
         super.handleTimeout(msg, l);
     }
 
@@ -302,10 +304,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
         // Create message off the right concrete class
         AbstractMRReply msg = newReply();
-
+                
         // message exists, now fill it
         loadChars(msg, istream);
         if (mLastSentMessage != null) {
+            ((Dcc4PcReply)msg).setOriginalRequest(mLastMessage);
             //log.debug(mLastMessage.getElement(0));
             if (mLastSentMessage.isForChildBoard()) {
                 if (log.isDebugEnabled()) {
@@ -354,9 +357,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             }
                         }
                         //set the last incomplete message as the one to return
+                        log.debug("Reply set as lastIncomplete");
                         msg = lastIncomplete;
                     }
                     ((Dcc4PcReply) msg).setError(false);
+                    ((Dcc4PcReply)msg).setOriginalRequest(mLastMessage);
                     lastIncomplete = null;
                     waitingForMore = false;
                     mLastMessage = null;
@@ -408,7 +413,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             log.debug("dispatch reply of length " + msg.getNumDataElements()
                     + " contains " + msg.toString() + " state " + mCurrentState);
         }
-
         // forward the message to the registered recipients,
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
@@ -608,5 +612,5 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         log.debug("TIMEOUT in transmitWait, mCurrentState:" + mCurrentState + " " + state + " port dsr " + port.isDSR() + " wait time " + waitTime);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
 }

@@ -26,7 +26,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.VSDConfig;
@@ -41,14 +40,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
@@ -481,18 +480,17 @@ public class VSDConfigDialog extends JDialog {
      */
     protected boolean storeFile(RosterEntry _rosterEntry) {
         log.debug("storeFile starts");
-        // We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
+        // We need to create a programmer, a cvTableModel, and a variableTableModel.
         // Doesn't matter which, so we'll use the Global programmer.
-        Programmer p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
-        IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
-        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel, iCvModel);
+        VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel);
 
         // Now, in theory we can call _rosterEntry.writeFile...
         if (_rosterEntry.getFileName() != null) {
             // set the loco file name in the roster entry
             _rosterEntry.readFile();  // read, but don't yet process
-            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel);
         }
 
         // id has to be set!
@@ -505,7 +503,7 @@ public class VSDConfigDialog extends JDialog {
         _rosterEntry.ensureFilenameExists();
 
         // create the RosterEntry to its file
-        _rosterEntry.writeFile(cvModel, iCvModel, variableModel); // where to get the models???
+        _rosterEntry.writeFile(cvModel, variableModel); // where to get the models???
 
         // mark this as a success
         variableModel.setFileDirty(false);
@@ -516,6 +514,6 @@ public class VSDConfigDialog extends JDialog {
         return true;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class);
 
 }

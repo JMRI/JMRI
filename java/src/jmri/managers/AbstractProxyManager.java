@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-abstract public class AbstractProxyManager implements Manager {
+abstract public class AbstractProxyManager<E extends NamedBean> implements Manager<E> {
 
     /**
      * Number of managers available through getManager(i) and getManagerList(),
@@ -40,7 +40,7 @@ abstract public class AbstractProxyManager implements Manager {
         return mgrs.size();
     }
 
-    protected Manager getMgr(int index) {
+    protected Manager<E> getMgr(int index) {
         // make sure internal present
         initInternal();
 
@@ -57,14 +57,14 @@ abstract public class AbstractProxyManager implements Manager {
      *
      * @return the list of managers
      */
-    public List<Manager> getManagerList() {
+    public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
 
         return new ArrayList<>(mgrs);
     }
 
-    public void addManager(Manager m) {
+    public void addManager(Manager<E> m) {
         // check for already present
         if (mgrs.contains(m)) {
             // already present, complain and skip
@@ -83,7 +83,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
     }
 
-    private Manager initInternal() {
+    private Manager<E> initInternal() {
         if (internalManager == null) {
             log.debug("create internal manager when first requested");
             internalManager = makeInternalManager();
@@ -91,15 +91,15 @@ abstract public class AbstractProxyManager implements Manager {
         return internalManager;
     }
 
-    private final java.util.ArrayList<Manager> mgrs = new java.util.ArrayList<>();
-    private Manager internalManager = null;
+    private final java.util.ArrayList<Manager<E>> mgrs = new java.util.ArrayList<>();
+    private Manager<E> internalManager = null;
 
     /**
      * Create specific internal manager as needed for concrete type.
      *
      * @return an internal manager
      */
-    abstract protected Manager makeInternalManager();
+    abstract protected Manager<E> makeInternalManager();
 
     /**
      * Locate via user name, then system name if needed. Subclasses use this to
@@ -109,8 +109,8 @@ abstract public class AbstractProxyManager implements Manager {
      * @return the requested NamedBean or null if nothing matches name
      */
     @Override
-    public NamedBean getNamedBean(String name) {
-        NamedBean t = getBeanByUserName(name);
+    public E getNamedBean(String name) {
+        E t = getBeanByUserName(name);
         if (t != null) {
             return t;
         }
@@ -149,11 +149,11 @@ abstract public class AbstractProxyManager implements Manager {
      * @param name the user name or system name of the bean
      * @return an existing or new NamedBean
      */
-    protected NamedBean provideNamedBean(String name) throws IllegalArgumentException {
+    protected E provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
         initInternal();
 
-        NamedBean t = getNamedBean(name);
+        E t = getNamedBean(name);
         if (t != null) {
             return t;
         }
@@ -174,12 +174,12 @@ abstract public class AbstractProxyManager implements Manager {
      * @param userName   the user name
      * @return a bean
      */
-    abstract protected NamedBean makeBean(int index, String systemName, String userName);
+    abstract protected E makeBean(int index, String systemName, String userName);
 
     @Override
-    public NamedBean getBeanBySystemName(String systemName) {
-        for (Manager m : this.mgrs) {
-            NamedBean b = m.getBeanBySystemName(systemName);
+    public E getBeanBySystemName(String systemName) {
+        for (Manager<E> m : this.mgrs) {
+            E b = m.getBeanBySystemName(systemName);
             if (b != null) {
                 return b;
             }
@@ -188,9 +188,9 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     @Override
-    public NamedBean getBeanByUserName(String userName) {
-        for (Manager m : this.mgrs) {
-            NamedBean b = m.getBeanByUserName(userName);
+    public E getBeanByUserName(String userName) {
+        for (Manager<E> m : this.mgrs) {
+            E b = m.getBeanByUserName(userName);
             if (b != null) {
                 return b;
             }
@@ -228,7 +228,7 @@ abstract public class AbstractProxyManager implements Manager {
      * @param userName   the user name
      * @return requested NamedBean object (never null)
      */
-    public NamedBean newNamedBean(String systemName, String userName) {
+    public E newNamedBean(String systemName, String userName) {
         // make sure internal present
         initInternal();
 
@@ -289,7 +289,7 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     @Override
-    public void deleteBean(NamedBean s, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(E s, String property) throws java.beans.PropertyVetoException {
         String systemName = s.getSystemName();
         try {
             getMgr(match(systemName)).deleteBean(s, property);
@@ -306,7 +306,7 @@ abstract public class AbstractProxyManager implements Manager {
      * @param s the bean
      */
     @Override
-    public void register(NamedBean s) {
+    public void register(E s) {
         String systemName = s.getSystemName();
         getMgr(match(systemName)).register(s);
     }
@@ -319,7 +319,7 @@ abstract public class AbstractProxyManager implements Manager {
      * @param s the name
      */
     @Override
-    public void deregister(NamedBean s) {
+    public void deregister(E s) {
         String systemName = s.getSystemName();
         getMgr(match(systemName)).deregister(s);
     }
@@ -414,8 +414,8 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     @Override
-    public List<NamedBean> getNamedBeanList() {
-        TreeSet<NamedBean> ts = new TreeSet<>(new SystemNameComparator());
+    public List<E> getNamedBeanList() {
+        TreeSet<E> ts = new TreeSet<>(new SystemNameComparator());
         mgrs.stream().forEach((m) -> {
             ts.addAll(m.getNamedBeanList());
         });
@@ -423,5 +423,6 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class);
+
 }

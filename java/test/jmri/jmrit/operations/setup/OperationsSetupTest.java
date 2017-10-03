@@ -2,6 +2,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -14,7 +15,7 @@ import org.junit.Assert;
 
 /**
  * Tests for the Operations Setup class Last manually cross-checked on 20090131
- *
+ * <p>
  * Still to do: Backup, Control, Demo
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
@@ -216,7 +217,7 @@ public class OperationsSetupTest extends OperationsTestCase {
          Assert.assertTrue(s.isShowCarLengthEnabled());
          s.setShowCarLengthEnabled(false);
          Assert.assertFalse(s.isShowCarLengthEnabled());
-		
+
          s.setShowCarLoadEnabled(true);
          Assert.assertTrue(s.isShowCarLoadEnabled());
          s.setShowCarLoadEnabled(false);
@@ -226,7 +227,7 @@ public class OperationsSetupTest extends OperationsTestCase {
          Assert.assertTrue(s.isShowCarColorEnabled());
          s.setShowCarColorEnabled(false);
          Assert.assertFalse(s.isShowCarColorEnabled());
-		
+
          s.setShowCarDestinationEnabled(true);
          Assert.assertTrue(s.isShowCarDestinationEnabled());
          s.setShowCarDestinationEnabled(false);
@@ -291,12 +292,12 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // confirm that all operation file names have been modified
     public void testXMLFileTestFileName() {
-        Assert.assertEquals("Test setup file name", "OperationsJUnitTest.xml", OperationsSetupXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test location file name", "OperationsJUnitTestLocationRoster.xml", LocationManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test train file name", "OperationsJUnitTestTrainRoster.xml", TrainManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test car file name", "OperationsJUnitTestCarRoster.xml", CarManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test engine file name", "OperationsJUnitTestEngineRoster.xml", EngineManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test route file name", "OperationsJUnitTestRouteRoster.xml", RouteManagerXml.instance().getOperationsFileName());
+        Assert.assertEquals("Test setup file name", "OperationsJUnitTest.xml", InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
+        Assert.assertEquals("Test location file name", "OperationsJUnitTestLocationRoster.xml", InstanceManager.getDefault(LocationManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test train file name", "OperationsJUnitTestTrainRoster.xml", InstanceManager.getDefault(TrainManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test car file name", "OperationsJUnitTestCarRoster.xml", InstanceManager.getDefault(CarManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test engine file name", "OperationsJUnitTestEngineRoster.xml", InstanceManager.getDefault(EngineManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test route file name", "OperationsJUnitTestRouteRoster.xml", InstanceManager.getDefault(RouteManagerXml.class).getOperationsFileName());
 
         Assert.assertEquals("Test directory name", "operations" + File.separator + "JUnitTest", OperationsSetupXml.getOperationsDirectoryName());
     }
@@ -448,7 +449,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
         // store files in "temp"
         // write it
-        ox.writeFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
+        ox.writeFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
 
         // Set filename back to Operations
         ox.setOperationsFileName("Operations.xml");
@@ -465,14 +466,14 @@ public class OperationsSetupTest extends OperationsTestCase {
         OperationsSetupXml ox = new OperationsSetupXml();
 
         // change file name to OperationsTest
-        ox.setOperationsFileName(OperationsSetupXml.instance().getOperationsFileName());
+        ox.setOperationsFileName(InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
 
         // create a Operations file with known contents
         Setup s = new Setup();
         Assert.assertNotNull("exists", s);
 
         // read it
-        ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
+        ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
     }
 
     // from here down is testing infrastructure

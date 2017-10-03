@@ -44,9 +44,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         this.trafficController = lm.getLnTrafficController();
         this.throttleManager = (jmri.jmrix.AbstractThrottleManager) lm.getThrottleManager();
         consistRequestState = LEADREQUESTSTATE;
-        ConsistType = Consist.CS_CONSIST;
+        consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<DccLocoAddress>();
-        throttleManager.requestThrottle(ConsistAddress, this);
+        throttleManager.requestThrottle(consistAddress, this);
     }
 
     // Initialize a consist for the specific address
@@ -58,9 +58,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         this.trafficController = lm.getLnTrafficController();
         this.throttleManager = (jmri.jmrix.AbstractThrottleManager) lm.getThrottleManager();
         consistRequestState = LEADREQUESTSTATE;
-        ConsistType = Consist.CS_CONSIST;
+        consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<DccLocoAddress>();
-        throttleManager.requestThrottle(ConsistAddress, this);
+        throttleManager.requestThrottle(consistAddress, this);
     }
 
     // Clean Up local storage
@@ -73,10 +73,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     @Override
     public void setConsistType(int consist_type) {
         if (consist_type == Consist.ADVANCED_CONSIST) {
-            ConsistType = consist_type;
+            consistType = consist_type;
             return;
         } else if (consist_type == Consist.CS_CONSIST) {
-            ConsistType = consist_type;
+            consistType = consist_type;
         } else {
             log.error("Consist Type Not Supported");
             notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.NotImplemented);
@@ -89,7 +89,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
-        if (ConsistType == Consist.CS_CONSIST) {
+        if (consistType == Consist.CS_CONSIST) {
             return true;
         } else if (address.getNumber() != 0) {
             return (true);
@@ -105,9 +105,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     @Override
     public int sizeLimit() {
-        if (ConsistType == ADVANCED_CONSIST) {
+        if (consistType == ADVANCED_CONSIST) {
             return -1;
-        } else if (ConsistType == CS_CONSIST) {
+        } else if (consistType == CS_CONSIST) {
             return -1;
         } else {
             return 0;
@@ -117,8 +117,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // does the consist contain the specified address?
     @Override
     public boolean contains(DccLocoAddress address) {
-        if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-            return ConsistList.contains(address);
+        if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
+            return consistList.contains(address);
         } else {
             log.error("Consist Type Not Supported");
             notifyConsistListeners(address, ConsistListener.NotImplemented);
@@ -130,13 +130,13 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     // locomotive in the consist
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
-        log.debug("consist " + ConsistAddress + " obtaining direction for " + address + " Consist List Size " + ConsistList.size());
-        if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-            if (address == ConsistAddress) {
+        log.debug("consist " + consistAddress + " obtaining direction for " + address + " Consist List Size " + consistList.size());
+        if (consistType == ADVANCED_CONSIST || consistType == CS_CONSIST) {
+            if (address == consistAddress) {
                 return true;
             }
-            if (ConsistList.contains(address)) {
-                Boolean Direction = ConsistDir.get(address);
+            if (consistList.contains(address)) {
+                Boolean Direction = consistDir.get(address);
                 return (Direction.booleanValue());
             } else {
                 return (true);
@@ -153,21 +153,21 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
         Boolean Direction = Boolean.valueOf(directionNormal);
-        if (!(ConsistList.contains(LocoAddress))) {
-            ConsistList.add(LocoAddress);
+        if (!(consistList.contains(LocoAddress))) {
+            consistList.add(LocoAddress);
         }
-        if (ConsistDir.containsKey(LocoAddress)) {
-            ConsistDir.remove(LocoAddress);
+        if (consistDir.containsKey(LocoAddress)) {
+            consistDir.remove(LocoAddress);
         }
-        ConsistDir.put(LocoAddress, Direction);
+        consistDir.put(LocoAddress, Direction);
     }
 
     /*
      * Method for removing an address from the internal consist list object.
      */
     private synchronized void removeFromConsistList(DccLocoAddress LocoAddress) {
-        ConsistDir.remove(LocoAddress);
-        ConsistList.remove(LocoAddress);
+        consistDir.remove(LocoAddress);
+        consistList.remove(LocoAddress);
     }
 
     /*
@@ -178,12 +178,12 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     @Override
     public synchronized void add(DccLocoAddress LocoAddress, boolean directionNormal) {
-        if (LocoAddress == ConsistAddress) {
+        if (LocoAddress == consistAddress) {
             // this is required for command station consists on LocoNet.
             addToConsistList(LocoAddress, directionNormal);
             notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
-        } else if (ConsistType == ADVANCED_CONSIST) {
-            if (ConsistList.contains(LocoAddress)) {
+        } else if (consistType == ADVANCED_CONSIST) {
+            if (consistList.contains(LocoAddress)) {
                 // we are changing the direction, so remove first, 
                 // then add
                 removeFromAdvancedConsist(LocoAddress);
@@ -194,8 +194,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             } else {
                 addToAdvancedConsist(LocoAddress, directionNormal);
             }
-        } else if (ConsistType == CS_CONSIST) {
-            if (ConsistList.contains(LocoAddress)) {
+        } else if (consistType == CS_CONSIST) {
+            if (consistList.contains(LocoAddress)) {
                 // we are changing the direction, so remove first, 
                 // then add
                 removeFromCSConsist(LocoAddress);
@@ -214,9 +214,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
 
     private synchronized void delayedAdd() {
         DccLocoAddress LocoAddress = needToWrite.get(0);
-        if (ConsistType == ADVANCED_CONSIST) {
+        if (consistType == ADVANCED_CONSIST) {
             addToAdvancedConsist(LocoAddress, getLocoDirection(LocoAddress));
-        } else if (ConsistType == CS_CONSIST) {
+        } else if (consistType == CS_CONSIST) {
             addToCSConsist(LocoAddress, getLocoDirection(LocoAddress));
         }
         needToWrite.remove(LocoAddress);
@@ -232,9 +232,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     @Override
     public synchronized void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
-        if (ConsistType == ADVANCED_CONSIST) {
+        if (consistType == ADVANCED_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
-        } else if (ConsistType == CS_CONSIST) {
+        } else if (consistType == CS_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
         } else {
             log.error("Consist Type Not Supported");
@@ -248,10 +248,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
      */
     @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
-        if (ConsistType == ADVANCED_CONSIST) {
+        if (consistType == ADVANCED_CONSIST) {
             removeFromAdvancedConsist(LocoAddress);
             removeFromConsistList(LocoAddress);
-        } else if (ConsistType == CS_CONSIST) {
+        } else if (consistType == CS_CONSIST) {
             removeFromCSConsist(LocoAddress);
             removeFromConsistList(LocoAddress);
         } else {
@@ -272,7 +272,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             log.debug("Add Locomotive " // NOI18N
                     + LocoAddress.toString()
                     + " to advanced consist " // NOI18N
-                    + ConsistAddress.toString()
+                    + consistAddress.toString()
                     + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
@@ -290,7 +290,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             log.debug(" Remove Locomotive " // NOI18N
                     + LocoAddress.toString()
                     + " from advanced consist " // NOI18N
-                    + ConsistAddress.toString());
+                    + consistAddress.toString());
         }
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
         consistRequestState = UNLINKSTAGEONESTATE;
@@ -307,7 +307,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             log.debug("Add Locomotive " // NOI18N
                     + LocoAddress.toString()
                     + " to Standard Consist " // NOI18N
-                    + ConsistAddress.toString()
+                    + consistAddress.toString()
                     + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
@@ -325,7 +325,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             log.debug("Remove Locomotive " // NOI18N
                     + LocoAddress.toString()
                     + " from Standard Consist " // NOI18N
-                    + ConsistAddress.toString()
+                    + consistAddress.toString()
                     + ".");
         }
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
@@ -371,7 +371,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     private void setDirection(LocoNetThrottle t) {
-        log.debug("consist " + ConsistAddress + " set direction for " + t.getLocoAddress());
+        log.debug("consist " + consistAddress + " set direction for " + t.getLocoAddress());
         // send a command to set the direction
         // of the locomotive in the slot.
         Boolean directionNormal = getLocoDirection((DccLocoAddress) t.getLocoAddress());
@@ -474,6 +474,12 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = IDLESTATE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class.getName());
+    @Override
+    public void notifyStealThrottleRequired(DccLocoAddress address){
+        // this is an automatically stealing impelementation.
+        throttleManager.stealThrottleRequest(address, this, true);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class);
 
 }

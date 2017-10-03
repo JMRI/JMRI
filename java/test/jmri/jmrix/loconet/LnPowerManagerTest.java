@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractPowerManagerTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -64,9 +66,16 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     @Override
     public void setUp() {
         controller = new LocoNetInterfaceScaffold();
-        p = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
+        p = pwr = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
+    }
+
+    @After
+    public void tearDown() {
+        pwr.dispose();
+        JUnitUtil.tearDown();
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing
+    LnPowerManager pwr;
 
 }

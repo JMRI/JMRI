@@ -22,6 +22,3 @@ abstract public class TrafficController extends AbstractCanTrafficController {
     }
 
 }
-
-
-

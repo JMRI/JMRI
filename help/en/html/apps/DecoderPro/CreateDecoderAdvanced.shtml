@@ -614,8 +614,9 @@ selects the different algorithm needed here.
         &lt;/capability&gt;
 </pre>The "Address Type" parameter is optional:
       <ul>
-          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit decoder address.</li>
-          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory address.</li>
+          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit accessory decoder address.</li>
+          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory output address.</li>
+          <li>If it is "signal", the current address is interpreted as an 11-bit signal decoder address.</li>
       </ul>
       <p>
         Note that this only works for

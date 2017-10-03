@@ -2,8 +2,8 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Light;
-import org.junit.Assert;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * Abstract Base Class for Light tests in specific jmrix packages. This is not
@@ -64,12 +64,12 @@ public abstract class AbstractLightTestBase extends TestCase {
         t.removePropertyChangeListener(ln);
         listenerResult = false;
         t.setUserName("user id");
-        Assert.assertTrue("listener should not have heard message after removeListner",
+        Assert.assertTrue("listener should not have heard message after removeListener",
                 !listenerResult);
     }
 
     public void testDispose() {
-        t.setState(Light.ON);  	// in case registration with TrafficController 
+        t.setState(Light.ON);  	// in case registration with TrafficController
         //is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());

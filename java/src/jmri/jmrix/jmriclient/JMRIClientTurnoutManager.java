@@ -43,6 +43,9 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
         return prefix + typeLetter() + curAddress;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
 }
-
-

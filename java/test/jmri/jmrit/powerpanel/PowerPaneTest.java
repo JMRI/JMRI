@@ -1,73 +1,56 @@
 package jmri.jmrit.powerpanel;
 
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Jmrit PowerPanel
  *
  * @author	Bob Jacobsen
  */
-public class PowerPaneTest extends TestCase {
+public class PowerPaneTest extends jmri.util.swing.JmriPanelTest {
 
     // setup a default PowerManager interface
+    @Before
     @Override
     public void setUp() {
         JUnitUtil.initDebugPowerManager();
-    }
-
-    // test creation
-    public void testCreate() {
-        PowerPane p = new PowerPane();
-        Assert.assertNotNull("exists", p);
+        panel = new PowerPane();
+        helpTarget="package.jmri.jmrit.powerpanel.PowerPanelFrame";
+        title=Bundle.getMessage("TitlePowerPanel");
     }
 
     // test on button routine
+    @Test
     public void testPushOn() {
-        PowerPane p = new PowerPane();
-        p.onButtonPushed();
-        Assert.assertEquals("Testing shown on/off", "On", p.onOffStatus.getText());
+        ((PowerPane) panel).onButtonPushed();
+        Assert.assertEquals("Testing shown on/off", "On", ((PowerPane) panel).onOffStatus.getText());
     }
 
     // test off button routine
+    @Test
     public void testPushOff() {
-        PowerPane p = new PowerPane();
-        p.offButtonPushed();
-        Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
+        ((PowerPane) panel).offButtonPushed();
+        Assert.assertEquals("Testing shown on/off", "Off", ((PowerPane) panel).onOffStatus.getText());
     }
 
     // click on button
+    @Test
     public void testOnClicked() {
-        PowerPane p = new PowerPane();
-        p.onButton.doClick();
-        Assert.assertEquals("Testing shown on/off", "On", p.onOffStatus.getText());
+        ((PowerPane) panel).onButton.doClick();
+        Assert.assertEquals("Testing shown on/off", "On", ((PowerPane) panel).onOffStatus.getText());
     }
 
     // click off button
+    @Test
     public void testOffClicked() {
-        PowerPane p = new PowerPane();
-        p.offButton.doClick();
-        Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
+        ((PowerPane) panel).offButton.doClick();
+        Assert.assertEquals("Testing shown on/off", "Off", ((PowerPane) panel).onOffStatus.getText());
     }
 
-    // from here down is testing infrastructure
-    public PowerPaneTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PowerPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PowerPaneTest.class);
-        return suite;
-    }
 
 }

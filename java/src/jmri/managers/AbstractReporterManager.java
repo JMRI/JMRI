@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  */
-public abstract class AbstractReporterManager extends AbstractManager
+public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {
 
     @Override
@@ -49,12 +49,12 @@ public abstract class AbstractReporterManager extends AbstractManager
 
     @Override
     public Reporter getBySystemName(String name) {
-        return (Reporter) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public Reporter getByUserName(String key) {
-        return (Reporter) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -118,8 +118,7 @@ public abstract class AbstractReporterManager extends AbstractManager
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30
-     *
+     * turnouts in numerical order eg. 10 to 30
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -128,7 +127,7 @@ public abstract class AbstractReporterManager extends AbstractManager
 
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Reporter r = getBySystemName(prefix + typeLetter() + curAddress);
         if (r == null) {
@@ -142,7 +141,7 @@ public abstract class AbstractReporterManager extends AbstractManager
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
             return null;
         }
 
@@ -162,6 +161,17 @@ public abstract class AbstractReporterManager extends AbstractManager
             return Integer.toString(iName);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
+
+    /**
+     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
+
 }
 

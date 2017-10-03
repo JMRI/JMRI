@@ -1,10 +1,10 @@
 package jmri.jmrix.dccpp;
 
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutTest.class);
 
     @Override
     public int numListeners() {
@@ -32,14 +32,12 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "a 10 1 0",
                 dnis.outbound.elementAt(dnis.outbound.size() - 1).toString());
-        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "a 10 1 1",
                 dnis.outbound.elementAt(dnis.outbound.size() - 1).toString());
-        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
     @Test
@@ -54,14 +52,14 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         Assert.assertEquals(42, num);
         
         int[] vals = DCCppTurnout.getModeValues();
-        Assert.assertEquals(5, vals.length);
-        Assert.assertEquals(Turnout.MONITORING, vals[3]);
-        Assert.assertEquals(Turnout.EXACT, vals[4]);
+        Assert.assertEquals(6, vals.length);
+        Assert.assertEquals(Turnout.MONITORING, vals[4]);
+        Assert.assertEquals(Turnout.EXACT, vals[5]);
         
         String[] names = DCCppTurnout.getModeNames();
-        Assert.assertEquals(5, names.length);
-        Assert.assertEquals("BSTURNOUT", names[3]);
-        Assert.assertEquals("BSOUTPUT", names[4]);
+        Assert.assertEquals(6, names.length);
+        Assert.assertEquals("BSTURNOUT", names[4]);
+        Assert.assertEquals("BSOUTPUT", names[5]);
         // TODO: CHeck some othr stuff
         
         // Check a few basic things
@@ -219,8 +217,8 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     }
 
     @After
-    public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

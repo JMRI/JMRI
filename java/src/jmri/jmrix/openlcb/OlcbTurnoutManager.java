@@ -13,7 +13,7 @@ import org.openlcb.OlcbInterface;
  * Turnouts must be manually created.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  * @since 2.3.1
+ * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
@@ -82,7 +82,8 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    public boolean allowMultipleAdditions() {
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
@@ -125,24 +126,6 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
             default:
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
-    }
-
-    /**
-     * A method that creates an array of systems names to allow bulk creation of
-     * turnouts.
-     * @param start initial id for a range
-     * @param numberToAdd size of the range
-     * @param prefix system connection prefix
-     * @return array system names for range
-     */
-    //further work needs to be done on how to format a number of turnouts, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++) {
-            range[x] = prefix + "T" + start;
-        }
-        return range;
     }
 }
 

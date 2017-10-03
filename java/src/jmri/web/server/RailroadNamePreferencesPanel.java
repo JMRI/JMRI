@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
+@ServiceProvider(service = PreferencesPanel.class)
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JTextField railroadName;
@@ -39,48 +41,9 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     private void setGUI() {
     }
 
-    /**
-     * set the local prefs to match the GUI Local prefs are independent from the
-     * singleton instance prefs.
-     *
-     * @return true if set, false if values are unacceptable.
-     */
-    private boolean setValues() {
-        boolean didSet = true;
-        preferences.setRailRoadName(railroadName.getText());
-        return didSet;
-    }
-
-    public void storeValues() {
-        if (setValues()) {
-            preferences.save();
-
-            if (parentFrame != null) {
-                parentFrame.dispose();
-            }
-        }
-
-    }
-
-    /**
-     * Update the singleton instance of prefs, then mark (isDirty) that the
-     * values have changed and needs to save to xml file.
-     */
-    protected void applyValues() {
-        if (setValues()) {
-            preferences.setIsDirty(true);
-        }
-    }
-
-    protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
-            getTopLevelAncestor().setVisible(false);
-        }
-    }
-
     private JPanel rrNamePanel() {
         JPanel panel = new JPanel();
-        railroadName = new JTextField(preferences.getRailRoadName());
+        railroadName = new JTextField(preferences.getRailroadName());
         railroadName.setToolTipText(Bundle.getMessage("ToolTipRailRoadName"));
         railroadName.setColumns(30);
         panel.add(new JLabel(Bundle.getMessage("LabelRailRoadName")));
@@ -125,7 +88,8 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        this.storeValues();
+        this.preferences.setRailroadName(railroadName.getText());
+        this.preferences.save();
     }
 
     @Override

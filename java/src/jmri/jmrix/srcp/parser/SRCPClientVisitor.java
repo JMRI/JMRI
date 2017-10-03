@@ -5,7 +5,7 @@ import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* This class provides an interface between the JavaTree/JavaCC 
+/* This class provides an interface between the JavaTree/JavaCC
  * parser for the SRCP protocol and the JMRI front end.
  * @author Paul Bender Copyright (C) 2011
  */
@@ -189,7 +189,7 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
                 //int address = Integer.parseInt((String)(((SimpleNode)group.jjtGetChild(0)).jjtGetValue()));
             }
         } else if (group instanceof ASTsm) {
-            if (busMemo.provides(jmri.ProgrammerManager.class)) {
+            if (busMemo.provides(jmri.GlobalProgrammerManager.class)) {
                 jmri.jmrix.srcp.SRCPProgrammer programmer = (jmri.jmrix.srcp.SRCPProgrammer) (busMemo.getProgrammerManager().getGlobalProgrammer());
                 if( programmer != null) {
                    programmer.reply(node);
@@ -274,6 +274,6 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
         return node.childrenAccept(this, data);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class);
 
 }

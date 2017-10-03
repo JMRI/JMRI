@@ -57,7 +57,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            JButton b = new JButton(res.getString("ButtonSelect"));
+            JButton b = new JButton(Bundle.getMessage("ButtonSelect")); // is in jmri.NBBundle
             b.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -166,7 +166,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     void doRead() {
         if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorNoInputFile"),
-                    res.getString("ErrorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -180,12 +180,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             file.read();
         } catch (FileNotFoundException f) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),
-                    res.getString("ErrorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         } catch (IOException f) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorIOError"),
-                    res.getString("ErrorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }

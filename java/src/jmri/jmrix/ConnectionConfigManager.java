@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.configurexml.ClassMigrationManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.ErrorHandler;
 import jmri.configurexml.ErrorMemo;
@@ -29,6 +30,7 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
@@ -90,6 +93,11 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                             }
                         }
                     }
+                    String newClassName = InstanceManager.getDefault(ClassMigrationManager.class).getClassName(className);
+                    if (!className.equals(newClassName)) {
+                        log.info("Class {} will be used for connection {} instead of {} if preferences are saved", newClassName, userName, className);
+                        className = newClassName;
+                    }
                     try {
                         log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                         XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
@@ -109,7 +117,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
                         this.addInitializationException(profile, new InitializationException(english, localized, ex));
-                    } catch (Exception ex) {
+                    } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N

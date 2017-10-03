@@ -1,6 +1,13 @@
 package jmri.jmrit.catalog;
 
+import java.util.Set;
 import jmri.CatalogTree;
+import jmri.CatalogTreeManager;
+import jmri.InstanceInitializer;
+import jmri.InstanceManager;
+import jmri.implementation.AbstractInstanceInitializer;
+import jmri.managers.AbstractManager;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  *
  */
-public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
-        implements jmri.CatalogTreeManager {
+public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> implements CatalogTreeManager {
 
     public DefaultCatalogTreeManager() {
     }
@@ -22,7 +28,6 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     /**
      * Override parent method to not register this object to be stored
      * automatically as part of the general storage mechanism.
-     *
      */
     @Override
     protected void registerSelf() {
@@ -66,19 +71,19 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         String name = key.toUpperCase();
         if (log.isDebugEnabled()) {
             log.debug("getBySystemName: systemName= " + name);
-            CatalogTree tree = (CatalogTree) _tsys.get(name);
+            CatalogTree tree = _tsys.get(name);
             if (tree != null) {
                 CatalogTreeNode root = tree.getRoot();
                 log.debug("root= " + root.toString()
                         + ", has " + root.getChildCount() + " children");
             }
         }
-        return (CatalogTree) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     @Override
     public CatalogTree getByUserName(String key) {
-        return (CatalogTree) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     @Override
@@ -181,18 +186,41 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         return null;
     }
 
+    /**
+     *
+     * @return the managed instance
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static DefaultCatalogTreeManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultCatalogTreeManager();
-        }
-        return _instance;
+        return InstanceManager.getDefault(DefaultCatalogTreeManager.class);
     }
-    private static DefaultCatalogTreeManager _instance;
 
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameCatalog");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);
+
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(CatalogTreeManager.class)) {
+                return new DefaultCatalogTreeManager();
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(CatalogTreeManager.class);
+            return set;
+        }
+
+    }
 }

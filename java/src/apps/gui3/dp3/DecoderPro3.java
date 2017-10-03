@@ -3,6 +3,7 @@ package apps.gui3.dp3;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -80,7 +81,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
      */
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new java.awt.Dimension(1024, 600));
             mainFrame.setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -126,7 +127,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
             @Override
             public void run() {
                 try {
-                    DecoderIndexFile.instance();
+                    InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
                     log.error("Error in trying to initialize decoder index file " + ex.toString());
                 }
@@ -136,5 +137,5 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         thr.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class);
 }

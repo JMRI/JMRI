@@ -26,7 +26,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system letter for XPressNet
+     * Returns the system letter for DCC++
      */
     @Override
     public String getSystemPrefix() {
@@ -34,9 +34,11 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
-     * that a Light with this system name does not already exist
+     * Method to create a new Light based on the system name.
+     * Assumes calling method has checked that a Light with this
+     * system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -64,20 +66,20 @@ public class DCCppLightManager extends AbstractLightManager {
         systemName, getSystemPrefix(), typeLetter());
             return (0);
         }
-        // name must be in the DCCppLnnnnn format
+        // name must be in the DCCppLnnnnn format (DCCPP is user configurable)
         int num = 0;
         try {
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.debug("illegal character in number field of system name: " + systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid DCC++ light system name: " + systemName);
+            log.warn("invalid DCC++ light system name: " + systemName);
             return (0);
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.error("bit number out of range in DCC++ light system name: " + systemName);
+            log.warn("bit number out of range in DCC++ light system name: " + systemName);
             return (0);
         }
         return (num);
@@ -88,8 +90,8 @@ public class DCCppLightManager extends AbstractLightManager {
      * name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
@@ -115,6 +117,15 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
      * Allow access to DCCppLightManager
      */
     @Deprecated
@@ -122,6 +133,6 @@ public class DCCppLightManager extends AbstractLightManager {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class);
 
 }

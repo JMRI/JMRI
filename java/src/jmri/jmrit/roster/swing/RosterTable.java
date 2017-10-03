@@ -143,7 +143,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataScroll.getViewport().setPreferredSize(dataTableSize);
 
         dataTable.setSelectionMode(selectionMode);
-        MouseListener mouseHeaderListener = new tableHeaderListener();
+        MouseListener mouseHeaderListener = new TableHeaderListener();
         dataTable.getTableHeader().addMouseListener(mouseHeaderListener);
 
         dataTable.setDefaultEditor(Object.class, new RosterCellEditor());
@@ -157,7 +157,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                     re = null;
                 } // leave last selected item visible if no selection
             } else if (e.getFirstIndex() == -1) {
-                //A reorder of the table might of occured therefore we are going to make sure that the selected item is still in view
+                //A reorder of the table might of occurred therefore we are going to make sure that the selected item is still in view
                 moveTableViewToSelected();
             }
         };
@@ -239,7 +239,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         for (int i = 0; i < columnModel.getColumnCount(false); i++) {
             TableColumn tc = columnModel.getColumnByModelIndex(i);
             JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(dataTable.getModel().getColumnName(i), columnModel.isColumnVisible(tc));
-            menuItem.addActionListener(new headerActionListener(tc));
+            menuItem.addActionListener(new HeaderActionListener(tc));
             popupMenu.add(menuItem);
 
         }
@@ -323,11 +323,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
     }
 
-    class headerActionListener implements ActionListener {
+    class HeaderActionListener implements ActionListener {
 
         TableColumn tc;
 
-        headerActionListener(TableColumn tc) {
+        HeaderActionListener(TableColumn tc) {
             this.tc = tc;
         }
 
@@ -342,7 +342,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    class tableHeaderListener extends MouseAdapter {
+    class TableHeaderListener extends MouseAdapter {
 
         @Override
         public void mousePressed(MouseEvent e) {

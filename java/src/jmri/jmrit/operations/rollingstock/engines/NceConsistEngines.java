@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.InstanceManager;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -44,8 +44,8 @@ import org.slf4j.LoggerFactory;
 public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListener {
 
     private boolean syncOK = true; // used to flag status messages
-    EngineManager engineManager = EngineManager.instance();
-    List<RollingStock> engineList;
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+    List<Engine> engineList;
     List<String> consists;
 
     javax.swing.JLabel textConsist = new javax.swing.JLabel();
@@ -76,7 +76,6 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     // we use a thread so the status frame will work!
     public void run() {
         if (tc == null) {
@@ -125,7 +124,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         if (syncOK) {
             // now check each engine in the operations to see if there are any matches
             engineList = engineManager.getByNumberList();
-            consists = new ArrayList<String>();
+            consists = new ArrayList<>();
 
             // look for lead engines
             for (int consistNum = 1; consistNum < 128; consistNum++) {
@@ -134,8 +133,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                 if (engNum != 0) {
                     log.debug("NCE consist {} has lead engine {}", consistNum, engNum);
                     boolean engMatch = false;
-                    for (RollingStock rs : engineList) {
-                        Engine engine = (Engine) rs;
+                    for (Engine engine : engineList) {
                         if (engine.getNumber().equals(Integer.toString(engNum))) {
                             log.debug("found lead engine match {}", engine.getNumber());
                             Consist engConsist = engineManager.newConsist(NCE + consistNum);
@@ -170,15 +168,13 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     private void syncEngines(int offset, int step) {
         for (int consistNum = 1; consistNum < 128; consistNum++) {
             int engNum = getEngineNumberFromArray(consistNum, offset, step);
             if (engNum != 0) {
-                log.debug("NCE consist " + consistNum + " has engine " + engNum);
+                log.debug("NCE consist {} has engine {}", consistNum, engNum);
                 boolean engMatch = false;
-                for (RollingStock rs : engineList) {
-                    Engine engine = (Engine) rs;
+                for (Engine engine : engineList) {
                     if (engine.getNumber().equals(Integer.toString(engNum))) {
                         log.debug("found engine match {}", engine.getNumber());
                         engMatch = true;
@@ -288,5 +284,5 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsistEngines.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistEngines.class);
 }

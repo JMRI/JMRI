@@ -26,12 +26,127 @@
       <h1>Hardware Support: Grapevine System</h1><a name=
       "connecting" id="connecting"></a>
 
-      <h2>Naming</h2>Individual inputs (Sensors) and outputs
+      <h2>Naming</h2>
+      Individual inputs (Sensors) and outputs
       (Turnouts and Lights) in JMRI are accessed via names. For
       information on the general scheme, please see the <a href=
       "../../doc/Technical/Names.shtml">naming page</a> in the
       <a href="../../doc/Technical/index.shtml">technical
       documentation</a>.
+
+      <h3>Adding an item to the table</h3>
+      <p>When you add an item to one of the tables, many times you only
+      have to fill in the numbers to have JMRI construct
+      the complete system name.<br>
+      Here's a summary, split up for
+      outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22016</td>
+          <td>Sensor node 22, pin 16</td>
+          <td>GS 22 016</td>
+          <td>n digits (node) + 3 digit (pin)</td>
+          <td> </td>
+          <td>node: 1<br>pin: 001</td>
+          <td>node: 127<br>pin: 016</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22p16</td>
+          <td>p = parallel input </td>
+          <td>GS 22 p16</td>
+          <td>int + p + int (pin)</td>
+          <td> </td>
+          <td>p1</td>
+          <td>p16</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22a3</td>
+          <td>a = ASD occupancy sensor</td>
+          <td>GS 22 a3</td>
+          <td>int + a + int (pin)</td>
+          <td>22103</td>
+          <td>a1</td>
+          <td>a24</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22103</td>
+          <td>a = ASD occupancy sensor</td>
+          <td>GS 22023</td>
+          <td>int + a + int (pin)</td>
+          <td>22a3</td>
+          <td>101</td>
+          <td>124</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22s3</td>
+          <td>s = old style serial occupancy sensor</td>
+          <td>GS 22 s3</td>
+          <td>int + s + int (pin)</td>
+          <td>22023</td>
+          <td>s1</td>
+          <td>s16</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22023</td>
+          <td>s = old style serial occupancy sensor</td>
+          <td>GS 22 s3</td>
+          <td>int + s + int (pin)</td>
+          <td>22a3</td>
+          <td>021</td>
+          <td>036</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22m3</td>
+          <td>m = ASD motion sensor</td>
+          <td>GS 22 m3</td>
+          <td>int + m + int (pin)</td>
+          <td>22203</td>
+          <td>1</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>22203</td>
+          <td>m = ASD motion sensor</td>
+          <td>GS 22 203</td>
+          <td> </td>
+          <td>22m3</td>
+          <td>201</td>
+          <td>224</td>
+        </tr>
+        <tr>
+          <td>o</td>
+          <td>22103</td>
+          <td>output, card/bank 1, connector 3</td>
+          <td>GT 22 103</td>
+          <td> </td>
+          <td> </td>
+          <td>101/201/301/401</td>
+          <td>124/224/324/424</td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
 
       <p>For Grapevine systems, all names start with a system
       letter of "G". After that, there's a <a href=
@@ -65,7 +180,7 @@
       menu.</p>
 
       <h3>Inputs</h3>Grapevine Nodes have a number of possible
-      inputs:
+      input types:
 
       <dl>
         <dt>Parallel Inputs</dt>
@@ -73,7 +188,7 @@
         <dd>
           There are eight three-pin connectors on a Grapevine Node
           that can be used as general inputs. These Sensors are
-          referenced as 001 to 008. The can also be referenced in a
+          referenced as 001 to 008. They can also be referenced in a
           shorter format (where the three full digits are not
           required) as p1 through p8.
 
@@ -162,7 +277,7 @@
       <h4>Lights</h4>
 
       <p>Grapevine outputs can be used to control lights on the
-      layout, in which case they should be references as JMRI
+      layout, in which case they should be referenced as JMRI
       <a href="../../tools/Lights.shtml">Lights</a>. System names
       for lights start with GL, for example GL54102 for the 2nd
       output on the 1st driver card on node 54.</p>
@@ -185,9 +300,11 @@
       name GH1203. <a name="documentation" id=
       "documentation"></a></p>
 
-      <h2>Documentation</h2>More information on the Grapevine
-      hardware can be found on the <a href=
-      "http://www.protrak.cc">ProTrak web site</a>. 
+      <h2>Documentation</h2>
+      <p>More information on the Grapevine
+      hardware can be found on the
+      <a href="http://www.protrak.cc">ProTrak web site</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

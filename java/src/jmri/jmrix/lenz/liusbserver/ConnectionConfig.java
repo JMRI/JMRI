@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * Handle configuring an XPressNet layout connection via a LIUSB Server.
+ * Handle configuring an XpressNet layout connection via a LIUSB Server.
  * <P>
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *
@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Ctor for an object being created during load process.
+     * Swing init is deferred.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
@@ -25,7 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -33,7 +33,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "Lenz LIUSB Server";
+        return Bundle.getMessage("LenzLiusbServerName");
     }
 
     /**
@@ -52,7 +52,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super.loadDetails(details);
         hostNameField.setText(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);
         hostNameField.setEnabled(false); // we can't change this now.
-        portFieldLabel.setText("Communication Port");
+        portFieldLabel.setText(Bundle.getMessage("CommunicationPortLabel"));
         portField.setText(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
         portField.setEnabled(false); // we can't change this now.
         options.get(adapter.getOption1Name()).getComponent().setEnabled(false); // we can't change this now.

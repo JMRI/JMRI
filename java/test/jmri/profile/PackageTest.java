@@ -18,7 +18,9 @@ import org.junit.runners.Suite;
     SearchPathTableModelTest.class,
     ProfileConfigurationTest.class,
     ProfilePropertiesTest.class,
-    NullProfileTest.class
+    NullProfileTest.class,
+    AddProfileDialogTest.class,
+    ProfileManagerDialogTest.class
 })
 public class PackageTest {
 }

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Application Preferences</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
+
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Application Preferences</h1>
+
+      This page discusses the how the main 
+      <a href="AppStructure.shtml">JMRI applications</a>
+      store and retrieve their preferences.
+      <p>
+      
+      For the structure of the JMRI library itself, see the
+      <a href="IntroStructure.shtml">Introduction to JMRI Library Structure page</a>.
+      For information the structure of the main JMRI applications, 
+      see the <a href="AppStructure.shtml">JMRI Application Structure</a> page.
+      For information on how JMRI initializes its connections to the layout,  
+      see the <a href="SystemStructure.shtml">JMRI External System Connection Structure</a> page.
+      
+      <p>This is just a stub of a page, which we'll slowly be building out.
+
+<h4>Concepts</h4>
+    <ul>
+    <li>The profile
+    <li>The host ID
+    <li>Use of services
+        <ul>
+        <li>References to service architecture
+        <li>Use of attributes to locate services (see PR #3766)
+        </ul>
+    </ul>
+
+    <p>Individual preferences, such as how a table column is sorted or the 
+    state of a check box, can be stored using the 
+    <code>jmri.UserPreferencesManager</code>.
+    
+    
+<h4>How Preferences Are Stored</h4>
+    <ul>
+    <li>Multiple search directories are stored in ...
+    <li>Within each of those...
+    </ul>
+     
+A newly-created profile directory looks like this:
+<pre style="font-family: monospace;">
+% ls -lt $JMRIPREFS/NewEmptyProfile/
+total 0
+drwxr-xr-x  2 jake  staff   68 Jul 17 11:54 programmers
+drwxr-xr-x  2 jake  staff   68 Jul 17 11:54 throttle
+drwxr-xr-x  5 jake  staff  170 Jul 17 11:54 profile
+
+% ls -lt $JMRIPREFS/NewEmptyProfile/*
+/Users/jake/Library/Preferences/JMRI/NewEmptyProfile/programmers:
+
+/Users/jake/Library/Preferences/JMRI/NewEmptyProfile/throttle:
+
+/Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile:
+total 16
+drwxr-xr-x  4 jake  staff  136 Jul 17 11:54 jmri-784F4398C983-3d854083
+-rw-r--r--  1 jake  staff  162 Jul 17 11:54 profile.properties
+-rw-r--r--  1 jake  staff  126 Jul 17 11:54 profile.properties.1.bak
+
+% ls -lt $JMRIPREFS/NewEmptyProfile/profile/*
+-rw-r--r--  1 jake  staff  162 Jul 17 11:54 /Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/profile.properties
+-rw-r--r--  1 jake  staff  126 Jul 17 11:54 /Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/profile.properties.1.bak
+
+/Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/jmri-784F4398C983-3d854083:
+total 16
+-rw-r--r--  1 jake  staff  1863 Jul 17 11:54 user-interface.xml
+-rw-r--r--  1 jake  staff   511 Jul 17 11:54 user-interface.xml.1.bak
+</pre>
+
+In addition to creating the directory structure, there are two files with content:
+<pre style="font-family: monospace;">
+% cat /Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/profile.properties
+#JMRI Preferences version 4.9.1ish+jake+20170717T1854Z+R262cbf5596
+#Mon Jul 17 11:54:51 PDT 2017
+profile.id=NewEmptyProfile.3d854083
+profile.name=NewEmptyProfile
+</pre>
+
+and
+
+<pre style="font-family: monospace;">
+% cat /Users/jake/Library/Preferences/JMRI/NewEmptyProfile/profile/jmri-784F4398C983-3d854083/user-interface.xml
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1"&gt;
+    &lt;classPreferences xmlns="http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd"&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.SignalMastTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.LogixTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.LRouteTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.managers.JmriUserPreferencesManager"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.SensorTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.SignalHeadTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.BlockTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.AudioTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.SignalGroupTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.LightTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.TransitTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.ReporterTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.RouteTableAction"/&gt;
+        &lt;preferences xmlns="" class="jmri.jmrit.beantable.MemoryTableAction"/&gt;
+    &lt;/classPreferences&gt;
+    &lt;windowDetails xmlns="http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"&gt;
+        &lt;window xmlns="" class="jmri.jmrit.roster.Roster"&gt;
+            &lt;properties&gt;
+                &lt;property&gt;
+                    &lt;key&gt;defaultRosterGroup&lt;/key&gt;
+                &lt;/property&gt;
+            &lt;/properties&gt;
+        &lt;/window&gt;
+        &lt;window xmlns="" class="PanelPro" height="231.0" locX="375.0" locY="334.0" width="689.0"/&gt;
+    &lt;/windowDetails&gt;
+&lt;/auxiliary-configuration&gt;
+</pre>
+
+In that example, the ProfileID was created as <code>NewEmptyProfile.3d854083</code>.  
+<h4>Specifics</h4>
+      <ul>
+      <li>jmri.UserPreferencesManager
+      <li>jmri/managers/JmriUserPreferencesManager
+
+      <li>jmri.spi.PreferencesManager
+
+      <li>jmri/profile/ProfilePreferencesPanel.form
+      <li>jmri/profile/ProfilePreferencesPanel
+
+      <li>apps/gui3/TabbedPreferences
+      <li>apps/gui3/TabbedPreferencesAction
+      <li>apps/gui3/TabbedPreferencesFrame
+      <li>gui3/TabbedPreferencesProfileAction
+
+      <li>META-INF/services/jmri.spi.PreferencesManager
+      <li>META-INF/services/jmri.swing.PreferencesPanel
+
+      </ul>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

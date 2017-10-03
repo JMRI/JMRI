@@ -1,8 +1,8 @@
 package jmri.util;
 
 import java.io.File;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -29,29 +29,32 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Common utility methods for working with Opertations related JUnit tests.
- * Portions of this code addapted from the operations tests written by bob Coleman and Dan Boudreau
+ * Common utility methods for working with Operations related JUnit tests.
+ * Portions of this code adapted from the operations tests written by Bob
+ * Coleman and Dan Boudreau
  *
  * @author Paul Bender Copyright 2017
  * @since 2.7.1
  */
 public class JUnitOperationsUtil {
 
-     private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
-
+    private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     /**
-     * Reset the OperationsManager and set the files location for 
-     * operations file used during tests.
+     * Reset the OperationsManager and set the files location for operations
+     * file used during tests.
      */
-    public static void resetOperationsManager(){
+    public static void resetOperationsManager() {
+
+        //shut down the AutoSave thread if it is running.
+        Setup.setAutoSaveEnabled(false);
+
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
 
@@ -61,68 +64,53 @@ public class JUnitOperationsUtil {
             OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
         }
         // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        InstanceManager.getDefault(OperationsSetupXml.class).setOperationsFileName("OperationsJUnitTest.xml");
+        InstanceManager.getDefault(RouteManagerXml.class).setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        InstanceManager.getDefault(EngineManagerXml.class).setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        InstanceManager.getDefault(CarManagerXml.class).setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        InstanceManager.getDefault(LocationManagerXml.class).setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
-        FileUtil.createDirectory(OperationsXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName());
+        // delete operations directory and all contents
+        File file = new File(OperationsXml.getFileLocation(), OperationsSetupXml.getOperationsDirectoryName());
+        FileUtil.delete(file);
+        // create an empty operations directory
+        FileUtil.createDirectory(file);
 
-        // delete files
-        File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(EngineManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(CarManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(LocationManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(TrainManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(OperationsSetupXml.instance().getDefaultOperationsFilename());
-        file.delete();
+        // the following .dispose() calls are likely not needed
+        // since new instances of these managers are recreated for each test
+        InstanceManager.getDefault(TrainManager.class).dispose();
+        InstanceManager.getDefault(LocationManager.class).dispose();
+        InstanceManager.getDefault(RouteManager.class).dispose();
+        InstanceManager.getDefault(ScheduleManager.class).dispose();
+        InstanceManager.getDefault(CarTypes.class).dispose();
+        InstanceManager.getDefault(CarColors.class).dispose();
+        InstanceManager.getDefault(CarLengths.class).dispose();
+        InstanceManager.getDefault(CarLoads.class).dispose();
+        InstanceManager.getDefault(CarRoads.class).dispose();
+        InstanceManager.getDefault(CarManager.class).dispose();
 
-        TrainManager.instance().dispose();
-        LocationManager.instance().dispose();
-        RouteManager.instance().dispose();
-        ScheduleManager.instance().dispose();
-        CarTypes.instance().dispose();
-        CarColors.instance().dispose();
-        CarLengths.instance().dispose();
-        CarLoads.instance().dispose();
-        CarRoads.instance().dispose();
-        CarManager.instance().dispose();
-        AutomationManager.instance().dispose();
-
-        // delete file and log directory before testing
-        file = new File(RollingStockLogger.instance().getFullLoggerFileName());
-        file.delete();
-        File dir = new File(RollingStockLogger.instance().getDirectoryName());
-        dir.delete();
-
-        RollingStockLogger.instance().dispose();
+        InstanceManager.getDefault(RollingStockLogger.class).dispose();
 
         // dispose of the manager first, because otherwise
         // the models go away.
-        EngineManager.instance().dispose();
-        EngineModels.instance().dispose();
-        EngineLengths.instance().dispose();
+        InstanceManager.getDefault(EngineManager.class).dispose();
+        InstanceManager.getDefault(EngineModels.class).dispose();
+        InstanceManager.getDefault(EngineLengths.class).dispose();
     }
 
     /**
      * Populate the Operations Managers with a common set of data for tests.
      */
-    public static void initOperationsData(){
+    public static void initOperationsData() {
 
-        TrainManager tmanager = TrainManager.instance();
-        RouteManager rmanager = RouteManager.instance();
-        LocationManager lmanager = LocationManager.instance();
-        EngineManager emanager = EngineManager.instance();
-        CarManager cmanager = CarManager.instance();
-        CarTypes ct = CarTypes.instance();
-        EngineTypes et = EngineTypes.instance();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
+        CarManager cmanager = InstanceManager.getDefault(CarManager.class);
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
 
         // register the car and engine types used
         ct.addName("Boxcar");
@@ -315,7 +303,6 @@ public class JUnitOperationsUtil {
         // Place Cabooses on Staging tracks
         c1.setLocation(l1, l1s1);
 
-
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
 
@@ -370,6 +357,5 @@ public class JUnitOperationsUtil {
         tmanager.register(train2);
     }
 
-
-    private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
 }

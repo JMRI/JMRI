@@ -123,7 +123,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                     try {
                         sendSetOffMessage(state);
                     } catch (Exception e) {
-                        log.error("Exception occured while sending delayed off to turnout: " + e);
+                        log.error("Exception occurred while sending delayed off to turnout: " + e);
                     }
                 }
             }, METERINTERVAL);
@@ -163,7 +163,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
             hiadr |= 0x10;
         } else {
             if (_useOffSwReqAsConfirmation) {
-                log.warn("Turnout " + _number + " is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
+                log.warn("Turnout {} is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway", _number);
             }
             hiadr &= 0xEF;
         }
@@ -364,8 +364,12 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         return true;
     }
 
-    //method which takes a turnout state as a parameter and adjusts it  as necessary
-    //to reflect the turnout invert property
+    /**
+     * Method which takes a turnout state as a parameter and adjusts it as necessary
+     * to reflect the turnout invert property.
+     *
+     * @param rawState "original" turnout state before optional inverting
+     */
     private int adjustStateForInversion(int rawState) {
 
         if (getInverted() && (rawState == CLOSED || rawState == THROWN)) {
@@ -377,7 +381,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         } else {
             return rawState;
         }
-
     }
 
     static final int METERINTERVAL = 100;  // msec wait before closed
@@ -387,6 +390,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     static java.util.Timer consistencyTimer = new java.util.Timer();
     int noConsistencyTimersRunning = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class);
 
 }

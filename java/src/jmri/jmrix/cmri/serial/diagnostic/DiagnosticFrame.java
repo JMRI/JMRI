@@ -29,7 +29,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected boolean wrapTest = false;
     protected boolean isSMINI = false;
     protected boolean isUSIC_SUSIC = true;
-// Here add other node types
+    // Here add other node types
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
     protected int numCards = 3;
@@ -39,20 +39,20 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected int obsDelay = 2000;
     protected int inCardNum = 2;
     protected int filterDelay = 0;
-    // Test running variables  
+    // Test running variables
     protected boolean testRunning = false;
-    protected boolean testSuspended = false;  // true when Wraparound is suspended by error 
+    protected boolean testSuspended = false;  // true when Wraparound is suspended by error
     protected byte[] outBytes = new byte[256];
-    protected int curOutByte = 0;   // current output byte in output test
-    protected int curOutBit = 0;    // current on bit in current output byte in output test
-    protected short curOutValue = 0;  // current ofoutput byte in wraparound test
-    protected int nOutBytes = 6;    // number of output bytes for all cards of this node
-    protected int begOutByte = 0;   // numbering from zero, subscript in outBytes
+    protected int curOutByte = 0;       // current output byte in output test
+    protected int curOutBit = 0;        // current on bit in current output byte in output test
+    protected short curOutValue = 0;    // current ofoutput byte in wraparound test
+    protected int nOutBytes = 6;        // number of output bytes for all cards of this node
+    protected int begOutByte = 0;       // numbering from zero, subscript in outBytes
     protected int endOutByte = 2;
     protected byte[] inBytes = new byte[256];
     protected byte[] wrapBytes = new byte[4];
-    protected int nInBytes = 3;    // number of input bytes for all cards of this node
-    protected int begInByte = 0;   // numbering from zero, subscript in inBytes
+    protected int nInBytes = 3;         // number of input bytes for all cards of this node
+    protected int begInByte = 0;        // numbering from zero, subscript in inBytes
 
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
     protected int endInByte = 2;
@@ -69,8 +69,8 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected int count = 20;
     int debugCount = 0;
     javax.swing.ButtonGroup testGroup = new javax.swing.ButtonGroup();
-    javax.swing.JRadioButton outputButton = new javax.swing.JRadioButton("Output Test   ", true);
-    javax.swing.JRadioButton wrapButton = new javax.swing.JRadioButton("Wraparound Test", false);
+    javax.swing.JRadioButton outputButton = new javax.swing.JRadioButton(Bundle.getMessage("ButtonOutputTest") + "    ", true);
+    javax.swing.JRadioButton wrapButton = new javax.swing.JRadioButton(Bundle.getMessage("ButtonWraparoundTest"), false);
 
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(3);
     javax.swing.JTextField outCardField = new javax.swing.JTextField(3);
@@ -78,9 +78,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     javax.swing.JTextField obsDelayField = new javax.swing.JTextField(5);
     javax.swing.JTextField filterDelayField = new javax.swing.JTextField(5);
 
-    javax.swing.JButton runButton = new javax.swing.JButton("Run");
-    javax.swing.JButton stopButton = new javax.swing.JButton("Stop");
-    javax.swing.JButton continueButton = new javax.swing.JButton("Continue");
+    javax.swing.JButton runButton = new javax.swing.JButton(Bundle.getMessage("ButtonRun"));
+    javax.swing.JButton stopButton = new javax.swing.JButton(Bundle.getMessage("ButtonStop"));
+    javax.swing.JButton continueButton = new javax.swing.JButton(Bundle.getMessage("ButtonContinue"));
 
     javax.swing.JLabel statusText1 = new javax.swing.JLabel();
     javax.swing.JLabel statusText2 = new javax.swing.JLabel();
@@ -95,11 +95,14 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         _memo=memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
-        setTitle("Run CMRI Diagnostic");
+        setTitle(Bundle.getMessage("DiagnosticTitle"));
         setSize(500, 200);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -111,7 +114,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel1.add(outputButton);
         panel1.add(wrapButton);
         Border panel1Border = BorderFactory.createEtchedBorder();
-        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border, "Test Type");
+        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border, Bundle.getMessage("TestTypeTitle"));
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 
@@ -120,35 +123,35 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
         JPanel panel21 = new JPanel();
         panel21.setLayout(new FlowLayout());
-        panel21.add(new JLabel("Node(UA):"));
+        panel21.add(new JLabel(Bundle.getMessage("LabelNodeAddress")));
         panel21.add(uaAddrField);
-        uaAddrField.setToolTipText("Enter node address, numbering from 0.");
+        uaAddrField.setToolTipText(Bundle.getMessage("EnterNodeAddressToolTip"));
         uaAddrField.setText("0");
-        panel21.add(new JLabel("  Out Card:"));
+        panel21.add(new JLabel("  " + Bundle.getMessage("OutCardLabel")));
         panel21.add(outCardField);
-        outCardField.setToolTipText("Enter output card number, numbering from 0.");
+        outCardField.setToolTipText(Bundle.getMessage("OutCardToolTip"));
         outCardField.setText("0");
         JPanel panel22 = new JPanel();
         panel22.setLayout(new FlowLayout());
-        panel22.add(new JLabel("Output Test Only - Observation Delay:"));
+        panel22.add(new JLabel(Bundle.getMessage("ObservationDelayLabel")));
         panel22.add(obsDelayField);
-        obsDelayField.setToolTipText("Enter delay (milliseconds) between changes of output led's.");
+        obsDelayField.setToolTipText(Bundle.getMessage("ObservationDelayToolTip"));
         obsDelayField.setText("2000");
         JPanel panel23 = new JPanel();
         panel23.setLayout(new FlowLayout());
-        panel23.add(new JLabel("Wraparound Test Only - In Card:"));
+        panel23.add(new JLabel(Bundle.getMessage("InCardToolLabel")));
         panel23.add(inCardField);
-        inCardField.setToolTipText("Enter input card number, numbering from 0.");
+        inCardField.setToolTipText(Bundle.getMessage("InCardToolTip"));
         inCardField.setText("2");
-        panel23.add(new JLabel("   Filtering Delay:"));
+        panel23.add(new JLabel("   " + Bundle.getMessage("FilteringDelayLabel")));
         panel23.add(filterDelayField);
-        filterDelayField.setToolTipText("Enter delay (milliseconds) if input card has filtering, else 0.");
+        filterDelayField.setToolTipText(Bundle.getMessage("FilteringDelayToolTip"));
         filterDelayField.setText("0");
         panel2.add(panel21);
         panel2.add(panel22);
         panel2.add(panel23);
         Border panel2Border = BorderFactory.createEtchedBorder();
-        Border panel2Titled = BorderFactory.createTitledBorder(panel2Border, "Test Set Up");
+        Border panel2Titled = BorderFactory.createTitledBorder(panel2Border, Bundle.getMessage("TestSetUpTitle"));
         panel2.setBorder(panel2Titled);
         contentPane.add(panel2);
 
@@ -157,14 +160,14 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
         panel31.setLayout(new FlowLayout());
-        statusText1.setText("Please ensure test hardware is installed.");
+        statusText1.setText(Bundle.getMessage("StatusLine1"));
         statusText1.setVisible(true);
         statusText1.setMaximumSize(new Dimension(statusText1.getMaximumSize().width,
                 statusText1.getPreferredSize().height));
         panel31.add(statusText1);
         JPanel panel32 = new JPanel();
         panel32.setLayout(new FlowLayout());
-        statusText2.setText("Select Test Type, enter Test Set Up information, then select Run below.");
+        statusText2.setText(Bundle.getMessage("StatusLine2", Bundle.getMessage("ButtonRun")));
         statusText2.setVisible(true);
         statusText2.setMaximumSize(new Dimension(statusText2.getMaximumSize().width,
                 statusText2.getPreferredSize().height));
@@ -172,16 +175,16 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel3.add(panel31);
         panel3.add(panel32);
         Border panel3Border = BorderFactory.createEtchedBorder();
-        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, "Status");
+        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, Bundle.getMessage("StatusTitle"));
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
 
         // Set up Continue, Stop, Run buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        continueButton.setText("Continue");
+        continueButton.setText(Bundle.getMessage("ButtonContinue"));
         continueButton.setVisible(true);
-        continueButton.setToolTipText("Continue Current Test");
+        continueButton.setToolTipText(Bundle.getMessage("ContinueTestToolTip"));
         continueButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -189,9 +192,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
         panel4.add(continueButton);
-        stopButton.setText("Stop");
+        stopButton.setText(Bundle.getMessage("ButtonStop"));
         stopButton.setVisible(true);
-        stopButton.setToolTipText("Stop Test");
+        stopButton.setToolTipText(Bundle.getMessage("StopToolTip"));
         panel4.add(stopButton);
         stopButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -199,9 +202,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                 stopButtonActionPerformed(e);
             }
         });
-        runButton.setText("Run");
+        runButton.setText(Bundle.getMessage("ButtonRun"));
         runButton.setVisible(true);
-        runButton.setToolTipText("Run Test");
+        runButton.setToolTipText(Bundle.getMessage("RunTestToolTip"));
         panel4.add(runButton);
         runButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -218,7 +221,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Method to handle run button in Diagnostic Frame
+     * Handle run button in Diagnostic Frame.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Ignore button if test is already running
@@ -243,10 +246,12 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Local method to read data in Diagnostic Frame, get node data, and test
-     * for consistency Returns 'true' if no errors are found Returns 'false' if
-     * errors are found If errors are found, the errors are noted in the status
-     * panel of the Diagnostic Frame
+     * Read data in Diagnostic Frame, get node data, and test
+     * for consistency.
+     * If errors are found, the errors are noted in the status panel
+     * of the Diagnostic Frame.
+     *
+     * @return 'true' if no errors are found, 'false' if errors are found
      */
     protected boolean readSetupData() {
         // determine test type
@@ -255,28 +260,28 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // read setup data - Node(UA) field
         try {
             ua = Integer.parseInt(uaAddrField.getText());
-        } catch (Exception e) {
-            statusText1.setText("Error - Bad character in Node(UA) field, please try again.");
+        } catch (NumberFormatException e) {
+            statusText1.setText(Bundle.getMessage("DiagnosticError1"));
             statusText1.setVisible(true);
             return (false);
         }
         if ((ua < 0) || (ua > 127)) {
-            statusText1.setText("Error - Node(UA) is not between 0 and 127, please try again.");
+            statusText1.setText(Bundle.getMessage("DiagnosticError2"));
             statusText1.setVisible(true);
             return (false);
         }
         // get the SerialNode corresponding to this node address
         node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(ua);
         if (node == null) {
-            statusText1.setText("Error - Unknown address in Node(UA) field, please try again.");
+            statusText1.setText(Bundle.getMessage("DiagnosticError3"));
             statusText1.setVisible(true);
             return (false);
         }
-        // determine if node is SMINI, USIC_SUSIC, or 
+        // determine if node is SMINI, USIC_SUSIC, or
         int type = node.getNodeType();
         isSMINI = (type == SerialNode.SMINI);
         isUSIC_SUSIC = (type == SerialNode.USIC_SUSIC);
-// Here insert code for other type nodes
+        // Here insert code for other type nodes
         // initialize numInputCards, numOutputCards, and numCards
         numOutputCards = node.numOutputCards();
         numInputCards = node.numInputCards();
@@ -286,27 +291,25 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         try {
             outCardNum = Integer.parseInt(outCardField.getText());
         } catch (Exception e) {
-            statusText1.setText("Error - Bad character in Out Card field, please try again.");
+            statusText1.setText(Bundle.getMessage("DiagnosticError4"));
             statusText1.setVisible(true);
             return (false);
         }
         // Check for consistency with Node definition
         if (isUSIC_SUSIC) {
             if ((outCardNum < 0) || (outCardNum >= numCards)) {
-                statusText1.setText("Error - Out Card is not between 0 and " + Integer.toString(numCards - 1)
-                        + ", please try again.");
+                statusText1.setText(Bundle.getMessage("DiagnosticError5", Integer.toString(numCards - 1)));
                 statusText1.setVisible(true);
                 return (false);
             }
             if (!node.isOutputCard(outCardNum)) {
-                statusText1.setText("Error - Out Card is not an Output Card in your Node definition, "
-                        + "please try again.");
+                statusText1.setText(Bundle.getMessage("DiagnosticError6"));
                 statusText1.setVisible(true);
                 return (false);
             }
         }
         if (isSMINI && ((outCardNum < 0) || (outCardNum > 1))) {
-            statusText1.setText("Error - Out Card is not 0 or 1, please try again.");
+            statusText1.setText(Bundle.getMessage("DiagnosticError7"));
             statusText1.setVisible(true);
             return (false);
         }
@@ -316,7 +319,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             try {
                 obsDelay = Integer.parseInt(obsDelayField.getText());
             } catch (Exception e) {
-                statusText1.setText("Error - Bad character in Observation Delay field, please try again.");
+                statusText1.setText(Bundle.getMessage("DiagnosticError8"));
                 statusText1.setVisible(true);
                 return (false);
             }
@@ -327,27 +330,25 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             try {
                 inCardNum = Integer.parseInt(inCardField.getText());
             } catch (Exception e) {
-                statusText1.setText("Error - Bad character in In Card field, please try again.");
+                statusText1.setText(Bundle.getMessage("DiagnosticError9"));
                 statusText1.setVisible(true);
                 return (false);
             }
             // Check for consistency with Node definition
             if (isUSIC_SUSIC) {
                 if ((inCardNum < 0) || (inCardNum >= numCards)) {
-                    statusText1.setText("Error - In Card is not between 0 and "
-                            + Integer.toString(numCards - 1) + ", please try again.");
+                    statusText1.setText(Bundle.getMessage("DiagnosticError10", Integer.toString(numCards - 1)));
                     statusText1.setVisible(true);
                     return (false);
                 }
                 if (!node.isInputCard(inCardNum)) {
-                    statusText1.setText("Error - In Card is not an Input Card in your Node definition, "
-                            + "please try again.");
+                    statusText1.setText(Bundle.getMessage("DiagnosticError11"));
                     statusText1.setVisible(true);
                     return (false);
                 }
             }
             if (isSMINI && (inCardNum != 2)) {
-                statusText1.setText("Error - In Card not 2 for SMINI, please try again.");
+                statusText1.setText(Bundle.getMessage("DiagnosticError12"));
                 statusText1.setVisible(true);
                 return (false);
             }
@@ -356,7 +357,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             try {
                 filterDelay = Integer.parseInt(filterDelayField.getText());
             } catch (Exception e) {
-                statusText1.setText("Error - Bad character in Filtering Delay field, please try again.");
+                statusText1.setText(Bundle.getMessage("DiagnosticError13"));
                 statusText1.setVisible(true);
                 return (false);
             }
@@ -377,20 +378,20 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Method to handle continue button in Diagnostic Frame
+     * Handle continue button in Diagnostic Frame.
      */
     public void continueButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (testRunning && testSuspended) {
             testSuspended = false;
             if (wrapTest) {
-                statusText1.setText("Running Wraparound Test");
+                statusText1.setText(Bundle.getMessage("StatusRunningWraparoundTest"));
                 statusText1.setVisible(true);
             }
         }
     }
 
     /**
-     * Method to handle Stop button in Diagnostic Frame
+     * Handle Stop button in Diagnostic Frame.
      */
     public void stopButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Ignore button push if test is not running, else change flag
@@ -405,9 +406,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Local Method to initialize an Output Test Returns 'true' if successfully
-     * initialized Returns 'false' if errors are found If errors are found, the
-     * errors are noted in the status panel of the Diagnostic Frame
+     * Initialize an Output Test.
+     * If errors are found, the errors are noted in the status panel of the Diagnostic Frame.
+     *
+     * @return 'true' if successfully initialized, 'false' if errors are found
      */
     protected boolean initializeOutputTest() {
         // clear all output bytes for this node
@@ -422,26 +424,25 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // Set up beginning LED on position
         curOutByte = begOutByte;
         curOutBit = 0;
-        // Send initialization message                
+        // Send initialization message
         _memo.getTrafficController().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
         try {
             // Wait for initialization to complete
             wait(1000);
-        } catch (Exception e) {
-            // Ignore exception and continue
+        } catch (InterruptedException e) {
+            // means done
+            log.debug("interrupted");
+            return false;
         }
         // Initialization was successful
         numIterations = 0;
         testRunning = true;
-        return (true);
+        return true;
     }
 
     /**
-     * Local Method to run an Output Test
+     * Run an Output Test.
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     protected void runOutputTest() {
         // Set up timer to update output pattern periodically
         outTimer = new Timer(obsDelay, new ActionListener() {
@@ -457,9 +458,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                     m.setTimeout(50);
                     _memo.getTrafficController().sendSerialMessage(m, curFrame);
                     // update status panel to show bit that is on
-                    statusText1.setText("Port " + portID[curOutByte - begOutByte] + " Bit "
-                            + Integer.toString(curOutBit)
-                            + " is on - Compare LED's with the pattern below");
+                    statusText1.setText(Bundle.getMessage("StatusLine3", portID[curOutByte - begOutByte], Integer.toString(curOutBit)));
                     statusText1.setVisible(true);
                     StringBuilder st = new StringBuilder();
                     for (int i = begOutByte; i <= endOutByte; i++) {
@@ -472,7 +471,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             }
                         }
                     }
-                    statusText2.setText(new String(st));
+                    statusText2.setText(st.toString());
                     statusText2.setVisible(true);
                     // update bit pattern for next entry
                     curOutBit++;
@@ -491,20 +490,19 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
 
-        // start timer        
+        // start timer
         outTimer.start();
     }
 
     /**
-     * Local Method to stop an Output Test
+     * Stop an Output Test.
      */
     protected void stopOutputTest() {
         if (testRunning && outTest) {
             // Stop the timer
             outTimer.stop();
             // Update the status
-            statusText1.setText("Output Test stopped after "
-                    + Integer.toString(numIterations) + " Cycles");
+            statusText1.setText(Bundle.getMessage("StatusLine4", Integer.toString(numIterations)));
             statusText1.setVisible(true);
             statusText2.setText("  ");
             statusText2.setVisible(true);
@@ -512,10 +510,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Local Method to initialize a Wraparound Test Returns 'true' if
-     * successfully initialized Returns 'false' if errors are found If errors
-     * are found, the errors are noted in the status panel of the Diagnostic
-     * Frame
+     * Initialize a Wraparound Test.
+     * If errors are found, the errors are noted in the status panel of the Diagnostic
+     * Frame.
+     *
+     * @return 'true' if successfully initialized, 'false' if errors are found
      */
     protected boolean initializeWraparoundTest() {
         // clear all output bytes for this node
@@ -526,36 +525,34 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         curOutByte = begOutByte;
         curOutValue = 0;
 
-        // Send initialization message                
+        // Send initialization message
         _memo.getTrafficController().sendSerialMessage((SerialMessage) node.createInitPacket(), curFrame);
         try {
             // Wait for initialization to complete
             wait(1000);
-        } catch (Exception e) {
-            // Ignore exception and continue
+        } catch (InterruptedException e) {
+            log.debug("interrupted");
+            return false;
         }
 
         // Clear error count
         numErrors = 0;
         numIterations = 0;
-        // Initialize running flags 
+        // Initialize running flags
         testRunning = true;
         testSuspended = false;
         waitingOnInput = false;
         needInputTest = false;
         count = 50;
-        return (true);
+        return true;
     }
 
     /**
-     * Local Method to run a Wraparound Test
+     * Run a Wraparound Test.
      */
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     protected void runWraparoundTest() {
         // Display Status Message
-        statusText1.setText("Running Wraparound Test");
+        statusText1.setText(Bundle.getMessage("StatusRunningWraparoundTest"));
         statusText1.setVisible(true);
 
         // Set up timer to update output pattern periodically
@@ -566,7 +563,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                     if (waitingOnInput) {
                         count--;
                         if (count == 0) {
-                            statusText2.setText("Time Out Error - no response after 5 seconds.");
+                            statusText2.setText(Bundle.getMessage("StatusLine5"));
                             statusText2.setVisible(true);
                         }
                     } else {
@@ -583,19 +580,21 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             }
                             if (comparisonError) {
                                 // report error and suspend test
-                                statusText1.setText("Test Suspended for Error - Stop or Continue?");
+                                statusText1.setText(Bundle.getMessage("StatusLine6",
+                                        Bundle.getMessage("ButtonStop"), Bundle.getMessage("ButtonContinue")));
                                 statusText1.setVisible(true);
-                                StringBuilder st = new StringBuilder("Compare Error - Out Bytes (hex):");
+                                StringBuilder st = new StringBuilder(Bundle.getMessage("StatusLine7pt1"));
                                 for (int i = begOutByte; i <= endOutByte; i++) {
                                     st.append(" ");
                                     st.append(Integer.toHexString((outBytes[i]) & 0x000000ff));
                                 }
-                                st.append("    In Bytes (hex):");
+                                st.append("    "); // spacer
+                                st.append(Bundle.getMessage("StatusLine7pt2"));
                                 for (int i = begInByte; i <= endInByte; i++) {
                                     st.append(" ");
                                     st.append(Integer.toHexString((inBytes[i]) & 0x000000ff));
                                 }
-                                statusText2.setText(new String(st));
+                                statusText2.setText(st.toString());
                                 statusText2.setVisible(true);
                                 numErrors++;
                                 testSuspended = true;
@@ -621,9 +620,10 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         // update Status area
                         short[] outBitPattern = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
                         String[] portID = {"A", "B", "C", "D"};
-                        StringBuilder st = new StringBuilder("Port: ");
+                        StringBuilder st = new StringBuilder(Bundle.getMessage("PortLabel"));
                         st.append(portID[curOutByte - begOutByte]);
-                        st.append(",  Pattern: ");
+                        st.append(",  ");
+                        st.append(Bundle.getMessage("PatternLabel"));
                         for (int j = 0; j < 8; j++) {
                             if ((curOutValue & outBitPattern[j]) != 0) {
                                 st.append("X ");
@@ -631,7 +631,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                                 st.append("O ");
                             }
                         }
-                        statusText2.setText(new String(st));
+                        statusText2.setText(st.toString());
                         statusText2.setVisible(true);
 
                         // set up for testing input returned
@@ -672,28 +672,27 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
 
-        // start timer        
+        // start timer
         wrapTimer.start();
     }
 
     /**
-     * Local Method to stop a Wraparound Test
+     * Stop a Wraparound Test.
      */
     protected void stopWraparoundTest() {
         if (testRunning && wrapTest) {
             // Stop the timer
             wrapTimer.stop();
             // Update the status
-            statusText1.setText("Wraparound Test Stopped, " + Integer.toString(numErrors)
-                    + " Errors Found");
+            statusText1.setText(Bundle.getMessage("StatusLine8", Integer.toString(numErrors)));
             statusText1.setVisible(true);
-            statusText2.setText(Integer.toString(numIterations) + " Cycles Completed");
+            statusText2.setText(Bundle.getMessage("StatusLine9", Integer.toString(numIterations)));
             statusText2.setVisible(true);
         }
     }
 
     /**
-     * Local Method to create an Transmit packet (SerialMessage)
+     * Create an Transmit packet (SerialMessage).
      */
     SerialMessage createOutPacket() {
         // Count the number of DLE's to be inserted
@@ -723,14 +722,14 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Message notification method to implement SerialListener interface
+     * {@inheritDoc}
      */
     @Override
     public void message(SerialMessage m) {
-    }  // Ignore for now 
+    }  // Ignore for now
 
     /**
-     * Reply notification method to implement SerialListener interface
+     * Reply notification implementing SerialListener interface
      */
     @Override
     public synchronized void reply(SerialReply l) {
@@ -759,4 +758,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
         super.windowClosing(e);
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DiagnosticFrame.class);
 }

@@ -22,8 +22,7 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.tearDown(); 
     }
 
 }

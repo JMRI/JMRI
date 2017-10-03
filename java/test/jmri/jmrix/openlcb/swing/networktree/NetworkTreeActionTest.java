@@ -1,11 +1,12 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 /**
  * @author Bob Jacobsen Copyright 2013
  * @author Paul Bender Copyright(C) 2016
@@ -25,8 +26,7 @@ public class NetworkTreeActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         tc = new jmri.jmrix.can.adapters.loopback.LoopbackTrafficController();
@@ -37,7 +37,6 @@ public class NetworkTreeActionTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }
