@@ -1,12 +1,12 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,12 +55,12 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             restartTimer(EliteXNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV, val);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
                 controller().sendXNetMessage(msg, this);
-            } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV, val);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
@@ -113,12 +113,12 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             restartTimer(EliteXNetProgrammerTimeout);
 
             // format and send message to go to program mode
-            if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) {
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
                 XNetMessage msg = XNetMessage.getReadPagedCVMsg(CV);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
                 controller().sendXNetMessage(msg, this);
-            } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE) || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
                 XNetMessage msg = XNetMessage.getReadDirectCVMsg(CV);
                 msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
                 msg.setTimeout(ELITEMESSAGETIMEOUT);
@@ -246,8 +246,8 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             if (m.isPagedModeResponse()) {
                 // valid operation response, but does it belong to us?
                 try {
-                    // we always save the cv number, but if 
-                    // we are using register mode, there is 
+                    // we always save the cv number, but if
+                    // we are using register mode, there is
                     // at least one case (CV29) where the value
                     // returned does not match the value we saved.
                     if (m.getServiceModeCVNumber() != _cv
@@ -267,7 +267,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 }
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                // if this was a read, we cached the value earlier.  
+                // if this was a read, we cached the value earlier.
                 // If its a write, we're to return the original write value
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                 return;
@@ -332,7 +332,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    // listen for the messages to the Elite 
+    // listen for the messages to the Elite
     @Override
     synchronized public void message(XNetMessage l) {
     }

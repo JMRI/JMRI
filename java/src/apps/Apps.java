@@ -360,7 +360,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
                     tp.init();
                 });
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
             }
         }, "init prefs").start();
@@ -369,7 +369,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         new Thread(() -> {
             try {
                 InstanceManager.getDefault(DecoderIndexFile.class);
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 log.error("Error in trying to initialize decoder index file {}", ex.getMessage());
             }
         }, "initialize decoder index").start();
@@ -378,7 +378,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             new Thread(() -> {
                 try {
                     JmriScriptEngineManager.getDefault().initializeAllEngines();
-                } catch (Exception ex) {
+                } catch (RuntimeException ex) {
                     log.error("Error in trying to initialize python interpreter {}", ex.getMessage());
                 }
             }, "initialize python interpreter").start();
@@ -896,7 +896,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             } else if (!current.equals(value)) {
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);
         }
     }

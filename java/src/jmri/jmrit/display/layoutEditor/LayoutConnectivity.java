@@ -75,7 +75,7 @@ public class LayoutConnectivity {
     private int direction = Path.NONE;
     private TrackSegment track1 = null;
 
-    private Object connect2 = null;
+    private LayoutTrack connect2 = null;
     private int typeConnect2 = 0;
 
     private LayoutTurnout xover = null;
@@ -130,14 +130,14 @@ public class LayoutConnectivity {
         return (false);
     }
 
-    public void setConnections(TrackSegment t, Object o, int type, PositionablePoint p) {
+    public void setConnections(TrackSegment t, LayoutTrack o, int type, PositionablePoint p) {
         track1 = t;
         if (t == null) {
             log.error("null track1 when setting up LayoutConnectivity");
         }
         connect2 = o;
         if (o == null) {
-            log.error("null connect object when setting up LayoutConnectivity");
+            log.error("null connect track when setting up LayoutConnectivity");
         }
         typeConnect2 = type;
         anchor = p;
@@ -155,7 +155,7 @@ public class LayoutConnectivity {
         return track1;
     }
 
-    public Object getConnectedObject() {
+    public LayoutTrack getConnectedObject() {
         return connect2;
     }
 

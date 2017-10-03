@@ -1,28 +1,25 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.GraphicsEnvironment;
+import javax.swing.JLabel;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
-import jmri.jmrit.roster.RosterEntry;
-import java.awt.GraphicsEnvironment;
-import javax.swing.JLabel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintCvActionTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         RosterEntry re = new RosterEntry();
         PaneProgFrame pFrame = new PaneProgFrame(null, re,
                 "test frame", "programmers/Basic.xml",

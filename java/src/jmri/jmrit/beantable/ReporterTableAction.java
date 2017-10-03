@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -205,7 +207,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
-    JTextField hardwareAddressTextField = new JTextField(10);
+    CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     JTextField userNameTextField = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
@@ -213,6 +215,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
+    PropertyChangeListener colorChangeListener;
     JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     String connectionChoice = "";
@@ -224,7 +227,7 @@ public class ReporterTableAction extends AbstractTableAction {
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
-            ActionListener okListener = new ActionListener() {
+            ActionListener createListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
@@ -248,7 +251,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
-                    //Simple test not to add a system with a duplicate System prefix
+                    // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
                         if ((prefixBox.getItemAt(i)).equals(manuName)) {
                             addToPrefix = false;
@@ -267,13 +270,32 @@ public class ReporterTableAction extends AbstractTableAction {
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox, numberToAdd, range, addButton,
-                    okListener, cancelListener, rangeListener, statusBar));
+            addButton.addActionListener(createListener);
+            // Define PropertyChangeListener
+            colorChangeListener = new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                    String property = propertyChangeEvent.getPropertyName();
+                    if ("background".equals(property)) {
+                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
+                            addButton.setEnabled(true);
+                        } else { // invalid
+                            addButton.setEnabled(false);
+                        }
+                    }
+                }
+            };
+            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            // create panel
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
         hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
-        hardwareAddressTextField.setBackground(Color.white);
+        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
+        hardwareAddressTextField.setBackground(Color.yellow);
+        addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
+        addButton.setName("createButton"); // for GUI test NOI18N
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -286,6 +308,7 @@ public class ReporterTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     void createPressed(ActionEvent e) {
@@ -380,7 +403,7 @@ public class ReporterTableAction extends AbstractTableAction {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
-        addButton = null;
+        addButton.removePropertyChangeListener(colorChangeListener);
     }
 
     private String addEntryToolTip;
@@ -422,6 +445,8 @@ public class ReporterTableAction extends AbstractTableAction {
         hardwareAddressTextField.setToolTipText("<html>"
                 + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
                 + "<br>" + addEntryToolTip + "</html>");
+        hardwareAddressTextField.setBackground(Color.yellow); // reset
+        addButton.setEnabled(true); // ambiguous, so start enabled
     }
 
     void handleCreateException(String sysName) {
@@ -434,7 +459,7 @@ public class ReporterTableAction extends AbstractTableAction {
     /**
      * Extends JTextField to provide a data validation function.
      *
-     * @author E. Broerse 2017, based on
+     * @author Egbert Broerse 2017, based on
      * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
      */
     public class CheckedTextField extends JTextField {
@@ -472,6 +497,9 @@ public class ReporterTableAction extends AbstractTableAction {
 
         /**
          * Validate the field information. Does not make any GUI changes.
+         * <p>
+         * During validation, logging is capped at the Error level to keep the Console clean from repeated validation.
+         * This is reset to default level afterwards.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -489,11 +517,20 @@ public class ReporterTableAction extends AbstractTableAction {
                 return false;
             } else if ((allow0Length == true) && (value.length() == 0)) {
                 return true;
-//            } else if (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value)) {
-//                // get prefixSelectedItem
-//                return true;
             } else {
-                return true; //false; // TODO temporarily disabled checking format while adding user feedback
+                boolean validFormat = false;
+                    // try {
+                    validFormat = (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value) == Manager.NameValidity.VALID);
+                    // } catch (jmri.JmriException e) {
+                    // use it for the status bar?
+                    // }
+                if (validFormat) {
+                    addButton.setEnabled(true); // directly update Create button
+                    return true;
+                } else {
+                    addButton.setEnabled(false); // directly update Create button
+                    return false;
+                }
             }
         }
 

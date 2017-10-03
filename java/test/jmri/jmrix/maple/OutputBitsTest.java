@@ -79,6 +79,7 @@ public class OutputBitsTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        obit = null;
         JUnitUtil.tearDown();
     }
 

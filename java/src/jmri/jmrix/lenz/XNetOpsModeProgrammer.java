@@ -45,7 +45,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     /**
-     * Send an ops-mode write request to the XPressnet.
+     * Send an ops-mode write request to the Xpressnet.
      */
     @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
@@ -85,7 +85,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 

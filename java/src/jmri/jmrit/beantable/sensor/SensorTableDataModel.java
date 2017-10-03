@@ -48,7 +48,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int INACTIVEDELAY = ACTIVEDELAY + 1;
     static public final int PULLUPCOL = INACTIVEDELAY + 1;
 
-    SensorManager senManager = InstanceManager.sensorManagerInstance();
+    SensorManager senManager = null;
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
@@ -167,7 +167,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
               return Bundle.getMessage("SensorActiveDebounce");
            case INACTIVEDELAY:
               return Bundle.getMessage("SensorInActiveDebounce");
-           case PULLUPCOL: 
+           case PULLUPCOL:
               return Bundle.getMessage("SensorPullUp");
            default:
               return super.getColumnName(col);
@@ -227,7 +227,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         if (col == USEGLOBALDELAY) {
             return true;
         }
-        //Need to do something here to make it disable 
+        //Need to do something here to make it disable
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
             if (sen.getUseDefaultTimerSettings()) {
                 return false;

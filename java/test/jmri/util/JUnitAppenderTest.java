@@ -135,6 +135,30 @@ public class JUnitAppenderTest extends TestCase {
         JUnitAppender.assertWarnMessage(msg);
     }
 
+    public void testExpectedMessageAsError() {
+        String msg = "Message for testing";
+        log.error(msg);
+        JUnitAppender.assertMessage(msg);
+    }
+
+    public void testExpectedMessageAsWarn() {
+        String msg = "Message for testing";
+        log.warn(msg);
+        JUnitAppender.assertMessage(msg);
+    }
+
+    public void testExpectedMessageAsInfo() {
+        String msg = "Message for testing";
+        log.info(msg);
+        // JUnitAppender.assertMessage(msg);  // info is usually turned off, so this doesn't pass
+    }
+
+    public void testExpectedMessageAsDebug() {
+        String msg = "Message for testing";
+        log.debug(msg);
+        // JUnitAppender.assertMessage(msg);  // debug is usually turned off, so this doesn't pass
+    }
+
     public void testIgnoreLowerBeforeExpectedWarnMessage() {
         log.debug("this is a DEBUG, should still pass");
         log.info("this is an INFO, should still pass");
@@ -229,7 +253,8 @@ public class JUnitAppenderTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+
+        apps.tests.Log4JFixture.tearDown();     
 
         // continue the testUnexpectedCheck test
         if (testingUnexpected) {
@@ -246,7 +271,6 @@ public class JUnitAppenderTest extends TestCase {
             
             testingUnexpected = false;
         }
-        
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class);

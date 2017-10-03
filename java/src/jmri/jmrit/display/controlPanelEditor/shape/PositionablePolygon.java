@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class PositionablePolygon extends PositionableShape {
 
     private ArrayList<Rectangle> _vertexHandles;
-    private boolean _editing = false;
+//    protected boolean _isClosed;
 
     // there is no default PositionablePolygon
     private PositionablePolygon(Editor editor) {
@@ -78,21 +78,16 @@ public class PositionablePolygon extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawPolygon("editShape", "Polygon", null);
-                    setEditParams();
-                }
+                makeEditFrame();
             }
         });
         return true;
     }
-
-    protected void editing(boolean edit) {
-        _editing = edit;
-    }
-
-    protected int getHitIndex() {
-        return _hitIndex;
+    private void makeEditFrame() {
+        if (_editFrame == null) {
+            _editFrame = new DrawPolygon("editShape", "Polygon", this);
+            setEditParams();
+        }
     }
 
     @Override

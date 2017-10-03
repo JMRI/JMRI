@@ -125,19 +125,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return false;
     }
 
-    /**
-     * Validate system name format.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.ReporterTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
-    }
-
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address passed does not already exist then this can

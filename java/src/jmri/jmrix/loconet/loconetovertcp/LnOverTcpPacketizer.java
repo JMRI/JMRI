@@ -217,9 +217,9 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     log.info("End of file");
 //                    disconnectPort(networkController);
                     return;
-                } // normally, we don't catch the unnamed Exception, but in this
+                } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
-                catch (Exception e) {
+                catch (RuntimeException e) {
                     log.warn("run: unexpected Exception: " + e);
                 }
             } // end of permanent loop

@@ -26,6 +26,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Abstract base class for Frames displaying communications monitor information.
@@ -46,6 +47,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected abstract void init();
 
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
+    @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
 
@@ -266,7 +268,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         init();
 
         // add help menu to window
-        addHelpMenu();
+        setHelp();
 
         // prevent button areas from expanding
         pack();
@@ -281,7 +283,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
      * Specific implementations can override this to show their own help page if
      * desired.
      */
-    protected void addHelpMenu() {
+    protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true); // NOI18N
     }
 
@@ -369,7 +371,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             // start logging
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
-            } catch (Exception ex) {
+            } catch (java.io.FileNotFoundException ex) {
                 log.error("exception " + ex);
             }
         }

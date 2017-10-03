@@ -12,7 +12,8 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import org.jdom2.Element;
+import org.jdom2.*;
+import java.io.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,7 +115,7 @@ public class PaneSet {
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
-        } catch (Exception e) {
+        } catch (JDOMException | IOException e) {
             log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
         }
         // load variables from decoder tree

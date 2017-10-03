@@ -11,19 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class DuplexGroupScanPanelTest {
+public class DuplexGroupScanPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        DuplexGroupScanPanel action = new DuplexGroupScanPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new DuplexGroupScanPanel();
+        helpTarget = "package.jmri.jmrix.loconet.DuplexGroupSetup.DuplexGroupScanPanel";
+        title = "Scan Duplex Channels";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

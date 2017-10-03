@@ -60,7 +60,7 @@ public class Path {
         this();
         _toBlockDirection = toBlockDirection;
         _fromBlockDirection = fromBlockDirection;
-        setBlock(dest);
+        Path.this.setBlock(dest);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Path {
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
         this(dest, toBlockDirection, fromBlockDirection);
-        addSetting(setting);
+        Path.this.addSetting(setting);
     }
 
     public void addSetting(BeanSetting t) {
@@ -377,7 +377,7 @@ public class Path {
             result.append(separator).append(MessageFormat.format("{0} with state {1}", beanSetting.getBean().getDisplayName(), beanSetting.getBean().describeState(beanSetting.getSetting()))); // NOI18N
             separator = ", "; // NOI18N
         }
-        return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result.toString()); // NOI18N
+        return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result); // NOI18N
     }
 
     // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
@@ -428,36 +428,29 @@ public class Path {
      * return the reverse octagonal direction
      *
      * @param inDir the direction
-     * @return the reverse direction
+     * @return the reverse direction or {@value #NONE} if inDir is not a
+     *         direction
      */
     public static int reverseDirection(int inDir) {
-        int result = NONE;
         switch (inDir) {
             case NORTH:
-                result = SOUTH;
-                break;
+                return SOUTH;
             case NORTH_EAST:
-                result = SOUTH_WEST;
-                break;
+                return SOUTH_WEST;
             case EAST:
-                result = WEST;
-                break;
+                return WEST;
             case SOUTH_EAST:
-                result = NORTH_WEST;
-                break;
+                return NORTH_WEST;
             case SOUTH:
-                result = NORTH;
-                break;
+                return NORTH;
             case SOUTH_WEST:
-                result = NORTH_EAST;
-                break;
+                return NORTH_EAST;
             case WEST:
-                result = EAST;
-                break;
+                return EAST;
             case NORTH_WEST:
-                result = SOUTH_EAST;
-                break;
+                return SOUTH_EAST;
+            default:
+                return NONE;
         }
-        return result;
-    }   // reverseDirection
+    }
 }

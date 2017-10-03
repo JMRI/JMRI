@@ -3,12 +3,11 @@ package jmri.jmrit.symbolicprog;
 import java.util.List;
 import javax.swing.JLabel;
 import jmri.util.JUnitUtil;
+import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.jdom2.Element;
 
 /**
  * Base for tests of classes inheriting from FnMapPanel abstract class
@@ -19,7 +18,7 @@ public class FnMapPanelTest {
 
     @Test
     public void testCtor() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
@@ -34,7 +33,7 @@ public class FnMapPanelTest {
 
     @Test
     public void testLargeNumbers() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},

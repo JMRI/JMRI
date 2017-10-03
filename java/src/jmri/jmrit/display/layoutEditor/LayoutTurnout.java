@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -15,25 +13,12 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -43,9 +28,7 @@ import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1058,7 +1041,6 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setSecondTurnout(@Nullable String tName) {
-
         if (tName != null && tName.equals(secondTurnoutName)) {
             return;
         }
@@ -1334,7 +1316,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     // updates connectivity for blocks assigned to this turnout and connected track segments
-    private void updateBlockInfo() {
+    protected void updateBlockInfo() {
         LayoutBlock bA = null;
         LayoutBlock bB = null;
         LayoutBlock bC = null;
@@ -1520,11 +1502,11 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setLayoutBlockByName(@Nullable String name) {
+    public void setLayoutBlockByName(@Nonnull String name) {
         blockName = name;
     }
 
-    public void setLayoutBlockBByName(@Nullable String name) {
+    public void setLayoutBlockBByName(@Nonnull String name) {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             blockBName = name;
         } else {
@@ -1532,7 +1514,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setLayoutBlockCByName(@Nullable String name) {
+    public void setLayoutBlockCByName(@Nonnull String name) {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             blockCName = name;
         } else {
@@ -1540,7 +1522,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setLayoutBlockDByName(@Nullable String name) {
+    public void setLayoutBlockDByName(@Nonnull String name) {
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             blockDName = name;
         } else {
@@ -2384,7 +2366,7 @@ public class LayoutTurnout extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLayoutTurnout();
+                    layoutEditor.getLayoutTrackEditors().editLayoutTurnout(LayoutTurnout.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -2652,596 +2634,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
         return boundaryBetween;
     }   // getBlockBoundaries
-
-    // variables for Edit Layout Turnout pane
-    protected JmriJFrame editLayoutTurnoutFrame = null;
-    private JmriBeanComboBox firstTurnoutComboBox = null;
-    private JmriBeanComboBox secondTurnoutComboBox = null;
-    private JLabel secondTurnoutLabel = null;
-    protected JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox blockBNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox blockCNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox blockDNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JComboBox<String> stateBox = new JComboBox<String>();
-    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("HideTurnout"));
-    private int turnoutClosedIndex;
-    private int turnoutThrownIndex;
-    private JButton turnoutEditBlock;
-    private JButton turnoutEditDone;
-    private JButton turnoutEditCancel;
-    private JButton turnoutEditBlockB;
-    private JButton turnoutEditBlockC;
-    private JButton turnoutEditBlockD;
-    private boolean editOpen = false;
-    protected boolean needRedraw = false;
-    protected boolean needsBlockUpdate = false;
-    private JCheckBox additionalTurnout = new JCheckBox(Bundle.getMessage("SupportingTurnout"));
-    private JCheckBox additionalTurnoutInvert = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));
-
-    /**
-     * Edit a Layout Turnout
-     */
-    protected void editLayoutTurnout() {
-        if (editOpen) {
-            editLayoutTurnoutFrame.setVisible(true);
-            return;
-        }
-        // Initialize if needed
-        if (editLayoutTurnoutFrame == null) {
-            editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditTurnout"), false, true);
-            editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutTurnout", true);
-            editLayoutTurnoutFrame.setLocation(50, 30);
-            Container contentPane = editLayoutTurnoutFrame.getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-            // setup turnout name
-            JPanel panel1 = new JPanel();
-            panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
-            panel1.add(turnoutNameLabel);
-
-            // add combobox to select turnout
-            firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
-
-            // disable items that are already in use
-            PopupMenuListener pml = new PopupMenuListener() {
-                @Override
-                public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                    // This method is called before the popup menu becomes visible.
-                    log.debug("PopupMenuWillBecomeVisible");
-                    Object o = e.getSource();
-                    if (o instanceof JmriBeanComboBox) {
-                        JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
-                        jmri.Manager m = jbcb.getManager();
-                        if (m != null) {
-                            String[] systemNames = m.getSystemNameArray();
-                            for (int idx = 0; idx < systemNames.length; idx++) {
-                                String systemName = systemNames[idx];
-                                jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(systemName, null));
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                    // This method is called before the popup menu becomes invisible
-                    log.debug("PopupMenuWillBecomeInvisible");
-                }
-
-                @Override
-                public void popupMenuCanceled(PopupMenuEvent e) {
-                    // This method is called when the popup menu is canceled
-                    log.debug("PopupMenuCanceled");
-                }
-            };
-
-            firstTurnoutComboBox.addPopupMenuListener(pml);
-            firstTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
-            firstTurnoutComboBox.setDisabledColor(Color.red);
-
-            panel1.add(firstTurnoutComboBox);
-            contentPane.add(panel1);
-
-            JPanel panel1a = new JPanel();
-            panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
-
-            secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
-
-            secondTurnoutComboBox.addPopupMenuListener(pml);
-            secondTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
-            secondTurnoutComboBox.setDisabledColor(Color.red);
-
-            additionalTurnout.addActionListener((ActionEvent e) -> {
-                boolean additionalEnabled = additionalTurnout.isSelected();
-                secondTurnoutLabel.setEnabled(additionalEnabled);
-                secondTurnoutComboBox.setEnabled(additionalEnabled);
-                additionalTurnoutInvert.setEnabled(additionalEnabled);
-            });
-            if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
-                additionalTurnout.setText(Bundle.getMessage("ThrowTwoTurnouts"));
-            }
-            panel1a.add(additionalTurnout);
-            contentPane.add(panel1a);
-
-            secondTurnoutLabel = new JLabel(Bundle.getMessage("Supporting", Bundle.getMessage("BeanNameTurnout")));
-            secondTurnoutLabel.setEnabled(false);
-            JPanel panel1b = new JPanel();
-            panel1b.add(secondTurnoutLabel);
-            panel1b.add(secondTurnoutComboBox);
-            additionalTurnoutInvert.addActionListener((ActionEvent e) -> {
-                setSecondTurnoutInverted(additionalTurnoutInvert.isSelected());
-            });
-            additionalTurnoutInvert.setEnabled(false);
-            panel1b.add(additionalTurnoutInvert);
-            contentPane.add(panel1b);
-
-            // add continuing state choice, if not crossover
-            if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
-                JPanel panel3 = new JPanel();
-                panel3.setLayout(new FlowLayout());
-                stateBox.removeAllItems();
-                stateBox.addItem(InstanceManager.turnoutManagerInstance().getClosedText());
-                turnoutClosedIndex = 0;
-                stateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
-                turnoutThrownIndex = 1;
-                stateBox.setToolTipText(Bundle.getMessage("StateToolTip"));
-                panel3.add(new JLabel(Bundle.getMessage("ContinuingState")));
-                panel3.add(stateBox);
-                contentPane.add(panel3);
-            }
-
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));
-            panel33.add(hiddenBox);
-            contentPane.add(panel33);
-
-            TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-            border.setTitle(Bundle.getMessage("BeanNameBlock"));
-            // setup block name
-            JPanel panel2 = new JPanel();
-            panel2.setBorder(border);
-            panel2.setLayout(new FlowLayout());
-            panel2.add(blockNameComboBox);
-            LayoutEditor.setupComboBox(blockNameComboBox, false, true);
-            blockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));
-            panel2.add(turnoutEditBlock = new JButton(Bundle.getMessage("CreateEdit")));
-            turnoutEditBlock.addActionListener((ActionEvent e) -> {
-                turnoutEditBlockPressed(e);
-            });
-            contentPane.add(panel2);
-            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-                JPanel panel21 = new JPanel();
-                panel21.setLayout(new FlowLayout());
-                TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
-                panel21.setBorder(borderblk2);
-                LayoutEditor.setupComboBox(blockBNameComboBox, false, true);
-                blockBNameComboBox.setToolTipText(Bundle.getMessage("EditBlockBNameHint"));
-                panel21.add(blockBNameComboBox);
-
-                panel21.add(turnoutEditBlockB = new JButton(Bundle.getMessage("CreateEdit")));
-                turnoutEditBlockB.addActionListener((ActionEvent e) -> {
-                    turnoutEditBlockBPressed(e);
-                });
-                turnoutEditBlockB.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));
-                contentPane.add(panel21);
-
-                JPanel panel22 = new JPanel();
-                panel22.setLayout(new FlowLayout());
-                TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
-                panel22.setBorder(borderblk3);
-                LayoutEditor.setupComboBox(blockCNameComboBox, false, true);
-                blockCNameComboBox.setToolTipText(Bundle.getMessage("EditBlockCNameHint"));
-                panel22.add(blockCNameComboBox);
-                panel22.add(turnoutEditBlockC = new JButton(Bundle.getMessage("CreateEdit")));
-                turnoutEditBlockC.addActionListener((ActionEvent e) -> {
-                    turnoutEditBlockCPressed(e);
-                });
-                turnoutEditBlockC.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));
-                contentPane.add(panel22);
-
-                JPanel panel23 = new JPanel();
-                panel23.setLayout(new FlowLayout());
-                TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
-                panel23.setBorder(borderblk4);
-                LayoutEditor.setupComboBox(blockDNameComboBox, false, true);
-                blockDNameComboBox.setToolTipText(Bundle.getMessage("EditBlockDNameHint"));
-                panel23.add(blockDNameComboBox);
-                panel23.add(turnoutEditBlockD = new JButton(Bundle.getMessage("CreateEdit")));
-                turnoutEditBlockD.addActionListener((ActionEvent e) -> {
-                    turnoutEditBlockDPressed(e);
-                });
-                turnoutEditBlockD.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));
-                contentPane.add(panel23);
-            }
-            // set up Edit Block, Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            // Edit Block
-
-            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
-            // Done
-            panel5.add(turnoutEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(turnoutEditDone);
-                rootPane.setDefaultButton(turnoutEditDone);
-            });
-
-            turnoutEditDone.addActionListener((ActionEvent e) -> {
-                turnoutEditDonePressed(e);
-            });
-            turnoutEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
-            // Cancel
-            panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            turnoutEditCancel.addActionListener((ActionEvent e) -> {
-                turnoutEditCancelPressed(e);
-            });
-            turnoutEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            contentPane.add(panel5);
-        }
-
-        hiddenBox.setSelected(hidden);
-
-        // Set up for Edit
-        blockNameComboBox.setText(blockName);
-        if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-            blockBNameComboBox.setText(blockBName);
-            blockCNameComboBox.setText(blockCName);
-            blockDNameComboBox.setText(blockDName);
-        }
-        firstTurnoutComboBox.setText(getTurnoutName());
-
-        if (secondNamedTurnout != null) {
-            additionalTurnout.setSelected(true);
-            additionalTurnoutInvert.setEnabled(true);
-            additionalTurnoutInvert.setSelected(isSecondTurnoutInverted());
-            secondTurnoutLabel.setEnabled(true);
-            secondTurnoutComboBox.setEnabled(true);
-            secondTurnoutComboBox.setText(getSecondTurnoutName());
-        }
-
-        if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
-            if (continuingSense == Turnout.CLOSED) {
-                stateBox.setSelectedIndex(turnoutClosedIndex);
-            } else {
-                stateBox.setSelectedIndex(turnoutThrownIndex);
-            }
-        }
-
-        editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                turnoutEditCancelPressed(null);
-            }
-        });
-        editLayoutTurnoutFrame.pack();
-        editLayoutTurnoutFrame.setVisible(true);
-        editOpen = true;
-        needsBlockUpdate = false;
-    }   // editLayoutTurnout
-
-    void turnoutEditBlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = blockNameComboBox.getUserName();
-        if (!blockName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((block != null) && (block != blockB) && (block != blockC)
-                    && (block != blockD)) {
-                block.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockName = newName;
-            try {
-                block = layoutEditor.provideLayoutBlock(blockName);
-            } catch (IllegalArgumentException ex) {
-                blockName = "";
-            }
-            // decrement use if block was already counted
-            if ((block != null) && ((block == blockB) || (block == blockC) || (block == blockD))) {
-                block.decrementUse();
-            }
-            needRedraw = true;
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (block == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        block.editLayoutBlock(editLayoutTurnoutFrame);
-        needRedraw = true;
-        layoutEditor.setDirty();
-    }   // turnoutEditBlockPressed
-
-    void turnoutEditBlockBPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = blockBNameComboBox.getUserName();
-        if (!blockBName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((blockB != null) && (block != blockB) && (blockB != blockC)
-                    && (blockB != blockD)) {
-                blockB.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockBName = newName;
-            try {
-                blockB = layoutEditor.provideLayoutBlock(blockBName);
-            } catch (IllegalArgumentException ex) {
-                blockBName = "";
-            }
-            // decrement use if block was already counted
-            if ((blockB != null) && ((block == blockB) || (blockB == blockC) || (blockB == blockD))) {
-                blockB.decrementUse();
-            }
-            needRedraw = true;
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockB == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockB.editLayoutBlock(editLayoutTurnoutFrame);
-        needRedraw = true;
-        layoutEditor.setDirty();
-    }   // turnoutEditBlockBPressed
-
-    void turnoutEditBlockCPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = blockCNameComboBox.getUserName();
-        if (!blockCName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((blockC != null) && (block != blockC) && (blockB != blockC)
-                    && (blockC != blockD)) {
-                blockC.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockCName = newName;
-            try {
-                blockC = layoutEditor.provideLayoutBlock(blockCName);
-            } catch (IllegalArgumentException ex) {
-                blockCName = "";
-            }
-            // decrement use if block was already counted
-            if ((blockC != null) && ((block == blockC) || (blockB == blockC) || (blockC == blockD))) {
-                blockD.decrementUse();
-            }
-            needRedraw = true;
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockC == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockC.editLayoutBlock(editLayoutTurnoutFrame);
-        needRedraw = true;
-        layoutEditor.setDirty();
-    }   // turnoutEditBlockCPressed
-
-    void turnoutEditBlockDPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = blockDNameComboBox.getUserName();
-        if (!blockDName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((blockD != null) && (block != blockD) && (blockB != blockD)
-                    && (blockC != blockD)) {
-                blockD.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockDName = newName;
-            try {
-                blockD = layoutEditor.provideLayoutBlock(blockDName);
-            } catch (IllegalArgumentException ex) {
-                blockDName = "";
-            }
-            // decrement use if block was already counted
-            if ((blockD != null) && ((block == blockD) || (blockB == blockD) || (blockC == blockD))) {
-                blockD.decrementUse();
-            }
-            needRedraw = true;
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockD == null) {
-            JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockD.editLayoutBlock(editLayoutTurnoutFrame);
-        needRedraw = true;
-        layoutEditor.setDirty();
-    }   // turnoutEditBlockDPressed
-
-    void turnoutEditDonePressed(ActionEvent a) {
-        // check if Turnout changed
-        String newName = firstTurnoutComboBox.getDisplayName();
-        if (!turnoutName.equals(newName)) {
-            // turnout has changed
-            if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
-                setTurnout(newName);
-            } else {
-                namedTurnout = null;
-                turnoutName = "";
-                firstTurnoutComboBox.setText("");
-            }
-            needRedraw = true;
-        }
-
-        if (additionalTurnout.isSelected()) {
-            newName = secondTurnoutComboBox.getDisplayName();
-            if (!secondTurnoutName.equals(newName)) {
-                if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-                    // turnout has changed
-                    if (layoutEditor.validatePhysicalTurnout(newName,
-                            editLayoutTurnoutFrame)) {
-                        setSecondTurnout(newName);
-                    } else {
-                        additionalTurnout.setSelected(false);
-                        secondNamedTurnout = null;
-                        secondTurnoutName = "";
-                        secondTurnoutComboBox.setText("");
-                    }
-                    needRedraw = true;
-                } else {
-                    setSecondTurnout(newName);
-                }
-            }
-        } else {
-            setSecondTurnout(null);
-        }
-
-        // set the continuing route Turnout State
-        if ((type == RH_TURNOUT) || (type == LH_TURNOUT) || (type == WYE_TURNOUT)) {
-            continuingSense = Turnout.CLOSED;
-            if (stateBox.getSelectedIndex() == turnoutThrownIndex) {
-                continuingSense = Turnout.THROWN;
-            }
-        }
-
-        // check if Block changed
-        newName = blockNameComboBox.getUserName();
-        if (!blockName.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((block != null) && (block != blockB) && (block != blockC)
-                    && (block != blockD)) {
-                block.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockName = newName;
-            try {
-                block = layoutEditor.provideLayoutBlock(blockName);
-            } catch (IllegalArgumentException ex) {
-                blockName = "";
-            }
-            // decrement use if block was already counted
-            if ((block != null) && ((block == blockB) || (block == blockC) || (block == blockD))) {
-                block.decrementUse();
-            }
-            needRedraw = true;
-            needsBlockUpdate = true;
-        }
-        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
-            // check if Block 2 changed
-            newName = blockBNameComboBox.getUserName();
-            if (!blockBName.equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((blockB != null) && (block != blockB) && (blockB != blockC)
-                        && (blockB != blockD)) {
-                    blockB.decrementUse();
-                }
-                // get new block, or null if block has been removed
-                blockBName = newName;
-                try {
-                    blockB = layoutEditor.provideLayoutBlock(blockBName);
-                } catch (IllegalArgumentException ex) {
-                    blockBName = "";
-                }
-                // decrement use if block was already counted
-                if ((blockB != null) && ((block == blockB) || (blockB == blockC) || (blockB == blockD))) {
-                    blockB.decrementUse();
-                }
-                needRedraw = true;
-                needsBlockUpdate = true;
-            }
-            // check if Block 3 changed
-            newName = blockCNameComboBox.getUserName();
-            if (!blockCName.equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((blockC != null) && (block != blockC) && (blockB != blockC)
-                        && (blockC != blockD)) {
-                    blockC.decrementUse();
-                }
-                // get new block, or null if block has been removed
-                blockCName = newName;
-                try {
-                    blockC = layoutEditor.provideLayoutBlock(blockCName);
-                } catch (IllegalArgumentException ex) {
-                    blockCName = "";
-                }
-
-                // decrement use if block was already counted
-                if ((blockC != null) && ((block == blockC) || (blockB == blockC) || (blockC == blockD))) {
-                    blockC.decrementUse();
-                }
-                needRedraw = true;
-                needsBlockUpdate = true;
-            }
-            // check if Block 4 changed
-            newName = blockDNameComboBox.getUserName();
-            if (!blockDName.equals(newName)) {
-                // block has changed, if old block exists, decrement use
-                if ((blockD != null) && (block != blockD) && (blockB != blockD)
-                        && (blockC != blockD)) {
-                    blockD.decrementUse();
-                }
-                // get new block, or null if block has been removed
-                blockDName = newName;
-                try {
-                    blockD = layoutEditor.provideLayoutBlock(blockDName);
-                } catch (IllegalArgumentException ex) {
-                    blockDName = "";
-                }
-                // decrement use if block was already counted
-                if ((blockD != null) && ((block == blockD) || (blockB == blockD) || (blockC == blockD))) {
-                    blockD.decrementUse();
-                }
-                needRedraw = true;
-                needsBlockUpdate = true;
-            }
-        }
-        // set hidden
-        boolean oldHidden = hidden;
-        hidden = hiddenBox.isSelected();
-        if (oldHidden != hidden) {
-            needRedraw = true;
-        }
-        editOpen = false;
-        editLayoutTurnoutFrame.setVisible(false);
-        editLayoutTurnoutFrame.dispose();
-        editLayoutTurnoutFrame = null;
-        if (needsBlockUpdate) {
-            updateBlockInfo();
-            reCheckBlockBoundary();
-        }
-        if (needRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }   // turnoutEditDonePressed
-
-    void turnoutEditCancelPressed(ActionEvent a) {
-        editOpen = false;
-        editLayoutTurnoutFrame.setVisible(false);
-        editLayoutTurnoutFrame.dispose();
-        editLayoutTurnoutFrame = null;
-        if (needsBlockUpdate) {
-            updateBlockInfo();
-        }
-        if (needRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
 
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<>(2);

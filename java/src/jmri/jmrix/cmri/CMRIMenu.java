@@ -12,7 +12,7 @@ public class CMRIMenu extends JMenu {
 
     CMRISystemConnectionMemo _memo = null;
 
-    public CMRIMenu(String name,CMRISystemConnectionMemo memo) {
+    public CMRIMenu(String name, CMRISystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }

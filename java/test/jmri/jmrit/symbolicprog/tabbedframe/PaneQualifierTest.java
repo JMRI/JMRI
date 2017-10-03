@@ -3,25 +3,23 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.VariableValue;
-import jmri.jmrit.symbolicprog.DecVariableValue;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.DecVariableValue;
+import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Some tests in this file are derived from the test for ArthmeticQualifier.
  *
  * @author Bob Jacobsen, Copyright 2014
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PaneQualifierTest {
 
@@ -35,7 +33,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableNotExistsOk() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -47,7 +45,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableNotExistsNOk() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -59,7 +57,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableExistsOk() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -79,7 +77,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableExistsNotOk() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -99,7 +97,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableEq() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -124,7 +122,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableGe() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -151,7 +149,7 @@ public class PaneQualifierTest {
     @Test
     public void testVariableRefEqNotExist() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         RosterEntry re = new RosterEntry();
         PaneProgPane jp = new PaneProgPane();
         JTabbedPane jtp = new JTabbedPane();
@@ -168,7 +166,7 @@ public class PaneQualifierTest {
     }
 
     // The minimal setup for log4J
-    @Before 
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDebugProgrammerManager();

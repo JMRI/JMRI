@@ -23,7 +23,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Returns the system letter for Acela
+     * Get the configured system prefix for this connection.
      */
     @Override
     public String getSystemPrefix() {
@@ -43,45 +43,35 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         Turnout trn = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName,_memo);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, _memo);
         if (nAddress == -1) {
             return (null);
         }
-        int bitNum = AcelaAddress.getBitFromSystemName(systemName);
+        int bitNum = AcelaAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
 
-// Bob C: Fix this up  
-         /*
-         conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum);
-         if ( conflict != "" ) {
-         log.error("Assignment conflict with "+conflict+".  Turnout not created.");
-         notifyTurnoutCreationError(conflict,bitNum);
-         return (null);
-         }
-         */
-
         // Validate the systemName
-        if (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix())) {
-            trn = new AcelaTurnout(systemName, userName,_memo);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'T',_memo)) {
-                log.warn("Turnout system Name does not refer to configured hardware: "
-                        + systemName);
+        if (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()) == NameValidity.VALID) {
+            trn = new AcelaTurnout(systemName, userName, _memo);
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'T', _memo)) {
+                log.warn("Turnout System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Turnout system Name format: " + systemName);
+            log.error("Invalid Turnout system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Turnout System Name format: " + systemName);
         }
         return trn;
     }
 
     /**
-     * Public method to notify user of Turnout creation error.
+     * Public method to notify user of Turnout creation error. use it somewhere TODO
      */
-    public void notifyTurnoutCreationError(String conflict, int bitNum) { // I18N TODO
-        javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum
-                + ", is currently assigned to " + conflict + ". Turnout cannot be created as "
-                + "you specified.", "Acela Assignment Conflict",
+    public void notifyTurnoutCreationError(String conflict, int bitNum) {
+        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("AcelaAssignDialog", bitNum, conflict,
+                Bundle.getMessage("BeanNameTurnout")),
+                Bundle.getMessage("AcelaAssignDialogTitle"),
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
@@ -90,7 +80,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
@@ -111,7 +101,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * return "" (empty string)
      */
     public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName));
+        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -121,7 +111,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * alternate representation, else return "".
      */
     public String convertSystemNameToAlternate(String systemName) {
-        return (AcelaAddress.convertSystemNameToAlternate(systemName));
+        return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     @Override

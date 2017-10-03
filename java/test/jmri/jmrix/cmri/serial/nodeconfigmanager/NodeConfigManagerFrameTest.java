@@ -28,9 +28,11 @@ public class NodeConfigManagerFrameTest {
     @Test
     public void testInitComponents() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigManagerFrame action = new NodeConfigManagerFrame(new CMRISystemConnectionMemo());
+        NodeConfigManagerFrame frame = new NodeConfigManagerFrame(new CMRISystemConnectionMemo());
         // test to make sure initCompoents doesn't throw an exception.
-        action.initComponents();
+        frame.initComponents();
+        // close
+        frame.dispose();
     }
 
 

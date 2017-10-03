@@ -13,60 +13,46 @@ import jmri.jmrix.nce.NceTrafficController;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class BoosterProgPanelTest {
+public class BoosterProgPanelTest extends jmri.util.swing.JmriPanelTest {
 
     private NceSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCtor() {
-        BoosterProgPanel action = new BoosterProgPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Test
     public void testInitComponents() throws Exception {
-        BoosterProgPanel action = new BoosterProgPanel();
         // this test currently only verifies there is no exception thrown.
-        action.initComponents(memo);
+        ((BoosterProgPanel)panel).initComponents(memo);
         // also check that dispose doesn't cause an exception
-        action.dispose();
+        panel.dispose();
     }
 
     @Test
     public void testInitContext() throws Exception {
-        BoosterProgPanel action = new BoosterProgPanel();
         // this test currently only verifies there is no exception thrown.
-        action.initContext(memo);
+        ((BoosterProgPanel)panel).initContext(memo);
         // also check that dispose doesn't cause an exception
-        action.dispose();
+        panel.dispose();
     }
 
-    @Test
-    public void testHelpTarget() {
-        BoosterProgPanel action = new BoosterProgPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.nce.boosterprog.BoosterProgPanel",action.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        BoosterProgPanel action = new BoosterProgPanel();
-        Assert.assertEquals("Title","NCE_: Booster Programming",action.getTitle());
-    }
 
     @Test
     public void testGetTitleAfterInit() throws Exception {
-        BoosterProgPanel action = new BoosterProgPanel();
-        action.initComponents(memo);
-        Assert.assertEquals("Title","NCE: Booster Programming",action.getTitle());
+        ((BoosterProgPanel)panel).initComponents(memo);
+        Assert.assertEquals("Title","NCE: Booster Programming",panel.getTitle());
     }
 
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
+        panel = new BoosterProgPanel();
+        helpTarget="package.jmri.jmrix.nce.boosterprog.BoosterProgPanel";
+        title="NCE_: Booster Programming";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

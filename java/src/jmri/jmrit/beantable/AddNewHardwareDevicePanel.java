@@ -23,13 +23,13 @@ import javax.swing.JTextField;
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JSpinner endRange, JCheckBox addRange,
-            JButton addButton, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener, JLabel statusBar) {
+            JButton addButton, ActionListener cancelListener, ActionListener rangeListener, JLabel statusBar) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         if (statusBar == null) statusBar = new JLabel("");
         _endRange = endRange;
         _range = addRange;
-        _addButton = addButton; // getting the addButton from the table action allows to disable it
-        // from there as long as no valid address is entered TODO
+        // directly using the addButton from the table action allows to disable it from there
+        // as long until a valid address is entered
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -87,8 +87,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         panelBottom.add(cancel);
         cancel.addActionListener(cancelListener);
 
-        panelBottom.add(_addButton);
-        _addButton.addActionListener(okListener);
+        panelBottom.add(addButton);
 
         add(panelBottom);
 
@@ -128,7 +127,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton cancel = new JButton(Bundle.getMessage("ButtonClose")); // when Apply has been clicked at least once, this is not Revert/Cancel
-    JButton _addButton;
     JSpinner _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
