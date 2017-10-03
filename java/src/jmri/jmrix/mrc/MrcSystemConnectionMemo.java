@@ -1,8 +1,8 @@
 package jmri.jmrix.mrc;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -13,7 +13,7 @@ import jmri.ProgrammerManager;
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
- * 
+ *
  */
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -31,6 +31,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
      * @return current traffic controller for this connection
      */
     public MrcTrafficController getMrcTrafficController() {
@@ -45,11 +46,9 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private ProgrammerManager programmerManager;
+    private MrcProgrammerManager programmerManager;
 
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
+    public MrcProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer if the system is disabled
         if (getDisabled()) {
             return null;
@@ -60,8 +59,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return programmerManager;
     }
 
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(MrcProgrammerManager p) {
         programmerManager = p;
     }
 
@@ -75,14 +73,10 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Tells which managers this provides by class
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
@@ -113,14 +107,11 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Provide manager by class
      */
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -152,13 +143,13 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private MrcTurnoutManager turnoutManager;
     private MrcThrottleManager throttleManager;
     private MrcClockControl clockManager;
+
     /*private MrcConsistManager consistManager;*/
 
     /**
      * Configure the common managers for MRC connections. This puts the common
      * manager config in one place.
      */
-    @SuppressWarnings("deprecation")
     public void configureManagers() {
         powerManager = new jmri.jmrix.mrc.MrcPowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
@@ -169,8 +160,12 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.mrc.MrcThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
 
-        InstanceManager.setProgrammerManager(
-                getProgrammerManager());
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
         clockManager = new jmri.jmrix.mrc.MrcClockControl(getMrcTrafficController(), getSystemPrefix());
         InstanceManager.addClockControl(clockManager);
@@ -194,6 +189,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public MrcClockControl getClockControl() {
         return clockManager;
     }
+
     /*public MrcConsistManager  getConsistManager() { return consistManager; }*/
 
     @Override
@@ -227,4 +223,3 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
 }
-

@@ -1,23 +1,20 @@
 package jmri.jmrit.symbolicprog;
 
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import java.util.HashMap;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DecVarSliderTest {
 
     @Test
     public void testCTor() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         HashMap<String, CvValue> v = new HashMap<String, CvValue>();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);

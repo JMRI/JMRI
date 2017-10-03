@@ -116,9 +116,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                         + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
-            } else if (programmer.getMode() != DefaultProgrammerManager.PAGEMODE
-                    && programmer.getSupportedModes().contains(DefaultProgrammerManager.PAGEMODE)) {
-                programmer.setMode(DefaultProgrammerManager.PAGEMODE);
+            } else if (programmer.getMode() != ProgrammingMode.PAGEMODE
+                    && programmer.getSupportedModes().contains(ProgrammingMode.PAGEMODE)) {
+                programmer.setMode(ProgrammingMode.PAGEMODE);
                 retry = 0;
                 state--;
                 log.warn(programmer.decodeErrorCode(status)

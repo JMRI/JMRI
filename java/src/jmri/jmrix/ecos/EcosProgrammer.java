@@ -29,7 +29,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
         return ret;
     }
 

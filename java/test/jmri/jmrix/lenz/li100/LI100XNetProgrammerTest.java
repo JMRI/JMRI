@@ -1,10 +1,10 @@
 package jmri.jmrix.lenz.li100;
 
 import jmri.JmriException;
+import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import jmri.managers.DefaultProgrammerManager;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -66,12 +66,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         // At this point, the LI100 XpressNet programmer
         // deviates from the standard XpressNet programmer.
-        // the LI100 version requests an exit from service 
+        // the LI100 version requests an exit from service
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
         Assert.assertEquals("exit service mode message contents", "21 81 A0", t.outbound.elementAt(2).toString());
 
-        // send reply stating service mode has exited       
+        // send reply stating service mode has exited
         XNetReply mr3 = new XNetReply();
         mr3.setElement(0, 0x61);
         mr3.setElement(1, 0x01);
@@ -97,7 +97,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         };
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV(29, 12, l);
@@ -126,12 +126,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         // At this point, the LI100 XpressNet programmer
         // deviates from the standard XpressNet programmer.
-        // the LI100 version requests an exit from service 
+        // the LI100 version requests an exit from service
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
         Assert.assertEquals("exit service mode message contents", "21 81 A0", t.outbound.elementAt(2).toString());
 
-        // send reply stating service mode has exited       
+        // send reply stating service mode has exited
         XNetReply mr3 = new XNetReply();
         mr3.setElement(0, 0x61);
         mr3.setElement(1, 0x01);
@@ -184,12 +184,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         // At this point, the LI100 XpressNet programmer
         // deviates from the standard XpressNet programmer.
-        // the LI100 version requests an exit from service 
+        // the LI100 version requests an exit from service
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
         Assert.assertEquals("exit service mode message contents", "21 81 A0", t.outbound.elementAt(2).toString());
 
-        // send reply stating service mode has exited       
+        // send reply stating service mode has exited
         XNetReply mr3 = new XNetReply();
         mr3.setElement(0, 0x61);
         mr3.setElement(1, 0x01);
@@ -216,7 +216,7 @@ public class LI100XNetProgrammerTest extends TestCase {
         };
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(29, l);
@@ -244,12 +244,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         // At this point, the LI100 XpressNet programmer
         // deviates from the standard XpressNet programmer.
-        // the LI100 version requests an exit from service 
+        // the LI100 version requests an exit from service
         // before sending a result to the registered listeners.
         //Assert.assertEquals("mode message sent", 3, t.outbound.size());
         Assert.assertEquals("exit service mode message contents", "21 81 A0", t.outbound.elementAt(2).toString());
 
-        // send reply stating service mode has exited       
+        // send reply stating service mode has exited
         XNetReply mr3 = new XNetReply();
         mr3.setElement(0, 0x61);
         mr3.setElement(1, 0x01);
@@ -302,12 +302,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         // At this point, the LI100 XpressNet programmer
         // deviates from the standard XpressNet programmer.
-        // the LI100 version requests an exit from service 
+        // the LI100 version requests an exit from service
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
         Assert.assertEquals("exit service mode message contents", "21 81 A0", t.outbound.elementAt(2).toString());
 
-        // send reply stating service mode has exited       
+        // send reply stating service mode has exited
         XNetReply mr3 = new XNetReply();
         mr3.setElement(0, 0x61);
         mr3.setElement(1, 0x01);
@@ -362,12 +362,12 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         // At this point, the LI100 XpressNet programmer
         // deviates from the standard XpressNet programmer.
-        // the LI100 version requests an exit from service 
+        // the LI100 version requests an exit from service
         // before sending a result to the registered listeners.
         Assert.assertEquals("mode message sent", 3, t.outbound.size());
         Assert.assertEquals("exit service mode message contents", "21 81 A0", t.outbound.elementAt(2).toString());
 
-        // send reply stating service mode has exited       
+        // send reply stating service mode has exited
         XNetReply mr3 = new XNetReply();
         mr3.setElement(0, 0x61);
         mr3.setElement(1, 0x01);

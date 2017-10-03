@@ -44,7 +44,7 @@ public class DccLocoAddress implements LocoAddress {
                     return false;
                 }
                 return true;
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 return false;
             }
         }

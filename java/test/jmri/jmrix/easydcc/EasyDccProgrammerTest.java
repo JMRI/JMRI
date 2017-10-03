@@ -9,7 +9,7 @@ package jmri.jmrix.easydcc;
 
 import java.util.Vector;
 import jmri.JmriException;
-import jmri.managers.DefaultProgrammerManager;
+import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -26,7 +26,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
-        p.setMode(DefaultProgrammerManager.PAGEMODE);
+        p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the write
         p.writeCV(10, 20, l);
@@ -37,9 +37,9 @@ public class EasyDccProgrammerTest extends TestCase {
                 ((t.outbound.elementAt(0))).toString());
     }
 
-    // Test names ending with "String" are for the new writeCV(String, ...) 
-    // etc methods.  If you remove the older writeCV(int, ...) tests, 
-    // you can rename these. Note that not all (int,...) tests may have a 
+    // Test names ending with "String" are for the new writeCV(String, ...)
+    // etc methods.  If you remove the older writeCV(int, ...) tests,
+    // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
     public void testWriteSequenceString() throws JmriException {
         // infrastructure objects
@@ -47,7 +47,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
-        p.setMode(DefaultProgrammerManager.PAGEMODE);
+        p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the write
         p.writeCV("10", 20, l);
@@ -66,7 +66,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV(3, 12, l);
@@ -85,7 +85,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
         p.writeCV("3", 12, l);
@@ -102,7 +102,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
-        p.setMode(DefaultProgrammerManager.PAGEMODE);
+        p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);
@@ -131,7 +131,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
-        p.setMode(DefaultProgrammerManager.PAGEMODE);
+        p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
         p.readCV("10", l);
@@ -162,7 +162,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV(3, l);
@@ -191,7 +191,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccProgrammer p = new EasyDccProgrammer();
 
         // set register mode
-        p.setMode(DefaultProgrammerManager.REGISTERMODE);
+        p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
         p.readCV("3", l);
@@ -224,7 +224,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
-        p.setMode(DefaultProgrammerManager.PAGEMODE);
+        p.setMode(ProgrammingMode.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);

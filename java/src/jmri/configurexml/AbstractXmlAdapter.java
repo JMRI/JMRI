@@ -27,24 +27,24 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             String operation,
             String systemName,
             String userName,
-            Exception exception) throws JmriConfigureXmlException {
+            Exception exception) {
         if (errorHandler != null) {
             this.errorHandler.handle(new ErrorMemo(this, operation, description, systemName, userName, exception));
         }
     }
 
     @Override
-    public boolean load(Element e) throws Exception {
+    public boolean load(Element e) throws JmriConfigureXmlException {
         throw new UnsupportedOperationException("One of the other load methods must be implemented.");
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
         return this.load(shared);
     }
 
     @Override
-    public void load(Element shared, Element perNode, Object o) throws Exception {
+    public void load(Element shared, Element perNode, Object o) throws JmriConfigureXmlException { // may not need exception
         this.load(shared, o);
     }
 

@@ -1,8 +1,8 @@
 package jmri.jmrix.nce;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -52,6 +52,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
      * @return tc for this connection
      */
     public NceTrafficController getNceTrafficController() {
@@ -66,11 +67,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private ProgrammerManager programmerManager;
+    private NceProgrammerManager programmerManager;
 
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
+    public NceProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer if the system is disabled
         if (getDisabled()) {
             return null;
@@ -81,13 +80,13 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return programmerManager;
     }
 
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(NceProgrammerManager p) {
         programmerManager = p;
     }
 
     /**
      * Sets the NCE message option.
+     *
      * @param val command option value
      */
     public void configureCommandStation(int val) {
@@ -103,9 +102,6 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return true;
@@ -149,9 +145,6 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -221,8 +214,12 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 // don't set a service mode programmer
             }
         } else {
-            InstanceManager.setProgrammerManager(
-                    getProgrammerManager());
+            if (getProgrammerManager().isAddressedModePossible()) {
+                InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            }
+            if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+                InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+            }
         }
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());

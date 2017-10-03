@@ -4,20 +4,19 @@ import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.jmrit.symbolicprog.DecVariableValue;
+import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Some tests in this file are derived from the test for ArthmeticQualifier.
  *
  * @author Bob Jacobsen, Copyright 2014
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JComponentQualifierTest {
 
@@ -47,7 +46,7 @@ public class JComponentQualifierTest {
     @Test
     public void testVariableExistsOk() {
         HashMap<String, CvValue> v = createCvMap();
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
         v.put("81", cv);
@@ -62,7 +61,7 @@ public class JComponentQualifierTest {
     @Test
     public void testVariableExistsNotOk() {
         HashMap<String, CvValue> v = createCvMap();
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
         v.put("81", cv);
@@ -77,7 +76,7 @@ public class JComponentQualifierTest {
     @Test
     public void testVariableEq() {
         HashMap<String, CvValue> v = createCvMap();
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
         v.put("81", cv);
@@ -97,7 +96,7 @@ public class JComponentQualifierTest {
     @Test
     public void testVariableGe() {
         HashMap<String, CvValue> v = createCvMap();
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
         v.put("81", cv);
@@ -130,7 +129,7 @@ public class JComponentQualifierTest {
     }
 
     // The minimal setup for log4J
-    @Before 
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
         jp = new JPanel();

@@ -220,7 +220,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         opened = false;
         try {
             closeConnection();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
         }
         reconnect();
     }
@@ -228,7 +228,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /*Each serial port adapter should handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
 
-    protected void closeConnection() throws Exception {
+    protected void closeConnection() {
         System.out.println("crap Called");
     }
 
@@ -297,7 +297,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             }
                         }
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {

@@ -295,7 +295,7 @@ public class WarrantManagerXml //extends XmlFile
     }
 
     @Override
-    public void load(Element element, Object o) throws Exception {
+    public void load(Element element, Object o) {
         log.error("load called. Invalid method.");
     }
 
