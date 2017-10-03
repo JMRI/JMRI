@@ -37,9 +37,11 @@ public class HexFileFrame extends JmriJFrame {
         super();
     }
 
-    //LocoNetSystemConnectionMemo adaptermemo = null;
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         if (port == null) {
             log.error("initComponents called before adapter has been set");
         }
@@ -193,16 +195,12 @@ public class HexFileFrame extends JmriJFrame {
         sourceThread.start();
     }
 
-    @SuppressWarnings("deprecation")
     public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
         sourceThread.suspend();
-        // sinkThread.suspend(); // allow sink to catch up
     }
 
-    @SuppressWarnings("deprecation")
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
         sourceThread.resume();
-        // sinkThread.resume();
     }
 
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
@@ -213,7 +211,6 @@ public class HexFileFrame extends JmriJFrame {
     }
 
     private Thread sourceThread;
-    //private Thread sinkThread;
 
     public void setAdapter(LnHexFilePort adapter) {
         port = adapter;

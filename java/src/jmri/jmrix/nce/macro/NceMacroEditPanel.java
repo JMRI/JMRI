@@ -209,18 +209,27 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.macro.NceMacroEditFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -234,8 +243,11 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo memo) throws Exception {
+    public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         this.tc = memo.getNceTrafficController();
         maxNumMacros = CabMemorySerial.CS_MAX_MACRO;

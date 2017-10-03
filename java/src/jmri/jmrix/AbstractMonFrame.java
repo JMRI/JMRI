@@ -90,8 +90,11 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         self = this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         // the following code sets the frame's initial state

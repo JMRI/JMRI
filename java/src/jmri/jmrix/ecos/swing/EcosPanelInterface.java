@@ -17,6 +17,6 @@ public interface EcosPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      */
-    public void initComponents(EcosSystemConnectionMemo memo) throws Exception;
+    public void initComponents(EcosSystemConnectionMemo memo);
 
 }

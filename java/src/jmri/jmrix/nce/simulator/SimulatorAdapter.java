@@ -221,8 +221,8 @@ public class SimulatorAdapter extends NcePortController implements
         while (true) {
             try {
                 wait(100);
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
+                log.debug("continuing after interrupt");
             }
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {

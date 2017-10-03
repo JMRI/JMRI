@@ -22,8 +22,11 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -68,10 +71,16 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         EasyDccTrafficController.instance().sendEasyDccMessage(m, this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(EasyDccMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(EasyDccReply r) {
     } // ignore replies

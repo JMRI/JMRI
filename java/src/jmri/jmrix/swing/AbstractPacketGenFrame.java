@@ -24,8 +24,11 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
         setTitle("Send Packet"); // NOI18N
 

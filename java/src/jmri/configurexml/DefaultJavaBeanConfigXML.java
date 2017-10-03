@@ -31,7 +31,11 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
     public void load(Element e, Object o) {
     }
 
-    Object unpack(Element e) throws Exception {
+    Object unpack(Element e) 
+            throws ClassNotFoundException,  NoSuchMethodException, InstantiationException,
+                    java.beans.IntrospectionException, IllegalAccessException,
+                    java.lang.reflect.InvocationTargetException
+            {
         String classname = e.getAttributeValue("beanClass");
 
         Class<?> cl = Class.forName(classname);
