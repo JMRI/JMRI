@@ -29,8 +29,7 @@ public class HomeServletAcceptanceSteps implements En {
       });
 
       Then("^the home page is returned$", () -> {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Assert.assertEquals("Page Title","index",webDriver.getTitle());
       });
 
       After(tags,()->{
