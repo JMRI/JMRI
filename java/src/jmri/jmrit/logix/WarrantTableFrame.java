@@ -138,7 +138,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * method, rather than in the ctor itself.
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         if (log.isDebugEnabled()) log.debug("initComponents");
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??

@@ -30,6 +30,14 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         _memo.getTrafficController().addSerialListener(this);
     }
 
+    /**
+     * Define system-specific help item
+     */
+    @Override
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.cmri.serial.serialmon.SerialMonFrame", true);  // NOI18N
+    }
+
     @Override
     public void dispose() {
         _memo.getTrafficController().removeSerialListener(this);
@@ -37,7 +45,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     @Override
- 
+
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

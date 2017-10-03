@@ -39,23 +39,28 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     public void init() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof SerialSystemConnectionMemo) {
-            try {
-                this.memo = (SerialSystemConnectionMemo) context;
-                initComponents();
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            this.memo = (SerialSystemConnectionMemo) context;
+            initComponents();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -69,8 +74,11 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(SerialSystemConnectionMemo memo) throws Exception {
+    public void initComponents(SerialSystemConnectionMemo memo) {
         this.memo = memo;
         tc = memo.getTrafficController();
         

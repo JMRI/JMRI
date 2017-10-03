@@ -22,7 +22,7 @@ public class ProducerTablePane extends JPanel {
     protected JTable table = null;
     protected ProducerTableModel tableModel = null;
 
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setSize(500, 300);

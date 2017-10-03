@@ -351,35 +351,34 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /**
      * By default, Swing components should be created an installed in this
      * method, rather than in the ctor itself.
-     *
-     * @throws java.lang.Exception may throw an Exception if an overriding class
-     *                             encounters an Exception
      */
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     /**
      * Add a standard help menu, including window specific help item.
+     * 
+     * Final because it defines the content of a standard help menu, not to be messed with individually
      *
      * @param ref    JHelp reference for the desired window-specific help page
-     * @param direct true if the help menu goes directly to the help system,
+     * @param direct true if the help main-menu item goes directly to the help system,
      *               such as when there are no items in the help menu
      */
-    public void addHelpMenu(String ref, boolean direct) {
+    final public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
         if (bar == null) {
             bar = new JMenuBar();
         }
         // add Window menu
-        bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
+        bar.add(new WindowMenu(this));
         // add Help menu
         jmri.util.HelpUtil.helpMenu(bar, ref, direct);
         setJMenuBar(bar);
     }
 
     /**
-     * Adds a "Close Window" key short cut to close window on op-W.
+     * Adds a "Close Window" key shortcut to close window on op-W.
      */
     void addWindowCloseShortCut() {
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004

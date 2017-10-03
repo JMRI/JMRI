@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 
 /**
@@ -13,7 +12,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010
  */
-public class EngineSetFrame extends RollingStockSetFrame implements
+public class EngineSetFrame extends RollingStockSetFrame<Engine> implements
         java.beans.PropertyChangeListener {
 
     protected static final ResourceBundle rb = ResourceBundle
@@ -69,7 +68,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
             if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
                     Bundle.getMessage("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 // convert cars list to rolling stock list
-                List<RollingStock> list = _engine.getConsist().getGroup();
+                List<Engine> list = _engine.getConsist().getGroup();
                 if (!updateGroup(list)) {
                     return false;
                 }

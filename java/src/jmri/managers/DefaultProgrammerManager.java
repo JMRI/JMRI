@@ -1,96 +1,143 @@
 package jmri.managers;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.AddressedProgrammer;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a very basic implementation of ProgrammerManager. You give it a
- * service-mode Programmer (perhaps null) at construction time that it returns
- * when requested; Ops Mode requests get a null in response to a request,
- * showing there's no programmer of that type.
+ * Provides a very basic implementation of a programmer manager by providing a
+ * union of the AddressedProgrammerManager and GlobalProgrammerManager
+ * interfaces.
  * <p>
- * This class also defines basic ProgrammingMode constants for the NMRA-defined
- * modes
+ * This implementation requires a service-mode Programmer at construction time
+ * and returns that Programmer for all global programming mode requests. This
+ * implementation of AddressedProgrammerManager always returns null for Op Mode,
+ * or addressed programmer requests, indicating there is no programmer of that
+ * type.
  *
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2015, 2016
+ * @see jmri.AddressedProgrammerManager
+ * @see jmri.GlobalProgrammerManager
+ * @author Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
-public class DefaultProgrammerManager implements ProgrammerManager {
+public class DefaultProgrammerManager implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     /**
-     * NMRA "Paged" mode
+     * NMRA "Paged" mode.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#PAGEMODE} instead
      */
-    public static final ProgrammingMode PAGEMODE = new ProgrammingMode("PAGEMODE");
+    @Deprecated
+    public static final ProgrammingMode PAGEMODE = ProgrammingMode.PAGEMODE;
 
     /**
      * NMRA "Operations" or "Programming on the main" mode, using only the
-     * bit-wise operations
+     * bit-wise operations.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSBITMODE} instead
      */
-    public static final ProgrammingMode OPSBITMODE = new ProgrammingMode("OPSBITMODE");
+    @Deprecated
+    public static final ProgrammingMode OPSBITMODE = ProgrammingMode.OPSBITMODE;
 
     /**
      * NMRA "Programming on the main" mode for stationary decoders, using only
      * the byte-wise operations and "extended" addressing.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCEXTBYTEMODE}
+     * instead
      */
-    public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE");
+    @Deprecated
+    public static final ProgrammingMode OPSACCEXTBYTEMODE = ProgrammingMode.OPSACCEXTBYTEMODE;
 
     /**
      * NMRA "Programming on the main" mode for stationary decoders, using only
      * the bit-wise operations. Note that this is defined as using the "normal",
      * not "extended" addressing.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCBITMODE}
+     * instead
      */
-    public static final ProgrammingMode OPSACCBITMODE = new ProgrammingMode("OPSACCBITMODE");
+    @Deprecated
+    public static final ProgrammingMode OPSACCBITMODE = ProgrammingMode.OPSACCBITMODE;
 
     /**
      * NMRA "Programming on the main" mode for stationary decoders, using only
      * the bit-wise operations and "extended" addressing.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCEXTBITMODE}
+     * instead
      */
-    public static final ProgrammingMode OPSACCEXTBITMODE = new ProgrammingMode("OPSACCEXTBITMODE");
+    @Deprecated
+    public static final ProgrammingMode OPSACCEXTBITMODE = ProgrammingMode.OPSACCEXTBITMODE;
 
     /**
      * NMRA "Programming on the main" mode for stationary decoders, using only
      * the byte-wise operations. Note that this is defined as using the
      * "normal", not "extended" addressing.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSACCBYTEMODE}
+     * instead
      */
-    public static final ProgrammingMode OPSACCBYTEMODE = new ProgrammingMode("OPSACCBYTEMODE");
+    @Deprecated
+    public static final ProgrammingMode OPSACCBYTEMODE = ProgrammingMode.OPSACCBYTEMODE;
 
     /**
      * NMRA "Address-only" mode. Often implemented as a proper subset of
      * "Register" mode, as the underlying operation is the same.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#ADDRESSMODE} instead
      */
-    public static final ProgrammingMode ADDRESSMODE = new ProgrammingMode("ADDRESSMODE");
+    @Deprecated
+    public static final ProgrammingMode ADDRESSMODE = ProgrammingMode.ADDRESSMODE;
 
     /**
      * NMRA "Operations" or "Programming on the main" mode, using only the
-     * byte-wise operations
+     * byte-wise operations.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#OPSBYTEMODE} instead
      */
-    public static final ProgrammingMode OPSBYTEMODE = new ProgrammingMode("OPSBYTEMODE");
+    @Deprecated
+    public static final ProgrammingMode OPSBYTEMODE = ProgrammingMode.OPSBYTEMODE;
 
     /**
-     * NMRA "Direct" mode, using only the byte-wise operations
+     * NMRA "Direct" mode, using only the byte-wise operations.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#DIRECTBYTEMODE}
+     * instead
      */
-    public static final ProgrammingMode DIRECTBYTEMODE = new ProgrammingMode("DIRECTBYTEMODE");
+    @Deprecated
+    public static final ProgrammingMode DIRECTBYTEMODE = ProgrammingMode.DIRECTBYTEMODE;
 
     /**
-     * NMRA "Register" mode
+     * NMRA "Register" mode.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#REGISTERMODE} instead
      */
-    public static final ProgrammingMode REGISTERMODE = new ProgrammingMode("REGISTERMODE");
+    @Deprecated
+    public static final ProgrammingMode REGISTERMODE = ProgrammingMode.REGISTERMODE;
 
     /**
-     * NMRA "Direct" mode, using only the bit-wise operations
+     * NMRA "Direct" mode, using only the bit-wise operations.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#DIRECTBITMODE}
+     * instead
      */
-    public static final ProgrammingMode DIRECTBITMODE = new ProgrammingMode("DIRECTBITMODE");
+    @Deprecated
+    public static final ProgrammingMode DIRECTBITMODE = ProgrammingMode.DIRECTBITMODE;
 
     /**
-     * NMRA "Direct" mode, using both the bit-wise and byte-wise operations
+     * NMRA "Direct" mode, using both the bit-wise and byte-wise operations.
+     *
+     * @deprecated since 4.9.5; use {@link ProgrammingMode#DIRECTMODE} instead
      */
-    public static final ProgrammingMode DIRECTMODE = new ProgrammingMode("DIRECTMODE");
+    @Deprecated
+    public static final ProgrammingMode DIRECTMODE = ProgrammingMode.DIRECTMODE;
 
     // For the record, these were the original numerical definitions:
     //     public static final ProgrammingMode NONE	    =  new ProgrammingMode("NONE", 0);
@@ -105,39 +152,38 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     //     public static final ProgrammingMode OPSACCBITMODE   = new ProgrammingMode("OPSACCBITMODE", 112);
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
-    private Programmer mProgrammer;
+    private Programmer programmer;
 
     /**
-     * For case where no global programmer is available.
+     * Constructor when no global programmer is available.
      */
     public DefaultProgrammerManager() {
         this(null);  // indicates not present
     }
 
     /**
-     * Case where no SystemConnectionMemo has been created.
+     * Constructor with a programmer.
      *
-     * @param programmer the programmer to associate this manager with; null if
-     *                   no programmer is available
+     * @param programmer the programmer to use; if null, acts as if no
+     *                   programmer is available
      */
     public DefaultProgrammerManager(@Nullable Programmer programmer) {
-        mProgrammer = programmer;
+        this.programmer = programmer;
     }
 
     /**
-     * Create a new programmer manager.
+     * Constructor with a programmer and associated connection.
      *
-     * @param programmer the programmer to associate this manager with; null if
-     *                   no programmer is available
-     * @param memo       the memo for the system connection this manager is
-     *                   associated with
+     * @param programmer the programmer to use; if null, acts as if no
+     *                   programmer is available
+     * @param memo       the associated connection
      */
     public DefaultProgrammerManager(@Nullable Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
         this(programmer);
         this.userName = memo.getUserName();
     }
 
-    String userName = "<Default>";
+    private String userName = "<Default>";
 
     /**
      * Provides the human-readable representation for including
@@ -161,8 +207,8 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     @Override
     public Programmer getGlobalProgrammer() {
-        log.debug("return default service-mode programmer of type {}", (mProgrammer != null ? mProgrammer.getClass() : "(null)"));
-        return mProgrammer;
+        log.debug("return default service-mode programmer of type {}", (programmer != null ? programmer.getClass() : "(null)"));
+        return programmer;
     }
 
     @Override
@@ -172,7 +218,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     @Override
     public Programmer reserveGlobalProgrammer() {
-        return mProgrammer;
+        return programmer;
     }
 
     @Override
@@ -189,9 +235,9 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     /**
-     * Default programmer does not provide Ops Mode
+     * {@inheritDoc}
      *
-     * @return false since there's no chance of getting one
+     * @return always false in this implementation
      */
     @Override
     public boolean isAddressedModePossible() {
@@ -199,9 +245,9 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     /**
-     * Default programmer doesn't depend on address
+     * {@inheritDoc}
      *
-     * @return false since there's no chance of getting one
+     * @return always false in this implementation
      */
     @Override
     public boolean isAddressedModePossible(@Nonnull jmri.LocoAddress l) {
@@ -209,9 +255,9 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     /**
-     * Allow for implementations that do not support Service mode programming
+     * {@inheritDoc}
      *
-     * @return false if there's no chance of getting one
+     * @return always false in this implementation
      */
     @Override
     public boolean isGlobalProgrammerAvailable() {
@@ -219,15 +265,17 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     /**
-     * Provide a default implementation of the mode (most) AddressProgrammers
-     * make available.
+     * {@inheritDoc}
+     *
+     * @return a default list of programming modes that most
+     *         {@link jmri.AddressedProgrammer}s make available
      */
     @Override
-    public java.util.List<ProgrammingMode> getDefaultModes() {
-        java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<>();
-        retval.add(OPSBYTEMODE);
+    public List<ProgrammingMode> getDefaultModes() {
+        List<ProgrammingMode> retval = new java.util.ArrayList<>();
+        retval.add(ProgrammingMode.OPSBYTEMODE);
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
+    private final static Logger log = LoggerFactory.getLogger(ProgrammingMode.class);
 }

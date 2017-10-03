@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
@@ -30,7 +29,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("OperationsJUnitTestEngineRoster.xml", InstanceManager.getDefault(EngineManagerXml.class).getOperationsFileName());
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
-        List<RollingStock> tempengineList = manager.getByIdList();
+        List<Engine> tempengineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
         Engine e1 = manager.newEngine("CP", "Test Number 1");

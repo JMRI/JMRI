@@ -99,7 +99,7 @@ public class AcelaAddress {
         int num = -1;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (-1);
         }
@@ -126,7 +126,7 @@ public class AcelaAddress {
         int num;
         try {
             num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("invalid character in number field of system name: " + systemName);
             return NameValidity.INVALID;
         }

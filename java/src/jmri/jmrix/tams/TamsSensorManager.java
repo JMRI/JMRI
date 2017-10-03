@@ -202,7 +202,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             while (port < 17) {
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (Exception e) {
+                } catch (JmriException e) {
                     log.error("Error creating system name for " + board + ":" + port);
                 }
                 s = getBySystemName(tmpSName);

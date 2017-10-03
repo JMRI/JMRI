@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManager extends RollingStockManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class EngineManager extends RollingStockManager<Engine> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     protected Hashtable<String, Consist> _consistHashTable = new Hashtable<>(); // stores Consists by number
 
@@ -174,7 +174,7 @@ public class EngineManager extends RollingStockManager implements InstanceManage
      *
      * @return list of engines ordered by engine model
      */
-    public List<RollingStock> getByModelList() {
+    public List<Engine> getByModelList() {
         return getByList(getByRoadNameList(), BY_MODEL);
     }
 
@@ -183,11 +183,11 @@ public class EngineManager extends RollingStockManager implements InstanceManage
      *
      * @return list of engines ordered by engine consist
      */
-    public List<RollingStock> getByConsistList() {
+    public List<Engine> getByConsistList() {
         return getByList(getByRoadNameList(), BY_CONSIST);
     }
 
-    public List<RollingStock> getByHpList() {
+    public List<Engine> getByHpList() {
         return getByList(getByModelList(), BY_HP);
     }
 
@@ -198,14 +198,14 @@ public class EngineManager extends RollingStockManager implements InstanceManage
 
     // add engine options to sort comparator
     @Override
-    protected java.util.Comparator<RollingStock> getComparator(int attribute) {
+    protected java.util.Comparator<Engine> getComparator(int attribute) {
         switch (attribute) {
             case BY_MODEL:
-                return (e1, e2) -> (((Engine) e1).getModel().compareToIgnoreCase(((Engine) e2).getModel()));
+                return (e1, e2) -> (e1.getModel().compareToIgnoreCase(e2.getModel()));
             case BY_CONSIST:
-                return (e1, e2) -> (((Engine) e1).getConsistName().compareToIgnoreCase(((Engine) e2).getConsistName()));
+                return (e1, e2) -> (e1.getConsistName().compareToIgnoreCase(e2.getConsistName()));
             case BY_HP:
-                return (e1, e2) -> (((Engine) e1).getHpInteger() - ((Engine) e2).getHpInteger());
+                return (e1, e2) -> (e1.getHpInteger() - e2.getHpInteger());
             default:
                 return super.getComparator(attribute);
         }
@@ -240,15 +240,7 @@ public class EngineManager extends RollingStockManager implements InstanceManage
      * @return A list of sorted locos.
      */
     public List<Engine> getByTrainBlockingList(Train train) {
-        return castListToEngine(getByList(super.getByTrainList(train), BY_BLOCKING));
-    }
-
-    private List<Engine> castListToEngine(List<RollingStock> list) {
-        List<Engine> out = new ArrayList<Engine>();
-        for (RollingStock rs : list) {
-            out.add((Engine) rs);
-        }
-        return out;
+        return getByList(super.getByTrainList(train), BY_BLOCKING);
     }
 
     /**

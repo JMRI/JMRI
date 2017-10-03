@@ -19,13 +19,19 @@ abstract public class RfidPanel extends jmri.util.swing.JmriPanel implements Rfi
      */
     protected RfidSystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(RfidSystemConnectionMemo memo) throws Exception {
+    public void initComponents(RfidSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof RfidSystemConnectionMemo) {
             try {
                 initComponents((RfidSystemConnectionMemo) context);

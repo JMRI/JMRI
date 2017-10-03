@@ -124,7 +124,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
                     log.error("internal state inconsistent with table requst for " + row + " " + col);
                     return null;
             }
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
 
         }
         return null;

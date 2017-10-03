@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
@@ -35,7 +34,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Default car load", "L", InstanceManager.getDefault(CarLoads.class).getDefaultLoadName());
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> tempcarList = manager.getByIdList();
+        List<Car> tempcarList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
         Car c1 = manager.newCar("CP", "Test Number 1");

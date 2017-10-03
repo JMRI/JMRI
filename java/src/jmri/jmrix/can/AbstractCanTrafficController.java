@@ -130,7 +130,7 @@ abstract public class AbstractCanTrafficController
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             portWarn(e);
         }
     }
@@ -303,7 +303,7 @@ abstract public class AbstractCanTrafficController
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
+        } catch (java.lang.reflect.InvocationTargetException | InterruptedException | RuntimeException e) {
             log.error("Unexpected exception in invokeAndWait:" + e);
             e.printStackTrace();
         }

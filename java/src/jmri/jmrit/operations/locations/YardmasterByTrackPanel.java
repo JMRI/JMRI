@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.locations;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -38,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster frame by track. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * 
+ *
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
@@ -181,7 +180,6 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         });
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();
@@ -360,9 +358,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             }
             // now do car holds
             // we only need the cars on this track
-            List<RollingStock> rsList = carManager.getByTrainList();
+            List<Car> rsList = carManager.getByTrainList();
             List<Car> carList = new ArrayList<Car>();
-            for (RollingStock rs : rsList) {
+            for (Car rs : rsList) {
                 if (rs.getTrack() != _track || rs.getRouteLocation() != null)
                     continue;
                 carList.add((Car) rs);

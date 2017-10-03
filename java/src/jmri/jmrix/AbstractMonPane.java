@@ -41,7 +41,9 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractMonPane extends JmriPanel {
 
-    // template functions to fill in
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public abstract String getTitle();    // provide the title for the frame
 
@@ -53,7 +55,9 @@ public abstract class AbstractMonPane extends JmriPanel {
      */
     protected abstract void init();
 
-    // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -177,8 +181,11 @@ public abstract class AbstractMonPane extends JmriPanel {
         add(p);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
 
         // the following code sets the frame's initial state
@@ -376,13 +383,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * Define help menu for this window.
-     * <p>
-     * By default, provides a generic help page that covers general features.
-     * Specific implementations can override this to show their own help page if
-     * desired.
-     *
-     * @return a String containing the name of the help target
+     * {@inheritDoc}
      */
     @Override
     public String getHelpTarget() {

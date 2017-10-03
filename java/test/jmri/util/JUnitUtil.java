@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.annotation.Nonnull;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
@@ -437,7 +438,8 @@ public class JUnitUtil {
 
     public static void initDebugProgrammerManager() {
         DebugProgrammerManager m = new DebugProgrammerManager();
-        InstanceManager.setProgrammerManager(m);
+        InstanceManager.setAddressedProgrammerManager(m);
+        InstanceManager.store(m, GlobalProgrammerManager.class);
     }
 
     public static void initDebugPowerManager() {
@@ -594,6 +596,24 @@ public class JUnitUtil {
     }
 
     /**
+     * Service method to find the test class name in the traceback.
+     * Heuristic: First jmri or apps class that isn't this one.
+     */
+    static String getTestClassName() {
+        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+        
+        for (StackTraceElement e : trace) {
+            if (e.getClassName().startsWith("jmri") || e.getClassName().startsWith("apps")) {
+                if (!e.getClassName().endsWith("JUnitUtil")) {
+                    return e.getClassName();
+                }
+            }
+        }
+
+        return "<unknown class>";
+    }
+    
+    /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using
      * {@link #dispose(java.awt.Window)} or
@@ -607,11 +627,11 @@ public class JUnitUtil {
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
             if (frame.isDisplayable()) {
-                String message = "Cleaning up frame \"{}\" (a {}).";
+                String message = "Cleaning up frame \"{}\" (a {}) in {}.";
                 if (error) {
-                    log.error(message, frame.getTitle(), frame.getClass());
+                    log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
                 } else if (warn) {
-                    log.warn(message, frame.getTitle(), frame.getClass());
+                    log.warn(message, frame.getTitle(), frame.getClass(), getTestClassName());
                 }
                 JUnitUtil.dispose(frame);
             }
@@ -619,18 +639,18 @@ public class JUnitUtil {
         for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
-                    String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent.";
+                    String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
                     if (!error) {
-                        log.warn(message);
+                        log.warn(message, getTestClassName());
                     } else {
-                        log.error(message);
+                        log.error(message, getTestClassName());
                     }
                 } else {
-                    String message = "Cleaning up window \"{}\" (a {}).";
+                    String message = "Cleaning up window \"{}\" (a {}) in {}.";
                     if (error) {
-                        log.error(message, window.getName(), window.getClass());
+                        log.error(message, window.getName(), window.getClass(), getTestClassName());
                     } else if (warn) {
-                        log.warn(message, window.getName(), window.getClass());
+                        log.warn(message, window.getName(), window.getClass(), getTestClassName());
                     }
                 }
                 JUnitUtil.dispose(window);

@@ -1,25 +1,24 @@
 package jmri.jmrit.symbolicprog;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import jmri.jmrit.roster.RosterEntry;
+import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.jdom2.Element;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class FnMapPanelESUTest {
 
     @Test
     public void testCTor() {
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvtm = new CvTableModel(new JLabel(), p);
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
