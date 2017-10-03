@@ -40,7 +40,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         _memo = memo;        
     }
 
-//    @Override
+    @Override
     public void dispose() { 
         super.dispose();
   }
@@ -76,15 +76,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         });
         
         paneA.add(pane1);
-
-<<<<<<< MRCS-monitor-metrics
         getContentPane().add(paneA);
         pack();
         paneA.setMaximumSize(paneA.getSize());
         pack();
+        
         // Move the filter packets button to the middle
         getContentPane().setComponentZOrder(paneA,1);
-=======
+    }
+    
     /**
      * Define system-specific help item
      */
@@ -93,13 +93,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         addHelpMenu("package.jmri.jmrix.cmri.serial.serialmon.SerialMonFrame", true);  // NOI18N
     }
 
-    @Override
-    public void dispose() {
-        _memo.getTrafficController().removeSerialListener(this);
-        super.dispose();
->>>>>>> master
-    }
-    
     /**
      * Method to initialize packet type filters
      */  
@@ -120,75 +113,25 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             pktTypeIndex++;
          } while ( pktTypeIndex < SerialFilterFrame.numMonPkts);
 
-<<<<<<< MRCS-monitor-metrics
+
          node = (SerialNode) _memo.getTrafficController().getNode(index);
          index ++;
          pktTypeIndex = 0;
 	}
-=======
-    @Override
-
-    public synchronized void message(SerialMessage l) {  // receive a message and log it
-        // check for valid length
-        if (l.getNumDataElements() < 2) {
-            nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
-                    l.toString());
-            return;
-        } else if (l.isPoll()) {
-            nextLine("Poll ua=" + l.getUA() + "\n", l.toString());
-        } else if (l.isXmt()) {
-            StringBuilder sb = new StringBuilder("Transmit ua=");
-            sb.append(l.getUA());
-            sb.append(" OB=");
-            for (int i = 2; i < l.getNumDataElements(); i++) {
-                sb.append(Integer.toHexString(l.getElement(i) & 0x000000ff));
-                sb.append(" ");
-            }
-            sb.append("\n");
-            nextLine(new String(sb), l.toString());
-        } else if (l.isInit()) {
-            StringBuilder sb = new StringBuilder("Init ua=");
-            sb.append(l.getUA());
-            sb.append(" type=");
-            sb.append((char) l.getElement(2));
-            int len = l.getNumDataElements();
-            if (len >= 5) {
-                sb.append(" DL=");
-                sb.append(l.getElement(3) * 256 + l.getElement(4));
-            }
-            if (len >= 6) {
-                sb.append(" NS=");
-                sb.append(l.getElement(5));
-                sb.append(" CT: ");
-                for (int i = 6; i < l.getNumDataElements(); i++) {
-                    sb.append(Integer.toHexString(l.getElement(i) & 0x000000ff));
-                    sb.append(" ");
-                }
-            }
-            sb.append("\n");
-            nextLine(new String(sb), l.toString());
-        } else {
-            nextLine("unrecognized cmd: \"" + l.toString() + "\"\n", "");
-        }
->>>>>>> master
     }
-
-    String newline = System.getProperty("line.separator");
-
     /**
     * Open the node/packet filter window
     */
-    public void openPacketFilterPerformed(ActionEvent e) 
-    {
-	// create a SerialFilterFrame
-	SerialFilterFrame f = new SerialFilterFrame(_memo);
-	try {
-		f.initComponents();
-            }
-	catch (Exception ex) {
+    public void openPacketFilterPerformed(ActionEvent e) {
+		// create a SerialFilterFrame
+		SerialFilterFrame f = new SerialFilterFrame(_memo);
+		try {
+			f.initComponents();
+			}
+		catch (Exception ex) {
 			log.warn("SerialMonFrame starting SerialFilterFrame: Exception: "+ex.toString());
 			}
-            f.setVisible(true);
+		f.setVisible(true);
 	}
     
     //-------------------
