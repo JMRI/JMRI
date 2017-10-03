@@ -361,6 +361,11 @@ if [ -z "${jmri_xms:-}" ] ; then
     jmri_xms="-Xms96m"
 fi
 
+# permit Java 9 illegal access
+if [[ $( "${JAVACMD}" -version 2>&1 | grep version ) =~ \"9 ]] ; then
+    jmri_options="${jmri_options} --illegal-access=warn"
+fi
+
 # define JMRI_HOME if it is not defined
 if [ -z "${JMRI_HOME}" ] ; then
     JMRI_HOME="${SCRIPTDIR}"
