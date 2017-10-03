@@ -36,11 +36,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     @Override
     public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 

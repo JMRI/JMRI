@@ -45,12 +45,8 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     @Override
     public void initContext(Object context) {
         if (context instanceof SerialSystemConnectionMemo) {
-            try {
-                this.memo = (SerialSystemConnectionMemo) context;
-                initComponents();
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            this.memo = (SerialSystemConnectionMemo) context;
+            initComponents();
         }
     }
 

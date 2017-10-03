@@ -429,13 +429,15 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         try {
             // Wait for initialization to complete
             wait(1000);
-        } catch (Exception e) {
-            // Ignore exception and continue
+        } catch (InterruptedException e) {
+            // means done
+            log.debug("interrupted");
+            return false;
         }
         // Initialization was successful
         numIterations = 0;
         testRunning = true;
-        return (true);
+        return true;
     }
 
     /**
@@ -528,8 +530,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         try {
             // Wait for initialization to complete
             wait(1000);
-        } catch (Exception e) {
-            // Ignore exception and continue
+        } catch (InterruptedException e) {
+            log.debug("interrupted");
+            return false;
         }
 
         // Clear error count
@@ -541,7 +544,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         waitingOnInput = false;
         needInputTest = false;
         count = 50;
-        return (true);
+        return true;
     }
 
     /**
@@ -756,4 +759,5 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         super.windowClosing(e);
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DiagnosticFrame.class);
 }

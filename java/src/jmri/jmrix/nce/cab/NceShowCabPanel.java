@@ -244,11 +244,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     @Override
     public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 

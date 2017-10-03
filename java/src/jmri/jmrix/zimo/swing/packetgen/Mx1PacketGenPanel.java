@@ -32,11 +32,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
     @Override
     public void initContext(Object context) {
         if (context instanceof Mx1SystemConnectionMemo) {
-            try {
-                initComponents((Mx1SystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((Mx1SystemConnectionMemo) context);
         }
     }
 

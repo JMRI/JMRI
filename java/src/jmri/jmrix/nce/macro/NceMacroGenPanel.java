@@ -47,11 +47,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
     @Override
     public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 

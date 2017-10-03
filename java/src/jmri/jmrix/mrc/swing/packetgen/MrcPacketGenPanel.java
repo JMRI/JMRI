@@ -33,11 +33,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
     @Override
     public void initContext(Object context) {
         if (context instanceof MrcSystemConnectionMemo) {
-            try {
-                initComponents((MrcSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((MrcSystemConnectionMemo) context);
         }
     }
 
