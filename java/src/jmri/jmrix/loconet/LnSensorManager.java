@@ -20,9 +20,9 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // ctor has to register for LocoNet events
         tc.addLocoNetListener(~0, this);
 
-        // start the update sequence.  Until JMRI 2.9.4, this waited
-        // until files have been read, but was stated automatically 
-        // in 2.9.5 for multi-system support.
+        // start the update sequence. Until JMRI 2.9.4, this waited
+        // until files have been read, but starts automatically
+        // since 2.9.5 for multi-system support.
         updateAll();
     }
 
@@ -70,7 +70,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 int sw2 = l.getElement(2);
                 a = new LnSensorAddress(sw1, sw2, prefix);
                 if (log.isDebugEnabled()) {
-                    log.debug("INPUT_REP received with address " + a);
+                    log.debug("INPUT_REP received with address {}", a);
                 }
                 break;
             default:  // here we didn't find an interesting command
@@ -81,7 +81,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         if (null == getBySystemName(s)) {
             // need to store a new one
             if (log.isDebugEnabled()) {
-                log.debug("Create new LnSensor as " + s);
+                log.debug("Create new LnSensor as {}", s);
             }
             LnSensor ns = (LnSensor) newSensor(s, null);
             ns.message(l);  // have it update state
@@ -145,14 +145,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 try {
                     board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
                 } catch (NumberFormatException ex) {
-                    log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx"); // NOI18N
+                    log.error("Unable to convert '{}' into the cab and channel format of nn:xx", curAddress); // NOI18N
                     throw new JmriException("Hardware Address passed should be a number"); // NOI18N
                 }
             }
             try {
                 channel = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx"); // NOI18N
+                log.error("Unable to convert '{}' into the cab and channel format of nn:xx", curAddress); // NOI18N
                 throw new JmriException("Hardware Address passed should be a number"); // NOI18N
             }
             if (turnout) {
@@ -165,7 +165,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number"); // NOI18N
+                log.error("Unable to convert '{}' Hardware Address to a number", curAddress); // NOI18N
                 throw new JmriException("Hardware Address passed should be a number"); // NOI18N
             }
         }
@@ -181,7 +181,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
             // here if an illegal loconet light system name
-            log.error("illegal character in header field of loconet sensor system name: " + systemName);
+            log.error("illegal character in header field of loconet sensor system name: {}", systemName);
             return (0);
         }
         // name must be in the LSnnnnn format (L is user configurable)
@@ -191,14 +191,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
+            log.warn("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid loconet sensor system name: " + systemName);
+            log.warn("invalid loconet sensor system name: {}", systemName);
             return (0);
         } else if (num > 4096) {
-            log.error("bit number out of range in loconet sensor system name: " + systemName);
+            log.warn("bit number out of range in loconet sensor system name: {}", systemName);
             return (0);
         }
         return (num);
@@ -223,7 +223,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false); // NOI18N
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false); // I18N
             return null;
         }
 

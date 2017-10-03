@@ -160,7 +160,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         if (confPane.ccCurrent != null) {
             try {
                 confPane.ccCurrent.dispose();
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 log.error("Error Occured while disposing connection {}", ex.toString());
             }
         }

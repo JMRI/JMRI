@@ -25,7 +25,7 @@ public class AddNewHardwareDevicePanelTest {
 
     @Test
     public void testCTor() {
-        ActionListener oklistener = new ActionListener() {
+        ActionListener createlistener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
@@ -37,7 +37,10 @@ public class AddNewHardwareDevicePanelTest {
             @Override
             public void actionPerformed(ActionEvent e) { }
         };
-        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(new JTextField(), new JTextField(), new JComboBox<String>(), new JSpinner(),new JCheckBox(), new JButton("ButtonOK"), oklistener, cancellistener,otherlistener,new JLabel());    
+        JButton okbutton = new JButton("ButtonOK");
+        okbutton.addActionListener(createlistener);
+        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(new JTextField(), new JTextField(), new JComboBox<String>(),
+                new JSpinner(), new JCheckBox(), okbutton, cancellistener, otherlistener, new JLabel());
         Assert.assertNotNull("exists",t);
     }
 
@@ -50,6 +53,7 @@ public class AddNewHardwareDevicePanelTest {
 
     @After
     public void tearDown() {
+
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

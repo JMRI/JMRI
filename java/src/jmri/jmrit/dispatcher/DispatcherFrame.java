@@ -1254,7 +1254,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 if (at == allocatedSections.get(k - 1).getActiveTrain()) {
                     releaseAllocatedSection(allocatedSections.get(k - 1), true);
                 }
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.warn("releaseAllocatedSection failed - maybe the AllocatedSection was removed due to a terminating train?? {}", e.getMessage());
             }
         }
@@ -2034,7 +2034,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             }
                         }
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.warn("checkAutoRelease failed  - maybe the AllocatedSection was removed due to a terminating train? {}", e.toString());
                     continue;
                 }

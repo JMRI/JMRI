@@ -22,8 +22,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.j
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -69,13 +72,21 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.j
         tc.sendJMRIClientMessage(m, this);
     }
 
+    /**
+     * {@inheritDoc}
+     * Ignore messages.
+     */
     @Override
     public void message(JMRIClientMessage m) {
-    }  // ignore replies
+    }
 
+    /**
+     * {@inheritDoc}
+     * Ignore replies.
+     */
     @Override
     public void reply(JMRIClientReply r) {
-    } // ignore replies
+    }
 
     // connect to the TrafficController
     public void connect(JMRIClientTrafficController t) {

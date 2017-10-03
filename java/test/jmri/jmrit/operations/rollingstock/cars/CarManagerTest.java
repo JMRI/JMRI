@@ -5,7 +5,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
@@ -40,7 +39,7 @@ public class CarManagerTest extends OperationsTestCase {
 
     public void testAddCars() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, carList.size());
         c1 = manager.newCar("CP", "1");
@@ -60,7 +59,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
 
         // now get cars by id
         carList = manager.getByIdList();
@@ -77,7 +76,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         c1.setBuilt("06-66"); // this becomes 1966
         c2.setBuilt("01-09"); // this becomes 1909
@@ -101,7 +100,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         c1.setMoves(2);
         c2.setMoves(44);
@@ -125,7 +124,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // now get cars by owner
         carList = manager.getByOwnerList();
         Assert.assertEquals("Number of Cars by owner", 6, carList.size());
@@ -141,7 +140,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         c1.setColor("RED");
         c2.setColor("BLUE");
@@ -164,7 +163,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // now get cars by road name
         carList = manager.getByRoadNameList();
         Assert.assertEquals("Number of Cars by road name", 6, carList.size());
@@ -180,7 +179,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // now get cars by load
         carList = manager.getByLoadList();
         Assert.assertEquals("Number of Cars by load", 6, carList.size());
@@ -196,7 +195,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         // set car weight so there won't be an exception when setting car in a kernel
         c1.setWeight("20");
@@ -228,7 +227,7 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         // now get cars by location
-        List<RollingStock> carList = manager.getByLocationList();
+        List<Car> carList = manager.getByLocationList();
         Assert.assertEquals("Number of Cars by location", 6, carList.size());
         Assert.assertEquals("1st car in list by location", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by location", c5, carList.get(1));
@@ -242,7 +241,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // now get cars by destination
         carList = manager.getByDestinationList();
         Assert.assertEquals("Number of Cars by destination", 6, carList.size());
@@ -258,7 +257,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         Route r = new Route("id", "Test");
         r.addLocation(l1);
@@ -294,7 +293,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
@@ -427,7 +426,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // now get cars by road number
         carList = manager.getByNumberList();
         Assert.assertEquals("Number of Cars by number", 6, carList.size());
@@ -457,7 +456,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // now get cars by RFID
         carList = manager.getByRfidList();
         Assert.assertEquals("Number of Cars by rfid", 6, carList.size());
@@ -487,7 +486,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getByIdList();
+        List<Car> carList = manager.getByIdList();
         // change car types so sort will work
         c1.setTypeName("F");
         c2.setTypeName("D");
@@ -511,7 +510,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         java.util.Calendar cal = java.util.Calendar.getInstance();
         java.util.Date start = cal.getTime(); // save to rest time, to avoid
@@ -560,7 +559,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList;
+        List<Car> carList;
 
         java.util.Calendar cal = java.util.Calendar.getInstance();
         java.util.Date start = cal.getTime(); // save to rest time, to avoid
@@ -632,7 +631,7 @@ public class CarManagerTest extends OperationsTestCase {
         resetCarManager();
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<RollingStock> carList = manager.getList(l1);
+        List<Car> carList = manager.getList(l1);
         Assert.assertEquals("Number of Cars at location", 2, carList.size());
         Assert.assertTrue("c1 in car list at location", carList.contains(c1));
         Assert.assertTrue("c2 in car list at location", carList.contains(c2));
@@ -644,7 +643,7 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         Track l1t1 = l1.getTrackByName("A", Track.SPUR);
-        List<RollingStock> carList = manager.getList(l1t1);
+        List<Car> carList = manager.getList(l1t1);
         Assert.assertEquals("Number of Cars on track", 1, carList.size());
         Assert.assertTrue("c1 in car list on track", carList.contains(c1));
         Assert.assertFalse("c2 not in car list on track", carList.contains(c2));

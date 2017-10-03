@@ -73,8 +73,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -82,8 +82,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }

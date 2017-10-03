@@ -26,7 +26,7 @@ public class CMRIMenuTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        CMRIMenu action = new CMRIMenu("CMRI Test Menu",new CMRISystemConnectionMemo());
+        CMRIMenu action = new CMRIMenu("CMRI Test Menu", new CMRISystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

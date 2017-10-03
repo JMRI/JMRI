@@ -9,9 +9,9 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE
  * systems
  *
- * @see jmri.ProgrammerManager Based on work by Bob Jacobsen
+ * @see jmri.managers.DefaultProgrammerManager Based on work by Bob Jacobsen
  * @author	Kevin Dickerson Copyright (C) 2012
- * 
+ *
  */
 public class TamsProgrammerManager extends DefaultProgrammerManager {
 
@@ -53,6 +53,3 @@ public class TamsProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 }
-
-
-

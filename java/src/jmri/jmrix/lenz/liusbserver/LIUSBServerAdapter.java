@@ -60,7 +60,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     }
 
     @Override
-    synchronized public void connect() throws Exception {
+    synchronized public void connect() throws java.io.IOException {
         opened = false;
         log.debug("connect called");
         // open the port in XpressNet mode

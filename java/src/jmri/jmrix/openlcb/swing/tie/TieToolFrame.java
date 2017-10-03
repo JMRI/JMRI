@@ -25,8 +25,11 @@ public class TieToolFrame extends jmri.util.JmriJFrame {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(rb.getString("WindowTitle"));

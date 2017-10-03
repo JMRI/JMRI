@@ -33,7 +33,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
-    //Implemented ready for new system connection memo
+    // Implemented ready for new system connection memo
     public OlcbSensorManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
         prefix = memo.getSystemPrefix();

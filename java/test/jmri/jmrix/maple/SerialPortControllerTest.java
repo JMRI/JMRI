@@ -6,7 +6,6 @@ import org.junit.Before;
 
 /**
  * JUnit tests for the SerialPortController class
- * <p>
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -18,7 +17,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
        JUnitUtil.setUp();
        SerialTrafficController tc = new SerialTrafficController(){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
        };
        MapleSystemConnectionMemo memo = new MapleSystemConnectionMemo();

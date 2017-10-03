@@ -19,13 +19,19 @@ abstract public class Mx1Panel extends jmri.util.swing.JmriPanel implements Mx1P
      */
     protected Mx1SystemConnectionMemo memo;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(Mx1SystemConnectionMemo memo) throws Exception {
+    public void initComponents(Mx1SystemConnectionMemo memo) {
         this.memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof Mx1SystemConnectionMemo) {
             try {
                 initComponents((Mx1SystemConnectionMemo) context);

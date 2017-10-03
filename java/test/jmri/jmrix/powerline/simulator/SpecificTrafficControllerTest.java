@@ -136,17 +136,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     /*         Assert.assertTrue("must Send", g.mustSend() ); */
     /*         g.resetMustSend(); */
     /*         Assert.assertTrue("must Send off", !(g.mustSend()) ); */
-    /*         c.setSerialOutput("PL5B2",false); */
-    /*         c.setSerialOutput("PL5B1",false); */
-    /*         c.setSerialOutput("PL5B23",false); */
-    /*         c.setSerialOutput("PPL5B22",false); */
-    /*         c.setSerialOutput("PL5B21",false); */
-    /*         c.setSerialOutput("PL5B2",true); */
-    /*         c.setSerialOutput("PL5B19",false); */
-    /*         c.setSerialOutput("PL5B5",false); */
-    /*         c.setSerialOutput("PL5B20",false); */
-    /*         c.setSerialOutput("PL5B17",true); */
-    /*         Assert.assertTrue("must Send on", g.mustSend() ); */
+    /*         //c.setSerialOutput("PL5B2",false); // test and 12 year old method removed, called nowhere as of 4.9.4 */
     /*         SerialMessage m = g.createOutPacket(); */
     /*         Assert.assertEquals("packet size", 9, m.getNumDataElements() ); */
     /*         Assert.assertEquals("node address", 5, m.getElement(0) ); */

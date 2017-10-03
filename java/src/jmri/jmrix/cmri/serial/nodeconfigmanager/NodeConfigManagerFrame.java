@@ -164,8 +164,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigManagerFrame", true); // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception
+    public void initComponents()
     {
         // set the frame's initial state
         setTitle(Bundle.getMessage("WindowTitle"));
@@ -2630,4 +2633,3 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
 }
 
-/* @(#)NodeConfigurationMgr.java */

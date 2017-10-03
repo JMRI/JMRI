@@ -207,8 +207,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             try {
                 initComponents((NceSystemConnectionMemo) context);
@@ -218,11 +221,17 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.consist.NceConsistEditFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -236,6 +245,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return x.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<JMenu> getMenus() {
         // build menu
@@ -246,8 +258,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return l;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
         // the following code sets the frame's initial state

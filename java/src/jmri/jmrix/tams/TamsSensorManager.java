@@ -88,7 +88,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         TamsSensor s = new TamsSensor(systemName, userName);
-        //log.info("Creating new TamsSensor: " + systemName);
+        log.debug("Creating new TamsSensor: {}", systemName);
         if (systemName.contains(":")) {
             int board = 0;
             int channel = 0;
@@ -108,7 +108,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     }*/
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             Hashtable<Integer, TamsSensor> sensorList = _ttams.get(board);
@@ -118,7 +118,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             if ((board * 2) > maxSE) {//Check if newly defined board number is higher than what we know
@@ -189,9 +189,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage("Error", "Unable to convert " +
-                    curAddress +
-                    " to a valid Hardware Address", "" + ex, "", true, false);
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"),
+                    Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -203,7 +202,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             while (port < 17) {
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (Exception e) {
+                } catch (JmriException e) {
                     log.error("Error creating system name for " + board + ":" + port);
                 }
                 s = getBySystemName(tmpSName);

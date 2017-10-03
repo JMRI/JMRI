@@ -1,4 +1,3 @@
-// NodeIOListFrame.java
 package jmri.jmrix.cmri.serial.nodeiolist;
 
 import java.awt.*;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
-//    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeiolist.NodeIOListBundle");
     ArrayList<SerialNode> cmriNode = new ArrayList<SerialNode>();  //c2
 
     protected boolean inputSelected = true;  // true if displaying input assignments, false for output
@@ -67,7 +65,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         curFrame = this;
     }
 
-    public void initComponents() throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("WindowTitle"));
@@ -580,4 +582,3 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
 }
 
-/* @(#)NodeIOListFrame.java */

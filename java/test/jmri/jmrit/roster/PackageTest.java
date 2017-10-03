@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(CopyRosterItemActionTest.class));
         suite.addTest(RosterEntryPaneTest.suite());
         suite.addTest(new JUnit4TestAdapter(FunctionLabelPaneTest.class));
-        suite.addTest(IdentifyLocoTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IdentifyLocoTest.class));
         suite.addTest(jmri.jmrit.roster.swing.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(LocoFileTest.class));
         suite.addTest(new JUnit4TestAdapter(RecreateRosterActionTest.class));

@@ -1,7 +1,6 @@
 package jmri.jmrix.tmcc;
 
 import jmri.Manager.NameValidity;
-
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
@@ -24,8 +23,8 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("invalid format - TL", NameValidity.VALID != SerialAddress.validSystemNameFormat("TL", 'L'));
 
         Assert.assertTrue("invalid format - TLB2", NameValidity.VALID != SerialAddress.validSystemNameFormat("TLB2", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field system name: TL");
-        JUnitAppender.assertErrorMessage("no node address before 'B' in system name: TLB2");
+        JUnitAppender.assertWarnMessage("invalid character in number field system name: TL");
+        JUnitAppender.assertWarnMessage("no node address before 'B' in system name: TLB2");
 
         Assert.assertTrue("valid format - TL2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("TL2005", 'L'));
 
@@ -40,10 +39,10 @@ public class SerialAddressTest extends TestCase {
         Assert.assertTrue("valid format - TS2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("TS2B5", 'S'));
 
         Assert.assertTrue("invalid format - TY2005", NameValidity.VALID != SerialAddress.validSystemNameFormat("TY2005", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in header field system name: TY2005");
+        JUnitAppender.assertErrorMessage("invalid character in header field system name: TY2005");
 
         Assert.assertTrue("invalid format - TY2B5", NameValidity.VALID != SerialAddress.validSystemNameFormat("TY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in header field system name: TY2B5");
+        JUnitAppender.assertErrorMessage("invalid character in header field system name: TY2B5");
 
         Assert.assertTrue("valid format - TL22001", NameValidity.VALID == SerialAddress.validSystemNameFormat("TL22001", 'L'));
 
@@ -73,13 +72,13 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: TL128B7");
 
         Assert.assertTrue("invalid format - TL2oo5", NameValidity.VALID != SerialAddress.validSystemNameFormat("TL2oo5", 'L'));
-        JUnitAppender.assertErrorMessage("illegal character in number field system name: TL2oo5");
+        JUnitAppender.assertWarnMessage("invalid character in number field system name: TL2oo5");
 
         Assert.assertTrue("invalid format - TL2aB5", NameValidity.VALID != SerialAddress.validSystemNameFormat("TL2aB5", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in node address field of system name: TL2aB5");
+        JUnitAppender.assertWarnMessage("invalid character in node address field of system name: TL2aB5");
 
         Assert.assertTrue("invalid format - TL2B5x", NameValidity.VALID != SerialAddress.validSystemNameFormat("TL2B5x", 'L'));
-        JUnitAppender.assertWarnMessage("illegal character in bit number field of system name: TL2B5x");
+        JUnitAppender.assertWarnMessage("invalid character in bit number field of system name: TL2B5x");
     }
 
     public void testGetBitFromSystemName() {
@@ -90,7 +89,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("TL999", 999, SerialAddress.getBitFromSystemName("TL999"));
         Assert.assertEquals("TL2999", 999, SerialAddress.getBitFromSystemName("TL2999"));
         Assert.assertEquals("TL29O9", 0, SerialAddress.getBitFromSystemName("TL29O9"));
-        JUnitAppender.assertErrorMessage("illegal character in number field of system name: TL29O9");
+        JUnitAppender.assertWarnMessage("invalid character in number field of system name: TL29O9");
         Assert.assertEquals("TL0B7", 7, SerialAddress.getBitFromSystemName("TL0B7"));
         Assert.assertEquals("TL2B7", 7, SerialAddress.getBitFromSystemName("TL2B7"));
         Assert.assertEquals("TL0B1", 1, SerialAddress.getBitFromSystemName("TL0B1"));
@@ -172,4 +171,5 @@ public class SerialAddressTest extends TestCase {
     protected void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

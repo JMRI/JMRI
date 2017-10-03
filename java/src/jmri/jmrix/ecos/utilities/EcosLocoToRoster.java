@@ -189,8 +189,9 @@ public class EcosLocoToRoster implements EcosListener {
                         try {
                             WindowMaker t = new WindowMaker(tmploco);
                             javax.swing.SwingUtilities.invokeAndWait(t);
-                        } catch (Exception ex) {
-                            // Thread.currentThread().interrupt();
+                        } catch (java.lang.reflect.InvocationTargetException | InterruptedException ex) {
+                            log.warn("Exception, ending", ex);
+                            return;
                         }
                     } else {
                         waitingForComplete = true;
@@ -204,7 +205,6 @@ public class EcosLocoToRoster implements EcosListener {
                                 }
                             } catch (InterruptedException ex) {
                                 Thread.currentThread().interrupt();
-
                             }
                         }
                     };
@@ -432,7 +432,7 @@ public class EcosLocoToRoster implements EcosListener {
 
                     re.setFunctionLabel(functNo, functionLabel);
                     re.setFunctionLockable(functNo, !moment);
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error("Error occurred while getting the function information : " + e.toString());
                 }
                 getFunctionDetails(functNo + 1);
