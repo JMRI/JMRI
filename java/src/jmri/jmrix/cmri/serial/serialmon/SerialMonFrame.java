@@ -42,7 +42,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
 //    @Override
     public void dispose() { 
-        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
   }
 
