@@ -29,7 +29,7 @@ public class HomeServletAcceptanceSteps implements En {
       });
 
       Then("^the home page is returned$", () -> {
-        Assert.assertEquals("Page Title","index",webDriver.getTitle());
+        Assert.assertEquals("Page Title","My JMRI Railroad",webDriver.getTitle());
       });
 
       After(tags,()->{

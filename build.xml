@@ -262,7 +262,7 @@
         <pathelement location="${libdir}/gherkin3-3.0.0.jar"/>
         <pathelement location="${libdir}/gherkin-jvm-deps-1.0.3.jar"/>
         <!-- Selenium and it's dependencies -->
-        <pathelement location="${libdir}/selenium-server-standalone-3.5.3.jar"/>
+        <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -1345,6 +1345,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="cucumber.options" value="--tags ~@Ignore"/>
 
             <classpath refid="test.class.path"/>
 
