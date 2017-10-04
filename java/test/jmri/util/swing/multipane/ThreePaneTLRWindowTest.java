@@ -24,6 +24,7 @@ public class ThreePaneTLRWindowTest {
                 "xml/config/apps/panelpro/Gui3MainToolBar.xml"
         );
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J

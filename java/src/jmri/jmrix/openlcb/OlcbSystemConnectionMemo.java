@@ -1,8 +1,8 @@
 package jmri.jmrix.openlcb;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 import org.openlcb.OlcbInterface;
 
 /**
@@ -24,18 +24,13 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
-
-
     /**
-     * Tells which managers this provides by class
+     * Tells which managers are provides by class
      */
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
@@ -59,9 +54,6 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         if (getDisabled()) {
             return null;
         }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
@@ -82,37 +74,38 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
     }
 
     /**
-     * Configure the common managers for the connection. This puts the
-     * common manager config in one place.
+     * Configure the common managers for the connection. This puts the common
+     * manager config in one place.
      */
     @Override
     public void configureManagers() {
 
-        InstanceManager.setSensorManager(
-                getSensorManager());
+        InstanceManager.setSensorManager(getSensorManager());
 
-        InstanceManager.setTurnoutManager(
-                getTurnoutManager());
+        InstanceManager.setTurnoutManager(getTurnoutManager());
 
-        jmri.InstanceManager.setProgrammerManager(
-                getProgrammerManager());
+        if (getProgrammerManager().isAddressedModePossible()) {
+            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        }
 
     }
 
-    /**
+    /*
      * Provides access to the ... for this particular connection.
      */
+    protected OlcbProgrammerManager programmerManager;
 
-    protected ProgrammerManager programmerManager;
-
-    public ProgrammerManager getProgrammerManager() {
+    public OlcbProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
             programmerManager = new OlcbProgrammerManager(new OlcbProgrammer());
         }
         return programmerManager;
     }
 
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(OlcbProgrammerManager p) {
         programmerManager = p;
     }
 
@@ -170,6 +163,3 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         super.dispose();
     }
 }
-
-
-

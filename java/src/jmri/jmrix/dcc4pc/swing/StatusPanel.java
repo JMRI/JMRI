@@ -32,6 +32,9 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -64,8 +67,11 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     void reset() {
@@ -74,7 +80,9 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         serialNo.setText(hrdString + "<unknown>");
     }
 
-    // to free resources when no longer used
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         if(tc!=null){
@@ -107,7 +115,9 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     public void notifyMessage(Dcc4PcMessage m) {
     }
 
-    // to listen for status changes from Ecos system
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(Dcc4PcReply r) {
         // power message?
@@ -156,6 +166,9 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
 
     int nextPacket = -1;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(Dcc4PcMessage m) {
         byte[] theByteArray = m.getFormattedMessage();
@@ -168,6 +181,9 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
     }

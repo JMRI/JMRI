@@ -43,7 +43,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         JTabbedPane tabbedPane = new JTabbedPane();
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
 

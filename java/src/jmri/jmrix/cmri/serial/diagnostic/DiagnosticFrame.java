@@ -29,7 +29,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected boolean wrapTest = false;
     protected boolean isSMINI = false;
     protected boolean isUSIC_SUSIC = true;
-// Here add other node types
+    // Here add other node types
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
     protected int numCards = 3;
@@ -95,8 +95,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         _memo=memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("DiagnosticTitle"));
@@ -257,7 +260,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // read setup data - Node(UA) field
         try {
             ua = Integer.parseInt(uaAddrField.getText());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             statusText1.setText(Bundle.getMessage("DiagnosticError1"));
             statusText1.setVisible(true);
             return (false);
@@ -278,7 +281,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         int type = node.getNodeType();
         isSMINI = (type == SerialNode.SMINI);
         isUSIC_SUSIC = (type == SerialNode.USIC_SUSIC);
-// Here insert code for other type nodes
+        // Here insert code for other type nodes
         // initialize numInputCards, numOutputCards, and numCards
         numOutputCards = node.numOutputCards();
         numInputCards = node.numInputCards();
@@ -426,13 +429,15 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         try {
             // Wait for initialization to complete
             wait(1000);
-        } catch (Exception e) {
-            // Ignore exception and continue
+        } catch (InterruptedException e) {
+            // means done
+            log.debug("interrupted");
+            return false;
         }
         // Initialization was successful
         numIterations = 0;
         testRunning = true;
-        return (true);
+        return true;
     }
 
     /**
@@ -525,8 +530,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         try {
             // Wait for initialization to complete
             wait(1000);
-        } catch (Exception e) {
-            // Ignore exception and continue
+        } catch (InterruptedException e) {
+            log.debug("interrupted");
+            return false;
         }
 
         // Clear error count
@@ -538,7 +544,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         waitingOnInput = false;
         needInputTest = false;
         count = 50;
-        return (true);
+        return true;
     }
 
     /**
@@ -716,7 +722,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     }
 
     /**
-     * Message notification implementing SerialListener interface
+     * {@inheritDoc}
      */
     @Override
     public void message(SerialMessage m) {
@@ -753,4 +759,5 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         super.windowClosing(e);
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DiagnosticFrame.class);
 }

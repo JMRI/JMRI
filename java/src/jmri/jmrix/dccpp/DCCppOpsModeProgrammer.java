@@ -104,8 +104,8 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
- ret.add(DefaultProgrammerManager.OPSBITMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
+ ret.add(ProgrammingMode.OPSBITMODE);
         return ret;
     }
 

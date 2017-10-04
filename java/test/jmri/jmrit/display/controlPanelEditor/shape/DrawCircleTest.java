@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,8 +19,17 @@ public class DrawCircleTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        ShapeDrawer s = new ShapeDrawer(frame);
-        DrawCircle t = new DrawCircle("newShape", "Circle", s);
+        DrawCircle t = new DrawCircle("newShape", "Circle", null);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
+    }
+
+    public void testCTorEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        PositionableCircle ps =  new PositionableCircle(frame);
+        DrawRectangle t = new DrawRoundRect("editShape", "Circle", ps);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

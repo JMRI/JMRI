@@ -78,16 +78,16 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor o = t.newSensor("XS21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received sensor value " + o);
+            log.debug("received sensor value {}", o);
         }
         Assert.assertTrue(null != (XNetSensor) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("XS21"));
+            log.debug("by system name: {}", t.getBySystemName("XS21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name: {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("XS21"));

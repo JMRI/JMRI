@@ -22,7 +22,6 @@ import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -251,7 +250,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    public List<RollingStock> getSortByList() {
+    public List<Engine> getSortByList() {
         return enginesModel.getSelectedEngineList();
     }
 

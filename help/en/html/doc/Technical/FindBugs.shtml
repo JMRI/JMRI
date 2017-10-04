@@ -130,11 +130,6 @@ scanning through the code.
           - Used to annotate a method that, if overridden, must (or
           should) be invoke super in the overriding method.
           Examples of such methods include finalize() and clone().
-          The argument to the method indicates when the super
-          invocation should occur: at any time (ANYTIME), at the
-          beginning of the overriding method (FIRST), or at the end
-          of the overriding method (LAST), defaulting to any time,
-          e.g. <code>@OverrideMustInvoke(value=ANYTIME)</code>
 
           <p>Note this replaces the deprecated <a href=
           "http://findbugs.sourceforge.net/manual/annotations.html">

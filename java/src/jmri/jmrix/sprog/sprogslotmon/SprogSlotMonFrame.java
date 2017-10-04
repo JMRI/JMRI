@@ -129,15 +129,18 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         getContentPane().add(pane1);
         getContentPane().add(slotScroll);
 
+        setHelp();
+        
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();
     }
 
-    @Override
-    public void initComponents() {
-        // add help menu to window
-        addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);  // NOI18N
     }
 
     /**

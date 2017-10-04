@@ -75,7 +75,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Not all columns are visible at the same time.
-     * 
+     *
      * @param sort which sort is active
      */
     public void setSort(int sort) {
@@ -165,8 +165,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    public List<RollingStock> getSelectedEngineList() {
-        List<RollingStock> list;
+    public List<Engine> getSelectedEngineList() {
+        List<Engine> list;
         if (_sort == SORTBY_ROAD) {
             list = manager.getByRoadNameList();
         } else if (_sort == SORTBY_MODEL) {
@@ -197,7 +197,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return list;
     }
 
-    List<RollingStock> sysList = null;
+    List<Engine> sysList = null;
 
     JTable _table;
     EnginesTableFrame _frame;

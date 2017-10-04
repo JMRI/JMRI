@@ -8,7 +8,6 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -25,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class CarManager extends RollingStockManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class CarManager extends RollingStockManager<Car> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     // stores Kernels
     protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<>();
@@ -219,10 +218,10 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
     /**
      * Sort by rolling stock location
      *
-     * @return list of cars ordered by the RollingStock's location
+     * @return list of cars ordered by the Car's location
      */
     @Override
-    public List<RollingStock> getByLocationList() {
+    public List<Car> getByLocationList() {
         return getByList(getByKernelList(), BY_LOCATION);
     }
 
@@ -231,9 +230,8 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      *
      * @return list of cars ordered by car kernel
      */
-    public List<RollingStock> getByKernelList() {
-        List<RollingStock> byBlocking = getByList(getByNumberList(), BY_BLOCKING);
-        return getByList(byBlocking, BY_KERNEL);
+    public List<Car> getByKernelList() {
+        return getByList(getByList(getByNumberList(), BY_BLOCKING), BY_KERNEL);
     }
 
     /**
@@ -241,7 +239,7 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      *
      * @return list of cars ordered by car loads
      */
-    public List<RollingStock> getByLoadList() {
+    public List<Car> getByLoadList() {
         return getByList(getByLocationList(), BY_LOAD);
     }
 
@@ -250,11 +248,11 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      *
      * @return list of cars ordered by car return when empty
      */
-    public List<RollingStock> getByRweList() {
+    public List<Car> getByRweList() {
         return getByList(getByLocationList(), BY_RWE);
     }
 
-    public List<RollingStock> getByFinalDestinationList() {
+    public List<Car> getByFinalDestinationList() {
         return getByList(getByDestinationList(), BY_FINAL_DEST);
     }
 
@@ -263,11 +261,11 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      *
      * @return list of cars ordered by wait count
      */
-    public List<RollingStock> getByWaitList() {
+    public List<Car> getByWaitList() {
         return getByList(getByIdList(), BY_WAIT);
     }
 
-    public List<RollingStock> getByPickupList() {
+    public List<Car> getByPickupList() {
         return getByList(getByIdList(), BY_PICKUP);
     }
 
@@ -282,25 +280,25 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
 
     // add car options to sort comparator
     @Override
-    protected java.util.Comparator<RollingStock> getComparator(int attribute) {
+    protected java.util.Comparator<Car> getComparator(int attribute) {
         switch (attribute) {
             case BY_LOAD:
-                return (c1, c2) -> (((Car) c1).getLoadName().compareToIgnoreCase(((Car) c2).getLoadName()));
+                return (c1, c2) -> (c1.getLoadName().compareToIgnoreCase(c2.getLoadName()));
             case BY_KERNEL:
-                return (c1, c2) -> (((Car) c1).getKernelName().compareToIgnoreCase(((Car) c2).getKernelName()));
+                return (c1, c2) -> (c1.getKernelName().compareToIgnoreCase(c2.getKernelName()));
             case BY_RWE:
-                return (c1, c2) -> (((Car) c1).getReturnWhenEmptyDestName()
-                        .compareToIgnoreCase(((Car) c2).getReturnWhenEmptyDestName()));
+                return (c1, c2) -> (c1.getReturnWhenEmptyDestName()
+                        .compareToIgnoreCase(c2.getReturnWhenEmptyDestName()));
             case BY_FINAL_DEST:
-                return (c1, c2) -> (((Car) c1).getFinalDestinationName()
-                        .compareToIgnoreCase(((Car) c2).getFinalDestinationName()));
+                return (c1, c2) -> (c1.getFinalDestinationName()
+                        .compareToIgnoreCase(c2.getFinalDestinationName()));
             case BY_WAIT:
-                return (c1, c2) -> (((Car) c1).getWait() - ((Car) c2).getWait());
+                return (c1, c2) -> (c1.getWait() - c2.getWait());
             case BY_PICKUP:
-                return (c1, c2) -> (((Car) c1).getPickupScheduleName()
-                        .compareToIgnoreCase(((Car) c2).getPickupScheduleName()));
+                return (c1, c2) -> (c1.getPickupScheduleName()
+                        .compareToIgnoreCase(c2.getPickupScheduleName()));
             case BY_HAZARD:
-                return (c1, c2) -> ((((Car) c1).isHazardous() ? 1 : 0) - (((Car) c2).isHazardous() ? 1 : 0));
+                return (c1, c2) -> ((c1.isHazardous() ? 1 : 0) - (c2.isHazardous() ? 1 : 0));
             default:
                 return super.getComparator(attribute);
         }
@@ -316,14 +314,14 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      * @return List of cars with no assigned train on a route
      */
     public List<Car> getAvailableTrainList(Train train) {
-        List<Car> out = new ArrayList<Car>();
+        List<Car> out = new ArrayList<>();
         Route route = train.getRoute();
         if (route == null) {
             return out;
         }
         // get a list of locations served by this route
         List<RouteLocation> routeList = route.getLocationsBySequenceList();
-        // don't include RollingStock at route destination
+        // don't include Car at route destination
         RouteLocation destination = null;
         if (routeList.size() > 1) {
             destination = routeList.get(routeList.size() - 1);
@@ -345,14 +343,14 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
         }
         // get rolling stock by priority and then by moves
         List<Car> sortByPriority = sortByPriority(getByMovesList());
-        // now build list of available RollingStock for this route
+        // now build list of available Car for this route
         for (Car car : sortByPriority) {
-            // only use RollingStock with a location
+            // only use Car with a location
             if (car.getLocation() == null) {
                 continue;
             }
             RouteLocation rl = route.getLastLocationByName(car.getLocationName());
-            // get RollingStock that don't have an assigned train, or the
+            // get Car that don't have an assigned train, or the
             // assigned train is this one
             if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))) {
                 out.add(car);
@@ -362,19 +360,18 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
     }
 
     // sorts the high priority cars to the start of the list
-    protected List<Car> sortByPriority(List<RollingStock> list) {
-        List<Car> out = new ArrayList<Car>();
+    protected List<Car> sortByPriority(List<Car> list) {
+        List<Car> out = new ArrayList<>();
         // move high priority cars to the start
-        for (RollingStock rs : list) {
-            Car car = (Car) rs;
+        for (Car car : list) {
             if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
                 out.add(car);
             }
         }
         // now load all of the remaining low priority cars
-        for (RollingStock rs : list) {
+        for (Car rs : list) {
             if (!out.contains(rs)) {
-                out.add((Car) rs);
+                out.add(rs);
             }
         }
         return out;
@@ -409,14 +406,14 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<RollingStock> byHazard = getByList(getList(train), BY_HAZARD);
-        List<RollingStock> byFinal = getByList(byHazard, BY_FINAL_DEST);
-        List<RollingStock> byLocation = getByList(byFinal, BY_LOCATION);
-        List<RollingStock> byDestination = getByList(byLocation, BY_DESTINATION);
+        List<Car> byHazard = getByList(getList(train), BY_HAZARD);
+        List<Car> byFinal = getByList(byHazard, BY_FINAL_DEST);
+        List<Car> byLocation = getByList(byFinal, BY_LOCATION);
+        List<Car> byDestination = getByList(byLocation, BY_DESTINATION);
         // now place cabooses, cars with FRED, and passenger cars at the rear of the train
         List<Car> out = new ArrayList<Car>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
-        for (RollingStock rs : byDestination) {
+        for (Car rs : byDestination) {
             Car car = (Car) rs;
             if (car.getKernel() != null && !car.getKernel().isLead(car)) {
                 continue; // not the lead car, skip for now.
@@ -537,8 +534,8 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
      * @param newLoadName new load name
      */
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
-        List<RollingStock> cars = getList();
-        for (RollingStock rs : cars) {
+        List<Car> cars = getList();
+        for (Car rs : cars) {
             Car car = (Car) rs;
             if (car.getTypeName().equals(type) && car.getLoadName().equals(oldLoadName)) {
                 if (newLoadName != null) {
@@ -552,8 +549,8 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
 
     public List<Car> getCarsLocationUnknown() {
         List<Car> mias = new ArrayList<Car>();
-        List<RollingStock> cars = getByIdList();
-        for (RollingStock rs : cars) {
+        List<Car> cars = getByIdList();
+        for (Car rs : cars) {
             Car car = (Car) rs;
             if (car.isLocationUnknown()) {
                 mias.add(car); // return unknown location car
@@ -625,8 +622,8 @@ public class CarManager extends RollingStockManager implements InstanceManagerAu
         root.addContent(kernels);
         root.addContent(values = new Element(Xml.CARS));
         // add entries
-        List<RollingStock> carList = getByIdList();
-        for (RollingStock rs : carList) {
+        List<Car> carList = getByIdList();
+        for (Car rs : carList) {
             Car car = (Car) rs;
             values.addContent(car.store());
         }

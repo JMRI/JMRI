@@ -22,7 +22,7 @@ public class AcelaLightTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("AcelaLight Constructor",new AcelaLight("AL2",_memo ));
+      Assert.assertNotNull("AcelaLight Constructor", new AcelaLight("AL2", _memo ));
     }
 
     @Test
@@ -45,6 +45,5 @@ public class AcelaLightTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

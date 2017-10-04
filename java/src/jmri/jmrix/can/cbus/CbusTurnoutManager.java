@@ -31,12 +31,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return prefix;
     }
 
-    /**
-     * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
-     *
-     * @return never null
-     */
     @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
@@ -48,12 +42,12 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             throw e;
         }
         try {
-            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
+            if (Integer.valueOf(addr) > 0 && !addr.startsWith("+")) {
                 // accept unsigned positive integer, prefix "+"
                 addr = "+" + addr;
             }
         } catch (NumberFormatException ex) {
-            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+            log.debug("Unable to convert {} into Cbus format +nn", addr);
         }
         Turnout t = new CbusTurnout(getSystemPrefix(), addr, memo.getTrafficController());
         t.setUserName(userName);
@@ -76,7 +70,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         // prefix + as service to user
         int unsigned = 0;
         try {
-            unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
+            unsigned = Integer.valueOf(curAddress); // on unsigned integer, will add "+" next
         } catch (NumberFormatException ex) {
             // already warned
         }
@@ -98,17 +92,24 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.debug("Warning: " + e.getMessage());
-            return false;
+            log.debug("Warning: {}", e.getMessage());
+            return NameValidity.INVALID;
         }
-        return true;
+        return NameValidity.VALID;
     }
 
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging of handled cases no higher than WARN.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
@@ -119,9 +120,9 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             case 1:
                 int unsigned = 0;
                 try {
-                    unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
+                    unsigned = Integer.valueOf(address); // accept unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
-                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                    log.debug("Unable to convert {} into Cbus format +nn", address);
                 }
                 if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
@@ -134,23 +135,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    /**
-     * A method that creates an array of systems names to allow bulk creation of
-     * turnouts.
-     */
-    //further work needs to be done on how to format a number of CBUS turnouts, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++) {
-            range[x] = getSystemPrefix() + "T" + start;
-        }
-        return range;
-    }
-
-    /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
-     */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");

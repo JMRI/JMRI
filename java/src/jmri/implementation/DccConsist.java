@@ -241,7 +241,7 @@ public class DccConsist implements Consist, ProgListener {
      *        the same direction as the consist, or false otherwise.
      */
     protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
-        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
         if (opsProg == null) {
@@ -265,7 +265,7 @@ public class DccConsist implements Consist, ProgListener {
             }
         }
 
-        InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .releaseAddressedProgrammer(opsProg);
     }
 
@@ -274,7 +274,7 @@ public class DccConsist implements Consist, ProgListener {
      *  @param address is the Locomotive address to remove from the consist
      */
     protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
-        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
         if (opsProg == null) {
@@ -289,7 +289,7 @@ public class DccConsist implements Consist, ProgListener {
             log.warn("Exception writing CV19 while removing from consist", e);
         }
 
-        InstanceManager.getDefault(jmri.ProgrammerManager.class)
+        InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .releaseAddressedProgrammer(opsProg);
     }
 

@@ -11,19 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NceShowCabPanelTest {
+public class NceShowCabPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCtor() {
-        NceShowCabPanel action = new NceShowCabPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new NceShowCabPanel();
+        helpTarget="package.jmri.jmrix.nce.cab.NceShowCabFrame";
+        title="NCE_: " + Bundle.getMessage("Title");
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

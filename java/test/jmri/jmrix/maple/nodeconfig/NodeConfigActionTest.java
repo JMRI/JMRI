@@ -1,6 +1,7 @@
 package jmri.jmrix.maple.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,22 +19,27 @@ public class NodeConfigActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigAction action = new NodeConfigAction("Maple test Action");
+        NodeConfigAction action = new NodeConfigAction("Maple test Action", new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigAction action = new NodeConfigAction();
+        NodeConfigAction action = new NodeConfigAction(new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+
+        JUnitUtil.tearDown();
+    }
+
 }

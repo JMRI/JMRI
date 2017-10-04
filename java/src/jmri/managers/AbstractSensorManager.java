@@ -181,23 +181,10 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Hardware Address passed should be a number", ex);
+            log.warn("Hardware Address passed should be a number, was {}", curAddress);
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix + typeLetter() + curAddress;
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @since 2.9.3
-     * @see jmri.jmrit.beantable.SensorTableAction.CheckedTextField
-     * @param systemName proposed complete system name incl. prefix
-     * @return always 'true' to let undocumented connection system managers pass entry validation.
-     */
-    @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return true;
     }
 
     @Override
