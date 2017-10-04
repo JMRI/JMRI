@@ -16,7 +16,7 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <jetty.version>9.4.5.v20170502</jetty.version>
+        <jetty.version>9.3.9.v20160517</jetty.version>
         <slf4j.version>1.7.21</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
