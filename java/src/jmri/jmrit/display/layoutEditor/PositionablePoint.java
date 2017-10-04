@@ -12,6 +12,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -66,7 +67,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionablePoint extends LayoutTrack {
 
-    // Defined text resource
+    // Defined text resource, should be called using Bundle.getMessage() to allow reuse of shared keys upstream
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
@@ -115,6 +116,10 @@ public class PositionablePoint extends LayoutTrack {
             }
             case EDGE_CONNECTOR: {
                 result = "Edge Connector";
+                break;
+            }
+            default: {
+                result = "Unknown type (" + type + ")";
                 break;
             }
         }
@@ -211,12 +216,12 @@ public class PositionablePoint extends LayoutTrack {
             }
             if (oldLinkedPoint.getConnect1() != null) {
                 TrackSegment ts = oldLinkedPoint.getConnect1();
-                oldLinkedPoint.getLayoutEditor().auxTools.setBlockConnectivityChanged();
+                oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
                 oldLinkedPoint.getLayoutEditor().repaint();
             }
             if (getConnect1() != null) {
-                layoutEditor.auxTools.setBlockConnectivityChanged();
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
                 layoutEditor.repaint();
             }
@@ -225,7 +230,7 @@ public class PositionablePoint extends LayoutTrack {
         if (p != null) {
             p.setLinkedPoint(this);
             if (getConnect1() != null) {
-                layoutEditor.auxTools.setBlockConnectivityChanged();
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
                 layoutEditor.repaint();
             }
@@ -614,7 +619,7 @@ public class PositionablePoint extends LayoutTrack {
             if (getConnect2() != null && getLinkedEditor() != null) {
                 //now that we have a connection we can fire off a change
                 TrackSegment ts = getConnect2();
-                getLinkedEditor().auxTools.setBlockConnectivityChanged();
+                getLinkedEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
             }
         } else {
@@ -660,42 +665,6 @@ public class PositionablePoint extends LayoutTrack {
             reCheckBlockBoundary();
         } else {
             log.error("Attempt to remove non-existant track connection");
-        }
-    }
-
-    public void reCheckBlockBoundary() {
-        if (type == END_BUMPER) {
-            return;
-        }
-        if (getConnect1() == null && getConnect2() == null) {
-            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if (westBoundSignalMastNamed != null) {
-                removeSML(getWestBoundSignalMast());
-            }
-            if (eastBoundSignalMastNamed != null) {
-                removeSML(getEastBoundSignalMast());
-            }
-            westBoundSignalMastNamed = null;
-            eastBoundSignalMastNamed = null;
-            setWestBoundSensor("");
-            setEastBoundSensor("");
-            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
-        } else if (getConnect1() == null || getConnect2() == null) {
-            //could still be in the process of rebuilding the point details
-            return;
-        } else if (getConnect1().getLayoutBlock() == getConnect2().getLayoutBlock()) {
-            //We are no longer a block bounardy
-            if (westBoundSignalMastNamed != null) {
-                removeSML(getWestBoundSignalMast());
-            }
-            if (eastBoundSignalMastNamed != null) {
-                removeSML(getEastBoundSignalMast());
-            }
-            westBoundSignalMastNamed = null;
-            eastBoundSignalMastNamed = null;
-            setWestBoundSensor("");
-            setEastBoundSensor("");
-            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
         }
     }
 
@@ -755,9 +724,7 @@ public class PositionablePoint extends LayoutTrack {
             popup = new JPopupMenu();
         }
 
-        if (tools == null) {
-            tools = new LayoutEditorTools(layoutEditor);
-        }
+        tools = layoutEditor.getLETools();
 
         boolean blockBoundary = false;
         boolean endBumper = false;
@@ -768,17 +735,17 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
 
                 LayoutBlock block1 = null;
-                LayoutBlock block2 = null;
                 if (connect1 != null) {
                     block1 = connect1.getLayoutBlock();
                 }
+                LayoutBlock block2 = block1;
                 if (connect2 != null) {
                     block2 = connect2.getLayoutBlock();
                 }
                 if ((block1 != null) && (block1 == block2)) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
-                    jmi = popup.add(rb.getString("BlockDivider"));
+                    jmi = popup.add(Bundle.getMessage("BlockDivider"));
                     jmi.setEnabled(false);
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
@@ -807,27 +774,33 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
-                    jmi = popup.add(getLinkedEditorName());
+                    String linkName = getLinkedEditorName() + ":" + getLinkedPointId();
+                    jmi = popup.add(Bundle.getMessage("LinkedToX", linkName));
                 } else {
-                    jmi = popup.add(rb.getString("EdgeNotLinked"));
+                    jmi = popup.add(Bundle.getMessage("EdgeNotLinked"));
                 }
                 jmi.setEnabled(false);
 
                 block1 = null;
-                block2 = null;
-                if (connect1 != null) {
-                    block1 = connect1.getLayoutBlock();
+                if (getConnect1() != null) {
+                    block1 = getConnect1().getLayoutBlock();
                 }
-                if (getConnect2() != null) {
-                    block2 = getConnect2().getLayoutBlock();
+                block2 = block1;
+                if (getLinkedPoint() != null) {
+                    if (getLinkedPoint().getConnect1() != null) {
+                        block2 = getLinkedPoint().getConnect1().getLayoutBlock();
+                    }
                 }
-                if ((block1 != null) && (block2 != null) && (block1 != block2)) {
-                    jmi = popup.add(rb.getString("BlockDivider"));
+                if ((block1 != null) && (block1 == block2)) {
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
+                } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
+                    jmi = popup.add(Bundle.getMessage("BlockDivider"));
                     jmi.setEnabled(false);
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
                     jmi.setEnabled(false);
+                    blockBoundary = true;
                 }
                 blockBoundary = true;
                 break;
@@ -837,7 +810,7 @@ public class PositionablePoint extends LayoutTrack {
 
         // if there are any track connections
         if ((connect1 != null) || (connect2 != null)) {
-            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+            JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
                 //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName());
                 //jmi.setEnabled(false);
@@ -878,7 +851,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         });
 
-        JMenu lineType = new JMenu(rb.getString("ChangeTo"));
+        JMenu lineType = new JMenu(Bundle.getMessage("ChangeTo"));
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Anchor")) {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -920,22 +893,21 @@ public class PositionablePoint extends LayoutTrack {
         if (blockBoundary) {
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             if (getType() == EDGE_CONNECTOR) {
-                popup.add(new AbstractAction(rb.getString("EdgeEditLink")) {
+                popup.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setLink();
                     }
                 });
-                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        tools = new LayoutEditorTools(layoutEditor);
                         // bring up signals at level crossing tool dialog
                         tools.setSignalAtEdgeConnector(PositionablePoint.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
                     }
                 });
-                popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         // bring up signals at block boundary tool dialog
@@ -943,7 +915,7 @@ public class PositionablePoint extends LayoutTrack {
                     }
                 });
             } else {
-                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
@@ -960,7 +932,7 @@ public class PositionablePoint extends LayoutTrack {
                     popup.add(ssaa);
                 }
 
-                popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         // bring up signals at block boundary tool dialog
@@ -970,7 +942,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         }
         if (endBumper) {
-            popup.add(new AbstractAction(rb.getString("SetSensors")) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
@@ -978,7 +950,7 @@ public class PositionablePoint extends LayoutTrack {
                             layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
@@ -990,10 +962,7 @@ public class PositionablePoint extends LayoutTrack {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    String where(MouseEvent e) {
-        return "" + e.getX() + "," + e.getY();
-    }
-
+    
     /**
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
@@ -1015,7 +984,7 @@ public class PositionablePoint extends LayoutTrack {
                 TrackSegment ts = getConnect2();
                 getLinkedPoint().setLinkedPoint(null);
                 oldLinkedEditor.repaint();
-                oldLinkedEditor.auxTools.setBlockConnectivityChanged();
+                oldLinkedEditor.getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
             }
             linkedPoint = null;
@@ -1026,17 +995,17 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * Removes this object from display and persistance
      */
-    void remove() {
+    private void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
 
-    boolean active = true;
+    private boolean active = true;
 
     /**
      * "active" means that the object is still displayed, and should be stored.
      */
-    public boolean isActive() {
+    protected boolean isActive() {
         return active;
     }
 
@@ -1094,7 +1063,8 @@ public class PositionablePoint extends LayoutTrack {
         editLink.setModal(false);
         editLink.setVisible(true);
     }
-    ArrayList<PositionablePoint> pointList;
+
+    private ArrayList<PositionablePoint> pointList;
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
@@ -1117,25 +1087,26 @@ public class PositionablePoint extends LayoutTrack {
 
         editorCombo.addActionListener(selectPanelListener);
         JPanel selectorPanel = new JPanel();
-        selectorPanel.add(new JLabel("Select Panel"));
+        selectorPanel.add(new JLabel(Bundle.getMessage("SelectPanel")));
         selectorPanel.add(editorCombo);
         linkPointsBox = new JComboBox<String>();
         updatePointBox();
-        selectorPanel.add(new JLabel("Connecting Block"));
+        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingBlock")));
         selectorPanel.add(linkPointsBox);
         return selectorPanel;
     }
 
     void updatePointBox() {
         linkPointsBox.removeAllItems();
-        pointList = new ArrayList<PositionablePoint>();
+        pointList = new ArrayList<>();
         if (editorCombo.getSelectedIndex() == 0) {
             linkPointsBox.setEnabled(false);
             return;
         }
         int ourDir = getConnect1Dir();
         linkPointsBox.setEnabled(true);
-        for (PositionablePoint p : editorCombo.getItemAt(editorCombo.getSelectedIndex()).item().pointList) {
+        LayoutEditor le = (LayoutEditor) editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
+        for (PositionablePoint p : le.getPositionablePoints()) {
             if (p.getType() == EDGE_CONNECTOR) {
                 if (p.getLinkedPoint() == this) {
                     pointList.add(p);
@@ -1152,7 +1123,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         }
         editLink.pack();
-    }
+    }   // updatePointBox
 
     public void updateLink() {
         if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {
@@ -1189,24 +1160,17 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     *
-     * @param p                  the point
-     * @param useRectangles      whether to use (larger) rectangles or (smaller)
-     *                           circles for hit testing
-     * @param requireUnconnected whether to only return free connection hit
-     *                           types
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
             // test point control rectangle
             Rectangle2D r = layoutEditor.trackControlPointRectAt(getCoordsCenter());
-            if (r.contains(p)) {
+            if (r.contains(hitPoint)) {
                 result = POS_POINT;
             }
         }
@@ -1228,15 +1192,11 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     *
-     * @param connectionType the specified connection type
-     * @return the object connected for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
-        Object result = null;
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
+        LayoutTrack result = null;
         if (connectionType == POS_POINT) {
             result = getConnect1();
             if (null == result) {
@@ -1250,16 +1210,10 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * set the object connected for the specified connection type
-     *
-     * @param connectionType the connection type (where it is connected to us)
-     * @param o              the object that is being connected
-     * @param type           the type of object that we're being connected to
-     *                       (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to positionable point - " + type);
             throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
@@ -1291,7 +1245,7 @@ public class PositionablePoint extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         if (getType() != ANCHOR) {
             Stroke originalStroke = g2.getStroke();
 
@@ -1300,12 +1254,14 @@ public class PositionablePoint extends LayoutTrack {
             Point2D ep1 = pt, ep2 = pt;
 
             if (getConnect1() != null) {
-                mainline = getConnect1().getMainline();
+                mainline = getConnect1().isMainline();
                 ep1 = getConnect1().getCentreSeg();
             }
-            if (getConnect2() != null) {
-                mainline |= getConnect2().getMainline();
-                ep2 = getConnect2().getCentreSeg();
+            if (getType() == ANCHOR) {
+                if (getConnect2() != null) {
+                    mainline |= getConnect2().isMainline();
+                    ep2 = getConnect2().getCentreSeg();
+                }
             }
 
             float trackWidth = Math.max(3.F, layoutEditor.setTrackStrokeWidth(g2, mainline));
@@ -1345,34 +1301,92 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * draw this PositionablePoint's controls
+     * draw this PositionablePoint's edit controls
      *
      * @param g2 the graphics port to draw to
      */
-    public void drawControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-        if (getConnect1() == null) {
+        TrackSegment ts1 = getConnect1();
+        if (ts1 == null) {
             g2.setColor(Color.red);
-        } else if ((getType() != END_BUMPER) && getConnect2() == null) {
-            g2.setColor(Color.yellow);
         } else {
-            g2.setColor(Color.green);
+            TrackSegment ts2 = null;
+            if (getType() == ANCHOR) {
+                ts2 = getConnect2();
+            } else if (getType() == EDGE_CONNECTOR) {
+                if (getLinkedPoint() != null) {
+                    ts2 = getLinkedPoint().getConnect1();
+                }
+            }
+            if ((getType() != END_BUMPER) && (ts2 == null)) {
+                g2.setColor(Color.yellow);
+            } else {
+                g2.setColor(Color.green);
+            }
         }
         g2.draw(layoutEditor.trackControlPointRectAt(getCoordsCenter()));
-    }   // drawControls
+    }   // drawEditControls
+
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // PositionablePoints don't have turnout controls...
+        // nothing to do here... move along...
+    }
 
     /*
-        return the layout connectivity for this PositionablePoint
+     * {@inheritDoc}
      */
-    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
-        ArrayList<LayoutConnectivity> results = new ArrayList<LayoutConnectivity>();
+    @Override
+    public void reCheckBlockBoundary() {
+        if (type == END_BUMPER) {
+            return;
+        }
+        if (getConnect1() == null && getConnect2() == null) {
+            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
+            if (westBoundSignalMastNamed != null) {
+                removeSML(getWestBoundSignalMast());
+            }
+            if (eastBoundSignalMastNamed != null) {
+                removeSML(getEastBoundSignalMast());
+            }
+            westBoundSignalMastNamed = null;
+            eastBoundSignalMastNamed = null;
+            setWestBoundSensor("");
+            setEastBoundSensor("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+        } else if (getConnect1() == null || getConnect2() == null) {
+            //could still be in the process of rebuilding the point details
+            return;
+        } else if (getConnect1().getLayoutBlock() == getConnect2().getLayoutBlock()) {
+            //We are no longer a block bounardy
+            if (westBoundSignalMastNamed != null) {
+                removeSML(getWestBoundSignalMast());
+            }
+            if (eastBoundSignalMastNamed != null) {
+                removeSML(getEastBoundSignalMast());
+            }
+            westBoundSignalMastNamed = null;
+            eastBoundSignalMastNamed = null;
+            setWestBoundSensor("");
+            setEastBoundSensor("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+        }
+    }   // reCheckBlockBoundary
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        List<LayoutConnectivity> results = new ArrayList<>();
         LayoutConnectivity lc = null;
         LayoutBlock blk1 = null, blk2 = null;
-        TrackSegment ts1 = getConnect1(), ts2 = getConnect2();
+        TrackSegment ts1 = getConnect1();
         Point2D p1, p2;
 
         if (getType() == ANCHOR) {
+            TrackSegment ts2 = getConnect2();
             if ((ts1 != null) && (ts2 != null)) {
                 blk1 = ts1.getLayoutBlock();
                 blk2 = ts2.getLayoutBlock();
@@ -1398,6 +1412,10 @@ public class PositionablePoint extends LayoutTrack {
                 }
             }
         } else if (getType() == EDGE_CONNECTOR) {
+            TrackSegment ts2 = null;
+            if (getLinkedPoint() != null) {
+                ts2 = getLinkedPoint().getConnect1();
+            }
             if ((ts1 != null) && (ts2 != null)) {
                 blk1 = ts1.getLayoutBlock();
                 blk2 = ts2.getLayoutBlock();
@@ -1426,4 +1444,5 @@ public class PositionablePoint extends LayoutTrack {
     }   // getLayoutConnectivity()
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }

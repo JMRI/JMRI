@@ -214,8 +214,8 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         String cSystemName = ConditionalSystemPrefix + group.toUpperCase();
         String cUserName = ConditionalUserPrefix + group;
         // add new Conditional
-        ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
-        ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
+        ArrayList<ConditionalVariable> variableList = new ArrayList<>();
+        ArrayList<ConditionalAction> actionList = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < _sensorModel.getRowCount(); i++) {
             if ((Boolean) _sensorModel.getValueAt(i, BeanTableModel.INCLUDE_COLUMN)) {

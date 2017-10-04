@@ -20,7 +20,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -441,7 +441,7 @@ public class PrintLocationsAction extends AbstractAction {
     private void printAnalysisSelected() throws IOException {
         CarManager carManager = InstanceManager.getDefault(CarManager.class);
         List<Location> locations = manager.getLocationsByNameList();
-        List<RollingStock> cars = carManager.getByLocationList();
+        List<Car> cars = carManager.getByLocationList();
         String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
 
         String s = Bundle.getMessage("TrackAnalysis") + NEW_LINE;
@@ -452,7 +452,7 @@ public class PrintLocationsAction extends AbstractAction {
             // get the total length for a given car type
             int numberOfCars = 0;
             int totalTrackLength = 0;
-            for (RollingStock car : cars) {
+            for (Car car : cars) {
                 if (car.getTypeName().equals(type) && car.getLocation() != null) {
                     numberOfCars++;
                     totalTrackLength += car.getTotalLength();

@@ -419,7 +419,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             step.setText(_headAppearances.get(Bundle.getMessage("SignalHeadStateFlashingLunar")));
             rampPrefs.addContent(step);
             prefs.addContent(rampPrefs);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             log.warn("Exception in storing warrant xml.", ex);
             return false;
         }

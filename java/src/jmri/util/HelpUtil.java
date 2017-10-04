@@ -165,7 +165,7 @@ public class HelpUtil {
                     log.debug("classversion={}", System.getProperty("java.class.version", "<unknown>"));
                     log.error("Help classes not found, help system omitted");
                     return false;
-                } catch (java.lang.Exception e2) {
+                } catch (Exception e2) {
                     log.error("HelpSet " + helpsetName + " not found, help system omitted");
                     return false;
                 }

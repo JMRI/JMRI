@@ -69,9 +69,12 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 
     protected javax.swing.JTextField pollIntervalField = new javax.swing.JTextField();
 
-    public void initComponents() throws Exception
-    {
-	initializeNodes();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
+	    initializeNodes();
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("WindowTitle"));
@@ -412,5 +415,3 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     private final static Logger log = LoggerFactory.getLogger(CMRInetManagerFrame.class);
 
 }
-
-/* @(#)CMRInetManagerFrame.java */

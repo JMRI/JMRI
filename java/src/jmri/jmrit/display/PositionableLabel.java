@@ -56,6 +56,10 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _rotateText = false;
     private int _degrees;
 
+    /**
+     * {@inheritDoc}
+     * @param editor where this label is displayed
+     */
     public PositionableLabel(String s, Editor editor) {
         super(s);
         _editor = editor;
@@ -98,9 +102,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = ed;
     }
 
-    /**
-     * *************** Positionable methods *********************
-     */
+    // *************** Positionable methods *********************
     @Override
     public void setPositionable(boolean enabled) {
         _positionable = enabled;

@@ -22,11 +22,11 @@ public class Sprogv4UpdateFrame
         super(memo);
     }
 
-    /**
-     * Set the help item
+    /** 
+     * {@inheritDoc}
      */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         setSprogModeButton.setVisible(false);
@@ -38,6 +38,9 @@ public class Sprogv4UpdateFrame
         _memo.getSprogVersionQuery().requestVersion(this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;

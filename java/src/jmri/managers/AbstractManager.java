@@ -433,6 +433,17 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return inputName;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return always 'VALID' to let undocumented connection system
+     *         managers pass entry validation.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return NameValidity.VALID;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractManager.class);
 
 }

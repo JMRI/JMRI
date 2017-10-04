@@ -44,7 +44,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
 
     @Override
     public void configure() {
-        log.debug("Configure doesnt do anything here");
+        log.debug("Configure doesn't do anything here");
     }
 
     @Override

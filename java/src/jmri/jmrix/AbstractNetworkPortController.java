@@ -35,18 +35,14 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     @Override
-    public void connect(String host, int port) throws Exception {
+    public void connect(String host, int port) throws IOException {
         setHostName(host);
         setPort(port);
-        try {
-            connect();
-        } catch (Exception e) {
-            throw e;
-        }
+        connect();
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() throws IOException {
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
             log.error("No host name or port set :{}:{}", m_HostName, m_port);
@@ -348,6 +344,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             while (reply) {
                 safeSleep(reconnectinterval, "Waiting");
                 count++;
+
                 try {
                     // if the device allows autoConfiguration,
                     // we need to run the autoConfigure() call
@@ -356,9 +353,11 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                         autoConfigure();
                     }
                     connect();
-                } catch (Exception e) {
-                    log.trace("Unable to reconnect", e);
+                } catch (IOException ex) {
+                    log.error("restart failed", ex);
+                    return;
                 }
+                
                 reply = !opened;
                 if (count >= retryAttempts) {
                     log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);

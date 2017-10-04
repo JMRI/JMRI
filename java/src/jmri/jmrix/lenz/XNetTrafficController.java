@@ -62,6 +62,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     // Abstract methods for the XNetInterface
+
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *

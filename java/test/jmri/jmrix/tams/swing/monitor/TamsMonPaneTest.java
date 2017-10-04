@@ -14,16 +14,13 @@ import org.junit.Test;
 public class TamsMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane );
-    }
-
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        pane = new TamsMonPane();
+        // pane for AbstractMonPaneTestBase, panel for JmriPanelTest
+        panel = pane = new TamsMonPane();
+        title="Tams Command Monitor";
     }
 
     @Override

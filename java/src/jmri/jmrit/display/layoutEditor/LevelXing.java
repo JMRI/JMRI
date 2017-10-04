@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -12,22 +10,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -35,9 +23,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,10 +88,10 @@ public class LevelXing extends LayoutTrack {
     private NamedBeanHandle<Sensor> sensorCNamed = null; // sensor at C track junction
     private NamedBeanHandle<Sensor> sensorDNamed = null; // sensor at D track junction
 
-    private Object connectA = null;
-    private Object connectB = null;
-    private Object connectC = null;
-    private Object connectD = null;
+    private LayoutTrack connectA = null;
+    private LayoutTrack connectB = null;
+    private LayoutTrack connectC = null;
+    private LayoutTrack connectD = null;
 
     private Point2D dispA = new Point2D.Double(-20.0, 0.0);
     private Point2D dispB = new Point2D.Double(-14.0, 14.0);
@@ -582,13 +568,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * get the object connected to this track for the specified connection type
-     * @param connectionType the specified connection type
-     * @return the object connected to this slip for the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * {@inheritDoc}
      */
     @Override
-    public Object getConnection(int connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         switch (connectionType) {
             case LEVEL_XING_A:
                 return connectA;
@@ -607,14 +590,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * set the object connected to this turnout for the specified connection type
-     * @param connectionType the connection type (where it is connected to the us)
-     * @param o the object that is being connected
-     * @param type the type of object that we're being connected to (Should always be "NONE" or "TRACK")
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, Object o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to LevelXing - " + type);
             throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
@@ -638,44 +617,44 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    public Object getConnectA() {
+    public LayoutTrack getConnectA() {
         return connectA;
     }
 
-    public Object getConnectB() {
+    public LayoutTrack getConnectB() {
         return connectB;
     }
 
-    public Object getConnectC() {
+    public LayoutTrack getConnectC() {
         return connectC;
     }
 
-    public Object getConnectD() {
+    public LayoutTrack getConnectD() {
         return connectD;
     }
 
-    public void setConnectA(Object o, int type) {
+    public void setConnectA(LayoutTrack o, int type) {
         connectA = o;
         if ((connectA != null) && (type != TRACK)) {
             log.error("unexpected type of A connection to levelXing - " + type);
         }
     }
 
-    public void setConnectB(Object o, int type) {
+    public void setConnectB(LayoutTrack o, int type) {
         connectB = o;
         if ((connectB != null) && (type != TRACK)) {
             log.error("unexpected type of B connection to levelXing - " + type);
         }
     }
 
-    public void setConnectC(Object o, int type) {
+    public void setConnectC(LayoutTrack o, int type) {
         connectC = o;
         if ((connectC != null) && (type != TRACK)) {
             log.error("unexpected type of C connection to levelXing - " + type);
         }
     }
 
-    public void setConnectD(Object o, int type) {
+    public void setConnectD(LayoutTrack o, int type) {
         connectD = o;
         if ((connectD != null) && (type != TRACK)) {
             log.error("unexpected type of D connection to levelXing - " + type);
@@ -726,7 +705,6 @@ public class LevelXing extends LayoutTrack {
      */
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
         switch (connectionType) {
             case LEVEL_XING_CENTER:
                 break;
@@ -767,19 +745,15 @@ public class LevelXing extends LayoutTrack {
      */
     public void setLayoutBlockAC(LayoutBlock b) {
         blockAC = b;
-        if (b != null) {
-            blockNameAC = b.getId();
-        }
+        blockNameAC = (b == null) ? "" : b.getId();
     }
 
     public void setLayoutBlockBD(LayoutBlock b) {
         blockBD = b;
-        if (b != null) {
-            blockNameBD = b.getId();
-        }
+        blockNameBD = (b == null) ? "" : b.getId();
     }
 
-    private void updateBlockInfo() {
+    protected void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
         if (blockAC != null) {
@@ -815,83 +789,6 @@ public class LevelXing extends LayoutTrack {
         reCheckBlockBoundary();
     }
 
-    public void reCheckBlockBoundary() {
-        if (connectA == null && connectB == null && connectC == null && connectD == null) {
-            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if (signalAMastNamed != null) {
-                removeSML(getSignalAMast());
-            }
-            if (signalBMastNamed != null) {
-                removeSML(getSignalBMast());
-            }
-            if (signalCMastNamed != null) {
-                removeSML(getSignalCMast());
-            }
-            if (signalDMastNamed != null) {
-                removeSML(getSignalDMast());
-            }
-            signalAMastNamed = null;
-            signalBMastNamed = null;
-            signalCMastNamed = null;
-            signalDMastNamed = null;
-            sensorANamed = null;
-            sensorBNamed = null;
-            sensorCNamed = null;
-            sensorDNamed = null;
-            //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
-        } else if (connectA == null || connectB == null || connectC == null || connectD == null) {
-            //could still be in the process of rebuilding the point details
-            return;
-        }
-
-        TrackSegment trkA;
-        TrackSegment trkB;
-        TrackSegment trkC;
-        TrackSegment trkD;
-
-        if (connectA instanceof TrackSegment) {
-            trkA = (TrackSegment) connectA;
-            if (trkA.getLayoutBlock() == blockAC) {
-                if (signalAMastNamed != null) {
-                    removeSML(getSignalAMast());
-                }
-                signalAMastNamed = null;
-                sensorANamed = null;
-            }
-        }
-        if (connectC instanceof TrackSegment) {
-            trkC = (TrackSegment) connectC;
-            if (trkC.getLayoutBlock() == blockAC) {
-                if (signalCMastNamed != null) {
-                    removeSML(getSignalCMast());
-                }
-                signalCMastNamed = null;
-                sensorCNamed = null;
-            }
-        }
-        if (connectB instanceof TrackSegment) {
-            trkB = (TrackSegment) connectB;
-            if (trkB.getLayoutBlock() == blockBD) {
-                if (signalBMastNamed != null) {
-                    removeSML(getSignalBMast());
-                }
-                signalBMastNamed = null;
-                sensorBNamed = null;
-            }
-        }
-
-        if (connectD instanceof TrackSegment) {
-            trkD = (TrackSegment) connectC;
-            if (trkD.getLayoutBlock() == blockBD) {
-                if (signalDMastNamed != null) {
-                    removeSML(getSignalDMast());
-                }
-                signalDMastNamed = null;
-                sensorDNamed = null;
-            }
-        }
-    }
-
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
@@ -907,8 +804,8 @@ public class LevelXing extends LayoutTrack {
      * connecting track segments are missing
      */
     public boolean isMainlineAC() {
-        if (((connectA != null) && (((TrackSegment) connectA).getMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).getMainline()))) {
+        if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
+                || ((connectB != null) && (((TrackSegment) connectB).isMainline()))) {
             return true;
         } else {
             return false;
@@ -916,8 +813,8 @@ public class LevelXing extends LayoutTrack {
     }
 
     public boolean isMainlineBD() {
-        if (((connectB != null) && (((TrackSegment) connectB).getMainline()))
-                || ((connectD != null) && (((TrackSegment) connectD).getMainline()))) {
+        if (((connectB != null) && (((TrackSegment) connectB).isMainline()))
+                || ((connectD != null) && (((TrackSegment) connectD).isMainline()))) {
             return true;
         } else {
             return false;
@@ -927,7 +824,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Modify coordinates methods
      */
-
     public void setCoordsA(Point2D p) {
         dispA = MathUtil.subtract(p, center);
     }
@@ -946,6 +842,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * scale this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
@@ -958,6 +855,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
+     *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
@@ -968,17 +866,13 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * find the hit (location) type for a point
-     * @param p the point
-     * @param useRectangles - whether to use (larger) rectangles or (smaller) circles for hit testing
-     * @param requireUnconnected - whether to only return hit types for free connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
+     * {@inheritDoc}
      */
-    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    @Override
+    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
 
         if (!requireUnconnected) {
             //check the center point
@@ -1072,9 +966,7 @@ public class LevelXing extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        if (tools == null) {
-            tools = new LayoutEditorTools(layoutEditor);
-        }
+        tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
             JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LevelCrossing")) + ident);
             jmi.setEnabled(false);
@@ -1100,7 +992,7 @@ public class LevelXing extends LayoutTrack {
             // if there are any track connections
             if ((connectA != null) || (connectB != null)
                     || (connectC != null) || (connectD != null)) {
-                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections_", "..."));
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
                     connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName()) {
                         @Override
@@ -1146,7 +1038,7 @@ public class LevelXing extends LayoutTrack {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(rb.getString("Hidden"));
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(hidden);
             popup.add(hiddenCheckBoxMenuItem);
             hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
@@ -1156,7 +1048,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    editLevelXing(LevelXing.this);
+                    layoutEditor.getLayoutTrackEditors().editLevelXing(LevelXing.this);
                 }
             });
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -1170,12 +1062,10 @@ public class LevelXing extends LayoutTrack {
                 }
             });
             if (blockACAssigned && blockBDAssigned) {
-                AbstractAction ssaa = new AbstractAction(rb.getString("SetSignals")) {
+                AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
+                        tools = layoutEditor.getLETools();
                         // bring up signals at level crossing tool dialog
                         tools.setSignalsAtLevelXingFromMenu(LevelXing.this,
                                 layoutEditor.signalIconEditor, layoutEditor.signalFrame);
@@ -1194,7 +1084,7 @@ public class LevelXing extends LayoutTrack {
             boolean blockBoundaries = false;
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockACAssigned && !blockBDAssigned) {
-                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
@@ -1202,7 +1092,7 @@ public class LevelXing extends LayoutTrack {
                         }
                     });
                 } else if (!blockACAssigned && blockBDAssigned) {
-                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
@@ -1210,7 +1100,7 @@ public class LevelXing extends LayoutTrack {
                         }
                     });
                 } else if (blockACAssigned && blockBDAssigned) {
-                    JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                    JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
                     viewRouting.add(new AbstractAction(blockNameAC) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -1237,23 +1127,17 @@ public class LevelXing extends LayoutTrack {
                 }
             }
             if (blockBoundaries) {
-                popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-
+                        tools = layoutEditor.getLETools();
                         tools.setSignalMastsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
-                popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-
+                        tools = layoutEditor.getLETools();
                         tools.setSensorsAtLevelXingFromMenu(LevelXing.this, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
@@ -1309,302 +1193,6 @@ public class LevelXing extends LayoutTrack {
         return boundaryBetween;
     }
 
-    // variables for Edit Level Crossing pane
-    private JmriJFrame editLevelXingFrame = null;
-    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideCrossing"));
-
-    private JmriBeanComboBox block1NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox block2NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JButton xingEditDone;
-    private JButton xingEditCancel;
-    private JButton xingEdit1Block;
-    private JButton xingEdit2Block;
-    private boolean editOpen = false;
-    private boolean needsRedraw = false;
-    private boolean needsBlockUpdate = false;
-
-    /**
-     * Edit a Level Crossing
-     */
-    protected void editLevelXing(LevelXing o) {
-        if (editOpen) {
-            editLevelXingFrame.setVisible(true);
-            return;
-        }
-        // Initialize if needed
-        if (editLevelXingFrame == null) {
-            editLevelXingFrame = new JmriJFrame(rb.getString("EditXing"), false, true);
-            editLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.EditLevelXing", true);
-            editLevelXingFrame.setLocation(50, 30);
-            Container contentPane = editLevelXingFrame.getContentPane();
-            contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
-            panel33.add(hiddenBox);
-            contentPane.add(panel33);
-
-            // setup block 1 name
-            JPanel panel1 = new JPanel();
-            panel1.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
-            panel1.add(block1NameLabel);
-            panel1.add(block1NameComboBox);
-            LayoutEditor.setupComboBox(block1NameComboBox, false, true);
-            block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
-            contentPane.add(panel1);
-
-            // setup block 2 name
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
-            panel2.add(block2NameLabel);
-            panel2.add(block2NameComboBox);
-            LayoutEditor.setupComboBox(block2NameComboBox, false, true);
-            block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
-            contentPane.add(panel2);
-
-            // set up Edit 1 Block and Edit 2 Block buttons
-            JPanel panel4 = new JPanel();
-            panel4.setLayout(new FlowLayout());
-            // Edit 1 Block
-            panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
-            xingEdit1Block.addActionListener((ActionEvent e) -> {
-                xingEdit1BlockPressed(e);
-            });
-            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
-            // Edit 2 Block
-            panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
-            xingEdit2Block.addActionListener((ActionEvent e) -> {
-                xingEdit2BlockPressed(e);
-            });
-            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
-            contentPane.add(panel4);
-            // set up Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            xingEditDone.addActionListener((ActionEvent e) -> {
-                xingEditDonePressed(e);
-            });
-            xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
-                rootPane.setDefaultButton(xingEditDone);
-            });
-
-            // Cancel
-            panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            xingEditCancel.addActionListener((ActionEvent e) -> {
-                xingEditCancelPressed(e);
-            });
-            xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            contentPane.add(panel5);
-        }
-
-        hiddenBox.setSelected(hidden);
-
-        // Set up for Edit
-        block1NameComboBox.setText(blockNameAC);
-        block2NameComboBox.setText(blockNameBD);
-        editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                xingEditCancelPressed(null);
-            }
-        });
-        editLevelXingFrame.pack();
-        editLevelXingFrame.setVisible(true);
-        editOpen = true;
-        needsBlockUpdate = false;
-    }
-
-    void xingEdit1BlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = block1NameComboBox.getUserName();
-        if (!blockNameAC.equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((blockAC != null) && (blockAC != blockBD)) {
-                blockAC.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameAC = newName;
-            if (!blockNameAC.isEmpty()) {
-                try {
-                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                    // decrement use if block was previously counted
-                    if ((blockAC != null) && (blockAC == blockBD)) {
-                        blockAC.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameAC = "";
-                    block1NameComboBox.setText("");
-                    block1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockAC = null;
-                blockNameAC = "";
-            }
-            needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockAC == null) {
-            JOptionPane.showMessageDialog(editLevelXingFrame,
-                    rb.getString("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockAC.editLayoutBlock(editLevelXingFrame);
-        needsRedraw = true;
-    }
-
-    void xingEdit2BlockPressed(ActionEvent a) {
-        // check if a block name has been entered
-        String newName = block2NameComboBox.getUserName();
-        if (-1 != block2NameComboBox.getSelectedIndex()) {
-            newName = block2NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
-        }
-        if (!blockNameBD.equals(newName)) {
-            // block has changed, if old block exists, decrement use
-            if ((blockBD != null) && (blockBD != blockAC)) {
-                blockBD.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameBD = newName;
-            if (!blockNameBD.isEmpty()) {
-                try {
-                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                    // decrement use if block was previously counted
-                    if ((blockBD != null) && (blockAC == blockBD)) {
-                        blockBD.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameBD = "";
-                    block2NameComboBox.setText("");
-                    block2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockBD = null;
-                blockNameBD = "";
-            }
-            needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-        // check if a block exists to edit
-        if (blockBD == null) {
-            JOptionPane.showMessageDialog(editLevelXingFrame,
-                    rb.getString("Error1"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        blockBD.editLayoutBlock(editLevelXingFrame);
-        needsRedraw = true;
-    }
-
-    void xingEditDonePressed(ActionEvent a) {
-        // check if Blocks changed
-        String newName = block1NameComboBox.getUserName();
-        if (!blockNameAC.equals(newName)) {
-            // block 1 has changed, if old block exists, decrement use
-            if ((blockAC != null) && (blockAC != blockBD)) {
-                blockAC.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameAC = newName;
-            if (!blockNameAC.isEmpty()) {
-                try {
-                    blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-                    // decrement use if block was previously counted
-                    if ((blockAC != null) && (blockAC == blockBD)) {
-                        blockAC.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameAC = "";
-                    block1NameComboBox.setText("");
-                    block1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockAC = null;
-                blockNameAC = "";
-            }
-            needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-        newName = block2NameComboBox.getUserName();
-        if (!blockNameBD.equals(newName)) {
-            // block 2 has changed, if old block exists, decrement use
-            if ((blockBD != null) && (blockBD != blockAC)) {
-                blockBD.decrementUse();
-            }
-            // get new block, or null if block has been removed
-            blockNameBD = newName;
-            if (!blockNameBD.isEmpty()) {
-                try {
-                    blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-                    // decrement use if block was previously counted
-                    if ((blockBD != null) && (blockAC == blockBD)) {
-                        blockBD.decrementUse();
-                    }
-                } catch (IllegalArgumentException ex) {
-                    blockNameBD = "";
-                    block2NameComboBox.setText("");
-                    block2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                blockBD = null;
-                blockNameBD = "";
-            }
-            needsRedraw = true;
-            layoutEditor.auxTools.setBlockConnectivityChanged();
-            needsBlockUpdate = true;
-        }
-
-        // set hidden
-        boolean oldHidden = hidden;
-        hidden = hiddenBox.isSelected();
-        if (oldHidden != hidden) {
-            needsRedraw = true;
-        }
-
-        editOpen = false;
-        editLevelXingFrame.setVisible(false);
-        editLevelXingFrame.dispose();
-        editLevelXingFrame = null;
-        if (needsBlockUpdate) {
-            updateBlockInfo();
-        }
-        if (needsRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-
-    void xingEditCancelPressed(ActionEvent a) {
-        editOpen = false;
-        editLevelXingFrame.setVisible(false);
-        editLevelXingFrame.dispose();
-        editLevelXingFrame = null;
-        if (needsBlockUpdate) {
-            updateBlockInfo();
-        }
-        if (needsRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-
     /**
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
@@ -1633,7 +1221,7 @@ public class LevelXing extends LayoutTrack {
         return active;
     }
 
-    ArrayList<SignalMast> sml = new ArrayList<SignalMast>();
+    ArrayList<SignalMast> sml = new ArrayList<>();
 
     public void addSignalMastLogic(SignalMast sm) {
         if (sml.contains(sm)) {
@@ -1670,8 +1258,8 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<JMenuItem>(0);
-    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<JMenuItem>(0);
+    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<>(0);
+    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<>(0);
 
     public void addEditPopUpMenu(JMenuItem menu) {
         if (!editAdditionalMenu.contains(menu)) {
@@ -1710,7 +1298,7 @@ public class LevelXing extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
-    public void draw(Graphics2D g2) {
+    protected void draw(Graphics2D g2) {
         if (isMainlineBD() && (!isMainlineAC())) {
             drawXingAC(g2);
             drawXingBD(g2);
@@ -1738,10 +1326,10 @@ public class LevelXing extends LayoutTrack {
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
-    public void drawEditControls(Graphics2D g2) {
+    protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlCircleAt(pt));
 
         pt = getCoordsA();
         if (getConnectA() == null) {
@@ -1775,5 +1363,28 @@ public class LevelXing extends LayoutTrack {
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }
+
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // LevelXings don't have turnout controls...
+        // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public void reCheckBlockBoundary() {
+        // nothing to do here... move along...
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
+        // nothing to do here... move along...
+        return null;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);
 }

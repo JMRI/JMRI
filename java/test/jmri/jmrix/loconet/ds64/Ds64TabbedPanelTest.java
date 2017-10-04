@@ -12,20 +12,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Ds64TabbedPanelTest {
+public class Ds64TabbedPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testCTor() {
-        Ds64TabbedPanel t = new Ds64TabbedPanel();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Ds64TabbedPanel();
+        helpTarget="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel";
+        title=Bundle.getMessage("MenuItemDS64Programmer");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

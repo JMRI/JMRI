@@ -28,8 +28,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         tc = memo.getTrafficController();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");

@@ -26,7 +26,7 @@ public class OakTreeSystemConnectionMemoTest {
        JUnitUtil.setUp();
        SerialTrafficController tc = new SerialTrafficController(){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
        };
        memo = new OakTreeSystemConnectionMemo();

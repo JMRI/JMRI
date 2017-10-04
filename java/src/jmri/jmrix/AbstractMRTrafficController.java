@@ -103,7 +103,7 @@ abstract public class AbstractMRTrafficController {
                 log.debug("notify client: {}", client);
                 try {
                     forwardMessage(client, m);
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.warn("notify: During message dispatch to {}", client, e);
                 }
             }
@@ -200,7 +200,7 @@ abstract public class AbstractMRTrafficController {
                 if (dest != client) {
                     forwardReply(client, r);
                 }
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.warn("notify: During reply dispatch to {}", client, e);
             }
         }
@@ -608,7 +608,7 @@ abstract public class AbstractMRTrafficController {
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             xmtException = true;
@@ -699,7 +699,7 @@ abstract public class AbstractMRTrafficController {
             rcvThread.setDaemon(true);
             rcvThread.start();
             
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Failed to start up communications. Error was {}", e.toString());
             log.debug("Full trace:", e);
         }
@@ -729,7 +729,7 @@ abstract public class AbstractMRTrafficController {
      * Check to see if PortController object can be sent to. returns true if
      * ready, false otherwise May throw an Exception.
      */
-    public boolean portReadyToSend(AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(AbstractPortController p) {
         if (p != null && !xmtException && !rcvException) {
             return true;
         } else {
@@ -765,7 +765,7 @@ abstract public class AbstractMRTrafficController {
                 rcvException = true;
                 reportReceiveLoopException(e);
                 break;
-            } catch (Exception e1) {
+            } catch (RuntimeException e1) {
                 log.error("Exception in receive loop: {}", e1.toString(), e1);
                 errorCount++;
                 if (errorCount == maxRcvExceptionCount) {
@@ -930,7 +930,7 @@ abstract public class AbstractMRTrafficController {
             } else {
                 SwingUtilities.invokeLater(r);
             }
-        } catch (Exception e) {
+        } catch (InterruptedException | java.lang.reflect.InvocationTargetException| RuntimeException e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
             return;
         }

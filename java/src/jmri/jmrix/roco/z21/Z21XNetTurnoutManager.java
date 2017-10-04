@@ -52,17 +52,9 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
           }
           // make sure we know about this turnout.
           String s = prefix + typeLetter() + address;
-          if (null == getBySystemName(s)) {
-             // need to create a new one, and send the message on 
-             // to the newly created object.
-             ((Z21XNetTurnout) provideTurnout(s)).initmessage(l);
-          } else {
-             // The turnout exists, forward this message to the 
-             // turnout
-             ((Z21XNetTurnout) getBySystemName(s)).message(l);
-          }
+          forwardMessageToTurnout(s,l);
         } else {
-          super.message(l); // the the XpressNetTurnoutManager code
+          super.message(l); // let the XpressNetTurnoutManager code
                             // handle any other replies.
         }
     }

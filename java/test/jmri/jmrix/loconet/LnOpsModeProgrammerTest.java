@@ -19,7 +19,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         try {
-            lnopsmodeprogrammer.setMode(DefaultProgrammerManager.PAGEMODE);
+            lnopsmodeprogrammer.setMode(ProgrammingMode.PAGEMODE);
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -31,7 +31,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
-        Assert.assertEquals("OpsByteMode", DefaultProgrammerManager.OPSBYTEMODE, intRet);
+        Assert.assertEquals("OpsByteMode", ProgrammingMode.OPSBYTEMODE, intRet);
     }
 
     public void testGetCanRead() {

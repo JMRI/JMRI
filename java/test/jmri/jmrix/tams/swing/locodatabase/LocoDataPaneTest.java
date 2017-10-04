@@ -14,31 +14,30 @@ import jmri.jmrix.tams.TamsTrafficController;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LocoDataPaneTest {
+public class LocoDataPaneTest extends jmri.util.swing.JmriPanelTest {
 
     private TamsSystemConnectionMemo memo = null;
 
     @Test
-    public void testCtor() {
-        LocoDataPane action = new LocoDataPane();
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testInit() {
+    @Override
+    public void testInitComponents() {
         // this test currently just makes sure we don't throw any exceptions
         // initializing the panel
-        LocoDataPane action = new LocoDataPane();
-        action.initComponents(memo);
+        ((LocoDataPane)panel).initComponents(memo);
     }
 
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
         memo = new TamsSystemConnectionMemo(tc);
+        panel = new LocoDataPane();
+        helpTarget="package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame";
+        title="Tams Loco Database";
     }
 
+    @Override
     @After
     public void tearDown() {
         memo = null;

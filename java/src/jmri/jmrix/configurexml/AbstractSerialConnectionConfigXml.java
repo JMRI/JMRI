@@ -76,7 +76,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
         // configure port name

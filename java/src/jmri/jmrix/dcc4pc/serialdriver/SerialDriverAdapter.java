@@ -112,7 +112,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             }
             for (int i = 0; i < connList.size(); i++) {
                 SystemConnectionMemo scm = connList.get(i);
-                if (scm.provides(jmri.ProgrammerManager.class) && (!scm.getUserName().equals(userName))) {
+                if ((scm.provides(jmri.AddressedProgrammerManager.class) || scm.provides(jmri.GlobalProgrammerManager.class))
+                        && (!scm.getUserName().equals(userName))) {
                     progConn.add(scm.getUserName());
                 }
             }

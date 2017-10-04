@@ -42,7 +42,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Override
     @After
     public void tearDown(){
-       tc = null;
+
+        tc = null;
         JUnitUtil.tearDown(); 
     }
 

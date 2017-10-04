@@ -454,10 +454,10 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * @param maxValid - highest Board ID number allowed for the given device type.
      * @throws jmri.JmriException - when the board address is invalid
      */
-    void setAddress(int maxValid) throws Exception {
+    void setAddress(int maxValid) throws jmri.JmriException {
         try {
             address = (Integer.parseInt(addrField.getText()) - 1);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             status.setText(Bundle.getMessage("STATUS_INPUT_BAD"));

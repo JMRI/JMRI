@@ -19,8 +19,7 @@ public interface Mx1PanelInterface {
      * classes.
      *
      * @param memo the memo to initialize components with
-     * @throws java.lang.Exception if unable to initialize components
      */
-    public void initComponents(Mx1SystemConnectionMemo memo) throws Exception;
+    public void initComponents(Mx1SystemConnectionMemo memo);
 
 }

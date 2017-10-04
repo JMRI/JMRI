@@ -1211,7 +1211,7 @@ public class SerialNode extends AbstractNode {
         } else {
             // multiple registration of the same sensor
             log.warn("multiple registration of same sensor: CS"
-                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1));
+                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERUA) + i + 1)); // TODO multichar prefix
         }
     }
 

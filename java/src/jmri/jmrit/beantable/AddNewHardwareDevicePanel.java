@@ -23,11 +23,13 @@ import javax.swing.JTextField;
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JSpinner endRange, JCheckBox addRange,
-            JButton addButton, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener, JLabel statusBar) {
+            JButton addButton, ActionListener cancelListener, ActionListener rangeListener, JLabel statusBar) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         if (statusBar == null) statusBar = new JLabel("");
         _endRange = endRange;
         _range = addRange;
+        // directly using the addButton from the table action allows to disable it from there
+        // as long until a valid address is entered
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -86,7 +88,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         cancel.addActionListener(cancelListener);
 
         panelBottom.add(addButton);
-        addButton.addActionListener(okListener);
 
         add(panelBottom);
 

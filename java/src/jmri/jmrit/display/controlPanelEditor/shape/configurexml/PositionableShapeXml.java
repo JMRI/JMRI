@@ -116,28 +116,24 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
             ps.setVisible(!value);
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape hidden attribute");
-        } catch (Exception e) {
         }
 
         try {
             ps.setPositionable(element.getAttribute("positionable").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape positionable attribute");
-        } catch (Exception e) {
         }
 
         try {
             ps.setShowToolTip(element.getAttribute("showtooltip").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape showtooltip attribute");
-        } catch (Exception e) {
         }
 
         try {
             ps.setEditable(element.getAttribute("editable").getBooleanValue());
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape editable attribute");
-        } catch (Exception e) {
         }
 
         Element elem = element.getChild("toolTip");
@@ -168,7 +164,6 @@ public abstract class PositionableShapeXml extends AbstractXmlAdapter {
             hide = element.getAttribute("hideOnSensor").getBooleanValue();
         } catch (DataConversionException e1) {
             log.warn("unable to convert positionable shape hideOnSensor attribute");
-        } catch (Exception e) {
         }
 
         int changeLevel = -1;

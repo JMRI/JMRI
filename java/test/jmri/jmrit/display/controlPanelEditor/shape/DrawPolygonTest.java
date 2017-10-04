@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,8 +19,17 @@ public class DrawPolygonTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        ShapeDrawer s = new ShapeDrawer(frame);
-        DrawPolygon t = new DrawPolygon("newShape", "Polygon", s);
+        DrawPolygon t = new DrawPolygon("newShape", "Polygon", null);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
+    }
+
+    public void testCTorEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        PositionablePolygon ps =  new PositionablePolygon(frame, null);
+        DrawRectangle t = new DrawRoundRect("editShape", "Polygon", ps);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

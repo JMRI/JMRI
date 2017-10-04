@@ -112,9 +112,11 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     }
 
-    public void initComponents() throws Exception
-    {
-	initializeNodes();
+    /** 
+     * {@inheritDoc}
+     */
+    public void initComponents() {
+	    initializeNodes();
 
         // For the class
         setLayout(new FlowLayout(FlowLayout.LEFT));

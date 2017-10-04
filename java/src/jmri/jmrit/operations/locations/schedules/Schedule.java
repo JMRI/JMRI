@@ -215,7 +215,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         while (en.hasMoreElements()) {
             arr[i++] = en.nextElement();
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getItemById(arr[i]));
         }

@@ -11,11 +11,6 @@ import jmri.*;
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
 public class CodeButton {
-
-    /**
-     * Nobody can build anonymous object
-     */
-    private CodeButton() {}
     
     /**
      * Create and configure 

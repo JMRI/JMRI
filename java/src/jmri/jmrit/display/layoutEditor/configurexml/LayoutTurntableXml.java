@@ -136,7 +136,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 }
             }
         }
-        p.turntableList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class);

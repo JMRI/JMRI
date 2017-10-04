@@ -71,7 +71,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         try {
             addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
         } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName " + systemName + " to a turnout address");
+            log.error("failed to convert systemName '{}' to a turnout address", systemName);
             return null;
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
@@ -640,7 +640,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             arr[i] = "" + en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(arr[i]);
         }

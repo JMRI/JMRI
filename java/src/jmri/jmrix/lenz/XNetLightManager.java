@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for XPressNet systems.
+ * Implement light manager for XpressNet systems.
  * <p>
  * System names are "XLnnnnn", where nnnnn is the bit number without padding.
  * <p>
@@ -26,12 +26,14 @@ public class XNetLightManager extends AbstractLightManager {
     }
 
     /**
-     * Return the system letter for XPressNet
+     * Return the system letter for XpressNet.
      */
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
+
+    // XNet-specific methods
 
     /**
      * Create a new Light based on the system name.
@@ -42,56 +44,38 @@ public class XNetLightManager extends AbstractLightManager {
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
-        Light lgt = null;
         // check if the output bit is available
-        int bitNum = getBitFromSystemName(systemName);
-        if (bitNum == 0) {
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        if (bitNum == -1) {
             return (null);
         }
-        // Normalize the systemName
-        String sName = prefix + typeLetter() + bitNum;   // removes any leading zeros
-        // make the new Light object
+        Light lgt = null;
+        // Normalize the System Name
+        String sName = prefix + typeLetter() + bitNum; // removes any leading zeros
+        // create the new Light object
         lgt = new XNetLight(tc, this, sName, userName);
         return lgt;
     }
 
     /**
      * Get the bit address from the system name.
+     *
+     * @param systemName system name for turnout
+     * @return index value for light, -1 if an error occurred
      */
     public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
-            // here if an illegal XPressNet light system name 
-            log.error("illegal character in header field of XPressNet light system name: " + systemName);
-            return (0);
-        }
-        // name must be in the XLnnnnn format (X is user configurable)
-        int num = 0;
-        try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
-        } catch (Exception e) {
-            log.error("illegal character in number field of system name: " + systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.error("invalid XPressNet light system name: " + systemName);
-            return (0);
-        } else if (num > 1024) {
-            log.error("bit number out of range in XPressNet light system name: " + systemName);
-            return (0);
-        }
-        return (num);
+        return XNetAddress.getBitFromSystemName(systemName, prefix);
     }
 
     /**
-     * Validate system name format.
+     * Validate Light system name format.
+     * Logging of handled cases no higher than WARN.
      *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**

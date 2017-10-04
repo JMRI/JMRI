@@ -11,20 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class PacketGenPanelTest {
+public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-
-    @Test
-    public void testCtor() {
-        PacketGenPanel action = new PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new PacketGenPanel();
+        helpTarget="package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame";
+        title="Send Tams command";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

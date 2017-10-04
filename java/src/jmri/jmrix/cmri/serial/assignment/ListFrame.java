@@ -80,8 +80,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setTitle(Bundle.getMessage("MenuItemAssignments"));

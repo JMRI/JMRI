@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class PortalManager extends AbstractManager<Portal>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
-    private static int _nextSName = 1;
+    private int _nextSName = 1;
 
     public PortalManager() {
         super();
@@ -55,7 +54,7 @@ public class PortalManager extends AbstractManager<Portal>
         return 'P';
     }
 
-    /**
+    /*
      * Method to create a new Portal. Returns null if a
      * Portal with the same systemName or userName already exists. 
      *
@@ -95,9 +94,6 @@ public class PortalManager extends AbstractManager<Portal>
         return portal;
     }
 
-    @SuppressFBWarnings(value=" ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification="Lesser of two evils")
-    // Multiple instances prevented by use of the InstanceManager.  However, should multiple 
-    // instances happen a static '_nextSName' provides a chance the session can survive.
     public String generateSystemName() {
         String name;
         do {

@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locoio.LocoIOTest");  // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(LocoIOPanelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOPanelTest.class));
         suite.addTest(LocoIOTableModelTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOTest.class));

@@ -29,7 +29,7 @@
       <h2>Virtual Sound Decoder</h2>
 
       <div align="right">
-        <p><a href="Main_Debug.shtml#pricom">Back</a></p>
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
       </div>
       <hr>
 
@@ -47,25 +47,32 @@
       coordinates.
 
       <h5>Reporters</h5><img src="images/VSD_Locations01.png" alt=
-      "Manage Reporter Locations" width="560" height="340" border=
-      "4">
+      "Manage Reporter Locations" width="536" height="358">
 
       <p>The Reporters tab shows a list of all currently defined
       Reporters. This is intended for use with Digitrax
       Transponding or other similar locomotive tracking hardware
       systems.</p>
 
+
+      <h5>Blocks</h5><img src="images/VSD_Locations02.png" alt=
+      "Manage Block Locations" width="536" height="358">
+
+      <p>The Blocks tab shows a list of all currently defined
+      Blocks. This is intended for use with Digitrax
+      Transponding or other similar locomotive tracking hardware
+      systems.</p>
+
+
       <h5>Operations Locations</h5><img src=
-      "images/VSD_Locations02.png" alt=
-      "Manage Operations Locations" width="560" height="340"
-      border="4">
+      "images/VSD_Locations03.png" alt=
+      "Manage Operations Locations" width="536" height="358">
 
       <p>The Operations Locations tab shows a list of all Locations
       defined within the JMRI Operations system.</p>
 
-      <h5>Listeners</h5><img src="images/VSD_Locations03.png" alt=
-      "Manage Listener Locations" width="560" height="340" border=
-      "4">
+      <h5>Listeners</h5><img src="images/VSD_Locations04.png" alt=
+      "Manage Listener Locations" width="536" height="358">
 
       <p>The Listeners tab shows the location of the Listener in
       the VSD sound system. The Listener position has two
@@ -99,9 +106,10 @@
       </ul>If you have one of the systems noted as "not tested",
       and would like to help with testing and debug of this
       feature, please contact me on the <a href=
-      "http://groups.yahoo.com/group/jmriusers/">JMRIUsers Yahoo!
-      Group</a>. More systems will be added in the future. To
-      enable VSD Location Following, follow these steps:
+      "https://groups.yahoo.com/neo/groups/jmriusers/info">
+	  JMRIUsers Yahoo! Group</a>. More systems will be added 
+	  in the future. To enable VSD Location Following, 
+	  follow these steps:
 
       <ol>
         <li>Follow the directions appropriate to your hardware
@@ -227,14 +235,10 @@
 
       <p>For more information on Operations, see the JMRI&reg;
       Operations User's Guide</p>
-
-      <p><em>Note:</em> Operations Locations following is
-      temporarily disabled in JMRI 3.1.6 but will be re-enabled in
-      3.1.7.</p>
       <hr>
 
       <div align="right">
-        <p><a href="Main_Debug.shtml#pricom">Back</a></p>
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

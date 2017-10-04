@@ -170,7 +170,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == VALUECOL) {
                     try {
-                        return s.getAppearanceName();
+                        if (s.getAppearanceName() != null) {
+                            return s.getAppearanceName();
+                        } else {
+                            //Appearance (head) not set
+                            log.debug("NULL Appearance returned for head in row {}", row);
+                            return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
+                        }
                     } catch (java.lang.NullPointerException e) {
                         //Appearance (head) not set
                         log.debug("Appearance for head {} not set", row);

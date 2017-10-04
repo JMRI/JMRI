@@ -104,7 +104,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     @Override
     public Object findInstance(Class<?> c, int index) {
-        ArrayList<Object> temp = new ArrayList<>(plist);
+        List<Object> temp = new ArrayList<>(plist);
         temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
@@ -120,24 +120,20 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     @Override
-    public ArrayList<Object> getInstanceList(Class<?> c) {
-        ArrayList<Object> temp = new ArrayList<>(plist);
-        ArrayList<Object> returnlist = new ArrayList<>();
+    public List<Object> getInstanceList(Class<?> c) {
+        List<Object> result = new ArrayList<>();
+
+        List<Object> temp = new ArrayList<>(plist);
         temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
         temp.addAll(uplist);
-        for (int i = 0; i < temp.size(); i++) {
-            if (c.isInstance(temp.get(i))) {
-                returnlist.add(temp.get(i));
-                //if (index-- == 0) return temp.get(i);
+        for (Object o : temp) {
+            if (c.isInstance(o)) {
+                result.add(o);
             }
         }
-        if (returnlist.isEmpty()) {
-            return null;
-        }
-        return returnlist;
-
+        return result;
     }
 
     @Override
@@ -152,7 +148,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
 
         // and add to list
-        //clist.add(o);
         clist.put(o, x);
     }
 
@@ -218,12 +213,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         uplist.remove(o);
     }
 
-    ArrayList<Object> plist = new ArrayList<>();
+    List<Object> plist = new ArrayList<>();
     Map<Object, Integer> clist = Collections.synchronizedMap(new LinkedHashMap<>());
-    ArrayList<Object> tlist = new ArrayList<>();
-    ArrayList<Object> ulist = new ArrayList<>();
-    ArrayList<Object> uplist = new ArrayList<>();
-    private final ArrayList<Element> loadDeferredList = new ArrayList<>();
+    List<Object> tlist = new ArrayList<>();
+    List<Object> ulist = new ArrayList<>();
+    List<Object> uplist = new ArrayList<>();
+    private final List<Element> loadDeferredList = new ArrayList<>();
 
     /**
      * Find the name of the adapter class for an object.
@@ -284,7 +279,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected boolean addConfigStore(Element root) {
         boolean result = true;
-        ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<>(clist.entrySet());
+        List<Map.Entry<Object, Integer>> l = new ArrayList<>(clist.entrySet());
         Collections.sort(l, (Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
         for (int i = 0; i < l.size(); i++) {
             try {
@@ -304,8 +299,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected boolean addToolsStore(Element root) {
         boolean result = true;
-        for (int i = 0; i < tlist.size(); i++) {
-            Object o = tlist.get(i);
+        for (Object o : tlist) {
             try {
                 Element e = elementFromObject(o);
                 if (e != null) {
@@ -322,8 +316,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected boolean addUserStore(Element root) {
         boolean result = true;
-        for (int i = 0; i < ulist.size(); i++) {
-            Object o = ulist.get(i);
+        for (Object o : ulist) {
             try {
                 Element e = elementFromObject(o);
                 if (e != null) {
@@ -339,8 +332,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     protected void addUserPrefsStore(Element root) {
-        for (int i = 0; i < uplist.size(); i++) {
-            Object o = uplist.get(i);
+        for (Object o : uplist) {
             Element e = elementFromObject(o);
             if (e != null) {
                 root.addContent(e);
@@ -679,7 +671,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 loadlist.put(item, order);
             }
 
-            ArrayList<Map.Entry<Element, Integer>> l = new ArrayList<>(loadlist.entrySet());
+            List<Map.Entry<Element, Integer>> l = new ArrayList<>(loadlist.entrySet());
             Collections.sort(l, (Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
@@ -929,7 +921,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * @return the loadDeferredList
      */
-    protected ArrayList<Element> getLoadDeferredList() {
+    protected List<Element> getLoadDeferredList() {
         return loadDeferredList;
     }
 }

@@ -327,7 +327,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Aclea Config Sensor message: " + m);
+                    log.debug("send Acela Config Sensor message: " + m);
                     incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
@@ -398,7 +398,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * static function returning the AcelaTrafficController instance to use.
+     * Static function returning the AcelaTrafficController instance to use.
      *
      * @return The registered AcelaTrafficController instance for general use,
      *         if need be creating one.

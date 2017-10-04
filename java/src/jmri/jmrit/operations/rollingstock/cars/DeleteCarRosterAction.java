@@ -6,7 +6,6 @@ import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public class DeleteCarRosterAction extends AbstractAction {
             if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("carDeleteCarsTrack"),
                     new Object[]{_carsTableFrame.carsTableModel.trackName}),
                     Bundle.getMessage("carDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                for (RollingStock car : _carsTableFrame.carsTableModel.getSelectedCarList()) {
+                for (Car car : _carsTableFrame.carsTableModel.getSelectedCarList()) {
                     InstanceManager.getDefault(CarManager.class).deregister(car);
                 }
             }

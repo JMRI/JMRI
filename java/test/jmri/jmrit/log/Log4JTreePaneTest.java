@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
  */
-public class Log4JTreePaneTest {
+public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testShow() {
@@ -35,11 +35,16 @@ public class Log4JTreePaneTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Log4JTreePane();
+        title=Bundle.getMessage("MenuItemLogTreeAction");
+        helpTarget="package.jmri.jmrit.log.Log4JTreePane";
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
