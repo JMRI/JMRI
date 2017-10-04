@@ -79,6 +79,10 @@ Note:
     <!-- Angular -->
     <script src="node_modules/angular-patternfly/node_modules/angular/angular.min.js"></script>
 
+    <!-- Bootstrap-Select (Optional): The following lines are only required if you use the pfBootstrapSelect directive -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/bootstrap-select/js/bootstrap-select.js"></script>
+
     <!-- Angular-Bootstrap -->
     <script src="node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
     <script src="node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
