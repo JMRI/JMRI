@@ -864,10 +864,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return;
         }
         Warrant warrant =  (Warrant)bean;
-        if (warrant == null) {
-            log.warn("Warrant \"{}\" not found.", ts.getBeanDisplayName());
-            return;
-        }
         int num = 0;
         try {
             num = Integer.parseInt(ts.getValue());
