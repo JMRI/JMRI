@@ -223,13 +223,15 @@ public class SimulatorAdapter extends NcePortController implements
                 wait(100);
             } catch (InterruptedException e) {
                 log.debug("continuing after interrupt");
+                } catch (IllegalMonitorStateException e) { // currently needs to happen to maintain simulator operation & speed
+                    log.debug("continuing after IllegalMonitorStateException");
             }
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
-                StringBuffer buf = new StringBuffer();
+                StringBuilder buf = new StringBuilder();
                 buf.append("Nce Simulator Thread received message: ");
                 for (int i = 0; i < m.getNumDataElements(); i++) {
-                    buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                    buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                 }
                 log.debug(buf.toString());
             }
@@ -240,7 +242,7 @@ public class SimulatorAdapter extends NcePortController implements
                     StringBuffer buf = new StringBuffer();
                     buf.append("Nce Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
                     log.debug(buf.toString());
                 }
