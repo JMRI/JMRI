@@ -20,6 +20,7 @@ public class WebServerScaffold implements En {
 
       Before(tags,()->{
           jmri.util.JUnitUtil.setUp();
+          jmri.util.JUnitUtil.initShutDownManager();
           server = new WebServer(); // a webserver using default preferences.
           server.start();
       });
