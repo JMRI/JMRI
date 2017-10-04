@@ -59,16 +59,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (manager != null) {
-            if (T.equals(jmri.GlobalProgrammerManager.class)) {
-                return (T) get(jmri.GlobalProgrammerManager.class);
-            }
-            if (T.equals(jmri.AddressedProgrammerManager.class)) {
-                return (T) get(jmri.AddressedProgrammerManager.class);
-            }
+        if (manager != null && !getDisabled()) {
             return (T) manager.get(T);
         }
         return null; // nothing, by default
