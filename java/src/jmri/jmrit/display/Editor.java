@@ -640,34 +640,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.scale(_paintScale, _paintScale);                
             }
 
-            Color backgroundColor = getBackgroundColor();
-
-            if (isOpaque()) {
-                Rectangle r = g.getClipBounds();
-                Color c = getBackground();
-                if (c == null) {
-                    c = Color.lightGray;
-                }
-                g.setColor(c);
-                if (r != null) {
-                    g.fillRect(r.x, r.y, r.width, r.height);
-                } else {
-                    g.fillRect(0, 0, getWidth(), getHeight());
-                }
-            }
-
-            paintTargetPanel(g);
-
-            clearBackgroundColor();
             super.paint(g);
-            setBackgroundColor(backgroundColor);
+            paintTargetPanel(g);
 
             Stroke stroke = new BasicStroke();
             if (g2d != null) {
                 stroke = g2d.getStroke();
             }
             Color color = g.getColor();                
-
             if (_selectRect != null) {
                 //Draw a rectangle on top of the image.
                 if (g2d != null) {
