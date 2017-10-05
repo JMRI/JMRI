@@ -28,7 +28,7 @@ public class SerialFilterAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 		// create a SerialMonFrame
-		SerialFilterFrame f = new SerialFilterFrame();
+		SerialFilterFrame f = new SerialFilterFrame(_memo);
 		try {
 			f.initComponents();
 			}
