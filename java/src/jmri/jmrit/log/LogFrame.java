@@ -14,7 +14,7 @@ public class LogFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         setTitle("Make Log Entry");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

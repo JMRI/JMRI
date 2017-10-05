@@ -60,7 +60,6 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -371,7 +370,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
-            if (e.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ProgrammerManager.class))) {
+            if (e.getPropertyName().equals(InstanceManager.getListPropertyName(AddressedProgrammerManager.class))
+                    || e.getPropertyName().equals(InstanceManager.getListPropertyName(GlobalProgrammerManager.class))) {
                 log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
                 updateProgrammerStatus();
             }
@@ -1341,13 +1341,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 programmer = gpm.getGlobalProgrammer();
                 log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
             } else {
-                ProgrammerManager dpm = InstanceManager.getNullableDefault(jmri.ProgrammerManager.class);
-                if (dpm != null) {
-                    programmer = dpm.getGlobalProgrammer();
-                    log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
-                } else {
-                    log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
-                }
+                log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
             }
         }
 
@@ -1521,13 +1515,15 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
             log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
-            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                log.debug("Checking connection name {}", connection.getConnectionName());
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
-                    log.debug("Connection found for GlobalProgrammermanager");
-                    serModeProCon = connection;
+            InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
+                for (ConnectionConfig connection : ccm) {
+                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                        log.debug("Connection found for GlobalProgrammermanager");
+                        serModeProCon = connection;
+                    }
                 }
-            }
+            });
         }
 
         // Find the connection that goes with the addressed programmer
@@ -1535,13 +1531,15 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
             log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
-            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                log.debug("Checking connection name {}", connection.getConnectionName());
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
-                    log.debug("Connection found for AddressedProgrammermanager");
-                    opsModeProCon = connection;
+            InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
+                for (ConnectionConfig connection : ccm) {
+                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                        log.debug("Connection found for AddressedProgrammermanager");
+                        opsModeProCon = connection;
+                    }
                 }
-            }
+            });
         }
 
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {

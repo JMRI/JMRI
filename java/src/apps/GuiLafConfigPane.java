@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
@@ -45,7 +46,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since 2.9.5 (Previously in jmri package)
  */
 @ServiceProvider(service = PreferencesPanel.class)
-public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
+public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     public static final int MAX_TOOLTIP_TIME = 3600;
     public static final int MIN_TOOLTIP_TIME = 1;
@@ -272,7 +273,10 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(profile);
+        }
     }
 
     @Override

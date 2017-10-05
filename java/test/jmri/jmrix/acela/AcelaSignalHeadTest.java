@@ -18,14 +18,14 @@ public class AcelaSignalHeadTest {
     public void testCTor() {
         AcelaSignalHead t = new AcelaSignalHead("AH1",memo);
         Assert.assertNotNull("exists",t);
-        jmri.util.JUnitAppender.assertErrorMessage("Can't find new Acela Signal with name 'AH1");
+        jmri.util.JUnitAppender.assertErrorMessage("Can't find new Acela Signal with name 'AH1'");
     }
 
     @Test
     public void test2stringCTor() {
         AcelaSignalHead t = new AcelaSignalHead("AH1","test",memo);
         Assert.assertNotNull("exists",t);
-        jmri.util.JUnitAppender.assertErrorMessage("Can't find new Acela Signal with name 'AH1");
+        jmri.util.JUnitAppender.assertErrorMessage("Can't find new Acela Signal with name 'AH1'");
     }
 
     // The minimal setup for log4J

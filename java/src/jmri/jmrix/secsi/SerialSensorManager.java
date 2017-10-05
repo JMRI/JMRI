@@ -103,7 +103,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'S'));
     }
 
@@ -142,7 +142,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("System name null during register Sensor");
             } else {
                 log.debug("system name is " + sName);
-                if ((sName.charAt(0) == 'V') && (sName.charAt(1) == 'S')) {
+                if ((sName.charAt(0) == 'V') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a Sensor
                     tNode = SerialAddress.getNodeFromSystemName(sName);
                     if (tNode == node) {

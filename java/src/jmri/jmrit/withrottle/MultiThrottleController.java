@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -13,8 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2011
  */
 public class MultiThrottleController extends ThrottleController {
-
-    String locoKey;
 
     public MultiThrottleController(char id, String key, ThrottleControllerListener tcl, ControllerInterface ci) {
         super(id, tcl, ci);
@@ -63,9 +62,9 @@ public class MultiThrottleController extends ThrottleController {
                 }
                 message.append(eventName.substring(1));
             } catch (ClassCastException cce) {
-                log.debug("Invalid event value. " + cce);
+                log.debug("Invalid event value. {}", cce.getMessage());
             } catch (IndexOutOfBoundsException oob) {
-                log.debug("Invalid event name. " + oob);
+                log.debug("Invalid event name. {}", oob.getMessage());
             }
 
             for (ControllerInterface listener : controllerListeners) {
@@ -124,15 +123,8 @@ public class MultiThrottleController extends ThrottleController {
                     listener.sendPacketToDevice(message.toString());
                 }
             }
-        } catch (NoSuchMethodException ea) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
-            return;
-        } catch (IllegalAccessException eb) {
-            log.warn(eb.getLocalizedMessage(), eb);
-            return;
-        } catch (java.lang.reflect.InvocationTargetException ec) {
-            log.warn(ec.getLocalizedMessage(), ec);
-            return;
         }
     }
 
@@ -197,21 +189,14 @@ public class MultiThrottleController extends ThrottleController {
                     listener.sendPacketToDevice(message.toString());
                 }
             }
-        } catch (NoSuchMethodException ea) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ea) {
             log.warn(ea.getLocalizedMessage(), ea);
-            return;
-        } catch (IllegalAccessException eb) {
-            log.warn(eb.getLocalizedMessage(), eb);
-            return;
-        } catch (java.lang.reflect.InvocationTargetException ec) {
-            log.warn(ec.getLocalizedMessage(), ec);
-            return;
         }
     }
 
     /**
-     * {@inheritDoc}
-     * A + indicates the address was acquired, - indicates released
+     * {@inheritDoc} A + indicates the address was acquired, - indicates
+     * released
      */
     @Override
     public void sendAddress() {
@@ -223,7 +208,7 @@ public class MultiThrottleController extends ThrottleController {
             }
         }
     }
-    
+
     public void sendStealAddress() {
         StringBuilder message = new StringBuilder(buildPacketWithChar('S'));
         message.append(locoKey);
@@ -235,14 +220,15 @@ public class MultiThrottleController extends ThrottleController {
     /**
      * Send a steal required message to the connected device prior to disposing
      * of this MTC
+     *
      * @param address of DCC locomotive involved in the steal
      */
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(DccLocoAddress address) {
         sendStealAddress();
-        notifyFailedThrottleRequest(address, "Steal Required");        
+        notifyFailedThrottleRequest(address, "Steal Required");
     }
-    
+
     public void requestStealAddress(String action) {
         log.debug("requestStealAddress: {}", action);
         int addr = Integer.parseInt(action.substring(1));

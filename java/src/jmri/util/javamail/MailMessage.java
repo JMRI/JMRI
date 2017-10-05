@@ -263,7 +263,7 @@ public class MailMessage {
         }
     }
 
-    public void send() throws Exception {
+    public void send() throws MessagingException {
         msg.setContent(mp);
 
         msg.setHeader("X-Mailer", mailer);

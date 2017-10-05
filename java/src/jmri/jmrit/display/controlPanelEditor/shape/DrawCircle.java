@@ -5,12 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.Editor;
 
 /**
  * @author Pete Cressman Copyright (c) 2012
@@ -19,13 +18,13 @@ public class DrawCircle extends DrawFrame {
 
     JTextField _diameterText;
 
-    public DrawCircle(String which, String title, ShapeDrawer parent) {
-        super(which, title, parent);
+    public DrawCircle(String which, String title, PositionableShape ps) {
+        super(which, title, ps);
     }
 
     @Override
-    protected JPanel makeParamsPanel(PositionableShape ps) {
-        JPanel panel = super.makeParamsPanel(ps);
+    protected JPanel makeParamsPanel() {
+        JPanel panel = super.makeParamsPanel();
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -54,25 +53,22 @@ public class DrawCircle extends DrawFrame {
         pp.add(new JLabel(Bundle.getMessage("circleRadius")));
         p.add(pp);
         panel.add(p);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         return panel;
     }
 
     @Override
-    protected boolean makeFigure(MouseEvent event) {
-        ControlPanelEditor ed = _parent.getEditor();
+    protected void makeFigure(MouseEvent event, Editor ed) {
         Rectangle r = ed.getSelectRect();
         if (r != null) {
             int dia = Math.max(r.width, r.height);
             Ellipse2D.Double rr = new Ellipse2D.Double(0, 0, dia, dia);
-            PositionableCircle ps = new PositionableCircle(ed, rr);
-            ps.setLocation(r.x, r.y);
-            ps.updateSize();
-            setDisplayParams(ps);
-            ps.setEditFrame(this);
-            ed.putItem(ps);
+            _shape = new PositionableCircle(ed, rr);
+            _shape.setLocation(r.x, r.y);
+            _shape.updateSize();
+            _shape.setEditFrame(this);
+            setDisplayParams();
+            ed.putItem(_shape);
         }
-        return true;
     }
 
     @Override

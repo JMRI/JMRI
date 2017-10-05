@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Models a Acela node.
+ * Models an Acela node.
  * <P>
  * Nodes are numbered from 0. The first watchman node carries the first 8
  * sensors 0 to 7, etc.
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * have it change back the next time that node is polled.
  * <P>
  * Same applies to the outputs (Dash-8s and Signalmen)
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
   *
@@ -579,7 +579,7 @@ public class AcelaNode extends AbstractNode {
             default: {
                 outputbitsPerCard = 0;
                 sensorbitsPerCard = 0;
-                log.error("Bad node type - " + Integer.toString(type));
+                log.error("Bad node type - {}", Integer.toString(type));
             }
         }
     }
@@ -625,8 +625,8 @@ public class AcelaNode extends AbstractNode {
      */
     public void setTransmissionDelay(int delay) {
         if ((delay < 0) || (delay > MAXDELAY)) {
-            log.warn("transmission delay out of 0-65535 range: "
-                    + Integer.toString(delay));
+            log.warn("transmission delay out of 0-65535 range: {}",
+                    Integer.toString(delay));
             if (delay < 0) {
                 delay = 0;
             }
@@ -1071,25 +1071,25 @@ public class AcelaNode extends AbstractNode {
         int firstBitAt = startingSensorAddress % 8; // mod operator
         //int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
 
-        log.debug("Sensor Parsing for module type: " + moduleNames[nodeType]);
-        log.debug("Sensor Parsing has startingSensorAddress: " + startingSensorAddress);
-        log.debug("Sensor Parsing has firstByteNum: " + firstByteNum);
-        log.debug("Sensor Parsing has firstBitAt: " + firstBitAt);
+        log.debug("Sensor Parsing for module type: {}", moduleNames[nodeType]);
+        log.debug("Sensor Parsing has startingSensorAddress: {}", startingSensorAddress);
+        log.debug("Sensor Parsing has firstByteNum: {}", firstByteNum);
+        log.debug("Sensor Parsing has firstBitAt: {}", firstBitAt);
 
         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
         int rawvalue = l.getElement(firstByteNum);
-        log.debug("Sensor Parsing has first rawvalue: " + Integer.toHexString(rawvalue));
+        log.debug("Sensor Parsing has first rawvalue: {}", Integer.toHexString(rawvalue));
 
         int usingByteNum = 0;
 
         try {
             for (int i = 0; i < sensorbitsPerCard; i++) {
                 if (sensorArray[i] == null) {
-                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " was skipped");
+                    log.debug("Sensor Parsing for Sensor: {} + {} was skipped", startingSensorAddress, i);
                     continue;
                 } // skip ones that don't exist
 
-                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i);
+                log.debug("Sensor Parsing for Sensor: {} + {}", startingSensorAddress, i);
 
                 int relvalue = rawvalue;
 
@@ -1102,7 +1102,7 @@ public class AcelaNode extends AbstractNode {
                         for (int j = 0; j < firstBitAt; j++) {
                             relvalue = relvalue >> 1;
                         }
-                        log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " shifted by 4: " + Integer.toHexString(relvalue));
+                        log.debug("Sensor Parsing for Sensor: {} + {} shifted by 4: {}", startingSensorAddress, i, Integer.toHexString(relvalue));
                     }
                 }
 
@@ -1112,7 +1112,7 @@ public class AcelaNode extends AbstractNode {
                         usingByteNum = 2;
                         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        log.debug("Sensor Parsing (1stat4) has third rawvalue: " + Integer.toHexString(rawvalue));
+                        log.debug("Sensor Parsing (1stat4) has third rawvalue: {}", Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
                         tempi = i - 12;  // tempi needs to shift down by 12
                     } else {
@@ -1120,7 +1120,7 @@ public class AcelaNode extends AbstractNode {
                             usingByteNum = 1;
                             //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                             rawvalue = l.getElement(usingByteNum + firstByteNum);
-                            log.debug("Sensor Parsing (1stat4) has second rawvalue: " + Integer.toHexString(rawvalue));
+                            log.debug("Sensor Parsing (1stat4) has second rawvalue: {}", Integer.toHexString(rawvalue));
                             relvalue = rawvalue;
                             tempi = i - 4;  // tempi needs to shift down by 4
                         }
@@ -1130,20 +1130,20 @@ public class AcelaNode extends AbstractNode {
                         usingByteNum = 1;
                         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        log.debug("Sensor Parsing has second rawvalue: " + Integer.toHexString(rawvalue));
+                        log.debug("Sensor Parsing has second rawvalue: {}", Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
                         tempi = i - 8;  // tempi needs to shift down by 8
                     }
                 }
 
-                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " has tempi: " + tempi);
+                log.debug("Sensor Parsing for Sensor: {} + {} has tempi: {}", startingSensorAddress, i, tempi);
 
                 //  Finally we can isolate the bit from the poll result
                 for (int j = 0; j < tempi; j++) {
                     relvalue = relvalue >> 1;
                 }
 
-                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " has relvalue: " + Integer.toHexString(relvalue));
+                log.debug("Sensor Parsing for Sensor: {} + {} has relvalue: {}", startingSensorAddress, i, Integer.toHexString(relvalue));
 
                 // Now that we have the relvalue need to compare to last time
                 boolean nooldstate = false;
@@ -1162,7 +1162,7 @@ public class AcelaNode extends AbstractNode {
 
                 if ((nooldstate) || (oldstate != newstate)) {
                     if (nooldstate) {
-                        log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + "  had no old state.");
+                        log.debug("Sensor Parsing for Sensor: {} + {} had no old state.", startingSensorAddress, i);
                     }
                     if (newstate == 0x00) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
@@ -1171,9 +1171,9 @@ public class AcelaNode extends AbstractNode {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(sensorLastSetting[i]);
                     }
-                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " changed state: " + sensorLastSetting[i] + " rawvalue: " + Integer.toHexString(rawvalue));
+                    log.debug("Sensor Parsing for Sensor: {} + {} changed state: {} rawvalue: {}", startingSensorAddress, i, sensorLastSetting[i], Integer.toHexString(rawvalue));
                 } else {
-                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " did NOT change state: " + sensorLastSetting[i] + " rawvalue: " + Integer.toHexString(rawvalue));
+                    log.debug("Sensor Parsing for Sensor: {} + {} did NOT change state: {} rawvalue: {}", startingSensorAddress, i, sensorLastSetting[i], Integer.toHexString(rawvalue));
                 }
             }
         } catch (JmriException e) {
@@ -1191,7 +1191,7 @@ public class AcelaNode extends AbstractNode {
     public void registerSensor(Sensor s, int rawaddr) {
         // validate the sensor ordinal
         if ((rawaddr < 0) || (rawaddr >= MAXNODE)) {
-            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(rawaddr));
+            log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(rawaddr));
             return;
         }
 
@@ -1201,7 +1201,9 @@ public class AcelaNode extends AbstractNode {
         hasActiveSensors = true;
         InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getTrafficController().setAcelaSensorsState(true);
         if (startingSensorAddress < 0) {
-            log.info("Trying to register sensor too early: AS" + rawaddr);
+            log.info("Trying to register sensor too early: {}S{}",
+                    InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getSystemPrefix(), // multichar prefix
+                    rawaddr);
         } else {
 
             if (sensorArray[addr] == null) {
@@ -1211,7 +1213,9 @@ public class AcelaNode extends AbstractNode {
                 }
             } else {
                 // multiple registration of the same sensor
-                log.warn("Multiple registration of same sensor: CS" + rawaddr);
+                log.warn("Multiple registration of same sensor: {}S{}",
+                        InstanceManager.getDefault(AcelaSystemConnectionMemo.class).getSystemPrefix(), // multichar prefix
+                        rawaddr);
             }
         }
     }
@@ -1225,7 +1229,7 @@ public class AcelaNode extends AbstractNode {
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         if (log.isDebugEnabled()) {
-            log.warn("Timeout to poll for UA=" + nodeAddress + ": consecutive timeouts: " + timeout);
+            log.warn("Timeout to poll for UA={}: consecutive timeouts: {}", nodeAddress, timeout);
         }
         return false;   // tells caller to NOT force init
     }
@@ -1233,7 +1237,7 @@ public class AcelaNode extends AbstractNode {
     @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
-            log.debug("Reset " + timeout + " timeout count");
+            log.debug("Reset {} timeout count", timeout);
         }
         timeout = 0;
     }

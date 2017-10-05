@@ -22,6 +22,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -43,11 +44,11 @@ import org.slf4j.LoggerFactory;
  * dummy "select from .." items at the top {@literal &} used those to indicate
  * that there was no selection in that box. Here, the lack of a selection
  * indicates there's no selection.
- *
+ * <p>
  * Internally, the "filter" is used to only show identified models (leaf nodes).
  * This is implemented in internal InvisibleTreeModel and DecoderTreeNode
  * classes.
- *
+ * <p>
  * The decoder definition "Showable" attribute also interacts with those.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2013
@@ -105,14 +106,14 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                log.debug("selection changed " + dTree.isSelectionEmpty() + " " + dTree.getSelectionPath());
+                log.debug("selection changed {} {}", dTree.isSelectionEmpty(), dTree.getSelectionPath());
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null
                         && // can't be just a mfg, has to be at least a family
                         dTree.getSelectionPath().getPathCount() > 2
                         && // can't be a multiple decoder selection
                         dTree.getSelectionCount() < 2) {
                     // decoder selected - reset and disable loco selection
-                    log.debug("Selection event with " + dTree.getSelectionPath().toString());
+                    log.debug("Selection event with {}", dTree.getSelectionPath());
                     if (locoBox != null) {
                         locoBox.setSelectedIndex(0);
                     }
@@ -156,8 +157,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         showAll.setSelected(true);
         showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
 
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
-                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null
+                && InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             ButtonGroup group = new ButtonGroup();
             group.add(showAll);
             group.add(showMatched);
@@ -188,7 +189,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                         dModel.activateFilter(true);
                         dModel.reload();
                         for (TreePath path : selectedPath) {
-                            log.debug("action selects path: " + path);
+                            log.debug("action selects path: {}", path);
                             dTree.expandPath(path);
                             dTree.addSelectionPath(path);
                             dTree.scrollPathToVisible(path);
@@ -215,10 +216,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             String mfg = decoder.getMfg();
             String family = decoder.getFamily();
             String model = decoder.getModel();
-            log.debug(" process " + mfg + "/" + family + "/" + model
-                    + " on nodes "
-                    + (mfgElement == null ? "<null>" : mfgElement.toString() + "(" + mfgElement.getChildCount() + ")") + "/"
-                    + (familyElement == null ? "<null>" : familyElement.toString() + "(" + familyElement.getChildCount() + ")"));
+            log.debug(" process {}/{}/{} on nodes {}/{}", mfg, family, model, mfgElement == null ? "<null>" : mfgElement.toString() + "(" + mfgElement.getChildCount() + ")", familyElement == null ? "<null>" : familyElement.toString() + "(" + familyElement.getChildCount() + ")");
 
             // build elements
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
@@ -240,7 +238,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                         || decoders.get(i + 2).getFamily().equals(family)
                         || !decoders.get(i + 1).getModel().equals(family)) {
                     // normal here; insert the new family element & exit
-                    log.debug("normal family update case: " + family);
+                    log.debug("normal family update case: {}", family);
                     familyElement = new DecoderTreeNode(family,
                             getHoverText(verString, famComment),
                             decoders.get(i).titleString());
@@ -249,10 +247,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                     continue;
                 } else {
                     // this is short case; insert decoder entry (next) here
-                    log.debug("short case, i=" + i + " family=" + family + " next "
-                            + decoders.get(i + 1).getModel());
+                    log.debug("short case, i={} family={} next {}", i, family, decoders.get(i + 1).getModel());
                     if (i + 1 > len) {
-                        log.error("Unexpected single entry for family: " + family);
+                        log.error("Unexpected single entry for family: {}", family);
                     }
                     family = decoders.get(i + 1).getModel();
                     familyElement = new DecoderTreeNode(family,
@@ -548,7 +545,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * The following has been taken from an example given in..
      * http://www.java2s.com/Code/Java/Swing-Components/DecoderTreeNodeTreeExample.htm
      * with extracts from http://www.codeguru.com/java/articles/143.shtml
-     *
      */
     static class InvisibleTreeModel extends DefaultTreeModel {
 

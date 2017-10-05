@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz;
 
 /**
- * Represents a single response from the XPressNet.
+ * Represents a single response from the XpressNet.
  *
  * @author Paul Bender Copyright (C) 2004
  *
@@ -491,7 +491,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the OK message (01 04 05).
+     * if an XpressNet Message is the OK message (01 04 05).
      */
     public boolean isOkMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -500,7 +500,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the timeslot restored message (01 07 06).
+     * if an XpressNet Message is the timeslot restored message (01 07 06).
      */
     public boolean isTimeSlotRestored() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
@@ -509,7 +509,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the Command Station no longer provideing a
+     * if an XpressNet Message is the Command Station no longer provideing a
      * timeslot message (01 05 04).
      */
     public boolean isTimeSlotRevoked() {
@@ -519,7 +519,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the Command Station Busy message (61 81 e3).
+     * if an XpressNet Message is the Command Station Busy message (61 81 e3).
      */
     public boolean isCSBusyMessage() {
         return (this.getElement(0) == XNetConstants.CS_INFO
@@ -529,7 +529,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is the Command Station Transfer Error 
+     * if an XpressNet Message is the Command Station Transfer Error
      * message (61 80 e1).
      */
     public boolean isCSTransferError() {
@@ -539,7 +539,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is a communications error message.
+     * if an XpressNet Message is a communications error message.
      * The errors handled are:
      *  01 01 00  -- Error between interface and the PC
      *  01 02 03  -- Error between interface and the Command Station
@@ -559,7 +559,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
-     * if an XPressNet Message is a communications error message.
+     * if an XpressNet Message is a communications error message.
      * The errors handled are:
      *  01 05 04  -- Timeslot Error
      *  01 07 06  -- Timeslot Restored
@@ -666,7 +666,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * @return a string representation of the reply suitable for display in the
-     * XPressNet monitor.
+     * XpressNet monitor.
      */
     public String toMonitorString(){
         String text;
@@ -864,7 +864,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     text += Bundle.getMessage("XNetCSStatusRamCheck") + "";
                 }
             } else if (getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                /* This is a Software version response for XPressNet
+                /* This is a Software version response for XpressNet
                  Version 1 or 2 */
                 text = Bundle.getMessage("XNetReplyCSVersionV1",
                         (getElementBCD(2).floatValue()) / 10);

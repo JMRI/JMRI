@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
-    BufferedReader sFile = null;
+    volatile BufferedReader sFile = null;
 
     public LnHexFilePort() {
         super(new LocoNetSystemConnectionMemo());
@@ -64,7 +64,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         jmri.jmrix.loconet.hexfile.HexFileFrame f
                 = new jmri.jmrix.loconet.hexfile.HexFileFrame();
 
@@ -72,7 +72,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         try {
             f.initComponents();
         } catch (Exception ex) {
-            //log.error("starting HexFileFrame exception: "+ex.toString());
+            log.warn("starting HexFileFrame exception: "+ex.toString());
         }
         f.configure();
     }

@@ -17,6 +17,6 @@ public interface CanPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      */
-    public void initComponents(CanSystemConnectionMemo memo) throws Exception;
+    public void initComponents(CanSystemConnectionMemo memo);
 
 }

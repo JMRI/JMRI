@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,8 +19,17 @@ public class DrawRectangleTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        ShapeDrawer s = new ShapeDrawer(frame);
-        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", s);
+        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null);
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(frame);
+    }
+
+    public void testCTorEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor();
+        PositionableRectangle ps =  new PositionableRectangle(frame);
+        DrawRectangle t = new DrawRoundRect("editShape", "Rectangle", ps);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

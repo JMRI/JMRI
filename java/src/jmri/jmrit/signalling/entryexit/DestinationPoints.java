@@ -42,7 +42,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
     boolean enabled = true;
     boolean activeEntryExit = false;
-    ArrayList<LayoutBlock> routeDetails = new ArrayList<>();
+    List<LayoutBlock> routeDetails = new ArrayList<>();
     LayoutBlock destination;
     boolean disposed = false;
 
@@ -290,9 +290,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         }
         /* We put the setting of the route into a seperate thread and put a glass pane in front of the layout editor.
          The swing thread for flashing the icons will carry on without interuption. */
-        final ArrayList<Color> realColorStd = new ArrayList<Color>();
-        final ArrayList<Color> realColorXtra = new ArrayList<Color>();
-        final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
+        final List<Color> realColorStd = new ArrayList<Color>();
+        final List<Color> realColorXtra = new ArrayList<Color>();
+        final List<LayoutBlock> routeBlocks = new ArrayList<>();
         if (manager.useDifferentColorWhenSetting()) {
             for (LayoutBlock lbk : routeDetails) {
                 routeBlocks.add(lbk);
@@ -336,12 +336,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
                         if (at == null && isSignalLogicDynamic()) {
                             if (i > 0) {
-                                ArrayList<LayoutTurnout> turnoutlist;
+                                List<LayoutTurnout> turnoutlist;
                                 int nxtBlk = i + 1;
                                 int preBlk = i - 1;
                                 if (i < routeDetails.size() - 1) {
                                     turnoutlist = connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
-                                    ArrayList<Integer> throwlist = connection.getTurnoutSettingList();
+                                    List<Integer> throwlist = connection.getTurnoutSettingList();
                                     for (int x = 0; x < turnoutlist.size(); x++) {
                                         if (turnoutlist.get(x) instanceof LayoutSlip) {
                                             int slipState = throwlist.get(x);
@@ -466,7 +466,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         }
                     }
                     if (manager.useDifferentColorWhenSetting()) {
-                        //final ArrayList<Color> realColorXtra = realColorXtra;
+                        //final List<Color> realColorXtra = realColorXtra;
                         javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
                             @Override
                             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -893,7 +893,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                     LayoutBlock srcStart = null;
                     LayoutBlock destination = null;
 
-                    BestPath(LayoutBlock startPro, LayoutBlock sourceProtecting, LayoutBlock destinationBlock, ArrayList<LayoutBlock> blocks) {
+                    BestPath(LayoutBlock startPro, LayoutBlock sourceProtecting, LayoutBlock destinationBlock, List<LayoutBlock> blocks) {
                         srcStart = startPro;
                         srcProtecting = sourceProtecting;
                         destination = destinationBlock;
@@ -912,10 +912,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         return destination;
                     }
 
-                    ArrayList<LayoutBlock> listOfBlocks = new ArrayList<LayoutBlock>(0);
+                    List<LayoutBlock> listOfBlocks = new ArrayList<>(0);
                     String errorMessage = "";
 
-                    ArrayList<LayoutBlock> getListOfBlocks() {
+                    List<LayoutBlock> getListOfBlocks() {
                         return listOfBlocks;
                     }
 
@@ -927,7 +927,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         return errorMessage;
                     }
                 }
-                ArrayList<BestPath> pathList = new ArrayList<BestPath>(2);
+                List<BestPath> pathList = new ArrayList<BestPath>(2);
                 LayoutBlock protectLBlock;
                 LayoutBlock destinationLBlock;
                 //Need to work out around here the best one.
@@ -937,7 +937,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                         //We have a problem, the destination point is already setup with a route, therefore we would need to
                         //check some how that a route hasn't been set to it.
                         destinationLBlock = getFacing();
-                        ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                        List<LayoutBlock> blocks = new ArrayList<>();
                         String errorMessage = null;
                         try {
                             blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
@@ -972,7 +972,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                     point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                                     return;
                                 } else {
-                                    ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                    List<LayoutBlock> blocks = new ArrayList<>();
                                     String errorMessage = null;
                                     try {
                                         blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
@@ -993,7 +993,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                     startlBlock = getFacing();
                                     protectLBlock = srcProLBlock;
                                 }
-                                ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                List<LayoutBlock> blocks = new ArrayList<>();
                                 String errorMessage = "";
                                 try {
                                     blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.NONE);
@@ -1005,7 +1005,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
                                 toadd.setErrorMessage(errorMessage);
                                 pathList.add(toadd);
                             } else {
-                                ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                List<LayoutBlock> blocks = new ArrayList<>();
                                 String errorMessage = "";
                                 try {
                                     blocks = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.NONE);

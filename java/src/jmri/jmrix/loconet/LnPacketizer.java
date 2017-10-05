@@ -102,7 +102,7 @@ public class LnPacketizer extends LnTrafficController {
                 xmtList.addLast(msg);
                 xmtHandler.notify();
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: " + e);
         }
     }
@@ -310,7 +310,7 @@ public class LnPacketizer extends LnTrafficController {
                 log.info("End of file");
                 disconnectPort(controller);
                 return;
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 log.warn("run: unexpected exception: " + e);
             }
         } // end of permanent loop
@@ -449,9 +449,9 @@ public class LnPacketizer extends LnTrafficController {
                     log.info("End of file"); // NOI18N
                     disconnectPort(controller);
                     return;
-                } // normally, we don't catch the unnamed Exception, but in this
+                } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
-                catch (Exception e) {
+                catch (RuntimeException e) {
                     log.warn("run: unexpected Exception: " + e); // NOI18N
                 }
             } // end of permanent loop

@@ -95,7 +95,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     /**
      * Actually transmits the next message to the port.
      */
-    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION", "UW_UNCOND_WAIT"},
+    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "", "UW_UNCOND_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem; Unconditional Wait is to give external hardware, which doesn't necessarilly respond, time to process the data.")
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {

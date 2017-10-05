@@ -6,6 +6,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +37,41 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-
         element.setAttribute("slipType", "" + p.getSlipType());
+
+        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
+        element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
+        element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
+
+        Point2D coords = p.getCoordsCenter();
+        element.setAttribute("xcen", "" + coords.getX());
+        element.setAttribute("ycen", "" + coords.getY());
+        coords = p.getCoordsA();
+        element.setAttribute("xa", "" + coords.getX());
+        element.setAttribute("ya", "" + coords.getY());
+        coords = p.getCoordsB();
+        element.setAttribute("xb", "" + coords.getX());
+        element.setAttribute("yb", "" + coords.getY());
+
+        if (!p.getTurnoutName().isEmpty()) {
+            element.addContent(new Element("turnout").addContent(p.getTurnoutName()));
+        }
+
+        if (!p.getTurnoutBName().isEmpty()) {
+            element.addContent(new Element("turnoutB").addContent(p.getTurnoutBName()));
+        }
+
         if (!p.getBlockName().isEmpty()) {
             element.setAttribute("blockname", p.getBlockName());
+        }
+        if (!p.getBlockBName().isEmpty()) {
+            element.setAttribute("blockbname", p.getBlockBName());
+        }
+        if (!p.getBlockCName().isEmpty()) {
+            element.setAttribute("blockcname", p.getBlockCName());
+        }
+        if (!p.getBlockDName().isEmpty()) {
+            element.setAttribute("blockdname", p.getBlockDName());
         }
 
         if (p.getConnectA() != null) {
@@ -54,6 +86,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         if (p.getConnectD() != null) {
             element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
         }
+
         if (!p.getSignalA1Name().isEmpty()) {
             element.addContent(new Element("signala1name").addContent(p.getSignalA1Name()));
         }
@@ -78,15 +111,6 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         if (!p.getSignalD2Name().isEmpty()) {
             element.addContent(new Element("signald2name").addContent(p.getSignalD2Name()));
         }
-        Point2D coords = p.getCoordsCenter();
-        element.setAttribute("xcen", "" + coords.getX());
-        element.setAttribute("ycen", "" + coords.getY());
-        coords = p.getCoordsA();
-        element.setAttribute("xa", "" + coords.getX());
-        element.setAttribute("ya", "" + coords.getY());
-        coords = p.getCoordsB();
-        element.setAttribute("xb", "" + coords.getX());
-        element.setAttribute("yb", "" + coords.getY());
 
         if (!p.getSignalAMastName().isEmpty()) {
             element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
@@ -114,14 +138,6 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         }
         if (!p.getSensorDName().isEmpty()) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
-        }
-
-        if (!p.getTurnoutName().isEmpty()) {
-            element.addContent(new Element("turnout").addContent(p.getTurnoutName()));
-        }
-
-        if (!p.getTurnoutBName().isEmpty()) {
-            element.addContent(new Element("turnoutB").addContent(p.getTurnoutBName()));
         }
 
         Element states = new Element("states");
@@ -183,15 +199,32 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             type = element.getAttribute("slipType").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutslip type attribute");
+        } catch (java.lang.NullPointerException e) {
+            //can be ignored as panel file may not support method
         }
 
         // create the new LayoutSlip
         LayoutSlip l = new LayoutSlip(name, new Point2D.Double(x, y), 0.0, p, type);
 
         // get remaining attributes
+        l.setTurnout(getElement(element, "turnout"));
+        l.setTurnoutB(getElement(element, "turnoutB"));
+
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
             l.tBlockName = a.getValue();
+        }
+        a = element.getAttribute("blockbname");
+        if (a != null) {
+            l.tBlockBName = a.getValue();
+        }
+        a = element.getAttribute("blockcname");
+        if (a != null) {
+            l.tBlockCName = a.getValue();
+        }
+        a = element.getAttribute("blockdname");
+        if (a != null) {
+            l.tBlockDName = a.getValue();
         }
 
         a = element.getAttribute("connectaname");
@@ -222,19 +255,38 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         l.setSignalD2Name(getElement(element, "signald2name"));
 
         try {
+            l.setDisabled(element.getAttribute("disabled").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout disabled attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+        try {
+            l.setDisableWhenOccupied(element.getAttribute("disableWhenOccupied").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout disableWhenOccupied attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+        try {
+            l.setHidden(element.getAttribute("hidden").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout hidden attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+
+        try {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
+            l.setCoordsA(new Point2D.Double(x, y));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip a coords attribute");
         }
-        l.setCoordsA(new Point2D.Double(x, y));
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
+            l.setCoordsB(new Point2D.Double(x, y));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip b coords attribute");
         }
-        l.setCoordsB(new Point2D.Double(x, y));
 
         l.setSignalAMast(getElement(element, "signalAMast"));
         l.setSignalBMast(getElement(element, "signalBMast"));
@@ -245,9 +297,6 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         l.setSensorB(getElement(element, "sensorB"));
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
-
-        l.setTurnout(getElement(element, "turnout"));
-        l.setTurnoutB(getElement(element, "turnoutB"));
 
         if (element.getChild("states") != null) {
             Element state = element.getChild("states");
@@ -276,7 +325,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
                         bc.getChild("turnoutB").getText());
             }
         }
-        p.slipList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     String getElement(Element el, String child) {

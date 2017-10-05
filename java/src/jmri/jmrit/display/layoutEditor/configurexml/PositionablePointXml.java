@@ -149,7 +149,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             LayoutEditor linkedEditor = (LayoutEditor) InstanceManager.getDefault(PanelMenu.class).getEditorByName(linkedEditorName);
             if (linkedEditor != null) {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
-                for (PositionablePoint point : linkedEditor.pointList) {
+                for (PositionablePoint point : linkedEditor.getPositionablePoints()) {
                     if (point.getType() == PositionablePoint.EDGE_CONNECTOR && point.getId().equals(linkedPoint)) {
                         point.setLinkedPoint(l);
                         l.setLinkedPoint(point);
@@ -159,7 +159,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             }
         }
 
-        p.pointList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class);

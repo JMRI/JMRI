@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -19,7 +18,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -394,27 +392,21 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "CarManager only provides Car Objects")
     private void updateCarsComboBox() {
         log.debug("update car combobox");
         carsComboBox.removeAllItems();
         String carType = (String) typeComboBox.getSelectedItem();
         // load car combobox
         carsComboBox.addItem(null);
-        List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(carType);
-        for (RollingStock rs : cars) {
-            Car car = (Car) rs;
+        List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTypeList(carType);
+        for (Car car : cars) {
             carsComboBox.addItem(car);
         }
     }
 
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "CarManager only provides Car Objects")
     private void adjustCarsComboBoxSize() {
-        List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getList();
-        for (RollingStock rs : cars) {
-            Car car = (Car) rs;
+        List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
+        for (Car car : cars) {
             carsComboBox.addItem(car);
         }
         Dimension boxsize = carsComboBox.getMinimumSize();

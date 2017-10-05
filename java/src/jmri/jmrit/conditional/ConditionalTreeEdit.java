@@ -670,8 +670,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 // add to Logix at the end of the calculate order
                 _curLogix.addConditional(cName, -1);
-                _actionList = new ArrayList<ConditionalAction>();
-                _variableList = new ArrayList<ConditionalVariable>();
+                _actionList = new ArrayList<>();
+                _variableList = new ArrayList<>();
                 _curConditional.setAction(_actionList);
                 _curConditional.setStateVariables(_variableList);
                 _showReminder = true;

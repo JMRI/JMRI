@@ -491,13 +491,18 @@
   <xs:complexType name="functionlabelsType">
     <xs:sequence>
       <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:string">
-              <xs:attribute name="num" type="xs:string"/>
-              <xs:attribute name="lockable" type="xs:string"/>
-            </xs:extension>
-          </xs:simpleContent>
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="text" minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueFunctionText1">
+                <xs:annotation><xs:documentation>Insist that there's only one text per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="text"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="num" type="xs:string"/>
+          <xs:attribute name="lockable" type="xs:string"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -506,12 +511,17 @@
   <xs:complexType name="soundlabelsType">
     <xs:sequence>
       <xs:element name="soundlabel" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:simpleContent>
-            <xs:extension base="xs:string">
-              <xs:attribute name="num" type="xs:string"/>
-            </xs:extension>
-          </xs:simpleContent>
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="text" minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueSoundText1">
+                <xs:annotation><xs:documentation>Insist that there's only one text per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="text"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="num" type="xs:string"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>

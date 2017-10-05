@@ -11,8 +11,6 @@ package jmri.util;
  * within a script.
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @deprecated since 4.7.2; within scripts run within a JMRI context, use
- * {@link java.lang.System#getProperty(java.lang.String)} directly
  */
 public class GetJavaProperty {
 

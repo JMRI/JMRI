@@ -93,11 +93,17 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         _memo = memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String title() {
         return Bundle.getMessage("SprogConsoleTitle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void init() {
         // connect to TrafficController
@@ -105,16 +111,22 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         tc.addSprogListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         tc.removeSprogListener(this);
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Ignore unsynchronized access to state
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         //SprogMessage msg;
         super.initComponents();
 
@@ -273,18 +285,16 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Define help menu for this window.
-     * <p>
-     * By default, provides a generic help page that covers general features.
-     * Specific implementations can override this to show their own help page if
-     * desired.
+     * {@inheritDoc}
      */
     @Override
-    protected void addHelpMenu() {
+    protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
     }
 
-    // Override superclass to append return
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
         nextLine(entryField.getText() + "\n", "");
@@ -370,6 +380,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         return sv.hasZTCMode();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
@@ -434,11 +447,17 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
         nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyReply(SprogReply l) {  // receive a reply message and log it
         SprogMessage msg;

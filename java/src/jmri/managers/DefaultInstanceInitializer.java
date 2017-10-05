@@ -2,16 +2,17 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
+import jmri.AddressedProgrammerManager;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.LogixManager;
 import jmri.MemoryManager;
-import jmri.ProgrammerManager;
 import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
@@ -80,7 +81,11 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultMemoryManager();
         }
 
-        if (type == ProgrammerManager.class) {
+        if (type == AddressedProgrammerManager.class) {
+            return new DeferringProgrammerManager();
+        }
+
+        if (type == GlobalProgrammerManager.class) {
             return new DeferringProgrammerManager();
         }
 
@@ -154,7 +159,8 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 LightManager.class,
                 LogixManager.class,
                 MemoryManager.class,
-                ProgrammerManager.class,
+                AddressedProgrammerManager.class,
+                GlobalProgrammerManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,

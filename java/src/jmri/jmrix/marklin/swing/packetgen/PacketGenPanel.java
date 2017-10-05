@@ -36,8 +36,11 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         super();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
 
@@ -80,16 +83,25 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         });
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame";
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
         return Bundle.getMessage("SendCommandTitle");
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(MarklinSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -124,14 +136,22 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
 
     }
 
+    /** 
+     * {@inheritDoc}
+     * Ignore messages
+     */
     @Override
     public void message(MarklinMessage m) {
-    }  // ignore replies
+    }
 
+    /** 
+     * {@inheritDoc}
+     * Ignore replies
+     */
     @Override
     public void reply(MarklinReply r) {
         packetReplyField.setText(r.toHexString());
-    } // ignore replies
+    }
 
     private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
 }

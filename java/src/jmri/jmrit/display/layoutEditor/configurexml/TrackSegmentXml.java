@@ -46,7 +46,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         element.setAttribute("connect2name", p.getConnect2Name());
         element.setAttribute("type2", "" + p.getType2());
         element.setAttribute("dashed", "" + (p.getDashed() ? "yes" : "no"));
-        element.setAttribute("mainline", "" + (p.getMainline() ? "yes" : "no"));
+        element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("arc", "" + (p.getArc() ? "yes" : "no"));
         if (p.getArc()) {
@@ -222,7 +222,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         if (a != null) {
             l.tBlockName = a.getValue();
         }
-        p.trackList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class);

@@ -25,6 +25,18 @@ public class NodeConfigManagerFrameTest {
         Assert.assertNotNull("exists", action);
     }
 
+    @Test
+    public void testInitComponents() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        NodeConfigManagerFrame frame = new NodeConfigManagerFrame(new CMRISystemConnectionMemo());
+        // test to make sure initCompoents doesn't throw an exception.
+        frame.initComponents();
+        // close
+        frame.dispose();
+    }
+
+
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

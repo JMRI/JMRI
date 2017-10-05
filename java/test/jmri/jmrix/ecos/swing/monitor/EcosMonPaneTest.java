@@ -20,11 +20,6 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.ecos.EcosSystemConnectionMemo memo = null;
 
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane);
-    }
-
     // Test checking the AutoScroll checkbox.
     // for some reason the EcosMonPane has the checkbox value reversed on
     // startup compared to other AbstractMonPane derivatives.
@@ -63,8 +58,10 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.jmrix.ecos.EcosInterfaceScaffold tc = new jmri.jmrix.ecos.EcosInterfaceScaffold();
         memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc);
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
-        pane = new EcosMonPane();
+        // pane for AbstactMonPaneBase, panel for JmriJPanel
+        panel = pane = new EcosMonPane();
         ((EcosMonPane)pane).initContext(memo); 
+        title = "ECoS Command Monitor";
     }
 
     @Override

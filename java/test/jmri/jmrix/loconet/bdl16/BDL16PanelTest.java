@@ -10,20 +10,19 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class BDL16PanelTest {
-
-    @Test
-    public void testCTor() {
-        BDL16Panel t = new BDL16Panel();
-        Assert.assertNotNull("exists",t);
-    }
+public class BDL16PanelTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new BDL16Panel();
+        helpTarget = "package.jmri.jmrix.loconet.bdl16.BDL16Frame";
+        title = Bundle.getMessage("MenuItemBDL16Programmer");
     }
 
+    @Override
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

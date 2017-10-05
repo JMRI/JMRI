@@ -46,7 +46,7 @@ public class CbusEventFilterPanel extends JPanel {
         super();
     }
 
-    public void initComponents(int index) throws Exception {
+    public void initComponents(int index) {
         // Panels will be added across
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 

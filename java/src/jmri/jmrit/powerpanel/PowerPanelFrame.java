@@ -1,6 +1,5 @@
 package jmri.jmrit.powerpanel;
 
-import java.util.ResourceBundle;
 import jmri.util.JmriJFrame;
 
 /**
@@ -14,7 +13,7 @@ public class PowerPanelFrame extends JmriJFrame {
     PowerPane pane = new PowerPane();
 
     public PowerPanelFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("TitlePowerPanel"));
+        super(Bundle.getMessage("TitlePowerPanel"));
         // general GUI config
 
         // install items in GUI
