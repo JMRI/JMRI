@@ -60,7 +60,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         if (num <= 0) {
             log.debug("invalid sprog turnout system name: {}", systemName);
             return (0);
-        } else if (num > 2044) { // unknown for SPROG, check with manufacturer TODO
+        } else if (num > SprogConstants.MAX_ACC_DECODER_JMRI_ADDR) { // undocumented for SPROG, higher causes error in NMRA Acc Packet
             log.debug("bit number out of range in sprog turnout system name: {}", systemName);
             return (0);
         }
