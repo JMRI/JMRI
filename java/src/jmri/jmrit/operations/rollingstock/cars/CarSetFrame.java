@@ -20,7 +20,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -32,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013, 2014
  */
-public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
+public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans.PropertyChangeListener {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
@@ -412,7 +411,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
         checkTrain(car);
         // is this car part of a kernel?
         if (askKernelChange && car.getKernel() != null) {
-            List<RollingStock> list = car.getKernel().getGroup();
+            List<Car> list = car.getKernel().getGroup();
             if (list.size() > 1) {
                 if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
                         Bundle.getMessage("carInKernel"), new Object[]{car.toString()}), MessageFormat
@@ -447,9 +446,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
     }
 
     @Override
-    protected boolean updateGroup(List<RollingStock> list) {
-        for (RollingStock rs : list) {
-            Car car = (Car) rs;
+    protected boolean updateGroup(List<Car> list) {
+        for (Car car : list) {
             if (car == _car) {
                 continue;
             }

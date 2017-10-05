@@ -66,14 +66,14 @@ public interface Manager<E extends NamedBean> {
     @Nonnull
     public String makeSystemName(@Nonnull String s);
 
-    /** 
+    /**
      * Code the validity (including just as a prefix)
      * of a proposed name string.
      * @since 4.9.5
      */
     enum NameValidity {
         /**
-         * Indicates the name is valid as is, 
+         * Indicates the name is valid as is,
          * and can also be a valid prefix for longer names
          */
         VALID,
@@ -82,7 +82,7 @@ public interface Manager<E extends NamedBean> {
           * can it be made valid by adding more characters;
           * just a bad start.
           */
-        INVALID, 
+        INVALID,
         /**
          * Indicates that adding additional characters might (or might not)
          * turn this into a valid name; it is not a valid name now.

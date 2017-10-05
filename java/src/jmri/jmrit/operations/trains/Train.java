@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -51,8 +50,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Rodney Black Copyright (C) 2011
  */
-@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-        justification = "CarManager only provides Car Objects") // NOI18N
 public class Train implements java.beans.PropertyChangeListener {
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -431,7 +428,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (routeLocation == getTrainDepartsRouteLocation())
             return minutes;
         // add any work at this location
-        for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+        for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
             if (rs.getRouteLocation() == routeLocation && !rs.getTrackName().equals(RollingStock.NONE)) {
                 minutes += Setup.getSwitchTime();
             }
@@ -1905,7 +1902,7 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     public int getNumberCarsWorked() {
         int count = 0;
-        for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+        for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
             if (rs.getRouteLocation() != null) {
                 count++;
             }
@@ -1951,7 +1948,7 @@ public class Train implements java.beans.PropertyChangeListener {
         Route route = getRoute();
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
+                for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
                     if (rs.getRouteLocation() == rl) {
                         number++;
                     }
@@ -1980,8 +1977,7 @@ public class Train implements java.beans.PropertyChangeListener {
         Route route = getRoute();
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
-                    Car car = (Car) rs;
+                for (Car car : InstanceManager.getDefault(CarManager.class).getList(this)) {
                     if (!car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                         continue;
                     }
@@ -2067,8 +2063,7 @@ public class Train implements java.beans.PropertyChangeListener {
                         weight += -rs.getAdjustedWeightTons();
                     }
                 }
-                for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
-                    Car car = (Car) rs;
+                for (Car car : InstanceManager.getDefault(CarManager.class).getList(this)) {
                     if (car.getRouteLocation() == rl) {
                         weight += car.getAdjustedWeightTons(); // weight depends on car load
                     }
@@ -2095,8 +2090,7 @@ public class Train implements java.beans.PropertyChangeListener {
         Route route = getRoute();
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList(this)) {
-                    Engine eng = (Engine) rs;
+                for (Engine eng : InstanceManager.getDefault(EngineManager.class).getList(this)) {
                     if (eng.getRouteLocation() == rl) {
                         hp += eng.getHpInteger();
                     }
@@ -2121,9 +2115,8 @@ public class Train implements java.beans.PropertyChangeListener {
     @Nonnull public String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentLocation();
-        List<RollingStock> cars = InstanceManager.getDefault(CarManager.class).getByTrainList(this);
-        for (RollingStock rs : cars) {
-            Car car = (Car) rs;
+        List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTrainList(this);
+        for (Car car : cars) {
             if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose()) {
                 cabooseRoadNumber = car.toString();
             }

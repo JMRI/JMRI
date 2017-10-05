@@ -11,38 +11,18 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Mx1PacketGenPanelTest {
+public class Mx1PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Test
-    public void testMemoCtor() {
-        Mx1PacketGenPanel action = new Mx1PacketGenPanel();
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testInitComponents() throws Exception{
-        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
-        // for now, just makes ure there isn't an exception.
-        pane.initComponents();
-    }
-
-    @Test
-    public void testGetHelpTarget(){
-        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
-        Assert.assertEquals("help target","package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle(){
-        Mx1PacketGenPanel pane = new Mx1PacketGenPanel();
-        Assert.assertEquals("title","MX1_: " + Bundle.getMessage("Title"),pane.getTitle());
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        panel = new Mx1PacketGenPanel();
+        helpTarget="package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel";
+        title="MX1_: " + Bundle.getMessage("Title");
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

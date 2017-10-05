@@ -10,8 +10,11 @@ import jmri.jmrix.roco.z21.Z21TrafficController;
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         super.initComponents();
 
         // all we need to do is set the title 
@@ -21,6 +24,9 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         pack();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendz21Message(createPacket(packetTextField.getSelectedItem().toString()), null);

@@ -29,6 +29,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         SerialTrafficController.instance().addSerialListener(this);
     }
 
+    /**
+     * Define system-specific help item
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.grapevine.serialmon.SerialMonFrame", true);  // NOI18N
+    }
+
     @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);

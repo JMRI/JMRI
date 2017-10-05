@@ -12,42 +12,22 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SerialPacketGenPaneTest {
+public class SerialPacketGenPaneTest extends jmri.util.swing.JmriPanelTest {
 
 
     private SerialTrafficControlScaffold tc = null;
 
-    @Test
-    public void testCtor() {
-        SerialPacketGenPane action = new SerialPacketGenPane();
-        Assert.assertNotNull("exists", action);
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        SerialPacketGenPane t = new SerialPacketGenPane();
-        Assert.assertEquals("help target","package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane",t.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        SerialPacketGenPane t = new SerialPacketGenPane();
-        Assert.assertEquals("title","Powerline_: Command Generator",t.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        SerialPacketGenPane t = new SerialPacketGenPane();
-        // we are just making sure that initComponents doesn't cause an exception.
-        t.initComponents();
-    }
-
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
+        panel = new SerialPacketGenPane();
+        title = "Powerline_: Command Generator";
+        helpTarget="package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
     }
 
+    @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();        tc = null;
     }

@@ -1,6 +1,7 @@
 package jmri.jmrix.maple.assignment;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,14 +19,14 @@ public class ListActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListAction action = new ListAction("Maple test Action"); 
+        ListAction action = new ListAction("Maple test Action", new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ListAction action = new ListAction();
+        ListAction action = new ListAction(new MapleSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
     }
 

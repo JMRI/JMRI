@@ -13,33 +13,13 @@ import org.junit.Test;
  */
 public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("exists", pane );
-    }
-
-    @Test
-    public void testGetHelpTarget() {
-        Assert.assertNull("help target",pane.getHelpTarget());
-    }
-
-    @Test
-    public void testGetTitle() {
-        Assert.assertEquals("title",Bundle.getMessage("MarklinMonitorTitle"), pane.getTitle());
-    }
-
-    @Test
-    public void testInitComponents() throws Exception {
-        // we are just making sure that initComponents doesn't cause an exception.
-        pane.initComponents();
-    }
-
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        pane = new MarklinMonPane();
+        // pane for AbstractMonPaneTestBase, panel for JmriJPanelTest
+        panel = pane = new MarklinMonPane();
+        title=Bundle.getMessage("MarklinMonitorTitle");
     }
 
     @Override

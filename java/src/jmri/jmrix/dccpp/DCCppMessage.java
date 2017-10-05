@@ -2234,7 +2234,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
  
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_MAIN);
         for (int k = 0; k < num_bytes; k++) {
-            m.myMessage.append(" " + bytes[k]);
+            m.myMessage.append(" " + jmri.util.StringUtil.twoHexFromInt(bytes[k]));
         }
         m.myRegex = DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX;
         return(m);

@@ -138,7 +138,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     /**
      * Stop the server.
      *
-     * @throws Exception if there is an error stopping the server
+     * @throws Exception if there is an error stopping the server; defined by Jetty superclass
      */
     @Override
     public void stop() throws Exception {

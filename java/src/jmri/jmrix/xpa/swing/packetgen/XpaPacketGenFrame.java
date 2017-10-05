@@ -23,8 +23,11 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo = m;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText(Bundle.getMessage("CommandLabel"));

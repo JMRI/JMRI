@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for serial systems
+ * Implement light manager for Maple serial systems
  * <P>
  * System names are "KLnnn", where nnn is the bit number without padding.
  * <P>
@@ -17,8 +17,16 @@ import org.slf4j.LoggerFactory;
   */
 public class SerialLightManager extends AbstractLightManager {
 
+    MapleSystemConnectionMemo _memo = null;
+    protected String prefix = "M";
+
     public SerialLightManager() {
 
+    }
+
+    public SerialLightManager(MapleSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = memo.getSystemPrefix();
     }
 
     /**
@@ -26,7 +34,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getSystemPrefix() {
-        return "K";
+        return prefix;
     }
 
     /**
@@ -36,33 +44,33 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
-        int bitNum = SerialAddress.getBitFromSystemName(systemName);
+        int bitNum = SerialAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == 0) {
             return (null);
         }
         String conflict = "";
-        conflict = SerialAddress.isOutputBitFree(bitNum);
+        conflict = SerialAddress.isOutputBitFree(bitNum, getSystemPrefix());
         if (!conflict.equals("")) {
-            log.error("Assignment conflict with " + conflict + ".  Light not created.");
+            log.error("Assignment conflict with '{}'. Light not created.", conflict);
             notifyLightCreationError(conflict, bitNum);
             return (null);
         }
-        // Validate the systemName
-        String sysName = SerialAddress.normalizeSystemName(systemName);
+        // Validate the System Name
+        String sysName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sysName.equals("")) {
-            log.error("error when normalizing system name " + systemName);
+            log.error("error when normalizing system name {}", systemName);
             return null;
         }
-        if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
-            lgt = new SerialLight(sysName, userName);
-            if (!SerialAddress.validSystemNameConfig(sysName, 'L')) {
-                log.warn("Light system Name '" + sysName + "' does not refer to configured hardware.");
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
+            lgt = new SerialLight(sysName, userName, _memo);
+            if (!SerialAddress.validSystemNameConfig(sysName, 'L', _memo)) {
+                log.warn("Light system Name '{}' does not refer to configured hardware.", sysName);
                 javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Light just added, " + sysName
                         + ", refers to an unconfigured output bit.", "Configuration Warning",
                         javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
         }
         return lgt;
     }
@@ -82,7 +90,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
@@ -90,7 +98,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L'));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L', _memo));
     }
 
     /**
@@ -98,7 +106,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -111,8 +119,10 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Allow access to SerialLightManager.
+     * Allow access to SerialLightManager
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialLightManager instance() {
         if (_instance == null) {
             _instance = new SerialLightManager();

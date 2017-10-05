@@ -91,7 +91,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID; 
+        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**

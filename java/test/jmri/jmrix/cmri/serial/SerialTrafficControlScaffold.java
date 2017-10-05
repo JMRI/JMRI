@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	Stands in for the SerialTrafficController class
+ * Stands in for the SerialTrafficController class.
  *
  * @author	Bob Jacobsen Copyright 2006
  */
@@ -20,7 +20,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     /**
-     * record messages sent, provide access for making sure they are OK
+     * Record messages sent, provide access for making sure they are OK.
      */
     public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 
