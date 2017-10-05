@@ -184,7 +184,7 @@ public abstract class LayoutTrack {
     /**
      * get turnout state string
      *
-     * @param state of the turnout
+     * @param turnoutState of the turnout
      * @return the turnout state string
      */
     public String getTurnoutStateString(int turnoutState) {
