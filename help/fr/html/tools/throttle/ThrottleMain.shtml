@@ -1,7 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-10-04-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Blorec Herv&#233; 2017-01-07-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -33,169 +31,52 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<h1>JMRI: Documentation R&#233;gulateurs</h1>
 
-    <div id="mainContent">
-      <h1>Introduction: Qu'est ce que l'Outil
-      R&eacute;gulateur</h1>
+<p>L'outil <b>R&#233;gulateur JMRI</b> est juste l'un des nombreux outils num&#233;riques ferroviaires 
+qui font partie du Projet <b>JMRI</b>. Il a la capacit&#233; de faire circuler une locomotive &#233;quip&#233;e de d&#233;codeur DCC
+ autour d'un r&#233;seau en utilisant un clavier et une souris d'ordinateur
+pour la commande au lieu d'un r&#233;gulateur &#224; main. Cet outil offre plusieurs 
+caract&#233;ristiques communes avec la plupart des r&#233;gulateurs manuels, y compris le
+capacit&#233; de commander les fonctions de lumi&#232;re et du son.</p>
 
-      <p>L'outil <b>R&eacute;gulateur JMRI</b> est juste l'un des
-      nombreux outils num&eacute;riques ferroviaires qui font
-      partie du Projet <b>JMRI</b>. Il a la capacit&eacute; de
-      faire circuler une locomotive &eacute;quip&eacute;e de
-      d&eacute;codeur DCC autour d'un r&eacute;seau en utilisant un
-      clavier et une souris d'ordinateur pour la commande au lieu
-      d'un r&eacute;gulateur &agrave; main. Cet outil offre
-      plusieurs caract&eacute;ristiques communes avec la plupart
-      des r&eacute;gulateurs manuels, y compris le capacit&eacute;
-      de commander les fonctions de la lumi&egrave;re et du
-      son.</p>
+<h2>Aide R&#233;gulateur</h2>
 
-      <p>Ce guide de l'utilisateur est destin&eacute; &agrave;
-      pr&eacute;senter &agrave; ceux qui ne connaissent pas l'outil
-      r&eacute;gulateur . Apr&egrave;s la lecture &agrave; travers
-      les sections identifi&eacute;es ci-dessous, et en essayant
-      l'outil r&eacute;gulateur sur vos propres r&eacute;seaux, il
-      faut esp&eacute;rer qu'il va augmenter votre plaisir du
-      mod&eacute;lisme ferroviaire en DCC.</p>
+<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
+<ul>
+  <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur JMRI</a></li>
+  <li>Le <a href="BasicThrottleWindow.shtml">R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottleWindowMenus.shtml">Menus R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottleToolBar.shtml">Barre d'outil du panneau R&#233;gulateur</a></li>
+  <li>Le <a href="AdvancedThrottleControl.shtml">Commandes R&#233;gulateur</a></li>
+  <li>Le <a href="ThrottlesListWindow.shtml">Liste R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottlesPreferencesPane.shtml">Pr&#233;f&#233;rences R&#233;gulateur</a></li>
+</ul>
 
-      <h1>Mise &agrave; jour Version documentaire du
-      R&eacute;gulateur</h1>
 
-      <p>S'il vous pla&icirc;t noter que cette documentation a
-      &eacute;t&eacute; mise &agrave; jour, reportez-vous aux liens
-      ci-dessous:</p>
+    <p style="margin-left:0em">Voir aussi:<br>
+   </p>
+ </li>
+</ul>
+<ul>
+  <li>Les <a href="RostersMediaPane.shtml">Panneaux M&#233;dia et Fonction label dans Decoder Pro</a></li>
+  <li><a
+    href="../../../package/jmri/jmrit/scripting/Jynstruments.shtml">Jynstruments</a></li>
+  <li><a href="../../../package/jmri/jmrit/scripting/Jynstruments.shtml"></a><a
+    href="../../../package/jmri/jmrit/throttle/HowToJMRIOrientedThrottle.shtml">Comment construire un R&#233;gulateur orient&#233; JMRI</a>.</li>
+</ul>
 
-      <ul>
-        <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu
-        R&eacute;gulateur dans JMRI</a></li>
+<hr>
 
-        <li>La <a href="BasicThrottleWindow.shtml">Fen&ecirc;tre
-        R&eacute;gulateur elle-m&ecirc;me</a></li>
+<p><a href="ThrottleChapter1.shtml">Aide R&#233;gulateurs pour JMRI v 1.x/2.x</a>
 
-        <li>Les <a href="ThrottleWindowMenus.shtml">Menus
-        Fen&ecirc;tre R&eacute;gulateur</a></li>
+<!--#include virtual="/Footer" -->
 
-        <li>La <a href="ThrottleToolBar.shtml">Fen&ecirc;tre barre
-        d'outils R&eacute;gulateur</a></li>
-
-        <li>La <a href=
-        "AdvancedThrottleControl.shtml">Fen&ecirc;tre commandes
-        R&eacute;gulateur</a></li>
-
-        <li>La <a href="ThrottlesListWindow.shtml">Liste des
-        Fen&ecirc;tres R&eacute;gulateurs</a></li>
-
-        <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet
-        pr&eacute;f&eacute;rences R&eacute;gulateurs</a><br>
-
-          <p style="margin-left:0em">Voir aussi:<br></p>
-        </li>
-      </ul>
-
-      <ul>
-        <li>Les <a href="RostersMediaPane.shtml">Panneaux
-        M&eacute;dia et Fonction label dans Decoder Pro</a></li>
-
-        <li><a href=
-        "../../../package/jmri/jmrit/scripting/Jynstruments.shtml">Jynstruments</a></li>
-
-        <li><a href=
-        "../../../package/jmri/jmrit/scripting/Jynstruments.shtml"></a><a href="../../../package/jmri/jmrit/throttle/HowToJMRIOrientedThrottle.shtml">Comment
-        construire un R&eacute;gulateur orient&eacute;
-        JMRI</a>.</li>
-      </ul>
-
-      <h1>Comment utiliser ce Guide</h1>
-
-      <p>Ce guide utilisateur a &eacute;t&eacute; mis en place
-      presque comme un guide de formation. Chaque lien dans la
-      section de la colonne de gauche est organis&eacute; comme un
-      livre. Si vous &ecirc;tes nouveau dans l'utilisation des
-      r&eacute;gulateurs, suivez chaque chapitre de la section dans
-      l'ordre et le texte vous guidera &agrave; travers le
-      processus &eacute;tape par &eacute;tape, y compris
-      l'ouverture d'une nouvelle configuration r&eacute;gulateur ,
-      sa personnalisation, puis en enregistrant tout votre dur
-      labeur.</p>
-
-      <p>Si vous avez d&eacute;j&agrave; trouv&eacute; les outils
-      de configuration des r&eacute;gulateurs, mais cherchez plus
-      d'informations sur eux, alors j'esp&egrave;re qu'il y a une
-      section ou deux qui puissent &eacute;galement vous apporter
-      de l'aide. La liste des chapitres et sections seront toujours
-      disponibles dans les colonnes de gauche de toutes les pages
-      tout en regardant ce guide. Il y a aussi un couple de boutons
-      de navigation en bas de chaque page. Ceux-ci vous
-      am&egrave;nent au chapitres suivant ou
-      pr&eacute;c&eacute;dent, ou &agrave; la table principale de
-      la page du contenu (voir la prochaine paragraphe).</p>
-
-      <p>Dans la liste des liens fournis sur la gauche, et
-      situ&eacute;e &agrave; la conclusion de chaque page chapitre,
-      il y a un lien identifi&eacute; comme <a href=
-      "ThrottleTOC.shtml" title=
-      "Allez &agrave; la table des mati&egrave;res"><i><strong>TOC</strong></i></a>
-      ou <a href="ThrottleTOC.shtml" title=
-      "Allez &agrave; la table des mati&egrave;res"><i><strong>Table
-      des Mati&egrave;res</strong></i></a> . Ce lien m&egrave;ne
-      &agrave; une table d&eacute;di&eacute;e decontenus des pages
-      . Certains peuvent trouver plus facile de naviguer en
-      utilisant cette page. Cependant, le colonne de gauche
-      contient tous les liens disponibles contenus dans la page TOC
-      .</p>
-
-      <p class="important"><b style="color: #FF0000">Note
-      importante</b>:De multiple programmeurs sont impliqu&eacute;s
-      dans le d&eacute;veloppement du code de ce projet. Certains
-      travaux sur le "front end" du code (qui est l'interface que
-      vous voyez sur votre &eacute;cran d'ordinateur), et d'autres
-      travaillent sur le "back end" du logiciel pour chaque besoin
-      particulier de chaque syst&egrave;me DCC . Bien que le "front
-      end" doit rester constant &agrave; travers tous les
-      syst&egrave;mes, il peut y avoir de l&eacute;g&egrave;res
-      diff&eacute;rences exp&eacute;riment&eacute;es sur votre
-      syst&egrave;me informatique et de DCC notamment en
-      comparaison &agrave; ce qui est d&eacute;crit et
-      pr&eacute;sent&eacute; dans ce guide utilisateur.<br>
-      <br>
-      <b>Les exemples et les r&eacute;f&eacute;rences
-      indiqu&eacute;s dans ce guide sont bas&eacute;es sur la
-      version 1.5.3 du logiciel, fonctionnant sous Microsoft
-      Windows 2000 Professionnel avec un Syst&egrave;me
-      Digitrax.</b></p>
-
-      <p>Utilisez ces liens pour avancer soit au chapitre suivant
-      pour une introduction &agrave; l'outil r&eacute;gulateur, ou
-      pour afficher le tableau complet de la table des
-      mati&egrave;res</p>
-
-      <table border="0" width="100%" cellpadding="0" cellspacing=
-      "0">
-        <tbody>
-          <tr>
-            <td align="right"> </td>
-
-            <td><img src="images/spacer.gif" width="30" height=
-            "10"></td>
-
-            <td align="center"><b><a href="ThrottleTOC.shtml"
-            title="Jump to the Table Of Contents page">TOC</a></b></td>
-
-            <td><img src="images/spacer.gif" width="30" height=
-            "10"></td>
-
-            <td align="left"><b><a href="ThrottleChapter1.shtml"
-            title="Advance to the next chapter"><img width="18"
-            height="18" src="images/RightArrow2.jpg"></a></b></td>
-          </tr>
-        </tbody>
-      </table><br>
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
