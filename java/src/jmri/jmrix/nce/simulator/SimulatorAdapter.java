@@ -219,13 +219,6 @@ public class SimulatorAdapter extends NcePortController implements
             log.info("NCE Simulator Started");
         }
         while (true) {
-            try {
-                wait(100);
-            } catch (InterruptedException e) {
-                log.debug("continuing after interrupt");
-                } catch (IllegalMonitorStateException e) { // currently needs to happen to maintain simulator operation & speed
-                    log.debug("continuing after IllegalMonitorStateException");
-            }
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
                 StringBuilder buf = new StringBuilder();
