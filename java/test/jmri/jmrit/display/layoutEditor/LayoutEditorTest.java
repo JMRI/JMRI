@@ -57,8 +57,8 @@ public class LayoutEditorTest {
         Assert.assertEquals("Zoom Get", 1.0, le.getZoom(), 0.0);
         // note: Layout Editor won't allow zooms below 0.25
         Assert.assertEquals("Zoom Set", 0.25, le.setZoom(0.1), 0.0);
-        // note: Layout Editor won't allow zooms above 6.0.
-        Assert.assertEquals("Zoom Set", 6.0, le.setZoom(10.0), 0.0);
+        // note: Layout Editor won't allow zooms above 8.0.
+        Assert.assertEquals("Zoom Set", 8.0, le.setZoom(10.0), 0.0);
         Assert.assertEquals("Zoom Set", 3.33, le.setZoom(3.33), 0.0);
         Assert.assertEquals("Zoom Get", 3.33, le.getZoom(), 0.0);
     }
