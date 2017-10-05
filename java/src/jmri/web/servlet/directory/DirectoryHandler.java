@@ -37,6 +37,7 @@ public class DirectoryHandler extends ResourceHandler {
         this.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
     }
 
+    @Override
     protected void doDirectory(HttpServletRequest request, HttpServletResponse response, Resource resource) throws IOException {
         if (this.isDirectoriesListed()) {
             response.setStatus(HttpServletResponse.SC_OK);
