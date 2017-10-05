@@ -104,12 +104,9 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     HandlerClass packetTypeCkBoxHandler = new HandlerClass();
     private CMRISystemConnectionMemo _memo = null;
 
-    SerialFilterFrame curFrame;
-
-    public SerialFilterFrame() {
+    public SerialFilterFrame(CMRISystemConnectionMemo memo) {
         super("CMRInet Packet Filter");
-        curFrame = this;
-
+        _memo = memo;
     }
 
     /** 
