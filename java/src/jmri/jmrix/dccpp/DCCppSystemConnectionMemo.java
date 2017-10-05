@@ -3,7 +3,6 @@ package jmri.jmrix.dccpp;
 
 import java.util.ResourceBundle;
 import jmri.CommandStation;
-import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.MultiMeter;
@@ -169,20 +168,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private LightManager lightManager = null;
 
     /*
-     * Provides access to the Consist Manager for this particular connection.
-     * NOTE: Consist manager defaults to NULL
-     */
-    public ConsistManager getConsistManager() {
-        return consistManager;
-    }
-
-    public void setConsistManager(ConsistManager c) {
-        consistManager = c;
-    }
-
-    private ConsistManager consistManager = null;
-
-    /*
      * Provides access to the Command Station for this particular connection.
      * NOTE: Command Station defaults to NULL
      */
@@ -235,8 +220,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
-        } else if (type.equals(jmri.ConsistManager.class)) {
-            return false;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else if (type.equals(jmri.MultiMeter.class)) {
@@ -272,9 +255,6 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
-        }
-        if (T.equals(jmri.ConsistManager.class)) {
-            return (T) getConsistManager();
         }
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
