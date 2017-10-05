@@ -232,7 +232,7 @@ public class SimulatorAdapter extends NcePortController implements
                 NceReply r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled() && r != null) {
-                    StringBuffer buf = new StringBuffer();
+                    StringBuilder buf = new StringBuilder();
                     buf.append("Nce Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
