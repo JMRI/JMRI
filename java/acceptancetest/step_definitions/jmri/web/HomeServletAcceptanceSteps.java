@@ -7,6 +7,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import java.awt.GraphicsEnvironment;
 import jmri.web.server.WebServer;
 
 /**
@@ -23,11 +24,15 @@ public class HomeServletAcceptanceSteps implements En {
    public HomeServletAcceptanceSteps() {
 
       Before(tags,()->{
-         FirefoxBinary firefoxBinary = new FirefoxBinary();
-         firefoxBinary.addCommandLineOptions("--headless");
-         FirefoxOptions firefoxOptions = new FirefoxOptions();
-         firefoxOptions.setBinary(firefoxBinary);
-         webDriver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
+         if(GraphicsEnvironment.isHeadless()) {
+            FirefoxBinary firefoxBinary = new FirefoxBinary();
+            firefoxBinary.addCommandLineOptions("--headless");
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setBinary(firefoxBinary);
+            webDriver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
+         } else {
+            webDriver = new EventFiringWebDriver(new FirefoxDriver());
+         }
       });
 
       When("^I ask for the /index\\.html$", () -> {
