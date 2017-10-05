@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.JmriException;
+import jmri.Turnout;
 import jmri.util.ColorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,7 +148,7 @@ public abstract class LayoutTrack {
      * @param g2 the graphics context
      */
     protected abstract void drawTurnoutControls(Graphics2D g2);
-    
+
     /**
      * Get the hidden state of the track element.
      *
@@ -181,10 +182,28 @@ public abstract class LayoutTrack {
      * non-accessor methods
      */
     /**
+     * get turnout state string
+     *
+     * @param state of the turnout
+     * @return the turnout state string
+     */
+    public String getTurnoutStateString(int turnoutState) {
+        String result = "";
+        if (turnoutState == Turnout.CLOSED) {
+            result = Bundle.getMessage("TurnoutStateClosed");
+        } else if (turnoutState == Turnout.THROWN) {
+            result = Bundle.getMessage("TurnoutStateThrown");
+        } else {
+            result = Bundle.getMessage("BeanStateUnknown");
+        }
+        return result;
+    }
+
+    /**
      * Initialization method for LayoutTrack sub-classes. The following method
      * is called for each instance after the entire LayoutEditor is loaded to
      * set the specific objects for that instance
-     * 
+     *
      * @param le the layout editor
      */
     public abstract void setObjects(@Nonnull LayoutEditor le);
@@ -220,9 +239,9 @@ public abstract class LayoutTrack {
      *
      * @param hitPoint           - the point
      * @param useRectangles      - whether to use (larger) rectangles or
-     *                             (smaller) circles for hit testing
+     *                           (smaller) circles for hit testing
      * @param requireUnconnected - whether to only return hit types for free
-     *                             connections
+     *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -389,7 +408,7 @@ public abstract class LayoutTrack {
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
-     * @return the bounds of this track 
+     * @return the bounds of this track
      */
     public abstract Rectangle2D getBounds();
 
