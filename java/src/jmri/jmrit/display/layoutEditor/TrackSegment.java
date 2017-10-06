@@ -12,7 +12,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -48,9 +47,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2009
  */
 public class TrackSegment extends LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
     // operational instance variables (not saved between sessions)
@@ -581,7 +577,7 @@ public class TrackSegment extends LayoutTrack {
                 // hit testing for the control points
                 // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
-                    if (r.contains(getBezierControlPoint(index))) {
+                    if (r.contains(bezierControlPoints.get(index))) {
                         result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                         break;
                     }
@@ -1139,7 +1135,7 @@ public class TrackSegment extends LayoutTrack {
                 Point2D[] points = new Point2D[len];
                 points[0] = ep1;
                 for (int idx = 1; idx < len - 1; idx++) {
-                    points[idx] = getBezierControlPoint(idx - 1);
+                    points[idx] = bezierControlPoints.get(idx - 1);
                 }
                 points[len - 1] = ep2;
 
@@ -1431,8 +1427,8 @@ public class TrackSegment extends LayoutTrack {
             Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
 
-            Point2D pt1 = getBezierControlPoint(0);
-            Point2D pt2 = getBezierControlPoint(1);
+            Point2D pt1 = bezierControlPoints.get(0);
+            Point2D pt2 = bezierControlPoints.get(1);
             MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
         } else {
             Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());

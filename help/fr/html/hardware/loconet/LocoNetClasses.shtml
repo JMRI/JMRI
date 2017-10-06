@@ -1,391 +1,285 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Updated  by Blorec Herv&#233;  2013-09-13-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated  by Blorec Herv&#233;  2017-01-30-->
 <html lang="fr">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+<<head>
+    <title>JMRI Support - LocoNet&reg; Implementation</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI LocoNet technical implementation">
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
 
-  <title>JMRI: LocoNet Implementation</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
-  "JMRI LocoNet technical implementation">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>Informations sur la mise en oeuvre JMRI
-      LocoNet&reg;</h1>Cette page d&eacute;crit les diverses
-      structures de haut niveau sur la mise en oeuvre de JMRI
-      LocoNet. S'il vous pla&icirc;t voir aussi les <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">
-      Javadocs pour le paquet jmrix.loconet</a> .
+<div id="mainContent">
 
-      <h2>LocoNet Valeurs Sp&eacute;cifiques</h2>la <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnConstants.html">
-      classe LnConstants</a> fournit les statiques, les constantes
-      finales pour repr&eacute;senter divers domaines et les
-      valeurs dans les messages LocoNet. A un certain moment,
-      certaines de celles-ci devraient &ecirc;tre
-      int&eacute;gr&eacute;es dans des classes sp&eacute;cifiques
-      (c.-&agrave; LocoNetMessage) de sorte que le codage et les
-      algorithmes de d&eacute;codage n'ont pas &agrave;
-      appara&icirc;tre dans de nombreux endroits.
+<H1>Informations sur la mise en oeuvre JMRI LocoNet&reg;</H1>
 
-      <h2>Envoi et R&eacute;ception de Messages LocoNet</h2>La
-      <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
-      Classe LocoNetInterface</a> fournit la connexion basique
-      &agrave; LocoNet pour les classes utilisateurs . Les messages
-      sont envoy&eacute;s en les passant &agrave; une prise en
-      charge LocoNetInterface et vous pouvez vous inscrire avec un
-      LocoNetInterface pour &ecirc;tre avis&eacute; de tout le
-      trafic LocoNet.
+Cette page d&#233;crit les diverses structures de haut niveau sur la mise en oeuvre de JMRI LocoNet.
+S'il vous pla&#238;t voir aussi les
+<A  HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html"> JavaDocs pour le paquet jmrix.loconet </A>.
 
-      <p><img src="images/LocoNetInterfaceUML.png" alt=
-      "UML of JMRI's LocoNet Interface"></p>
+<h2> LocoNet Valeurs Sp&#233;cifiques </h2>
+la
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnConstants.html"> classe LnConstants </a>
+fournit les statiques, les constantes finales pour repr&#233;senter
+divers domaines et les valeurs dans les messages LocoNet. A un certain moment, certaines de celles-ci
+devraient &#234;tre int&#233;gr&#233;es dans des classes sp&#233;cifiques (c.-&#224; LocoNetMessage) de sorte que le codage et les
+algorithmes de d&#233;codage n'ont pas &#224; appara&#238;tre dans de nombreux endroits.
 
-      <p>La classe <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">
-      LocoNetMessage</a> actuellement (2001) n'aide pas vraiment
-      d'autre code &agrave; construire et &agrave; d&eacute;coder
-      les paquets LocoNet, mais les contient juste. Ce devrait
-      &ecirc;tre am&eacute;lior&eacute;.</p>
+<h2> Envoi et R&#233;ception de Messages LocoNet </h2>
 
-      <p>Les &eacute;tapes pour envoyer un message &agrave; LocoNet
-      sont:</p>
+La
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html"> Classe LocoNetInterface </A>
+fournit la connexion basique &#224; LocoNet pour les classes utilisateurs
+. Les messages sont envoy&#233;s en les passant &#224; une prise en charge LocoNetInterface
+ et vous pouvez vous inscrire avec un LocoNetInterface
+pour &#234;tre avis&#233; de tout le trafic LocoNet.
 
-      <ol>
-        <li>Cr&eacute;er un <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">
-        LocoNetMessage</a> , et remplissez-le avec le message que
-        vous souhaitez envoyer. Il n'est pas n&eacute;cessaire de
-        remplir la v&eacute;rification des bits d'erreur , ce sera
-        fait dans le cadre de l'envoi.</li>
-
-        <li>Localiser un objet fournissant une interface <a href=
-        "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
-          LocoNetInterface</a> . Dans de nombreux cas, les <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
-          LnTrafficController</a> devraient fournir cela, et l'
-          objet peut &ecirc;tre situ&eacute; avec
-          <pre>
+<P>
+<IMG SRC="images/LocoNetInterfaceUML.png" alt="UML of JMRI's LocoNet Interface">
+<P>
+La classe
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html"> LocoNetMessage </A> 
+actuellement (2001) n'aide pas vraiment d'autre code &#224; construire et &#224; d&#233;coder les paquets LocoNet, mais les
+contient juste. Ce devrait &#234;tre am&#233;lior&#233;.
+<P>
+Les &#233;tapes pour envoyer un message &#224; LocoNet sont:
+<OL>
+<LI> Cr&#233;er un <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html"> LocoNetMessage </A>,
+et remplissez-le avec le message que vous souhaitez envoyer. Il n'est pas n&#233;cessaire de remplir la v&#233;rification des bits d'erreur
+, ce sera fait dans le cadre de l'envoi.
+<LI> Localiser un objet fournissant une interface
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html"> LocoNetInterface </A>
+. Dans de nombreux cas, les
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html"> LnTrafficController </A> devraient fournir cela, et l'
+objet peut &#234;tre situ&#233; avec
+<PRE>
 LocoNetInterface l = LnTrafficController.instance ();
-</pre>
-        </li>
+</PRE>
+<LI> Envoyez le message:
+<PRE>
+		l.sendLocoNetMessage (msg);
+</PRE>
+</OL>
 
-        <li>Envoyez le message:
-          <pre>
-                l.sendLocoNetMessage (msg);
-</pre>
-        </li>
-      </ol>
+<P>
+Les classes qui souhaitent recevoir des paquets entrants LocoNet devraient prendre en charge l'interfaces
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetListener.html"> LocoNetListener </A> ,
+et enregistrer leur d&#233;sir d'&#233;couter
+via un objet de l'interface 
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html"> LocoNetInterface </A> .
+Il est important de noter que les
+objets auditeur ne peuvent pas supposer qu'ils re&#231;oivent des messages entrants LocoNet
+dans n'importe quel fil sp&#233;cifique. En particulier, ils ne doivent pas pr&#233;sumer qu'ils 
+recoivent ces messages dans un fil GUI, donc ils ont &#224; transmettre toute
+modifications de l'interface utilisateur..
 
-      <p>Les classes qui souhaitent recevoir des paquets entrants
-      LocoNet devraient prendre en charge l'interfaces <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetListener.html">
-      LocoNetListener</a> , et enregistrer leur d&eacute;sir
-      d'&eacute;couter via un objet de l'interface <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">
-      LocoNetInterface</a> . Il est important de noter que les
-      objets auditeur ne peuvent pas supposer qu'ils
-      re&ccedil;oivent des messages entrants LocoNet dans n'importe
-      quel fil sp&eacute;cifique. En particulier, ils ne doivent
-      pas pr&eacute;sumer qu'ils recoivent ces messages dans un fil
-      GUI, donc ils ont &agrave; transmettre toute modifications de
-      l'interface utilisateur..</p>
+<h2> Prise en charge de la Connexion LocoNet </h2>
+La prise en charge de la communication avec une vraie LocoNet est assur&#233;e par des
+classes qui prennent en charge l'interface LocoNetListener.
+Il en existe actuellement quatre:
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html"> LnTrafficController </a>
+et ses sous-classes
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficPacketizer.html"> LnTrafficPacketizer </a>,(lien cass&#233; le 17/01/2012)
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html"> LnTrafficRouter </a>,
+et
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html"> LocoNetInterfaceScaffold </a>(lien cass&#233; le 17/01/2012).
 
-      <h2>Prise en charge de la Connexion LocoNet</h2>La prise en
-      charge de la communication avec une vraie LocoNet est
-      assur&eacute;e par des classes qui prennent en charge
-      l'interface LocoNetListener. Il en existe actuellement
-      quatre: <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
-      LnTrafficController</a> et ses sous-classes <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficPacketizer.html">
-      LnTrafficPacketizer</a> ,(lien cass&eacute; le 17/01/2012)
-      <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">
-      LnTrafficRouter</a> , et <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html">
-      LocoNetInterfaceScaffold</a> (lien cass&eacute; le
-      17/01/2012).
+<h3>LnTrafficController</h3>
 
-      <h3>LnTrafficController</h3>La classe abstraite <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">
-      LnTrafficController</a> fournit une prise en charge commune
-      pour ses sous-classes, et ajoute un m&eacute;canisme de mise
-      en oeuvre pour trouver une LocoNetInterface utilisable.
+La classe abstraite 
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html"> LnTrafficController </a>
+ fournit une prise en charge commune pour ses sous-classes, et
+ajoute un m&#233;canisme de mise en oeuvre pour trouver une LocoNetInterface utilisable.
+<P>
+La routine addLocoNetListener et les m&#233;thodes removeLocoNetListener sont mises en oeuvre ici,
+avec une m&#233;thode de notification pour transmettre LocoNetMessages aux auditeurs.
+<P>
+L'instance statique () est utilis&#233;e par un grand nombre de classes jmrix.loconet
+pour trouver une LocoNetInterface pour transmettre et recevoir des messages. Elle fonctionne gr&#226;ce &#224;
+un membre statique "automatique", qui est initialis&#233; avec un LnTrafficController
+objet sous-classe qui est cr&#233;&#233;. Tous les objets qui veulent envoyer ou  recevoir &#224; travers la
+LocoNet utiliserons la dernier&#233; cr&#233;ation de l'application LnTrafficController.
+Voir la section sur les "<a href="#startup"> D&#233;marrages </a>" pour plus d'informations &#224; ce sujet.
 
-      <p>La routine addLocoNetListener et les m&eacute;thodes
-      removeLocoNetListener sont mises en oeuvre ici, avec une
-      m&eacute;thode de notification pour transmettre
-      LocoNetMessages aux auditeurs.</p>
+<P>
+<img src="images/LnTrafficControllerUML.png" alt="UML of JMRI's LocoNet Traffic Controller">
 
-      <p>L'instance statique () est utilis&eacute;e par un grand
-      nombre de classes jmrix.loconet pour trouver une
-      LocoNetInterface pour transmettre et recevoir des messages.
-      Elle fonctionne gr&acirc;ce &agrave; un membre statique
-      "automatique", qui est initialis&eacute; avec un
-      LnTrafficController objet sous-classe qui est
-      cr&eacute;&eacute;. Tous les objets qui veulent envoyer ou
-      recevoir &agrave; travers la LocoNet utiliserons la
-      dernier&eacute; cr&eacute;ation de l'application
-      LnTrafficController. Voir la section sur les " <a href=
-      "#startup">D&eacute;marrages</a> " pour plus d'informations
-      &agrave; ce sujet.</p>
+<h3>LnTrafficPacketizer</h3>
+La classe
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficPacketizer.html"> LnTrafficPacketizer </a>
+ &#233;tend la mise en oeuvre de LnTrafficController pour envoyer et recevoir
+des paquets sur un lien s&#233;rie LocoBuffer  &#224; un LocoNet.
 
-      <p><img src="images/LnTrafficControllerUML.png" alt=
-      "UML of JMRI's LocoNet Traffic Controller"></p>
+Il fonctionne avec une mise en oeuvre de la Classe abstraite
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"> LnPortController </A> -
+, qui travaille au niveau des flux de caract&#232;res.
+Ceux-ci communiquent &#224; travers des flux de Java qui transportent les messages LocoNet comme des
+s&#233;quences de caract&#232;res. La mise en oeuvre de LnPortController est
+disponible pour le LocoBuffer, MS100 et pour la lecture d'un fichier Rapport hexad&#233;cimal.
+<P>
+Il utilise des fils s&#233;par&#233;s pour la transmission et la r&#233;ception de caract&#232;res &#224; partir des flux.
+L'op&#233;ration de r&#233;ception se fait dans un fil de sorte qu'il peut facilement d&#233;crocher si aucun message
+n'est disponible. L'op&#233;ration d'&#233;mission se fait dans un fil pour une raison analogue;
+parfois l'entr&#233;e  d'un LocoBuffer s'&#233;teindra  (sortie du programme), ce qui provoque
+le d&#233;crochage du flux des op&#233;rations d'&#233;criture. En faisant ceci dans un fil s&#233;par&#233;, nous pouvons
+d&#233;tecter ou au moins contourner ceci sans que la totalit&#233; du programme ne s'arr&#234;te.
 
-      <h3>LnTrafficPacketizer</h3>La classe <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficPacketizer.html">
-      LnTrafficPacketizer</a> &eacute;tend la mise en oeuvre de
-      LnTrafficController pour envoyer et recevoir des paquets sur
-      un lien s&eacute;rie LocoBuffer &agrave; un LocoNet. Il
-      fonctionne avec une mise en oeuvre de la Classe abstraite
-      <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html">
-      LnPortController</a> - , qui travaille au niveau des flux de
-      caract&egrave;res. Ceux-ci communiquent &agrave; travers des
-      flux de Java qui transportent les messages LocoNet comme des
-      s&eacute;quences de caract&egrave;res. La mise en oeuvre de
-      LnPortController est disponible pour le LocoBuffer, MS100 et
-      pour la lecture d'un fichier Rapport hexad&eacute;cimal.
+<h3>LnTrafficRouter</h3>
+La classe
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html"> LnTrafficRouter </a>
+ fournit une op&#233;ration de Dispersion-Regroupement pour l'interface LocoNetListener.
+Notez que cette mise en oeuvre ne transforme pas la LocoNetMessages dans le trafic s&#233;rie.
 
-      <p>Il utilise des fils s&eacute;par&eacute;s pour la
-      transmission et la r&eacute;ception de caract&egrave;res
-      &agrave; partir des flux. L'op&eacute;ration de
-      r&eacute;ception se fait dans un fil de sorte qu'il peut
-      facilement d&eacute;crocher si aucun message n'est
-      disponible. L'op&eacute;ration d'&eacute;mission se fait dans
-      un fil pour une raison analogue; parfois l'entr&eacute;e d'un
-      LocoBuffer s'&eacute;teindra (sortie du programme), ce qui
-      provoque le d&eacute;crochage du flux des op&eacute;rations
-      d'&eacute;criture. En faisant ceci dans un fil
-      s&eacute;par&eacute;, nous pouvons d&eacute;tecter ou au
-      moins contourner ceci sans que la totalit&eacute; du
-      programme ne s'arr&ecirc;te.</p>
+<BR> <img Src="images/LocoNetConnections.gif" alt="Drawing comment les diff&#233;rents objets de route messages" width="640" height="480">
+<BR>
 
-      <h3>LnTrafficRouter</h3>La classe <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">
-      LnTrafficRouter</a> fournit une op&eacute;ration de
-      Dispersion-Regroupement pour l'interface LocoNetListener.
-      Notez que cette mise en oeuvre ne transforme pas la
-      LocoNetMessages dans le trafic s&eacute;rie.<br>
-      <img src="images/LocoNetConnections.gif" alt=
-      "Drawing comment les diff&eacute;rents objets de route messages"
-      width="640" height="480"><br>
-      Notez l'objet de deux LnTrafficRouter. Il fournit une
-      LocoNetInterface pour tous les LocoNet en utilisant des
-      messages dans le noeud distant, de sorte que seuls une copie
-      de chaque message voyage &agrave; travers le lien &agrave;
-      distance.
+Notez l'objet de deux LnTrafficRouter. Il fournit une LocoNetInterface pour tous les
+LocoNet en utilisant des messages dans le noeud distant, de sorte que seuls
+une copie de chaque message  voyage &#224; travers le lien &#224; distance.
+<P>
+Notez que la communication "une classe distante " pourrait &#233;galement &#234;tre mise en oeuvre comme une sous-classe de LnTrafficRouter,
+au lieu de communiquer avec un.
 
-      <p>Notez que la communication "une classe distante " pourrait
-      &eacute;galement &ecirc;tre mise en oeuvre comme une
-      sous-classe de LnTrafficRouter, au lieu de communiquer avec
-      un.</p>
+<h3> LocoNetInterfaceScaffold </h3>
+La classe
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html"> LocoNetInterfaceScaffold </a>
+ fournit une mise en oeuvre de LnTrafficController pour une utilisation dans les programmes de test.
+Plut&#244;t que de communiquer avec un LocoNet r&#233;el, il fournit un &#233;chafaudage pour
+rendre facile &#224; tester la transmission et la r&#233;ception de messages.
 
-      <h3>LocoNetInterfaceScaffold</h3>La classe <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html">
-      LocoNetInterfaceScaffold</a> fournit une mise en oeuvre de
-      LnTrafficController pour une utilisation dans les programmes
-      de test. Plut&ocirc;t que de communiquer avec un LocoNet
-      r&eacute;el, il fournit un &eacute;chafaudage pour rendre
-      facile &agrave; tester la transmission et la r&eacute;ception
-      de messages.
 
-      <h2><a name="startup" id=
-      "startup">D&eacute;marrage</a></h2>Il y a des classes
-      "action" qui se connectent &agrave; une source
-      d'entr&eacute;e. Le principal programme met celle-ci dans un
-      menu, sur un bouton, etc, afin que l'utilisateur puisse
-      s&eacute;lectionner la connexion souhait&eacute;e. L'ensemble
-      actuel (Mars 2002) est:
+<h2> <a name="startup"> D&#233;marrage </a> </h2>
+Il y a des classes "action"  qui se connectent &#224; une source d'entr&#233;e. Le principal
+programme met celle-ci dans un menu, sur un bouton, etc, afin que l'utilisateur puisse s&#233;lectionner la
+connexion souhait&#233;e. L'ensemble actuel (Mars 2002)  est:
+<UL>
+<LI> LocoBufferAction  - cr&#233;e un objet LocoBufferAdapter et configure pour un fonctionnement
+avec un LocoBuffer
+<LI> MS100Action  - cr&#233;e un objet MS100Adapter et configure pour fonctionner avec
+une MS100
+<LI> LnHexFileAction - cr&#233;e un objet LnHexFilePort et configure pour un fonctionnement
+comme "LocoNet Simulator" (auparavant, cela &#233;tait connu comme "Le fichier Hex LocoNet", comme il
+peut charger le contenu d'un fichier de cha&#238;nes de caract&#232;res hexad&#233;cimcommaux)
+</UL>
+<BR>
+En plus de configurer l'adaptateur pour la source d'entr&#233;e,
+quelque chose &#224; configurer l'ensemble des objets g&#233;rant et les objets manipul&#233;s par
+LocoNet. Il s'agit notamment de:
+<UL>
+<LI> Typiquement un LnPacketizer, qui devient l' "instance" pour 
+les objets qui utilisent LnTrafficController.instance () pour localiser une interface.
+<LI> Un ProgrammerInstance
+<LI> Un PowerManagerInstance
+<LI> Un TurnoutManagerInstance
+</UL>
+Ces trois derniers fournissent des services bas&#233;s sur LocoNet pour les
+Interfaces JMRI de niveau sup&#233;rieur.
+<P>
+Les m&#233;thodes de configuration () dans les divers adaptateurs de classes font cela.
+Ce n'est pas un m&#233;canisme tr&#232;s g&#233;n&#233;ral. Bien qu'un LnPacketizer
+soit la bonne chose pour se connecter &#224; chacun des adaptateurs port s&#233;rie,
+le reste de la configuration peut varier.</UL>
 
-      <ul>
-        <li>LocoBufferAction - cr&eacute;e un objet
-        LocoBufferAdapter et configure pour un fonctionnement avec
-        un LocoBuffer</li>
+<h2>Adaptateurs Port </h2>
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"> LnPortController </A>
+est une classe de base abstraite pour r&#233;aliser des mises en oeuvres communes pour l'adaptateur de
+classes qui se connectent &#224; des ports s&#233;rie avec des protocoles sp&#233;cifiques.
 
-        <li>MS100Action - cr&eacute;e un objet MS100Adapter et
-        configure pour fonctionner avec une MS100</li>
+<h4> MS100 </h4>
 
-        <li>LnHexFileAction - cr&eacute;e un objet LnHexFilePort et
-        configure pour un fonctionnement comme "LocoNet Simulator"
-        (auparavant, cela &eacute;tait connu comme "Le fichier Hex
-        LocoNet", comme il peut charger le contenu d'un fichier de
-        cha&icirc;nes de caract&egrave;res
-        hexad&eacute;cimcommaux)</li>
-      </ul><br>
-      En plus de configurer l'adaptateur pour la source
-      d'entr&eacute;e, quelque chose &agrave; configurer l'ensemble
-      des objets g&eacute;rant et les objets manipul&eacute;s par
-      LocoNet. Il s'agit notamment de:
+Notez que l'application courante MS100  n'est pas aussi robuste que nous ayons vraiment besoin qu'elle soit.
+En particulier, le d&#233;lestage et la retransmission ne sont pas coch&#233;es. La meilleure solution disponible maintenant
+ est d&#233;sormais d'utiliser un LocoBuffer au lieu d'un MS100 pour l'acc&#232;s au
+LocoNet; qui a un PIC en elle qui g&#232;re tout cela correctement.
+<P>
 
-      <ul>
-        <li>Typiquement un LnPacketizer, qui devient l' "instance"
-        pour les objets qui utilisent LnTrafficController.instance
-        () pour localiser une interface.</li>
+La classe MS100Action (paquet jmrix.loconet.ms100) d&#233;marre une connexion LocoNet
+via un MS100. Une fois d&#233;clench&#233;, il cr&#233;e un objet MS100Frame visible.
+<P>
+À son tour, le MS100Frame cr&#233;e un objet MS100Adapter,
+montre ensuite les ports de communication disponibles , permettant &#224; l'utilisateur d'en choisir un.
+L'objet MS100Adapter met en oeuvre l'interface LnPortController, de sorte
+qu'il peut &#233;ventuellement connecter un LnTrafficController &#224; un port s&#233;rie et MS100.
+<P>
+Quand le bouton "port ouvert MS100" est enfonc&#233;, l'objet MS100Frame 
 
-        <li>Un ProgrammerInstance</li>
+<UL>
+<LI> Passe du port de communication s&#233;lectionn&#233;
+&#224; l'MS100Adapter. L'adaptateur, puis MS100
+se connectent &#224; ce port et cr&#233;ent le
+flux d'entr&#233;e et de sortie
+<LI> Puis s'assure qu'
+un objet LnTrafficController existe en appelant le proc&#233;d&#233; LnTrafficController.instance
 
-        <li>Un PowerManagerInstance</li>
+<LI> Relie cette instance LnTrafficController &#224; l'MS100Adapter (sous-classe de LnPortController)
+<LI> Commence LnTrafficController dans un nouveau fil pour qu'il puisse g&#233;rer les 
+messages entrants de fa&#231;on asynchrone.
+</UL>
 
-        <li>Un TurnoutManagerInstance</li>
-      </ul>Ces trois derniers fournissent des services bas&eacute;s
-      sur LocoNet pour les Interfaces JMRI de niveau
-      sup&eacute;rieur.
+<h4> LocoBuffer </h4>
 
-      <p>Les m&eacute;thodes de configuration () dans les divers
-      adaptateurs de classes font cela. Ce n'est pas un
-      m&eacute;canisme tr&egrave;s g&eacute;n&eacute;ral. Bien
-      qu'un LnPacketizer soit la bonne chose pour se connecter
-      &agrave; chacun des adaptateurs port s&eacute;rie, le reste
-      de la configuration peut varier.</p>
+Tr&#232;s semblable au cas MS100, avec la m&#234;me s&#233;quence d'op&#233;rations. La configuration du port
+est quelque peu diff&#233;rente. Les classes sont dans le paquet jmrix.loconet.locobuffer.
 
-      <h2>Adaptateurs Port</h2><a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html">LnPortController</a>
-      est une classe de base abstraite pour r&eacute;aliser des
-      mises en oeuvres communes pour l'adaptateur de classes qui se
-      connectent &agrave; des ports s&eacute;rie avec des
-      protocoles sp&eacute;cifiques.
+<h4> HexFile </h4>
 
-      <h4>MS100</h4>Notez que l'application courante MS100 n'est
-      pas aussi robuste que nous ayons vraiment besoin qu'elle
-      soit. En particulier, le d&eacute;lestage et la
-      retransmission ne sont pas coch&eacute;es. La meilleure
-      solution disponible maintenant est d&eacute;sormais
-      d'utiliser un LocoBuffer au lieu d'un MS100 pour
-      l'acc&egrave;s au LocoNet; qui a un PIC en elle qui
-      g&egrave;re tout cela correctement.
+Les classes HexFile (paquet jmrix.loconet.hexfile ) sont destin&#233;es &#224;
+simuler une connexion LocoNet partir d'un fichier de donn&#233;es.
+La fourniture des types de connections du "Simulateur LocoNet".
+Un fichier de donn&#233;es de format hexad&#233;cimal se nourrit dans les messages
+comme s'ils provenaient d'une connexion externe.
+<P>
+L'initialisation  est fournie par la classe HexFileAction.
+Une fois d&#233;clench&#233;e, elle cr&#233;e un objet HexFileFrame visible.
+Cela fournit un bouton, que l'utilisateur peut utiliser pour s&#233;lectionner un fichier d'entr&#233;e.
+<P>
+Quand un fichier est s&#233;lectionn&#233;, l'objet HexFileFrame
+<UL>
+<LI> Cr&#233;e un objet HexFileAdapter
+connect&#233; &#224; ce fichier
+<LI> Puis s'assure qu'
+un objet LnTrafficController existe en appelant le proc&#233;d&#233; LnTrafficController.instance.
+<LI> Relie cette instance LnTrafficController &#224; l'HexFileAdapter (sous-classe de LnPortController)
+<LI> Commence LnTrafficController dans un nouveau fil pour qu'il puisse g&#233;rer les 
+messages entrants de fa&#231;on asynchrone.</LI> 
 
-      <p>La classe MS100Action (paquet jmrix.loconet.ms100)
-      d&eacute;marre une connexion LocoNet via un MS100. Une fois
-      d&eacute;clench&eacute;, il cr&eacute;e un objet MS100Frame
-      visible.</p>
+<h2>Slot et gestion du Programmateur </h2>
 
-      <p>&Atilde;&euro; son tour, le MS100Frame cr&eacute;e un
-      objet MS100Adapter, montre ensuite les ports de communication
-      disponibles , permettant &agrave; l'utilisateur d'en choisir
-      un. L'objet MS100Adapter met en oeuvre l'interface
-      LnPortController, de sorte qu'il peut &eacute;ventuellement
-      connecter un LnTrafficController &agrave; un port
-      s&eacute;rie et MS100.</p>
+Les "slots" sont &#224; la base du fonctionnement d'une station de commande LocoNet. Ils sont repr&#233;sent&#233;s
+par la classe LocoNetSlot. Comme LocoNetMessage, cette classe n'a pas (encore) fourni un grand nombre
+de support pour la cr&#233;ation et le d&#233;codage des statuts des slots . La classe SlotManager &#233;coute le trafic LocoNet
+pour garder une id&#233;e des mise &#224; jour du contenu des slot des centrales de commande. Il pourrait un jour
+&#234;tre n&#233;cessaires pour la SlotManager de communiquer activement avec la station de commande pour
+mise &#224; jour de cette information, mais pour ne pas que la SlotManager &#233;coute seulement pour les slots les commande de changement qui
+proviennent du LocoNet ou sont transmis par le programme.
+<P>
+L'interface SlotListener devraient &#234;tre appliqu&#233;e par toute classe qui veut &#234;tre
+notifi&#233;e lorsqu'un slots change .
+<P>
+Parce que les stations de commande Digitrax g&#233;rent la programmation via un emplacement r&#233;serv&#233; sp&#233;ciale
+, l'interface jmri.Programmer est &#233;galement impl&#233;ment&#233;e par la classe loconet.SlotManager.
+Cela complique grandement la classe, mais elle est acceptable pour l'instant.
 
-      <p>Quand le bouton "port ouvert MS100" est enfonc&eacute;,
-      l'objet MS100Frame</p>
+<p>LocoNet&reg; est une marque s&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-      <ul>
-        <li>Passe du port de communication
-        s&eacute;lectionn&eacute; &agrave; l'MS100Adapter.
-        L'adaptateur, puis MS100 se connectent &agrave; ce port et
-        cr&eacute;ent le flux d'entr&eacute;e et de sortie</li>
-
-        <li>Puis s'assure qu' un objet LnTrafficController existe
-        en appelant le proc&eacute;d&eacute;
-        LnTrafficController.instance</li>
-
-        <li>Relie cette instance LnTrafficController &agrave;
-        l'MS100Adapter (sous-classe de LnPortController)</li>
-
-        <li>Commence LnTrafficController dans un nouveau fil pour
-        qu'il puisse g&eacute;rer les messages entrants de
-        fa&ccedil;on asynchrone.</li>
-      </ul>
-
-      <h4>LocoBuffer</h4>Tr&egrave;s semblable au cas MS100, avec
-      la m&ecirc;me s&eacute;quence d'op&eacute;rations. La
-      configuration du port est quelque peu diff&eacute;rente. Les
-      classes sont dans le paquet jmrix.loconet.locobuffer.
-
-      <h4>HexFile</h4>Les classes HexFile (paquet
-      jmrix.loconet.hexfile ) sont destin&eacute;es &agrave;
-      simuler une connexion LocoNet partir d'un fichier de
-      donn&eacute;es. La fourniture des types de connections du
-      "Simulateur LocoNet". Un fichier de donn&eacute;es de format
-      hexad&eacute;cimal se nourrit dans les messages comme s'ils
-      provenaient d'une connexion externe.
-
-      <p>L'initialisation est fournie par la classe HexFileAction.
-      Une fois d&eacute;clench&eacute;e, elle cr&eacute;e un objet
-      HexFileFrame visible. Cela fournit un bouton, que
-      l'utilisateur peut utiliser pour s&eacute;lectionner un
-      fichier d'entr&eacute;e.</p>
-
-      <p>Quand un fichier est s&eacute;lectionn&eacute;, l'objet
-      HexFileFrame</p>
-
-      <ul>
-        <li>Cr&eacute;e un objet HexFileAdapter connect&eacute;
-        &agrave; ce fichier</li>
-
-        <li>Puis s'assure qu' un objet LnTrafficController existe
-        en appelant le proc&eacute;d&eacute;
-        LnTrafficController.instance.</li>
-
-        <li>Relie cette instance LnTrafficController &agrave;
-        l'HexFileAdapter (sous-classe de LnPortController)</li>
-
-        <li>Commence LnTrafficController dans un nouveau fil pour
-        qu'il puisse g&eacute;rer les messages entrants de
-        fa&ccedil;on asynchrone.</li>
-
-        <li style="list-style: none">
-          <h2>Slot et programmateur de gestion</h2>Les "slots" sont
-          &agrave; la base du fonctionnement d'une station de
-          commande LocoNet. Ils sont repr&eacute;sent&eacute;s par
-          la classe LocoNetSlot. Comme LocoNetMessage, cette classe
-          n'a pas (encore) fourni un grand nombre de support pour
-          la cr&eacute;ation et le d&eacute;codage des statuts des
-          slots . La classe SlotManager &eacute;coute le trafic
-          LocoNet pour garder une id&eacute;e des mise &agrave;
-          jour du contenu des slot des centrales de commande. Il
-          pourrait un jour &ecirc;tre n&eacute;cessaires pour la
-          SlotManager de communiquer activement avec la station de
-          commande pour mise &agrave; jour de cette information,
-          mais pour ne pas que la SlotManager &eacute;coute
-          seulement pour les slots les commande de changement qui
-          proviennent du LocoNet ou sont transmis par le programme.
-
-          <p>L'interface SlotListener devraient &ecirc;tre
-          appliqu&eacute;e par toute classe qui veut &ecirc;tre
-          notifi&eacute;e lorsqu'un slots change .</p>
-
-          <p>Parce que les stations de commande Digitrax
-          g&eacute;rent la programmation via un emplacement
-          r&eacute;serv&eacute; sp&eacute;ciale , l'interface
-          jmri.Programmer est &eacute;galement
-          impl&eacute;ment&eacute;e par la classe
-          loconet.SlotManager. Cela complique grandement la classe,
-          mais elle est acceptable pour l'instant.</p>
-
-          <p>LocoNet&reg; est une marque s&eacute;pos&eacute;e de
-          <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-          <!--#include virtual="/Footer" -->
-        </li>
-      </ul>
-    </div>
+<!--#include virtual="/Footer" -->
+  </div>
   </div>
 </body>
 </html>

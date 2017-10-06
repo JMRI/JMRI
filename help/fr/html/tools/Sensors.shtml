@@ -1,27 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-10-05-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Blorec Herv&#233; le 2017-01-06-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <title>
+ 	JMRI: Sensors Documentation
+  </title>
 
-  <title>JMRI: Sensor Documentation</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta name="keywords" content=
-  "sensor model railroad JMRI decoderpro panelpro">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords"
+        content="sensor model railroad JMRI decoderpro panelpro">
+
+<!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 </head>
@@ -36,164 +28,131 @@
     <div id="mBody">
       <!--#include virtual="Sidebar" -->
 
-      <div id="mainContent">
-        <!-- Page Body -->
+<div id="mainContent">
+<H1>JMRI:Documentation Capteur</H1>
 
-        <h2>JMRI:Documentation Capteur</h2>
+<h2>Que sont les capteurs? </h2>
 
-        <h3>Que sont les capteurs?</h3>
+<p>
+Un capteur est une fa&#231;on pour JMRI de repr&#233;senter une entr&#233;e en provenance du r&#233;seau.
+<P>
+JMRI utilise un Capteur pour repr&#233;senter l'&#233;tat d'un d&#233;tecteur d'occupation du canton,
+ou un bouton poussoir sur le tableau de bord, ou &#224; peu pr&#232;s tout ce que vous pouvez joindre
+&#224; une entr&#233;e sur votre syst&#232;me DCC ou Syst&#232;me C/MRI.
 
-        <p>Un capteur est une fa&ccedil;on pour JMRI de
-        repr&eacute;senter une entr&eacute;e sur le
-        r&eacute;seau.</p>
+<h3>Commander un Capteur</h3>
 
-        <p>JMRI utilise un Capteur pour repr&eacute;senter
-        l'&eacute;tat d'un d&eacute;tecteur d'occupation du canton,
-        ou un bouton poussoir sur le tableau de bord, ou &agrave;
-        peu pr&egrave;s tout ce que vous pouvez joindre &agrave;
-        une entr&eacute;e sur votre syst&egrave;me DCC ou
-        Syst&egrave;me C/MRI.</p>
+<p>
+G&#233;n&#233;ralement, vous ne commandez pas l'&#233;tat d'un objet Capteur; JMRI, travaillant avec 
+le mat&#233;riel de votre r&#233;seau le peut.
+<P>
+Mais il y a certaines occasions o&#249; vous aimeriez changer localement l'&#233;tat
+d'un Capteur: Pour d&#233;boguer une certaine logique qui utilise le capteur comme une entr&#233;e, etc. Il peut
+&#234;tre tr&#232;s pratique de modifier temporairement la mani&#232;re dont un Capteur est r&#233;gl&#233;, sans avoir &#224;
+couper le r&#233;seau et appuyez sur un bouton ou de mettre une locomotive dans un canton.
+<P>
+Par cons&#233;quent, JMRI vous laisse changer un Capteur via le Tableau Capteur ( voir ci-dessous ), ou
+en cliquant sur une ic&#244;ne du Capteur sur un panneau ( voir les 
+<A HREF="../apps/PanelPro/PanelPro.shtml">pages PanelPro</a> 
+pour plus d'info sur les Panneaux).
+<P>
+Le changement prend effet imm&#233;diatement, sauf si une minuterie anti-rebond est configur&#233; voir ci-dessous,
+mais ne dure que jusqu'&#224; la prochaine fois que vous le changer dans le programme, ou la prochaine fois
+que l'entr&#233;e mat&#233;riel sur le r&#233;seau change de valeur.
 
-        <h3>Contr&ocirc;ler un Capteur</h3>
+<h2>Propri&#233;t&#233;s des Capteurs</h2>
 
-        <p>G&eacute;n&eacute;ralement, vous ne contr&ocirc;lez pas
-        l'&eacute;tat d'un objet Capteur; JMRI, travaillant avec le
-        mat&eacute;riel de votre r&eacute;seau le peut.</p>
+<H3><A NAME="Debounce"> </a> Capteur Anti-Rebonds</H3>
+<p>L'installation de Capteur Antirebond est l&#224; pour aider &#224; pr&#233;venir les faux d&#233;clenchements d'un capteur
+ passant dans le syst&#232;me et d&#233;clenchant d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
+Ces faux d&#233;clenchements pourraientt &#234;tre d&#251; &#224; un z&#244;ne sale de la voie ou des interf&#233;rences &#233;lectriques.
 
-        <p>Mais il y a certaines occasions o&ugrave; vous aimeriez
-        changer localement l'&eacute;tat d'un Capteur: Pour
-        d&eacute;boguer une certaine logique qui utilise le capteur
-        comme une entr&eacute;e, etc. Il peut &ecirc;tre
-        tr&egrave;s pratique pour modifier temporairement la
-        mani&egrave;re dont un Capteur est r&eacute;gl&eacute;,
-        sans avoir &agrave; couper le r&eacute;seau et appuyez sur
-        un bouton ou de mettre une locomotive dans un canton.</p>
+<p>L'installation vous permet d'assigner une dur&#233;e en millisecondes avant que le changement
+soit enregistr&#233; avec le reste du syst&#232;me. Si apr&#232;s cette p&#233;riode l'Etat n'a
+pas chang&#233; alors l'&#233;tat du capteur sera retransmis sur le reste du syst&#232;me. <br>
+    
+Toutefois, si l'&#233;tat des capteurs est diff&#233;rent apr&#232;s que la temporisation soit finie, alors le
+syst&#232;me va red&#233;marrer le processus, cette fois apr&#232;s que le minuteur ait termin&#233;, il sera
+v&#233;rifier si l'&#233;tat du capteur est dans le m&#234;me &#233;tat qu'il &#233;tait avant qu'il red&#233;marre
+le processus. Si ce n'est pas le cas le processus est relanc&#233; &#224; nouveau jusqu'&#224; ce que l'Etat soit le m&#234;me
+avant et apr&#232;s que le chronom&#232;tre ait &#233;t&#233; lanc&#233;.
 
-        <p>Par cons&eacute;quent, nous vous laissons changer
-        localement un Capteur via le tableau de Capteur (voir
-        ci-dessous), ou en cliquant sur une ic&ocirc;ne du Capteur
-        sur un panneau (voir la <a href=
-        "../apps/PanelPro/PanelPro.shtml">pages PanelPro</a> pour
-        plus d'info sur les panneaux).</p>
+<h2>Comment configurer un Capteur</h2>
 
-        <p>Le changement prend effet imm&eacute;diatement, sauf si
-        une minuterie anti-rebond est configur&eacute; voir
-        ci-dessous, mais ne dure que jusqu'&agrave; la prochaine
-        fois que vous le changer dans le programme, ou la prochaine
-        fois dque l'entr&eacute;e duu mat&eacute;riel sur le
-        r&eacute;seau change de valeur.</p>
+<h3>Le Tableau Capteur</h3>
+Les capteurs peuvent &#234;tre vus et configur&#233;s en utilisant le <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau 
+Capteur</a>
+Il contient les colonnes suivantes:</p>
+	<ul>
+	<li>Nom Syst&#232;me</li>
+	<li>Nom Utilisateur ( option )</li>
+	<li>&#201;tat ( soit Actif, Inactif, Incoh&#233;rent ou - au d&#233;but - Inconnu</li>
+	<li>Commentaire ( option, double-clic pour &#233;diter</li>
+	<li>Invers&#233; ( case &#224; cocher )</li>
+	</ul>
 
-        <h3><a name="Debounce" id="Debounce"></a> Capteur
-        Anti-Rebonds</h3>
+<h3> Commandes du Tableau Capteurs</h3>
+<p>Dans le bas du tableau il y a le bouton <b>Ajouter...</b><br>
+et une case &#224; cocher pour <b>Montrer l'Information Anti-Rebond du Capteur</b></p>
+<p>Le menu <b> Par D&#233;fauts</b> vous permet de d&#233;finir deux r&#233;glages du syst&#232;me:
+	<ul>
+	<li>Anti-Rebondds Total</li>
+	<li>&#201;tat Initial du Capteur</li>
+	</ul>
 
-        <p>L'installation de Capteur Antirebond est l&agrave; pour
-        aider &agrave; pr&eacute;venir les faux
-        d&eacute;clenchements d'un capteur passant dans le
-        syst&egrave;me et d&eacute;clenchant d'autres
-        &eacute;v&eacute;nements dans le syst&egrave;me.<br>
-        Ces faux d&eacute;clenchements pourrait &ecirc;tre d&ucirc;
-        &agrave; un z&ocirc;ne sale de la voie ou des
-        interf&eacute;rences &eacute;lectriques.</p>
+<h3> Sauvegarde de configuration du capteur sur le disque </h3>
 
-        <p>L'installation vous permet d'assigner une dur&eacute;e
-        en millisecondes avant que le changement soit
-        enregistr&eacute; avec le reste du syst&egrave;me. Si
-        apr&egrave;s cette p&eacute;riode l'Etat n'a pas
-        chang&eacute; alors l'&eacute;tat du capteur sera
-        retransmis sur le reste du syst&egrave;me.<br>
-        Toutefois, si l'&eacute;tat des capteurs est
-        diff&eacute;rent apr&egrave;s que la temporisation soit
-        finie, alors le syst&egrave;me va red&eacute;marrer le
-        processus, cette fois apr&egrave;s que le minuteur ait
-        termin&eacute;, il sera v&eacute;rifier si l'&eacute;tat du
-        capteur est dans le m&ecirc;me &eacute;tat qu'il
-        &eacute;tait avant qu'il red&eacute;marre le processus. Si
-        ce n'est pas le cas le processus est relanc&eacute;
-        &agrave; nouveau jusqu'&agrave; ce que l'Etat soit le
-        m&ecirc;me avant et apr&egrave;s que le chronom&egrave;tre
-        ait &eacute;t&eacute; lanc&eacute;.</p>
+<p>Les Capteurs sont sauvegard&#233;s dans votre fichier de configuration de r&#233;seau, avec les aiguillages,
+les lumi&#232;res, les t&#234;tes de signal, etc. Pour stocker ces informations sur le disque, utilisez <b>Stocker
+Configuration ...</b> dans le menu  <b>Fichier</b>  en haut du Tableau Capteur
+ (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez  <b> Enregistrer Panneau...</b>
+dans le menu <b>Panneau</b>.
 
-        <h3>Sauvegarde de configuration du capteur sur le
-        disque</h3>
+<a name="add"> <H3> Ajout d'un nouveau Capteur </H3> </a>
+<p> Pour cr&#233;er un nouveau Capteur, suivez cette proc&#233;dure: </p>
+<ol>
+<p> <li>Cliquez sur le menu <b>Outils</b> -&gt; <b>Tableaux</b> -&gt; <b>Capteurs</b> pour afficher le
+<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a>
+ et cliquez sur le bouton
+<a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"> <b> Ajouter ...</b> </a>
+au bas de le Tableau pour ouvrir la fen&#234;tre Ajouter/Modifier Capteur. </p>
 
-        <p>Les Capteurs ont enregistr&eacute;s dans votre fichier
-        de configuration de r&eacute;seau, avec les aiguillages,
-        les lumi&egrave;res, les t&ecirc;tes de signal, etc. Pour
-        stocker ces informations sur le disque, utilisez <b>Stocker
-        Configuration ...</b> dans le menu <b>Fichier</b> en haut
-        du Tableau Lumi&egrave;re (ou d'autres tableaux &agrave;
-        partir du menu Outils), ou s&eacute;lectionnez <b>Stocker
-        Panneau...</b> dans le menu <b>Panneau</b> . <a name="add"
-        id="add"></a></p>
+<p> <li> Depuis la liste d&#233;roulante <b>Syst&#232;me</b>, s&#233;lectionnez le syst&#232;me auquel le
+    Capteur est connect&#233;. Dans la zone <b>Adresse mat&#233;rielle</b> entrez dans l'
+     <a href="../doc/Technical/Names.shtml#systeminfo"> adresse mat&#233;rielle de la connexion d'entr&#233;e </a>
+    r&#233;f&#233;renc&#233;e. <br> Le format de l'adresse mat&#233;rielle peut souvent &#234;tre souvent dans le 
+format de la "carte : canal" ou "Adresse Chassis: Pin", vous aurez besoin pour confirmer
+    les sp&#233;cificit&#233;s de chaque syst&#232;me en utilisant le <a href="../doc/Technical/Names.shtml#systeminfo">lien</a> suivant 
+    
+</Li>
+<p> <li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rent
+du nom utilisateur d'autres capteurs sera accept&#233;e, mais il est
+sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue du Capteur.
+Vous pouvez laisser ce champ vide si vous le souhaitez. </P>
+</Li>
+    
+    <p> <li> Si vous souhaitez ajouter un certain nombre de capteurs &#224; la fois, cliquez sur la case &#224; cocher
+    <b>Ajouter une plage </b>et puis dans la case <b> Nombre &#224; ajouter </b> entrez
+    le nombre de capteurs que vous souhaitez ajouter. Si vous avez entr&#233; un nom utilisateur, 
+ 	 alors il sera ajout&#233; avec un certain num&#233;ro pour s'assurer que chaque nom utilisateur
+    est unique. Si une adresse mat&#233;rielle qui existe d&#233;j&#224; dans le canton qui est en cours d'
+    ajout, alors le syst&#232;me va sauter cette adresse et se poursuivra.
+    </Li>
 
-        <h3><a name="add" id="add">Ajout d'un nouveau
-        Capteur</a></h3><a name="add" id="add"></a>
+<p> <li> Cliquez sur le bouton <b>OK</b> situ&#233; au bas de la fen&#234;tre.
+Si tout va bien, un message indiquant "Nouveau capteur ajout&#233; ..." sera
+affich&#233; dans la zone des notes. S'il y a des probl&#232;mes avec quoi que ce soit, un
+message d'avertissement ou d'erreur sera affich&#233; dans la zone des notes; vous devez alors
+corriger l'erreur et cliquez sur <b>OK </b> &#224; nouveau. </p>
+    </Li>
+    <P> <LI> Retour au Tableau du Capteur princi pale, vous pouvez alors voir 
+l'&#233;tat actuel du Capteur.
+ 
+</ol>
 
-        <p>Pour cr&eacute;er un nouveau capteur, suivez cette
-        proc&eacute;dure:</p>
+<!--#include virtual="/Footer" -->
 
-        <ol>
-          <li style="list-style: none">Cliquez</li>
-
-          <li><a href=
-          "../../package/jmri/jmrit/beantable/SensorTable.shtml"><b>
-          Tableau Capteur</b></a> dans le menu <b>Outils</b> pour
-          faire appara&icirc;tre le Tableau de Capteur, et cliquez
-          sur le bouton <a href=
-          "../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><b>
-          Ajouter ...</b></a> au bas de le Tableau pour ouvrir la
-          fen&ecirc;tre Ajouter/modifier Capteur.</li>
-
-          <li>Depuis la liste d&eacute;roulante
-          <b>Syst&egrave;me</b>, s&eacute;lectionnez le
-          syst&egrave;me auquel le Capteur est connect&eacute;.
-          Dans la zone <b>Adresse mat&eacute;rielle</b> entrez dans
-          l' <a href=
-          "../doc/Technical/Names.shtml#systeminfo">adresse
-          mat&eacute;rielle de la connexion d'entr&eacute;e</a>
-          r&eacute;f&eacute;renc&eacute;e.<br>
-          Le format de l'adresse mat&eacute;rielle peut souvent
-          &ecirc;tre souvent dans le format de la "carte : canal"
-          ou "Adresse Chassis: Pin", vous aurez besoin pour
-          confirmer les sp&eacute;cificit&eacute;s de chaque
-          syst&egrave;me en utilisant le <a href=
-          "../doc/Technical/Names.shtml#systeminfo">lien</a>
-          suivant</li>
-
-          <li>Entrez un nom utilisateur. Toute cha&icirc;ne de
-          caract&egrave;res qui est diff&eacute;rent du nom
-          utilisateur d'autres capteurs sera accept&eacute;e, mais
-          il est sage d'utiliser une cha&icirc;ne qui d&eacute;crit
-          l'utilisation pr&eacute;vue du Capteur. Vous pouvez
-          laisser ce champ vide si vous le souhaitez.</li>
-
-          <li>Si vous souhaitez ajouter un certain nombre de
-          capteurs &agrave; la fois, cliquez sur la case &agrave;
-          cocher <b>Ajouter une plage</b> et puis dans la case
-          <b>Nombre &agrave; ajouter</b> entrez le nombre de
-          capteurs que vous souhaitez ajouter. Si vous avez
-          entr&eacute; un nom utilisateur , alors il sera
-          ajout&eacute; avec un certain num&eacute;ro pour
-          s'assurer que chaque nom utilisateur est unique. Si une
-          adresse mat&eacute;rielle qui existe d&eacute;j&agrave;
-          dans le canton qui est en cours d' ajout, alors le
-          syst&egrave;me va sauter cette adresse et se
-          poursuivra.</li>
-
-          <li>Cliquez sur le bouton <b>OK</b> situ&eacute; au bas
-          de la fen&ecirc;tre. Si tout va bien, un message
-          indiquant "Nouveau capteur ajout&eacute; ...&ucirc;" sera
-          affich&eacute; dans la zone des notes. S'il y a des
-          probl&egrave;mes avec quoi que ce soit, une erreur ou
-          message d'avertissement sera affich&eacute; dans la zone
-          des notes; vous devez alors corriger l'erreur et cliquez
-          sur <b>OK</b> &agrave; nouveau.</li>
-
-          <li>Retour au Tableau du Capteur principale, vous pouvez
-          alors voir l'&eacute;tat actuel du Capteur .</li>
-        </ol><!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div><!-- closes #container -->
 </body>
-</html>

@@ -13,7 +13,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -66,9 +65,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (2) 2014
  */
 public class PositionablePoint extends LayoutTrack {
-
-    // Defined text resource, should be called using Bundle.getMessage() to allow reuse of shared keys upstream
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
     public static final int ANCHOR = 1;
