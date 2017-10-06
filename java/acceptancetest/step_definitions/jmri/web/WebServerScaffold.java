@@ -35,6 +35,7 @@ public class WebServerScaffold implements En {
              jmri.util.JUnitUtil.tearDown();
          } catch(Exception ex) {
              // if an exception occurs here, we may want to raise a flag,
+             ex.printStackTrace();
              Assert.fail("Exception occured during web server shutdown:" + ex);
          }
       });
