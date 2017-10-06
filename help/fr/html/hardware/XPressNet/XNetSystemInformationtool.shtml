@@ -3,25 +3,20 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-20-->
+<!-- UpDated  by Blorec Herv&#233;  2017-01-13-->
+<title>JMRI Hardware Support - XPressNet System Information Tool</title>
 
-  <title>The JMRI XPressNet System Information Tool</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -33,30 +28,33 @@
       utilis&eacute;e pour d&eacute;terminer quel mat&eacute;riel
       est connect&eacute; au syst&egrave;me.</p>
 
-      <p>Les deux premi&egrave;res lignes indiquent le type de
-      centrale de commande et les version des logiciels qui sont
-      connect&eacute; &agrave; travers votre ordinateur. Cette
-      information est lu dans le cadre du processus de
-      configuration automatique lorsque JMRI d&eacute;bute la
-      premi&egrave;re fois, mais peut &ecirc;tre relu &agrave;
-      l'aide du bouton "Get System Info" (Obtenir Infos
-      Syst&egrave;me).</p>
+<h1>Structure Mat&#233;rielle: Outil Information Syst&#232;me XPressNet</H1>
+<img src="images/XPressNetSystemInfo.jpg" alt="XPressNet System 
+Information Tool Image">
+<P>
+L'outil d'Information Syst&#232;me XPressNet est utilis&#233;e pour d&#233;terminer quel mat&#233;riel
+est connect&#233; au syst&#232;me.
+<P>
+Les deux premi&#232;res lignes indiquent le type de centrale et les version des logiciels
+qui sont connect&#233; &#224; votre ordinateur.
+Cette information est lue dans le cadre du processus de configuration automatique lorsque
+JMRI d&#233;bute la premi&#232;re fois, mais peut &#234;tre relu &#224; l'aide du bouton "Get System Info" (Obtenir Infos Syst&#232;me).
+<P>
+Sous le champ Interface, la version du mat&#233;riel et des logiciels d'
+Interface ordinateur sont affich&#233;es. Ces derni&#232;res sont obtenues par le "Get System
+Info" (Obtenir Infos Syst&#232;me).
+<P>
+L'image montre les r&#233;sultats obtenus en appuyant sur le bouton "Get
+System Info "avec une version du logiciel 2 LI101F connect&#233;e &#224; un Atlas
+Commander avec le logiciel 3.2.
+<P>
+Cliquer sur "Close" fermerera l'&#233;cran.
 
-      <p>Apr&egrave;s la lecture de l'interface de ligne, la
-      version du mat&eacute;riel et des logiciels d' Interface
-      ordinateur est affich&eacute;e. Ces derniers sont obtenus par
-      le "Get System Info" (Obtenir Infos Syst&egrave;me).</p>
+<p>Retour &#224; la page <a href="index.shtml"> Aide XPressNet</a>
 
-      <p>L'image sur cette page montre les r&eacute;sultats obtenus
-      en appuyant sur le bouton "Get System Info "avec une version
-      du logiciel 2 LI101F connect&eacute;e &agrave; un Atlas
-      Commander avec le logiciel 3.2.</p>
-
-      <p>Le bouton "Fermer" va fermer l'&eacute;cran.</p>
-      <hr>
-      Paul Bender<br>
-      paul.bender @ acm.org <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<hr>
+Paul Bender <BR>
+paul.bender @ acm.org
+<!--#include virtual="/Footer" -->
 </body>
 </html>
