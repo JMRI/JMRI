@@ -2,6 +2,7 @@ package jmri.util;
 
 import java.awt.Color;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
@@ -143,6 +144,49 @@ public class ColorUtil {
             return "cyan";
         }
         return null;
+    }
+
+    /**
+     * calculate the linear interpolation between two colors
+     *
+     * @param colorA the first color
+     * @param colorB the second color
+     * @param t  the fraction (between 0 and 1)
+     * @return the linear interpolation between a and b for t
+     */
+    @CheckReturnValue
+    public static Color lerp(@Nonnull Color colorA, @Nonnull Color colorB, double t) {
+        return new Color(
+                MathUtil.lerp(colorA.getRed(), colorB.getRed(), t),
+                MathUtil.lerp(colorA.getGreen(), colorB.getGreen(), t),
+                MathUtil.lerp(colorA.getBlue(), colorB.getBlue(), t),
+                MathUtil.lerp(colorA.getAlpha(), colorB.getAlpha(), t)
+        );
+    }
+
+    /**
+     * set the alpha component of a color
+     *
+     * @param color the color
+     * @param alpha the alpha component (integer 0 - 255)
+     * @return the new color with the specified alpha
+     */
+    @CheckReturnValue
+    public static Color setAlpha(@Nonnull Color color, int alpha) {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+    }
+
+    /**
+     * set the alpha component of a color
+     *
+     * @param color the color
+     * @param alpha the alpha component (double 0.0 - 1.0)
+     * @return the new color with the specified alpha
+     */
+    @CheckReturnValue
+    public static Color setAlpha(@Nonnull Color color, double alpha) {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), 
+                (int) (255.0 * alpha));
     }
 
     // initialize logging

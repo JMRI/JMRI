@@ -929,7 +929,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         });
 
-        setupComboBox(blockSensorComboBox, true, true);
+        setupComboBox(blockSensorComboBox, false, true);
         blockSensorComboBox.setToolTipText(Bundle.getMessage("OccupancySensorToolTip"));
 
         //third row of edit tool bar items
@@ -5219,11 +5219,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     beginObject = foundObject;
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
-                    //TODO: highlight all free connection points?
                     layoutEditorMode = LayoutEditorMode.EDIT_ADDING_TRACK_SEGMENT;
                 } else {
                     //TODO: auto-add anchor point?
-                    foundObject = null;
                     beginObject = null;
                 }
             } else if (!event.isShiftDown() && !event.isControlDown() && !event.isPopupTrigger()) {
@@ -5367,6 +5365,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             boolean requireUnconnected, @Nullable Object avoid) {
         boolean result = false; // assume failure (pessimist!)
 
+        foundObject = null;
         foundPointType = LayoutTrack.NONE;
         Optional<LayoutTrack> opt = layoutTrackList.stream().filter(o -> {
             LayoutTrack layoutTrack = (LayoutTrack) o;
@@ -6162,7 +6161,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             }
         }
         beginObject = null;
-        foundObject = null;
     } //checkPointOfPositionable
 
     // We just dropped a turnout... see if it will connect to anything
@@ -9609,6 +9607,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             g2.setColor(defaultTrackColor);
             setTrackStrokeWidth(g2, false);
             g2.draw(new Line2D.Double(beginLocation, currentLocation));
+
+            Color highlightColor = ColorUtil.setAlpha(Color.yellow, 0.75);
+            Color connectColor = ColorUtil.setAlpha(Color.green, 0.5);
+            g2.setColor(highlightColor);
+            g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            for (LayoutTrack lt : getLayoutTracks()) {
+                if (lt != beginObject) {
+                    if (lt == foundObject) {
+                        g2.setColor(connectColor);
+                        lt.drawUnconnected(g2);
+                        g2.setColor(highlightColor);
+                    } else {
+                        lt.drawUnconnected(g2);
+                    }
+                }
+            }
         }
     } //drawTrackInProgress
 
@@ -9702,6 +9716,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         double maxX = MathUtil.granulize(panelWidth + upperLeftX, gridSize1st);
         double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
 
+        log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
+        
         Point2D startPt = new Point2D.Double();
         Point2D stopPt = new Point2D.Double();
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -9713,7 +9729,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //draw horizontal lines
         double pix = gridSize1st;
 
-        while (pix < maxY) {
+        while (pix <= maxY) {
             startPt.setLocation(minX, pix);
             stopPt.setLocation(maxX, pix);
 
@@ -9730,7 +9746,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         //draw vertical lines
         pix = gridSize1st;
 
-        while (pix < maxX) {
+        while (pix <= maxX) {
             startPt.setLocation(pix, minY);
             stopPt.setLocation(pix, maxY);
 
@@ -9778,13 +9794,15 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public List<PositionablePoint> getPositionablePoints() {
-        return getLayoutTracksOfClass(PositionablePoint.class)
+        return getLayoutTracksOfClass(PositionablePoint.class
+        )
                 .map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
     public List<LayoutSlip> getLayoutSlips() {
-        return getLayoutTracksOfClass(LayoutSlip.class)
+        return getLayoutTracksOfClass(LayoutSlip.class
+        )
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
     }
@@ -9803,13 +9821,15 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public List<LayoutTurntable> getLayoutTurntables() {
-        return getLayoutTracksOfClass(LayoutTurntable.class)
+        return getLayoutTracksOfClass(LayoutTurntable.class
+        )
                 .map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
     }
 
     public List<LevelXing> getLevelXings() {
-        return getLayoutTracksOfClass(LevelXing.class)
+        return getLayoutTracksOfClass(LevelXing.class
+        )
                 .map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
     }
@@ -9819,7 +9839,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     }
 
     public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class)
+        return getLayoutTracksOfClass(LayoutTurnout.class
+        )
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
