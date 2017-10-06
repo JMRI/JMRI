@@ -31,7 +31,7 @@ public class WebServerScaffold implements En {
       After(tags, ()->{
          try {
              server.stop();
-             jmri.util.JUnitUtil.waitFor(()->{ return server.isStopped(); });
+             //jmri.util.JUnitUtil.waitFor(()->{ return server.isStopped(); });
              jmri.util.JUnitUtil.tearDown();
          } catch(Exception ex) {
              // if an exception occurs here, we may want to raise a flag,
