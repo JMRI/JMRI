@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2013-10-02-->
+<!-- UpDated by Blorec Herv&#233; 2017-01-07-->
 <html lang="fr">
 <head>
   <title>Throttle: Open/Configure a Throttle Window </title>
@@ -34,19 +34,19 @@
 <h1><span style="color:#ff0000">Mise &#224; jour Version de la documentation du R&#233;gulateur
 </span></h1>
 
-<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
+<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour. Version Actuelle:</p>
 <ul>
   <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur dans JMRI</a></li>
   <li>La <a href="BasicThrottleWindow.shtml">Fen&#234;tre R&#233;gulateur elle-m&#234;me</a></li>
   <li>Les <a href="ThrottleWindowMenus.shtml">Menus Fen&#234;tre R&#233;gulateur</a></li>
-  <li>La <a href="ThrottleToolBar.shtml">Fen&#234;tre Barre d'outils R&#233;gulateur</a></li>
-  <li>La <a href="AdvancedThrottleControl.shtml">Fen&#234;tre commandes R&#233;gulateur</a></li>
-  <li>La <a href="ThrottlesListWindow.shtml">Fen&#234;tre Liste des R&#233;gulateurs</a></li>
-  <li>Le<a href="ThrottlesListWindow.shtml"></a><a
+  <li>La <a href="ThrottleToolBar.shtml">Barre d'outils de la Fen&#234;tre R&#233;gulateur</a></li>
+  <li>Les <a href="AdvancedThrottleControl.shtml">Commandes de la Fen&#234;tre  R&#233;gulateur</a></li>
+  <li>La <a href="ThrottlesListWindow.shtml">Liste Fen&#234;tre R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottlesListWindow.shtml"></a><a
     href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a></li>
 </ul>
 
-<h1>Ouvrez une nouvelle fen&#234;tre R&#233;gulateur </h1>
+<h1>Ouvrir une nouvelle fen&#234;tre R&#233;gulateur</h1>
 
 <p> Ce chapitre vous guidera &#224; travers le processus d'ouverture d'une nouvelles
 fen&#234;tre de configuration de R&#233;gulateur puis l'ex&#233;cuter avec une locomotive sur votre r&#233;seau. Pour 
@@ -70,7 +70,7 @@ lisez ceci, il suffit de remplacer "8251" par votre adresse d&#233;codeur Loco p
       <td valign="top" align="left"><p>La premi&#232;re chose que nous voulons faire est d'
          ouvrir une fen&#234;tre R&#233;gulateur. Comme indiqu&#233; dans le <a
          href= "ThrottleChapter1.shtml"
-         title= "Retour &#224; revoir le chapitre 1"> chapitre pr&#233;c&#233;dent </a>, c'est  fait
+         title= "Retour &#224; revoir le chapitre 1"> chapitre pr&#233;c&#233;dent </a>, c'est fait
           en s&#233;lectionnant les options suivantes dans la
          fen&#234;tre principale primaire: </p>
          <ul type="square">
@@ -88,27 +88,27 @@ lisez ceci, il suffit de remplacer "8251" par votre adresse d&#233;codeur Loco p
 
 <h2>Structure d'une fen&#234;tre R&#233;gulateurs </h2>
 <dir>
-   <p> Il y a <i>ttrois panneaux</i> (ou sous-fen&#234;tres) associ&#233;s &#224; chaque
+   <p> Il y a <i>trois panneaux</i> (ou sous-fen&#234;tres) associ&#233;s &#224; chaque
    Fen&#234;tre de r&#233;gulateur. Ils sont identifi&#233;s comme suit: </p>
 </dir>
 <ul>
-  <li>Le <b>Panneau de commande</b> contient un curseur d'acc&#233;l&#233;rateur pour contr&#244;ler la vitesse des
+  <li>Le <b>Panneau de commande</b> contient un curseur d'acc&#233;l&#233;ration pour commander la vitesse des
       locomotives, d'un s&#233;lecteur de marche avant et arri&#232;re, un bouton d'action d'arr&#234;t d'urgence,
-     et un bouton d'action Inactif (Idle) (principalement utilis&#233; pour le son des d&#233;codeurs &#233;quip&#233;s). <br>
+     et un Bouton d'action Inoccup&#233; (Idle) (principalement utilis&#233; pour les d&#233;codeurs &#233;quip&#233;s de son ). <br>
      <br>
    </li>
    <li>Le <b>Panneau Fonction</b> est utilis&#233; pour associer les touches de fonction avec
      les fonctions de sortie actives du d&#233;codeur.<br>
      <br>
    </li>
-  <li>Le <b>Panneau Adresse</b> est utilis&#233; pour identifier l'adresse du d&#233;codeur, et d'
-     exp&#233;dition ou lib&#233;rer l'adresse identifi&#233;e. <br>
+  <li>Le <b>Panneau Adresse</b> est utilis&#233; pour identifier l'adresse du d&#233;codeur, et pour dispatcher
+     ou lib&#233;rer l'adresse identifi&#233;e. <br>
      <br>
    </li>
 </ul>
 
-<p class="important"> <b>Important!</b> Ces trois panneaux sont en r&#233;alit&#233; des
-fen&#234;tres d&#233;finies dans une fen&#234;tre de l'ensemble. S'il vous pla&#238;t noter que chacun de ces panneaux
+<p class="important"> <b>Important!</b> Ces trois panneaux sont actuellement des
+fen&#234;tres d&#233;finies dans une fen&#234;tre d'ensemble. S'il vous pla&#238;t noter que chacun de ces panneaux
 contient ses propres boutons "minimiser" et "fermer" ainsi le panneau peut &#233;galement &#234;tre
 redimensionn&#233;. Vous pouvez effectivement r&#233;duire un ou plusieurs de ces panneaux dans la
 Fen&#234;tre R&#233;gulateur. Ceci avait besoin d'&#234;tre soulign&#233; car si vous cliquez accidentellement
@@ -132,35 +132,31 @@ car il n'y a pas encore d'adresse affect&#233;es. Apr&#232;s l'&#233;tablissemen
 autres options sur les panneaux seront activ&#233;es. </p>
 <a name="AddressPanel"> </a>
 
-<h2> Attribution d'une adresse D&#233;codeur dans une Fen&#234;tre R&#233;gulateur </h2>
+<h2> Affecter une adresse D&#233;codeur &#224; un R&#233;gulateur </h2>
 <dir>
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
-       <tr>
+       	<tr>
          <td valign="top"><p>  La premi&#232;re chose &#224; faire avant tout, est d'attribuer une
-           adresse de d&#233;codeur dans le Panneau <b>"Adresse"</b>". Il y a deux fa&#231;ons
+           adresse de d&#233;codeur dans le <b>"Panneau Adresse"</b>". Il y a deux fa&#231;ons
            pour le faire. </p>
-           <ol>
-             <li> Saisissez manuellement l'adresse du d&#233;codeur dans la grande zone de texte,
-               puis cliquez sur le bouton <big>"Valider"</big>(Set). <br>
-               <br>
-
-               <dir>
-                 <p class="important"> <b>Important!</b> lors de la saisie manuelle
-                d'une adresse, n'oubliez pas de cliquer sur le bouton <big>Valider</big> .
-                 Sans cette &#233;tape, toutes les actions du r&#233;gulateur restent d&#233;sactiv&#233;es.</p>
-               </dir>
-               <br>
-               <br>
-             </li>
-             <li> Ou, utilisez la liste d&#233;roulante pour choisir parmi la Liste (comme
-               indiqu&#233; dans la figure &#224; droite).<br>
-              <br>
-              S'il vous pla&#238;t noter que lorsque vous s&#233;lectionnez une locomotive de cette liste, il suffit
-              de lire l'adresse des d&#233;codeurs &#224; partir de la Liste des fichiers. Couramment, il ne renvoie 
-               <u>pas</u> &#224; n'importe quel fichier de configuration de R&#233;gulateur sauvegard&#233;.</li>
-           </ol>
+           	<ol>
+             	<li> Saisissez manuellement l'adresse du d&#233;codeur dans la grande zone de texte,
+               	puis cliquez sur le bouton <big>"Valider"</big>(Set). <br>
+                	<dir>
+                 	<p class="important"> <b>Important!</b> lors de la saisie manuelle
+                	d'une adresse, n'oubliez pas de cliquer sur le bouton <big>Valider</big> .
+                 	Sans cette &#233;tape, toutes les actions du r&#233;gulateur restent d&#233;sactiv&#233;es.</p>
+              		</dir>
+               
+             	</li>
+             	<li> Ou, utilisez la liste d&#233;roulante pour choisir parmi la liste de l'inventaire (comme
+              	indiqu&#233; dans la figure &#224; droite).<br>
+                S'il vous pla&#238;t noter que lorsque vous s&#233;lectionnez une locomotive de cette liste, il suffit
+             	de lire l'adresse des d&#233;codeurs &#224; partir de le fichier inventaire. Il ne fait pas actuellement 
+		<u> pas </ u> de r&#233;f&#233;rence crois&#233;e avec n'importe quel fichier de configuration de r&#233;gulateurs sauvagard&#233;s.</li>
+           	</ol>
          </td>
          <td> <img width="20" height="40" src="images/spacer.gif"> </td>
          <td valign="top" align="center"> <p
@@ -175,27 +171,25 @@ autres options sur les panneaux seront activ&#233;es. </p>
          <td> </td>
        </tr>
        <tr>
-        <td valign="top"><dir> 
-          <p> Apr&#232;s qu'une adresse ait &#233;t&#233; s&#233;lectionn&#233;e, toutes les autres commandes et options de
-             la fen&#234;tre du r&#233;gulateur deviennent actives. Deux autres boutons d'option sont
-             aussi devenu actifs dans le "<b>Panneau Adresse</b>". Ils sont
-             d&#233;crit comme  ...</p>
+        <td valign="top"><dir>
+    	<p> Apr&#232;s qu'une adresse ait &#233;t&#233; s&#233;lectionn&#233;e, toutes les autres commandes et options de
+        la fen&#234;tre du r&#233;gulateur deviennent actives. Deux autres boutons d'option sont aussi devenu actifs dans le 
+	"<b>Panneau Adresse</b>". Ils sont
+        d&#233;crit comme  ...</p>
            </dir>
            <ul>
-             <li> <strong>R&#233;glage</strong> &#8212; Communication de l'adresse du d&#233;codeur en retour
-               &#224; la centrale dans un mode "R&#233;glage" . Habituellement, une seul
-               adresse peut &#234;tre en &#233;tat R&#233;glage &#224; la centrale. Toutes les
+             <li> <strong>Dispatcher</strong> Renvoie l'adresse du d&#233;codeur
+               &#224; la centrale dans un mode "Dispatcher". Habituellement, une seul
+               adresse peut &#234;tre en &#233;tat dispatch &#224; la centrale. Toutes les
                autres sont soit "utilis&#233;es" ou "inactives". Les commandes et les
                options dans la fen&#234;tre r&#233;gulateur seront d&#233;sactiv&#233;es jusqu'&#224; ce qu'une autre
-              adresse soit <big>"Valid&#233;e"</big>.(Set) <br>
-               <br>
+               adresse soit <big>"Valid&#233;e"</big>.
              </li>
-             <li> <strong>Lib&#233;ration</strong> &#8212; Communique l'adresse du d&#233;codeur  &#224;
+             <li><strong>Lib&#233;ration</strong> &#8212; Communique l'adresse du d&#233;codeur  &#224;
                la centrale comme "n'&#233;tant plus n&#233;cessaire". Les commandes et les
                options dans la fen&#234;tre  r&#233;gulateur seront d&#233;sactiv&#233;es jusqu'&#224; ce qu'une autre
-              adresse soit <big>"Valid&#233;e"</big>.<br>
-	    <br>   
-          </li>
+              adresse soit <big>"Valid&#233;e"</big>.
+	   </li>
           </ul>
         </td>
         <td> </td>
@@ -219,11 +213,9 @@ autres options sur les panneaux seront activ&#233;es. </p>
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<a name="ControlPanel"></a> 
 
-<h2>Panneau de configuration - Faisons circuler un train </h2>
+<a name="ControlPanel"></a> 
+<h2>Panneau de configuration - Faisons Circuler un train </h2>
 <dir>
 
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -232,9 +224,8 @@ autres options sur les panneaux seront activ&#233;es. </p>
         <td align="left"> <valign="top"<p> Maintenant que vous avez &#233;tabli une
           Adresse pour le R&#233;gulateur, vous devriez &#234;tre en mesure de faire rouler un train sur votre
           r&#233;seau (si votre r&#233;seau est actif et que l'adresse que vous avez entr&#233;e est valide
-          pour la locomotive sur la voie). Pour cela, utilisez le "<b>Panneau de Commandes
-          </b>" (voir figure 2-5). Mais voici o&#249; les choses deviennent un peu plus
-          d&#233;licates. </p>
+          pour la locomotive sur la voie). Pour cela, utilisez le "<b>Panneau de Commandes</b>" 
+	  (voir figure 2-5). Mais voici o&#249; les choses deviennent un peu plus d&#233;licates. </p>
 
           <p> Il y a de multiples combinaisons de syst&#232;mes DCC et de plates-formes
           informatiques qui donnent de l&#233;g&#232;res diff&#233;rences dans les fonctionnalit&#233;s des
@@ -245,27 +236,25 @@ autres options sur les panneaux seront activ&#233;es. </p>
 
           <p class="important"> <b>Important!</b> Le "Panneau de Commandes" doit
           avoir le "focus" pour qu'il devienne actif (et utilisable). En d'autres
-         termes, la barre de fen&#234;tre doit &#234;tre active. Si vous suivez ce que dit ce
+          termes, la barre de fen&#234;tre doit &#234;tre active. Si vous suivez ce que dit ce
           texte avec votre propre locomotive et juste entrer une adresse
-          dans le Panneau d'Adresses, vous d&#233;couvrirez que le  Panneau d'Adresse est la
+          dans le Panneau d'Adresses, vous d&#233;couvrirez que le Panneau d'Adresse est la
           fen&#234;tre avec le focus actuel. Aucune des actions clavier ou souris
-          d&#233;crites ci-dessous ne d&#233;placera le train jusqu'&#224; la mise au point du Panneau de Commandes
-. Pour faire du Panneau de Commandes la fen&#234;tre active, utilisez le pointeur de votre souris
-           pour cliquer quelque part dans le Panneau de Commandee. </P>
+          d&#233;crites ci-dessous ne d&#233;placera le train jusqu'&#224; la mise au point du Panneau de Commandes. 
+	  Pour faire du Panneau de Commandes la fen&#234;tre active, utilisez le pointeur de votre souris
+          pour cliquer quelque part dans le Panneau de Commandee. </P>
         </Td>
         <td> <img width="20" height="40" src="images/spacer.gif"></td>
         <td valign="top" align="center"><p
           style = "text-align: center; font-size: xx-small"><img width = "99"
           height = "330" src ="images/jmri033.jpg" 
-          title= "Exemple du Panneau de configuration"> <br>
+          title= "Exemple du Panneau de configuration"> 
           Figure 2-5: Panneau de configuration </p>  
       </td>
       </tr>
     </tbody>
   </table>
-  <br>
-  <br>
-
+<br>
 
   <table width="100%" border="2" cellpadding="2" cellspacing="2">
      <tbody>
@@ -291,9 +280,9 @@ autres options sur les panneaux seront activ&#233;es. </p>
 	 </li>
           </ul>
 
-         <p>  Alors, en cliquant d'abord dans le Panneau de Contr&#244;le pour en faire la
+         <p> Alors, en cliquant d'abord dans le Panneau de Contr&#244;le pour en faire la
           fen&#234;tre "active" avec le focus, et sachant  que votre loco est
-           arr&#234;t&#233;e, il est sugg&#233;r&#233; de cliquer sur le bouton  "Inactif" (si vous savez
+           arr&#234;t&#233;e, il est sugg&#233;r&#233; de cliquer sur le bouton "Inactif" (si vous savez
            pourquoi votre loco est arr&#234;t&#233;e), ou dans la zone avant ou arri&#232;re
            (en fonction bien s&#251;r de l'orientation actuelle de la loco). En d'autres
            termes vous voulez cliquer quelque part dans l'int&#233;rieur des fronti&#232;res de la
@@ -312,11 +301,8 @@ autres options sur les panneaux seront activ&#233;es. </p>
      </tbody>
    </table>
 </dir>
-<br>
-<br>
-<br> 
-<a name="StandardActions"> </a>
 
+<a name="StandardActions"> </a>
 <h3> Clavier de Commandes </h3>
 <dir>
    <dir>
@@ -338,13 +324,13 @@ autres options sur les panneaux seront activ&#233;es. </p>
            <td align="center"> <p
              style = "color: #0000CD; font: bolder; font-size: large p ">+</>
            </td>
-          <td> Augmenter la vitesse de 1 cran &#224; chaque pression sur la touche </td>
+          <td> Augmente la vitesse de 1 cran &#224; chaque pression sur la touche </td>
          </tr>
          <tr>
            <td align="center"> <p
              style = "color: #0000CD; font: bolder; font-size: large p ">-</P>
            </td>
-           <td> Diminuer la vitesse de 1 cran &#224; chaque pression sur la touche </td>
+           <td> Diminue la vitesse de 1 cran &#224; chaque pression sur la touche </td>
          </tr>
          <tr>
            <td align="center"> <p
@@ -356,7 +342,7 @@ autres options sur les panneaux seront activ&#233;es. </p>
            <td align="center"> <p
              style = "color: #0000CD; font: bolder; font-size: large p ">/</p>
            </td>
-           <td>Stop Urgence! (stoppe instantan&#233;ment la locomotive) </td>
+           <td>Arr&#234;t Urgence! (stoppe instantan&#233;ment la locomotive) </td>
          </tr>
          <tr>
            <td align="center"> <p
@@ -395,9 +381,7 @@ autres options sur les panneaux seront activ&#233;es. </p>
           </td>
         </tr>
  </tbody>
-    </table>    <br>
-    <br>
-
+    </table>   
 
     <div>
     <p class="important"><b>Remarque:</b> * Les touches implicites not&#233;es ci-dessus (avec l'
@@ -417,19 +401,16 @@ autres options sur les panneaux seront activ&#233;es. </p>
      z&#233;ro. </p>
 
      <p> Bien s&#251;r, en plus des actions standard du clavier, ce n'est pas la peine d'avoir une souris
- si vous ne pouvez pas l'utiliser pour contr&#244;ler vos trains.
-     Alors maintenant, nous allons discuter comment d&#233;placer votre locomotive en utilisant la souris sur votre
-     ordinateur. </p> 
+ 	si vous ne pouvez pas l'utiliser pour commander vos trains. Alors maintenant, nous allons discuter 
+	comment d&#233;placer votre locomotive en utilisant la souris de votre ordinateur. </p> 
  </dir>
 </dir>
-<br>
-<br>
-<br>
+
 <a name="MouseControl"></a> 
-Commande de la Souris </h3>
+<h3>Commande de la Souris </h3>
 <dir>
    <dir>
-     <p> Vous pouvez effectuer toutes les actions du clavier not&#233; ci-dessus en utilisant votre
+     <p> Vous pouvez effectuer toutes les actions du clavier not&#233;es ci-dessus en utilisant votre
      pointeur de la souris dans la fen&#234;tre Panneau de Commandes. Nous allons commencer par d&#233;finir les  marche
      Avant, marche Arri&#232;re, Arr&#234;t et Inactif. Ils sont assez simples &#224; utiliser. </P>
 
@@ -460,27 +441,23 @@ Commande de la Souris </h3>
            </td>
            <td> cliquer sur ce bouton effectue un arr&#234;t physique imm&#233;diat 
              de la locomotive. Si une fonction de freinage dynamique est activ&#233;e pour
-             le d&#233;codeur, elle sera ignor&#233;e, arr&#234;tant la locomotive imm&#233;diatement.  Lorsque vous utilisez un d&#233;codeur de son (comme un Soundtraxx
-             DSD-150), le d&#233;codeur a une "action d'arr&#234;t du son" (comme dans
+             le d&#233;codeur, elle sera ignor&#233;e, arr&#234;tant la locomotive imm&#233;diatement. Lorsque vous utilisez un 	  	       d&#233;codeur de son (comme un Soundtraxx DSD-150), le d&#233;codeur a une "action d'arr&#234;t du son" (comme dans
              les d&#233;codeurs diesel), le bruit du moteur associ&#233; chutera en l'occurence  </td>
        </tr>
 	<tr>
           <td align="center"><p
             style="color: #0000CD; font: bolder; font-size: large"><b>Inactif</b></p>
 </td>
-<td> cliquer sur ce bouton, r&#233;gle la vitesse de la locomotive &#224;
-0. Si une fonction de freinage dynamique est activ&#233;e pour le d&#233;codeur, elle
-sera toujours active ralentissant la locomotive jusqu'&#224; l'arr&#234;t. Lorsque
-un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le moteur
-son basculera sur son &#233;tat "inactif". </td> 
+<td> cliquer sur ce bouton, r&#233;gle la vitesse de la locomotive &#224; 0. 
+Si une fonction de freinage dynamique est activ&#233;e pour le d&#233;codeur, elle
+sera toujours active, ralentissant la locomotive jusqu'&#224; l'arr&#234;t. Lorsque
+un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son moteur
+ basculera sur son &#233;tat "inactif". </td> 
        </tr>
       </tbody>
     </table>  </dir>
 </dir>
-<br>
-<br>
-<br>
-<br>
+
 <a name="SliderBar"></a> 
 
 <h4>LA BARRE CURSEUR </h4>
@@ -491,9 +468,8 @@ son basculera sur son &#233;tat "inactif". </td>
       plusieurs facteurs. Ce guide de l'utilisateur ne va pas  essayer d'identifier l'ensemble des
       diff&#233;rentes possibilit&#233;s. Au lieu de cela, il va identifier plusieurs
       moyens principaux que le curseur peut utiliser. Au moins un de ces
-      moyens doit vous convenir. Vous pourriez d&#233;couvrir que votre configuration peut utiliser
-      plus d'un de ces derniers. Un peu d'exp&#233;rimentation de votre part sera peut-&#234;tre
-      n&#233;cessaire. </p>
+      moyens doit vous convenir. Vous pourriez d&#233;couvrir que votre configuration peut en utiliser
+      plusieurs. Un peu d'exp&#233;rimentation de votre part sera peut-&#234;tre n&#233;cessaire. </p>
       <ol>
         <li> <strong> M&#233;thode Curseur 1 </strong>
           <ul>
@@ -541,18 +517,14 @@ son basculera sur son &#233;tat "inactif". </td>
             <li>Cliquez et maintenez le bouton gauche de la souris sur le pointeur du curseur
                puis faites-le glisser &#224; la vitesse que vous souhaitez, puis rel&#226;chez le bouton de la souris
                 Ceci enverra une commande "vitesse r&#233;gl&#233; sur" au
-               d&#233;codeur. <br>
-               <br>
-             </li>
+               d&#233;codeur.
+               </li>
            </ul>
            <p class="important"> <b>Remarque:</b>Si le d&#233;codeur a ses courbes d'acc&#233;l&#233;ration
            ou de freinage activ&#233;e, la locomotive va acc&#233;l&#233;rer ou ralentir
            en cons&#233;quence. Si aucune valeur dynamique n'est activ&#233;e, la loco va acc&#233;l&#233;rer
             ou ralentir brusquement &#224; la vitesse r&#233;gl&#233;e lorsque le bouton de la souris a &#233;t&#233;
            lib&#233;r&#233;. </p>
-           <br>
-           <br>
-           <br>
          </li>
          <li> <strong> Curseur M&#233;thode 3</strong>
            <ul>
@@ -573,9 +545,7 @@ son basculera sur son &#233;tat "inactif". </td>
                curseur lorsque vous cliquez dessus, puis la vitesse de la locomotive va passer
                &#224; environ 25%. </li>
           </ul>
-          <br>
-          <br>
-
+          
           <p class = "important"> <b>Remarque : </b>Si le d&#233;codeur a ses courbes d'acc&#233;l&#233;ration
            ou de freinage activ&#233;es, la locomotive va acc&#233;l&#233;rer ou ralentir
            en cons&#233;quence. Si aucune valeur dynamique n'est activ&#233;e, la loco va acc&#233;l&#233;rer
@@ -589,15 +559,9 @@ son basculera sur son &#233;tat "inactif". </td>
            Par cons&#233;quent, il est sugg&#233;r&#233; que lorsque la vitesse doit diminuer avec cette
            m&#233;thode, que vous cliquiez sur le mot "Inactif" &#224; l'extr&#233;mit&#233; inf&#233;rieure de la
            la course du curseur. </p>
-	   <br>
-          <br>         
-       </li>
+	</li>
       </ol>
-      <br>
-      <br>
-      <br>
-
-
+    
       <table border="2" width="90%" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>            <td><p
@@ -607,7 +571,7 @@ son basculera sur son &#233;tat "inactif". </td>
                d&#233;crites ci-dessus est tout simplement de cliquer sur le bouton <b>"Inactif"</b>
                situ&#233; au bas de la fen&#234;tre du Panneau de Contr&#244;le. </p>
 
-               <p> Ou plus brutalement, vous pouvez &#233;galement cliquer sur le bouton d'arr&#234;t d'urgence
+               <p> Ou plus brutalement, vous pouvez &#233;galement cliquer sur le bouton 
                <b
                style = "font; gras; color: # FF0000; font-size: large">ARR&#202;T URGENCE!</b>
                </p>
@@ -615,20 +579,14 @@ son basculera sur son &#233;tat "inactif". </td>
            </tr>
          </tbody>
        </table>
-       <br>
-       <br>
-
-
+      
        <p> Si vous avez d&#233;couvert que votre syst&#232;me fonctionne d'une mani&#232;re diff&#233;rente
        parmi tous ceux indiqu&#233;s ci-dessus, alors vous avez simplement trouv&#233; un autre
        m&#233;thode.</p>
     </dir>
   </dir>
 </dir>
-<br>
-<br>
-<br>
-<br>
+
 <a name="Acquiring"></a> 
 
 <h2> L'acquisition d'une Locomotive Enregistr&#233;e </h2>
@@ -653,13 +611,8 @@ son basculera sur son &#233;tat "inactif". </td>
    pointeur de la barre curseur en cons&#233;quence. Jusque-l&#224;, m&#233;fiez-vous de cette petite
    r&#233;action. </p>
 </dir>
-<br>
-<br>
-<br>
-<br>
 
 <a name="FunctionPanel"></a> 
-
 <h2>Le Panneau Fonction </h2>
 <dir>
 
@@ -694,10 +647,6 @@ son basculera sur son &#233;tat "inactif". </td>
     </tbody>
   </table>
 </dir>
-<br>
-<br>
-<br>
-<br>
 
 <p>Si vous lisez cette page de haut en bas comme un manuel de formation, &#224; sa
 conclusion, vous devriez &#234;tre en mesure de ...</p>
@@ -710,7 +659,7 @@ conclusion, vous devriez &#234;tre en mesure de ...</p>
 </ul>
 
 <p> Le prochain chapitre sera d'identifier les caract&#233;ristiques des r&#233;gulateurs qui peuvent &#234;tre personnalis&#233;es 
-afin de rendre l'exp&#233;rience de votre mod&#232;le num&#233;rique ferroviaire encore plus agr&#233;able. </p>
+afin de rendre l'exp&#233;rience de votre r&#233;seau num&#233;rique encore plus agr&#233;able. </p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>

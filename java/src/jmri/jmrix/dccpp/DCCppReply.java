@@ -85,6 +85,125 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return(myReply.toString());
     }
 
+   /**
+    * Generate text translations of replies for use in the DCCpp monitor.
+    *
+    * @return representation of the DCCppReply as a string.
+    */
+   public String toMonitorString(){
+        // Beautify and display
+        String text;
+
+        switch (getOpCodeChar()) {
+            case DCCppConstants.THROTTLE_REPLY:
+                text = "Throttle Reply: \n";
+                text += "\tRegister: " + getRegisterString() + "\n";
+                text += "\tSpeed: " + getSpeedString() + "\n";
+                text += "\tDirection: " + getDirectionString();
+                break;
+            case DCCppConstants.TURNOUT_REPLY:
+                text = "Turnout Reply: \n";
+                text += "\tT/O Number: " + getTOIDString() + "\n";
+                text += "\tDirection: " + getTOStateString();
+                break;
+            case DCCppConstants.SENSOR_REPLY_H:
+                text = "Sensor Reply (Inactive): \n";
+                text += "\tSensor Number: " + getSensorNumString() + "\n";
+                text += "\tState: INACTIVE";
+                break;
+            case DCCppConstants.SENSOR_REPLY_L:
+                // Also covers the V1.0 version SENSOR_REPLY
+                if (isSensorDefReply()) {
+                    text = "Sensor Def Reply: \n";
+                    text += "\tSensor Number: " + getSensorDefNumString() + "\n";
+                    text += "\tSensor Pin: " + getSensorDefPinString() + "\n";
+                    text += "\tSensor Pullup: " + getSensorDefPullupString();
+                } else {
+                    text = "Sensor Reply (Active): \n";
+                    text += "\tSensor Number: " + getSensorNumString() + "\n";
+                    text += "\tState: ACTIVE";
+                }
+                break;
+            case DCCppConstants.OUTPUT_REPLY:
+                if (isOutputCmdReply()) {
+                    text = "Output Command Reply: \n";
+                    text += "\tOutput Number: " + getOutputNumString() + "\n";
+                    text += "\tOutputState: " + getOutputCmdStateString();
+                } else if (isOutputListReply()) {
+                    text = "Output Command Reply: \n";
+                    text += "\tOutput Number: " + getOutputNumString() + "\n";
+                    text += "\tOutputState: " + getOutputListPinString() + "\n";
+                    text += "\tOutputState: " + getOutputListIFlagString() + "\n";
+                    text += "\tOutputState: " + getOutputListStateString();
+                } else {
+                    text = "Invalid Output Reply Format: \n";
+                    text += "\t" + toString();
+                }
+                break;
+            case DCCppConstants.PROGRAM_REPLY:
+                if (isProgramBitReply()) {
+                    text = "Program Bit Reply: \n";
+                    text += "\tCallback Num: " + getCallbackNumString() + "\n";
+                    text += "\tCallback Sub: " + getCallbackSubString() + "\n";
+                    text += "\tCV: " + getCVString() + "\n";
+                    text += "\tCV Bit: " + getProgramBitString() + "\n";
+                    text += "\tValue: " + getReadValueString();
+                } else {
+                    text = "Program Reply: \n";
+                    text += "\tCallback Num: " + getCallbackNumString() + "\n";
+                    text += "\tCallback Sub: " + getCallbackSubString() + "\n";
+                    text += "\tCV: " + getCVString() + "\n";
+                    text += "\tValue: " + getReadValueString();
+                }
+                break;
+            case DCCppConstants.STATUS_REPLY:
+                text = "Base Station Status: \n";
+                text += "\tVersion: " + getStatusVersionString() + "\n";
+                text += "\tBuild: " + getStatusBuildDateString();
+                break;
+            case DCCppConstants.POWER_REPLY:
+                text = "Power Status: ";
+                text += ((char) (getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+                break;
+            case DCCppConstants.CURRENT_REPLY:
+                text = "Current: " + getCurrentString() + " / 1024";
+                break;
+            // case DCCppConstants.LISTPACKET_REPLY:
+            //     // TODO: Implement this fully
+            //     text = "List Packet Reply...\n";
+            //     break;
+            case DCCppConstants.WRITE_EEPROM_REPLY:
+                text = "Write EEPROM Reply...\n";
+                // TODO: Don't use getProgValueString()
+                text += "\tTurnouts: " + getValueString(1) + "\n";
+                text += "\tSensors: " + getValueString(2);
+                text += "\tOutputs: " + getValueString(3);
+                break;
+            case DCCppConstants.MEMORY_REPLY:
+                // TODO: Implement this fully
+                text = "Memory Reply...\n";
+                text += "\tFree Memory: " + getFreeMemoryString();
+                break;
+            case DCCppConstants.COMM_TYPE_REPLY:
+                text = "Comm Type Reply ";
+                text += "Type: " + Integer.toString(getCommTypeInt());
+                text += " Port: " + getCommTypeValueString();
+                break;
+            case DCCppConstants.MADC_FAIL_REPLY:
+                text = "No Sensor/Turnout/Output Reply ";
+                break;
+            case DCCppConstants.MADC_SUCCESS_REPLY:
+                text = "Sensor/Turnout/Output MADC Success Reply ";
+                break;
+            default:
+                text = "Unregonized reply: ";
+                text += toString() + "\n\tvals: ";
+                text += toString().replace("", " ").trim(); // inserts a space for every character
+        }
+
+        return text;
+    }
+
     public void parseReply(String s) {
         DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);

@@ -1,5 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- Translated by Herv&#232; Blorec 2016-08-1 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -20,16 +23,45 @@
   <link rel="home" title="Home" href="/">
 </head>
 
-<body>
-  JMRI: FAQ Subversion <!-- Style -->
-   <!-- /Style -->
-   <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI: FAQ Subversion</h1>
+<h1>JMRI: FAQ Subversion</h1>
+
+  <p>Il s'agit d'une liste de questions fr&#232;quemment pos&#232;es sur Subversion,
+particuli&#232;rement en ce qui concerne la fa&#231;on dont nous l'utilisons avec JMRI.</p>
+
+  <p>Voir aussi  <a href="index.shtml">l'index Technique</a>
+pour plus d'information sur la maintenance du code JMRI.
+
+<h3>Propri&#233;t&#233;s SVN</h3> <i>(Cette propri&#233;t&#233; n'est plus d'actualit&#233; avec GitHub, il n'y a plus de gestion de version)</i>
+
+En g&#233;n&#233;ral, nous gardons tout dans le contr&#244;le de r&#233;vision SVN, donc il n'y a en pas 
+besoin pour les diff&#233;rentes lignes de propri&#233;t&#233;s que nous avons utilis&#233; pour en avoir besoin dans CVS. Elles 
+ressemblent &#224;:
+<code>
+<pre>
+# La ligne suivante est maintenue par CVS, SVP ne rien changer.
+# $Revision$
+</pre>
+</code>
+
+<p>
+Mais il y a certain fichier, comme decoder XML, fichier properties, etc,
+que les utilisateurs sont susceptibles de modifier et soumettre de nouveau pour l'inclusion. C'est 
+tr&#232;s utile si nous pouvons identifier le contenu sp&#233;cifique qui d&#233;marre avec 
+<p>
+Toutefois, pourles fichiers html, XML, python et properties, nous faisons:
+
+<code>
+<pre>
+svn propset svn:keywords "Date Revision Version Id Author" {}
+</pre>
+</code>
+
+De cette fa&#231;on, SVN remplira ces balises si/quand elles sont pr&#233;sentes et le fichier est modifi&#233;
 
       <p>Il s'agit d'une liste de questions fr&eacute;quemment
       pos&eacute;es sur Subversion, particuli&egrave;rement en ce

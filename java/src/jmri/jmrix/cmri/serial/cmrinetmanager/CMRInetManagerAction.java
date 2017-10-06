@@ -23,7 +23,6 @@ public class CMRInetManagerAction extends AbstractAction {
 
     public CMRInetManagerAction(CMRISystemConnectionMemo memo) {
         this("WindowTitle", memo);
-//        this(Bundle.getMessage("WindowTitle"), memo);
     }
 
     @Override

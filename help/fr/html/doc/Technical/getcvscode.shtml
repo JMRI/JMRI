@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="fr">
+ <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-08-22 -->
+<head>
+    <title>
+ 	JMRI: Getting the OLD CVS Code - no longer supported
+    </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI technical code CVS download">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+    <!--#include virtual="/Style" -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <h1>JMRI: Obtenir le vieux code CVS</h1>
+
+<h2>Cette pages est conserv&#233;e dans un but historique seulement!</h2>
+
+<p><em>JMRI a migr&#233; loin de CVS pour le contr&#244;le de version &#224; <a href="getsvncode.shtml">SVN</a> en Juillet 2011, et sur Git en Septembre 2015 . Pour acc&#233;der au code source du JMRI actuel, SVP voir
+l'information <a href="getgitcode.shtml">r&#233;pertoire Git</a> information.</em></p>
+<p>JMRI version 2.12 ( et avant ) ont &#233;t&#233; r&#233;alis&#233;e depuis CVS et pour acc&#233;der &#224; ce
+code source, vous devez utiliser les instructions d&#233;taill&#233;es ci-dessous.</p>
+
+<h2>D&#233;marrage Rapide</h2>
+
+<p>Vous pouvez t&#233;l&#233;charger le code source JMRI via CVS en utilisant:
+<code><pre>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
+</pre></code>
+( Si un mot de passe est demand&#233;, taper sur rerour )
+
+
+<h2>D&#233;tails</h2>
+<p> Notre code source jusqu'&#224; JMRI vers 2.12 a &#233;t&#233; distribu&#233; en utilisant CVS.
+( nous avons garder le <a href="WebSite.shtml">site web</a> dans CVS, si vous souhaitez travailler directement avec lui.)
+Si vous voulez travailler avec le code, quelques minutes d'installation de CVS en vaut la peine. Nous sommes d&#233;sol&#233;s, mais nous ne pouvons pas soutenir d'autres m&#233;thodes (envoi des fichiers .zip, etc.), car ils ont tout simplement trop d'erreurs
+
+<p>
+Beaucoup d'ordinateurs ont CVS install&#233;, Linux et MAC OS X.
+Si vous utilisez Windows, vous aurez besoin d'installer un programme "client" CVS comme
+<a href="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>
+Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e depuis:
+<a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
+
+<p>
+Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "anonymous checkout".
+Pour une ligne de commande cvs client, cr&#233;ez un nouveau r&#233;pertoire pour le projet,
+changez pour lui, et dite &#224; CVS que vous existez avec
+<pre>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
+</pre>
+Cette ligne d'enregistrement 
+est seulement necessaire une fois; apr&#232;s cela, elle est m&#233;moris&#233;e dans votre machine locale. On peut vous
+demander un mot de passe. dans ce cas cliquez "entr&#233;e", car le mot de passe vide est accept&#233;.
+Vous pouvez obtenir une copie du code avec
+<pre>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
+</pre>
+<p>
+Si vous utilisez une Interface Graphique bas&#233;e Client comme WinCVS, d&#233;roulez le menu "admin" 
+et s&#233;lectionnez "ligne de commande" pour obtenir un lieu o&#249; taper ces commandes.
+Sur d'autres ordinateurs, vous pouvez les taper directement en ligne de commande.
+<p>
+Si vous avez une copie existante du code et voulez l'actualiser 
+pour le contenu le plus r&#233;cent de cvs, la seconde commande est: 
+<pre>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
+</pre>
+
+<p>
+Voir aussi la  
+<a href="CVSFAQ.shtml">page CVS FAQ</a>.
+<p>
+Apr&#232;s que le contr&#244;le est complet, vous allez trouver des r&#233;pertoires appel&#233;s
+"xml", "resources", "jython", "help", "lib", "java", et autres .
+Changez pour le r&#233;pertoire "java". L&#224; vous trouverez un r&#233;pertoire "src" 
+qui contient le code source pour JMRI lui-m&#234;me, et un r&#233;pertoire "tests" 
+qui contient des routines tests vari&#233;es.
+<p>
+Vous pouvez regarger le code avec votre &#233;diteur de teste favori. Pour compiler et 
+l'ex&#233;cuter, vous avez besoin d'un des outils de compilation d&#233;crit sur la barre &#224; 
+gauche.
+<p>
+Quand vous travaillez avec le code, vous voudrez probablement cr&#233;er quelques modifications 
+que vous voudriez voir contribuer au projet. C'est l&#224; que CVS &#224; d'&#233;norme avantages; 
+avec les permissions et les commandes appropri&#233;es, vous pouvez fusionner vos changements 
+avec la source commune automatiquement. Contactez-nous quand vous &#234;tes pr&#234;t &#224; le 
+faire ou voir l' <a href="index.shtml#contributing">info sur la contribution</a>.
+
+<h2>D&#233;tails Windows</h2>
+
+<p>
+Obtenir et actualiser le code avec tortoisecvs
+</p>
+<p>
+Pour obtenir un contr&#244;le initial depuis CVS pour votre propre usage apr&#232;s l'installation 
+http://www.tortoisecvs.org/. Faites un nouveau r&#233;pertoire pour le projet, par 
+la cr&#233;ation d'un dossier nomm&#233;  "JMRISourceCode". Clic-droit ( ctrl-clic ) sur 
+ce dossier et s&#233;lectionnez "CVS CVS Checkout".
+Dans le volet qui s'ouvre pour le CVSROOT entrez <pre><code>&lt;:pserver:jmri.cvs.sourceforge.net:/cvsroot/jmri&gt;</code></pre>
+Pour le serveur entrez <pre><code>&lt; jmri.cvs.sourceforge.net&gt;</code></pre>
+En bas &#224; droite de l'&#233;cran il y a un bouton "Fetch List". Cliquez le et une liste doit appara&#238;tre cliquez sur la ligne 'all'.
+Puis cliquez sur OK en bas du volet.
+Un nouveau volet doit s'ouvrir et les fichiers doivent &#234;tre t&#233;l&#233;charg&#233;s; au bas de ce volet il y a une case nomm&#233;e "Close on Completion", cochez la
+quand le volet se ferme, le dossier que vous avez cr&#233;&#233; doit avoir les dossiers &#224; l'int&#233;rieur avec tous les fichiers JMRI.
+</p>
+<p>
+Une fois que vous avez r&#233;alis&#233; le contr&#244;le initial depuis CVS dans votre dossier local, pour 
+les actualiser, s&#233;lectionnez les tous et Clic Droit et 
+s&#233;lectionnez "CVS Update", Vous pouvez aussi juste actualiser un simple dossier en le s&#233;lectionnant, etc.
+</p>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

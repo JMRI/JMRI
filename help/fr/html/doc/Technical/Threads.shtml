@@ -1,6 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233;  2013-09-09-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$Id: Threads.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- UpDated by Blorec Herv&#233;  2016-08-017-->
+  <html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Liaison
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code threading">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
 
 <html lang="fr">
 <head>
@@ -26,40 +37,62 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head><!--#include virtual="/Header" -->
 
-<body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+	    <H1>JMRI: Liaison</H1>
 
-    <div id="mainContent">
-      <h1>JMRI: Liaison</h1>Le mod&egrave;le initial des liens pour
-      JMRI est assez simple: Tout ce qui se passe dans le lien
-      d'interface graphique est int&eacute;ressant. Une fois qu'un
-      "message", par exemple: un paquet LocoNet, est
-      accumul&eacute; dans un lien s&eacute;par&eacute;, le message
-      est trait&eacute; dans le Lien interface graphique via:
-      <pre>
-        // message is complete, dispatch it !!
-        { 
-        final LocoNetMessage thisMsg = msg;
-        final LnTrafficController thisTC = this;
-        // return a notification via the queue to ensure end
-        Runnable r = new Runnable() {
-                LocoNetMessage msgForLater = thisMsg;
-                LnTrafficController myTC = thisTC;
-                public void run() { 
-                                log.debug("Delayed notify starts");
-                        myTC.notify(msgForLater);
-                        }
-                };
-                javax.swing.SwingUtilities.invokeLater(r);
-        }
-</pre>Ca peut ne pas toujours fonctionner, cependant, nous
-travaillons sur un nouveau mod&egrave;le de liaison
+La grande majorit&#233; des codeurs JMRI (et programmeurs) n'ont pas &#224; 
+se soucier des liaisons. Leur code se trouve invoqu&#233;, et appelle un autre code, 
+et la laison prend soin d'elle-m&#234;me. Cela est particuli&#232;rement vrai pour le code bas&#233; sur les &#233;v&#233;nements,
+qui r&#233;pond &#224; des &#233;v&#233;nements provenant par exemple de l'interface graphique ou du changement d'un objet sur le r&#233;seau,
+et appelle des m&#233;thodes concernant d'autres objets, qui peuvent &#224; leurs tours cr&#233;er plus d'&#233;v&#233;nements.
 
-      <p>Voir le travail <a href=
-      "http://sourceforge.net/apps/trac/jmri/wiki/Thread%20Model">page
-      Wiki</a> <!--#include virtual="/Footer" --></p>
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+<p>
+Cette simplicit&#233; vient de l'utilisation d'un seul lien pour le traitement de la plupart de l'activit&#233; de JMRI: Le fil des &#233;v&#233;nements Java Swing.
+<p>
+Notez que ceci ne signifie <em>pas</em> que d'autres choses ne peuvent pas survenir. Par exemple, ce fragment de script:
+
+<pre><code>
+    state = sensors.provideSensor("mySensor").getState()<br/>
+    turnouts.provideTurnout("myTurnout").setState(THROWN)<br/>
+    print state == sensors.provideSensor("mySensor").getState()<br/>
+</code></pre>  
+
+peut imprimer soit vrai ou faux, parce que car la modification de l'aiguillage <em>peut</em> changer instantan&#233;ment les capteurs associ&#233;s.
+
+<p>
+Il y a des moments o&#249; vous pouvez vouloir faire des choses un peu plus complexes avec l'utilisation d'un lien suppl&#233;mentaire:
+<ul>
+<li>Vous pouvez vouloir mettre un processus gourmand en temps dans un lien s&#233;par&#233; pour garder le reste de JMRI r&#233;actif.
+<li>La meilleure mani&#232;re de coder un l'&#233;tat d'une machine qui dialogue avec le mat&#233;riel du r&#233;seau pourrait &#234;tre d'utiliser un lien s&#233;par&#233;.
+<li>Vous pourriez &#234;tre l'interface avec un autre code existant qui utilise des liens
+</ul>
+
+Nous pr&#233;f&#233;rerions que vous manipuliez les questions de liaison qui se posent dans ce cas par l'interm&#233;diaire de la clase
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil<a/>. 
+ThreadingUtil fournit des utilitaires qui rendent cela ais&#233; 
+pour appeler les fonctions n&#233;cessaire sur le bon lien.
+<p>
+Par exemple, si vous voulez lire un tas de donn&#233;es venant d'un fichier, passer quelque temps &#224; le modifier, 
+et puis cr&#233;er une fen&#234;tre pour le montrer, vous pouvez vouloir faire tout ce travail sur 
+un lien s&#233;par&#233;. &#192; la fin, quand il est temps de rendre visible votre travail, vous devez 
+le faire sur le lien Swing ( GUI ). Voici le code pour le faire:
+<pre>
+    frame = new JmriJFrame();  // frame declared as instance variable<br/>
+    // spend a long time reading data and configuring the frame<br/>
+    ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });<br/>
+</pre> 
+ThreadingUtil s&#233;pare les op&#233;rations sur le lien GUI ( par ex Java Swing )  et les op&#233;rations 
+sur le r&#233;seau ( ex: Capteurs, Aiguillages, etc ). Il n'y a pas de vrai diff&#233;rence maintenant,
+mais dans l'inter&#234;t peut-&#234;tre d'avoir besoin un jour de les s&#233;parer, nous introduisons maintenant 
+les deux versions. SVP essayez de choisir la bonne la plupart du temps l'une lors du codage.
+<p>
+( N.B: Vous trouverez beaucoup de cas plus anciens qui utilisent explicitement javax.swing.SwingUtilities.invokeLater( r ) 
+ou javax.swing.SwingUtilities.invokeAndWait( r ); Ceux-ci seront migr&#233;s vers les nouvelles m&#233;thodes sp&#233;cifiques JMRI 
+&#224; l'avenir pour garder notre code juste un petit peu plus propre  et plus souple.)
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
 </body>
 </html>

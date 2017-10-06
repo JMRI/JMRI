@@ -8,7 +8,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -60,9 +59,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  */
 public class LevelXing extends LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
     // operational instance variables (not saved between sessions)
