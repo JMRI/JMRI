@@ -1,7 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated by Blorec Herv&#233; 2013-09-02-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -24,29 +23,19 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<p>
+Aide sur les menus sp&#233;cifiques:
+<ul>
+<li>Edit - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
+<li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils -&gt; Tables -&gt; Signaux</a>
+<li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Inventaire</a>
+</ul>
 
-    <div id="mainContent">
-      <h1>JMRI:Fen&ecirc;tre Principale SignalPro</h1><img src=
-      "../../../../../resources/logo.gif" align="right" height=
-      "100" width="100"> La fen&ecirc;tre principale SignalPro vous
-      donne acc&egrave;s &agrave; toutes les capacit&eacute;s de
-      JMRI.
+Plus d'information <a href="../../setup/Files.shtml">Fichier de Configuration JMRI</a> 
 
-      <p>Aide sur les menus sp&eacute;cifiques:</p>
-
-      <ul>
-        <li>Edit - (<a href=
-        "../TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>)</li>
-
-        <li><a href=
-        "../../jmri/jmrit/ToolsMenu.shtml">Outils</a></li>
-
-        <li><a href=
-        "../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a></li>
-      </ul><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+</div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->
 </body>
+</htm
 </html>
