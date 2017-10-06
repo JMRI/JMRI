@@ -233,6 +233,7 @@ public class NXFrame extends WarrantRoute {
         }
         _maxSpeedBox.setText(Bundle.getMessage("NoData"));        
     }
+
     private JPanel makeAutoRunPanel() {
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
