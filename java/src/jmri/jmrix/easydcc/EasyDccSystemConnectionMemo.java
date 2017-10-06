@@ -74,11 +74,11 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setThrottleManager(getThrottleManager());
 
-        InstanceManager.setConsistManager(getConsistManager());
+        setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 
         commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
 
-        InstanceManager.setCommandStation(commandStation);
+        InstanceManager.store(commandStation,jmri.CommandStation.class);
     }
 
     /**
@@ -111,7 +111,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +142,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(jmri.CommandStation.class)) {
             return (T) commandStation;
         }
-        return null; // nothing, by default
+        return super.get(T); // nothing, by default
     }
 
     private EasyDccPowerManager powerManager;
@@ -185,18 +185,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return turnoutManager;
     }
 
-    private EasyDccConsistManager consistManager;
-
-    public EasyDccConsistManager getConsistManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        if (consistManager == null) {
-            consistManager = new jmri.jmrix.easydcc.EasyDccConsistManager();
-        }
-        return consistManager;
-    }
-
     private EasyDccProgrammerManager programmerManager;
 
     public EasyDccProgrammerManager getProgrammerManager() {
@@ -232,9 +220,6 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         }
         if (throttleManager != null) {
             InstanceManager.deregister(((EasyDccThrottleManager) throttleManager), jmri.jmrix.easydcc.EasyDccThrottleManager.class);
-        }
-        if (consistManager != null) {
-            InstanceManager.deregister(consistManager, jmri.jmrix.easydcc.EasyDccConsistManager.class);
         }
         super.dispose();
     }
