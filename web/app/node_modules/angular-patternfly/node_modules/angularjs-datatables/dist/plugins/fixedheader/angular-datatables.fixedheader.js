@@ -1,5 +1,5 @@
 /*!
- * angularjs-datatables - v0.5.7
+ * angularjs-datatables - v0.5.9
  * https://github.com/dtaylor113/angularjs-datatables
  * License: MIT
  */

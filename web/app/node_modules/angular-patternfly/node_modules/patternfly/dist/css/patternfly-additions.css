@@ -3164,6 +3164,32 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
   stroke: #d1d1d1;
   stroke-width: 1px;
 }
+.pct-donut-chart-pf .pct-donut-chart-pf-label {
+  display: block;
+}
+.pct-donut-chart-pf.pct-donut-chart-pf-left,
+.pct-donut-chart-pf.pct-donut-chart-pf-right,
+.pct-donut-chart-pf .pct-donut-chart-pf-left,
+.pct-donut-chart-pf .pct-donut-chart-pf-right {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+}
+.pct-donut-chart-pf.pct-donut-chart-pf-left,
+.pct-donut-chart-pf.pct-donut-chart-pf-right {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+.pct-donut-chart-pf.pct-donut-chart-pf-left,
+.pct-donut-chart-pf .pct-donut-chart-pf-left {
+  -ms-flex-direction: row-reverse;
+      flex-direction: row-reverse;
+}
 .close {
   text-shadow: none;
   z-index: 1;
@@ -3379,11 +3405,17 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 .pficon-add-circle-o:before {
   content: "\e61b";
 }
+.pficon-applications:before {
+  content: "\e936";
+}
 .pficon-arrow:before {
   content: "\e929";
 }
 .pficon-asleep:before {
   content: "\e925";
+}
+.pficon-automation:before {
+  content: "\e937";
 }
 .pficon-build:before {
   content: "\e902";
@@ -3412,6 +3444,9 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 .pficon-cluster:before {
   content: "\e620";
 }
+.pficon-connected:before {
+  content: "\e938";
+}
 .pficon-container-node:before {
   content: "\e621";
 }
@@ -3423,6 +3458,9 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 }
 .pficon-delete:before {
   content: "\e611";
+}
+.pficon-disconnected:before {
+  content: "\e939";
 }
 .pficon-domain:before {
   content: "\e919";
@@ -3477,14 +3515,14 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 .pficon-info:before {
   content: "\e92b";
 }
+.pficon-infrastructure:before {
+  content: "\e93d";
+}
 .pficon-key:before {
   content: "\e924";
 }
 .pficon-locked:before {
   content: "\e923";
-}
-.pficon-unlocked:before {
-  content: "\e922";
 }
 .pficon-maintenance:before {
   content: "\e92d";
@@ -3507,6 +3545,12 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 .pficon-on-running:before {
   content: "\e930";
 }
+.pficon-optimize:before {
+  content: "\e93e";
+}
+.pficon-orders:before {
+  content: "\e93f";
+}
 .pficon-off:before {
   content: "\e92f";
 }
@@ -3519,6 +3563,9 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 }
 .pficon-pending:before {
   content: "\e933";
+}
+.pficon-plugged:before {
+  content: "\e940";
 }
 .pficon-print:before {
   content: "\e612";
@@ -3590,6 +3637,9 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 .pficon-service:before {
   content: "\e61e";
 }
+.pficon-service-catalog:before {
+  content: "\e941";
+}
 .pficon-settings:before {
   content: "\e610";
 }
@@ -3625,6 +3675,12 @@ fieldset[disabled] .combobox-container .input-group-addon.active {
 }
 .pficon-users:before {
   content: "\e91f";
+}
+.pficon-unlocked:before {
+  content: "\e922";
+}
+.pficon-unplugged:before {
+  content: "\e942";
 }
 .pficon-virtual-machine:before {
   content: "\e90f";
@@ -5545,8 +5601,18 @@ a.disabled {
   display: block;
 }
 .drawer-pf.drawer-pf-expanded {
-  left: 270px;
   width: inherit;
+}
+@media (max-width: 767px) {
+  .drawer-pf.drawer-pf-expanded {
+    left: 0;
+    width: 100%;
+  }
+}
+@media (min-width: 767px) {
+  .drawer-pf.drawer-pf-expanded {
+    left: 270px;
+  }
 }
 .drawer-pf.drawer-pf-expanded .drawer-pf-toggle-expand:before {
   content: "\f101";
@@ -5688,6 +5754,12 @@ a.disabled {
   display: -ms-flexbox;
   display: flex;
 }
+@media (max-width: 991px) {
+  .drawer-pf-notification.expanded-notification .drawer-pf-notification-content {
+    -ms-flex-direction: column;
+        flex-direction: column;
+  }
+}
 .drawer-pf-notification.expanded-notification .drawer-pf-notification-content .drawer-pf-notification-message {
   -ms-flex: 1 1;
       flex: 1 1;
@@ -5696,6 +5768,12 @@ a.disabled {
 .navbar-pf-vertical .drawer-pf {
   height: calc(100vh - 80px);
   top: 58px;
+}
+@media (max-width: 767px) {
+  .navbar-pf-vertical .drawer-pf {
+    width: 100%;
+    height: calc(100vh - 58px);
+  }
 }
 .navbar-pf-vertical .nav .drawer-pf-trigger .drawer-pf-trigger-icon {
   border-left: 1px solid #2b2b2b;
@@ -5710,6 +5788,13 @@ a.disabled {
 .navbar-pf .drawer-pf {
   height: calc(100vh - 46px);
   top: 26px;
+}
+@media (max-width: 767px) {
+  .navbar-pf .drawer-pf {
+    width: 100%;
+    height: calc(100vh - 58px);
+    top: 34px;
+  }
 }
 .navbar-pf .drawer-pf-trigger-icon {
   cursor: pointer;
@@ -6592,7 +6677,6 @@ table.dataTable th:active {
   font-weight: 400;
   height: 63px;
   line-height: 26px;
-  outline: 0;
   padding: 17px 20px 17px 25px;
   position: relative;
   white-space: nowrap;
@@ -7375,87 +7459,92 @@ table.dataTable th:active {
   transition: visibility 100ms, opacity 100ms linear;
 }
 .wizard-pf {
-  height: 100%;
   margin: 0 auto;
   max-height: 900px;
   padding: 10px;
   width: auto;
 }
 .wizard-pf .modal-content {
-  height: 100%;
+  min-height: 100%;
 }
 .wizard-pf-body {
   padding: 0;
   position: static;
+  background: #fff;
 }
 /* styles the sidebard containing the sub-steps */
-.wizard-pf-sidebar {
-  background: #fafafa;
-  border-right: 1px solid #d1d1d1;
-  bottom: 0;
-  left: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: absolute;
-  top: 0;
+@media (max-width: 480px) {
+  .wizard-pf-sidebar {
+    display: none;
+  }
 }
-.wizard-pf-sidebar .list-group {
-  border-top: 0;
-  margin-bottom: 0;
-}
-.wizard-pf-sidebar .list-group-item {
-  background-color: transparent;
-  border-color: #ededed;
-  padding: 0;
-}
-.wizard-pf-sidebar .list-group-item > a {
-  color: #030303;
-  cursor: pointer;
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  height: 50px;
-  outline: 0;
-  padding-top: 11px;
-  padding-left: 20px;
-  position: relative;
-  white-space: nowrap;
-  width: 14em;
-}
-.wizard-pf-sidebar .list-group-item > a:hover {
-  text-decoration: none;
-}
-.wizard-pf-sidebar .list-group-item.active {
-  background-color: #ededed;
-}
-.wizard-pf-sidebar .list-group-item.active:hover {
-  border-color: #ededed;
-}
-.wizard-pf-sidebar .list-group-item.active > a {
-  color: #39a5dc;
-  cursor: default;
-}
-.wizard-pf-sidebar .list-group-item.active > a:before {
-  background: #39a5dc;
-  content: " ";
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 3px;
-}
-.wizard-pf-sidebar .list-group-item.active > a:after {
-  color: #39a5dc;
-  content: "\f105";
-  display: block;
-  font-family: FontAwesome;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 30px;
-  padding-top: 10px;
-  position: absolute;
-  right: 23px;
-  top: 0;
+@media (min-width: 480px) {
+  .wizard-pf-sidebar {
+    background: #fafafa;
+    border-right: 1px solid #d1d1d1;
+    -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .wizard-pf-sidebar .list-group {
+    border-top: 0;
+    margin-bottom: 0;
+  }
+  .wizard-pf-sidebar .list-group-item {
+    background-color: transparent;
+    border-color: #ededed;
+    padding: 0;
+  }
+  .wizard-pf-sidebar .list-group-item > a {
+    color: #030303;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    height: 50px;
+    outline: 0;
+    padding-top: 11px;
+    padding-left: 20px;
+    position: relative;
+    white-space: nowrap;
+    width: 14em;
+  }
+  .wizard-pf-sidebar .list-group-item > a:hover {
+    text-decoration: none;
+  }
+  .wizard-pf-sidebar .list-group-item.active {
+    background-color: #ededed;
+  }
+  .wizard-pf-sidebar .list-group-item.active:hover {
+    border-color: #ededed;
+  }
+  .wizard-pf-sidebar .list-group-item.active > a {
+    color: #39a5dc;
+    cursor: default;
+  }
+  .wizard-pf-sidebar .list-group-item.active > a:before {
+    background: #39a5dc;
+    content: " ";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 3px;
+  }
+  .wizard-pf-sidebar .list-group-item.active > a:after {
+    color: #39a5dc;
+    content: "\f105";
+    display: block;
+    font-family: FontAwesome;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 30px;
+    padding-top: 10px;
+    position: absolute;
+    right: 23px;
+    top: 0;
+  }
 }
 .wizard-pf-substep-number {
   display: inline-block;
@@ -7472,19 +7561,35 @@ table.dataTable th:active {
 /* styles the steps indicator across the top of the wizard */
 .wizard-pf-steps {
   border-bottom: solid 1px #d1d1d1;
-  text-align: center;
+}
+@media (min-width: 480px) {
+  .wizard-pf-steps {
+    text-align: center;
+  }
 }
 .wizard-pf-steps-indicator {
   font-size: 16px;
   display: inline-block;
   display: -ms-flexbox;
   display: flex;
-  height: 120px;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
   list-style: none;
-  padding: 38px 0 0;
   /* draw the step number in the circle */
+}
+@media (min-width: 480px) {
+  .wizard-pf-steps-indicator {
+    height: 120px;
+    padding: 38px 0 0;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+}
+@media (max-width: 480px) {
+  .wizard-pf-steps-indicator {
+    padding: 15px 0;
+    margin-bottom: 0;
+    background: #ededed;
+    border-top: 1px solid #d1d1d1;
+  }
 }
 .wizard-pf-steps-indicator li {
   counter-increment: section;
@@ -7500,27 +7605,69 @@ table.dataTable th:active {
   position: relative;
   text-align: center;
   /* draw the line between the circles */
-  /* don't draw the line between the circles on the ends */
 }
-.wizard-pf-steps-indicator li:before {
-  background-color: #bbb;
-  content: "";
-  height: 2px;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 40px;
+@media (min-width: 480px) {
+  .wizard-pf-steps-indicator li:not(.active) {
+    display: block;
+  }
 }
-.wizard-pf-steps-indicator li:first-child:before {
-  left: 50%;
-  right: 0;
+@media (max-width: 480px) {
+  .wizard-pf-steps-indicator li:not(.active) {
+    display: none;
+  }
 }
-.wizard-pf-steps-indicator li:last-child:before {
-  left: 0;
-  right: 50%;
+@media (max-width: 480px) {
+  .wizard-pf-steps-indicator li a {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    font-weight: 700;
+  }
+  .wizard-pf-steps-indicator li a .wizard-pf-step-title {
+    margin-left: 10px;
+  }
+  .wizard-pf-steps-indicator li a .wizard-pf-step-title-substep {
+    font-weight: normal;
+    margin-left: 10px;
+    text-transform: capitalize;
+  }
+  .wizard-pf-steps-indicator li a .wizard-pf-step-title-substep:before {
+    content: "\00BB";
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  .wizard-pf-steps-indicator li a .wizard-pf-step-title-substep:not(.active) {
+    display: none;
+  }
 }
-.wizard-pf-steps-indicator li:only-of-type:before {
-  background-color: transparent;
+@media (min-width: 480px) {
+  .wizard-pf-steps-indicator li {
+    /* don't draw the line between the circles on the ends */
+  }
+  .wizard-pf-steps-indicator li .wizard-pf-step-title-substep {
+    display: none;
+  }
+  .wizard-pf-steps-indicator li:before {
+    background-color: #bbb;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 40px;
+  }
+  .wizard-pf-steps-indicator li:first-child:before {
+    left: 50%;
+    right: 0;
+  }
+  .wizard-pf-steps-indicator li:last-child:before {
+    left: 0;
+    right: 50%;
+  }
+  .wizard-pf-steps-indicator li:only-of-type:before {
+    background-color: transparent;
+  }
 }
 .wizard-pf-steps-indicator li a {
   color: #030303;
@@ -7543,11 +7690,15 @@ table.dataTable th:active {
   font-size: 12px;
   font-weight: 700;
   height: 25px;
-  left: calc(50% - 13px);
   line-height: 22px;
-  position: absolute;
-  top: 27px;
   width: 25px;
+}
+@media (min-width: 480px) {
+  .wizard-pf-steps-indicator .wizard-pf-step-number {
+    position: absolute;
+    top: 27px;
+    left: calc(50% - 13px);
+  }
 }
 .wizard-pf-steps-indicator .active .wizard-pf-step-number {
   cursor: default;
@@ -7563,11 +7714,21 @@ table.dataTable th:active {
 /* styles the main content portion of the wizard */
 .wizard-pf-main {
   height: 100%;
-  margin-left: 253px;
-  /* this value is updated by js */
   overflow: auto;
-  padding: 3em;
   vertical-align: top;
+}
+@media (min-width: 480px) {
+  .wizard-pf-main {
+    padding: 3em;
+    -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+  }
+}
+@media (max-width: 480px) {
+  .wizard-pf-main {
+    padding: 1em;
+    width: 100%;
+  }
 }
 .wizard-pf-main .blank-slate-pf {
   background-color: transparent;
@@ -7685,24 +7846,21 @@ table.dataTable th:active {
 /* styles the footer */
 .wizard-pf-footer {
   border-top: 1px solid #d1d1d1;
-  bottom: 0;
-  left: 0;
   margin-top: 0;
   padding-bottom: 17px;
-  position: absolute;
-  right: 0;
+  background: #fff;
 }
 .wizard-pf-footer .btn-cancel {
   margin-right: 25px;
 }
-.wizard-pf-row {
-  bottom: 58px;
-  /* this value is updated by js */
-  position: absolute;
-  overflow: hidden;
-  top: 172px;
-  /* this value is updated by js */
-  width: 100%;
+@media (min-width: 480px) {
+  .wizard-pf-row {
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    height: 900px;
+    max-height: 65vh;
+  }
 }
 @media (min-width: 992px) {
   .wizard-pf {

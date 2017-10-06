@@ -191,14 +191,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.warn("invalid character in number field of system name: {}", systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.warn("invalid loconet sensor system name: {}", systemName);
+            log.debug("invalid loconet sensor system name: {}", systemName);
             return (0);
         } else if (num > 4096) {
-            log.warn("bit number out of range in loconet sensor system name: {}", systemName);
+            log.debug("bit number out of range in loconet sensor system name: {}", systemName);
             return (0);
         }
         return (num);
