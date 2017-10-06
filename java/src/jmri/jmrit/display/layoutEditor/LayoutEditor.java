@@ -5121,6 +5121,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         _lastY = _anchorY;
         calcLocation(event);
 
+        //TODO: Add command-click on nothing to pan view?
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
             selectionActive = false;
