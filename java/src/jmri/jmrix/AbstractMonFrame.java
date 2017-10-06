@@ -50,6 +50,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
+
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Herv&#233; 2016-08-13-->  
+<html lang="fr">
+<head>
+    <title>Using the NetBeans Swing GUI Builder </title>
+        <meta content="Bob Jacobsen" name="Author">
+        <meta name="keywords" content="JMRI technical code NetBeans">
+
+        <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+        <!-- are an arbitrary design pattern used by the update.pl script to -->
+        <!-- easily replace the common header/footer code for all the web pages -->
+
+        <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+        <!-- or change them to reflect your alternative logo -->
+
+        <!-- Style -->
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+        <link rel="icon" href="/images/jmri.ico" type="image/png">
+        <link rel="home" title="Home" href="/">
+        <!-- /Style -->
+    </head>
+
+    <!--#include virtual="/Header" -->
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- - - - - - - - - -->
+				<p> Des morceaux de code de l'Interface Graphique Utilisateur ( GUI ) de JMRI sont maintenus
+						par l'utilisation de
+						<a href="https://netbeans.org/features/java/swing.html">NetBeans Swing GUI Builder</a>
+						( le "Builder" ). cette page est un guide pour l'utilisation de l'outil Builder. Voir
+						<a href="NetBeans.shtml">Construire avec NetBeans</a> pour une introduction
+						g&#233;n&#233;rale de l'utilisation de NetBeans pour la maintenance de JMRI.</p>
+        <!-- - - - - - - - - -->
+
+				<h1>Utilisation du NetBeans Swing GUI Builder</h1>
+
+				<ul>
+						<li><a href="#intro">Introduction</a></li>
+            <li><a href="#usage">Utilisation de Builder</a></li>
+            <li><a href="#code">Examen du Code</a>
+                <ul>
+                    <li><a href="#java">.java File</a></li>
+                    <li><a href="#form">.form File</a></li>
+                </ul></li>
+            <li><a href="#references">Voir Aussi</a></li>
+        </ul>
+        <h2><a id="intro">Introduction</a></h2>
+        <pNetBeans 7.4 ou 8.0 inclut un Swing GUI Builder qui rend plus ais&#233; 
+				la maintenance d'un Java Swing-based GUI (tel que JMRI ) que l'&#233;criture 
+				de l'interface utilisateur enti&#232;rement &#224; la main.</p>
+        <p>Cet outil peut cr&#233;er du code qui n'est pas id&#233;alement s&#233;par&#233; en code Java 
+						g&#233;n&#233;r&#233; et maintenu par l'homme. Si vous utilisez Netbeans, vous &#234;tes prot&#233;g&#233; de 
+						ceci, car le Builder r&#233;alise une bonne int&#233;gration de ses affichages avec 
+						l'&#233;diteur de source. Cependant, si vous utilisez un autre &#233;diteur, vous y 
+						serez expos&#233;.</p>
+        
+				<h2><a id="usage">Utilisation de Builder</a></h2>
+
+        <p>La barre d'outil de l'&#233;diteur NetBeans contiendra automatiquement un bouton
+						<strong>Design</strong> si la Classe devant &#234;tre &#233;dit&#233;e peut aussi &#234;tre 
+						&#233;dit&#233;e dans le Swing GUI Builder.</p>
+        <p>Cliquer sur le bouton <strong>Design</strong> donnera la possibilit&#233; 
+						de glisser les boutons, labels, panneaux et autres objets sur une fen&#234;tre 
+						pour les placer visuellement. Tout objet conforme au standard 
+       			<a href="http://www.oracle.com/technetwork/java/javase/documentation/spec-136004.html">JavaBean</a>
+        		peut &#234;tre plac&#233; sur la fen&#234;tre et li&#233; &#224; d'autres objets sur 
+						cette fen&#234;tre, m&#234;me s'il n'a pas de repr&#233;sentation visuelle.</p>
+				<p>O&#249 le Builder ne peut pas g&#233;n&#233;r&#233; automatiquement du code, il fournit
+						des m&#233;thodes vides, ou tronqu&#233;es, qui peuvent &#234;tre compl&#233;t&#233;es pour mettre en &#339;uvre 
+						la logique souhait&#233;e, et passe automatiquement &#224; l'affichage du code au besoin.</p>
+
+
+        <h2><a id="code">Examen du Code</a></h2>
+        <p>Le Builder maintient deux fichiers: un fichier.java contenant le code compilable, 
+						et un fichier .form, contenant une repr&#233;sentation XMLde l'interface graphique avec 
+						le code qui est utilis&#233; pour cr&#233;er la m&#233;thode initComponents() dans le fichier .java.
+
+        <h3><a href="java">Fichier .java</a></h3>
+        <p>Dans NetBeans, le code g&#233;n&#233;r&#233; par le Builder, ressemble &#224; n'importe 
+						quel autre code java, mais des portions ne peuvent pas &#234;tre modifi&#233;es ( simplement NetBeans
+						n'autorise pas le changement du code ). Des bouts de m&#233;thodes 
+						seront modifiables, cependant, il ne sera pas possible de changer les signatures 
+						de m&#233;thode ( nom, param&#232;tres, valeurs retourn&#233;es, ou throws clauses ).</p>
+        <p>Une m&#233;thode, <code>private void initComponents()</code>
+				<p>D'autre outils, cependant, afficheront le code de fa&#231;on tr&#232;s diff&#233;rente, et 
+						Code contiendra les marques non-standards suivantes, bien que valides, 
+						comme les commentaires qui sont cach&#233;s dans NetBeans: </p>
+			<dl>
+					<dt>// &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;</dt>
+					<dd>Masquer tout entre elle et
+							<code>// &lt;/editor-fold&gt;</code> avec la description
+							<em>Generated Code</em> dans NetBeans et autres &#233;diteurs qui
+							le reconnaissent.	Le code entre cess deux commentaires peut &#234;tre affich&#233;
+							en cliquant	l'ic&#244;ne	<strong>+</strong> &#224; gauche de la description dans ces 
+							&#233;diteurs. C'est utilis&#233; pour cacher le code qui ne devrait pas &#234;tre 
+							modifi&#233; manuellement.</dd>	
+					<dt>// &lt;/editor-fold&gt;</dt>
+					<dd>Utilis&#233; avec
+							<code>// &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;</code>.
+							Voir la description commentaire pour plus d'informations.</dd>
+					<dt>//GEN-BEGIN:<em>&lt;token&gt;</em></dt>
+          <dd>Pr&#233;c&#232;de une m&#233;thode ou un bloc de variable qui est
+							enti&#233;rement g&#233;n&#233;r&#233; par le Builder. Une telle m&#233;thode ou bloc est 
+							suivi d'un														
+							<code>//GEN-END:<em>&lt;token&gt;</em></code>commentaire correspondant.</dd>
+					<dt>//GEN-END:<em>&lt;token&gt;</em></dt>
+          <dd>Suit une m&#233;thode ou un bloc de variable qui est
+							enti&#233;rement g&#233;n&#233;r&#233; par le Builder. Une telle m&#233;thode ou bloc est 
+							pr&#233;c&#233;d&#233; d'un														
+							<code>//GEN-BEGIN:<em>&lt;token&gt;</em></code>commentaire correspondant.</dd>
+					<dt>//GEN-FIRST:<em>&lt;token&gt;</em></dt>
+          <dd>Pr&#233;c&#232;de une m&#233;thode qui g&#233;n&#232;re du code appel&#233;, mais le contenu
+							de celui-ci est &#233;crit par un d&#233;veloppeur. Une telle m&#233;thode est suivi 
+							par un <code>//GEN-LAST:<em>&lt;token&gt;</em></code> commentaire 
+							correspondant. Le signe est souvent
+					 		<code>event_<em>&lt;methodName&gt;</em></code>.</dd>
+          <dt>//GEN-LAST:<em>&lt;token&gt;</em></dt>
+          <dd>Suit une m&#233;thode qui g&#233;n&#232;re du code appel&#233;, mais le contenu
+							de celui-ci est &#233;crit par un d&#233;veloppeur. Ce commentaire marque l'accolade 
+							fermante dans la m&#233;thode pr&#233;c&#233;d&#233;e 
+							par un <code>//GEN-FIRST:<em>&lt;token&gt;</em></code>commentaire 
+							correspondant..</dd>
+        	
+       	</dl>
+       	<h3><a href="form">Fichier .form</a></h3>
+				<p>Le fichier .form est enti&#232;rement cach&#233; au sein d'un IDE NetBeans.L'ouverture
+						d'un fichier .java avec son fichier correspondaznt .form ( le m&#234;me nom de 
+						fichier dans le m&#234;me paquet ) ajoutera le bouton  <strong>Design</strong> &#224; la
+						baree d'outil de l'&#233;diteur, permettant au Builder d'&#234;tre utilis&#233;.</p>
+				<p>Le fichier .form est un fichier XML adh&#233;rant &#224; la DTD dans			
+						<a href="http://hg.netbeans.org/core-main/file/tip/form/src/org/netbeans/modules/form/forminfo/forms.dtd">le code source NetBeans</a>
+						( li&#233; &#224; la t&#234;te de l'arbre NetBeans ). NetBeans utilise ce fichier 
+						pour stocker des informations suppl&#233;mentaires en dehors de la sp&#233;cification  
+						JavaBeans ce qui est n&#233;cessaire pour g&#233;n&#233;rer correctement la m&#233;thode
+						<code>initComponents()</code>, des bouts de m&#233;thodes et des listes de 
+						variables. En absence d'autres changements dans le fichier .java, ce fichier
+						pourra &#234;tre utilis&#233; pour g&#233;n&#233;rer enti&#232;rement un neouveau fichier. java, si cela 
+						est n&#233;cessaire.</p>
+				<p>Ce fichier ne devrait pas &#234;tre modifi&#233; &#224; la main, mais devrait &#234;tre g&#233;n&#233;r&#233; par 
+						le Builder.</p>
+
+        <h2><a id="references">Voir aussi</a></h2>
+        <ul>
+            <li><a href="https://netbeans.org/kb/docs/java/quickstart-gui.html">Designing a Swing GUI in NetBeans IDE</a></li>
+            <li><a href="https://netbeans.org/kb/trails/matisse.html">Java GUI Applications Learning Trail</a></li>
+        </ul>
+        <!--#include virtual="/Footer" -->
+    </div>
+    <!-- closes #mainContent-->
+</body>
+
+</html>
