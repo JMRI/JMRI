@@ -1,6 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Hervé  2013-10-05-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233;  2017-01-05-->
+
 <!--  $Id$ -->
 
 <html lang="fr">
@@ -32,631 +32,333 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      JMRI: Documentation Itin&Atilde;&copy;raire
 
-      <h3>Que sont les Itin&Atilde;&copy;raires?</h3>
 
-      <p>Les Itin&Atilde;&copy;raires sont des collections
-      d'appareils de voie et/ou de capteurs dont les
-      &Atilde;&copy;tats peuvent &Atilde;&ordf;tre
-      d&Atilde;&copy;t&Atilde;&copy;rmin&Atilde;&copy;s tous
-      &Atilde;  la fois. Aussi, quand un Itin&Atilde;&copy;raire
-      est d&Atilde;&copy;clench&Atilde;&copy;, un son peut
-      &Atilde;&ordf;tre jou&Atilde;&copy;, ou un script peut
-      &Atilde;&ordf;tre ex&Atilde;&copy;cut&Atilde;&copy;. Par
-      exemple, un Itin&Atilde;&copy;raire peut &Atilde;&ordf;tre
-      mis en place pour effacer tous les aiguillages sur une ligne
-      principale avec un ordinateur ou les boutons d'un panneau de
-      contr&Atilde;&acute;le. Les Itin&Atilde;&copy;raires peuvent
-      &Atilde;&copy;galement &Atilde;&ordf;tre mis en place pour
-      contr&Atilde;&acute;ler le r&Atilde;&copy;glage des ensembles
-      d' aiguillages dans les zones de garage ou de triages. Une
-      autre utilisation consiste &Atilde;  fixer la disposition des
-      aiguillages &Atilde;  la position par d&Atilde;&copy;faut
-      lorsque l'on commence une session de fonctionnement. Les
-      Itin&Atilde;&copy;raires JMRI sont similaires aux
-      itin&Atilde;&copy;raires mis en &oelig;uvre dans le Digitrax
-      Chief system , &Atilde;  l'exception des
-      itin&Atilde;&copy;raires JMRI o&Atilde;&sup1; vous pouvez
-      m&Atilde;&copy;langer les aiguillages
-      contr&Atilde;&acute;l&Atilde;&copy;s par des
-      syst&Atilde;&uml;mes mat&Atilde;&copy;riels
-      diff&Atilde;&copy;rents, et peut &Atilde;&copy;galement
-      mettre des capteurs, jouer un son, ou ex&Atilde;&copy;cuter
-      un script.</p>
-
-      <p>Les option d'un Itin&Atilde;&copy;raire peuvent
-      &Atilde;&ordf;tre contr&Atilde;&acute;l&Atilde;&copy;es par
-      un maximum de trois capteurs et/ou par un aiguillage de
-      contr&Atilde;&acute;le. Lorsqu'un Itin&Atilde;&copy;raire est
-      cr&Atilde;&copy;&Atilde;&copy;, ou quand il est lu &Atilde; 
-      partir d'un fichier de configuration,
-      l'Itin&Atilde;&copy;raire est "activ&Atilde;&copy;", il est
-      mis en place pour surveiller automatiquement les changements
-      d'&Atilde;&copy;tat de ses capteurs de contr&Atilde;&acute;le
-      et/ou de l'aiguillage de contr&Atilde;&acute;le. Lorsque les
-      capteurs de contr&Atilde;&acute;le ou l'aiguillage change de
-      la mani&Atilde;&uml;re sp&Atilde;&copy;cifi&Atilde;&copy;e
-      par l'utilisateur, l'Itin&Atilde;&copy;raire est 'set'
-      ('d&Atilde;&copy;clench&Atilde;&copy;'); les aiguillages et
-      les capteurs inclus sont r&Atilde;&copy;gl&Atilde;&copy;s
-      comme indiqu&Atilde;&copy;, et si
-      sp&Atilde;&copy;cifi&Atilde;&copy;, un son est
-      jou&Atilde;&copy; ou un script est
-      ex&Atilde;&copy;cut&Atilde;&copy;.</p>
-
-      <p>le Tableau Itin&Atilde;&copy;raire contient une colonne
-      "Activ&Atilde;&copy;". Pour un itin&Atilde;&copy;raire
-      d&Atilde;&copy;clench&Atilde;&copy; par ses capteurs de
-      contr&Atilde;&acute;le ou ses aiguillage de
-      contr&Atilde;&acute;le, elle doit &Atilde;&ordf;tre
-      "activ&Atilde;&copy;", la case dans la colonne
-      "Activ&Atilde;&copy;" doit &Atilde;&ordf;tre
-      coch&Atilde;&copy;e. Vous pouvez d&Atilde;&copy;cocher cette
-      case pour d&Atilde;&copy;sactiver temporairement un
-      itin&Atilde;&copy;raire, c'est &Atilde;  dire
-      l'emp&Atilde;&ordf;cher de fixer ses aiguillages, capteurs,
-      etc quand un capteur de contr&Atilde;&acute;le ou
-      l'aiguillage de contr&Atilde;&acute;le change.</p>
-
-      <h3>Comment configurer pour l'ajout ou modification
-      d'Itin&Atilde;&copy;raires:</h3>
-
-      <p>d'abord s'assurer que le Tableau Aiguillage contient tous
-      les aiguillages impliqu&Atilde;&copy;s dans les
-      Itin&Atilde;&copy;raires &Atilde;  d&Atilde;&copy;finir, et
-      que le Tableau Capteur contient tous les capteurs
-      n&Atilde;&copy;cessaires. Ensuite, s&Atilde;&copy;lectionnez
-      <b>Outils--&gt; Tableau Itin&Atilde;&copy;raire&gt;</b> , et
-      cliquez sur le bouton <b>Ajouter ...</b> au bas de le tableau
-      pour faire appara&Atilde;&reg;tre la fen&Atilde;&ordf;tre
-      Ajouter/Modifier l'Itin&Atilde;&copy;raire.</p><a name=
-      "additin&Atilde;&copy;raire"></a>
-
-      <h3><a name="additin&Atilde;&copy;raire">Pour ajouter un
-      nouvel Itin&Atilde;&copy;raire:</a></h3><a name=
-      "additin&Atilde;&copy;raire"></a>
-
-      <ol>
-        <li>Entrez un nom syst&Atilde;&uml;me, telles que "IR100' -
-        tout Nom court peut &Atilde;&ordf;tre utilis&Atilde;&copy;
-        &Atilde;  condition qu'il soit diff&Atilde;&copy;rent du
-        nom syst&Atilde;&uml;me d'autres itin&Atilde;&copy;raires.
-
-          <p>Par convention, les noms syst&Atilde;&uml;mes
-          commencent g&Atilde;&copy;n&Atilde;&copy;ralement par
-          "IR" pour Internal Route .</p>
-        </li>
-
-        <li>Entrez un nom utilisateur. Toute cha&Atilde;&reg;ne de
-        caract&Atilde;&uml;res qui est diff&Atilde;&copy;rente du
-        nom utilisateur d'autres itin&Atilde;&copy;raires sera
-        accept&Atilde;&copy;e, mais il est sage d'utiliser une
-        cha&Atilde;&reg;ne qui d&Atilde;&copy;crit l'utilisation
-        pr&Atilde;&copy;vue de l'Itin&Atilde;&copy;raire.
-
-          <p>Notez qu'avant la version 1.5.6 de JMRI, il y avait un
-          bug qui vous a emp&Atilde;&ordf;ch&Atilde;&copy; d'avoir
-          plus d'un nom utilisateur vide. Dans les versions les
-          plus r&Atilde;&copy;centes, vous pouvez avoir autant
-          d'Itin&Atilde;&copy;raires avec des noms d'utilisateur
-          vide que vous le souhaitez; ils doivent &Atilde;&ordf;tre
-          r&Atilde;&copy;f&Atilde;&copy;renc&Atilde;&copy;s via
-          leurs noms syst&Atilde;&uml;me, bien
-          s&Atilde;&raquo;r.</p>
-        </li>
-
-        <li>S&Atilde;&copy;lectionnez les aiguillages devant
-        &Atilde;&ordf;tre inclus dans le nouvel
-        itin&Atilde;&copy;raire dans la liste de tous les
-        aiguillages d&Atilde;&copy;finis, en cliquant sur la case
-        dans la colonne <b>Inclure</b> . Pour chaque aiguillage
-        inclus, utilisez la liste d&Atilde;&copy;roulante dans la
-        colonne <b>Fixer &Atilde;&permil;tat</b> pour
-        s&Atilde;&copy;lectionner si l'aiguillage inclus doit
-        d'&Atilde;&ordf;tre "Fix&Atilde;&copy; Direct",
-        "Fix&Atilde;&copy; D&Atilde;&copy;vi&Atilde;&copy;" ou "
-        Les deux" lorsque l'Itin&Atilde;&copy;raire est
-        "Fix&Atilde;&copy;". Ne vous inqui&Atilde;&copy;tez pas si
-        tout n'est pas parfait. Il est facile de modifier ces
-        informations ult&Atilde;&copy;rieurement.
-
-          <p>Notez que la fen&Atilde;&ordf;tre Ajouter/Modifier
-          Itin&Atilde;&copy;raire vous permet d'afficher "Tous" les
-          Aiguillages et Capteurs ou Les Aiguillages et Capteurs
-          "inclus". C'est uniquement pour votre convenance pour
-          v&Atilde;&copy;rifier que tous les aiguillages
-          d&Atilde;&copy;sir&Atilde;&copy;s et/ou les capteurs ont
-          &Atilde;&copy;t&Atilde;&copy; inclus; elle n'affecte pas
-          les entr&Atilde;&copy;es d'informations.</p>
-        </li>
-
-        <li>De m&Atilde;&ordf;me, s&Atilde;&copy;lectionnez les
-        capteurs &Atilde;  inclure dans le nouvel
-        Itin&Atilde;&copy;raire dans la liste de tous les capteurs
-        d&Atilde;&copy;finis, en cliquant sur le case dans la
-        colonne <b>Inclure</b> . Pour chaque capteur inclus,
-        utilisez la liste d&Atilde;&copy;roulante dans la colonne
-        <b>Fixer &Atilde;&permil;tat</b> pour
-        s&Atilde;&copy;lectionner si ce capteur doit
-        &Atilde;&ordf;tre "Fix&Atilde;&copy; Actif",
-        "Fix&Atilde;&copy; Inactif" ou "Les deux" lorsque
-        l'itin&Atilde;&copy;raire est "fix&Atilde;&copy;".</li>
-
-        <li>Si vous voulez que l'Itin&Atilde;&copy;raire joue un
-        son lorsque il se d&Atilde;&copy;clenche, entrez le nom de
-        fichier d'un fichier son dans la zone de texte suivante
-        "Jouer fichier son" . En cliquant <b>fixer</b> pour faire
-        appara&Atilde;&reg;tre une s&Atilde;&copy;lection de
-        fichiers pour aider &Atilde;  localiser le fichier. Une
-        fois le fichier localis&Atilde;&copy;, cliquer sur son nom
-        dans la bo&Atilde;&reg;te de dialogue le copieras, avec le
-        chemin complet, dans la zone de texte.</li>
-
-        <li>
-          <p>De m&Atilde;&ordf;me, si vous voulez un script
-          &Atilde;  ex&Atilde;&copy;cuter lorsque
-          l'Itin&Atilde;&copy;raire d&Atilde;&copy;clenche, entrez
-          son nom de fichier dans la zone de texte sur la droite.
-          Le bouton' <b>Fixer</b> peut &Atilde;&ordf;tre
-          utilis&Atilde;&copy; comme ci-dessus pour l'aider
-          &Atilde;  entrer les informations sur le fichier
-          script.</p>
-        </li>
-
-        <li>Si vous voulez que le r&Atilde;&copy;glage de
-        l'Itin&Atilde;&copy;raire soit
-        contr&Atilde;&acute;l&Atilde;&copy; par une ou plusieurs
-        capteurs d'entr&Atilde;&copy;e, entrez leurs noms (nom
-        syst&Atilde;&uml;me ou nom utilisateur) et
-        s&Atilde;&copy;lectionner &Atilde;  quel genre de logique
-        ils ob&Atilde;&copy;issent. Les Choix logique sont
-        d&Atilde;&copy;crits dans <a href=
-        "#sensorlogic">d&Atilde;&copy;tails ci-dessous</a> .
-
-          <p>Lorsque vous enregistrez vos Itin&Atilde;&copy;raires
-          et les restaurez en utilisant un fichier de
-          configuration, le nom du capteur que vous entrez ici est
-          utilis&Atilde;&copy; pour recr&Atilde;&copy;er
-          l'itin&Atilde;&copy;raire. Un nom syst&Atilde;&uml;me
-          sera toujours associ&Atilde;&copy; avec le capteur de la
-          m&Atilde;&ordf;me entr&Atilde;&copy;e. Un nom utilisateur
-          peut &Atilde;&ordf;tre d&Atilde;&copy;plac&Atilde;&copy;
-          &Atilde;  une autre entr&Atilde;&copy;e en changeant les
-          entr&Atilde;&copy;es dans le tableau Capteur. Par
-          exemple, "Occupation Est OS"pourrait &Atilde;&ordf;tre
-          chang&Atilde;&copy; depuis l'entr&Atilde;&copy;e du
-          capteur LocoNet LS12 &Atilde;  LS24 pour simplement en
-          associant ce nom utilisateur avec un nom
-          syst&Atilde;&uml;me diff&Atilde;&copy;rent, ce qui rend
-          la rec&Atilde;&cent;blage du r&Atilde;&copy;seau facile.
-          Cependant les noms utilisateurs entr&Atilde;&copy;s ici
-          doivent exister, si vous changez le nom utilisateur du
-          capteur de "Occupation East OS" &Atilde;  "Occupation
-          Orient", l'itin&Atilde;&copy;raire ne se charge pas
-          correctement jusqu'&Atilde;  ce que vous le modifiez pour
-          utiliser le nouveau nom.</p>
-        </li>
-
-        <li>&Atilde;&permil;galement optionnel, si vous souhaitez
-        activer l'Itin&Atilde;&copy;raire lorsqu'un aiguillage
-        particulier change d'&Atilde;&copy;tat, saisissez un nom
-        d'aiguillage (nom syst&Atilde;&uml;me ou nom utilisateur)
-        et s&Atilde;&copy;lectionnez la logique &Atilde;  laquelle
-        il ob&Atilde;&copy;ira. Les choix de logique sont
-        expliqu&Atilde;&copy;s en d&Atilde;&copy;tail <a href=
-        "#turnoutlogic">ci-dessous</a> .
-
-          <p>Lorsque vous enregistrez et restaurez vos
-          Itin&Atilde;&copy;raires en utilisant un fichier de
-          configuration, le nom de l'aiguillage que vous indiquez
-          ici est utilis&Atilde;&copy; pour recr&Atilde;&copy;er
-          l'itin&Atilde;&copy;raire. Un nom syst&Atilde;&uml;me
-          sera toujours associ&Atilde;&copy; au m&Atilde;&ordf;me
-          aiguillage. Un nom utilisateur peut &Atilde;&ordf;tre
-          d&Atilde;&copy;plac&Atilde;&copy; vers un autre
-          aiguillage en changeant les entr&Atilde;&copy;es
-          aiguillage dans le tableau. Par exemple, "Fixer Voie 5"
-          pourrait &Atilde;&ordf;tre chang&Atilde;&copy; depour un
-          capteur d'aiguillage de 105 &Atilde; l'aiguillage 5 en
-          associant simplement ce nom utilisateur avec un nom de
-          syst&Atilde;&uml;me diff&Atilde;&copy;rent, ce qui rend
-          le rec&Atilde;&cent;blage plus facile. Les noms
-          utilisateurs entr&Atilde;&copy;s ici doivent exister
-          cependant, si vous changez le nom utilisateur de
-          l'aiguillage de partir "Track Set 5" &Atilde;  "Set Trk
-          5", l'itin&Atilde;&copy;raire ne se charge pas
-          correctement jusqu'&Atilde;  ce que vous modifiez pour
-          utiliser le nouveau nom.</p>
-        </li>
-
-        <li>
-          <p>L'entr&Atilde;&copy;e "Ajouter retard de" est
-          normalement laiss&Atilde;&copy; &Atilde;  "0". Quand un
-          Itin&Atilde;&copy;raire commande ensembles ses
-          aiguillages, il attend 250 millisecondes entre chaque
-          commande d'aiguillage. Si ce n'est pas assez de temps
-          entre chaque commande pour votre type de
-          contr&Atilde;&acute;le d'aiguillage, vous pouvez
-          augmenter le temps entre les commandes en ajoutant un
-          retard (en millisecondes).</p>
-        </li>
-
-        <li>Cliquez sur <b>Ajouter Itin&Atilde;&copy;raire</b> au
-        le bas de la fen&Atilde;&ordf;tre. Si tout va bien, un
-        message indiquant "Nouvel Itin&Atilde;&copy;raire
-        Ajout&Atilde;&copy; ..." sera affich&Atilde;&copy; dans la
-        bo&Atilde;&reg;te de notes pr&Atilde;&uml;s du bas de la
-        fen&Atilde;&ordf;tre. S'il ya des probl&Atilde;&uml;mes
-        avec quoi que ce soit, un message d'erreur s'affiche dans
-        la bo&Atilde;&reg;te de notes; vous devez alors corriger
-        l'erreur et cliquez sur <b>Ajouter
-        Itin&Atilde;&copy;raire</b> &Atilde;  nouveau.</li>
-      </ol>
-
-      <h3>Pour modifier un Itin&Atilde;&copy;raire existant:</h3>
-
-      <ol>
-        <li>Modifier un itin&Atilde;&copy;raire existant peut
-        &Atilde;&ordf;tre d&Atilde;&copy;marr&Atilde;&copy; suivant
-        l'une des deux fa&Atilde;&sect;ons suivantes:
-
-          <ul>
-            <li>Cliquez sur <b>Modifier un
-            Itin&Atilde;&copy;raire</b> dans le Tableau
-            Itin&Atilde;&copy;raire.</li>
-
-            <li>Entrez le nom syst&Atilde;&uml;me de
-            l'Itin&Atilde;&copy;raire &Atilde;  &Atilde;&copy;diter
-            dans la fen&Atilde;&ordf;tre Ajouter/Modifier et
-            cliquez sur le bouton <b>Modifier
-            Itin&Atilde;&copy;raire</b> au bas de la
-            fen&Atilde;&ordf;tre Ajouter/modifier
-            Itin&Atilde;&copy;raire. Ce doit &Atilde;&ordf;tre le
-            m&Atilde;&ordf;me que le nom syst&Atilde;&uml;me
-            indiqu&Atilde;&copy; dans le Tableau
-            Itin&Atilde;&copy;raire.</li>
-          </ul>Le bouton <b>Ajouter Itin&Atilde;&copy;raire</b> et
-          <b>Modifier Itin&Atilde;&copy;raire</b> dans la
-          fen&Atilde;&ordf;tre Ajouter/Modifier va changer pour
-          <b>Mise &Atilde;  Jour Itin&Atilde;&copy;raire</b> et
-          <b>Annuler Itin&Atilde;&copy;raire</b> .
-        </li>
-
-        <li>Effectuez les modifications ou les ajouts que vous
-        devez dans l'information dans la bo&Atilde;&reg;te de
-        dialogue. Notez que le nom syst&Atilde;&uml;me
-        d'Itin&Atilde;&copy;raire &Atilde;&copy;dit&Atilde;&copy;
-        ne peut pas &Atilde;&ordf;tre chang&Atilde;&copy;, mais le
-        nom utilisateur peut &Atilde;&ordf;tre chang&Atilde;&copy;.
-        Les autres &Atilde;&copy;l&Atilde;&copy;ments sont
-        d&Atilde;&copy;crits <a href=
-        "#additin%C3%83%C2%A9raire">ci-dessus</a> .</li>
-
-        <li>Apr&Atilde;&uml;s avoir modifi&Atilde;&copy; les
-        informations d'Itin&Atilde;&copy;raire, cliquez sur <b>Mise
-        &Atilde;  Jour Itin&Atilde;&copy;raire</b> pour changer
-        l'itin&Atilde;&copy;raire
-        s&Atilde;&copy;lectionn&Atilde;&copy;. Si tout va bien, un
-        message indiquant "Itin&Atilde;&copy;raire &Atilde;  jour
-        ..." sera affich&Atilde;&copy; dans les notes du bas de la
-        fen&Atilde;&ordf;tre. S'il 'y a un probl&Atilde;&uml;me, un
-        message d'erreur sera affich&Atilde;&copy; dans la
-        bo&Atilde;&reg;te de notes, et la mise &Atilde;  jour est
-        arr&Atilde;&ordf;t&Atilde;&copy;e pour vous permettre de
-        corriger l'erreur et cliquez sure <b>Mise &Atilde;  Jour
-        Itin&Atilde;&copy;raire</b> &Atilde;  nouveau.</li>
-
-        <li>Cliquez &gt; <b>Annuler</b> pour quitter le mode
-        &Atilde;&copy;dition sans changer l'
-        itin&Atilde;&copy;raire
-        s&Atilde;&copy;lectionn&Atilde;&copy;. Si la
-        fen&Atilde;&ordf;tre Ajouter/Editer Itin&Atilde;&copy;raire
-        est rejet&Atilde;&copy;e (ferm&Atilde;&copy;e) dans le mode
-        &Atilde;&copy;dition, <b>Annuler</b> est automatiquement
-        s&Atilde;&copy;lectionn&Atilde;&copy;, et aucune
-        modification n'est apport&Atilde;&copy;e &Atilde; 
-        l'Itin&Atilde;&copy;raire
-        s&Atilde;&copy;lectionn&Atilde;&copy;.</li>
-      </ol>
-
-      <h3>Pour d&Atilde;&copy;finir (d&Atilde;&copy;clencher) un
-      Itin&Atilde;&copy;raire:</h3>
-
-      <p>Les Itin&Atilde;&copy;raires peuvent &Atilde;&ordf;tre
-      "d&Atilde;&copy;clench&Atilde;&copy;s" en cliquant sur le
-      bouton <b>Set</b> dans la colonne d'&Atilde;&permil;tat du
-      Tableau Itin&Atilde;&copy;raire. Un Itin&Atilde;&copy;raire
-      peut &Atilde;&copy;galement &Atilde;&ordf;tre
-      r&Atilde;&copy;gl&Atilde;&copy; par les boutons du tableau de
-      commande. Si les capteurs de ces boutons sont
-      d&Atilde;&copy;finis comme des capteurs de commande dans les
-      informations de l'Itin&Atilde;&copy;raire . Si une aiguillage
-      de contr&Atilde;&acute;le est d&Atilde;&copy;fini dans les
-      informations de l'Itin&Atilde;&copy;raire,
-      d&Atilde;&copy;viant ou mettant en direct l'aiguillage depuis
-      votre r&Atilde;&copy;gulateur physique qui
-      d&Atilde;&copy;clenchera &Atilde;&copy;galement
-      l'Itin&Atilde;&copy;raire. Notez que les aiguillages de
-      contr&Atilde;&acute;le peuvent &Atilde;&ordf;tre des
-      aiguillages r&Atilde;&copy;els, aiguillages
-      fant&Atilde;&acute;me ou aiguillages internes comme
-      d&Atilde;&copy;crit <a href="#turnoutlogic">ci-dessous</a> .
-      Un Itin&Atilde;&copy;raire peut &Atilde;&copy;galement
-      &Atilde;&ordf;tre d&Atilde;&copy;clench&Atilde;&copy;
-      &Atilde;  partir d'un Logix, comme l'action d'un de ses
-      conditionnels. Si vous avez besoin de logique plus puissante
-      que celle fournit par l'Itin&Atilde;&copy;raire
-      lui-m&Atilde;&ordf;me, pour contr&Atilde;&acute;ler votre
-      itin&Atilde;&copy;raire , envisager d'utiliser un <a href=
-      "Logix.shtml">Logix</a> .</p>
-
-      <p>Notez que
-      activ&Atilde;&copy;s/d&Atilde;&copy;sactiv&Atilde;&copy;s et
-      "droit de veto" logique discut&Atilde;&copy; ci-dessous pour
-      le contr&Atilde;&acute;le des <a href=
-      "#sensorlogic">capteurs</a> et pour le contr&Atilde;&acute;le
-      des <a href="#turnoutlogic">aiguillages</a> ne s'appliquent
-      qu'aux m&Atilde;&copy;canisme de contr&Atilde;&acute;le
-      automatis&Atilde;&copy;s d'un Itin&Atilde;&copy;raire . Ni la
-      logique "D&Atilde;&copy;sactiv&Atilde;&copy;e", ni
-      "v&Atilde;&copy;to" permettra d'&Atilde;&copy;viter qu'un
-      itin&Atilde;&copy;raire soit valid&Atilde;&copy;
-      (d&Atilde;&copy;clench&Atilde;&copy;) en utilisant le
-      <b>Set</b> &Atilde;  partir d'un bouton ou Logix.</p>
-
-      <p>Il est &Atilde;&copy;galement utile de noter que si un
-      itin&Atilde;&copy;raire a &Atilde;&copy;t&Atilde;&copy;
-      d&Atilde;&copy;clench&Atilde;&copy; et est en train d'envoyer
-      des commandes aux aiguillages de l'Itin&Atilde;&copy;raire
-      est marqu&Atilde;&copy; comme occup&Atilde;&copy;
-      jusqu'&Atilde;  cette op&Atilde;&copy;ration soit
-      achev&Atilde;&copy;e. Un Itin&Atilde;&copy;raire ne peut
-      &Atilde;&ordf;tre d&Atilde;&copy;clench&Atilde;&copy;
-      &Atilde;  nouveau alors qu'il est occup&Atilde;&copy;, c'est
-      &Atilde;  dire jusqu'&Atilde;  ce que son
-      op&Atilde;&copy;ration en cours soit complet.</p>
-
-      <h3>Pour enregistrer les Itin&Atilde;&copy;raires sur le
-      disque :</h3>
-
-      <p>Les Itin&Atilde;&copy;raires sont enregistr&Atilde;&copy;s
-      dans votre fichier de configuration de r&Atilde;&copy;seau,
-      avec les aiguillages, les capteurs, les t&Atilde;&ordf;tes de
-      signal , les lumi&Atilde;&uml;res, etc. Pour stocker ces
-      informations sur le disque, utilisez <b>Stocker Configuration
-      ...</b> dans le menu du <b>Fichier</b> en haut du Tableau
-      Itin&Atilde;&copy;raire (ou d'autres tableaux &Atilde; 
-      partir du menu Outils), ou s&Atilde;&copy;lectionnez
-      <b>Stocker Panneau ...</b> dans le menu <b>Panneau</b> .
-      Notez que l'&Atilde;&copy;tat
-      activ&Atilde;&copy;/d&Atilde;&copy;sactiv&Atilde;&copy; pour
-      chaque Itin&Atilde;&copy;raire n'est pas
-      enregistr&Atilde;&copy; dans le fichier de configuration.
-      Lorsque les Itin&Atilde;&copy;raires sont
-      charg&Atilde;&copy;s &Atilde;  partir d'un fichier de
-      configuration, ils sont tous activ&Atilde;&copy;s. <a name=
-      "sensorlogic" id="sensorlogic"></a></p>
-
-      <h3><a name="sensorlogic" id="sensorlogic">Le
-      contr&Atilde;&acute;le des Itin&Atilde;&copy;raires &Atilde; 
-      partir de Capteurs</a></h3><a name="sensorlogic" id=
-      "sensorlogic"></a> Le fonctionnement d'un
-      Itin&Atilde;&copy;raire peut &Atilde;&ordf;tre
-      contr&Atilde;&acute;l&Atilde;&copy; par un maximum de trois
-      capteurs. Ceux-ci peuvent &Atilde;&ordf;tre
-      reli&Atilde;&copy;s &Atilde;  des d&Atilde;&copy;tecteurs
-      d'occupation ou commutateurs sur le TCO, ou m&Atilde;&ordf;me
-      juste pour faire fonctionner l'itin&Atilde;&copy;raire
-      &Atilde;  partir d'un panneau de commande sur l'ordinateur.
-      Ces capteurs peuvent &Atilde;&ordf;tre des capteurs
-      r&Atilde;&copy;els ou des d&Atilde;&copy;tecteurs internes.
-
-      <p>Par d&Atilde;&copy;faut, lorsque l'un des capteurs
-      d&Atilde;&copy;finis passe &Atilde;  l'&Atilde;&copy;tat
-      actif, l'Itin&Atilde;&copy;raire sera
-      d&Atilde;&copy;clench&Atilde;&copy;. Cela pourrait par
-      exemple &Atilde;&ordf;tre utilis&Atilde;&copy; pour
-      d&Atilde;&copy;finir un Itin&Atilde;&copy;raire quand un
-      canton est devenu occup&Atilde;&copy;, ou quand un bouton a
-      &Atilde;&copy;t&Atilde;&copy; pouss&Atilde;&copy;.</p>
-
-      <p>Une logique plus puissante peut aussi faire des choses
-      comme "d&Atilde;&copy;finir Itin&Atilde;&copy;raires pour
-      avoir la position d'un aiguillage qui suive la position d'un
-      interrupteur du panneau ". Pour cela, chacun des trois
-      capteurs a un" mode associ&Atilde;&copy;, qui peut
-      &Atilde;&ordf;tre:</p>
-
-      <dl>
-        <dt>"Sur Actif"</dt>
-
-        <dd>La m&Atilde;&copy;thode par d&Atilde;&copy;faut,
-        l'Itin&Atilde;&copy;raire est
-        d&Atilde;&copy;clench&Atilde;&copy; lorsque le capteur
-        passe actif, par exemple "D&Atilde;&copy;viez l'aiguillage
-        12 lorsque le capteur 12 devient actif "</dd>
-
-        <dt>"Sur inactif"</dt>
-
-        <dd>L'Itin&Atilde;&copy;raire est
-        d&Atilde;&copy;clench&Atilde;&copy; lorsque le capteur
-        passe inactif. Par exemple, en utilisant
-        l'Itin&Atilde;&copy;raire ci-dessus, plus un
-        deuxi&Atilde;&uml;me Itin&Atilde;&copy;raire "Fermer
-        l'aiguillage 12 lorsque le capteur 12 devient inactif" aura
-        l'aiguillage 12 &Atilde;  suivre un interrupteur du panneau
-        reli&Atilde;&copy; au capteur 12 comme il est
-        retourn&Atilde;&copy; en arri&Atilde;&uml;re et en avant
-        etc.</dd>
-
-        <dt>"Sur le changement"</dt>
-
-        <dd>L'Itin&Atilde;&copy;raire est
-        d&Atilde;&copy;clench&Atilde;&copy; lorsque
-        l'&Atilde;&copy;tat du capteur change, que ce soit d'actif
-        &Atilde;  inactif ou inactif &Atilde;  actif.</dd>
-
-        <dt>"V&Atilde;&copy;to actif"</dt>
-
-        <dd>Si ce capteur est actif, les autres capteurs
-        param&Atilde;&copy;tr&Atilde;&copy;s "sur actif", "Sur
-        inactif", "Le changement" seront ignor&Atilde;&copy;s, et
-        un contr&Atilde;&acute;le d'aiguillage
-        r&Atilde;&copy;gl&Atilde;&copy; "sur Direct", "sur
-        D&Atilde;&copy;vi&Atilde;&copy;" ou "sur Changement" sera
-        &Atilde;&copy;galement ignor&Atilde;&copy;. Cela a
-        plusieurs utilisations, par exemple pour
-        emp&Atilde;&ordf;cher de d&Atilde;&copy;vier un aiguillage
-        sous un train, lorsque le canton est montr&Atilde;&copy;
-        occup&Atilde;&copy;.</dd>
-
-        <dt>"V&Atilde;&copy;to inactif"</dt>
-
-        <dd>Comme veto actif, mais l'autre polarit&Atilde;&copy; de
-        la logique.</dd>
-      </dl>
-
-      <p>Notez qu'il y a une implicite "et/ou" ici. Tous les
-      "v&Atilde;&copy;to" capteurs et le "v&Atilde;&copy;to"
-      aiguillage, s'il ya en a un, doivent &Atilde;&ordf;tre dans
-      leur &Atilde;&copy;tat de non-droit de v&Atilde;&copy;to_et _
-      au moins un des capteurs de d&Atilde;&copy;clenchement ou
-      d'un d&Atilde;&copy;clenchement d'aiguillage doivent voir le
-      changement appropri&Atilde;&copy; pour que l'
-      Itin&Atilde;&copy;raire soit
-      r&Atilde;&copy;alis&Atilde;&copy;.</p><a name="turnoutlogic"
-      id="turnoutlogic"></a>
-
-      <h3><a name="turnoutlogic" id=
-      "turnoutlogic">Contr&Atilde;&acute;le
-      d'Itin&Atilde;&copy;raire &Atilde;  partir d'un
-      Aiguillage</a></h3><a name="turnoutlogic" id=
-      "turnoutlogic"></a>
-
-      <p>Le r&Atilde;&copy;glage (d&Atilde;&copy;clenchement) d'un
-      Itin&Atilde;&copy;raire peut &Atilde;&ordf;tre
-      contr&Atilde;&acute;l&Atilde;&copy; &Atilde;  partir d'un
-      aiguillage. Cet aiguillage peut &Atilde;&ordf;tre un
-      aiguillage physique r&Atilde;&copy;el, un aiguillage
-      "fant&Atilde;&acute;me" (un num&Atilde;&copy;ro d'aiguillage
-      DCC sans aiguillage physique correspondant), ou aiguillage
-      "interne".</p>
-
-      <ul>
-        <li>Si un aiguillage r&Atilde;&copy;el est
-        utilis&Atilde;&copy;, l'aiguillage r&Atilde;&copy;el va
-        recevoir la commande d'activation original, puis l'
-        Itin&Atilde;&copy;raire fixera toutes les positions
-        d'aiguillage et/ou les &Atilde;&copy;tats des capteur qui
-        ont &Atilde;&copy;t&Atilde;&copy;
-        sp&Atilde;&copy;cifi&Atilde;&copy;s . Ceci peut
-        &Atilde;&ordf;tre utilis&Atilde;&copy; pour
-        d&Atilde;&copy;finir de multiples aiguillages pour
-        correspondre &Atilde;  un aiguillage r&Atilde;&copy;el
-        d'origine, ou pour d&Atilde;&copy;finir le retour de
-        l'aiguillage &Atilde;  sa position initiale (si vous ne
-        voulez pas que quiconque le change), etc
-        L'Itin&Atilde;&copy;raire se d&Atilde;&copy;clenche lorsque
-        l'aiguillage est fix&Atilde;&copy; &Atilde;  partir de
-        JMRI, et/ou avec certains syst&Atilde;&uml;mes DCC
-        (Digitrax LocoNet et Lenz XPressNet syst&Atilde;&uml;mes),
-        il se d&Atilde;&copy;clenche quand un
-        op&Atilde;&copy;rateur commande &Atilde;  l'aiguillage de
-        changer d'&Atilde;&copy;tat &Atilde;  partir d'un
-        r&Atilde;&copy;gulateurr de poche.</li>
-
-        <li>Un aiguillage "fant&Atilde;&acute;me est une aiguillage
-        DCC qui n' existent pas r&Atilde;&copy;ellement. Pour en
-        utiliser un, il suffit de cr&Atilde;&copy;er une
-        entr&Atilde;&copy;e d'aiguillage pour un
-        num&Atilde;&copy;ro d'adresse qui n'existe pas sur votre
-        r&Atilde;&copy;seau. Les op&Atilde;&copy;rateurs peuvent
-        s&Atilde;&copy;lectionner le num&Atilde;&copy;ro de
-        l'aiguillage fant&Atilde;&acute;me sur leurs
-        r&Atilde;&copy;gulateur et envoyer des commandes pour
-        provoquer la mise en place de l'Itin&Atilde;&copy;raire .
-        Avec l'ajout de capteurs comme les v&Atilde;&copy;tos dans
-        les Itin&Atilde;&copy;raires vous pouvez faire des choses
-        comme permettre aux op&Atilde;&copy;rateurs de changer les
-        aiguillages (via l'Itin&Atilde;&copy;raire) lorsque le
-        r&Atilde;&copy;partiteur a valid&Atilde;&copy; par un
-        bouton un acc&Atilde;&uml;s local.</li>
-
-        <li>Un "aiguillage interne" est celui qui n'existe que dans
-        le logiciel JMRI, il ne correspond pas &Atilde;  une
-        adresse particuli&Atilde;&uml;re sur la
-        r&Atilde;&copy;seau, et il ne correspond en particuluer
-        &Atilde;  aucun mat&Atilde;&copy;riel sur le
-        r&Atilde;&copy;seau. Le nom syst&Atilde;&uml;me des
-        aiguillages internes commencer par "IT", par exemple
-        "IT201". JMRI sait qu'ils sont distincts du
-        r&Atilde;&copy;seau et n'a donc pas &Atilde;  envoyer de
-        commandes au mat&Atilde;&copy;riel connect&Atilde;&copy;
-        lorsque l'un change . Ceux-ci peuvent &Atilde;&ordf;tre
-        utilis&Atilde;&copy;s avec des Itin&Atilde;&copy;raires
-        demandant une logique compliqu&Atilde;&copy;e sous-jacente.
-        Par exemple, une ic&Atilde;&acute;ne sur un panneau peut
-        d&Atilde;&copy;finir un aiguillage interne, qui &Atilde; 
-        son tour peut fixer l'aiguillage d'une groupe de triage
-        entier.</li>
-      </ul>
-
-      <p>similaires aux capteurs de contr&Atilde;&acute;le
-      ci-dessus, l'aiguillage de contr&Atilde;&acute;le a un "mode"
-      qui lui est associ&Atilde;&copy;, qui peut
-      &Atilde;&ordf;tre:</p>
-
-      <dl>
-        <dt>"Sur direct"</dt>
-
-        <dd>La m&Atilde;&copy;thode par d&Atilde;&copy;faut,
-        l'Itin&Atilde;&copy;raire est
-        d&Atilde;&copy;clench&Atilde;&copy; lorsque l'aiguillage
-        change pour l'&Atilde;&copy;tat direct.</dd>
-
-        <dt>"Sur D&Atilde;&copy;vi&Atilde;&copy;"</dt>
-
-        <dd>L'Itin&Atilde;&copy;raire est
-        d&Atilde;&copy;clench&Atilde;&copy;e lorsque l'aiguillage
-        change pour l'&Atilde;&copy;tat
-        d&Atilde;&copy;vi&Atilde;&copy;.</dd>
-
-        <dt>"Sur Changement"</dt>
-
-        <dd>L'Itin&Atilde;&copy;raire est
-        d&Atilde;&copy;clench&Atilde;&copy; lorsque
-        l'&Atilde;&copy;tat de l'aiguillage change, que ce soit de
-        direct &Atilde;  partir d&Atilde;&copy;vi&Atilde;&copy; ou
-        d&Atilde;&copy;vi&Atilde;&copy; &Atilde;  la position
-        directe.</dd>
-
-        <dt>"V&Atilde;&copy;to direct"</dt>
-
-        <dd>Si cette aiguillage est direct, les capteurs mis "Sur
-        Actif", "Sur Inactif" "Sur Changement" seront
-        ignor&Atilde;&copy;s.</dd>
-
-        <dt>"Veto d&Atilde;&copy;vi&Atilde;&copy;"</dt>
-
-        <dd>Si cette aiguillage est
-        d&Atilde;&copy;vi&Atilde;&copy;, les capteurs mis en "Sur
-        Actif", "Sur Inactif" Le changement" seront
-        ignor&Atilde;&copy;.</dd>
-      </dl>
-
-      <p>Un seul "v&Atilde;&copy;to" aiguillage ou "veto" capteur
-      peut emp&Atilde;&ordf;cher l'Itin&Atilde;&copy;raire
-      d'&Atilde;&ordf;tre d&Atilde;&copy;clench&Atilde;&copy;. Tous
-      les "v&Atilde;&copy;to" des capteurs et des
-      "v&Atilde;&copy;to" d'aiguillage, s'il y en a un, doivent
-      &Atilde;&ordf;tre dans leur &Atilde;&copy;tat
-      non-v&Atilde;&copy;to_et_ au moins l'un des capteurs ou un
-      des aiguillage de d&Atilde;&copy;clenchement doit voir le
-      Changement appropri&Atilde;&copy; dpour que
-      l'Itin&Atilde;&copy;raire soit fix&Atilde;&copy;</p>
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<H1> JMRI: Documentation Itin&#233;raires </H1>
+
+<h2>Que sont les Itin&#233;raires? </H2>
+
+<p> Les Itin&#233;raires sont des collections d'appareils de voie et/ou de capteurs dont les &#233;tats peuvent &#234;tre
+ d&#233;t&#233;rmin&#233;s tous &#224; la fois. Aussi, quand un Itin&#233;raire est d&#233;clench&#233;, un son peut &#234;tre jou&#233;,
+ou un script peut &#234;tre ex&#233;cut&#233;. Par exemple, un Itin&#233;raire peut &#234;tre mis en place pour effacer tous les
+aiguillages sur une ligne principale avec un ordinateur ou les boutons d'un panneau de contr&#244;le.
+Les Itin&#233;raires peuvent &#233;galement &#234;tre mis en place pour contr&#244;ler le r&#233;glage des ensembles d'
+aiguillages dans les zones de garage ou de triages. Une autre utilisation consiste &#224; fixer la disposition
+des aiguillages &#224; la position par d&#233;faut lorsque l'on commence une session de fonctionnement.
+Les Itin&#233;raires JMRI sont similaires aux itin&#233;raires mis en &#339;uvre dans le Digitrax Chief system
+, &#224; l'exception des itin&#233;raires JMRI o&#249; vous pouvez m&#233;langer les aiguillages contr&#244;l&#233;s par des
+syst&#232;mes mat&#233;riels diff&#233;rents, et peut &#233;galement mettre des capteurs, jouer un son, ou
+ex&#233;cuter un script. </p>
+<p> Les option d'un Itin&#233;raire peuvent &#234;tre contr&#244;l&#233;es par un maximum de trois capteurs et/ou par
+un aiguillage de cocommande. Lorsqu'un Itin&#233;raire est cr&#233;&#233;, ou quand il est lu &#224; partir d'un
+fichier de configuration, l'Itin&#233;raire est "activ&#233;", il est mis en place
+pour surveiller automatiquement les changements d'&#233;tat de ses capteurs de contr&#244;le
+et/ou de l'aiguillage de contr&#244;le. Lorsque les capteurs de contr&#244;le ou l'aiguillage change
+de la mani&#232;re sp&#233;cifi&#233;e par l'utilisateur, l'Itin&#233;raire est 'set' ('d&#233;clench&#233;');
+les aiguillages et les capteurs inclus sont r&#233;gl&#233;s comme indiqu&#233;, et si
+sp&#233;cifi&#233;, un son est jou&#233; ou un script est ex&#233;cut&#233;. </p>
+<p> le Tableau Itin&#233;raire contient une colonne "Activ&#233;". Pour un itin&#233;raire 
+d&#233;clench&#233; par ses capteurs de contr&#244;le ou ses aiguillage de contr&#244;le,
+elle doit &#234;tre "activ&#233;", la case dans la colonne "Activ&#233;" 
+doit &#234;tre coch&#233;e. Vous pouvez d&#233;cocher cette case pour d&#233;sactiver temporairement un
+itin&#233;raire, c'est &#224; dire l'emp&#234;cher de fixer ses aiguillages,
+capteurs, etc quand un capteur de commande ou l'aiguillage de commande change. </p>
+
+<h3>Le Tableau Itin&#233;raire</h3>
+Les Itin&#233;raires peuvent &#234;tre vus et configur&#233;s en utilisant <a href="../../package/jmri/jmrit/beantable/RouteTable.shtml">Le Tableau 
+Itin&#233;raires</a>.
+Il contient les colonnes suivantes:
+	<ul>
+	<li>Nom Syst&#232;me</li>
+	<li>Nom Utilisateur (option )</li>
+	<li>Commentaire ( option, double clic pour &#233;diter )</li>
+	<li>Activ&#233; ( case &#224; cocher )</li>
+	<li>Verrouill&#233; ( case &#224; cocher )</li>
+
+<h3>Commandes du Tableau Itin&#233;raires</h3>
+<p> En bas du tableau il y a le bouton  <a href="../../package/jmri/jmrit/beantable/RouteAddEdit.shtml"><b>Ajouter...</b></a>.
+
+<h2> Comment configurer les Itin&#233;raires:</h2>
+
+<p> d'abord s'assurer que le <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau Aiguillage</a> contient tous les 
+aiguillages impliqu&#233;s dans les Itin&#233;raires &#224; d&#233;finir, et que le 
+<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a> 
+contient tous les capteurs n&#233;cessaires. Ensuite, s&#233;lectionnez <b>Outils</b> -&gt; <b>Tableaux</b> -&gt; <b>Itin&#233;raires</b>, ,
+et cliquez sur le bouton <b> Ajouter ...</b> au bas du tableau pour
+faire appara&#238;tre la fen&#234;tre Ajouter/Modifier l'Itin&#233;raire. </p>
+
+<a name="addroute"> <H3> Pour ajouter un nouvel Itin&#233;raire: </H3> </a>
+
+<ol>
+<p> <li> Entrez un nom  syst&#232;me, telles que "IR100' - tout
+Nom court peut &#234;tre utilis&#233; &#224; condition qu'il soit diff&#233;rent du nom syst&#232;me 
+d'autres itin&#233;raires. </p>
+<p> Par convention, les noms syst&#232;mes commencent g&#233;n&#233;ralement par "IR" pour Internal Route
+. </P>
+</Li>
+<p> <li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
+du nom utilisateur d'autres itin&#233;raires sera accept&#233;e, mais il est
+sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'Itin&#233;raire. </p>
+<p> Notez qu'avant la version 1.5.6 de JMRI, il y avait un bug qui
+vous a emp&#234;ch&#233; d'avoir plus d'un nom utilisateur vide. Dans les
+ versions les plus r&#233;centes, vous pouvez avoir autant d'Itin&#233;raires avec des noms d'utilisateur vide
+que vous le souhaitez; ils doivent &#234;tre r&#233;f&#233;renc&#233;s via leurs noms syst&#232;me,
+bien s&#251;r. </p>
+</Li>
+<p> <li> S&#233;lectionnez les aiguillages devant &#234;tre inclus dans le nouvel
+itin&#233;raire dans la liste de tous les aiguillages d&#233;finis, en cliquant sur la
+case dans la colonne <b>Inclure</b>. Pour chaque aiguillage inclus,
+utilisez la liste d&#233;roulante dans la colonne <b>Fixer &#201;tat</b>  pour s&#233;lectionner si
+l'aiguillage inclus doit d'&#234;tre "Fix&#233; Direct", "Fix&#233; D&#233;vi&#233;" ou
+" Les deux" lorsque l'Itin&#233;raire est "Fix&#233;". Ne vous inqui&#233;tez pas si tout n'est pas
+parfait. Il est facile de modifier ces informations ult&#233;rieurement. </P>
+<p> Notez que la fen&#234;tre  Ajouter/Modifier Itin&#233;raire vous permet d'afficher
+"Tous" les Aiguillages et Capteurs ou Les Aiguillages et Capteurs "inclus". C'est
+ uniquement pour votre convenance pour v&#233;rifier que tous les aiguillages d&#233;sir&#233;s
+et/ou les capteurs ont &#233;t&#233; inclus; elle n'affecte pas les entr&#233;es 
+d'informations.</p>
+</Li>
+<p> <li> De m&#234;me, s&#233;lectionnez les capteurs &#224; inclure dans le nouvel
+Itin&#233;raire dans la liste de tous les capteurs d&#233;finis, en cliquant sur le
+case dans la colonne <b>Inclure</b> . Pour chaque capteur inclus,
+utilisez la liste d&#233;roulante dans la colonne <b>Fixer &#201;tat </b>  pour s&#233;lectionner si
+ce capteur doit &#234;tre "Fix&#233; Actif", "Fix&#233; Inactif" ou "Les deux" 
+lorsque l'itin&#233;raire est "fix&#233;".</P>
+</Li>
+<p> <li> Si vous voulez que l'Itin&#233;raire joue un son lorsque il se d&#233;clenche,
+entrez le nom de fichier d'un fichier son dans la zone de texte suivante "Jouer fichier son"
+. En cliquant <b>fixer</b> pour faire appara&#238;tre une s&#233;lection de fichiers
+ pour aider &#224; localiser le fichier. Une fois le fichier localis&#233;, cliquer sur 
+son nom dans la bo&#238;te de dialogue le copieras, avec le chemin complet, dans
+la zone de texte. </p>
+</Li>
+<li>
+<p> De m&#234;me, si vous voulez un script &#224; ex&#233;cuter lorsque l'Itin&#233;raire
+d&#233;clenche, entrez son nom de fichier dans la zone de texte sur la droite. Le bouton'
+<b>Fixer</b>  peut &#234;tre utilis&#233; comme ci-dessus pour l'aider &#224; entrer 
+les informations sur le fichier script. </p>
+</Li>
+<p> <li> Si vous voulez que le r&#233;glage de l'Itin&#233;raire soit contr&#244;l&#233;
+par une ou plusieurs capteurs d'entr&#233;e, entrez leurs noms (nom syst&#232;me ou nom utilisateur)
+et s&#233;lectionner &#224; quel genre de logique ils ob&#233;issent. Les Choix logique sont d&#233;crits dans
+<A  HREF="#sensorlogic">d&#233;tails ci-dessous </a>.</P>
+<P> Lorsque vous enregistrez vos Itin&#233;raires et les restaurez en utilisant un fichier de configuration,
+le nom du capteur que vous entrez ici est utilis&#233; pour recr&#233;er l'itin&#233;raire.
+Un nom syst&#232;me sera toujours associ&#233; avec le capteur de la m&#234;me entr&#233;e.
+Un nom utilisateur peut &#234;tre d&#233;plac&#233; &#224; une autre entr&#233;e en changeant les entr&#233;es
+dans le tableau Capteur. Par exemple, "Occupation Est OS"pourrait &#234;tre
+chang&#233; depuis l'entr&#233;e du capteur LocoNet LS12 &#224; LS24 pour simplement en associant
+ce nom utilisateur avec un nom syst&#232;me diff&#233;rent, ce qui rend la rec&#226;blage du r&#233;seau
+facile. Cependant les noms utilisateurs entr&#233;s ici doivent exister, si vous changez le
+nom utilisateur du capteur de "Occupation East OS" &#224; "Occupation Orient", l'itin&#233;raire
+ne se charge pas correctement jusqu'&#224; ce que vous le modifiez pour utiliser le nouveau nom.
+</P>
+</Li>
+<p> <li> &#201;galement optionnel, si vous souhaitez activer 
+l'Itin&#233;raire lorsqu'un aiguillage particulier change d'&#233;tat, saisissez un
+nom d'aiguillage (nom syst&#232;me ou nom utilisateur) et s&#233;lectionnez la logique &#224; laquelle il
+ob&#233;ira. Les choix de logique sont expliqu&#233;s en d&#233;tail
+<A HREF="#turnoutlogic"> ci-dessous </a>.</P>
+<P> Lorsque vous enregistrez et restaurez vos Itin&#233;raires en utilisant un fichier de configuration,
+le nom de l'aiguillage que vous indiquez ici est utilis&#233; pour recr&#233;er l'itin&#233;raire.
+Un nom syst&#232;me sera toujours associ&#233; au m&#234;me aiguillage.
+Un nom utilisateur peut &#234;tre d&#233;plac&#233; vers un autre aiguillage en changeant les entr&#233;es
+ aiguillage dans le tableau. Par exemple, "Fixer Voie 5" pourrait &#234;tre
+chang&#233; depour un capteur d'aiguillage  de 105 &#224;l'aiguillage 5 en associant simplement
+ce nom utilisateur avec un nom de syst&#232;me diff&#233;rent, ce qui rend le rec&#226;blage plus
+facile. Les noms utilisateurs entr&#233;s ici doivent exister cependant, si vous changez le
+nom utilisateur de l'aiguillage de partir "Track Set 5" &#224; "Set Trk 5", l'itin&#233;raire
+ne se charge pas correctement jusqu'&#224; ce que vous modifiez pour utiliser le nouveau nom.
+</P>
+
+ </Li>
+ <li>
+ <p> L'entr&#233;e "Ajouter retard de" est normalement laiss&#233; &#224; "0". Quand un
+ Itin&#233;raire commande ensembles ses aiguillages, il attend 250 millisecondes entre chaque
+ commande d'aiguillage. Si ce n'est pas assez de temps entre chaque
+ commande pour votre type de contr&#244;le d'aiguillage, vous pouvez augmenter
+ le temps entre les commandes en ajoutant un retard (en millisecondes).
+ </P>
+<p><li>Cliquez sur <b>Ajouter Itin&#233;raire</b> au
+le bas de la fen&#234;tre. Si tout va bien, un message
+indiquant "Nouvel Itin&#233;raire Ajout&#233; ..." sera affich&#233; dans la bo&#238;te de notes
+pr&#232;s du bas de la fen&#234;tre. S'il ya des probl&#232;mes avec quoi que ce soit,
+un message d'erreur s'affiche dans la bo&#238;te de notes; vous devez alors
+corriger l'erreur et cliquez sur <b>Ajouter Itin&#233;raire</b> &#224; nouveau.</p></li>
+</Ol>
+
+<h3>Pour modifier un Itin&#233;raire existant</h3>
+
+<ol>
+ 
+<li>Modifier un itin&#233;raire existant peut &#234;tre d&#233;marr&#233; suivant l'une des deux fa&#231;ons suivantes:
+<ul>
+<li>Cliquez sur <b>Modifier un Itin&#233;raire</b> dans le Tableau Itin&#233;raire.</li>
+<li> Entrez le nom  syst&#232;me de l'Itin&#233;raire &#224; &#233;diter dans la fen&#234;tre 
+Ajouter/Modifier et cliquez sur le bouton <b>Modifier Itin&#233;raire</b> au 
+bas de la fen&#234;tre Ajouter/modifier Itin&#233;raire. Ce doit &#234;tre le m&#234;me
+que le nom syst&#232;me indiqu&#233; dans le Tableau Itin&#233;raire. </li>
+</Ul>
+Le bouton <b>Ajouter Itin&#233;raire</b> et <b>Modifier Itin&#233;raire</b>  dans la fen&#234;tre
+Ajouter/Modifier va changer pour
+<b>Mise &#224; Jour Itin&#233;raire</b> et <b>Annuler Itin&#233;raire</b>.</li>
+<li>Effectuez les modifications ou les ajouts que vous devez dans l'information dans
+la bo&#238;te de dialogue. Notez que le nom  syst&#232;me d'Itin&#233;raire &#233;dit&#233; ne peut pas &#234;tre
+chang&#233;, mais le nom utilisateur peut &#234;tre chang&#233;. Les autres &#233;l&#233;ments sont d&#233;crits
+<A HREF="#additin&#233;raire"> ci-dessus</a>.</Li>
+<li> Apr&#232;s avoir modifi&#233; les informations d'Itin&#233;raire, cliquez sur <b>Mise &#224; Jour
+Itin&#233;raire</b> pour changer l'itin&#233;raire s&#233;lectionn&#233;. Si tout va bien, un
+message indiquant "Itin&#233;raire &#224; jour ..." sera affich&#233; dans les notes
+ du bas de la fen&#234;tre. S'il 'y a un probl&#232;me, un message d'erreur
+ sera affich&#233; dans la bo&#238;te de notes, et la mise &#224; jour est arr&#234;t&#233;e
+pour vous permettre de corriger l'erreur et cliquez sure <b>Mise &#224; Jour
+Itin&#233;raire</b> &#224; nouveau.</li>
+<li>Cliquez > <b>Annuler</b> pour quitter le mode &#233;dition sans changer l'
+itin&#233;raire s&#233;lectionn&#233;. Si la fen&#234;tre  Ajouter/Editer Itin&#233;raire est rejet&#233;e (ferm&#233;e)
+ dans le mode &#233;dition, <b>Annuler</b> est automatiquement s&#233;lectionn&#233;, et aucune
+modification n'est apport&#233;e &#224; l'Itin&#233;raire s&#233;lectionn&#233;.</li>
+</Ol>
+
+
+<h3>Configurer (d&#233;clencher) un Itin&#233;raire: </h3>
+
+<p>Les Itin&#233;raires peuvent &#234;tre "d&#233;clench&#233;s" en cliquant sur le bouton <b>Set</b> dans la colonne d'&#201;tat
+ du Tableau Itin&#233;raire. Un Itin&#233;raire peut &#233;galement &#234;tre r&#233;gl&#233; par les boutons du tableau de commande.
+Si les capteurs de ces boutons sont d&#233;finis comme des capteurs de commande dans les informations de l'Itin&#233;raire
+. Si une aiguillage de contr&#244;le est d&#233;fini dans les informations de l'Itin&#233;raire, d&#233;viant
+ou mettant en direct l'aiguillage depuis votre r&#233;gulateur physique qui d&#233;clenchera &#233;galement l'Itin&#233;raire.
+Notez que les
+aiguillages de contr&#244;le peuvent &#234;tre des aiguillages r&#233;els, aiguillages fant&#244;me ou aiguillages internes
+comme d&#233;crit<A  HREF="#turnoutlogic"> ci-dessous </a>. Un Itin&#233;raire peut &#233;galement &#234;tre d&#233;clench&#233;
+&#224; partir d'un Logix, comme l'action d'une de ses conditions. Si vous avez besoin de 
+logique plus puissante que celle fournit par l'Itin&#233;raire lui-m&#234;me, pour commander votre itin&#233;raire ,
+envisager d'utiliser un <a href="Logix.shtml"> Logix </a>. </p>
+
+<p> Notez que activ&#233;s/d&#233;sactiv&#233;s et "droit de v&#233;to" logique discut&#233; ci-dessous pour la commande des
+<A HREF="#sensorlogic"> capteurs </a> et pour le contr&#244;le des
+<A HREF="#turnoutlogic"> aiguillages </a> ne s'appliquent qu'aux m&#233;canisme de contr&#244;le automatis&#233;s d'un Itin&#233;raire
+. Ni la logique "D&#233;sactiv&#233;e", ni "v&#233;to" permettra d'&#233;viter qu'un itin&#233;raire
+soit valid&#233; (d&#233;clench&#233;) en utilisant le <b>Set</b> &#224; partir d'un bouton ou Logix. </p>
+
+<p> Il est &#233;galement utile de noter que si un itin&#233;raire a &#233;t&#233; d&#233;clench&#233; et est en train
+d'envoyer des commandes aux aiguillages de l'Itin&#233;raire est marqu&#233; comme occup&#233; jusqu'&#224; ce que cette op&#233;ration soit
+achev&#233;e. Un Itin&#233;raire ne peut &#234;tre d&#233;clench&#233; &#224; nouveau alors qu'il est occup&#233;, c'est &#224; dire jusqu'&#224; ce que son
+op&#233;ration en cours soit termin&#233;e.
+
+<h3> Pour Sauvegarder les Itin&#233;raires sur le disque : </h3>
+
+<p> Les Itin&#233;raires  sont enregistr&#233;s dans votre
+fichier de configuration de r&#233;seau, avec les aiguillages, les capteurs, les t&#234;tes de signal
+, les lumi&#232;res, etc. Pour stocker ces informations sur le disque, utilisez <b>Enregistrer la Configuration ...</b> 
+dans le menu du <b>Fichier</b> en haut du Tableau Itin&#233;raire
+ (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez <b>Stocker Panneau ...</b>
+dans le menu <b>Panneau</b>. Notez que l'&#233;tat activ&#233;/d&#233;sactiv&#233; pour chaque Itin&#233;raire
+n'est pas enregistr&#233; dans le fichier de configuration. Lorsque les Itin&#233;raires sont charg&#233;s &#224; partir d'un
+fichier de configuration, ils sont tous activ&#233;s.
+
+<a name="sensorlogic"> <H3> Le contr&#244;le des Itin&#233;raires &#224; partir de Capteurs </H3> </a>
+
+Le fonctionnement d'un Itin&#233;raire peut &#234;tre contr&#244;l&#233; par un maximum de trois
+capteurs. Ceux-ci peuvent &#234;tre reli&#233;s &#224; des d&#233;tecteurs d'occupation ou
+commutateurs sur le TCO, ou m&#234;me juste pour faire fonctionner l'itin&#233;raire
+&#224; partir d'un panneau de commande sur l'ordinateur. Ces capteurs peuvent &#234;tre des capteurs r&#233;els
+ ou des d&#233;tecteurs internes.
+<P>
+Par d&#233;faut, lorsque l'un des
+capteurs d&#233;finis passe &#224; l'&#233;tat actif, l'Itin&#233;raire sera d&#233;clench&#233;.
+Cela pourrait par exemple &#234;tre utilis&#233; pour d&#233;finir un Itin&#233;raire quand un canton est devenu occup&#233;,
+ou quand un bouton a &#233;t&#233; pouss&#233;.
+<P>
+Une logique plus puissante peut aussi faire des choses comme "d&#233;finir
+Itin&#233;raires pour avoir la position d'un aiguillage qui suive la position d'un
+interrupteur du panneau ". Pour cela, chacun des trois capteurs a un" mode
+associ&#233;, qui peut &#234;tre:
+<DL>
+<DT> "Sur Actif" </dt> <dd> La m&#233;thode par d&#233;faut, l'Itin&#233;raire est d&#233;clench&#233; lorsque
+le capteur passe actif, par exemple "D&#233;viez l'aiguillage 12 lorsque le capteur 12 devient
+actif "</dd>
+
+<DT> "Sur inactif" </dt> <dd> L'Itin&#233;raire est d&#233;clench&#233; lorsque le capteur passe
+inactif. Par exemple, en utilisant l'Itin&#233;raire ci-dessus, plus un deuxi&#232;me Itin&#233;raire
+"Fermer l'aiguillage 12 lorsque le capteur 12 devient inactif" aura l'aiguillage 12
+&#224; suivre un interrupteur du panneau reli&#233; au capteur 12 comme il est retourn&#233; en arri&#232;re et en avant 
+etc. </dd>
+
+<DT> "Sur le changement" </dt> <dd> L'Itin&#233;raire est d&#233;clench&#233; lorsque l'&#233;tat du capteur
+change, que ce soit d'actif &#224; inactif ou inactif &#224; actif. </dd>
+
+<DT> "V&#233;to actif" </dt> <dd> Si ce capteur est actif, les autres capteurs param&#233;tr&#233;s
+"sur actif", "Sur inactif", "Le changement" seront ignor&#233;s, et un
+ contr&#244;le d'aiguillage r&#233;gl&#233; "sur Direct", "sur D&#233;vi&#233;" ou "sur Changement" sera
+&#233;galement ignor&#233;. Cela a plusieurs utilisations, par exemple pour emp&#234;cher de d&#233;vier un
+aiguillage sous un train, lorsque le canton est montr&#233; occup&#233;. </dd>
+
+<DT> "V&#233;to inactif" </dt> <dd> Comme veto actif, mais l'autre polarit&#233; de 
+la logique. </dd>
+
+</DL>
+<p> Notez qu'il y a ici un "et/ou" implicite ici. Tous les "v&#233;to"
+capteur et le "v&#233;to" aiguillage, s'il y en a , doivent &#234;tre dans leur 
+&#233;tat de non-droit de v&#233;to_et _ au moins un des capteurs de d&#233;clenchement ou d'un
+d&#233;clenchement d'aiguillage doivent voir le changement appropri&#233; pour que l'
+Itin&#233;raire soit r&#233;alis&#233;. </P>
+
+<a name="turnoutlogic">  <H3> Contr&#244;le d'Itin&#233;raire &#224; partir d'un Aiguillage </H3> </a>
+<p> La r&#233;alisation (d&#233;clenchement) d'un Itin&#233;raire peut &#234;tre commandl&#233; &#224; partir d'un aiguillage.
+Cet aiguillage peut &#234;tre un aiguillage physique r&#233;el, un aiguillage "fant&#244;me" (un num&#233;ro d'aiguillage
+ DCC sans aiguillage physique correspondant), ou aiguillage "interne". </p>
+<UL>
+<LI> Si un aiguillage r&#233;el est utilis&#233;, l'aiguillage r&#233;el va
+recevoir la commande d'activation original, puis l'
+Itin&#233;raire fixera toutes les positions d'aiguillage et/ou les &#233;tats des capteur qui ont &#233;t&#233; sp&#233;cifi&#233;s
+. Ceci peut &#234;tre utilis&#233; pour d&#233;finir de multiples
+aiguillages pour correspondre &#224; un aiguillage r&#233;el d'origine, ou pour d&#233;finir
+le retour de l'aiguillage &#224; sa position initiale (si vous ne voulez pas que 
+quiconque le change), etc L'Itin&#233;raire se d&#233;clenche lorsque
+l'aiguillage est fix&#233; &#224; partir de JMRI, et/ou avec certains
+syst&#232;mes DCC (Digitrax LocoNet et Lenz XPressNet syst&#232;mes), il
+ se d&#233;clenche quand un op&#233;rateur commande &#224; l'aiguillage
+ de changer d'&#233;tat &#224; partir d'un r&#233;gulateurr de poche.
+<LI> Un aiguillage "fant&#244;me  est une aiguillage DCC qui n'
+existent pas r&#233;ellement. Pour en utiliser un, il suffit de cr&#233;er une entr&#233;e d'aiguillage
+pour un num&#233;ro d'adresse qui n'existe pas sur votre r&#233;seau.
+Les op&#233;rateurs peuvent s&#233;lectionner le num&#233;ro de l'aiguillage fant&#244;me
+ sur leurs r&#233;gulateur et envoyer des commandes pour provoquer la mise en place de l'Itin&#233;raire
+ . Avec l'ajout de capteurs comme les v&#233;tos dans les Itin&#233;raires
+ vous pouvez faire des choses comme  permettre aux op&#233;rateurs de changer les aiguillages
+ (via l'Itin&#233;raire) lorsque le r&#233;partiteur a valid&#233; par un bouton un acc&#232;s local.
+<LI> Un "aiguillage interne" est celui qui n'existe que dans le
+ logiciel JMRI, il ne correspond pas &#224; une adresse particuli&#232;re
+sur la r&#233;seau, et il ne correspond en particuluer &#224; aucun
+mat&#233;riel sur le r&#233;seau. Le nom  syst&#232;me des aiguillages internes
+commencer par "IT", par exemple "IT201". JMRI sait qu'ils sont 
+distincts du r&#233;seau et n'a donc pas &#224; envoyer de commandes au
+mat&#233;riel connect&#233; lorsque l'un change . Ceux-ci peuvent &#234;tre utilis&#233;s avec des
+Itin&#233;raires demandant une logique compliqu&#233;e sous-jacente.
+Par exemple, une ic&#244;ne sur un panneau peut d&#233;finir un aiguillage interne,
+qui &#224; son tour peut fixer l'aiguillage d'une groupe de triage entier.
+ </UL>
+<p> similaires aux Capteurs de commande ci-dessus, l'aiguillage de commande
+a un "mode" qui lui est associ&#233;, qui peut &#234;tre:
+<DL>
+<DT> "Sur direct" </dt> <dd> La m&#233;thode par d&#233;faut, l'Itin&#233;raire est d&#233;clench&#233; lorsque
+l'aiguillage change pour l'&#233;tat direct. </dd>
+<DT> "Sur D&#233;vi&#233;" </dt> <dd> L'Itin&#233;raire est d&#233;clench&#233;e lorsque l'aiguillage
+change pour l'&#233;tat d&#233;vi&#233;. </dd>
+<DT> "Sur Changement" </dt> <dd> L'Itin&#233;raire est d&#233;clench&#233; lorsque l'&#233;tat de l'aiguillage
+change, que ce soit de direct &#224; partir d&#233;vi&#233; ou d&#233;vi&#233; &#224; la position directe. </dd>
+<DT> "V&#233;to direct" </dt> <dd> Si cette aiguillage est direct, les capteurs mis 
+"Sur Actif", "Sur Inactif" "Sur Changement" seront ignor&#233;s. </dd>
+<DT> "Veto d&#233;vi&#233;" </dt> <dd> Si cette aiguillage est d&#233;vi&#233;, les capteurs mis en
+"Sur Actif", "Sur Inactif" Le changement" seront ignor&#233;. </dd>
+</DL>
+<p> Un seul "v&#233;to" aiguillage ou "veto"  capteur peut emp&#234;cher l'Itin&#233;raire d'&#234;tre
+d&#233;clench&#233;. Tous les "v&#233;to" des capteurs et des "v&#233;to" d'aiguillage, s'il y en a
+ un, doivent &#234;tre dans leur &#233;tat non-v&#233;to_et_ au moins l'un des capteurs ou un des aiguillage de
+d&#233;clenchement doit voir le Changement appropri&#233; pour que l'Itin&#233;raire soit fix&#233;
+ </p>  
+
+    
+<!--#include virtual="/Footer" -->
 </body>
 </html>
