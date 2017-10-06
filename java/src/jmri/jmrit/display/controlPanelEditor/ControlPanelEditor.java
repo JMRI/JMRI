@@ -410,21 +410,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-            ControlPanelEditor panelEd;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        editItem.addActionListener((ActionEvent event) -> {
                 ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                 ii.pack();
                 ii.setVisible(true);
-            }
-
-            ActionListener init(ControlPanelEditor pe) {
-                panelEd = pe;
-                return this;
-            }
-        }.init(this));
+        });
 
         editItem = new JMenuItem(Bundle.getMessage("PEView"));
         _fileMenu.add(editItem);
