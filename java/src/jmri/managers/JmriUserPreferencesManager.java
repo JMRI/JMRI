@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.BoxLayout;
@@ -1445,7 +1446,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             return parameters.keySet();
         }
 
-        final HashMap<String, Object> parameters = new HashMap<>();
+        final ConcurrentHashMap<String, Object> parameters = new ConcurrentHashMap<>();
 
     }
 
