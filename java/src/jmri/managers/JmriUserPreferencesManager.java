@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.BoxLayout;
@@ -1392,10 +1393,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     protected final static class WindowLocations {
 
-        Point xyLocation = new Point(0, 0);
-        Dimension size = new Dimension(0, 0);
-        boolean saveSize = false;
-        boolean saveLocation = false;
+        private Point xyLocation = new Point(0, 0);
+        private Dimension size = new Dimension(0, 0);
+        private boolean saveSize = false;
+        private boolean saveLocation = false;
 
         WindowLocations() {
         }
@@ -1434,10 +1435,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             saveSize = true;
         }
 
-        void setProperty(String key, Object value) {
-            parameters.put(key, value);
+        void setProperty(@Nonnull String key, @CheckForNull Object value) {
+            if (value == null) {
+                parameters.remove(key);
+            } else {
+                parameters.put(key, value);
+            }
         }
 
+        @CheckForNull
         Object getProperty(String key) {
             return parameters.get(key);
         }
