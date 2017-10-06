@@ -9502,7 +9502,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     @Override
     protected void paintTargetPanel(Graphics g) {
-        // Nothing to do here… 
+        // Nothing to do here 
         // All drawing has been moved into LayoutEditorComponent
         // which calls draw (next method below this one)
         // This is so the layout is drawn at level three
@@ -9609,6 +9609,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             setTrackStrokeWidth(g2, false);
             g2.draw(new Line2D.Double(beginLocation, currentLocation));
 
+            // highlight unconnected endpoints of all tracks
             Color highlightColor = ColorUtil.setAlpha(Color.yellow, 0.75);
             Color connectColor = ColorUtil.setAlpha(Color.green, 0.5);
             g2.setColor(highlightColor);
