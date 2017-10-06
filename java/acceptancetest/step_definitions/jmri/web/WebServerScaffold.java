@@ -2,6 +2,7 @@ package jmri.web;
 
 import cucumber.api.Scenario;
 import cucumber.api.java8.En;
+import org.junit.Assert;
 
 import jmri.web.server.WebServer;
 
@@ -34,6 +35,7 @@ public class WebServerScaffold implements En {
              jmri.util.JUnitUtil.tearDown();
          } catch(Exception ex) {
              // if an exception occurs here, we may want to raise a flag,
+             Assert.fail("Exception occured during web server shutdown:" + ex);
          }
       });
    }
