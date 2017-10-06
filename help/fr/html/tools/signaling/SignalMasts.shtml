@@ -1,63 +1,50 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; le 2013-10-01-->
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; le 2016-09-15--> 
+<title>JMRI: Signal Masts</title>
 
-  <title>JMRI: Signal Masts</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI: M&acirc;ts Signal</h1>
 
-      <p class="subtitle">Informations g&eacute;n&eacute;rales sur
-      les M&acirc;ts Signal JMRI</p>
+<H1>JMRI: M&#226;ts de Signalisation</H1>
+<p class=subtitle>
+    Informations g&#233;n&#233;rales sur les M&#226;ts Signal JMRI
+</p>
 
-      <div class="para">
-        <a href=
-        "../../../package/jmri/jmrit/beantable/SignalMastTable.png">
-        <img src=
-        "../../../package/jmri/jmrit/beantable/SignalMastTable.png"
-        height="86" width="338" align="right"></a> Les objets JMRI
-        "SignalMast" vous permettent d'afficher des aspects
-        prototypiques sur les signaux. Pour plus d'information,
-        consultez la page <a href="AspectSignaling.shtml">Aspect
-        Signalisation</a> .
+<div class=para>
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
+   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png" 
+        height="86" width="338" align="right">
+</a>
+Les objets JMRI "SignalMast"  vous permettent d'afficher des aspects réalistes sur les
+signaux. Pour plus d'information, consultez la page<a  href="AspectSignaling.shtml"> Aspect Signalisation </a>.
+<p>
+Les  M&#226;ts de Signalisation sont configur&#233;s via le
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau  M&#226;ts de Signalisation  </a>
+Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..." 
+sur le tableau, qui vous emm&#232;ne &#224; la
+<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"> fen&#234;tre "Ajouter  M&#226;ts de Signalisation" </a>.
 
-        <p>Les M&acirc;ts Signal sont configur&eacute;s via le
-        <a href=
-        "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
-        Tableau M&acirc;t de Signal</a> Vous pouvez en ajouter de
-        nouveaux avec le bouton "Ajouter ..." sur le tableau, qui
-        vous emm&egrave;ne &agrave; la <a href=
-        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
-        fen&ecirc;tre "Ajouter M&acirc;t de Signal"</a> .</p>
+<p>
+Du tableau, vous pouvez d&#233;finir des M&#226;ts de Signalisation individuels avec tous les aspects qu'ils sont capables
+d'afficher en cliquant dans la colonne  "Aspect" 
 
-        <p>Du tableau, vous pouvez d&eacute;finir des m&acirc;ts de
-        signal individuels avec tous les aspects qu'ils sont
-        capables d'afficher en cliquant dans la colonne "Aspect" 
-        <!--#include virtual="/Footer" --></p>
-      </div>
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
 </body>
-</html>
+</html>>

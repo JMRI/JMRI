@@ -29,7 +29,9 @@ public class ServletUtilTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     @Test
     public void testGetRailroadName() {

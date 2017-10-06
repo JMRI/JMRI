@@ -1,85 +1,32 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Translated  by Blorec Herv&#233; le 2013-09-13-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Herv&#233; le 2017-01-29-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+ <title>JMRI Hardware Support - Fleischmann Twin Centre via Serial Port</title>
+    <meta content="Michael Beck" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
 
-  <title>JMRI Install Guide: Fleischmann Twin Centre via Serial
-  Port</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Michael Beck" name="Author">
-  <meta content="John Plocher" name="Author">
-  <meta name="keywords" content=
-  "Uhlenbrock Intellibox java model railroad JMRI install">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>Guide d'Installation JMRI: Centrale Twin Fleischmann via
-      Port S&eacute;rie</h1>
+<div id="mainContent">
 
-      <p>DecoderPro peut communiquer avec une Centrale Twin
-      Fleischmann via le port s&eacute;rie int&eacute;gr&eacute; et
-      le protocole LocoNet&reg;.</p>
+      <H1> Support Mat&#233;riel: Fleischmann Twin Centre</H1>
 
-      <p>Notez que cette fonctionnalit&eacute; a &eacute;t&eacute;
-      ajout&eacute;e &agrave; JMRI en test sur la version 1.5.2, et
-      n'est pas pr&eacute;sente dans la Version
-      pr&eacute;c&eacute;dente 1.4 de production. Si vous utilisez
-      une version avant la version 1.5.2 JMRI, S'il vous
-      pla&icirc;t aller &agrave; la <a href=
-      "http://jmri.org/download/index.shtml">page de
-      t&eacute;l&eacute;chargement</a> pour
-      t&eacute;l&eacute;charger la derni&egrave;re version.</p>
+<P>JMRI peut communiquer avec Fleischmann Twin Centre de plusieurs fa&#231;ons. Pour avoir plus de d&#233;tails, voir la page 
+<a href="Uhlenbrock.shtml"> sur la configuration des &#233;quipements compatibles avec Uhlenbrock</a>.
 
-      <p>La Centrale Twin a besoin d'avoir ce logiciel mis &agrave;
-      jour &agrave; la version 1.1 ou ult&eacute;rieure.</p>
-
-      <p>Configurer les options de votre Centrale Twin
-      &agrave;:</p>
-
-      <ul>
-        <li>SO 2 valeur 4</li>
-
-        <li>SO 5 valeur 1</li>
-
-        <li>SO 6 valeur 255</li>
-
-        <li>Baudrate 19200</li>
-      </ul>Ensuite, d&eacute;marrez le programme JMRI et le
-      configurer pour:
-
-      <ul>
-        <li>"LocoNet Intellibox Serial Port" protocole</li>
-
-        <li>19200 bauds</li>
-
-        <li>S&eacute;lectionnez mat&eacute;riel Handshake</li>
-
-        <li>S&eacute;lectionnez la centrale de commande DCS100</li>
-      </ul>
-
-      <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
-      <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
 </body>
 </html>
