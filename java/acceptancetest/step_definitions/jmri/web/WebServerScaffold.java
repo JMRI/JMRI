@@ -24,6 +24,7 @@ public class WebServerScaffold implements En {
           jmri.util.JUnitUtil.initDebugPowerManager();
           server = new WebServer(); // a webserver using default preferences.
           server.start();
+          jmri.util.JUnitUtil.waitFor(()->{ return server.isStarted(); });
       });
 
       After(tags, ()->{
