@@ -2,8 +2,8 @@ package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -347,13 +347,26 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return familyTOMap;
     }
 
-    /**
-     * Build the Control Panel Editor tabbed Item Panel frame &amp; menus
-     */
-    public ItemPalette(String title, Editor editor) {
-        super(title, true, true);
-//        long t = System.currentTimeMillis();
-        loadIcons(editor);
+    static public ItemPalette getDefault(String title, Editor ed) {
+        if (GraphicsEnvironment.isHeadless()) {
+            return null;
+        }
+        ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> {
+            return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
+        });
+        instance.pack();
+        instance.setVisible(true);
+        return instance;
+    }
+    
+    private ItemPalette(String title, Editor ed) {
+        super();
+        init(title, ed);
+    }
+    
+    private void init(String title, Editor ed) {
+        this.setTitle(title);
+        loadIcons(ed);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -361,8 +374,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             }
         });
 
-        makeMenus(editor);
-        buildTabPane(this, editor);
+        makeMenus(ed);
+        buildTabPane(this, ed);
 
         setLayout(new BorderLayout(5, 5));
         add(_tabPane, BorderLayout.CENTER);
@@ -373,7 +386,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         pack();
     }
 
-    /**
+    /*
      * Add the tabs on the the Control Panel Editor
      */
     static void buildTabPane(ItemPalette palette, Editor editor) {
@@ -484,38 +497,23 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         menuBar.add(findIcon);
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
-        editItem.addActionListener(new ActionListener() {
-            Editor editor;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        editItem.addActionListener((ActionEvent e) -> {
                 ImageIndexEditor ii = InstanceManager.getDefault(ImageIndexEditor.class);
                 ii.pack();
                 ii.setVisible(true);
-            }
-
-            ActionListener init(Editor ed) {
-                editor = ed;
-                return this;
-            }
-        }.init(editor));
+        });
         findIcon.add(editItem);
         findIcon.addSeparator();
 
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
-        openItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
-            }
+        openItem.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
         });
         findIcon.add(openItem);
 
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
-         searchItem.addActionListener(new ActionListener() {
-             public void actionPerformed(ActionEvent e) {
-                 InstanceManager.getDefault(DirectorySearcher.class).searchFS();
-             }
+         searchItem.addActionListener((ActionEvent e) -> {
+             jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
          });
          findIcon.add(searchItem);
 
@@ -539,7 +537,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         super.windowClosing(e);
     }
 
-    /**
+    /*
      * Look for duplicate name of family in the iterated set
      */
     static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
@@ -561,7 +559,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return true;
     }
 
-    /**
+    /*
      * Adding a new Family of icons to the device type
      */
     static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
@@ -583,14 +581,14 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return false;
     }
 
-    /**
+    /*
      * Getting all the Families of icons for a given device type
      */
     static protected HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
         return _iconMaps.get(type);
     }
 
-    /**
+    /*
      * Removing a Family of icons from the device type
      */
     static protected void removeIconMap(String type, String family) {
@@ -610,7 +608,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         }
     }
 
-    /**
+    /*
      * Getting a clone of the Family of icons for a given device type and family
      */
     static protected HashMap<String, NamedIcon> getIconMap(String type, String family) {
@@ -627,7 +625,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return cloneMap(iconMap);
     }
 
-    /**
+    /*
      * ************ Currently only needed for IndicatorTO type **************
      */
     // add entire family
@@ -677,9 +675,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
     }
 
-    /**
-     * ***********************************************************************
-     */
+    ///////////////////////////////////////////////////////////////////////////////
+    
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
         if (map != null) {

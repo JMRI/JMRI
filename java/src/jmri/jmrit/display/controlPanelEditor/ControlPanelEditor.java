@@ -202,15 +202,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 editor = ed;
                 return this;
             }
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_itemPalette == null) {
-                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
-                }
+                _itemPalette = ItemPalette.getDefault(Bundle.getMessage("MenuItemItemPalette"), editor);
                 _itemPalette.setVisible(true);
             }
         }.init(this));
+        
         if (SystemType.isMacOSX()) {
             mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
         } else {

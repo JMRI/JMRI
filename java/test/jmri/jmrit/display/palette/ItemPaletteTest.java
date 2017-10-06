@@ -20,7 +20,7 @@ public class ItemPaletteTest {
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
+            ip = ItemPalette.getDefault("Test ItemPalette", null);
             ip.pack();
             ip.setVisible(true);
         });
