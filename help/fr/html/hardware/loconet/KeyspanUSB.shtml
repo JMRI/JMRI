@@ -1,117 +1,82 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233;  2013-09-13-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated  by Blorec Herv&#233;  2017-01-29-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+ <title>JMRI Hardware Support - Keyspan USB adapter</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="Keyspan USB java model railroad JMRI install">
 
-  <title>JMRI: Keyspan USB connections</title>
-  <meta http-equiv="Content-Type" content=
-  "texGuide d'Installationt/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta content="John Plocher" name="Author">
-  <meta name="keywords" content=
-  "Keyspan USB java model railroad JMRI install"><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h2>JMRI Guide d'Installation: Keyspan connexions USB</h2>
+<div id="mainContent">
+      <H1>Support Mat&#233;riel: Keyspan connexions USB</H1>
 
-      <p>Cette page d&eacute;crit les tests des deux d'adaptateurs
-      USB ports s&eacute;rie avec l'interface MS100 LocoNett&reg;
-      Digitrax.</p>
+      <p>Cette page d&#233;crit les tests des deux d'adaptateurs USB  ports s&#233;rie avec       
+       l'interface MS100 LocoNett&reg; Digitrax.
+ 
+       <p> MS100 est un syst&#232;me de d&#233;calage de niveau passif qui tire sa puissance du
+       contr&#244;le conduit dans l'interface RS232. Digitrax n'a pas publi&#233; de
+       sch&#233;ma, mais Bill Robinson, de Digital Team a gracieusement fourni un
+       sch&#233;ma de leur d&#233;calage de niveau qui est pens&#233; pour &#234;tre tr&#232;s similaire.</p>
 
-      <p>MS100 est un syst&egrave;me de d&eacute;calage de niveau
-      passif qui tire sa puissance du contr&ocirc;le conduit dans
-      l'interface RS232. Digitrax n'a pas publi&eacute; de
-      sch&eacute;ma, mais Bill Robinson, de l'&eacute;quipe Digital
-      a gracieusement fourni un sch&eacute;ma de leur
-      d&eacute;calage de niveau qui est pens&eacute; pour
-      &ecirc;tre tr&egrave;s similaire.</p>
+      <p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>
 
-      <p><img src="./images/LN_to_PC.gif" alt=
-      "Sample LocoNet to RS232 Interface Schematic"></p>
+    <H2>R&#233;sum&#233;</H2>
 
-      <h2>R&eacute;sum&eacute;</h2>
+	<dl>
+         <dt class="left">Keyspan PDA adapteur P/N USA-19</dt>
+	 <dt class="left">R&#233;sum&#233;: Cela a fonctionn&#233;.</dt>
+	<dd>
+	<p> Malheureusement, cet adaptateur n'est plus fabriqu&#233;. Je crois que le
+remplacement par "Keyspan High Speed Serial Adapter" Partie # USA-19QW est la
+m&#234;me chose.</p>
 
-      <dl>
-        <dt class="left">Keyspan PDA adapteur P/N USA-19</dt>
+	<p>Nous avons eu un rapport que cet adaptateur PDA ne peut pas travailler avec un
+LocoBuffer &#224; 57600 bauds. Il semble y avoir plusieurs versions de l'
+adaptateur, avec des num&#233;ros de mod&#232;le l&#233;g&#232;rement diff&#233;rent, et il se pourrait que
+certains d'entre eux travaillent &#224; 56.000 bauds. </p>
+</dd>
 
-        <dt class="left">R&eacute;sum&eacute;: Cela a
-        fonctionn&eacute;.</dt>
+ <dt class="left">Keyspa<p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>n Dual Serial Adapter P/N USA-28X</dt>
+ <dt class="left">R&#233;sum&#233;:. Cela n'a pas fonctionn&#233;.</dt>
+	<dd>
+	Probl&#232;mes: l'adaptateur USB fournit une seule sortie ligne de contr&#244;le, et
+les sorties du port s&#233;rie ont seulement +/- 5V. Ce ne fut pas suffisant pour alimenter
+le MS100 pendant la r&#233;ception.
+	</dd>
+	</dl>
 
-        <dd>
-          <p>Malheureusement, cet adaptateur n'est plus
-          fabriqu&eacute;. Je crois que le remplacement par
-          "Keyspan High Speed Serial Adapter" Partie # USA-19QW est
-          la m&ecirc;me chose.</p>
+    <H2>D&#233;tails</H2>
 
-          <p>Nous avons eu un rapport que cet adaptateur PDA ne
-          peut pas travailler avec un LocoBuffer &agrave; 57600
-          bauds. Il semble y avoir plusieurs versions de l'
-          adaptateur, avec des num&eacute;ros de mod&egrave;le
-          l&eacute;g&egrave;rement diff&eacute;rent, et il se
-          pourrait que certains d'entre eux travaillent &agrave;
-          56.000 bauds.</p>
-        </dd>
-
-        <dt class="left">Keyspa<br>
-        <img src="./images/LN_to_PC.gif" alt=
-        "Sample LocoNet to RS232 Interface Schematic"><br>
-        <br>
-        n Dual Serial Adapter P/N USA-28X</dt>
-
-        <dt class="left">R&eacute;sum&eacute;:. Cela n'a pas
-        fonctionn&eacute;.</dt>
-
-        <dd>Probl&egrave;mes: l'adaptateur USB fournit une seule
-        sortie ligne de contr&ocirc;le, et les sorties du port
-        s&eacute;rie ont seulement +/- 5V. Ce ne fut pas suffisant
-        pour alimenter le MS100 pendant la r&eacute;ception.</dd>
-      </dl>
-
-      <h2>D&eacute;tails</h2>
-
-      <dl>
+	<dl>
         <dt class="left">Keyspan PDA adapter P/N USA-19</dt>
+	 <dt class="left">R&#233;sum&#233;: Ceci &#224; fonctionn&#233;.</dt>
+	<dd>
+	<p> Ce fut effectivement la seconde s&#233;rie d'adaptateur USB que j'ai essay&#233;, apr&#232;s le
+Keyspan Adaptateur s&#233;rie  double (voir ci-dessous). Cet adaptateur fournit un connecteur DB9
+m&#226;le, brochage disponible &#224; partir de la page  support produit  Keyspan  </a>. Notez qu'il y a deux sorties, RTS et DTR
+, qui peuvent &#234;tre command&#233;es s&#233;par&#233;ment pour fournir le  + et le  - de tension
+pour le MS100. </p>
 
-        <dt class="left">R&eacute;sum&eacute;: Ceci &agrave;
-        fonctionn&eacute;.</dt>
+<p> j'ai reli&#233; une DB9 femelle par un c&#226;ble adaptateur &#224; une DB25 m&#226;le qu'il
+m'est arriv&#233; d'avoir, et le programme d'essais a &#233;t&#233; imm&#233;diatement en mesure de
+communiquer avec le LocoNet. </p>
+ 
+	<h3>Connexions DB9 femmelle &#224; DB25 male </h3>
 
-        <dd>
-          <p>Ce fut effectivement la seconde s&eacute;rie
-          d'adaptateur USB que j'ai essay&eacute;, apr&egrave;s le
-          Keyspan Adaptateur s&eacute;rie double (voir ci-dessous).
-          Cet adaptateur fournit un connecteur DB9 m&acirc;le,
-          brochage disponible &agrave; partir de la page support
-          produit Keyspan . Notez qu'il y a deux sorties, RTS et
-          DTR , qui peuvent &ecirc;tre command&eacute;es
-          s&eacute;par&eacute;ment pour fournir le + et le - de
-          tension pour le MS100.</p>
-
-          <p>j'ai reli&eacute; une DB9 femelle par un c&acirc;ble
-          adaptateur &agrave; une DB25 m&acirc;le qu'il m'est
-          arriv&eacute; d'avoir, et le programme d'essais a
-          &eacute;t&eacute; imm&eacute;diatement en mesure de
-          communiquer avec le LocoNet.</p>
-
-          <h3>Connexions DB9 femmelle &agrave; DB25 male</h3>
-          <pre>
+<pre>
        DB9 pin      DB25 pin
        -------      --------
 
@@ -127,91 +92,66 @@ RI       9            22
 
 </pre>
 
-          <p>Notez que je n'ai pas tester le niveau d'entr&eacute;e
-          du MS100 (DSR, CTS). &lt;/ p&gt; &lt;/ dd&gt;</p>
-        </dd>
+	<p> Notez que je n'ai pas tester le niveau d'entr&#233;e du MS100 (DSR, CTS).
 
-        <dt class="left">Keyspan Dual Serial Adapter P/N
-        USA-28X</dt>
+</ p>
+</ dd>
 
-        <dt class="left">R&eacute;sum&eacute;:. Cela n'a pas
-        fonctionn&eacute;</dt>
+ <dt class="left"> Keyspan Dual Serial Adapter P/N USA-28X </dt>
+ <dt class="left"> R&#233;sum&#233;:. Cela n'a pas fonctionn&#233; </dt>
+<dd>
+<p>
+Le probl&#232;me initial &#233;tait que l'adaptateur USB fournit une seule commande
+Sortie de ligne (voir sur les 
+<a HREF="http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html"> 
+Page support produit Keyspan </a>.
 
-        <dd>
-          <p>Le probl&egrave;me initial &eacute;tait que
-          l'adaptateur USB fournit une seule commande Sortie de
-          ligne (voir sur les <a href=
-          "http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html">
-          Page support produit Keyspan</a> . Cela signifie que le
-          port s&eacute;rie ne peut fournir l'un des deux + ou -
-          niveaux n&eacute;cessaires pour le MS100. Comme il ya
-          deux ports, j'ai construis un petit adaptateur pour
-          utiliser la ligne de commande du second port pour fournir
-          l'autre niveau.</p>
+Cela signifie que le port s&#233;rie ne peut fournir l'un des deux + ou -
+niveaux n&#233;cessaires pour le MS100. Comme il ya deux ports, j'ai construis un
+petit adaptateur pour utiliser la ligne de commande du second port pour fournir
+l'autre niveau. </p>
+	<p>
+	<a HREF="./images/KeyspanJumper.jpg"><img SRC="./images/KeyspanJumper-thumb.jpg"  alt="Keyspan USA-28X did not function"></a></p>(cliquez pour agrandir)</a></p>
 
-          <p><a href="./images/KeyspanJumper.jpg"><img src=
-          "./images/KeyspanJumper-thumb.jpg" alt=
-          "Keyspan USA-28X did not function"></a></p>(cliquez pour
-          agrandir)
 
-          <p>Le deuxi&egrave;me probl&egrave;me &eacute;tait que
-          les sorties du port s&eacute;rie ont seulement + / - 5V.
-          Ce n'&eacute;tait pas suffisant pour alimenter le MS100
-          pendant la r&eacute;ception.</p>
+	<p> Le deuxi&#232;me probl&#232;me &#233;tait que les sorties du port s&#233;rie ont seulement + / -
+5V. Ce n'&#233;tait pas suffisant pour alimenter le MS100 pendant la r&#233;ception.
 
-          <p>L'image suivante montre les niveau des donn&eacute;es
-          &agrave; transmettre depuis l'adaptateur Keyspan. Les
-          Niveaux DC avaient une gamme similaire. Ce fut un grand
-          &eacute;lan pour piloter le LocoNet lui-m&ecirc;me, mais
-          pas au point de recevoir le d&eacute;calage de niveau
-          dans le MS100.</p>
+<p> L'image suivante montre les niveau des donn&#233;es &#224; transmettre depuis l'adaptateur
+Keyspan. Les Niveaux DC avaient une gamme similaire. Ce fut un grand
+&#233;lan pour piloter le LocoNet lui-m&#234;me, mais pas au point de recevoir le
+d&#233;calage de niveau dans le MS100.
 
-          <p><a href="./images/KeyspanTxD.jpg"><img src=
-          "./images/KeyspanTxD-thumb.jpg" alt=
-          "Oscilloscope image showing Keyspan USA-28X TxD voltages">(cliquez
-          pour agrandir)</a></p>
+<p><a HREF="./images/KeyspanTxD.jpg"> <img SRC="./images/KeyspanTxD-thumb.jpg" alt="Oscilloscope image showing Keyspan USA-28X TxD voltages">(cliquez pour agrandir) </a> </p>
 
-          <p>Fournir une tension auxiliaire +/- 9V au MS100, sans
-          utiliser le ligne de sortie comme une source
-          d'alimentation, ne fut pas suffisant. Ce qui suit est
-          l'image des donn&eacute;es re&ccedil;ues, nominalement un
-          signal RS232 d'au moins +/-6 Volts, &agrave; partir du
-          MS100. Le signal de donn&eacute;e re&ccedil;u a
-          &eacute;t&eacute; de 6V, marginalement OK, mais il
-          n'allait pas &agrave; la masse. L'adaptateur s&eacute;rie
-          USB n'a pas rapport&eacute; tous les caract&egrave;res
-          re&ccedil;us au Macintosh Notez que je n'ai pas tester le
-          niveau d'entr&eacute;e du MS100 (DSR, CTS).</p>
+<p>Fournir une tension auxiliaire +/- 9V au MS100, sans utiliser le
+ligne de sortie comme une source d'alimentation, ne fut pas suffisant. Ce qui suit
+est l'image des donn&#233;es re&#231;ues, nominalement un signal RS232 d'au moins
++/-6 Volts, &#224; partir du MS100. Le signal de donn&#233;e re&#231;u a &#233;t&#233; de 
+6V, marginalement OK, mais il n'allait pas &#224; la masse. L'adaptateur s&#233;rie USB
+ n'a pas rapport&#233; tous les caract&#232;res re&#231;us au Macintosh
+Notez que je n'ai pas tester le niveau d'entr&#233;e du MS100 (DSR, CTS).
 
-          <p><a href="./images/KeyspanRxD.jpg"><img src=
-          "./images/KeyspanRxD-thumb.jpg" alt=
-          "Oscilloscope image showing inadequate Keyspan USA-28X RxD voltages">(cliquez
-          pour agrandir)</a></p>
+		
+	<p><a HREF="./images/KeyspanRxD.jpg"><img SRC="./images/KeyspanRxD-thumb.jpg"  alt="Oscilloscope image showing inadequate Keyspan USA-28X RxD voltages">(cliquez pour agrandir)</a></p>
+	
+	<h3>Mat&#233;riel & Logiciel utilis&#233;s</h3>
 
-          <h3>Mat&eacute;riel &amp; Logiciel utilis&eacute;s</h3>
+	<p>Les tests ont &#233;t&#233; effectu&#233;s avec un PowerBook G4 400MHz, Mac OS 9.1. Le
+programme de test est une application Java cr&#233;&#233;e avec CodeWarrior 4.1.0.3
+construire 661. Ce programme est disponible sur demande, voir ci-dessous pour
+l'adresse. L'acc&#232;s Java &#224; des adaptateurs USB s&#233;rie a &#233;t&#233; fait par la mise en oeuvre de  javax.comm par l'interm&#233;diaire du Macintosh de Patrick Beard.
 
-          <p>Les tests ont &eacute;t&eacute; effectu&eacute;s avec
-          un PowerBook G4 400MHz, Mac OS 9.1. Le programme de test
-          est une application Java cr&eacute;&eacute;e avec
-          CodeWarrior 4.1.0.3 construire 661. Ce programme est
-          disponible sur demande, voir ci-dessous pour l'adresse.
-          L'acc&egrave;s Java &agrave; des adaptateurs USB
-          s&eacute;rie a &eacute;t&eacute; fait par la mise en
-          oeuvre de javax.comm par l'interm&eacute;diaire du
-          Macintosh de Patrick Beard.</p>
+<p> Le syst&#232;me Digitrax &#233;tait un Chief, r&#233;gulateur DT100IR, et divers
+d&#233;codeurs sur le r&#233;seau. Le Trafic de la centrale de commande, du r&#233;gulateur et des
+divers composants auxiliaires (PM4, DS54) &#233;tait disponible pour les tests.
+.
+	</dd>
+	</dl>
+<p>LocoNet&reg; est une marque d&#233;pos&#233; de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-          <p>Le syst&egrave;me Digitrax &eacute;tait un Chief,
-          r&eacute;gulateur DT100IR, et divers d&eacute;codeurs sur
-          le r&eacute;seau. Le Trafic de la centrale de commande,
-          du r&eacute;gulateur et des divers composants auxiliaires
-          (PM4, DS54) &eacute;tait disponible pour les tests. .</p>
-        </dd>
-      </dl>
-
-      <p>LocoNet&reg; est une marque d&eacute;pos&eacute; de
-      <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
