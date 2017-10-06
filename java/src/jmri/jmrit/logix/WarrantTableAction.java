@@ -213,12 +213,8 @@ public class WarrantTableAction extends AbstractAction {
 
     synchronized protected static boolean setNXFrame(NXFrame frame) {
         if (_nxFrame !=null && _nxFrame != frame) {
-            frame.toFront();
-            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(_nxFrame, Bundle.getMessage("NXWarrantInProgress"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) )
-                return false;
+            return false;
         }
-        closeNXFrame(_nxFrame);
         _nxFrame = frame;
         return true;
     }
