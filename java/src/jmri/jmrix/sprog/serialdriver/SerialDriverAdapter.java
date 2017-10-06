@@ -27,10 +27,9 @@ import purejavacomm.UnsupportedCommOperationException;
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
- * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged
- * with "AJB" indicate changes or observations by me
+ * Updated January 2010 for gnu io (RXTX) - Andrew Berridge.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -87,7 +86,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             try {
                 activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -102,8 +101,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -123,7 +122,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
                 );
             }
 
-            //AJB - add Sprog Traffic Controller as event listener
+            //add Sprog Traffic Controller as event listener
             try {
                 activeSerialPort.addEventListener(this.getSystemConnectionMemo().getSprogTrafficController());
             } catch (TooManyListenersException e) {

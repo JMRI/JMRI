@@ -1,28 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec  2013-09-09-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--  $Id$ -->
+<!-- UpDated by Herv&#233; Blorec  2016-08-19-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+    <TITLE>
+ 	JMRI: XML Editors
+   </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml editors">
 
-  <title>JMRI: Editeurs XML</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code xml editors">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- /Style -->
 </head>
-
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -51,12 +42,17 @@
       "http://groups.yahoo.com/group/jmriusers/">groupe de
       discussion des utilisateurs JMRI</a>.</p>
 
-      <p>Pour plus d'informations sur XML lui-m&ecirc;me, s'il vous
-      pla&icirc;t voir notre <a href=
-      "../../apps/DecoderPro/IntroXML.shtml">page
-      d'introduction</a>..</p>
+<h2>&#233;diteurs Libres</h2>
 
-      <h2>&eacute;diteurs Libres</h2>
+<dl>
+<dt> Crimson Editor
+<dd> <a href="http://www.crimsoneditor.com/"> http://www.crimsoneditor.com/</a>
+
+<dt>CotEditor
+<dd><a href="http://coteditor.com">http://coteditor.com</a> (OS X)
+
+<dt> Editra
+<dd> <a href="http://editra.org/"> http://editra.org/</a>
 
       <dl>
         <dt>Crimson Editor</dt>
@@ -71,9 +67,8 @@
 
         <dt>Edxor</dt>
 
-        <dd><a href=
-        "http://www.snapfiles.com/get/edxor.html">http://www.snapfiles.com/get/edxor.html</a>
-        jEdit</dd>
+<dt> XML Marker
+<dd> <a href="http://symbolclick.com/"> http://symbolclick.com/</a>
 
         <dd><a href=
         "http://www.jedit.org/">http://www.jedit.org/</a> Komodo

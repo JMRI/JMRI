@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<!-- translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2017-01-29 -->
+<head>
+ <title>JMRI Hardware Support - Bluetooth LocoBridge Adapter</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>Support Mat&#233;riel: connexion a travers un Adaptateur Bluetooth LocoBridge</h1>
+
+<img src="http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png" alt="LocoAdapter picture" align="right" height="205" width="166"/>
+Le <a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">LocoBridge</a> 
+vous permet de vous connecter &#224; distance &#224; travers Bluetooth &#224; 
+un adaptateur, qui vous connecte &#224; un LocoNet pour commabnder votre r&#233;seau.
+
+<p>
+Pour avoir plus d'information sur le LocoBridge lui-m&#234;me, voir 
+<a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">ces pages</a>.
+
+<h2>Installation</h2>
+
+<p>Sur les syst&#232;mes r&#233;cents Mac et Windows, tous les logiciels n&#233;cessaires sont fournis par le t&#233;l&#233;versement de JMRI.
+
+<p>
+Sur Linux et autres sust&#232;mes, vous aurez besoin d'avoir une libbluetooth install&#233;e.
+D&#233;pendant de la distribut Linux utilis&#233;e, vous pouvez avoir besoin de commandes 
+telle que "sudo apt-get install libbluetooth" ou peut &#234;tre "sudo apt-get install libbluetooth-dev".
+Pour avoir plus d'information,voir 
+<a href="http://snapshot.bluecove.org/bluecove-gpl/">ces pages</a>, 
+qui d&#233;crivent les exigences d'utilisation de la biblioth&#232;que Blue Cove que JMRI 
+utilises pour acc&#233;der &#224; Bluetooth.
+
+<h2>Configuration</h2>
+
+<p>Pour configurer une application JMRI pour utiliser le:</p>
+
+<ol>
+	<li>D&#233;marrez JMRI
+	<li>Ouvrez la fen&#234;tre Pr&#233;f&#233;rences depuis le menu &#201;dition et configurez la Connexion comme:
+	<ul>
+		<li>S&#233;lectionnez System manufacturer pour: Digitrax
+		<li>S&#233;lectionnez le System connection pour: BT LocoBridge
+		<li>S&#233;lectionnez votre LocoBridge pour: the Bluetooth adapter
+		<li>S&#233;lectionnez votre type de Centrale
+	</ul>
+	<li>Cliquez "Enregistrer" au bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez JMRI et red&#233;marrez.
+</ol>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
