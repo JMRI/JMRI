@@ -38,7 +38,9 @@ public final class MathUtil {
     }
 
     public static final Point2D zeroPoint2D = zeroPoint2D();
-    public static final Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
+    public static final Point2D infinityPoint2D = infinityPoint2D();
+    public static final Rectangle2D zeroRectangle2D = zeroRectangle2D();
+    public static final Rectangle2D infinityRectangle2D = infinityRectangle2D();
 
     /**
      * @return the point {0, 0}
@@ -53,7 +55,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Point2D infinityPoint2D() {
-        return infinityPoint2D;
+        return new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
     }
 
     /**
@@ -664,6 +666,22 @@ public final class MathUtil {
     @CheckReturnValue
     public static double pin(double inValue, double inMin, double inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
+    }
+
+    /**
+     * @return a new rectangle {0.0, 0.0, 0.0, 0.0}
+     */
+    @CheckReturnValue
+    public static Rectangle2D zeroRectangle2D() {
+        return new Rectangle2D.Double(0.0, 0.0, 0.0, 0.0);
+    }
+
+    /**
+     * @return a new rectangle {0.0, 0.0, POSITIVE_INFINITY, POSITIVE_INFINITY}
+     */
+    @CheckReturnValue
+    public static Rectangle2D infinityRectangle2D() {
+        return new Rectangle2D.Double(0.0, 0.0, POSITIVE_INFINITY, POSITIVE_INFINITY);
     }
 
     /**

@@ -3398,9 +3398,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             // compute how much to change zoom
             double amount = Math.pow(1.1, event.getScrollAmount());
-            if (event.getWheelRotation() < 0) {
+            if (event.getWheelRotation() < 0.0) {
                 //reciprocal for zoom out
-                amount = 1 / amount;
+                amount = 1.0 / amount;
             }
             // set the new zoom
             double newZoom = setZoom(oldZoom * amount);
@@ -3413,6 +3413,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             Point2D iNewViewPos2D = MathUtil.subtract(imP2D, iNewDeltaP2D);
             // convert from image coordinates to newZoom (scaled) coordinates
             Point2D newViewPos2D = MathUtil.multiply(iNewViewPos2D, newZoom);
+
+            // don't let it go negative
+            newViewPos2D = MathUtil.pin(newViewPos2D, MathUtil.zeroPoint2D, MathUtil.infinityPoint2D);
+            log.debug("mouseWheelMoved: newViewPos2D: {}", newViewPos2D);
+
             // set new view position
             viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPos2D));
         } else {
@@ -3568,7 +3573,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         // put a grid size margin around it
         result = MathUtil.inset(result, -gridSize1st * gridSize2nd);
-
+        // don't let it go negative
+        result = result.createIntersection(MathUtil.infinityRectangle2D);
         return result;
     } // calculateMinimumLayoutBounds
 
@@ -3587,8 +3593,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             panelBounds.add(layoutBounds);
         }
 
+        // don't let it go negative
+        panelBounds = panelBounds.createIntersection(MathUtil.infinityRectangle2D);
+
         // make sure it includes the origin
         panelBounds.add(MathUtil.zeroPoint2D);
+
+        log.debug("resizePanelBounds: {{}}", panelBounds);
 
         panelWidth = (int) panelBounds.getWidth();
         panelHeight = (int) panelBounds.getHeight();
@@ -3606,8 +3617,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
 
-        // don't let its orgin go negative
-        scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        // don't let it go negative
+        //scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        scrollBounds = scrollBounds.createIntersection(MathUtil.infinityRectangle2D);
 
         // calculate the horzontial and vertical scales
         double scaleWidth = scrollPane.getWidth() / layoutBounds.getWidth();
@@ -3622,8 +3634,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         // calculate new scroll bounds
         scrollBounds = MathUtil.scale(layoutBounds, result);
 
-        // don't let its orgin go negative
-        scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        // don't let it go negative
+        //scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        scrollBounds = scrollBounds.createIntersection(MathUtil.infinityRectangle2D);
 
         // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(scrollBounds));
@@ -9132,7 +9145,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     public void setPanelBounds(Rectangle2D newBounds) {
         // make sure the origin is at {0, 0}
-        newBounds = MathUtil.offset(newBounds, -newBounds.getX(), -newBounds.getY());
+        ///newBounds = MathUtil.offset(newBounds, -newBounds.getX(), -newBounds.getY());
+        // don't let it go negative
+        newBounds = newBounds.createIntersection(MathUtil.infinityRectangle2D);
 
         panelWidth = (int) newBounds.getWidth();
         panelHeight = (int) newBounds.getHeight();
@@ -9144,7 +9159,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // this will grow the panel bounds based on items added to the layout
     public Rectangle2D unionToPanelBounds(@Nonnull Rectangle2D bounds) {
         Rectangle2D result = getPanelBounds();
-        result.add(bounds);
+
+        // make room to expand
+        Rectangle2D b = MathUtil.inset(bounds, -gridSize1st * gridSize2nd);
+        // don't let it go negative
+        b = b.createIntersection(MathUtil.infinityRectangle2D);
+
+        result.add(b);
         setPanelBounds(result);
         return result;
     }
@@ -9719,7 +9740,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
-        
+
         Point2D startPt = new Point2D.Double();
         Point2D stopPt = new Point2D.Double();
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -9811,7 +9832,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     public List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
-        		.map(TrackSegment.class::cast)
+                .map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
 
