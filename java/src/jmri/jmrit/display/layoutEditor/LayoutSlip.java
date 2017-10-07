@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -68,9 +67,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutSlip extends LayoutTurnout {
 
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
     public int currentState = UNKNOWN;
 
     private String turnoutBName = "";
@@ -97,7 +93,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     // this should only be used for debugging...
     public String toString() {
-        return "LayoutSlip " + ident;
+        return String.format("LayoutSlip %s (%s)", getId(), getSlipStateString(getSlipState()));
     }
 
     public void setTurnoutType(int slipType) {
@@ -209,7 +205,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public String getDisplayName() {
-        String name = "Slip " + ident;
+        String name = "Slip " + getId();
         String tnA = getTurnoutName();
         String tnB = getTurnoutBName();
         if ((tnA != null) && !tnA.isEmpty()) {
@@ -229,59 +225,83 @@ public class LayoutSlip extends LayoutTurnout {
         return name;
     }
 
+    private String getSlipStateString(int slipState) {
+        String result = Bundle.getMessage("BeanStateUnknown");
+        switch (slipState) {
+            case STATE_AC: {
+                result = "AC";
+                break;
+            }
+            case STATE_BD: {
+                result = "BD";
+                break;
+            }
+            case STATE_AD: {
+                result = "AD";
+                break;
+            }
+            case STATE_BC: {
+                result = "BC";
+                break;
+            }
+        }
+        return result;
+    }
+
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
      */
     public void toggleState(int selectedPointType) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            int newSlipState = getSlipState();
             switch (selectedPointType) {
                 case SLIP_LEFT: {
-                    switch (currentState) {
+                    switch (newSlipState) {
                         case STATE_AC: {
                             if (type == SINGLE_SLIP) {
-                                currentState = STATE_BD;
+                                newSlipState = STATE_BD;
                             } else {
-                                currentState = STATE_BC;
+                                newSlipState = STATE_BC;
                             }
                             break;
                         }
                         case STATE_AD: {
-                            currentState = STATE_BD;
+                            newSlipState = STATE_BD;
                             break;
                         }
                         case STATE_BC:
                         default: {
-                            currentState = STATE_AC;
+                            newSlipState = STATE_AC;
                             break;
                         }
                         case STATE_BD: {
-                            currentState = STATE_AD;
+                            newSlipState = STATE_AD;
                             break;
                         }
                     }
                     break;
                 }
                 case SLIP_RIGHT: {
-                    switch (currentState) {
+                    switch (newSlipState) {
                         case STATE_AC: {
-                            currentState = STATE_AD;
+                            newSlipState = STATE_AD;
                             break;
                         }
                         case STATE_AD: {
-                            currentState = STATE_AC;
+                            newSlipState = STATE_AC;
                             break;
                         }
                         case STATE_BC:
                         default: {
-                            currentState = STATE_BD;
+                            newSlipState = STATE_BD;
                             break;
                         }
                         case STATE_BD: {
                             if (type == SINGLE_SLIP) {
-                                currentState = STATE_AC;
+                                newSlipState = STATE_AC;
                             } else {
-                                currentState = STATE_BC;
+                                newSlipState = STATE_BC;
                             }
                             break;
                         }
@@ -289,14 +309,16 @@ public class LayoutSlip extends LayoutTurnout {
                     break;
                 }
             }   // switch
-            setSlipState(turnoutStates.get(currentState));
+            setSlipState(newSlipState);
         }
     }
 
-    private void setSlipState(TurnoutState ts) {
+    private void setSlipState(int newSlipState) {
         if (disableWhenOccupied && isOccupied()) {
             log.debug("Turnout not changed as Block is Occupied");
         } else if (!disabled) {
+            currentState = newSlipState;
+            TurnoutState ts = turnoutStates.get(newSlipState);
             if (getTurnout() != null) {
                 getTurnout().setCommandedState(ts.getTurnoutAState());
             }
@@ -313,7 +335,7 @@ public class LayoutSlip extends LayoutTurnout {
      */
     private boolean isOccupied() {
         Boolean result = false; // assume failure (pessimist!)
-        switch (currentState) {
+        switch (getSlipState()) {
             case STATE_AC: {
                 result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
                         || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
@@ -335,7 +357,7 @@ public class LayoutSlip extends LayoutTurnout {
                 break;
             }
             default: {
-                log.error("Unknown slip state: {}", currentState);
+                log.error("Unknown slip state: {}", getSlipState());
             }
         }
         return result;
@@ -357,6 +379,7 @@ public class LayoutSlip extends LayoutTurnout {
                         updateState();
                     }, namedTurnoutB.getName(), "Layout Editor Slip");
         }
+        updateState();
     }
 
     private void deactivateTurnout() {
@@ -672,14 +695,17 @@ public class LayoutSlip extends LayoutTurnout {
         }
         tools = layoutEditor.getLETools();
         if (layoutEditor.isEditable()) {
+            String slipStateString = getSlipStateString(getSlipState());
+            slipStateString = String.format(" (%s)", slipStateString);
+
             JMenuItem jmi = null;
             switch (type) {
                 case SINGLE_SLIP: {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutSingleSlip")) + ident);
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutSingleSlip")) + getId() + slipStateString);
                     break;
                 }
                 case DOUBLE_SLIP: {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutDoubleSlip")) + ident);
+                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutDoubleSlip")) + getId() + slipStateString);
                     break;
                 }
                 default: {
@@ -693,14 +719,18 @@ public class LayoutSlip extends LayoutTurnout {
             if (getTurnout() == null) {
                 jmi = popup.add(Bundle.getMessage("NoTurnout"));
             } else {
-                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
+                String stateString = getTurnoutStateString(getTurnout().getKnownState());
+                stateString = String.format(" (%s)", stateString);
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + getTurnoutName() + stateString);
             }
             jmi.setEnabled(false);
 
             if (getTurnoutB() == null) {
                 jmi = popup.add(Bundle.getMessage("NoTurnout"));
             } else {
-                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutBName);
+                String stateString = getTurnoutStateString(getTurnoutB().getKnownState());
+                stateString = String.format(" (%s)", stateString);
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + getTurnoutBName() + stateString);
             }
             jmi.setEnabled(false);
 
@@ -1007,14 +1037,16 @@ public class LayoutSlip extends LayoutTurnout {
 
     //Internal call to update the state of the slip depending upon the turnout states.
     private void updateState() {
-        int state_a = getTurnout().getKnownState();
-        int state_b = getTurnoutB().getKnownState();
-        for (Entry<Integer, TurnoutState> en : turnoutStates.entrySet()) {
-            if (en.getValue().getTurnoutAState() == state_a) {
-                if (en.getValue().getTurnoutBState() == state_b) {
-                    currentState = en.getKey();
-                    layoutEditor.redrawPanel();
-                    return;
+        if ((getTurnout() != null) && (getTurnoutB() != null)) {
+            int state_a = getTurnout().getKnownState();
+            int state_b = getTurnoutB().getKnownState();
+            for (Entry<Integer, TurnoutState> en : turnoutStates.entrySet()) {
+                if (en.getValue().getTurnoutAState() == state_a) {
+                    if (en.getValue().getTurnoutBState() == state_b) {
+                        currentState = en.getKey();
+                        layoutEditor.redrawPanel();
+                        return;
+                    }
                 }
             }
         }
@@ -1137,6 +1169,27 @@ public class LayoutSlip extends LayoutTurnout {
             g2.draw(new Line2D.Double(pointC, MathUtil.oneThirdPoint(pointC, pointB)));
         }
     }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if (getConnectA() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
+
+        if (getConnectB() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (getConnectC() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+        if (getConnectD() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+        }
+    }
 
     protected void drawTurnoutControls(Graphics2D g2) {
         // drawHidden left/right turnout control circles
