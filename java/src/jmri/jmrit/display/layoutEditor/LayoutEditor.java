@@ -3414,7 +3414,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             // convert from image coordinates to newZoom (scaled) coordinates
             Point2D newViewPos2D = MathUtil.multiply(iNewViewPos2D, newZoom);
 
-            // don't let it go negative
+            // don't let origin go negative
             newViewPos2D = MathUtil.pin(newViewPos2D, MathUtil.zeroPoint2D, MathUtil.infinityPoint2D);
             log.debug("mouseWheelMoved: newViewPos2D: {}", newViewPos2D);
 
@@ -3573,8 +3573,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         // put a grid size margin around it
         result = MathUtil.inset(result, -gridSize1st * gridSize2nd);
-        // don't let it go negative
-        result = result.createIntersection(MathUtil.infinityRectangle2D);
+        // don't let origin go negative
+        result = result.createIntersection(MathUtil.zeroToInfinityRectangle2D);
         return result;
     } // calculateMinimumLayoutBounds
 
@@ -3593,8 +3593,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             panelBounds.add(layoutBounds);
         }
 
-        // don't let it go negative
-        panelBounds = panelBounds.createIntersection(MathUtil.infinityRectangle2D);
+        // don't let origin go negative
+        panelBounds = panelBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         // make sure it includes the origin
         panelBounds.add(MathUtil.zeroPoint2D);
@@ -3617,9 +3617,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
 
-        // don't let it go negative
+        // don't let origin go negative
         //scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
-        scrollBounds = scrollBounds.createIntersection(MathUtil.infinityRectangle2D);
+        scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         // calculate the horzontial and vertical scales
         double scaleWidth = scrollPane.getWidth() / layoutBounds.getWidth();
@@ -3634,9 +3634,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         // calculate new scroll bounds
         scrollBounds = MathUtil.scale(layoutBounds, result);
 
-        // don't let it go negative
+        // don't let origin go negative
         //scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
-        scrollBounds = scrollBounds.createIntersection(MathUtil.infinityRectangle2D);
+        scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(scrollBounds));
@@ -9146,8 +9146,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     public void setPanelBounds(Rectangle2D newBounds) {
         // make sure the origin is at {0, 0}
         ///newBounds = MathUtil.offset(newBounds, -newBounds.getX(), -newBounds.getY());
-        // don't let it go negative
-        newBounds = newBounds.createIntersection(MathUtil.infinityRectangle2D);
+        // don't let origin go negative
+        newBounds = newBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         panelWidth = (int) newBounds.getWidth();
         panelHeight = (int) newBounds.getHeight();
@@ -9162,8 +9162,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         // make room to expand
         Rectangle2D b = MathUtil.inset(bounds, -gridSize1st * gridSize2nd);
-        // don't let it go negative
-        b = b.createIntersection(MathUtil.infinityRectangle2D);
+        // don't let origin go negative
+        b = b.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         result.add(b);
         setPanelBounds(result);
