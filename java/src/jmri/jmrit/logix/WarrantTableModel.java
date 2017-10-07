@@ -164,7 +164,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         fireTableDataChanged();
     }
 
-    public void addNXWarrant(Warrant w) {
+    protected void addNXWarrant(Warrant w) {
         _warList.add(w);
         _warNX.add(w);
         w.addPropertyChangeListener(this);
@@ -564,27 +564,29 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     private void openWarrantFrame(Warrant warrant) {
-        if (WarrantTableAction._openFrame != null) {
-            WarrantTableAction._openFrame.dispose();
-        }
-        WarrantTableAction._openFrame = null;
+        WarrantFrame frame = null;
         for (int i = 0; i < _warList.size(); i++) {
             if (warrant.equals(_warList.get(i))) {
-                WarrantTableAction._openFrame = new WarrantFrame(warrant);
+                frame = new WarrantFrame(warrant);
                 break;
             }
         }
-        if (WarrantTableAction._openFrame == null) {
+        if (frame == null) {
             for (int i = 0; i < _warNX.size(); i++) {
                 if (warrant.equals(_warList.get(i))) {
-                    WarrantTableAction._openFrame = new WarrantFrame(warrant);
+                    frame= new WarrantFrame(warrant);
                     break;
                 }
             }
-            if (WarrantTableAction._openFrame != null) {
-                WarrantTableAction._openFrame.setVisible(true);
-                WarrantTableAction._openFrame.toFront();
+        }
+        if (frame != null) {
+            WarrantFrame f = WarrantTableAction.getWarrantFrame();
+            if (f != null) {
+                WarrantTableAction.closeWarrantFrame(f);
             }
+            frame.setVisible(true);
+            frame.toFront();
+            WarrantTableAction.setWarrantFrame(frame);
         }
     }
 
