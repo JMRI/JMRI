@@ -17,7 +17,7 @@ class LayoutEditorComponent extends JComponent {
         this.layoutEditor = LayoutEditor;
     }
 
-    // (not actually used anywhere…)
+    // not actually used anywhere
     protected LayoutEditor getLayoutEditor() {
         return layoutEditor;
     }
@@ -60,4 +60,5 @@ class LayoutEditorComponent extends JComponent {
         rv.setBounds(MathUtil.rectangle2DToRectangle(layoutEditor.getBounds()));
         return rv;
     }
+
 }
