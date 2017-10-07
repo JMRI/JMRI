@@ -40,7 +40,13 @@ public class WebServerAcceptanceSteps implements En {
       });
 
       Given("^I am using chrome$", () -> {
-         webDriver = new EventFiringWebDriver(new ChromeDriver());
+         if(GraphicsEnvironment.isHeadless()) {
+             ChromeOptions chromeOptions = new ChromeOptions();
+             chromeOptions.addArguments("--headless");
+             webDriver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
+         } else {
+             webDriver = new EventFiringWebDriver(new ChromeDriver());
+         }
       });
 
       When("^I ask for the url (.*)$", (String url) -> {
