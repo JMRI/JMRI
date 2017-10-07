@@ -9,7 +9,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -128,9 +127,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  */
 public class LayoutTurnout extends LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants - turnout types
     public static final int RH_TURNOUT = 1;
@@ -352,7 +348,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     // this should only be used for debugging...
     public String toString() {
-        return "LayoutTurnout " + ident;
+        return "LayoutTurnout " + getId();
     }
 
     protected void rotateCoords(double rotDEG) {
@@ -1066,12 +1062,12 @@ public class LayoutTurnout extends LayoutTrack {
             if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
                 Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
                 String oldSystemName = (oldTurnout == null) ? null : oldTurnout.getSystemName();
-                LayoutTurnout oldLinked = (oldSystemName == null) ? null : 
-                        lf.findLayoutTurnoutByTurnoutName(oldSystemName);
+                LayoutTurnout oldLinked = (oldSystemName == null) ? null
+                        : lf.findLayoutTurnoutByTurnoutName(oldSystemName);
                 if (oldLinked == null) {
                     String oldUserName = (oldTurnout == null) ? null : oldTurnout.getUserName();
-                    oldLinked = (oldUserName == null) ? null : 
-                            lf.findLayoutTurnoutByTurnoutName(oldUserName);
+                    oldLinked = (oldUserName == null) ? null
+                            : lf.findLayoutTurnoutByTurnoutName(oldUserName);
                 }
                 if ((oldLinked != null) && oldLinked.getSecondTurnout() == getTurnout()) {
                     oldLinked.setSecondTurnout(null);
@@ -2105,7 +2101,7 @@ public class LayoutTurnout extends LayoutTrack {
                 blockName = tBlockName;
                 block.incrementUse();
             } else {
-                log.error("bad blockname '" + tBlockName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockName + "' in layoutturnout " + getId());
             }
         }
         if (!tBlockBName.isEmpty()) {
@@ -2116,7 +2112,7 @@ public class LayoutTurnout extends LayoutTrack {
                     blockB.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + getId());
             }
         }
         if (!tBlockCName.isEmpty()) {
@@ -2127,7 +2123,7 @@ public class LayoutTurnout extends LayoutTrack {
                     blockC.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + getId());
             }
         }
         if (!tBlockDName.isEmpty()) {
@@ -2139,7 +2135,7 @@ public class LayoutTurnout extends LayoutTrack {
                     blockD.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + getId());
             }
         }
 
@@ -2150,7 +2146,7 @@ public class LayoutTurnout extends LayoutTrack {
                 secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
                 secondTurnoutName = tSecondTurnoutName;
             } else {
-                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutturnout " + ident);
+                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutturnout " + getId());
                 secondTurnoutName = "";
                 secondNamedTurnout = null;
             }
@@ -2162,7 +2158,7 @@ public class LayoutTurnout extends LayoutTrack {
                 turnoutName = tTurnoutName;
                 activateTurnout();
             } else {
-                log.error("bad turnoutname '" + tTurnoutName + "' in layoutturnout " + ident);
+                log.error("bad turnoutname '" + tTurnoutName + "' in layoutturnout " + getId());
                 turnoutName = "";
                 namedTurnout = null;
             }
@@ -2207,21 +2203,25 @@ public class LayoutTurnout extends LayoutTrack {
                 default:
                     break;
             }
-            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", label) + ident);
+            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", label) + getId());
             jmi.setEnabled(false);
 
             if (getTurnout() == null) {
                 jmi = popup.add(Bundle.getMessage("NoTurnout"));
             } else {
+                String stateString = getTurnoutStateString(getTurnout().getKnownState());
+                stateString = String.format(" (%s)", stateString);
                 jmi = popup.add(Bundle.getMessage("BeanNameTurnout")
-                        + ": " + getTurnoutName());
+                        + ": " + getTurnoutName() + stateString);
             }
             jmi.setEnabled(false);
 
             if (getSecondTurnout() != null) {
+                String stateString = getTurnoutStateString(getSecondTurnout().getKnownState());
+                stateString = String.format(" (%s)", stateString);
                 jmi = popup.add(Bundle.getMessage("Supporting",
                         Bundle.getMessage("BeanNameTurnout"))
-                        + ": " + getSecondTurnoutName());
+                        + ": " + getSecondTurnoutName() + stateString);
             }
             jmi.setEnabled(false);
 
@@ -3208,6 +3208,29 @@ public class LayoutTurnout extends LayoutTrack {
             }   // if (to == null) {} else...
         }   // if (type == XXX) {} else if... {} else...
     }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if (getConnectA() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
+
+        if (getConnectB() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (getConnectC() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+        if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+            if (getConnectD() == null) {
+                g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+            }
+        }
+    }
 
     protected void drawTurnoutControls(Graphics2D g2) {
         g2.draw(layoutEditor.trackControlCircleAt(center));
