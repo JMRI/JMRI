@@ -403,6 +403,19 @@ public final class MathUtil {
     }
 
     /**
+     * calculate the linear interpolation between two integers
+     *
+     * @param a the first number
+     * @param b the second number
+     * @param t the fraction (between 0 and 1)
+     * @return the linear interpolation between a and b for t
+     */
+    @CheckReturnValue
+    public static int lerp(int a, int b, double t) {
+        return (int) lerp((double) a, (double) b, t);
+    }
+
+    /**
      * calculate the linear interpolation between two doubles
      *
      * @param a the first number
@@ -416,7 +429,7 @@ public final class MathUtil {
     }
 
     /**
-     * calculate the linear interpolation between two doubles
+     * calculate the linear interpolation between two Doubles
      *
      * @param a the first number
      * @param b the second number

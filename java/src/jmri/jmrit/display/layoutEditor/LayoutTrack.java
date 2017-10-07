@@ -6,9 +6,10 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jmri.JmriException;
+import jmri.Turnout;
 import jmri.util.ColorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,6 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017
  */
 public abstract class LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // hit point types
     public static final int NONE = 0;
@@ -68,9 +66,6 @@ public abstract class LayoutTrack {
 
     // package-private
     static Color defaultTrackColor = Color.black;
-
-//    protected static final double controlPointSize = 3.0;   // LayoutEditor.SIZE;
-//    protected static final double controlPointSize2 = 2.0 * controlPointSize; // LayoutEditor.SIZE2;
 
     /**
      * constructor method
@@ -135,22 +130,31 @@ public abstract class LayoutTrack {
 
     /**
      * one draw routine to rule them all...
+     *
      * @param g2 the graphics context
      */
     protected abstract void draw(Graphics2D g2);
 
     /**
+     * highlight unconnected connections
+     * @param g2 the graphics context
+     */
+    protected abstract void drawUnconnected(Graphics2D g2);
+
+    /**
      * draw the edit controls
+     *
      * @param g2 the graphics context
      */
     protected abstract void drawEditControls(Graphics2D g2);
 
     /**
      * draw the turnout controls
+     *
      * @param g2 the graphics context
      */
     protected abstract void drawTurnoutControls(Graphics2D g2);
-    
+
     /**
      * Get the hidden state of the track element.
      *
@@ -183,12 +187,29 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
+    /**
+     * get turnout state string
+     *
+     * @param turnoutState of the turnout
+     * @return the turnout state string
+     */
+    public String getTurnoutStateString(int turnoutState) {
+        String result = "";
+        if (turnoutState == Turnout.CLOSED) {
+            result = Bundle.getMessage("TurnoutStateClosed");
+        } else if (turnoutState == Turnout.THROWN) {
+            result = Bundle.getMessage("TurnoutStateThrown");
+        } else {
+            result = Bundle.getMessage("BeanStateUnknown");
+        }
+        return result;
+    }
 
     /**
-     * Initialization method for LayoutTrack sub-classes.
-     * The following method is called for each instance after the entire
-     * LayoutEditor is loaded to set the specific objects for that instance
-     * 
+     * Initialization method for LayoutTrack sub-classes. The following method
+     * is called for each instance after the entire LayoutEditor is loaded to
+     * set the specific objects for that instance
+     *
      * @param le the layout editor
      */
     public abstract void setObjects(@Nonnull LayoutEditor le);
@@ -224,9 +245,9 @@ public abstract class LayoutTrack {
      *
      * @param hitPoint           - the point
      * @param useRectangles      - whether to use (larger) rectangles or
-     *                             (smaller) circles for hit testing
+     *                           (smaller) circles for hit testing
      * @param requireUnconnected - whether to only return hit types for free
-     *                             connections
+     *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
@@ -393,7 +414,7 @@ public abstract class LayoutTrack {
     public abstract Point2D getCoordsForConnectionType(int connectionType);
 
     /**
-     * @return the bounds of this track 
+     * @return the bounds of this track
      */
     public abstract Rectangle2D getBounds();
 
@@ -404,9 +425,9 @@ public abstract class LayoutTrack {
      *
      * @param connectionType where on us to get the connection
      * @return the LayoutTrack connected at the specified connection type
-     * @throws jmri.JmriException - if the connectionType is invalid
+     * @throws JmriException - if the connectionType is invalid
      */
-    public abstract LayoutTrack getConnection(int connectionType) throws jmri.JmriException;
+    public abstract LayoutTrack getConnection(int connectionType) throws JmriException;
 
     /**
      * set the LayoutTrack connected at the specified connection type
@@ -414,9 +435,9 @@ public abstract class LayoutTrack {
      * @param connectionType where on us to set the connection
      * @param o              the LayoutTrack that is to be connected
      * @param type           where on the LayoutTrack we are connected
-     * @throws jmri.JmriException - if connectionType or type are invalid
+     * @throws JmriException - if connectionType or type are invalid
      */
-    public abstract void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException;
+    public abstract void setConnection(int connectionType, LayoutTrack o, int type) throws JmriException;
 
     /**
      * abstract method... subclasses should implement _IF_ they need to recheck
@@ -426,6 +447,7 @@ public abstract class LayoutTrack {
 
     /**
      * get the layout connectivity for this track
+     *
      * @return the list of Layout Connectivity objects
      */
     protected abstract List<LayoutConnectivity> getLayoutConnectivity();
@@ -441,7 +463,7 @@ public abstract class LayoutTrack {
         if (isConnectionHitType(connectionType)) {
             try {
                 result = (null == getConnection(connectionType));
-            } catch (jmri.JmriException e) {
+            } catch (JmriException e) {
                 // this should never happen because isConnectionType() above would have caught an invalid connectionType.
             }
         }

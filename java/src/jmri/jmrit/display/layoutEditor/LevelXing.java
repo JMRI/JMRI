@@ -8,7 +8,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -60,9 +59,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  */
 public class LevelXing extends LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
     // operational instance variables (not saved between sessions)
@@ -1326,42 +1322,59 @@ public class LevelXing extends LayoutTrack {
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
-    protected void drawEditControls(Graphics2D g2) {
-        Point2D pt = getCoordsCenter();
-        g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackControlCircleAt(pt));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if (getConnectA() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
 
-        pt = getCoordsA();
+        if (getConnectB() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (getConnectC() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+
+        if (getConnectD() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+        }
+    }
+
+    protected void drawEditControls(Graphics2D g2) {
+        g2.setColor(defaultTrackColor);
+        g2.draw(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
 
-        pt = getCoordsB();
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
 
-        pt = getCoordsC();
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
 
-        pt = getCoordsD();
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
     }
 
     protected void drawTurnoutControls(Graphics2D g2) {
