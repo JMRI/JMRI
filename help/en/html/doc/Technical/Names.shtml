@@ -359,14 +359,14 @@
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>i</td>
+          <td>i/o</td>
           <td>1003</td>
           <td>Node 1, Input 3</td>
           <td>CS1003</td>
           <td>n digits (node) + 3 digit (pin)</td>
           <td>1:3</td>
           <td>node: 1; pin: 1</td>
-          <td>node: N/A; pin: 999</td>
+          <td>node: 127; pin: 999</td>
         </tr>
         <tr>
           <td>C/MRI</td>
@@ -381,36 +381,36 @@
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>o</td>
+          <td>i/o</td>
           <td>4003</td>
           <td>Node 4, Output 3</td>
           <td>CT4003</td>
           <td>n digits (node) + 3 digit (pin)</td>
           <td>4:3</td>
           <td>node: 1; pin: 1</td>
-          <td>node: N/A; pin: 999</td>
+          <td>node: 127; pin: 999</td>
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>o</td>
+          <td>i/o</td>
           <td>4:3</td>
           <td>Node 4, Output 3</td>
           <td>CT4:3</td>
           <td> </td>
           <td>4003</td>
           <td>0:1</td>
-          <td>N/A</td>
+          <td>127:999</td>
         </tr>
         <tr>
           <td>C/MRI</td>
-          <td>o</td>
+          <td>i/o</td>
           <td>4B3</td>
           <td>Node 4, Output 3</td>
           <td>CT4B3</td>
           <td> </td>
           <td>4003</td>
           <td>0B1</td>
-          <td>N/A</td>
+          <td>127B999</td>
         </tr>
         <tr>
           <td>DCC++</td>
