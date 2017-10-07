@@ -1322,42 +1322,59 @@ public class LevelXing extends LayoutTrack {
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
-    protected void drawEditControls(Graphics2D g2) {
-        Point2D pt = getCoordsCenter();
-        g2.setColor(defaultTrackColor);
-        g2.draw(layoutEditor.trackControlCircleAt(pt));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if (getConnectA() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
 
-        pt = getCoordsA();
+        if (getConnectB() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (getConnectC() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+
+        if (getConnectD() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+        }
+    }
+
+    protected void drawEditControls(Graphics2D g2) {
+        g2.setColor(defaultTrackColor);
+        g2.draw(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
 
-        pt = getCoordsB();
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
 
-        pt = getCoordsC();
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
 
-        pt = getCoordsD();
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
     }
 
     protected void drawTurnoutControls(Graphics2D g2) {

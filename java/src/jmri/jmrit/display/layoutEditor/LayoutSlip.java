@@ -1170,6 +1170,27 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }   // draw
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if (getConnectA() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
+
+        if (getConnectB() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (getConnectC() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+        if (getConnectD() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+        }
+    }
+
     protected void drawTurnoutControls(Graphics2D g2) {
         // drawHidden left/right turnout control circles
         Point2D leftCircleCenter = getCoordsLeft();

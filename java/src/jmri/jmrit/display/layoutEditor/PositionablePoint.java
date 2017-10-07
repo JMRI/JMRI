@@ -958,7 +958,6 @@ public class PositionablePoint extends LayoutTrack {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    
     /**
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
@@ -1294,6 +1293,17 @@ public class PositionablePoint extends LayoutTrack {
             }
             g2.setStroke(originalStroke);
         }   // if (getType() != ANCHOR)
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if ((getConnect1() == null)
+                || ((getType() == ANCHOR) && (getConnect2() == null))) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+        }
     }
 
     /**
