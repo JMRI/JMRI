@@ -25,14 +25,14 @@ public class WebServerScaffold implements En {
           jmri.util.JUnitUtil.initDebugPowerManager();
           server = new WebServer(); // a webserver using default preferences.
           server.start();
-          jmri.util.JUnitUtil.waitFor(()->{ return server.isStarted(); });
+          jmri.util.JUnitUtil.waitFor(()->{ return server.isStarted(); },"Server Failed to Start in time");
       });
 
       After(tags, ()->{
          try {
              server.stop();
-             //jmri.util.JUnitUtil.waitFor(()->{ return server.isStopped(); });
-             jmri.util.JUnitUtil.tearDown();
+             jmri.util.JUnitUtil.waitFor(()->{ return server.isStopped(); },"Server failed to Stop in time");
+             //jmri.util.JUnitUtil.tearDown();
          } catch(Exception ex) {
              // if an exception occurs here, we may want to raise a flag,
              ex.printStackTrace();
