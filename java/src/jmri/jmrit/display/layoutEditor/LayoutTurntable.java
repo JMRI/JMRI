@@ -501,7 +501,7 @@ public class LayoutTurntable extends LayoutTrack {
                     String info = rt.getTurnout().getDisplayName();
                     String stateString = getTurnoutStateString(rt.getTurnoutState());
                     if (!stateString.isEmpty()) {
-                        info += " (" + stateString +")";
+                        info += " (" + stateString + ")";
                     }
                     jmi = rayPopup.add(info);
                     jmi.setEnabled(false);
@@ -724,6 +724,19 @@ public class LayoutTurntable extends LayoutTrack {
                 pt1 = MathUtil.subtract(center, delta);
                 //g2.setColor(Color.RED); //TODO: remove this
                 g2.draw(new Line2D.Double(pt1, pt2));
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        for (int j = 0; j < getNumberRays(); j++) {
+            if (getRayConnectOrdered(j) == null) {
+                Point2D pt = getRayCoordsOrdered(j);
+                g2.fill(layoutEditor.trackControlCircleAt(pt));
             }
         }
     }
