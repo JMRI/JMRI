@@ -1062,12 +1062,12 @@ public class LayoutTurnout extends LayoutTrack {
             if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
                 Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
                 String oldSystemName = (oldTurnout == null) ? null : oldTurnout.getSystemName();
-                LayoutTurnout oldLinked = (oldSystemName == null) ? null : 
-                        lf.findLayoutTurnoutByTurnoutName(oldSystemName);
+                LayoutTurnout oldLinked = (oldSystemName == null) ? null
+                        : lf.findLayoutTurnoutByTurnoutName(oldSystemName);
                 if (oldLinked == null) {
                     String oldUserName = (oldTurnout == null) ? null : oldTurnout.getUserName();
-                    oldLinked = (oldUserName == null) ? null : 
-                            lf.findLayoutTurnoutByTurnoutName(oldUserName);
+                    oldLinked = (oldUserName == null) ? null
+                            : lf.findLayoutTurnoutByTurnoutName(oldUserName);
                 }
                 if ((oldLinked != null) && oldLinked.getSecondTurnout() == getTurnout()) {
                     oldLinked.setSecondTurnout(null);
@@ -3208,6 +3208,29 @@ public class LayoutTurnout extends LayoutTrack {
             }   // if (to == null) {} else...
         }   // if (type == XXX) {} else if... {} else...
     }   // draw
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        if (getConnectA() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
+
+        if (getConnectB() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (getConnectC() == null) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+        if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+            if (getConnectD() == null) {
+                g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+            }
+        }
+    }
 
     protected void drawTurnoutControls(Graphics2D g2) {
         g2.draw(layoutEditor.trackControlCircleAt(center));
