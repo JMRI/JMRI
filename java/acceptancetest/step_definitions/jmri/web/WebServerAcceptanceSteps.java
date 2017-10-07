@@ -7,23 +7,27 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import java.awt.GraphicsEnvironment;
 import jmri.web.server.WebServer;
 
 /**
- * Cucumber step defintions for Home Servlet Acceptance tests.
+ * Cucumber step defintions for Web Server Acceptance tests.
  *
  * @author  Paul Bender Copyright (C) 2017
  */
-public class HomeServletAcceptanceSteps implements En {
+public class WebServerAcceptanceSteps implements En {
      
    private EventFiringWebDriver webDriver;
    
+   String[] firefoxtags = {"@webtest","@firefox"};
+   String[] chrometags = {"@webtest","@chrome"};
    String[] tags = {"@webtest"};
    
-   public HomeServletAcceptanceSteps() {
+   public WebServerAcceptanceSteps() {
 
-      Before(tags,()->{
+      Given("^I am using firefox$", () -> {
          if(GraphicsEnvironment.isHeadless()) {
             FirefoxBinary firefoxBinary = new FirefoxBinary();
             firefoxBinary.addCommandLineOptions("--headless");
@@ -35,12 +39,16 @@ public class HomeServletAcceptanceSteps implements En {
          }
       });
 
-      When("^I ask for the /index\\.html$", () -> {
-         webDriver.get("http://localhost:12080");
+      Given("^I am using chrome$", () -> {
+         webDriver = new EventFiringWebDriver(new ChromeDriver());
       });
 
-      Then("^the home page is returned$", () -> {
-        Assert.assertEquals("Page Title","My JMRI Railroad",webDriver.getTitle());
+      When("^I ask for the url (.*)$", (String url) -> {
+         webDriver.get(url);
+      });
+
+      Then("^a page with title (.*) is returned$", (String pageTitle) -> {
+        Assert.assertEquals("Page Title",pageTitle,webDriver.getTitle());
       });
 
       After(tags,()->{
