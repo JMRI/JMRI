@@ -1,11 +1,17 @@
 package jmri.jmrit.roster;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.symbolicprog.*;
-import org.jdom2.*;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.VariableValue;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
-class LocoFile extends XmlFile {
+public class LocoFile extends XmlFile {
 
     /**
      * Convert to a canonical text form for ComboBoxes, etc
