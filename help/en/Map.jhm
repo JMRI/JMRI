@@ -194,6 +194,8 @@
 
 <mapID target="package.jmri.jmrit.display.SwitchboardEditor" url="package/jmri/jmrit/display/SwitchboardEditor.shtml"/>
 
+<mapID target="html.doc.Technical.Javadoc_html" url="html/doc/Technical/Javadoc.shtml#html"/>
+
 <mapID target="package.apps.TabbedPreferences_WebServer" url="package/apps/TabbedPreferences.shtml#WebServer"/>
 
 <mapID target="manual.DecoderPro3.Basic_BasicPane_EnterEditData" url="manual/DecoderPro3/Basic_BasicPane.shtml#EnterEditData"/>
@@ -703,6 +705,8 @@
 <mapID target="html.doc.Technical.NetBeansGUIEditor" url="html/doc/Technical/NetBeansGUIEditor.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad" url="package/jmri/jmrit/operations/Operations.shtml#ShowSchedulesByCarTypeAndLoad"/>
+
+<mapID target="html.doc.Technical.Javadoc_inherit" url="html/doc/Technical/Javadoc.shtml#inherit"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains" url="manual/JMRI_OPS_UsersGuide/Ops_Trains.shtml"/>
 
@@ -1263,6 +1267,8 @@
 <mapID target="manual.DecoderPro3.Main_NCE_ClockMon" url="manual/DecoderPro3/Main_NCE.shtml#ClockMon"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_ClockMonitor" url="manual/DecoderPro3/Main_LocoNet.shtml#ClockMonitor"/>
+
+<mapID target="html.doc.Technical.Javadoc_missing" url="html/doc/Technical/Javadoc.shtml#missing"/>
 
 <mapID target="manual.DecoderPro.Dcode_Format_Top" url="manual/DecoderPro/Dcode_Format.shtml#Top"/>
 
@@ -2821,8 +2827,6 @@
 <mapID target="manual.DecoderPro3.index_revisions" url="manual/DecoderPro3/index.shtml#revisions"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_DCC_Hardware_Top" url="manual/JMRI_OPS_UsersGuide/Start_DCC_Hardware.shtml#Top"/>
-
-<mapID target="package.apps.gui3.dp3.StatusAndToDo" url="package/apps/gui3/dp3/StatusAndToDo.shtml"/>
 
 <mapID target="html.tools.throttle.HowToJMRIOrientedThrottle" url="html/tools/throttle/HowToJMRIOrientedThrottle.shtml"/>
 
