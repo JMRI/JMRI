@@ -21,8 +21,7 @@ public class WebServerScaffold implements En {
 
       Before(tags,()->{
           jmri.util.JUnitUtil.setUp();
-          jmri.util.JUnitUtil.initShutDownManager();
-          jmri.util.JUnitUtil.initDebugPowerManager();
+          jmri.util.JUnitUtil.resetProfileManager();
           server = new WebServer(); // a webserver using default preferences.
           server.start();
           jmri.util.JUnitUtil.waitFor(()->{ return server.isStarted(); },"Server Failed to Start in time");
@@ -30,13 +29,22 @@ public class WebServerScaffold implements En {
 
       After(tags, ()->{
          try {
-             server.stop();
-             jmri.util.JUnitUtil.waitFor(()->{ return server.isStopped(); },"Server failed to Stop in time");
+             try {
+                 server.stop();
+                 jmri.util.JUnitUtil.waitFor(()->{ return server.isStopped(); },"Server failed to Stop in time");
+             } catch(java.lang.NullPointerException npe) {
+                npe.printStackTrace();
+                Assert.fail("Null Pointer Exception while stopping web server:" + npe);
+             } catch(Exception ex) {
+                 // Exception is thrown by the stop call above.
+                 // if an Exception occurs here, we may want to raise a flag,
+                 ex.printStackTrace();
+                 Assert.fail("Exception occured during web server shutdown:" + ex);
+             }
              jmri.util.JUnitUtil.tearDown();
-         } catch(Exception ex) {
-             // if an exception occurs here, we may want to raise a flag,
-             ex.printStackTrace();
-             Assert.fail("Exception occured during web server shutdown:" + ex);
+         } catch(java.lang.NullPointerException npe2) {
+             npe2.printStackTrace();
+             Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
          }
       });
    }
