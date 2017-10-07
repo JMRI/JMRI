@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class
+ * Tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -42,13 +42,13 @@ public class CMRISystemConnectionMemoTest {
         Assert.assertEquals(NameValidity.VALID, m.validSystemNameFormat("CS127B1024",'S'));
 
         Assert.assertEquals(NameValidity.INVALID, m.validSystemNameFormat("CSx",'S'));
-        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CSx");
+//        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CSx");
 
-        Assert.assertEquals(NameValidity.INVALID, m.validSystemNameFormat("CS2000",'S'));
-        jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
+        Assert.assertEquals(NameValidity.VALID_AS_PREFIX_ONLY, m.validSystemNameFormat("CS2000",'S'));
+//        jmri.util.JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in CMRI system name: CS2000");
 
         Assert.assertEquals(NameValidity.INVALID, m.validSystemNameFormat("CS",'S'));
-        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CS");
+//        jmri.util.JUnitAppender.assertWarnMessage("invalid character in number field of CMRI system name: CS");
     }
 
     @Test

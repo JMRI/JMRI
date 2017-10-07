@@ -60,7 +60,8 @@ public class WarrantTableAction extends AbstractAction {
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
-    protected static WarrantFrame _openFrame;
+    private static WarrantFrame _openFrame;
+    private static NXFrame _nxFrame;
     private static boolean _logging = false;
     private static boolean _edit;
     static ShutDownTask _shutDownTask = null;
@@ -201,6 +202,27 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
+    synchronized protected static void closeNXFrame(NXFrame frame) {
+        if (frame != null) {
+            if (frame.equals(_nxFrame)) {
+                _nxFrame = null;
+            }
+            frame.dispose();
+        }
+    }
+
+    synchronized protected static boolean setNXFrame(NXFrame frame) {
+        if (_nxFrame !=null && _nxFrame != frame) {
+            return false;
+        }
+        _nxFrame = frame;
+        return true;
+    }
+
+    synchronized protected static NXFrame getNXFrame() {
+        return _nxFrame;
+    }
+
     synchronized protected static void closeWarrantFrame(WarrantFrame frame) {
         if (frame != null) {
             if (frame.equals(_openFrame)) {
@@ -210,9 +232,13 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
-    synchronized protected static void newWarrantFrame(WarrantFrame frame) {
+    synchronized protected static void setWarrantFrame(WarrantFrame frame) {
         closeWarrantFrame(_openFrame);
         _openFrame = frame;
+    }
+
+    synchronized protected static WarrantFrame getWarrantFrame() {
+        return _openFrame;
     }
 
     synchronized protected static void openWarrantFrame(String key) {
@@ -283,9 +309,8 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
-        NXFrame nxFrame = NXFrame.getDefault();
-        if (nxFrame.isVisible() && nxFrame.isRouteSeaching()) {
-            nxFrame.mouseClickedOnBlock(block);
+        if (_nxFrame != null && _nxFrame.isVisible() && _nxFrame.isRouteSeaching()) {
+            _nxFrame.mouseClickedOnBlock(block);
             return;
         }
 
@@ -643,9 +668,9 @@ public class WarrantTableAction extends AbstractAction {
                     }
                 }
                 _warrantMap.put(w.getDisplayName(), w);
-                newWarrantFrame(new WarrantFrame(w, false)); // copy/concat warrant/s
+                setWarrantFrame(new WarrantFrame(w, false)); // copy/concat warrant/s
             } else {
-                newWarrantFrame(new WarrantFrame(w, true));  // create new warrant
+                setWarrantFrame(new WarrantFrame(w, true));  // create new warrant
             }
             _startW = null;
             _endW = null;
