@@ -354,6 +354,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> {
             return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
         });
+        Iterator<Entry<String, ItemPanel>> iter = _tabIndex.entrySet().iterator();
+        while (iter.hasNext()) {
+            Entry<String, ItemPanel> entry = iter.next();
+            ItemPanel tab = entry.getValue();
+            tab.setEditor(ed);            
+        }
+        instance.setLocationRelativeTo(ed);
         instance.pack();
         instance.setVisible(true);
         return instance;
@@ -540,7 +547,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     /*
      * Look for duplicate name of family in the iterated set
      */
-    static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
+    private static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
             JOptionPane.showMessageDialog(frame,
                     Bundle.getMessage("EnterFamilyName"),

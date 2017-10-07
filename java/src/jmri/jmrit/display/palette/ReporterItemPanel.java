@@ -78,9 +78,11 @@ public class ReporterItemPanel extends TableItemPanel {
         }
         _reporter = new ReporterIcon(_editor);
         JPanel panel = new JPanel();
+        panel.setBackground(_editor.getTargetPanel().getBackground());
         JPanel comp;
         try {
             comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
+            comp.setBackground(_editor.getTargetPanel().getBackground());
             comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();

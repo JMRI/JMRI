@@ -60,6 +60,10 @@ public abstract class ItemPanel extends JPanel {
     public void init() {
         _initialized = true;
     }
+    
+    protected void setEditor(Editor ed) {
+        _editor = ed;
+    }
 
     protected void initLinkPanel() {
         JPanel panel = new JPanel();

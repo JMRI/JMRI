@@ -80,6 +80,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _dragIconPanel = new JPanel();
         makeDndIconPanel(null, null);
         _iconPanel = new JPanel();
+        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
         addIconsToPanel(_currentIconMap);
         _iconFamilyPanel.add(_dragIconPanel);
         JPanel panel = new JPanel();
@@ -102,12 +104,14 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
         NamedIcon icon = getDragIcon();
         JPanel panel = new JPanel();
+        panel.setBackground(_editor.getTargetPanel().getBackground());
         String borderName = ItemPalette.convertText("dragToPanel");
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 borderName));
         JLabel label;
         try {
             label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
+            label.setBackground(_editor.getTargetPanel().getBackground());
             label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
