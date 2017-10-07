@@ -73,6 +73,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XNetFeedbackMessageCacheTest.class));
         suite.addTest(new JUnit4TestAdapter(AbstractXNetSerialConnectionConfigTest.class));
         suite.addTest(new JUnit4TestAdapter(AbstractXNetInitializationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(XNetAddressTest.class));
         return suite;
     }
 

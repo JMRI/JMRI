@@ -1358,6 +1358,15 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        // TrackSegments are always connected
+        // nothing to do here... move along...
+    }
+    
     private void drawHidden(Graphics2D g2) {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),

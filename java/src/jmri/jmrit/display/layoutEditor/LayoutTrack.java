@@ -136,6 +136,12 @@ public abstract class LayoutTrack {
     protected abstract void draw(Graphics2D g2);
 
     /**
+     * highlight unconnected connections
+     * @param g2 the graphics context
+     */
+    protected abstract void drawUnconnected(Graphics2D g2);
+
+    /**
      * draw the edit controls
      *
      * @param g2 the graphics context
