@@ -3,6 +3,7 @@ package jmri.util;
 import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.PathMatcher;
@@ -98,14 +99,7 @@ public class FileLineEndingsTest {
             for (String pattern : patterns) {
                 PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern);
                 Files.walk(directory.toPath())
-                        .filter(path -> {
-                            for (PathMatcher antiMatcher : antiMatchers) {
-                                if (antiMatcher.matches(path)) {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        })
+                        .filter(path -> antiMatchers.stream().noneMatch((antiMatcher) -> (antiMatcher.matches(path))))
                         .filter(matcher::matches)
                         .forEach((path) -> {
                             if (path.toFile().isFile()) {
@@ -126,7 +120,7 @@ public class FileLineEndingsTest {
     @Test
     public void lineEndings() {
         try {
-            String contents = FileUtils.readFileToString(file);
+            String contents = FileUtils.readFileToString(file, Charset.defaultCharset());
             Assert.assertFalse("File " + file.getPath() + " has incorrect line endings.", contents.contains("\r\n"));
         } catch (IOException ex) {
             log.error("Unable to get path for {}", this.file, ex);
