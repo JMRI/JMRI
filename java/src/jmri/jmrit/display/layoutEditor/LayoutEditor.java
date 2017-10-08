@@ -9574,14 +9574,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     }   // draw
 
-    boolean main = true;
-    float trackWidth = sideTrackWidth;
+    private boolean main = true;
+    private float trackWidth = sideTrackWidth;
 
     //had to make this protected so the LayoutTrack classes could access it
     //also returned the current value of trackWidth for the callers to use
-    protected float setTrackStrokeWidth(Graphics2D g2, boolean need) {
-        if (main != need) {
-            main = need;
+    protected float setTrackStrokeWidth(Graphics2D g2, boolean needMain) {
+        if (main != needMain) {
+            main = needMain;
 
             //change track stroke width
             trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
@@ -9589,6 +9589,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
         return trackWidth;
     } //setTrackStrokeWidth
+
+    protected float getTrackStrokeWidth() {
+        return trackWidth;
+    }
 
     private void drawHiddenLayoutTracks(Graphics2D g2) {
         g2.setColor(defaultTrackColor);

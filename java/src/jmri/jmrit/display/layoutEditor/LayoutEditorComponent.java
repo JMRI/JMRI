@@ -23,6 +23,9 @@ class LayoutEditorComponent extends JComponent {
         return layoutEditor;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void paint(Graphics g) {
         if (g instanceof Graphics2D) {
@@ -30,32 +33,50 @@ class LayoutEditorComponent extends JComponent {
         }
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBounds() {
         return MathUtil.rectangle2DToRectangle(layoutEditor.getTargetPanel().getBounds());
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBounds(Rectangle rv) {
         rv.setBounds(getBounds());
         return rv;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public int getX() {
         return (int) layoutEditor.getTargetPanel().getX();
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public int getY() {
         return (int) layoutEditor.getTargetPanel().getY();
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public int getWidth() {
         return (int) layoutEditor.getTargetPanel().getWidth();
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public int getHeight() {
         return (int) layoutEditor.getTargetPanel().getHeight();
