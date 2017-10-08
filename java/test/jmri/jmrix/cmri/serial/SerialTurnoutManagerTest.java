@@ -61,10 +61,10 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("CT21"));
+            log.debug("by system name: {}", l.getBySystemName("CT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("CT21"));
