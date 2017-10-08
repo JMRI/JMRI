@@ -85,7 +85,10 @@ public class JsonMessageSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        InstanceManager.getDefault(JsonMessageClientManager.class).unsubscribe(this.connection);
+        // do not create the default instance, since we only need it if we triggered its creation earlier
+        InstanceManager.getOptionalDefault(JsonMessageClientManager.class).ifPresent((jmcm) -> {
+            jmcm.unsubscribe(this.connection);
+        });
     }
 
     private void subscribe(String client) throws JsonException {
