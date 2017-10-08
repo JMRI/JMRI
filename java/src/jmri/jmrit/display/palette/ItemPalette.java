@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -350,7 +351,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return familyTOMap;
     }
 
-    static public ItemPalette getDefault(String title, Editor ed) {
+    static public ItemPalette getDefault(String title, @Nonnull Editor ed) {
         if (GraphicsEnvironment.isHeadless()) {
             return null;
         }
@@ -358,17 +359,15 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
         });
         Iterator<Entry<String, ItemPanel>> iter = _tabIndex.entrySet().iterator();
-        if (ed != null) { // tests use null Editor
-            while (iter.hasNext()) {
-                Entry<String, ItemPanel> entry = iter.next();
-                ItemPanel tab = entry.getValue();
-                tab.setEditor(ed);            
-            }
-            // Either of these positioning calls puts the instance on the primary monitor. ???
-            java.awt.Point pt = ed.getLocation();
-            instance.setLocation(pt.x, pt.y);
-//            instance.setLocationRelativeTo(ed);            
+        while (iter.hasNext()) {
+            Entry<String, ItemPanel> entry = iter.next();
+            ItemPanel tab = entry.getValue();
+            tab.setEditor(ed);            
         }
+        // Either of these positioning calls puts the instance on the primary monitor. ???
+        java.awt.Point pt = ed.getLocation();
+        instance.setLocation(pt.x, pt.y);
+//        instance.setLocationRelativeTo(ed);            
         instance.pack();
         instance.setVisible(true);
         return instance;
