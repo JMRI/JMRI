@@ -14,13 +14,13 @@ public class SprogSlotMonAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo = null;
 
-    public SprogSlotMonAction(String s,SprogSystemConnectionMemo memo) {
+    public SprogSlotMonAction(String s, SprogSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public SprogSlotMonAction(SprogSystemConnectionMemo memo) {
-        this(Bundle.getMessage("SprogSlotMonitorTitle"),memo);
+        this(Bundle.getMessage("SprogSlotMonitorTitle"), memo);
     }
 
     @Override

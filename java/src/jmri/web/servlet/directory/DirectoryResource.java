@@ -40,8 +40,8 @@ public class DirectoryResource extends Resource {
     @Override
     public String getListHTML(String base, boolean parent)
             throws IOException {
-        base = URIUtil.canonicalPath(base);
-        if (base == null || !isDirectory()) {
+        String resource = URIUtil.canonicalPath(base);
+        if (resource == null || !isDirectory()) {
             return null;
         }
 
@@ -51,27 +51,27 @@ public class DirectoryResource extends Resource {
         }
         Arrays.sort(ls);
 
-        String decodedBase = URIUtil.decodePath(base);
+        String decodedBase = URIUtil.decodePath(resource);
         String title = Bundle.getMessage(this.locale, "DirectoryTitle", deTag(decodedBase)); // NOI18N
 
         StringBuilder table = new StringBuilder(4096);
         String row = Bundle.getMessage(this.locale, "TableRow"); // NOI18N
         if (parent) {
             table.append(String.format(this.locale, row,
-                    URIUtil.addPaths(base, "../"),
+                    URIUtil.addPaths(resource, "../"),
                     Bundle.getMessage(this.locale, "ParentDirectory"),
                     "",
                     ""));
         }
 
-        String encodedBase = hrefEncodeURI(base);
+        String encodedBase = hrefEncodeURI(resource);
 
         DateFormat dfmt = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, this.locale);
         for (String l : ls) {
             Resource item = addPath(l);
             String path = URIUtil.addPaths(encodedBase, URIUtil.encodePath(l));
             if (item.isDirectory() && !path.endsWith("/")) {
-                path = path + URIUtil.SLASH;
+                path += URIUtil.SLASH;
             }
             table.append(String.format(this.locale, row,
                     path,
@@ -88,9 +88,9 @@ public class DirectoryResource extends Resource {
                         InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                         title
                 ),
-                InstanceManager.getDefault(ServletUtil.class).getNavBar(this.locale, base),
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(this.locale, resource),
                 InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
-                InstanceManager.getDefault(ServletUtil.class).getFooter(this.locale, base),
+                InstanceManager.getDefault(ServletUtil.class).getFooter(this.locale, resource),
                 title,
                 table
         );

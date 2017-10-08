@@ -17,25 +17,19 @@ import purejavacomm.SerialPortEventListener;
  * sends/receives message objects. The connection to a SprogPortController is
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
- *
- * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged
- * with "AJB" indicate changes or observations by me
- *
- * Removed Runnable implementation and methods for it
+ * <p>
+ * Updated January 2010 for gnu io (RXTX) - Andrew Berridge.
+ * Removed Runnable implementation and methods for it.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
   */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener {
 
     private SprogReply reply = new SprogReply();
-
     private boolean waitingForReply = false;
     SprogListener lastSender = null;
-
     private SprogState sprogState = SprogState.NORMAL;
 
-    //public SprogTrafficController() {
-    //}
 
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
        memo = adaptermemo;
@@ -81,12 +75,12 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
         } else {
             // disable flow control
-            //AJB - removed Jan 2010 - this stops SPROG from sending. Could cause problems with
-            //serial Sprogs, but I have no way of testing: 
-            //getController().setHandshake(0);
+            // removed Jan 2010 - this stops SPROG from sending. Could cause problems with
+            // serial Sprogs, but I have no way of testing:
+            // getController().setHandshake(0);
         }
         if (log.isDebugEnabled()) {
-            log.debug("Setting sprogState " + s);
+            log.debug("Setting sprogState {}", s);
         }
     }
 
@@ -111,7 +105,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     protected synchronized void notifyMessage(SprogMessage m, SprogListener originator) {
         for (SprogListener listener : this.getCopyOfListeners()) {
             try {
-                //don't send it back to the originator!
+                // don't send it back to the originator!
                 if (listener != originator) {
                     // skip forwarding to the last sender for now, we'll get them later
                     if (lastSender != listener) {
@@ -119,7 +113,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                     }
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + listener + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
             }
         }
         // forward to the last listener who sent a message
@@ -133,14 +127,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     protected synchronized void notifyReply(SprogReply r) {
         for (SprogListener listener : this.getCopyOfListeners()) {
             try {
-                //if is message don't send it back to the originator!
+                // if is message don't send it back to the originator!
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != listener) {
                     listener.notifyReply(r);
                 }
 
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + listener + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
             }
         }
         // forward to the last listener who sent a message
@@ -152,25 +146,25 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     protected synchronized void notifyReply(SprogReply r, SprogListener lastSender) {
-        log.debug("notifyReply starts last sender: "+lastSender);
+        log.debug("notifyReply starts last sender: {}", lastSender);
         for (SprogListener listener : this.getCopyOfListeners()) {
             try {
                 //if is message don't send it back to the originator!
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != listener) {
-                    log.debug("Notify listener: "+listener+" "+r.toString());
+                    log.debug("Notify listener: {} {}", listener, r.toString());
                     listener.notifyReply(r);
                 }
 
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + listener + "\nException " + e);
+                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
             }
         }
         // forward to the last listener who sent a message
         // this is done _second_ so monitoring can have already stored the reply
         // before a response is sent
         if (lastSender != null) {
-            log.debug("notify last sender: "+lastSender+r.toString());
+            log.debug("notify last sender: {}{}", lastSender, r.toString());
             lastSender.notifyReply(r);
         }
     }
@@ -188,7 +182,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 log.warn("sendMessage: no connection established");
             }
         } catch (Exception e) {
-            log.warn("sendMessage: Exception: " + e.toString());
+            log.warn("sendMessage: Exception: {}", e.toString());
         }
     }
 
@@ -215,10 +209,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         waitingForReply = true;
 
         if (log.isDebugEnabled()) {
-            log.debug("sendSprogMessage message: [" + m.toString(isSIIBootMode()) + "]");
+            log.debug("sendSprogMessage message: [{}]", m.toString(isSIIBootMode()));
         }
         // remember who sent this
-//        log.debug("Updating last sender "+replyTo.toString());
+        log.debug("Updating last sender");
         lastSender = replyTo;
         // notify all _other_ listeners
         notifyMessage(m, replyTo);
@@ -249,7 +243,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * @return the port controller
      */
     protected SerialDriverAdapter getController(){
-       return (SerialDriverAdapter)controller;
+       return (SerialDriverAdapter) controller;
     }
 
     /**
@@ -299,8 +293,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     private boolean unsolicited;
-
-    private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class);
 
     /**
      * Respond to an event triggered by RXTX.
@@ -356,7 +348,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 break;
             }
         }
-
     }
 
     /**
@@ -370,7 +361,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             notify();
         }
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + this.reply.getNumDataElements());
+            log.debug("dispatch reply of length {}", this.reply.getNumDataElements());
         }
         {
             final SprogReply thisReply = this.reply;
@@ -388,7 +379,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
                 @Override
                 public void run() {
-                    log.debug("Delayed notify starts "+replyForLater.toString());
+                    log.debug("Delayed notify starts {}", replyForLater.toString());
                     myTC.notifyReply(replyForLater, lastSenderForLater);
                 }
             };
@@ -397,6 +388,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
         //Create a new reply, ready to be filled
         this.reply = new SprogReply();
-
     }
+
+    private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class);
+
 }

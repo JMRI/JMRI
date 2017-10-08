@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-02-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--  $Id$ --
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 
-<html lang="fr">
+ <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -41,11 +41,17 @@
         <li>Edit - (<a href=
         "../TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>)</li>
 
-        <li><a href=
-        "../../jmri/jmrit/ToolsMenu.shtml">Outils</a></li>
+<p>
+Aide sur les menus sp&#233;cifiques:
+<ul>
+<li>Edit - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
+<li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
+<li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Inventaire</a>
+<li><a href="../../../html/tools/Audio.shtml">Audio</a>
+</ul>
 
-        <li><a href=
-        "../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a></li>
+Plus d'information au sujet de <a href="../../setup/Files.shtml">Fichiers de Configuration JMRI</a> 
+
 
         <li><a href=
         "../../../html/tools/Audio.shtml">Audio</a></li>

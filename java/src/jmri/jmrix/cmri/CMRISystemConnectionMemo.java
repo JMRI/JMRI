@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
 public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
-        this("C", CMRIConnectionTypeList.CMRI);
+        this("C", CMRIConnectionTypeList.CMRI); // default to "C" prefix
     }
 
     public CMRISystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
@@ -68,7 +68,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         if (offset < 1) {
             return "";
         }
-        if (systemName.length() < 3) {
+        if (systemName.length() < offset + 1) {
             // not a valid system name for C/MRI
             return "";
         }
@@ -114,10 +114,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public int getBitFromSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
+//            log.error("invalid system prefix in CMRI system name: {}", systemName); // fix test first
             return 0;
         }
-        if ((systemName.charAt(offset) != 'L') && (systemName.charAt(offset) != 'S') && (systemName.charAt(offset) != 'T')) {
-            log.warn("invalid character in header field of system name: {}", systemName);
+        if (validSystemNameFormat(systemName, systemName.charAt(offset)) != NameValidity.VALID) {
+            // No point in normalizing if a valid system name format is not present
             return 0;
         }
         // Find the beginning of the bit number field
@@ -127,7 +128,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 k = i + 1;
             }
         }
-        int n = 0;
+        int n = 0; // bit number
         if (k == 0) {
             // here if 'B' not found, name must be CLnnxxx format
             int num;
@@ -143,9 +144,9 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 log.warn("invalid CMRI system name: {}", systemName);
                 return 0;
             }
-        } else {
+        } else { // k = position of "B" char in name
             try {
-                n = Integer.parseInt(systemName.substring(k, systemName.length()));
+                n = Integer.parseInt(systemName.substring(k)); // why use a different formula than 13 lines up?
             } catch (Exception e) {
                 log.warn("invalid character in bit number field of CMRI system name: {}", systemName);
                 return 0;
@@ -243,6 +244,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public String normalizeSystemName(String systemName) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
+//            log.error("invalid system prefix in CMRI system name: {}", systemName); // fix test first
             return "";
         }
         if (validSystemNameFormat(systemName, systemName.charAt(offset)) != NameValidity.VALID) {
@@ -283,6 +285,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public String convertSystemNameToAlternate(String systemName) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
+            log.error("invalid system prefix in CMRI system name: {}", systemName);
             return "";
         }
         if (validSystemNameFormat(systemName, systemName.charAt(offset)) != NameValidity.VALID) {
@@ -329,7 +332,6 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             log.error("invalid system prefix in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
-
         if (systemName.charAt(offset) != type) {
             log.error("invalid type character in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
@@ -350,42 +352,51 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             try {
                 num = Integer.valueOf(systemName.substring(offset+1)).intValue();
             } catch (Exception e) {
-                log.warn("invalid character in number field of CMRI system name: {}", systemName);
+                log.debug("invalid character in number field of CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
             if ((num < 1) || (num >= 128000)) {
-                log.warn("number field out of range in CMRI system name: {}", systemName);
+                log.debug("number field out of range in CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
-                log.warn("bit number not in range 1 - 999 in CMRI system name: {}", systemName);
-                return NameValidity.INVALID;
+                log.debug("bit number not in range 1 - 999 in CMRI system name: {}", systemName);
+                if (systemName.length() <= offset + 6) {
+                    return NameValidity.VALID_AS_PREFIX_ONLY;
+                    // may become valid by adding 1 or more digits > 0
+                } else { // unless systemName.length() > offset + 6
+                    return NameValidity.INVALID;
+                }
             }
         } else {
             // This is a CLnBxxx pattern address
             if (s.length() == 0) {
-                log.warn("no node address before 'B' in CMRI system name: {}", systemName);
+                log.debug("no node address before 'B' in CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
             int num;
             try {
                 num = Integer.valueOf(s).intValue();
             } catch (Exception e) {
-                log.warn("invalid character in node address field of CMRI system name: {}", systemName);
+                log.debug("invalid character in node address field of CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
             if ((num < 0) || (num >= 128)) {
-                log.warn("node address field out of range in CMRI system name: {}", systemName);
+                log.debug("node address field out of range in CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
             try {
-                num = Integer.parseInt(systemName.substring(k, systemName.length()));
+                num = Integer.parseInt(systemName.substring(k));
             } catch (Exception e) {
-                log.warn("invalid character in bit number field of CMRI system name: {}", systemName);
+                log.debug("invalid character in bit number field of CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
+            if (num == 0) {
+                return NameValidity.VALID_AS_PREFIX_ONLY;
+                // may become valid by adding 1 or more digits > 0, all zeros will be removed later so total length irrelevant
+            }
             if ((num < 1) || (num > 2048)) {
-                log.warn("bit number field out of range in CMRI system name: {}", systemName);
+                log.debug("bit number field out of range in CMRI system name: {}", systemName);
                 return NameValidity.INVALID;
             }
         } // TODO add format check for CLnn:xxx format
