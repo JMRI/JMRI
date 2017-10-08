@@ -123,8 +123,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-
-        serialPort.setRTS(rts);
+        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
         serialPort.setDTR(dtr);
     }
 
@@ -166,8 +165,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * currentBaudNumber, which requires it.
      */
     public int[] validBaudNumber() {
-        log.error("default validBaudNumber implementation should not be used");
-        new Exception().printStackTrace();
+        log.error("default validBaudNumber implementation should not be used", new Exception());
         return null;
     }
 

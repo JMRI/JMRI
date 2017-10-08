@@ -182,7 +182,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         commandOptions = val;
         if (commandOptionSet) {
             log.warn("setCommandOptions called more than once");
-            //new Exception().printStackTrace(); TODO need to remove for testing
         }
         commandOptionSet = true;
     }
@@ -262,7 +261,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         usbSystem = val;
         if (usbSystemSet) {
             log.warn("setUsbSystem called more than once");
-            //new Exception().printStackTrace();
         }
         usbSystemSet = true;
     }
@@ -360,7 +358,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         cmdGroups = val;
         if (cmdGroupsSet) {
             log.warn("setCmdGroups called more than once");
-            //new Exception().printStackTrace();
         }
         cmdGroupsSet = true;
     }
@@ -477,8 +474,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         try {
             NceMessageCheck.checkMessage(getAdapterMemo(), m);
         } catch (JmriException e) {
-            log.error(e.getMessage());
-            new Exception().printStackTrace();
+            log.error(e.getMessage(), e);
             return;  // don't send bogus message to interface
         }
         sendMessage(m, reply);
