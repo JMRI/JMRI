@@ -1,8 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import jmri.util.MathUtil;
@@ -38,7 +41,22 @@ class LayoutEditorComponent extends JComponent {
      */
     @Override
     public Rectangle getBounds() {
-        return MathUtil.rectangle2DToRectangle(layoutEditor.getTargetPanel().getBounds());
+        JComponent targetPanel = layoutEditor.getTargetPanel();
+        Rectangle2D targetBounds = targetPanel.getBounds();
+        Container parent = getParent();
+        if (parent != null) {   // if there is a parent...
+            Rectangle2D parentBounds = parent.getBounds();
+
+            // convert our origin to parent coordinates
+            Point2D origin = new Point2D.Double(
+                    targetBounds.getX() - parentBounds.getX(),
+                    targetBounds.getY() - parentBounds.getY());
+
+            return new Rectangle((int) origin.getX(), (int) origin.getY(),
+                    (int) targetBounds.getWidth(), (int) targetBounds.getHeight());
+        } else {
+            return MathUtil.rectangle2DToRectangle(targetBounds);
+        }
     }
 
     /*
@@ -55,7 +73,8 @@ class LayoutEditorComponent extends JComponent {
      */
     @Override
     public int getX() {
-        return (int) layoutEditor.getTargetPanel().getX();
+        Rectangle bounds = getBounds();
+        return (int) bounds.getX();
     }
 
     /*
@@ -63,7 +82,8 @@ class LayoutEditorComponent extends JComponent {
      */
     @Override
     public int getY() {
-        return (int) layoutEditor.getTargetPanel().getY();
+        Rectangle bounds = getBounds();
+        return (int) bounds.getY();
     }
 
     /*
@@ -71,7 +91,8 @@ class LayoutEditorComponent extends JComponent {
      */
     @Override
     public int getWidth() {
-        return (int) layoutEditor.getTargetPanel().getWidth();
+        Rectangle bounds = getBounds();
+        return (int) bounds.getWidth();
     }
 
     /*
@@ -79,7 +100,8 @@ class LayoutEditorComponent extends JComponent {
      */
     @Override
     public int getHeight() {
-        return (int) layoutEditor.getTargetPanel().getHeight();
+        Rectangle bounds = getBounds();
+        return (int) bounds.getHeight();
     }
 
     //initialize logging
