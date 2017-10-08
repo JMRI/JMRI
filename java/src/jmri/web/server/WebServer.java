@@ -97,7 +97,6 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         });
     }
 
-    private Thread serverThread = null; 
 
     /**
      * Start the web server.
@@ -130,7 +129,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
             });
             server.addLifeCycleListener(this);
 
-            serverThread = new ServerThread(server);
+            Thread serverThread = new ServerThread(server);
             serverThread.setName("WebServer"); // NOI18N
             serverThread.start();
         }
