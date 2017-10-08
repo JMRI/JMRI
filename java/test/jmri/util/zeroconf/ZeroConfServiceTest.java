@@ -35,6 +35,10 @@ public class ZeroConfServiceTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        ZeroConfService.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return (ZeroConfService.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
     }
 
     @After
