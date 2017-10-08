@@ -144,6 +144,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     @Override
     public void stop() throws Exception {
         server.stop();
+        zeroConfService.stop();
     }
 
     /**
