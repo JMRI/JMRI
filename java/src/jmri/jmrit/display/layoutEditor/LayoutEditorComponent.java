@@ -1,12 +1,13 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import jmri.util.MathUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class LayoutEditorComponent extends JComponent {
 
@@ -22,6 +23,9 @@ class LayoutEditorComponent extends JComponent {
         return layoutEditor;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void paint(Graphics g) {
         if (g instanceof Graphics2D) {
@@ -29,35 +33,57 @@ class LayoutEditorComponent extends JComponent {
         }
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBounds() {
-        Dimension d = layoutEditor.getTargetPanel().getSize();
-        return new Rectangle(0, 0, (int) d.getWidth(), (int) d.getHeight());
+        return MathUtil.rectangle2DToRectangle(layoutEditor.getTargetPanel().getBounds());
     }
 
-    @Override
-    public int getX() {
-        return (int) layoutEditor.getBounds().getX();
-    }
-
-    @Override
-    public int getY() {
-        return (int) layoutEditor.getBounds().getY();
-    }
-
-    @Override
-    public int getWidth() {
-        return (int) layoutEditor.getBounds().getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return (int) layoutEditor.getBounds().getHeight();
-    }
-
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public Rectangle getBounds(Rectangle rv) {
-        rv.setBounds(MathUtil.rectangle2DToRectangle(layoutEditor.getBounds()));
+        rv.setBounds(getBounds());
         return rv;
     }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public int getX() {
+        return (int) layoutEditor.getTargetPanel().getX();
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public int getY() {
+        return (int) layoutEditor.getTargetPanel().getY();
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return (int) layoutEditor.getTargetPanel().getWidth();
+    }
+
+    /*
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHeight() {
+        return (int) layoutEditor.getTargetPanel().getHeight();
+    }
+
+    //initialize logging
+    private transient final static Logger log = LoggerFactory.getLogger(
+            LayoutEditorComponent.class
+    );
 }
