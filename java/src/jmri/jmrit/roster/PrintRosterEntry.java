@@ -68,7 +68,7 @@ public class PrintRosterEntry implements PaneContainer {
         try {
             Element root = pf.rootFromName(filename);
             if (root == null) {
-                log.error("Programmer file name incorrect " + filename);
+                log.error("Programmer file name incorrect {}", filename);
                 return;
             }
             if ((base = root.getChild("programmer")) == null) {
@@ -77,9 +77,7 @@ public class PrintRosterEntry implements PaneContainer {
             }
             log.debug("Success: xml file top element is 'programmer'");
         } catch (JDOMException | java.io.IOException e) {
-            log.error("exception reading programmer file: " + filename, e);
-            // provide traceback too
-            e.printStackTrace();
+            log.error("exception reading programmer file {}", filename, e);
             return;
         }
 

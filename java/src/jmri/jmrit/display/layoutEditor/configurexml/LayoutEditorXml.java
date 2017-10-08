@@ -222,7 +222,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 panelWidth = windowWidth - 18;
             }
 
-            // For files created by the new version, 
+            // For files created by the new version,
             // retrieve window and panel sizes
             if ((a = shared.getAttribute("windowheight")) != null) {
                 windowHeight = a.getIntValue();
@@ -527,9 +527,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                     | jmri.configurexml.JmriConfigureXmlException
                     | RuntimeException e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
+                log.error("Exception while loading {}", item.getName(), e);
                 result = false;
-                e.printStackTrace();
             }
         }
         panel.disposeLoadData();     // dispose of url correction data

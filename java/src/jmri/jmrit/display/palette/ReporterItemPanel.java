@@ -70,7 +70,7 @@ public class ReporterItemPanel extends TableItemPanel {
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
     }
-    
+
     @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
@@ -83,7 +83,7 @@ public class ReporterItemPanel extends TableItemPanel {
             comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
             comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             comp = new JPanel();
         }
         panel.add(comp);
@@ -136,7 +136,7 @@ public class ReporterItemPanel extends TableItemPanel {
         public IconDragJComponent(DataFlavor flavor, JComponent comp) {
             super(flavor, comp);
         }
-        
+
         @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
@@ -163,7 +163,7 @@ public class ReporterItemPanel extends TableItemPanel {
                 ReporterIcon r = new ReporterIcon(_editor);
                 r.setReporter(bean.getDisplayName());
                 r.setLevel(Editor.REPORTERS);
-                return r;                
+                return r;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icon for \"");

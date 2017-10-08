@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * to their liking.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
- * 
+ *
  */
 public class TrainManifest extends TrainCommon {
 
@@ -282,7 +282,7 @@ public class TrainManifest extends TrainCommon {
             newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[]{
                     Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()}));
             newLine(fileOut, messageFormatText);
-            e.printStackTrace();
+            log.error("Illegal argument", e);
         }
 
         fileOut.flush();

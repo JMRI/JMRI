@@ -48,7 +48,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
 //            initIconFamiliesPanel();
-            add(_iconFamilyPanel, 1);            
+            add(_iconFamilyPanel, 1);
         }
     }
 
@@ -110,7 +110,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
             label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             label = new JLabel();
         }
         label.setName(borderName);
@@ -162,7 +162,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _family = null;
             return;
         }
-        
+
         try {
             _mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(bean.getDisplayName());
         } catch (IllegalArgumentException ex) {
@@ -182,7 +182,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                     s = s.substring(s.indexOf("resources"));
                 }
                 NamedIcon n = new NamedIcon(s, s);
-                _currentIconMap.put(aspect, n);                
+                _currentIconMap.put(aspect, n);
             }
         }
         if (log.isDebugEnabled()) {
@@ -281,7 +281,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 sb.append("\"");
                 return  sb.toString();
             }
-            return null;                
+            return null;
         }
     }
 

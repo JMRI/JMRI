@@ -65,9 +65,9 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
 
             // set RTS high, DTR high
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            //AJB: Removed Jan 2010 - 
+            //AJB: Removed Jan 2010 -
             //Setting flow control mode to zero kills comms - SPROG doesn't send data
-            //Concern is that will disabling this affect other SPROGs? Serial ones? 
+            //Concern is that will disabling this affect other SPROGs? Serial ones?
             configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout
@@ -108,8 +108,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -120,9 +119,8 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     public void setHandshake(int mode) {
         try {
             activeSerialPort.setFlowControlMode(mode);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while setting COM port handshake mode trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (UnsupportedCommOperationException ex) {
+            log.error("Unexpected exception while setting COM port handshake mode", ex);
         }
 
     }

@@ -1,6 +1,8 @@
 package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JPanel extension to handle automatic creation of window title and help
@@ -36,10 +38,10 @@ abstract public class NcePanel extends jmri.util.swing.JmriPanel implements NceP
             try {
                 initComponents((NceSystemConnectionMemo) context);
             } catch (Exception e) {
-                //log.error("NcePanel initContext failed");
-                e.printStackTrace();
+                log.error("NcePanel initContext failed", e);
             }
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(NcePanel.class);
 }

@@ -216,7 +216,7 @@ public class SerialNode extends AbstractNode {
                 SerialMessage m2 = new SerialMessage(4);
                 int i = 0;
 
-                // turn on 2nd parallel inputs        
+                // turn on 2nd parallel inputs
                 m2.setElement(i++, getNodeAddress() | 0x80);  // address
                 m2.setElement(i++, 0x73);  // command
                 m2.setElement(i++, getNodeAddress() | 0x80);  // address
@@ -234,7 +234,7 @@ public class SerialNode extends AbstractNode {
         SerialMessage m1 = new SerialMessage(4);
         int i = 0;
 
-        // turn on ASD     
+        // turn on ASD
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
         m1.setElement(i++, 0x71);  // command
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
@@ -307,7 +307,7 @@ public class SerialNode extends AbstractNode {
             return;  // not interesting message
         }
         // Yes, continue.
-        // Want to get individual sensor bits, and xor them with the 
+        // Want to get individual sensor bits, and xor them with the
         // past state and the inverted bit.
 
         if (l.isFromNewSerialSensor()) {
@@ -421,9 +421,9 @@ public class SerialNode extends AbstractNode {
             }
         } else {
             // multiple registration of the same sensor
-            new Exception("mult reg " + i + " S:" + s.getSystemName()).printStackTrace();
-            log.warn("multiple registration of same sensor: GS"
-                    + Integer.toString((getNodeAddress() * SerialSensorManager.SENSORSPERNODE) + i)); // TODO multichar prefix
+            log.warn("multiple registration of same sensor: GS{}",
+                    (getNodeAddress() * SerialSensorManager.SENSORSPERNODE) + i,
+                    new Exception("mult reg " + i + " S:" + s.getSystemName())); // TODO multichar prefix
         }
     }
 

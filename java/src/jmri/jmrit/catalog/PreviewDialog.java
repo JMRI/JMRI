@@ -370,7 +370,7 @@ public class PreviewDialog extends JDialog {
                     try {
                         image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                     } catch (java.lang.ClassNotFoundException cnfe) {
-                        cnfe.printStackTrace();
+                        log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
                         image = new JLabel(cnfe.getMessage());
                     }
                     image.setOpaque(true);

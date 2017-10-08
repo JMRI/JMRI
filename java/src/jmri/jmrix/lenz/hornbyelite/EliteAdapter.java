@@ -182,8 +182,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException | TooManyListenersException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -284,7 +283,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    
+
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used. Convert to JMRI multi-system support structure.
      */

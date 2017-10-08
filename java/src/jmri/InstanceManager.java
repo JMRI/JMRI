@@ -219,7 +219,7 @@ public final class InstanceManager {
         if (l.isEmpty()) {
 
             // example of tracing where something is being initialized
-            //if (type == jmri.implementation.SignalSpeedMap.class) new Exception("jmri.implementation.SignalSpeedMap init").printStackTrace();
+            // log.error("jmri.implementation.SignalSpeedMap init", new Exception());
             if (traceFileActive) {
                 traceFilePrint("Start initialization: " + type.toString());
                 traceFileIndent++;

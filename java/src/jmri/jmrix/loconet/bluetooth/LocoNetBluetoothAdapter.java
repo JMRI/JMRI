@@ -42,7 +42,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
     }
 
     Vector<String> portNameVector = null;
-    
+
     @Override
     public Vector<String> getPortNames() {
         portNameVector = new Vector<String>();
@@ -53,18 +53,16 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
                     portNameVector.add(device.getFriendlyName(false));
                 }
             }
-        } catch (BluetoothStateException BSe) {
-            BSe.printStackTrace();
-        } catch (IOException IOe) {
-            IOe.printStackTrace();
+        } catch (IOException ex) {
+            log.error("Unable to use bluetooth device", ex);
         }
         return portNameVector;
     }
-    
+
     @Override
     public String openPort(String portName, String appName) {
-        int[] responseCode = new int[] { -1 };
-        Exception[] exception = new Exception[] { null };
+        int[] responseCode = new int[]{-1};
+        Exception[] exception = new Exception[]{null};
         try {
             // Find the RemoteDevice with this name.
             RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
@@ -73,10 +71,10 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
                     if (device.getFriendlyName(false).equals(portName)) {
                         Object[] waitObj = new Object[0];
                         // Start a search for a serialport service (UUID 0x1101)
-                        LocalDevice.getLocalDevice().getDiscoveryAgent().searchServices(new int[] { 0x0100 }, new UUID[] { new UUID(0x1101) }, device, new DiscoveryListener() {
+                        LocalDevice.getLocalDevice().getDiscoveryAgent().searchServices(new int[]{0x0100}, new UUID[]{new UUID(0x1101)}, device, new DiscoveryListener() {
                             @Override
                             public void servicesDiscovered(int transID, ServiceRecord[] servRecord) {
-                                synchronized(waitObj) {
+                                synchronized (waitObj) {
                                     for (ServiceRecord service : servRecord) {
                                         // Service found, get url for connection.
                                         String url = service.getConnectionURL(ServiceRecord.NOAUTHENTICATE_NOENCRYPT, false);
@@ -105,30 +103,33 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
                                     }
                                 }
                             }
-                            
+
                             @Override
                             public void serviceSearchCompleted(int transID, int respCode) {
-                                synchronized(waitObj) {
+                                synchronized (waitObj) {
                                     // Search for services complete, if the port was not opened, save the response code for error analysis.
                                     responseCode[0] = respCode;
                                     // Search completer, let openPort continue.
                                     waitObj.notify();
                                 }
                             }
-                            
+
                             @Override
-                            public void inquiryCompleted(int discType) { }
+                            public void inquiryCompleted(int discType) {
+                            }
+
                             @Override
-                            public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) { }
+                            public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) {
+                            }
                         });
-                        synchronized(waitObj) {
+                        synchronized (waitObj) {
                             // Wait until either the port is open on the search has returned a response code.
                             while (!opened && responseCode[0] == -1) {
                                 try {
                                     // Wait for search to complete.
                                     waitObj.wait();
-                                } catch (InterruptedException Ie) {
-                                    Ie.printStackTrace();
+                                } catch (InterruptedException ex) {
+                                    log.error("Thread unexpectedly interrupted", ex);
                                 }
                             }
                         }
@@ -143,7 +144,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             log.error("Unknown IOException when establishing connection to " + portName);
             return IOe.getLocalizedMessage();
         }
-        
+
         if (!opened) {
             ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
@@ -151,29 +152,29 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
                 return exception[0].getLocalizedMessage();
             }
             switch (responseCode[0]) {
-            case DiscoveryListener.SERVICE_SEARCH_COMPLETED:
-                log.error("Bluetooth connection " + portName + " not opened, unknown error");
-                return "Unknown error: failed to connect to " + portName;
-            case DiscoveryListener.SERVICE_SEARCH_DEVICE_NOT_REACHABLE:
-                log.error("Bluetooth device " + portName + " could not be reached");
-                return "Could not find " + portName;
-            case DiscoveryListener.SERVICE_SEARCH_ERROR:
-                log.error("Error when searching for " + portName);
-                return "Error when searching for " + portName;
-            case DiscoveryListener.SERVICE_SEARCH_NO_RECORDS:
-                log.error("No serial service found on " + portName);
-                return "Invalid bluetooth device: " + portName;
-            case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
-                log.error("Service search on " + portName + " ended prematurely");
-                return "Search for " + portName + " ended unexpectedly";
-            default:
-                log.warn("Unhandled response code: {}", responseCode[0]);
-                break;
+                case DiscoveryListener.SERVICE_SEARCH_COMPLETED:
+                    log.error("Bluetooth connection " + portName + " not opened, unknown error");
+                    return "Unknown error: failed to connect to " + portName;
+                case DiscoveryListener.SERVICE_SEARCH_DEVICE_NOT_REACHABLE:
+                    log.error("Bluetooth device " + portName + " could not be reached");
+                    return "Could not find " + portName;
+                case DiscoveryListener.SERVICE_SEARCH_ERROR:
+                    log.error("Error when searching for " + portName);
+                    return "Error when searching for " + portName;
+                case DiscoveryListener.SERVICE_SEARCH_NO_RECORDS:
+                    log.error("No serial service found on " + portName);
+                    return "Invalid bluetooth device: " + portName;
+                case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
+                    log.error("Service search on " + portName + " ended prematurely");
+                    return "Search for " + portName + " ended unexpectedly";
+                default:
+                    log.warn("Unhandled response code: {}", responseCode[0]);
+                    break;
             }
             log.error("Unknown error when connecting to " + portName);
             return "Unknown error when connecting to " + portName;
         }
-        
+
         return null; // normal operation
     }
 
@@ -232,7 +233,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     @Override
     public String[] validBaudRates() {
-        return new String[] { "" };
+        return new String[]{""};
     }
 
 }

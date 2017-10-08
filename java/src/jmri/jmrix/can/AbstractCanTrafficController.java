@@ -150,15 +150,15 @@ abstract public class AbstractCanTrafficController
     }
 
     /*
-     * enterProgMode() and enterNormalMode() return any message that 
+     * enterProgMode() and enterNormalMode() return any message that
      * needs to be returned to the command station to change modes.
-     * 
+     *
      * If no message is needed, you may return null.
-     * 
-     * If the programmerIdle() function returns true, enterNormalMode() is 
-     * called after a timeout while in IDLESTATE durring programing to 
-     * return the system to normal mode.  
-     * 
+     *
+     * If the programmerIdle() function returns true, enterNormalMode() is
+     * called after a timeout while in IDLESTATE durring programing to
+     * return the system to normal mode.
+     *
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -304,8 +304,7 @@ abstract public class AbstractCanTrafficController
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (java.lang.reflect.InvocationTargetException | InterruptedException | RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+            log.error("Unexpected exception in invokeAndWait:", e);
         }
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.zimo.swing;
 
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
@@ -17,14 +18,8 @@ public class Mx1Menu extends JMenu {
      *
      * @param memo the connection to associate actions with
      */
-    public Mx1Menu(Mx1SystemConnectionMemo memo) {
+    public Mx1Menu(@Nonnull Mx1SystemConnectionMemo memo) {
         super();
-
-        // memo can not be null!
-        if (memo == null) {
-            new Exception().printStackTrace();
-            return;
-        }
 
         setText(memo.getUserName());
 

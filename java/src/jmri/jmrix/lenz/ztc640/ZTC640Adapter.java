@@ -175,8 +175,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException | TooManyListenersException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "IO Exception while opening port " + portName + ": " + ex;
         }
 
