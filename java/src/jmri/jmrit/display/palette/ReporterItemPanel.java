@@ -1,11 +1,12 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -26,7 +27,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
     ReporterIcon _reporter;
 
-    public ReporterItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public ReporterItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -56,10 +57,12 @@ public class ReporterItemPanel extends TableItemPanel {
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-        _iconPanel = new JPanel(new FlowLayout());
-        _iconFamilyPanel.add(_iconPanel);
+        _iconPanel = new JPanel();
+        _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
+        _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),Bundle.getMessage("PreviewBorderTitle")));
+//        _iconFamilyPanel.add(_iconPanel);
+        makeDragIconPanel(1);
         makeDndIconPanel(null, null);
-        _iconFamilyPanel.add(_dragIconPanel);
     }
 
     @Override
@@ -93,8 +96,9 @@ public class ReporterItemPanel extends TableItemPanel {
         int width = Math.max(100, panel.getPreferredSize().width);
         panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-        _dragIconPanel = panel;
+        _dragIconPanel.add(panel);
         _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
+        _dragIconPanel.invalidate();
     }
 
     protected JPanel makeItemButtonPanel() {
@@ -124,9 +128,27 @@ public class ReporterItemPanel extends TableItemPanel {
             if (_updateButton != null) {
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
+                _reporter = new ReporterIcon(_editor);
             }
         }
+        initIconFamiliesPanel();
         validate();
+    }
+
+    @Override
+    protected void showIcons() {
+    }
+
+    @Override
+    protected void setEditor(Editor ed) {
+        _family = null;
+        super.setEditor(ed);
+        if (_initialized) {
+            remove(_iconFamilyPanel);
+            initIconFamiliesPanel();
+            add(_iconFamilyPanel, 1);
+            validate();
+        }
     }
 
     protected IconDragJComponent getDragger(DataFlavor flavor) {

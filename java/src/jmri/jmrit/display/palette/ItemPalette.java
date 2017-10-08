@@ -53,7 +53,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
-    ItemPanel _currentItemPanel;
+    private ItemPanel _currentItemPanel;
 
     /**
      * Store palette icons in preferences file catalogTrees.xml
@@ -360,6 +360,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             ItemPanel tab = entry.getValue();
             tab.setEditor(ed);            
         }
+//        instance.setLocation(ed.getLocation());
         instance.setLocationRelativeTo(ed);
         instance.pack();
         instance.setVisible(true);
@@ -491,10 +492,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             _currentItemPanel.closeDialogs();
         }
         _currentItemPanel = p;
-//     java.awt.Dimension dim = p.getPreferredSize();
-//     setSize(dim.width+30, dim.height+50);
-//     repaint();
-//        System.out.println("Panel "+p._itemType+" built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
+        pack();
     }
 
     private void makeMenus(Editor editor) {
@@ -544,7 +542,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         super.windowClosing(e);
     }
 
-    /*
+    /**
      * Look for duplicate name of family in the iterated set
      */
     private static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
@@ -566,8 +564,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return true;
     }
 
-    /*
+    /**
      * Adding a new Family of icons to the device type
+     * @param frame frame
+     * @param type type
+     * @param family family
+     * @param iconMap iconMap
+     * @return result
      */
     static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
         if (ItemPalette.getFamilyMaps(type) == null) {
@@ -588,15 +591,19 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return false;
     }
 
-    /*
+    /**
      * Getting all the Families of icons for a given device type
+     * @param type type
+     * @return map of families
      */
     static protected HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
         return _iconMaps.get(type);
     }
 
-    /*
+    /**
      * Removing a Family of icons from the device type
+     * @param type type
+     * @param family family
      */
     static protected void removeIconMap(String type, String family) {
         if (log.isDebugEnabled()) {
@@ -632,8 +639,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return cloneMap(iconMap);
     }
 
-    /*
+    /**
      * ************ Currently only needed for IndicatorTO type **************
+     * @param frame frame
+     * @param type type
+     * @param family family
+     * @param iconMap iconMap
+     * @return result
      */
     // add entire family
     static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family,

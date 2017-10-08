@@ -34,7 +34,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
     JSpinner _spinner;
 
-    public MemoryItemPanel(ItemPalette parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public MemoryItemPanel(ItemPalette parentFrame, String type, String family, PickListModel<jmri.Memory> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -84,10 +84,10 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-        makeDragIconPanel();
+        makeDragIconPanel(1);
         makeDndIconPanel(null, null);
 
-        _iconFamilyPanel.add(_dragIconPanel);
+//        _iconFamilyPanel.add(_dragIconPanel);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _comboMem = new MemoryComboIcon(_editor, null);
         panel.add(makeDragIcon(_comboMem, Type.COMBO), c);
 
-        _dragIconPanel = panel;
+        _dragIconPanel.add(panel);
         _dragIconPanel.invalidate();
     }
 
@@ -219,16 +219,20 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
+            _iconFamilyPanel.remove(_dragIconPanel);
+            makeDragIconPanel(1);
+            makeDndIconPanel(null, null);
         }
         validate();
     }
 
     @Override
     protected void setEditor(Editor ed) {
+        _editor = ed;
         if (_initialized) {
             _iconFamilyPanel.remove(_dragIconPanel);
+            makeDragIconPanel(1);
             makeDndIconPanel(null, null);
-            _iconFamilyPanel.add(_dragIconPanel);
         }
     }
 

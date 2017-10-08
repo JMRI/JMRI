@@ -36,7 +36,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     SignalMast _mast;
 
-    public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -47,7 +47,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _table.getSelectionModel().addListSelectionListener(this);
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
-//            initIconFamiliesPanel();
+//            makeDragIconPanel();
+            initIconFamiliesPanel();
             add(_iconFamilyPanel, 1);            
         }
     }
@@ -77,7 +78,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             int row = _table.getSelectedRow();
             getIconMap(row);        // sets _currentIconMap & _mast, if they exist.
         }
-        _dragIconPanel = new JPanel();
+        makeDragIconPanel(1);
         makeDndIconPanel(null, null);
         _iconPanel = new JPanel();
         _iconPanel.setBackground(_editor.getTargetPanel().getBackground());
@@ -88,6 +89,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         if (_mast != null) {
             panel.add(new JLabel(Bundle.getMessage("IconSetName") + " "
                     + _mast.getSignalSystem().getSystemName()));
+        } else {
+            panel.add(new JLabel(Bundle.getMessage("PickRowMast")));
         }
         _iconFamilyPanel.add(panel);
         _iconFamilyPanel.add(_iconPanel);
@@ -162,6 +165,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             if (log.isDebugEnabled()) {
                 log.debug("getIconMap: NamedBean is null at row " + row);
             }
+            _mast = null;
             _currentIconMap = null;
             _family = null;
             return;
@@ -209,6 +213,15 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         return new NamedIcon(fileName, fileName);
     }
 
+    @Override
+    protected void setEditor(Editor ed) {
+        _editor = ed;
+        if (_initialized) {
+            makeDragIconPanel(0);
+            makeDndIconPanel(_currentIconMap, "");  // empty key OK, this uses getDragIcon()
+        }
+    }
+
     /**
      * ListSelectionListener action
      */
@@ -222,8 +235,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             log.debug("Table valueChanged: row= " + row);
         }
         remove(_iconFamilyPanel);
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel, 1);
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -236,9 +247,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
+            _mast = null;
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
+        initIconFamiliesPanel();
+        add(_iconFamilyPanel, 1);
         validate();
     }
 
