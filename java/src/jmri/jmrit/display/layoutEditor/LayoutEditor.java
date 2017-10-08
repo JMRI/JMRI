@@ -9138,7 +9138,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
         setPanelBounds(panelBounds);
     } //setLayoutDimensions
-
+    
     public Rectangle2D getPanelBounds() {
         return new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
     }
@@ -9734,8 +9734,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         int wideMin = gridSize1st / 2;
 
         // granulize puts these on gridSize1st increments
-        double minX = MathUtil.granulize(upperLeftX, gridSize1st);
-        double minY = MathUtil.granulize(upperLeftY, gridSize1st);
+        double minX = Math.min(MathUtil.granulize(upperLeftX, gridSize1st), gridSize1st);
+        double minY = Math.min(MathUtil.granulize(upperLeftY, gridSize1st), gridSize1st);
         double maxX = MathUtil.granulize(panelWidth + upperLeftX, gridSize1st);
         double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
 
