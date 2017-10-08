@@ -355,20 +355,21 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
         });
         Iterator<Entry<String, ItemPanel>> iter = _tabIndex.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, ItemPanel> entry = iter.next();
-            ItemPanel tab = entry.getValue();
-            tab.setEditor(ed);            
+        if (ed != null) { // tests use null
+            while (iter.hasNext()) {
+                Entry<String, ItemPanel> entry = iter.next();
+                ItemPanel tab = entry.getValue();
+                tab.setEditor(ed);            
+            }
+            instance.setLocationRelativeTo(ed);            
         }
-//        instance.setLocation(ed.getLocation());
-        instance.setLocationRelativeTo(ed);
         instance.pack();
         instance.setVisible(true);
         return instance;
     }
     
     private ItemPalette(String title, Editor ed) {
-        super();
+        super(false, false);
         init(title, ed);
     }
     

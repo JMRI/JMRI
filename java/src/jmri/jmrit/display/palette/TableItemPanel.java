@@ -103,7 +103,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         java.awt.Dimension dim = _table.getPreferredSize();
-        dim.height = ROW_HEIGHT * (_table.getRowCount() + 1);
+        dim.height = Math.min(ROW_HEIGHT * (_table.getRowCount() + 1), 15);
         _scrollPane.getViewport().setPreferredSize(dim);
 
         JPanel panel = new JPanel();
