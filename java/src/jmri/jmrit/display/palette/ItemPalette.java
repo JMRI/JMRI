@@ -38,8 +38,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Container for adding items to control panels. Loads and stores icons used in
- * control editor panels. For background colors to work there needs to be an
- * ItemPalette instance for each editor instance
+ * control editor panels. For background colors to work on a particular editor
+ * instance, select the 'Item Palette' item under 'Add Items' menu to configure 
+ * ItemPalette for that editor.  Otherwise any item can be dragged and
+ * dropped to any editor.  The icons are displayed on the background 
+ * of the last editor to call the ItemPalette instance.
  *
  * @author Pete Cressman Copyright (c) 2010
  */
@@ -355,13 +358,16 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
         });
         Iterator<Entry<String, ItemPanel>> iter = _tabIndex.entrySet().iterator();
-        if (ed != null) { // tests use null
+        if (ed != null) { // tests use null Editor
             while (iter.hasNext()) {
                 Entry<String, ItemPanel> entry = iter.next();
                 ItemPanel tab = entry.getValue();
                 tab.setEditor(ed);            
             }
-            instance.setLocationRelativeTo(ed);            
+            // Either of these positioning calls puts the instance on the primary monitor. ???
+            java.awt.Point pt = ed.getLocation();
+            instance.setLocation(pt.x, pt.y);
+//            instance.setLocationRelativeTo(ed);            
         }
         instance.pack();
         instance.setVisible(true);
