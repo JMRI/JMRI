@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame controlling a single turnout
+ * Frame to control a single turnout.
+ * TODO I18N using Bundle, some strings are available in jmrix.Bundle
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -183,9 +184,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 nowStateLabel.setText(InstanceManager
                         .turnoutManagerInstance().getClosedText());
             }
-            if (log.isDebugEnabled()) {
-                log.debug("about to command CLOSED");
-            }
+            log.debug("about to command CLOSED");
             // and set commanded state to CLOSED
             turnout.setCommandedState(Turnout.CLOSED);
 
@@ -213,9 +212,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 nowStateLabel.setText(InstanceManager
                         .turnoutManagerInstance().getThrownText());
             }
-            if (log.isDebugEnabled()) {
-                log.debug("about to command THROWN");
-            }
+            log.debug("about to command THROWN");
             // and set commanded state to THROWN
             turnout.setCommandedState(Turnout.THROWN);
         } catch (IllegalArgumentException ex1) {
@@ -279,7 +276,9 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         }
     }
 
-    // update state field in GUI as state of turnout changes
+    /**
+     * Update state field in GUI as state of turnout changes.
+     */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // If the Commanded State changes, show transition state as "<inconsistent>" 
@@ -377,13 +376,13 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     void invalidTurnout(String name, Exception ex) {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
                 .showErrorMessage("Error",
-                        "Unable to convert \"" + name + "\" to a valid hardware address",
+                        "Unable to convert \"" + name + "\" to a valid hardware address (simpleTurnoutControlFrame)",
                         ex.toString(), "", true, false);
     }
 
     Turnout turnout = null;
+    String newState = "";
 
     private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class);
 
-    String newState = "";
 }

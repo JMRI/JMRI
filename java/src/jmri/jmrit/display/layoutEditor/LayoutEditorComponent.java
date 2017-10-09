@@ -21,7 +21,7 @@ class LayoutEditorComponent extends JComponent {
         this.layoutEditor = LayoutEditor;
     }
 
-    // (not actually used anywhere…)
+    // (not actually used anywhere)
     protected LayoutEditor getLayoutEditor() {
         return layoutEditor;
     }

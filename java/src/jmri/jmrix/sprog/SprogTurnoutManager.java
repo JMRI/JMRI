@@ -44,7 +44,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      */
     public int getBitFromSystemName(String systemName) {
         // validate the System Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "T"))) {
+        if (!systemName.startsWith(getSystemPrefix() + "T")) {
             // here if an illegal sprog turnout system name
             log.error("illegal character in header field of sprog turnout system name: {}", systemName);
             return (0);

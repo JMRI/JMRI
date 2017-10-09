@@ -185,7 +185,7 @@ public class SerialAddress {
         // check the bit number
         if ((bitNum < 1) || ((type.equals("S")) && (bitNum > 1000)) || (bitNum > 8000)) {
             // here if an illegal bit number 
-            log.warn("illegal address range proposed for system name - {}", bitNum);
+            log.debug("illegal address range proposed for system name - {}", bitNum);
             return (nName);
         }
         // construct the address
