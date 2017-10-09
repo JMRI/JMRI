@@ -4,8 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -16,9 +14,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -42,7 +38,7 @@ public class NXFrameTest {
     @Test
     public void testGetDefault() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = new NXFrame();
         Assert.assertNotNull("NXFrame", nxFrame);
         JUnitUtil.dispose(nxFrame);
     }
@@ -50,7 +46,7 @@ public class NXFrameTest {
     @Test
     public void testRoutePanel() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = new NXFrame();
         Assert.assertNotNull("NXFrame", nxFrame);
 
         JFrameOperator jfo = new JFrameOperator(nxFrame);
@@ -81,7 +77,8 @@ public class NXFrameTest {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = new NXFrame();
+        WarrantTableAction.setNXFrame(nxFrame);
         nxFrame.setVisible(true);
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);

@@ -208,14 +208,14 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                     getSystemPrefix().length() + 1, systemName.length())
             ).intValue();
         } catch (Exception e) {
-            log.warn("invalid character in number field of system name: {}", systemName);
+            log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.warn("invalid loconet turnout system name: {}", systemName);
+            log.debug("invalid loconet turnout system name: {}", systemName);
             return (0);
         } else if (num > 4096) {
-            log.warn("bit number out of range in loconet turnout system name: {}", systemName);
+            log.debug("bit number out of range in loconet turnout system name: {}", systemName);
             return (0);
         }
         return (num);

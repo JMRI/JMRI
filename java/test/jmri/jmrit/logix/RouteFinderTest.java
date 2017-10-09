@@ -1,14 +1,13 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -19,7 +18,7 @@ public class RouteFinderTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = new NXFrame();
         BlockOrder orig = new BlockOrder(new OBlock("OB1", "Test1"));
         BlockOrder dest = new BlockOrder(new OBlock("OB2", "Test2"));
         BlockOrder via = new BlockOrder(new OBlock("OB3", "Test3"));
