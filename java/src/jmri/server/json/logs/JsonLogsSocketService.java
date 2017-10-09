@@ -3,6 +3,7 @@ package jmri.server.json.logs;
 import static jmri.server.json.logs.JsonLogs.LOGS;
 import static jmri.server.json.logs.JsonLogs.LOG_FILE;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,9 +61,10 @@ public class JsonLogsSocketService extends JsonSocketService {
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         try (BufferedReader br = Files.newBufferedReader(LOG_FILE.toPath(), StandardCharsets.UTF_8)) {
+            TailerListener listener = new TailerListener();
             String line = br.readLine();
             while (line != null) {
-                this.sendLogEntry(line);
+                listener.handle(line);
                 line = br.readLine();
             }
         }
@@ -76,21 +78,38 @@ public class JsonLogsSocketService extends JsonSocketService {
         }
     }
 
-    private void sendLogEntry(String entry) throws IOException {
-        // uncomment to see messages that sent (not a log.debug or log.trace statement
-        // since it is a bad idea to log reading a log entry)
-        System.out.println(String.format("{\"type\": \"log\", \"data\": %1$s}", entry));
-        this.connection.sendMessage(String.format("{\"type\": \"log\", \"data\": %1$s}", entry));
-    }
-
     private final static Logger log = LoggerFactory.getLogger(JsonLogsSocketService.class);
 
     private class TailerListener extends TailerListenerAdapter {
 
+        private StringBuilder workingMessage = null;
+
+        /**
+         * Send lines as JSON messages. Cache lines as needed until a valid JSON
+         * object can be read from the cached lines plus current line.
+         * <p>
+         * {@inheritDoc }
+         */
         @Override
         public void handle(String line) {
             try {
-                JsonLogsSocketService.this.sendLogEntry(line);
+                if (workingMessage != null) {
+                    workingMessage.append(line);
+                    try {
+                        JsonNode entry = JsonLogsSocketService.this.connection.getObjectMapper().readTree(workingMessage.toString());
+                        JsonLogsSocketService.this.sendMessage(LOGS, entry);
+                        workingMessage = null;
+                    } catch (JsonProcessingException ex) {
+                        // thrown when creating JsonNode, ignoring allows rest of logic to flow correctly
+                    }
+                } else {
+                    try {
+                        JsonNode entry = JsonLogsSocketService.this.connection.getObjectMapper().readTree(line);
+                        JsonLogsSocketService.this.sendMessage(LOGS, entry);
+                    } catch (JsonProcessingException ex) {
+                        workingMessage = new StringBuilder(line);
+                    }
+                }
             } catch (IOException ex) {
                 JsonLogsSocketService.this.tailer.stop();
                 JsonLogsSocketService.this.tailer = null;
