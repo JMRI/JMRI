@@ -232,7 +232,7 @@ public class MergePrompt extends JDialog {
      * @param id           roster id
      * @return HashMap of Key and direction of possible errors
      */
-    static protected HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
+    static public HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
         // do forward speeds, then reverse
         HashMap<Integer, Boolean> anomalies = new HashMap<Integer, Boolean>();
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();

@@ -247,7 +247,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             _spTable.dispose();
         }
         if (_speedUtil.profileHasSpeedInfo(true) || _speedUtil.profileHasSpeedInfo(false)) {
-            RosterSpeedProfile speedProfile = _speedUtil.getValidSpeedProfile(this);
+            RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
             if (speedProfile != null) {
                 _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
                 _spTable.setVisible(true);
