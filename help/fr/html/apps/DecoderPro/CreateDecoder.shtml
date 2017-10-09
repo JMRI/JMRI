@@ -5,7 +5,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
- <!--Updated et Translated by Herv&#233; Blorec le 2016-06-18 -->
+ <!--Updated et Translated by Herv&#233; Blorec le 2017-10-10 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -74,7 +74,7 @@ et ce qui ne l'a pas &#233;t&#233; .
 
 </dd>
 
-<dt class=left>Contenu du fichier: En t&#234;te XML </dt>
+<dt class=left>Contenu du fichier: En-t&#234;te XML </dt>
 <dd>
 <p>Vous verrez quelque chose comme ceci en haut du fichier ( les exemples viennent d'un fichier <a
 HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> )
@@ -91,7 +91,7 @@ HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> )
 <p>N'oubliez pas ces lignes; elles d&#233;crivent le format du fichier.
 </dd>
 
-<dt class=left>File contents: Author  </dt>
+<dt class=left>Contenu du fichier: Author  </dt>
 <dd>
 <p>L'&#233;l&#233;ment suivant d&#233;crit l'auteur et la version de ce fichier de d&#233;codeur:
 <p class=example>
@@ -109,7 +109,7 @@ modifiez un fichier existant incr&#233;menter l'attribut version au
 num&#233;ro suivant.</p>
 </dd>
 
-<dt class=left> File contents: Decoder Family and Model</dt>
+<dt class=left>Contenu du fichier: Decoder Family and Model</dt>
 <dd>
 Les lignes suivantes identifient la "famille" de d&#233;codeurs que ce fichier 
 d&#233;crit:
@@ -155,7 +155,7 @@ Le fabricant peut charger un num&#233;ro de version dans le CV 7 du d&#233;codeu
 Tous les fabricants ne le font pas, Mais si un est disponible, 
 le programmateur peut v&#233;rifier si ce fichier est utilis&#233; avec le type de d&#233;codeur attendu. 
 Si une valeur est valide, d&#233;finissez les attributs 
-lowVersionID and highVersionID avec la m&#234;me valeur par exemple
+lowVersionID et highVersionID avec la m&#234;me valeur par exemple
 
 <p class=example>
 &nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="123"&nbsp;highVersionID="123"
@@ -178,62 +178,70 @@ info au sujet du changement dans le fichier.
 
 <p> Les lignes suivantes:</p>
 
-<p class=example>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;
-</p>
-vous permettent de lister un nombre de mod&#232;le de d&#233;codeurs diff&#233;rents qui peuvent utiliser 
+ <p class="example">    &lt;model model="DH142"
+          numOuts="4" numFns="2"/&gt;<br>
+              &lt;model model="DN142" numOuts="4"
+          numFns="2"/&gt;<br>
+              &lt;model model="DH083" numOuts="5"
+numFns="2"/&gt;</p>vous permettent de lister un nombre de mod&#232;le de d&#233;codeurs diff&#233;rents qui peuvent utiliser 
 ce fichier. Pour un simple d&#233;codeur, enlever tout sauf un 
 et donnez lui le nom du "mod&#232;le" de d&#233;codeur. Le numOuts
 et numFns sont d&#233;crit plus tard, mais pour le moment vous pouvez les effacer 
 laissant quelque chose comme: </p>
 
-<p class=example>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" /&gt;
-</p>
-
-L'&#233;l&#233;ment mod&#232;le peut aussi contenir les attributs lowVersionID et/ou highVersionID
+ <p class="example">    &lt;model model="DH142"
+/&gt;</p> L'&#233;l&#233;ment mod&#232;le peut aussi contenir les attributs lowVersionID et/ou highVersionID
 , qui sont applicables &#225; tout ce mod&#232;le. Si l'un 
 n'apparait pas, la valeur ( ou sa valeur par d&#233;faut ) de l'&#233;l&#233;ment famille sera utilis&#233;e .
 
-</dd>
-
-<dt class=left> File contents: Programming Modes </dt>
+<p> Il est important de noter que <em>la combinaison 'family'+'model'doit &#234;tre unique</em>
+C'est la <em>seule</em> information qui doit &#234;tre utilis&#233;e pour correspondre &#224; une d&#233;finition 
+de d&#233;codeur dans une entr&#233;e existante de l'inventaire</p>
+<ul>
+   <li>Il peut y avoir plusieurs instances du mod&#232;le 'x'
+   mais ils doivent r&#233;sider dans diff&#233;rentes familles. </li>
+   <li> Il peut y avoir plusieurs instances de la famille 'y'
+   (dans diff&#233;rents fichiers de d&#233;codeur) mais le mod&#232;le 'x' 
+   peut seulement apparaitre au sein d'un de celles-ci.</li>
+   <li>La restriction d'unicit&#233; 'family'+'model" s'applique 
+   ind&#233;pendamment du fabricant.</li>
+ </ul>
+ </dd>
+<dt class=left> Contenu du fichier: Programming Modes </dt>
 <dd>
 
-<p>L'&#233;l&#233;ment suivant d&#233;finit quel mode de programmation est comprit par le d&#233;codeur :</p>
+<p>L'&#233;l&#233;ment suivant d&#233;finit quels sont les modes de programmation compris par le d&#233;codeur :</p>
 
-<p class=example>
-&lt;programming direct="byteOnly" paged= "yes" <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;register= "yes" ops= "yes"&gt;&lt;/programming&gt;
-</p>
+<<p class="example">&lt;programming direct="byteOnly"
+          paged="yes"<br>
+register="yes" ops="yes"&gt;&lt;/programming&gt;</p>
 
-<p>Pagind, registerer et  ops peuvent &#234;tre r&#233;gler soit &#225; "yes" ou &#225; "no".  Direct
+<p>Paged, registerer et ops peuvent &#234;tre r&#233;gler soit &#225; "yes" ou &#225; "no".  Direct
 peut &#234;tre fix&#233; &#225; "no", "bitOnly", "byteOnly", ou "yes". Le 
 programmateur utilise ces informations pour s&#233;lectionner le mode de programmation &#225; 
 utiliser pour travailler avec le d&#233;codeur.</p>
 </dd>
 
-<A name="variable">
+<dd><a name="variable" id="variable"></a></dd>
 <dt class=left> File contents: Variable names </dt></a>
 <dd>
 <p>La partie suivante du fichier consiste en un jeu d'&#233;l&#233;ments "variable" 
 d&#233;finissant des variables sp&#233;cifiques, imbriqu&#233;es dans un &#233;l&#233;ment "variables"(notez le"s")
 Un exemple:</p>
 
-<p class=example>
-&lt;variables&gt;<br>
-  &nbsp;&nbsp;&lt;variable CV="1" item="Primary Address" default="03"&gt;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Short Address&lt;/label&gt;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;comment&gt;NMRA standard form&lt;/comment&gt;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;tooltip&gt;Digitrax systems only address 1-99&lt;/tooltip&gt;<br>
-  &nbsp;&nbsp;&lt;/variable&gt;<br>
-  <br>
-  &nbsp;&nbsp;(followed by more &lt;variable&gt; entries)<BR>
+<p class="example">&lt;variables&gt;<br>
+            &lt;variable CV="1" item="Primary Address"
+          default="03"&gt;<br>
+              &lt;decVal min="1" max="127"/&gt;<br>
+              &lt;label&gt;Short Address&lt;/label&gt;<br>
+              &lt;comment&gt;NMRA standard form&lt;/comment&gt;<br>
+              &lt;tooltip&gt;Digitrax systems only address
+          1-99&lt;/tooltip&gt;<br>
+            &lt;/variable&gt;<br>
+<br>
+ (suivie par plusieurs entr&#233;es de &lt;variables&gt;)<BR>
   <BR>
-  &nbsp;&nbsp;(Insert new ones at the end)<BR>
+  &nbsp;&nbsp;(Ins&#233;rer les nouvells &#224; la fin)<BR>
 &lt;/variables&gt;  
 </p>
 
@@ -245,37 +253,41 @@ l'&#233;l&#233;ment entier de la &lt;variable&gt; pour correspondre &#225; la
 &lt;/variable&gt;. Vous pouvez aussi les r&#233;arranger si vous pr&#233;f&#233;rez un 
 ordre diff&#233;rent.</p>
 
-<p> Les attributs incluent:
+<p> Les attributs incluent:</p>
 <ul>
- <li><dfn>item</dfn> - Un nom alternatif "standard" pour cette variable. Voir la 
+ <li><dfn>item</dfn> -Le nom "standard" pour cette variable. Voir la 
 <A HREF="Programmer.shtml#id"> discussion sur la page des d&#233;finitions des programmateurs</a> 
-pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le programmateur Complet 
+pour plus de d&#233;tails sur ceux-ci. G&#233;n&#233;ralement, regarder le programmateur Complet 
 pour trouver quelque chose de similaire, et utilisez le "nom" attribu&#233;.
+</li>
 <li><dfn>CV</dfn> - Quel CV contient l'information de configuration
-pour cette variable.
+pour cette variable.</li>
 <li><dfn>mask</dfn> - Un mod&#232;le comme "XXXVVVXX" qui commande quels 
 bits dans le CV mettent la variable up . Chaque "V" est un bit 
 qui est inclut, et "X" sont des bits qui ne sont pas 
 inclus.  Il est mieux d'avoir huit caract&#232;res,comme cela 
 nous savons o&#249; nous allons. Si la variable 
-est un Octet complet, cette attribut peut &#234;tre omit .
+est un Octet complet, cette attribut peut &#234;tre omit .</Li>
 <li><dfn>default</dfn> - la valeur par d&#233;faut pour cette varable. C'est 
 utilis&#233; pour un nouveau d&#233;codeur, ou quand vous voulez remettre le 
-d&#233;codeur &#225; ses r&#233;glages d'usine
+d&#233;codeur &#225; ses r&#233;glages d'usine.</li>
 </ul>
 
 <p>(Il y en a un peu plus,que nous allons quitter pour la section avanc&#233;e ci-dessous)</p>
+
 <p>L'&#233;l&#233;ment "label" inclut fournit un nom de variable lisible. Ceci est g&#233;n&#233;ralement 
 la fa&#231;on dont les fabricants de d&#233;codeur appellent cet &#233;l&#233;ment, m&#234;me si le d'autres fabricants ou le
 NMRA utilisent un nom diff&#233;rent pour des choses similaires. C'est en option, auquel cas la valeur "&#233;l&#233;ment" 
-sera utilis&#233; comme label quand il est pr&#233;sent&#233; &#225; l'utilisateur.
+sera utilis&#233; comme label quand il est pr&#233;sent&#233; &#225; l'utilisateur.</p>
+
 <p>L'&#233;l&#233;ment "comment" vous permet d'ajouter des informations additionnelles
 pour les futures d&#233;veloppeurs.  cette information est visible quand la d&#233;finition
-est &#233;dit&#233;e, mais n'est pas fournie aux simples utilisateurs de DecoderPro
+est &#233;dit&#233;e, mais n'est pas fournie aux simples utilisateurs de DecoderPro.</p>
+
 <p>L'&#233;l&#233;ment "tooltip" lvous permet de fournir des informations suppl&#233;mentaires
 &#225; l'utilisateur quand celui-ci survole avec 
-le curseur la variable &#225; l'&#233;cran.
-/dd>
+le curseur la variable &#225; l'&#233;cran.</p>
+</dd>
 
 <dt class=left> File contents: Creating new Variable definitions </dt>
 <dd>
@@ -285,15 +297,15 @@ copier une d&#233;finition similaire, changer son nom d'&#233;l&#233;ment par un
 
 <p> Pour d&#233;finir comment la nouvelle variable est affich&#233;e et &#233;dit&#233;e, vous 
 ajoutez l'&#233;l&#233;ment au sein de l'&#233;l&#233;ment "variable". Il y a plusieurs 
-formes possibles:
+formes possibles:</p>
 <ul>
 <li>Pour une valeur d&#233;cimale, vous incluez un &#233;l&#233;ment decVal comme 
 l'exemple ci-dessus. Les deux attributs possibles sont min et max, 
 qui d&#233;finissent la fourchette de valeurs acceptables. Si vous les omettez 
-les valeurs entre 0 et 255 seront permises.
+les valeurs entre 0 et 255 seront permises.</li>
 <li>Si vous pr&#233;f&#233;rez entrer et afficher des valeurs en hexad&#233;cimal, utilisez 
 l'&#233;l&#233;ment "hexVal".c'est le m&#234;me que l'&#233;l&#233;ment 
-"decVal" dont nous avons d&#233;j&#225; discut&#233; mais en hexa.
+"decVal" dont nous avons d&#233;j&#225; discut&#233; mais en hexa.</li>
 <li><p>Si votre d&#233;codeur supporte les adresses longues, vous pouvez ajouter
 un &#233;l&#233;ment 'longAddress'. C'est peut &#234;tre plus simple de copier ceci 
 depuis un autre fichier, ou depuis cet exemple:</p>
@@ -317,14 +329,13 @@ depuis un autre fichier, ou depuis cet exemple:</p>
 <li>Quelques options de d&#233;codeur sont mieux repr&#233;senter par "choisir un
 choix".Elles sont repr&#233;sent&#233;es par un &#233;l&#233;ment enumVariable. Exemple:
 
-<p class=example>
-&lt;variable name=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumVal&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Off&quot;/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;On&quot;/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;/enumVal&gt;<BR>
-&lt;/variable&gt;
-</p>
+<p class=example>&lt;variable item="F6 during DC
+              operation" CV="13" mask="XXVXXXXX"&gt;<br>
+                  &lt;enumVal&gt;<br>
+                      &lt;enumChoice choice="Off"/&gt;<br>
+                      &lt;enumChoice choice="On"/&gt;<br>
+                  &lt;/enumVal&gt;<br>
+&lt;/variable&gt;</p>
 
 <p>Chaque &#233;l&#233;ment enumChoice d&#233;crit une possibilit&#233;. Il peut y en avoir 
 autant que d&#233;sir&#233;. pour le choix d'un bit, vous utilisez deux
@@ -336,10 +347,11 @@ entr&#233; dans les bits CV; choisir le second stocke 1; etc.</p>
 
 <p> Si vous avez besoin de sp&#233;cifier un nombre sp&#233;cifique pour une option enum, 
 ajoutez un attribut "value":
-<p class=example>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Blue&quot; value=&quot;32&quot;/&gt;
-</p>
+<p class=example>    &lt;enumChoice choice="Blue"
+value="32"/&gt;</p>
+</li>
 </ul>
+</dd>
 
 <dt class=left>V&#233;rification des erreurs de syntaxe </dt>
 <dd>
@@ -351,7 +363,7 @@ s&#233;lectionnez votre fichier et cliquez  "open".  Si tout est bon, vous obten
 boite de dialogue qui dit "OK". Si non , vous obtiendrez un message d'erreur compl&#232;tement 
 incompr&#233;hensible. La seule partie utilisable de ce 
 message est le num&#233;ro de la ligne; ouvrez un &#233;diteur &#225; cette ligne et essayer 
-de trouver le probl&#232;me de syntaxe.
+de trouver le probl&#232;me de syntaxe.</p>
 </dd>
 
 <dt class=left>Ajouter le fichier &#225; l'index</dt>
@@ -365,12 +377,13 @@ d&#233;codeurs disponibles est construite .</p>
 </dd>
 </dl>
 <p>F&#233;licitations!  Vous avez fini.  Ensuite, ouvrez l'application  programmateur et essayez le</p>
+
  <p>Pour des informations plus avanc&#233;es sur le contenu des fichiers, svp voir la page 
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>
 
 
-<!--#include virtual="/Footer" -->
-</div>
+<!--#include virtual="/Footer" --></p>
+</div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-
