@@ -12,16 +12,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,9 +54,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2007
  */
 public class LayoutTurntable extends LayoutTrack {
-
-    // Defined text resource
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     // defined constants
     // operational instance variables (not saved between sessions)
@@ -507,7 +501,7 @@ public class LayoutTurntable extends LayoutTrack {
                     String info = rt.getTurnout().getDisplayName();
                     String stateString = getTurnoutStateString(rt.getTurnoutState());
                     if (!stateString.isEmpty()) {
-                        info += " (" + stateString +")";
+                        info += " (" + stateString + ")";
                     }
                     jmi = rayPopup.add(info);
                     jmi.setEnabled(false);
@@ -516,17 +510,6 @@ public class LayoutTurntable extends LayoutTrack {
                 break;
             }
         }
-    }
-
-    private String getTurnoutStateString(int turnoutState) {
-        String result = "";
-        TurnoutManager tmi = InstanceManager.turnoutManagerInstance();
-        if (turnoutState == Turnout.CLOSED) {
-            result = tmi.getClosedText();
-        } else if (turnoutState == Turnout.THROWN) {
-            result = tmi.getThrownText();
-        }
-        return result;
     }
 
     public void setPosition(int index) {
@@ -741,6 +724,19 @@ public class LayoutTurntable extends LayoutTrack {
                 pt1 = MathUtil.subtract(center, delta);
                 //g2.setColor(Color.RED); //TODO: remove this
                 g2.draw(new Line2D.Double(pt1, pt2));
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2) {
+        for (int j = 0; j < getNumberRays(); j++) {
+            if (getRayConnectOrdered(j) == null) {
+                Point2D pt = getRayCoordsOrdered(j);
+                g2.fill(layoutEditor.trackControlCircleAt(pt));
             }
         }
     }
