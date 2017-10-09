@@ -97,12 +97,12 @@ for easy access click an item in this list:</p>
       <li><a href="#L662">Running JMRI when disconnected from your C/MRI
         system</a></li>
       <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>
-      <li><a href="#L737">Documentation</a> 
-        <ul>
-          <li><a href="#L739">JMRI Help</a></li>
-          <li><a href="#L746">Third Party info</a></li>
-        </ul>
-      </li>
+    </ul>
+  </li>
+  <li><a href="#L737">Documentation</a>
+    <ul>
+      <li><a href="#L739">JMRI Help</a></li>
+      <li><a href="#L746">Third Party info</a></li>
     </ul>
   </li>
 </ul>
@@ -119,7 +119,9 @@ for easy access click an item in this list:</p>
 
   <h2 id="L164">Limitations</h2>
   <p>Original Chubb IBEC and UBEC interfaces for older PC system buses (ISA,
-  PCI) are not supported. <a name="intro" id="intro"></a></p>
+  PCI) are not supported.</p>
+
+  <a name="intro" id="intro"></a>
   <h2 id="L170">Introduction to C/MRI on JMRI</h2>
 
   <p>C/MRI is a system of digital input and digital output lines that can be
@@ -191,7 +193,7 @@ for easy access click an item in this list:</p>
   system supported; C/MRI specific features are accessed via the
   <strong>CMRI</strong> menu from the <strong>PanelPro main screen.</strong></p>
 
-  <p><img alt="" src="images/cmrimenu.png" width="699" height="219"> </p>
+  <p><img alt="" src="images/cmrimenu.png" width="699" height="219"></p>
 
   <p><a name="iobits" id="iobits"></a>JMRI presents itself to users via several
   application front ends, each focusing on a type of use, but all based on the
@@ -299,7 +301,7 @@ for easy access click an item in this list:</p>
 
   <p>You can add new nodes or update an existing node's configuration by
   returning to the Preference dialog (Edit &gt; &gt;Preferences...) or by
-  selecting <strong>Configure Nodes</strong> in the CMRI menu in the main
+  selecting <strong>Configure Nodes</strong> in the C/MRI menu in the main
   PanelPro window.</p>
 
   <p>You will need to save your Preferences after making changes to your node
@@ -1073,7 +1075,16 @@ height="586"></p>
 
   <p>Click "Edit Node" to update, then close the pane.</p>
 
-  <h2 id="L632">CMRInet Network Connections</h2>
+  <h2>Send Command
+  <img alt="" src="images/CMRISendSerialCommand.png" width="246"
+          height="146" align ="right"></h2>
+  <p>To send a command to the C/MRI nodes, select <b>Send Command</b> from the C/MRI menu.<br>
+  Enter a command and click [Send].</p>
+  <p>To poll a node, enter its address in the UA text box and click [Send poll].</p>
+
+  <h2>Extra hints</h2>
+
+  <h3 id="L632">CMRInet Network Connections</h3>
 
   <p>Using USB-serial adapters</p>
 
@@ -1109,7 +1120,7 @@ height="586"></p>
   selection popup menu, you may not have any operating system serial device
   drivers installed.</p>
 
-  <h2 style="margin-left:0;" id="L652">Using An Ethernet Network Connection</h2>
+  <h3 style="margin-left:0;" id="L652">Using An Ethernet Network Connection</h3>
 
   <p>JMRI allows you to connect to C/MRI nodes through a network connection.
   JMRI communicates via the TCP/IP protocol across a network to a
@@ -1136,7 +1147,7 @@ height="586"></p>
   check the Additional Configuration Settings box and enter the port number.
   Click Save and restart the program.</p>
 
-  <h2 id="L662">Running JMRI when disconnected from your C/MRI system</h2>
+  <h3 id="L662">Running JMRI when disconnected from your C/MRI system</h3>
 
   <p>JMRI continually polls the C/MRI hardware for status changes. If one or
   more C/MRI nodes are not responding, eventually their inputs (Sensors) are
@@ -1165,7 +1176,7 @@ height="586"></p>
   <p>When the C/MRI hardware is again available, go the JMRI Preferences,
   select "C/MRI Serial", save Preferences, quit and restart.</p>
 
-  <h2 id="L676">PanelPro Signaling Example Using C/MRI</h2>
+  <h3 id="L676">PanelPro Signaling Example Using C/MRI</h3>
 
   <p>The following is an example of what is needed to create a simple ABS
   signaling system using an SMINI node and Control Panel Editor (CPE) in
@@ -1247,13 +1258,10 @@ height="586"></p>
 
   <p><img alt="" src="images/example-signalmasttable.png" width="1234"></p>
 
-  <p></p>
-
   <p><img alt="" src="images/example-addsignalmast.png" width="495"
   height="492"></p>
 
-  <p><a name="documentation" id="documentation"></a> </p>
-
+  <a name="documentation" id="documentation"></a>
   <h2 id="L737">Documentation</h2>
 
   <h3 id="L739">JMRI Help</h3>
