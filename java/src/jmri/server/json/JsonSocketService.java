@@ -73,4 +73,18 @@ public abstract class JsonSocketService {
     public JsonConnection getConnection() {
         return connection;
     }
+
+    /**
+     * Assemble and send a JSON message.
+     *
+     * @param type the value for the type field in the message
+     * @param data the value for the data field in the message
+     * @throws IOException if unable to send the message
+     */
+    public void sendMessage(String type, JsonNode data) throws IOException {
+        this.connection.sendMessage(
+                this.connection.getObjectMapper().createObjectNode()
+                        .put(JSON.TYPE, type)
+                        .set(JSON.DATA, data));
+    }
 }

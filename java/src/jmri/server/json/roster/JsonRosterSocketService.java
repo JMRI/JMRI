@@ -117,7 +117,7 @@ public class JsonRosterSocketService extends JsonSocketService {
             try {
                 try {
                     if (evt.getPropertyName().equals(RosterEntry.ID)) {
-                        // send old roster entry and new roster entry to client as roster changes
+                        // sendMessage old roster entry and new roster entry to client as roster changes
                         ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, JsonRoster.ROSTER);
                         ObjectNode data = root.putObject(DATA);
                         RosterEntry old = new RosterEntry((RosterEntry) evt.getSource(), (String) evt.getOldValue());
@@ -127,7 +127,7 @@ public class JsonRosterSocketService extends JsonSocketService {
                         connection.sendMessage(root);
                     } else if (!evt.getPropertyName().equals(RosterEntry.DATE_UPDATED)
                             && !evt.getPropertyName().equals(RosterEntry.FILENAME)
-                            && !evt.getPropertyName().equals(RosterEntry.COMMENT)) {  //don't send comment changes
+                            && !evt.getPropertyName().equals(RosterEntry.COMMENT)) {  //don't sendMessage comment changes
                         log.debug("Sending updated rosterEntry for {} ({} => {})", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
                         connection.sendMessage(service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource()));
                     }

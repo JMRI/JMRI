@@ -105,7 +105,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             log.debug("in TurnoutListener for '{}' '{}' ('{}'=>'{}')", this.turnout.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-            if (evt.getPropertyName().equals("KnownState")  //only send changes for values which are sent
+            if (evt.getPropertyName().equals("KnownState")  //only sendMessage changes for values which are sent
                     || evt.getPropertyName().equals("inverted")
                     || evt.getPropertyName().equals("UserName")
                     || evt.getPropertyName().equals("Comment")) { 
@@ -130,7 +130,7 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
             try {
                 try {
-                 // send the new list
+                 // sendMessage the new list
                     connection.sendMessage(service.doGetList(TURNOUTS, locale)); 
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N 

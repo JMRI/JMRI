@@ -121,7 +121,7 @@ public class JsonSensorSocketService extends JsonSocketService {
 
             try {
                 try {
-                 // send the new list
+                 // sendMessage the new list
                     connection.sendMessage(service.doGetList(SENSORS, locale)); 
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N 
