@@ -1,12 +1,11 @@
 package jmri.util.logging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import jmri.util.node.HostName;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Layout;
 import org.apache.log4j.helpers.LogLog;
@@ -35,12 +34,9 @@ public class LogstashLog4jJsonLayout extends Layout {
     private String customUserFields;
 
     private final String hostname = new HostName().getHostName();
-    private String threadName;
-    private long timestamp;
     private String ndc;
     private Map mdc; // log4j events return a raw Map for getProperties()
     private LocationInfo info;
-    private Map<String, Object> exceptionInformation;
 
     private ObjectNode event;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -65,19 +61,17 @@ public class LogstashLog4jJsonLayout extends Layout {
 
     @Override
     public String format(LoggingEvent loggingEvent) {
-        threadName = loggingEvent.getThreadName();
-        timestamp = loggingEvent.getTimeStamp();
-        exceptionInformation = new HashMap<>();
         mdc = loggingEvent.getProperties();
         ndc = loggingEvent.getNDC();
 
         event = mapper.createObjectNode();
+        ObjectNode exceptionInformation = mapper.createObjectNode();
         String whoami = this.getClass().getSimpleName();
 
         // All v1 of the event format requires is "@timestamp" and "@version".
         // Every other field is arbitrary.
         event.put("@version", version);
-        event.put("@timestamp", dateFormat(timestamp));
+        event.put("@timestamp", dateFormat(loggingEvent.getTimeStamp()));
 
         // Extract and add fields from log4j config, if defined
         if (getUserFields() != null) {
@@ -106,18 +100,21 @@ public class LogstashLog4jJsonLayout extends Layout {
         event.put("message", loggingEvent.getRenderedMessage());
 
         if (loggingEvent.getThrowableInformation() != null) {
-            final ThrowableInformation throwableInformation = loggingEvent.getThrowableInformation();
-            if (throwableInformation.getThrowable().getClass().getCanonicalName() != null) {
-                exceptionInformation.put("exception_class", throwableInformation.getThrowable().getClass().getCanonicalName());
+            final ThrowableInformation throwable = loggingEvent.getThrowableInformation();
+            if (throwable.getThrowable().getClass().getCanonicalName() != null) {
+                exceptionInformation.put("exception_class", throwable.getThrowable().getClass().getCanonicalName());
             }
-            if (throwableInformation.getThrowable().getMessage() != null) {
-                exceptionInformation.put("exception_message", throwableInformation.getThrowable().getMessage());
+            if (throwable.getThrowable().getMessage() != null) {
+                exceptionInformation.put("exception_message", throwable.getThrowable().getMessage());
             }
-            if (throwableInformation.getThrowableStrRep() != null) {
-                String stackTrace = StringUtils.join(throwableInformation.getThrowableStrRep(), "\n");
-                exceptionInformation.put("stacktrace", stackTrace);
+            if (throwable.getThrowableStrRep() != null) {
+                ArrayNode stackTrace = mapper.createArrayNode();
+                for (String s : throwable.getThrowableStrRep()) {
+                    stackTrace.add(s);
+                    exceptionInformation.set("stacktrace", stackTrace);
+                }
+                event.set("exception", exceptionInformation);
             }
-            event.putPOJO("exception", exceptionInformation);
         }
 
         if (locationInfo) {
@@ -132,7 +129,7 @@ public class LogstashLog4jJsonLayout extends Layout {
         event.putPOJO("mdc", mdc);
         event.putPOJO("ndc", ndc);
         event.put("level", loggingEvent.getLevel().toString());
-        event.put("thread_name", threadName);
+        event.put("thread_name", loggingEvent.getThreadName());
 
         return event.toString() + "\n";
     }
