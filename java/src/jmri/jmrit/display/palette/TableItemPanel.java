@@ -54,6 +54,12 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
      * Constructor for all table types. When item is a bean, the itemType is the
      * name key for the item in jmri.NamedBeanBundle.properties
+     * @param parentFrame parentFrame
+     * @param type type
+     * @param family family
+     * @param model model
+     * @param editor editor
+     * 
      */
     public TableItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -97,13 +103,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         java.awt.Dimension dim = _table.getPreferredSize();
-        dim.height = _table.getRowCount();
-        if (dim.height < 2) {
-            dim.height = 4;
-        } else {
-            dim.height +=2;
-        }
-        dim.height = ROW_HEIGHT * 12;
+        dim.height = Math.min(ROW_HEIGHT * (_table.getRowCount() + 1), 15);
         _scrollPane.getViewport().setPreferredSize(dim);
 
         JPanel panel = new JPanel();
@@ -195,6 +195,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      * <P>
      * Note! the selection is cleared. When two successive calls are made, the
      * 2nd will always return null, regardless of the 1st return.
+     * @return bean selected in the table
      */
     public NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
@@ -203,7 +204,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
             if (log.isDebugEnabled()) {
-                log.debug("getTableSelection: row= " + row + ", bean= " + b.getDisplayName());
+                log.debug("getTableSelection: row= " + row + ", bean= " + (b==null?b:b.getDisplayName()));
             }
             return b;
         } else if (log.isDebugEnabled()) {

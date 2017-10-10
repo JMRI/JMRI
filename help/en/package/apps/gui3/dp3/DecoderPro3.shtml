@@ -27,7 +27,7 @@
     <div id="mainContent">
       <h1>Introduction to Decoder Pro 3</h1>
 
-      <p><b>THIS HELP FILE IS WORK IN PROGRESS</b> . Please help
+      <p><b>THIS HELP FILE IS WORK IN PROGRESS</b>. Please help
       JMRI by contributing to improve this help file !</p>
 
       <p>Decoder Pro 3 presents a list of your locomotives (the
@@ -37,8 +37,8 @@
       <h2>Description of Decoder Pro 3 Window</h2>
 
       <p>The Decoder Pro 3 Window is divided into five main
-      sections from top to bottom.</p><img src="helpfile_dump1.jpg"
-      width="526" height="266">
+      sections from top to bottom.</p>
+      <img src="../../images/Dp3Roster.png" width="509" height="265">
 
       <ol>
         <li><a href="#menubar">The Menu Bar</a>.</li>
@@ -90,7 +90,8 @@
       to match it to an entry in the Roster Table. Some decoders
       only work with a limited range of programming modes, and it
       may be necessary to change the programming mode with the
-      "Set" button. If a locomotive is correctly identified, it
+      "Programming Mode" drop down list.<br>
+      If a locomotive is correctly identified, it
       will be highlighted in the Roster Table, and its details will
       appear in the lower Decoder Information Area.</p>
 
@@ -151,117 +152,99 @@
       <h3>File menu</h3>
 
       <ul>
-        <li>New DecoderPro Window</li>
-
-        <li>Import Roster</li>
-
-        <li>Import Roster Entry</li>
-
-        <li>Import Decoder File</li>
-
-        <li>Import Decoder URL</li>
-
+        <li>New Roster Window</li>
+        <li>Import Decoder File...</li>
+        <li>Import Decoder URL...</li>
         <li>------------------</li>
-
-        <li>Export Roster Entry</li>
-
-        <li>Export Complete Roster</li>
-
+        <li>Export Roster Entry...</li>
+        <li>Import Roster Entry...</li>
         <li>------------------</li>
-
-        <li>Print Roster Summary</li>
-
-        <li>Print Roster Entry</li>
-
-        <li>Print Preview Roster Summary</li>
-
-        <li>Print Preview Roster Entry</li>
-
+        <li>Export Roster...</li>
+        <li>Import Roster...</li>
+        <li>------------------</li>
+        <li>Rebuild Roster</li>
+        <li>Validate XML File</li>
+        <li>------------------</li>
+        <li>Open PanelPro Window</li>
+        <li>------------------</li>
+        <li>Close Window</li>
+        <li>------------------</li>
+        <li>Print Roster -&gt;</li>
+          <ul>
+            <li>Selected entry</li>
+            <li>Summary</li>
+          </ul>
+        <li>Print Preview Roster -&gt;</li>
+          <ul>
+            <li>Selected entry</li>
+            <li>Summary</li>
+          </ul>
         <li>-------------------</li>
-
-        <li>Quit</li>
+        <li>Quit (on Windows and Linux; on macOS it's in the DecoderPro menu)</li>
       </ul>
 
-      <h3>Edit menu</h3>
+      <h3><b>Edit</b> menu</h3>
 
       <ul>
         <li>Cut</li>
-
         <li>Copy</li>
-
         <li>Paste</li>
-
-        <li>Duplicate Loco</li>
-
-        <li>Delete Loco</li>
-
         <li>-----------</li>
-
+        <li>New Loco...</li>
+        <li>Duplicate Loco</li>
+        <li>Delete Loco</li>
+        <li>-----------</li>
         <li>Preferences</li>
       </ul>
 
-      <h3>Settings menu</h3>
+      <h3><b>Settings</b> menu</h3>
 
       <ul>
         <li>Hide/Show Summary Pane</li>
-
-        <li>Reset window sizes</li>
-
-        <li>Hide/Show roster image</li>
-
+        <li>Reset Window sizes</li>
+        <li>Reset Column Widths</li>
+        <li>Hide/Show Roster Image</li>
+        <li>Hide/Show Roster Groups</li>
         <li>--------------</li>
-
         <li>Programming -&gt;</li>
-
+          <ul>
+            <li>Programming Track</li>
+            <li>Programming On Main</li>
+            <li>Edit Only</li>
+          </ul>
         <li>--------------</li>
-
         <li>Create Roster Group</li>
-
+        <li>Rename Roster Group</li>
+        <li>Duplicate Roster Group</li>
         <li>Delete Roster Group</li>
-
+        <li>--------------</li>
         <li>Roster Group Table Association</li>
       </ul>
 
-      <h3>Actions menu</h3>
+      <h3><b>Actions</b> menu</h3>
 
       <ul>
-        <li>Basic Programmer</li>
-
-        <li>Comprehensive Programmer</li>
-
-        <li>Single CV Programmer</li>
-
+        <li>Program</li>
+        <li>Labels and Media</li>
         <li>Edit Throttle Lables</li>
-
-        <li>Edit Roster Medi</li>
-
+        <li>New Throttle</li>
+        <li>Load default throtttle layout</li>
         <li>--------------</li>
-
-        <li>New Throttles</li>
-
         <li>Consisting Tool</li>
-
-        <li>Turnout Tool</li>
-
+        <li>Turnout Control</li>
         <li>Power Control</li>
-
-        <li>Speedometer</li>
-
+        <li>SpeedoMeter</li>
+        <li>Single CV Programmer</li>
+        <li>Multi-Decoder Control</li>
         <li>--------------</li>
-
         <li>Start WiThrottle Server</li>
-
         <li>Start Web Server</li>
-
         <li>--------------</li>
-
-        <li>Rebuild Roster</li>
-
+        <li>Recreate Roster Index</li>
         <li>Recreate Decoder Index</li>
-
+        <li>Update Decoder Definitions</li>
         <li>--------------</li>
-
-        <li>Run Script</li>
+        <li>Run Script...</li>
       </ul>
 
       <h3>Command Station Specific menu</h3>
@@ -277,13 +260,14 @@
 
       <h3>Help menu</h3>
 
-      <p>Opens this panel.</p><a name="toolbar" id="toolbar"></a>
+      <p>Window Help opens this page.</p>
 
+      <a name="toolbar" id="toolbar"></a>
       <h2>Tool Bar</h2>
 
       <h3>Help button</h3>
 
-      <p>Opens this panel.</p>
+      <p>Opens this page.</p>
 
       <h3>New Loco button</h3>
 
@@ -292,31 +276,28 @@
 
       <h3>Identify button</h3>
 
-      <p>Attempts to identify the loco on the Programing track.</p>
+      <p>Attempts to identify the loco on the Programming track.</p>
 
-      <h3>Programming mode Set button</h3>
+      <h3>Programming mode drop down</h3>
 
-      <p>Opens the selection of programing modes.</p>
+      <p>Opens the selection of programming modes.</p>
 
       <h3>Roster Group Pane</h3>
 
       <p>The Roster Group Pane only appears if a Roster Group has
-      been defined. The pane appears to the left of the Roster
-      Table. Further groups can be added using the "+" button, and
+      been defined. It appears to the left of the Roster
+      Table (if not hidden using the Settings menu).
+      Further groups can be added using the "+" button, and
       groups can be removed with the "-" button. Locos can be
       dragged from the Roster Table to the Roster Group Pane. The
       Roster Group Pane can be hidden with a menu option (under
       Settings), or with the triangular shrink/expand keys in the
-      frame border. At present, removing a loco from a Roster Group
-      can only be done with the "Roster Group Table Associations"
-      window, accessible from the "Settings" menu. <i>Note that the
-      Roster Group Pane feature is somewhat experimental
-      development and comments on its design and extending the
-      functionality are sought</i>.</p>
-      <hr>
+      frame border. Removing a loco from a Roster Group
+      can be done using the "Roster Group Table Associations"
+      pane, accessible from the "Settings" menu.</p>
 
-      <p>Location /package/apps/gui3/dp3/DecoderPro3.shtml 
-      <!--#include virtual="/Footer" --></p>
+      <p>Location /package/apps/gui3/dp3/DecoderPro3.shtml</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
