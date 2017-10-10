@@ -272,6 +272,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             nxFrame = new NXFrame();
             WarrantTableAction.setNXFrame(nxFrame);
         } else {
+            nxFrame.setState(java.awt.Frame.NORMAL);
             nxFrame.setVisible(true);
             nxFrame.toFront();            
         }
