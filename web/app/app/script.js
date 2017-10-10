@@ -179,13 +179,13 @@ angular.module('jmri.app').filter('powerTriState', function(jmriWebSocket) {
   return function(input) {
     switch(input) {
       case jmriWebSocket.POWER_OFF:
-        return 'fa-circle-o';
+        return 'pficon pficon-off';
         break;
       case jmriWebSocket.POWER_ON:
-        return 'fa-bolt';
+        return 'pficon pficon-on';
         break;
       default: // unknown
-        return 'fa-question';
+        return 'fa fa-fw fa-question';
     }
   };
 });
