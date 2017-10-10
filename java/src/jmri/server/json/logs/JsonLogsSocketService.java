@@ -97,6 +97,8 @@ public class JsonLogsSocketService extends JsonSocketService {
                     workingMessage.append(line);
                     try {
                         JsonNode entry = JsonLogsSocketService.this.connection.getObjectMapper().readTree(workingMessage.toString());
+                        // uncomment to show message sent - not logging because logging a log message is endlessly recursive
+                        //System.out.println(entry.toString());
                         JsonLogsSocketService.this.sendMessage(LOGS, entry);
                         workingMessage = null;
                     } catch (JsonProcessingException ex) {
@@ -105,6 +107,8 @@ public class JsonLogsSocketService extends JsonSocketService {
                 } else {
                     try {
                         JsonNode entry = JsonLogsSocketService.this.connection.getObjectMapper().readTree(line);
+                        // uncomment to show message sent - not logging because logging a log message is endlessly recursive
+                        //System.out.println(entry.toString());
                         JsonLogsSocketService.this.sendMessage(LOGS, entry);
                     } catch (JsonProcessingException ex) {
                         workingMessage = new StringBuilder(line);

@@ -26,6 +26,7 @@ public class WebAppConfiguration extends AbstractWebServerConfiguration {
         map.put("/app/node_modules", "program:web/app/node_modules"); // NOI18N
         map.put("/app/app", "program:web/app/app"); // NOI18N
         map.put("/app/short-detector", "program:web/app/short-detector"); // NOI18N
+        map.put("/app/logs", "program:web/app/logs"); // NOI18N
         return map;
     }
 }
