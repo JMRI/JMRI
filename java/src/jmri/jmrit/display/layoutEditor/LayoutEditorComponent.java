@@ -21,7 +21,7 @@ class LayoutEditorComponent extends JComponent {
         this.layoutEditor = LayoutEditor;
     }
 
-    // (not actually used anywhere)
+    // not actually used anywhere
     protected LayoutEditor getLayoutEditor() {
         return layoutEditor;
     }
@@ -108,4 +108,5 @@ class LayoutEditorComponent extends JComponent {
     private transient final static Logger log = LoggerFactory.getLogger(
             LayoutEditorComponent.class
     );
+
 }
