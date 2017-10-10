@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -29,8 +28,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>LocoNet Slot Monitor</h1><a href=
-      "../../../../../html/hardware/loconet/images/SlotMon.gif"><img src="../../../../../html/hardware/loconet/images/SlotMon.gif"
-      width="300" height="150" alt="Command Station Slot Monitor"
+      "SlotMonitorScreenShot.bmp"><img src="SlotMonitorScreenShot.bmp"
+      width="365" height="263" alt="Command Station Slot Monitor"
       align="right"></a><br>
       The Slot Monitor tool displays a table of the "command
       station slots'" contents. Slots are used to control
@@ -127,8 +126,8 @@
         <dd>The current function settings. Check mark indicates
         function is On.</dd>
 
-        <dt>package/jmri/jmrix/loconet/slotmon/ 
-        <!--#include virtual="/Footer" --></dt>
+        <dt>package/jmri/jmrix/loconet/slotmon/</dt>
+        <!--#include virtual="/Footer" -->
       </dl>
     </div>
   </div>
