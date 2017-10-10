@@ -56,7 +56,9 @@
 Donc, l'Indicateur d'Itin&#233;raire peut seulement afficher une destination &#224; la fois. L'affichage d'un itin&#233;raire n'indique pas n&#233;cessairement que le conducteur prendra le m&#234;me itin&#233;raire pour atteindre sa destination.</p> 
  
 <h4><a name="speed">Indicateurs de Vitesse</a></h4>
-	<a href="https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img src="../../../package/jmri/jmrit/beantable/speedindicbelg40.gif" ALIGN=RIGHT WIDTH="60" HEIGHT="119" HSPACE="0" VSPACE="0" ALT="Speed Indicator figure by J. Calvert"></a>
+	<a href="https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img
+			src="../../../package/jmri/jmrit/beantable/images/speedindicbelg40.gif" ALIGN=RIGHT WIDTH="60" HEIGHT="119"
+			HSPACE="0" VSPACE="0" ALT="Speed Indicator figure by J. Calvert"></a>
 		<p>Un Indicateur de Vitesse tel qu'il est utilis&#233; en Hollande( Prorail ) et en Belgique ( NMBS/SNCB ) affiche une Digit allum&#233; en dessous de Feu de Signalisation principal, ex un "4" restreint la vitesse maximum &#224; 40 km/h.</p>
  
 <a name="table"><h3>Le Tableau Groupe Signal</h3></a>

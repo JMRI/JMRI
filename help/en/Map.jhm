@@ -298,6 +298,8 @@
 
 <mapID target="html.hardware.powerline.index_hardware" url="html/hardware/powerline/index.shtml#hardware"/>
 
+<mapID target="package.jmri.jmrix.openlcb.swing.tie.TieToolFrame" url="package/jmri/jmrix/openlcb/swing/tie/TieToolFrame.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.index" url="manual/JMRI_OPS_UsersGuide/index.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_VSD_VSDLocations" url="manual/DecoderPro/Main_VSD.shtml#VSDLocations"/>
@@ -2572,6 +2574,8 @@
 
 <mapID target="manual.DecoderPro.Main_XpressNet_LZV100CM" url="manual/DecoderPro/Main_XpressNet.shtml#LZV100CM"/>
 
+<mapID target="html.doc.Technical.webupdate.UpdatingDocs_submitpage" url="html/doc/Technical/webupdate/UpdatingDocs.shtml#submitpage"/>
+
 <mapID target="manual.DecoderPro.Main_LocoNet_Sounds" url="manual/DecoderPro/Main_LocoNet.shtml#Sounds"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ShowCars" url="package/jmri/jmrit/operations/Operations.shtml#ShowCars"/>
@@ -2827,8 +2831,6 @@
 <mapID target="manual.DecoderPro3.index_revisions" url="manual/DecoderPro3/index.shtml#revisions"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_DCC_Hardware_Top" url="manual/JMRI_OPS_UsersGuide/Start_DCC_Hardware.shtml#Top"/>
-
-<mapID target="package.apps.gui3.dp3.StatusAndToDo" url="package/apps/gui3/dp3/StatusAndToDo.shtml"/>
 
 <mapID target="html.tools.throttle.HowToJMRIOrientedThrottle" url="html/tools/throttle/HowToJMRIOrientedThrottle.shtml"/>
 
@@ -3835,8 +3837,6 @@
 <mapID target="html.tools.signaling.ldt.output3_html_40375239" url="html/tools/signaling/ldt/output3_html_40375239.png"/>
 
 <mapID target="images.popup" url="images/popup.gif"/>
-
-<mapID target="html.tools.throttle.images.get_adobe_reader" url="html/tools/throttle/images/get_adobe_reader.gif"/>
 
 <mapID target="manual.DecoderPro3.images.toolbar02" url="manual/DecoderPro3/images/toolbar02.png"/>
 
