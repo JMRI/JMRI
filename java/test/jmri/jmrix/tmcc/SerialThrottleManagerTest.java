@@ -10,18 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SerialThrottleManagerTest {
+public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        SerialThrottleManager t = new SerialThrottleManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tm = new SerialThrottleManager();
     }
 
     @After

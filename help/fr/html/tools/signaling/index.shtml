@@ -187,8 +187,8 @@ qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections s
 	quand un des &#233;tats surveill&#233;s change comme not&#233; ci-dessous. <i>Note:</i> Tous les Conditionnels Logix ne sont pas list&#233;s ici.
 	</P>
 
-	<a href="../../../package/jmri/jmrit/beantable/LogixSignalHeadVariable.png">
-    <img src="../../../package/jmri/jmrit/beantable/LogixSignalHeadVariable.png" 
+	<a href="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png">
+    <img src="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png"
     width="423" height="92" align="right"></a>
 
 	<p>Conditionnels pour la Variable Type "Feu de Signalisation":</p>
@@ -226,8 +226,8 @@ qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections s
 
 <a name="scripting"><h3>Script</h3></a>
 
-	<a href="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png">
-   <img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png" 
+	<a href="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
+   <img src="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
 	   width="250" height="136" align="right"></a>
 
 	<p>Comme d'autres objets dans JMRI, vous pouvez configurer et lire des Feux de Signalisation, des M&#226;ts de Signalisation et la Logique de M&#226;t de Signalisation via des Scripts. Au lieu de d&#233;finir notre propre langage pour accomplir ceci,
