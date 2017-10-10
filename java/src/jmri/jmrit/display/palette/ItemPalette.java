@@ -364,6 +364,11 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             ItemPanel tab = entry.getValue();
             tab.setEditor(ed);            
         }
+        String name = ed.getName();
+        if (name == null || name.equals("")) {
+            name = Bundle.getMessage("untitled");
+        }
+        instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + "-" + name);
         // Either of these positioning calls puts the instance on the primary monitor. ???
         java.awt.Point pt = ed.getLocation();
         instance.setLocation(pt.x, pt.y);

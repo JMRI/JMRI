@@ -961,17 +961,23 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void setTitle() {
         String name = getName();
         if (name == null || name.length() == 0) {
-            name = "Control Panel";
+            name = Bundle.getMessage("untitled");
         }
-        if (isEditable()) {
+        String ending = " " + Bundle.getMessage("LabelEditor");
+        String defaultName = Bundle.getMessage("ControlPanelEditor");
+        defaultName = defaultName.substring(0, defaultName.length() - ending.length());
+        if (name.endsWith(ending)) {
+            name = name.substring(0, name.length() - ending.length());
+        }
+        if (name.equals(defaultName)) {
+            name = Bundle.getMessage("untitled") + "(" + name + ")";
+        }
+       if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
         } else {
-            String ending = " " + Bundle.getMessage("LabelEditor");
-            if (name.endsWith(ending)) {
-                name = name.substring(0, name.length() - ending.length());
-            }
             super.setTitle(name);
         }
+        setName(name);
     }
 
     // all content loaded from file.
