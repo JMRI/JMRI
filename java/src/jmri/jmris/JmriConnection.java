@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstraction of DataOutputStream and WebSocket.Connection classes.
- *
+ * <p>
  * Used so that that server objects need only to use a single object/method to
  * send data to any supported object type.
  *
@@ -53,32 +53,12 @@ public class JmriConnection {
     }
 
     /**
-     * @deprecated see {@link #getSession() }
-     * @return the WebSocket session
-     */
-    @Deprecated
-    public Session getWebSocketConnection() {
-        return this.getSession();
-    }
-
-    /**
      * Set the WebSocket session.
      *
      * @param session the WebSocket session
      */
     public void setSession(Session session) {
         this.session = session;
-    }
-
-    /**
-     * @deprecated see {@link #setSession(org.eclipse.jetty.websocket.api.Session)
-     * }
-     *
-     * @param webSocketConnection the WebSocket session
-     */
-    @Deprecated
-    public void setWebSocketConnection(Session webSocketConnection) {
-        this.setSession(session);
     }
 
     public DataOutputStream getDataOutputStream() {
@@ -91,7 +71,7 @@ public class JmriConnection {
 
     /**
      * Send a String to the instantiated connection.
-     *
+     * <p>
      * This method throws an IOException so the server or servlet holding the
      * connection open can respond to the exception if there is an immediate
      * failure. If there is an asynchronous failure, the connection is closed.
@@ -107,17 +87,11 @@ public class JmriConnection {
                 this.session.getRemote().sendString(message, new WriteCallback() {
                     @Override
                     public void writeFailed(Throwable thrwbl) {
-                        if (log.isDebugEnabled()) {
-                            // include entire message in log
-                            log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), message, thrwbl);
-                        } else {
-                            // include only first 75 characters of message in log
-                            int length = 75;
-                            log.error("Exception \"{}\" sending {}", thrwbl,
-                                    (message.length() > length)
-                                    ? message.substring(0, length - 1)
-                                    : message);
-                        }
+                        // include only first 75 characters of message in log unless debugging
+                        String logMessage = (log.isDebugEnabled() || message.length() <= 75)
+                                ? message
+                                : message.substring(0, 75 - 1);
+                        log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), logMessage, thrwbl);
                         JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
                     }
 
@@ -137,7 +111,7 @@ public class JmriConnection {
 
     /**
      * Close the connection.
-     *
+     * <p>
      * Note: Objects using JmriConnection with a
      * {@link org.eclipse.jetty.websocket.api.Session} may prefer to use
      * <code>getSession().close()</code> since Session.close() does not throw an
