@@ -1,5 +1,6 @@
 package jmri.util;
 
+import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 
 import java.awt.Graphics2D;
@@ -38,7 +39,10 @@ public final class MathUtil {
     }
 
     public static final Point2D zeroPoint2D = zeroPoint2D();
-    public static final Point2D infinityPoint2D = new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
+    public static final Point2D infinityPoint2D = infinityPoint2D();
+    public static final Rectangle2D zeroRectangle2D = zeroRectangle2D();
+    public static final Rectangle2D zeroToInfinityRectangle2D = zeroToInfinityRectangle2D();
+    public static final Rectangle2D infinityRectangle2D = infinityRectangle2D();
 
     /**
      * @return the point {0, 0}
@@ -53,7 +57,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Point2D infinityPoint2D() {
-        return infinityPoint2D;
+        return new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
     }
 
     /**
@@ -286,10 +290,10 @@ public final class MathUtil {
     }
 
     /**
-     * rotate a point (by radians) around another point
+     * rotate a point around another point (by radians)
      *
-     * @param p the point being rotated
-     * @param c the point being rotated around
+     * @param p    the point being rotated
+     * @param c    the point its being rotated around
      * @param aRAD the angle (in radians)
      * @return the point rotated by the angle
      */
@@ -300,11 +304,10 @@ public final class MathUtil {
     }
 
     /**
-     * rotate a point (by degrees)
-     * rotate a point (by radians) around another point
+     * rotate a point around another point (by degrees)
      *
-     * @param p the point being rotated
-     * @param c the point being rotated around
+     * @param p    the point being rotated
+     * @param c    the point its being rotated around
      * @param aDEG the angle (in radians)
      * @return the point rotated by the angle
      */
@@ -664,6 +667,31 @@ public final class MathUtil {
     @CheckReturnValue
     public static double pin(double inValue, double inMin, double inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
+    }
+
+    /**
+     * @return a new rectangle {0.0, 0.0, 0.0, 0.0}
+     */
+    @CheckReturnValue
+    public static Rectangle2D zeroRectangle2D() {
+        return new Rectangle2D.Double(0.0, 0.0, 0.0, 0.0);
+    }
+
+    /**
+     * @return a new rectangle {0.0, 0.0, POSITIVE_INFINITY, POSITIVE_INFINITY}
+     */
+    @CheckReturnValue
+    public static Rectangle2D zeroToInfinityRectangle2D() {
+        return new Rectangle2D.Double(0.0, 0.0, POSITIVE_INFINITY, POSITIVE_INFINITY);
+    }
+
+    /**
+     * @return a new rectangle {NEGATIVE_INFINITY, NEGATIVE_INFINITY,
+     *         POSITIVE_INFINITY, POSITIVE_INFINITY}
+     */
+    @CheckReturnValue
+    public static Rectangle2D infinityRectangle2D() {
+        return new Rectangle2D.Double(NEGATIVE_INFINITY, NEGATIVE_INFINITY, POSITIVE_INFINITY, POSITIVE_INFINITY);
     }
 
     /**

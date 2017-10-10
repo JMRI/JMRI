@@ -179,12 +179,12 @@ import org.slf4j.LoggerFactory;
 public class LayoutEditor extends PanelEditor implements VetoableChangeListener, MouseWheelListener {
 
     //Operational instance variables - not saved to disk
-    private JmriJFrame floatingEditToolBox = null;
-    private JScrollPane floatingEditContent = null;
+    private JmriJFrame floatingEditToolBoxFrame = null;
+    private JScrollPane floatingEditContentScrollPane = null;
     private JPanel floatEditHelpPanel = null;
     private JPanel editToolBarPanel = null;
-    private JScrollPane editToolBarScroll = null;
-    private JPanel editToolBarContainer = null;
+    private JScrollPane editToolBarScrollPane = null;
+    private JPanel editToolBarContainerPanel = null;
     private JPanel helpBarPanel = null;
     private JPanel helpBar = new JPanel();
 
@@ -314,10 +314,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
     private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
 
-    //private int savedMSX = 0;
-    //private int savedMSY = 0;
-    private int height = 100;
-    private int width = 100;
+    private int toolbarHeight = 100;
+    private int toolbarWidth = 100;
 
     //private int numTurnouts = 0;
     private transient TrackSegment newTrack = null;
@@ -555,8 +553,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private boolean savedShowHelpBar = true;
 
     //zoom
-    private double maxZoom = 8.0;
     private double minZoom = 0.25;
+    private double maxZoom = 8.0;
 
     //Special sub group for color treatment when active
     JPanel blockPropertiesPanel = null;
@@ -1084,12 +1082,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         //set to full screen
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        height = screenDim.height - 120;
-        width = screenDim.width - 20;
+        windowWidth = screenDim.width - 20;
+        windowHeight = screenDim.height - 120;
 
         //Let Editor make target, and use this frame
         super.setTargetPanel(null, null);
-        super.setTargetPanelSize(width, height);
+        super.setTargetPanelSize(windowWidth, windowHeight);
         setSize(screenDim.width, screenDim.height);
 
         setupToolBar();
@@ -1198,28 +1196,28 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
     private void createFloatingEditToolBox() {
-        if (floatingEditToolBox == null) {
-            if (floatingEditContent == null) {
+        if (floatingEditToolBoxFrame == null) {
+            if (floatingEditContentScrollPane == null) {
                 // Create the window content if necessary, normally on first load or switching between toolbox and toolbar
                 createFloatingEditContent();
             }
 
-            if (isEditable() && floatingEditToolBox == null) {
+            if (isEditable() && floatingEditToolBoxFrame == null) {
                 //Create the window and add the toolbox content
-                floatingEditToolBox = new JmriJFrame(Bundle.getMessage("ToolBox", getLayoutName()));
-                floatingEditToolBox.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                floatingEditToolBox.setContentPane(floatingEditContent);
-                floatingEditToolBox.pack();
-                floatingEditToolBox.setAlwaysOnTop(true);
-                floatingEditToolBox.setVisible(true);
+                floatingEditToolBoxFrame = new JmriJFrame(Bundle.getMessage("ToolBox", getLayoutName()));
+                floatingEditToolBoxFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                floatingEditToolBoxFrame.setContentPane(floatingEditContentScrollPane);
+                floatingEditToolBoxFrame.pack();
+                floatingEditToolBoxFrame.setAlwaysOnTop(true);
+                floatingEditToolBoxFrame.setVisible(true);
             }
         }
     }
 
     private void deleteFloatingEditToolBox() {
-        if (floatingEditToolBox != null) {
-            floatingEditToolBox.dispose();
-            floatingEditToolBox = null;
+        if (floatingEditToolBoxFrame != null) {
+            floatingEditToolBoxFrame.dispose();
+            floatingEditToolBoxFrame = null;
         }
     }
 
@@ -1381,9 +1379,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         //Notice: End tree structure indenting
         //Create a scroll pane to hold the window content.
-        floatingEditContent = new JScrollPane(floatingEditPanel);
-        floatingEditContent.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        floatingEditContent.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        floatingEditContentScrollPane = new JScrollPane(floatingEditPanel);
+        floatingEditContentScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        floatingEditContentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         // Force the help panel width to the same as the tabs section
         int tabSectionWidth = floatEditTabsPanel.getWidth();
@@ -1420,9 +1418,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Container contentPane = getContentPane();
 
         //remove these (if present) so we can add them back (without duplicates)
-        if (editToolBarContainer != null) {
-            editToolBarContainer.setVisible(false);
-            contentPane.remove(editToolBarContainer);
+        if (editToolBarContainerPanel != null) {
+            editToolBarContainerPanel.setVisible(false);
+            contentPane.remove(editToolBarContainerPanel);
         }
 
         if (helpBarPanel != null) {
@@ -1857,25 +1855,25 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             editToolBarPanel.add(hTop6Panel);
         } // if (toolBarIsVertical) {} else...
 
-        editToolBarScroll = new JScrollPane(editToolBarPanel);
+        editToolBarScrollPane = new JScrollPane(editToolBarPanel);
 
         if (toolBarIsVertical) {
-            width = editToolBarScroll.getPreferredSize().width;
-            height = screenDim.height;
+            toolbarWidth = editToolBarScrollPane.getPreferredSize().width;
+            toolbarHeight = screenDim.height;
         } else {
-            width = screenDim.width;
-            height = editToolBarScroll.getPreferredSize().height;
+            toolbarWidth = screenDim.width;
+            toolbarHeight = editToolBarScrollPane.getPreferredSize().height;
         }
-        editToolBarContainer = new JPanel();
-        editToolBarContainer.setLayout(new BoxLayout(editToolBarContainer, BoxLayout.PAGE_AXIS));
-        editToolBarContainer.add(editToolBarScroll);
+        editToolBarContainerPanel = new JPanel();
+        editToolBarContainerPanel.setLayout(new BoxLayout(editToolBarContainerPanel, BoxLayout.PAGE_AXIS));
+        editToolBarContainerPanel.add(editToolBarScrollPane);
 
         //setup notification for when horizontal scrollbar changes visibility
         //editToolBarScroll.getViewport().addChangeListener(e -> {
         //log.warn("scrollbars visible: " + editToolBarScroll.getHorizontalScrollBar().isVisible());
         //});
-        editToolBarContainer.setMinimumSize(new Dimension(width, height));
-        editToolBarContainer.setPreferredSize(new Dimension(width, height));
+        editToolBarContainerPanel.setMinimumSize(new Dimension(toolbarWidth, toolbarHeight));
+        editToolBarContainerPanel.setPreferredSize(new Dimension(toolbarWidth, toolbarHeight));
 
         helpBarPanel = new JPanel();
         helpBarPanel.add(helpBar);
@@ -1883,7 +1881,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         for (Component c : helpBar.getComponents()) {
             if (c instanceof JTextArea) {
                 JTextArea j = (JTextArea) c;
-                j.setSize(new Dimension(width, j.getSize().height));
+                j.setSize(new Dimension(toolbarWidth, j.getSize().height));
                 j.setLineWrap(toolBarIsVertical);
                 j.setWrapStyleWord(toolBarIsVertical);
             }
@@ -1893,12 +1891,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         switch (toolBarSide) {
             case eTOP:
             case eLEFT:
-                contentPane.add(editToolBarContainer, 0);
+                contentPane.add(editToolBarContainerPanel, 0);
                 break;
 
             case eBOTTOM:
             case eRIGHT:
-                contentPane.add(editToolBarContainer);
+                contentPane.add(editToolBarContainerPanel);
                 break;
 
             default:
@@ -1907,12 +1905,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         } //switch
 
         if (toolBarIsVertical) {
-            editToolBarContainer.add(helpBarPanel);
+            editToolBarContainerPanel.add(helpBarPanel);
         } else {
             contentPane.add(helpBarPanel);
         }
         helpBarPanel.setVisible(isEditable() && getShowHelpBar());
-        editToolBarContainer.setVisible(isEditable());
+        editToolBarContainerPanel.setVisible(isEditable());
 
         if (false) {
             //use the GuiLafPreferencesManager value
@@ -1984,7 +1982,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             toolBarFont = toolBarFont.deriveFont(newToolBarFontSize);
 
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
-                recursiveSetFont(floatingEditContent, toolBarFont);
+                recursiveSetFont(floatingEditContentScrollPane, toolBarFont);
             } else {
                 recursiveSetFont(editToolBarPanel, toolBarFont);
             }
@@ -2038,7 +2036,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     @Override
     public void setSize(int w, int h) {
         super.setSize(w, h);
-        log.debug("Frame size: {w:{}, h:{}}", width, height);
     }
 
     @Override
@@ -3026,8 +3023,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //
     private void updateAllComboBoxesDropDownListDisplayOrderFromPrefs() {
         //1st call the recursive funtion starting from the edit toolbar container
-        updateComboBoxDropDownListDisplayOrderFromPrefs(editToolBarContainer);
-        updateComboBoxDropDownListDisplayOrderFromPrefs(floatingEditContent);
+        updateComboBoxDropDownListDisplayOrderFromPrefs(editToolBarContainerPanel);
+        updateComboBoxDropDownListDisplayOrderFromPrefs(floatingEditContentScrollPane);
 
         //and now that that's done update the drop down menu display order menu
         updateDropDownMenuDisplayOrderMenu();
@@ -3124,15 +3121,15 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
                 createFloatingEditToolBox();
-                if (null != editToolBarContainer) {
-                    editToolBarContainer.setVisible(false);
+                if (null != editToolBarContainerPanel) {
+                    editToolBarContainerPanel.setVisible(false);
                 }
             } else {
-                if (null != floatingEditToolBox) {
+                if (null != floatingEditToolBoxFrame) {
                     deleteFloatingEditToolBox();
                 }
-                floatingEditContent = null; // The switch to toolbar will move the toolbox content to the new toolbar
-                editToolBarContainer.setVisible(isEditable());
+                floatingEditContentScrollPane = null; // The switch to toolbar will move the toolbox content to the new toolbar
+                editToolBarContainerPanel.setVisible(isEditable());
             }
             toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
             toolBarSideLeftButton.setSelected(toolBarSide.equals(ToolBarSide.eLEFT));
@@ -3316,7 +3313,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
 
                 if (zoomProp != null) {
-                    //setZoom(maxZoom - (Double) zoomProp);
                     setZoom((Double) zoomProp);
                 }
             });
@@ -3374,6 +3370,31 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     }
 
+    private void adjustScrollBars() {
+        JScrollPane scrollPane = getPanelScrollPane();
+        JViewport viewPort = scrollPane.getViewport();
+
+        //Dimension viewSize = viewPort.getViewSize();
+        Dimension viewSize = scrollPane.getSize();
+        Dimension panelSize = _targetPanel.getSize();
+        log.debug("viewSize: {}, panelSize: {}, panelWidth: {}, panelHeight: {}",
+                viewSize, panelSize, "" + panelWidth, "" + panelHeight);
+
+        JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
+        int w = (int) Math.max((panelWidth * getZoom()) - viewSize.getWidth(), 0.0);
+        int x = Math.min(horScroll.getValue(), w);
+        horScroll.setMaximum(w);
+        horScroll.setValue(x);
+
+        JScrollBar vertScroll = scrollPane.getVerticalScrollBar();
+        int h = (int) Math.max((panelHeight * getZoom()) - viewSize.getHeight(), 0.0);
+        int y = Math.min(vertScroll.getValue(), h);
+        vertScroll.setMaximum(h);
+        vertScroll.setValue(y);
+
+        log.debug("w: {}, x: {}, h: {}, y: {}", "" + w, "" + x, "" + h, "" + y);
+    }
+
     @Override
     public void mouseWheelMoved(MouseWheelEvent event) {
         //log.warn("mouseWheelMoved");
@@ -3398,9 +3419,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             // compute how much to change zoom
             double amount = Math.pow(1.1, event.getScrollAmount());
-            if (event.getWheelRotation() < 0) {
+            if (event.getWheelRotation() < 0.0) {
                 //reciprocal for zoom out
-                amount = 1 / amount;
+                amount = 1.0 / amount;
             }
             // set the new zoom
             double newZoom = setZoom(oldZoom * amount);
@@ -3413,8 +3434,15 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             Point2D iNewViewPos2D = MathUtil.subtract(imP2D, iNewDeltaP2D);
             // convert from image coordinates to newZoom (scaled) coordinates
             Point2D newViewPos2D = MathUtil.multiply(iNewViewPos2D, newZoom);
+
+            // don't let origin go negative
+            newViewPos2D = MathUtil.pin(newViewPos2D, MathUtil.zeroPoint2D, MathUtil.infinityPoint2D);
+            log.debug("mouseWheelMoved: newViewPos2D: {}", newViewPos2D);
+
             // set new view position
             viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPos2D));
+
+            adjustScrollBars();
         } else {
             JScrollPane scrollPane = getPanelScrollPane();
             if (scrollPane != null) {
@@ -3482,11 +3510,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //
     //
     public double setZoom(double zoomFactor) {
+        //TODO: add code to re-calculate minZoom (so panel never smaller than view)
         double newZoom = MathUtil.pin(zoomFactor, minZoom, maxZoom);
 
         if (!MathUtil.equals(newZoom, getPaintScale())) {
             log.debug("zoom: {}", zoomFactor);
             setPaintScale(newZoom);
+            adjustScrollBars();
+
             zoomLabel.setText(String.format("x%1$,.2f", newZoom));
             selectZoomMenuItem(newZoom);
 
@@ -3509,21 +3540,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //
     //
     private double zoomIn() {
-        double newScale = _paintScale;
-
-        newScale *= 1.1;
-
-        return setZoom(newScale);
+        return setZoom(getZoom() * 1.1);
     } //zoomIn
 
     //
     //
     //
     private double zoomOut() {
-        double newScale = _paintScale;
-
-        newScale /= 1.1;
-        return setZoom(newScale);
+        return setZoom(getZoom() / 1.1);
     } //zoomOut
 
     //
@@ -3568,7 +3592,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         // put a grid size margin around it
         result = MathUtil.inset(result, -gridSize1st * gridSize2nd);
-
+        // don't let origin go negative
+        result = result.createIntersection(MathUtil.zeroToInfinityRectangle2D);
         return result;
     } // calculateMinimumLayoutBounds
 
@@ -3587,12 +3612,18 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             panelBounds.add(layoutBounds);
         }
 
+        // don't let origin go negative
+        panelBounds = panelBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
+
         // make sure it includes the origin
         panelBounds.add(MathUtil.zeroPoint2D);
 
+        log.debug("resizePanelBounds: {{}}", panelBounds);
+
         panelWidth = (int) panelBounds.getWidth();
         panelHeight = (int) panelBounds.getHeight();
-        setTargetPanelSize(panelWidth, panelHeight);
+        setTargetPanelSize((int) (panelWidth * getZoom()), (int) (panelHeight * getZoom()));
+        adjustScrollBars();
         return panelBounds;
     } // resizePanelBounds
 
@@ -3606,8 +3637,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
 
-        // don't let its orgin go negative
-        scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        // don't let origin go negative
+        //scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         // calculate the horzontial and vertical scales
         double scaleWidth = scrollPane.getWidth() / layoutBounds.getWidth();
@@ -3622,8 +3654,9 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         // calculate new scroll bounds
         scrollBounds = MathUtil.scale(layoutBounds, result);
 
-        // don't let its orgin go negative
-        scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        // don't let origin go negative
+        //scrollBounds = MathUtil.offset(scrollBounds, -Math.min(scrollBounds.getX(), 0.0), -Math.min(scrollBounds.getY(), 0.0));
+        scrollBounds = scrollBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         // and scroll to it
         scrollPane.scrollRectToVisible(MathUtil.rectangle2DToRectangle(scrollBounds));
@@ -3637,7 +3670,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private Point2D windowCenter() {
         //Returns window's center coordinates converted to layout space
         //Used for initial setup of turntables and reporters
-        return MathUtil.point2DToPoint(MathUtil.divide(MathUtil.center(getBounds()), getPaintScale()));
+        return MathUtil.point2DToPoint(MathUtil.divide(MathUtil.center(getBounds()), getZoom()));
     } //windowCenter
 
     //
@@ -4752,8 +4785,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
         //Compute layout size based on LayoutPane size
         dim = getTargetPanelSize();
-        panelHeight = (int) (dim.height / getPaintScale());
-        panelWidth = (int) (dim.width / getPaintScale());
+        panelWidth = (int) (dim.width / getZoom());
+        panelHeight = (int) (dim.height / getZoom());
+        adjustScrollBars();
+
         Point pt = getLocationOnScreen();
         upperLeftX = pt.x;
         upperLeftY = pt.y;
@@ -5080,8 +5115,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      * Get mouse coordinates and adjust for zoom
      */
     private Point2D calcLocation(MouseEvent event, int dX, int dY) {
-        xLoc = (int) ((event.getX() + dX) / getPaintScale());
-        yLoc = (int) ((event.getY() + dY) / getPaintScale());
+        xLoc = (int) ((event.getX() + dX) / getZoom());
+        yLoc = (int) ((event.getY() + dY) / getZoom());
         dLoc.setLocation(xLoc, yLoc);
         return dLoc;
     } //calcLocation
@@ -5967,8 +6002,8 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 util.setAdditionalViewPopUpMenu(popup);
             }
         }
-        popup.show((Component) p, p.getWidth() / 2 + (int) ((getPaintScale() - 1.0) * p.getX()),
-                p.getHeight() / 2 + (int) ((getPaintScale() - 1.0) * p.getY()));
+        popup.show((Component) p, p.getWidth() / 2 + (int) ((getZoom() - 1.0) * p.getX()),
+                p.getHeight() / 2 + (int) ((getZoom() - 1.0) * p.getY()));
 
         /*popup.show((Component)p, event.getX(), event.getY());*/
     } //showPopUp()
@@ -8892,7 +8927,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                 deleteFloatingEditToolBox();
             }
         } else {
-            editToolBarContainer.setVisible(editable);
+            editToolBarContainerPanel.setVisible(editable);
         }
         setShowHidden(editable);
 
@@ -9132,11 +9167,22 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     public void setPanelBounds(Rectangle2D newBounds) {
         // make sure the origin is at {0, 0}
-        newBounds = MathUtil.offset(newBounds, -newBounds.getX(), -newBounds.getY());
+        ///newBounds = MathUtil.offset(newBounds, -newBounds.getX(), -newBounds.getY());
+        // don't let origin go negative
+        newBounds = newBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
         panelWidth = (int) newBounds.getWidth();
         panelHeight = (int) newBounds.getHeight();
-        setTargetPanelSize(panelWidth, panelHeight);
+        int newTargetWidth = (int) (panelWidth * getZoom());
+        int newTargetHeight = (int) (panelHeight * getZoom());
+
+        Dimension targetPanelSize = getTargetPanelSize();
+        int oldTargetWidth = (int) targetPanelSize.getWidth();
+        int oldTargetHeight = (int) targetPanelSize.getHeight();
+        if ((newTargetWidth != oldTargetWidth) || (newTargetHeight != oldTargetHeight)) {
+            setTargetPanelSize((int) (panelWidth * getZoom()), (int) (panelHeight * getZoom()));
+            adjustScrollBars();
+        }
 
         log.debug("setPanelBounds(({})", newBounds);
     }
@@ -9144,8 +9190,16 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // this will grow the panel bounds based on items added to the layout
     public Rectangle2D unionToPanelBounds(@Nonnull Rectangle2D bounds) {
         Rectangle2D result = getPanelBounds();
-        result.add(bounds);
-        setPanelBounds(result);
+
+        // make room to expand
+        Rectangle2D b = MathUtil.inset(bounds, -gridSize1st * gridSize2nd);
+        // don't let origin go negative
+        b = b.createIntersection(MathUtil.zeroToInfinityRectangle2D);
+
+        result.add(b);
+        if (!getPanelBounds().equals(result)) {
+            setPanelBounds(result);
+        }
         return result;
     }
 
@@ -9553,14 +9607,14 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     }   // draw
 
-    boolean main = true;
-    float trackWidth = sideTrackWidth;
+    private boolean main = true;
+    private float trackWidth = sideTrackWidth;
 
     //had to make this protected so the LayoutTrack classes could access it
     //also returned the current value of trackWidth for the callers to use
-    protected float setTrackStrokeWidth(Graphics2D g2, boolean need) {
-        if (main != need) {
-            main = need;
+    protected float setTrackStrokeWidth(Graphics2D g2, boolean needMain) {
+        if (main != needMain) {
+            main = needMain;
 
             //change track stroke width
             trackWidth = main ? mainlineTrackWidth : sideTrackWidth;
@@ -9568,6 +9622,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
         return trackWidth;
     } //setTrackStrokeWidth
+
+    protected float getTrackStrokeWidth() {
+        return trackWidth;
+    }
 
     private void drawHiddenLayoutTracks(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
@@ -9713,13 +9771,13 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         int wideMin = gridSize1st / 2;
 
         // granulize puts these on gridSize1st increments
-        double minX = MathUtil.granulize(upperLeftX, gridSize1st);
-        double minY = MathUtil.granulize(upperLeftY, gridSize1st);
-        double maxX = MathUtil.granulize(panelWidth + upperLeftX, gridSize1st);
-        double maxY = MathUtil.granulize(panelHeight + upperLeftY, gridSize1st);
+        int minX = 0;
+        int minY = 0;
+        int maxX = (int) MathUtil.granulize(panelWidth, gridSize1st);
+        int maxY = (int) MathUtil.granulize(panelHeight, gridSize1st);
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
-        
+
         Point2D startPt = new Point2D.Double();
         Point2D stopPt = new Point2D.Double();
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -9729,37 +9787,31 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         g2.setStroke(narrow);
 
         //draw horizontal lines
-        double pix = gridSize1st;
+        for (int y = minY; y <= maxY; y += gridSize1st) {
+            startPt.setLocation(minX, y);
+            stopPt.setLocation(maxX, y);
 
-        while (pix <= maxY) {
-            startPt.setLocation(minX, pix);
-            stopPt.setLocation(maxX, pix);
-
-            if ((((int) pix) % wideMod) < wideMin) {
+            if ((y % wideMod) < wideMin) {
                 g2.setStroke(wide);
                 g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += gridSize1st;
         }
 
         //draw vertical lines
-        pix = gridSize1st;
+        for (int x = minX; x <= maxX; x += gridSize1st) {
+            startPt.setLocation(x, minY);
+            stopPt.setLocation(x, maxY);
 
-        while (pix <= maxX) {
-            startPt.setLocation(pix, minY);
-            stopPt.setLocation(pix, maxY);
-
-            if ((((int) pix) % wideMod) < wideMin) {
+            if ((x % wideMod) < wideMin) {
                 g2.setStroke(wide);
                 g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += gridSize1st;
         }
     } //drawPanelGrid
 
@@ -9811,7 +9863,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     public List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
-        		.map(TrackSegment.class::cast)
+                .map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
 

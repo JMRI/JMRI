@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.JUnitUtil;
@@ -148,15 +149,17 @@ public class LayoutEditorTest {
     @Test
     public void testGetWindowWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // defaults to 0
-        Assert.assertEquals("window width", 0, le.getWindowWidth());
+        // defaults to screen width - 20
+        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
+        Assert.assertEquals("window width", w, le.getWindowWidth());
     }
 
     @Test
     public void testGetWindowHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // defaults to 0
-        Assert.assertEquals("window height", 0, le.getWindowHeight());
+        // defaults to screen height - 120
+        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
+        Assert.assertEquals("window height", h, le.getWindowHeight());
     }
 
     @Test

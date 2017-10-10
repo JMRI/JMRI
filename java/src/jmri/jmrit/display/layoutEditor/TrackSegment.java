@@ -1368,9 +1368,13 @@ public class TrackSegment extends LayoutTrack {
     }
     
     private void drawHidden(Graphics2D g2) {
+        // hidden track segments are drawn interleaved with non-hidden ones
+        // so save and restore the previous stroke before & after drawing here
+        Stroke oldStroke = g2.getStroke();  // save previous stroke
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
                 layoutEditor.getCoords(getConnect2(), getType2())));
+        g2.setStroke(oldStroke);    // restore previous stroke
     }   // drawHidden
 
     private void drawDashed(Graphics2D g2) {
