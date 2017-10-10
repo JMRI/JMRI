@@ -185,7 +185,7 @@ angular.module('jmri.app').filter('powerTriState', function(jmriWebSocket) {
         return 'pficon pficon-on';
         break;
       default: // unknown
-        return 'fa fa-fw fa-question';
+        return 'fa fa-question';
     }
   };
 });

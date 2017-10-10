@@ -19,7 +19,7 @@ angular.module('jmri.app').run(function logsNotification($rootScope, $http, $log
   
   this.webSocket = null;
   $rootScope.$on('$translateRefreshEnd', function () {
-    $translate('LOGS.ERROR NOTIFICATION').then(function (translation) {
+    $translate('LOGS.ERROR_NOTIFICATION').then(function (translation) {
     if (this.webSocket === null) {
       // register a listener for logs with the jmriWebSocket service
       // this listener determines if a notification needs to be shown or cleared
@@ -30,7 +30,7 @@ angular.module('jmri.app').run(function logsNotification($rootScope, $http, $log
             if (data.level === "ERROR") {
               $rootScope.jmriLogs.errors++;
               if (data.message !== null) {
-                Notifications.message('danger', $translate.instant('LOGS.ERROR NOTIFICATION', {'dts': data['@timestamp']}), data.message, true);
+                Notifications.message('danger', $translate.instant('LOGS.ERROR_NOTIFICATION', {'dts': data['@timestamp']}), data.message, true);
               }
             } else if (data.level === "WARNING") {
               $rootScope.jmriLogs.warnings++;
