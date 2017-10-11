@@ -10,14 +10,13 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Mx1ThrottleManagerTest {
+public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private Mx1SystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        Mx1ThrottleManager t = new Mx1ThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
@@ -34,6 +33,7 @@ public class Mx1ThrottleManagerTest {
            }
         };
         memo = new Mx1SystemConnectionMemo(tc);
+        tm = new Mx1ThrottleManager(memo);
     }
 
     @After

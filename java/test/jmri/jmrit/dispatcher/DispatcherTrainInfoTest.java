@@ -41,6 +41,10 @@ public class DispatcherTrainInfoTest extends TestCase {
         ti.setRunInReverse(false);
         ti.setSoundDecoder(true);
         ti.setMaxTrainLength(225);
+        ti.setAllocationMethod(8);
+        ti.setUseSpeedProfile(true);
+        ti.setStopBySpeedProfile(true);
+        ti.setStopBySpeedProfileAdjust(0.5f);
         // test it
         Assert.assertEquals("Transit Name", ti.getTransitName(), "Transit");
         Assert.assertEquals("Train Name", ti.getTrainName(), "Train");
@@ -65,7 +69,10 @@ public class DispatcherTrainInfoTest extends TestCase {
         Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 225f, 0.0);
+        Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),8,0);
+        Assert.assertTrue("Use Speed Profile", ti.getUseSpeedProfile());
+        Assert.assertTrue("Stop By Speed Profile", ti.getStopBySpeedProfile());
+        Assert.assertEquals("Stop By Speed Profile using percentage of block", ti.getStopBySpeedProfileAdjust(),0.5f, 0.0);
 
     }
 

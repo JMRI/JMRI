@@ -340,7 +340,7 @@ public class LayoutEditorAuxTools {
                             log.debug("At connection D of a single slip which could go in two different directions");
                         }
                     } else {
-                        //note: I'm adding these logs as a prequel to adding the correct code for (single &double) slips
+                        //note: I'm adding these logs as a prequel to adding the correct code for double slips
                         if (lc.getConnectedType() == LayoutTrack.SLIP_A) {
                             log.debug("At connection A of a double slip which could go in two different directions");
                         } else if (lc.getConnectedType() == LayoutTrack.SLIP_B) {
