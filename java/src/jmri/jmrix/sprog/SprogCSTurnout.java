@@ -71,7 +71,10 @@ public class SprogCSTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton ST {}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
+            log.debug("Send command to {} Pushbutton {}T{}",
+                    (_pushButtonLockout ? "Lock" : "Unlock"),
+                    _memo.getSystemPrefix(),
+                    _number);
         }
     }
 
