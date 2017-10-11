@@ -90,7 +90,9 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
         Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 120.0f, 0.0);
-
+        Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),3,0);
+        Assert.assertFalse("Use Speed Profile", ti.getUseSpeedProfile());
+        Assert.assertEquals("Use Speed Profile Adjust block length", ti.getStopBySpeedProfileAdjust(),1.0f,0.0f);
     }
 
     @Before
