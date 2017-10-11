@@ -410,7 +410,7 @@ public class RosterSpeedProfile {
         } else {
             spd = getReverseSpeed(speedStep);
         }
-        if (spd <= 0.0f) {
+        if (spd <= 0.01f) {
             log.error("Speed not available to compute distance travelled");
             return 0.0f;
         }
@@ -451,6 +451,7 @@ public class RosterSpeedProfile {
             distanceTravelled = 0;
             stepQueue = new LinkedList<>();
         }
+        _throttle = null;
     }
 
     public void setExtraInitialDelay(float eDelay) {
@@ -483,6 +484,34 @@ public class RosterSpeedProfile {
     }
 
     /**
+     * Set speed of a throttle.
+     *
+     * @param t     the throttle to set
+     * @param blk   the block used for length details
+     * @param speed the speed to set
+     * @param usePercentage the percentage of the block to be used for stopping
+     */
+    public void changeLocoSpeed(DccThrottle t, Block blk, float speed, float usePercentage) {
+        if (blk == referenced && speed == desiredSpeedStep) {
+            //if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
+            return;
+        }
+        float blockLength = blk.getLengthMm() * usePercentage;
+        if (blk == referenced) {
+            distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float) (System.nanoTime() - lastTimeTimerStarted) / 1000000000));
+            blockLength = distanceRemaining;
+            //Not entirely reliable at this stage as the loco could still be running and not completed the calculation of the distance, this could result in an over run
+            log.debug("Block passed is the same as we are currently processing");
+        } else {
+            referenced = blk;
+        }
+        changeLocoSpeed(t, blockLength, speed);
+
+    }
+
+    /**
+     * Set speed of a throttle to a speeed set by a float, using the section for
+     * the length details
      * Set speed of a throttle.
      *
      * @param t     the throttle to set
@@ -676,8 +705,13 @@ public class RosterSpeedProfile {
                 setNextStep();
             }
 
-            calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float) (timePerStep / 1000.0)));
-
+            // The throttle can disappear during a stop situation
+            if (_throttle != null) {
+                calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float) (timePerStep / 1000.0)));
+            } else {
+                log.warn("Throttle destroyed before zero length[{}] remaining.",calculatedDistance);
+                calculatedDistance = 0;
+            }
             if (calculatedDistance < 0 && !calculated) {
                 log.error("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10);
