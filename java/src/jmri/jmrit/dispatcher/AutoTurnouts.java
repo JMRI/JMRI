@@ -161,12 +161,20 @@ public class AutoTurnouts {
             }
         } else {
 
-            if (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
-                //This can be considered normal where SignalMast Logic is used.
-                return true;
+            //if (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
+            //    //This can be considered normal where SignalMast Logic is used.
+            //    return true;
+            //}
+            // this is an error but is it? It only happens when system is under stress
+            // which would point to a threading issue.
+            try {
+            log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block and Section mismatch",
+                    at.getActiveTrainName(),at.isAllocationReversed(),s.getUserName(),
+                    at.getStartBlock().getUserName(),at.getEndBlock().getUserName());
+            } catch (Exception ex ) {
+                log.warn(ex.getLocalizedMessage());
             }
-            log.error("Error in turnout check/set request - initial Block and Section mismatch");
-            return false;
+            return true;
         }
 
         Block nextBlock = null;
