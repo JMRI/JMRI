@@ -5,6 +5,7 @@ addons:
     packages:
     - graphviz
     - libalut0
+    - dbus-x11
   firefox: latest
   chrome: stable
 
