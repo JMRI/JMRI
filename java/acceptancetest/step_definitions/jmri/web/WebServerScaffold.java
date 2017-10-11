@@ -27,6 +27,7 @@ public class WebServerScaffold implements En {
           server = new WebServer(); // a webserver using default preferences.
           server.start();
           jmri.util.JUnitUtil.waitFor(()->{ return server.isStarted(); },"Server Failed to Start in time");
+          jmri.util.JUnitOperationsUtil.resetOperationsManager();
       });
 
       After(tags, ()->{
