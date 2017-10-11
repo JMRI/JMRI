@@ -7,6 +7,10 @@ import java.io.FileInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedTransferQueue;
+
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,6 +135,106 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         return new GcTrafficController();
     }
 
+    private class AsyncBufferInputStream extends FilterInputStream {
+        AsyncBufferInputStream(InputStream inputStream) {
+            super(inputStream);
+            Thread rt = new Thread(()->readThreadBody());
+            rt.setDaemon(true);
+            rt.setPriority(Thread.MAX_PRIORITY);
+            rt.start();
+        }
+
+        private BufferEntry tryRead(int len) {
+            BufferEntry tail = new BufferEntry();
+            try {
+                tail.data = new byte[len];
+                tail.len = in.read(tail.data, 0, len);
+                errorCount = 0;
+            } catch (IOException e) {
+                tail.e = e;
+                e.printStackTrace();
+                if (++errorCount > MAX_IO_ERRORS_TO_ABORT) {
+                    log.error("Closing read thread due to too many IO errors");
+                    return null;
+                }
+            }
+            return tail;
+        }
+
+        private void readThreadBody() {
+            BufferEntry tail;
+            while(true) {
+                // Try to read one byte to block the thread.
+                tail = tryRead(1);
+                if (tail == null) return;
+                // TODO: we need to add support for the underlying input stream persistently returning EOF.
+                if (tail.len > 0 || tail.e != null) {
+                    readAhead.add(tail);
+                } else {
+                    continue;
+                }
+                // Read as many bytes as we have in large increments.
+                do {
+                    tail = tryRead(128);
+                    if (tail == null) return;
+                    if (tail.len > 0 || tail.e != null) {
+                        readAhead.add(tail);
+                    } else {
+                        break;
+                    }
+                } while(true);
+            }
+        }
+
+        private class BufferEntry {
+            byte[] data;
+            int len = 0;
+            IOException e = null;
+        }
+
+        @Override
+        public int read() throws IOException {
+            throw new IOException("unimplemented");
+        }
+
+        @Override
+        public int read(byte[] bytes) throws IOException {
+            throw new IOException("unimplemented");
+        }
+
+        @Override
+        public synchronized int read(byte[] bytes, int skip, int len) throws IOException {
+            if (skip != 0) {
+                throw new IOException("unimplemented");
+            }
+            if (head == null || headOfs >= head.len) {
+                while (true) {
+                    try {
+                        head = readAhead.take();
+                        break;
+                    } catch (InterruptedException e) {
+                    }
+                }
+                if (head.e != null) {
+                    throw head.e;
+                }
+                headOfs = 0;
+                if (head.len < 0) return -1;
+            }
+            int cp = head.len - headOfs;
+            if (cp > len) cp = len;
+            System.arraycopy(head.data, headOfs, bytes, 0, cp);
+            headOfs += cp;
+            return cp;
+        }
+
+        private final static int MAX_IO_ERRORS_TO_ABORT = 10;
+        private BlockingQueue<BufferEntry> readAhead = new LinkedBlockingQueue<>();
+        BufferEntry head = null;
+        int headOfs = 0;
+        int errorCount = 0;
+    }
+
     // base class methods for the PortController interface
     @Override
     public DataInputStream getInputStream() {
@@ -140,42 +244,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
         }
         synchronized (this) {
             if (bufferedStream == null) {
-                bufferedStream = new FilterInputStream(serialStream) {};
-                new FilterInputStream(serialStream) {
-                    @Override
-                    public int read() throws IOException {
-                        throw new IOException("unimplemented");
-                    }
-
-                    @Override
-                    public int read(byte[] bytes) throws IOException {
-                        throw new IOException("unimplemented");
-                    }
-
-                    @Override
-                    public synchronized int read(byte[] bytes, int skip, int len) throws IOException {
-                        if (skip != 0) {
-                            throw new IOException("unimplemented");
-                        }
-                        if (ofs >= buflen) {
-                            // refill buffer
-                            buflen = in.read(buf);
-                            if (buflen <= 0) {
-                                return in.read(bytes, skip, len);
-                            }
-                            ofs = 0;
-                        }
-                        int cp = buflen - ofs;
-                        if (cp > len) cp = len;
-                        System.arraycopy(buf, ofs, bytes, 0, cp);
-                        ofs += cp;
-                        return cp;
-                    }
-
-                    private byte[] buf = new byte[192];
-                    private int ofs = 0;
-                    private int buflen = 0;
-                };
+                bufferedStream = new AsyncBufferInputStream(serialStream);
             } else {
                 log.error("Creating multiple input streams.");
             }
