@@ -53,7 +53,7 @@ abstract public class AbstractMRTrafficController {
         Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
-    private boolean synchronizeRx = true;
+    protected boolean synchronizeRx = true;
     
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;

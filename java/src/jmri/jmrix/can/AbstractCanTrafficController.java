@@ -9,6 +9,8 @@ import jmri.jmrix.AbstractMRTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.SwingUtilities;
+
 /**
  * Abstract base for TrafficControllers in a CANbus based Message/Reply
  * protocol.
@@ -302,7 +304,11 @@ abstract public class AbstractCanTrafficController
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
-            javax.swing.SwingUtilities.invokeAndWait(r);
+            if (synchronizeRx) {
+                SwingUtilities.invokeAndWait(r);
+            } else {
+                SwingUtilities.invokeLater(r);
+            }
         } catch (java.lang.reflect.InvocationTargetException | InterruptedException | RuntimeException e) {
             log.error("Unexpected exception in invokeAndWait:" + e);
             e.printStackTrace();
