@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Acela systems
- * <P>
+ * <p>
  * System names are "ATnnn", where nnn is the bit number without padding.
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -68,12 +68,12 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * Public method to notify user of Turnout creation error. use it somewhere TODO
      */
-    public void notifyTurnoutCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("AcelaAssignDialog", bitNum, conflict,
-                Bundle.getMessage("BeanNameTurnout")),
-                Bundle.getMessage("AcelaAssignDialogTitle"),
-                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
-    }
+//    public void notifyTurnoutCreationError(String conflict, int bitNum) {
+//        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("AcelaAssignDialog", bitNum, conflict,
+//                Bundle.getMessage("BeanNameTurnout")),
+//                Bundle.getMessage("AcelaAssignDialogTitle"),
+//                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
+//    }
 
     /**
      * Public method to validate system name format.
@@ -106,7 +106,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to convert system name to its alternate format
-     * <P>
+     * <p>
      * Returns a normalized system name if system name is valid and has a valid
      * alternate representation, else return "".
      */
@@ -120,7 +120,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Allow access to AcelaTurnoutManager
+     * Allow access to AcelaTurnoutManager.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated

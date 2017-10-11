@@ -14,7 +14,7 @@ public class LocoNetMenu extends JMenu {
      * Create a LocoNet menu. Preloads the TrafficController to certain actions.
      * Actions will open new windows.
      */
-    // Need to Sort out the Loconet server menu items;
+    // Need to Sort out the Loconet server menu items
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 

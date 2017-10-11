@@ -51,12 +51,12 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      * be referenced from classes that don't inherit.
      */
     public void configureManagers() {
-        //None to configure
+        // None to configure
     }
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        //No Actions at start up to return
+        // No Actions at start up to return
         return null;
     }
 

@@ -60,7 +60,6 @@ public class SystemsMenu extends JMenu {
 
         // LocoNet is migrated
         add(new jmri.jmrix.loconet.swing.LocoNetMenu(null));
-        //addMenu("jmri.jmrix.loconet.swing.LocoNetMenu");
         // NCE is migrated
         add(new jmri.jmrix.nce.swing.NceMenu(null));
 
@@ -115,4 +114,5 @@ public class SystemsMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class);
+
 }

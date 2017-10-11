@@ -8,16 +8,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * EasyDcc implementation of the Turnout interface.
- * <P>
+ * <p>
  * This object doesn't listen to the EasyDcc communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * Description: extend jmri.AbstractTurnout for EasyDcc layouts
- *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccTurnout extends AbstractTurnout {
+
+    protected String _prefix = "E";
 
     /**
      * Create a turnout. EasyDcc turnouts use the NMRA number (0-511) as their
@@ -25,8 +25,9 @@ public class EasyDccTurnout extends AbstractTurnout {
      *
      * @param number the NMRA turnout number from 0 to 511
      */
-    public EasyDccTurnout(int number) {
-        super("ET" + number);
+    public EasyDccTurnout(int number, String prefix) {
+        super(prefix + "T" + number);
+        _prefix = prefix;
         _number = number;
         // At construction, register for messages
     }
@@ -63,7 +64,7 @@ public class EasyDccTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ET" + _number);
+            log.debug("Send command to {}", (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton {}T{}", _prefix, _number);
         }
     }
 

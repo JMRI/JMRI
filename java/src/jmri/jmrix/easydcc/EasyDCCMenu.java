@@ -4,13 +4,14 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri EasyDCC-specific tools
+ * Create a "Systems" menu containing the Jmri EasyDCC-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003
  */
 public class EasyDCCMenu extends JMenu {
 
     public EasyDCCMenu(String name) {
+
         this();
         setText(name);
     }
@@ -18,15 +19,10 @@ public class EasyDCCMenu extends JMenu {
     public EasyDCCMenu() {
 
         super();
+        setText(Bundle.getMessage("MenuEasyDCC"));
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        // setText(rb.getString("MenuSystems"));
-        setText(rb.getString("MenuItemEasyDCC"));
-
-        add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction(rb.getString("MenuItemSendCommand")));
-
+        add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction(Bundle.getMessage("MonitorXTitle", "EasyDCC")));
+        add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction(Bundle.getMessage("MenuItemSendCommand")));
     }
 
 }

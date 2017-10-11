@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a "Systems" menu containing as submenus the JMRI system-specific menus
  * for available systems.
- * <P>
+ * <p>
  * Also provides a static member for adding these items to an existing menu.
  *
  * @see SystemsMenu
@@ -36,7 +36,7 @@ public class ActiveSystemsMenu extends JMenu {
     }
 
     /**
-     * Add menus for active systems to the menu bar
+     * Add menus for active systems to the menu bar.
      */
     static public void addItems(JMenuBar m) {
 
@@ -87,7 +87,7 @@ public class ActiveSystemsMenu extends JMenu {
 
     /**
      * Add active systems as submenus inside a single menu entry. Only used in
-     * JmriDemo, which has a huge number of menus
+     * JmriDemo, which has a huge number of menus.
      */
     static public void addItems(JMenu m) {
         //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
@@ -141,6 +141,7 @@ public class ActiveSystemsMenu extends JMenu {
             return null;
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(ActiveSystemsMenu.class);
 
 }

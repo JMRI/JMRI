@@ -690,4 +690,5 @@ public class JUnitUtil {
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
+
 }

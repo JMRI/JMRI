@@ -49,7 +49,8 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 
         // create and register the DCCppComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.dccpp.swing.DCCppComponentFactory(this), jmri.jmrix.swing.ComponentFactory.class);
+        InstanceManager.store(cf = new jmri.jmrix.dccpp.swing.DCCppComponentFactory(this),
+                jmri.jmrix.swing.ComponentFactory.class);
 
         if (log.isDebugEnabled()) {
             log.debug("Created DCCppSystemConnectionMemo");

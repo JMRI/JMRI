@@ -12,7 +12,8 @@ import jmri.ThrottleManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author Bob Jacobsen Copyright (C) 2010 Kevin Dickerson
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -34,12 +35,12 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
          jmri.jmrix.swing.ComponentFactory.class);*/
     }
 
-    /* Temp until it is refactored to completely for multiple connections*/
+    /* Temp until it is refactored  completely for multiple connections*/
     public EasyDccSystemConnectionMemo(String prefix, String name) {
         super(prefix, name);
         register(); // registers general type
         InstanceManager.store(this, EasyDccSystemConnectionMemo.class); // also register as specific type
-        //Needs to be implemented
+        // Needs to be implemented
         /*InstanceManager.store(cf = new jmri.jmrix.easydcc.swing.ComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);*/
     }
@@ -47,7 +48,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public EasyDccTrafficController getTrafficController() {
         return et;
@@ -82,7 +83,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this provides by class.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -238,4 +239,5 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         }
         super.dispose();
     }
+
 }

@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Tests for the jmri.jmrix.nce.EasyDccTurnout class
+ * Tests for the jmri.jmrix.easydcc.EasyDccTurnout class
  *
  * @author	Bob Jacobsen
  */
@@ -22,7 +22,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
         // prepare an interface
         tcis = new EasyDccTrafficControlScaffold();
 
-        t = new EasyDccTurnout(4);
+        t = new EasyDccTurnout(4, "E");
     }
 
     @Override
