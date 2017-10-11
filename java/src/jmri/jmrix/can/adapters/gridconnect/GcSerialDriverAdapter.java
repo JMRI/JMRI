@@ -1,7 +1,10 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import jmri.jmrix.can.TrafficController;
@@ -135,7 +138,50 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
             log.error("getInputStream called before load(), stream not available");
             return null;
         }
-        return new DataInputStream(serialStream);
+        synchronized (this) {
+            if (bufferedStream == null) {
+                bufferedStream = new FilterInputStream(serialStream) {};
+                new FilterInputStream(serialStream) {
+                    @Override
+                    public int read() throws IOException {
+                        throw new IOException("unimplemented");
+                    }
+
+                    @Override
+                    public int read(byte[] bytes) throws IOException {
+                        throw new IOException("unimplemented");
+                    }
+
+                    @Override
+                    public synchronized int read(byte[] bytes, int skip, int len) throws IOException {
+                        if (skip != 0) {
+                            throw new IOException("unimplemented");
+                        }
+                        if (ofs >= buflen) {
+                            // refill buffer
+                            buflen = in.read(buf);
+                            if (buflen <= 0) {
+                                return in.read(bytes, skip, len);
+                            }
+                            ofs = 0;
+                        }
+                        int cp = buflen - ofs;
+                        if (cp > len) cp = len;
+                        System.arraycopy(buf, ofs, bytes, 0, cp);
+                        ofs += cp;
+                        return cp;
+                    }
+
+                    private byte[] buf = new byte[192];
+                    private int ofs = 0;
+                    private int buflen = 0;
+                };
+            } else {
+                log.error("Creating multiple input streams.");
+            }
+        }
+        //return new DataInputStream(serialStream);
+        return new DataInputStream(bufferedStream);
     }
 
     @Override
@@ -174,6 +220,7 @@ public class GcSerialDriverAdapter extends GcPortController implements jmri.jmri
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+    private InputStream bufferedStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class);
 
