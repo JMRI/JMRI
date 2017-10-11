@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -21,7 +20,7 @@ public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleMa
     public void setUp() {
         JUnitUtil.setUp();
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        tm = new EliteXNetThrottleManager(new XNetSystemConnectionMemo(tc));
+        tm = new EliteXNetThrottleManager(new EliteXNetSystemConnectionMemo(tc));
     }
 
     @After
