@@ -2608,7 +2608,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return Train's railroad name.
      */
-    public String getTrainRailroadName() {
+    public String getRailroadName() {
         return _railroadName;
     }
 
@@ -2617,7 +2617,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @param name The railroad name for this train.
      */
-    public void setTrainRailroadName(String name) {
+    public void setRailroadName(String name) {
         String old = _railroadName;
         _railroadName = name;
         if (!old.equals(name)) {
@@ -3945,7 +3945,7 @@ public class Train implements java.beans.PropertyChangeListener {
         // check for optional railroad name and logo
         if ((e.getChild(Xml.RAIL_ROAD) != null) && (a = e.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
             String name = a.getValue();
-            setTrainRailroadName(name);
+            setRailroadName(name);
         }
         if ((e.getChild(Xml.MANIFEST_LOGO) != null)) {
             if ((a = e.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME)) != null) {
@@ -4195,9 +4195,9 @@ public class Train implements java.beans.PropertyChangeListener {
             }
             e.addContent(es);
         }
-        if (!getTrainRailroadName().equals(NONE)) {
+        if (!getRailroadName().equals(NONE)) {
             Element r = new Element(Xml.RAIL_ROAD);
-            r.setAttribute(Xml.NAME, getTrainRailroadName());
+            r.setAttribute(Xml.NAME, getRailroadName());
             e.addContent(r);
         }
         if (!getManifestLogoURL().equals(NONE)) {
