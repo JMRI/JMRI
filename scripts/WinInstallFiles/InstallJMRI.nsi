@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.13
+; - Remove outmoded Apache Commons IO libraries
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.12
 ; - Remove outmoded Jetty and WebSocket libraries
 ; -------------------------------------------------------------------------
@@ -482,7 +485,8 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Delete old vecmath.jar files as of JMRI 4.5.1
     Delete "$OUTDIR\lib\vecmath.jar"
 
-    ; -- Delete jetty and websocket libraries irrespective of version
+    ; -- Delete libraries outdated as of JMRI 4.9.6
+    Delete "$OUTDIR\lib\commons-io-1.3.1.jar"
     Delete "$OUTDIR\lib\jetty-http-9.3.9.v20160517.jar"
     Delete "$OUTDIR\lib\jetty-io-9.3.9.v20160517.jar"
     Delete "$OUTDIR\lib\jetty-security-9.3.9.v20160517.jar"
