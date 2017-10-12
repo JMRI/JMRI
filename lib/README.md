@@ -61,6 +61,10 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - from Java3D 1.5.2
 - from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath
 
+##### commons-io-2.5.jar
+- provides org.apache.commons.io utilities for IO and file manipulation
+- from http://commons.apache.org/proper/commons-io/
+
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3
