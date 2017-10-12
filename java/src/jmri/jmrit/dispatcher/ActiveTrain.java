@@ -157,6 +157,15 @@ public class ActiveTrain {
     public static final int OPERATIONS = 0x02;
     public static final int USER = 0x04;
 
+    /**
+     * The value of {@link #getAllocateMethod()} if allocating as many sections as are clear.
+     */
+    public static final int ALLOCATE_AS_FAR_AS_IT_CAN = -1;
+    /**
+     * The value of {@link #getAllocateMethod()} if allocating up until the next safe section
+     */
+    public static final int ALLOCATE_BY_SAFE_SECTIONS = 0;
+
     // instance variables
     private Transit mTransit = null;
     private String mTrainName = "";
@@ -169,6 +178,7 @@ public class ActiveTrain {
     private AutoActiveTrain mAutoActiveTrain = null;
     private List<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
     private jmri.Section mLastAllocatedSection = null;
+    private int mLastAllocatedSectionSeqNumber = 0;
     private jmri.Section mSecondAllocatedSection = null;
     private int mNextAllocationNumber = 1;
     private jmri.Section mNextSectionToAllocate = null;
@@ -184,7 +194,7 @@ public class ActiveTrain {
     private String mDccAddress = "";
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
-    private boolean mAllocateAllTheWay = false;
+    private int mAllocateMethod = 3;
     public final static int NODELAY = 0x00;
     public final static int TIMEDDELAY = 0x01;
     public final static int SENSORDELAY = 0x02;
@@ -604,6 +614,7 @@ public class ActiveTrain {
             if (as.getSection() == mNextSectionToAllocate) {
                 // this  is the next Section in the Transit, update pointers
                 mLastAllocatedSection = as.getSection();
+                mLastAllocatedSectionSeqNumber = mNextSectionSeqNumber;
                 mNextSectionToAllocate = as.getNextSection();
                 mNextSectionSeqNumber = as.getNextSectionSequence();
                 mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(
@@ -673,6 +684,7 @@ public class ActiveTrain {
             if (mAllocatedSections.size() > 0) {
                 mLastAllocatedSection = mAllocatedSections.get(
                         mAllocatedSections.size() - 1).getSection();
+                mLastAllocatedSectionSeqNumber = mAllocatedSections.size() - 1;
             }
         }
     }
@@ -794,6 +806,10 @@ public class ActiveTrain {
         return mLastAllocatedSection;
     }
 
+    public int getLastAllocatedSectionSeqNumber() {
+        return mLastAllocatedSectionSeqNumber;
+    }
+
     public String getLastAllocatedSectionName() {
         if (mLastAllocatedSection == null) {
             return "<" + Bundle.getMessage("None").toLowerCase() + ">"; // <none>
@@ -905,16 +921,27 @@ public class ActiveTrain {
         mReverseAtEnd = s;
     }
 
-    public boolean getAllocateAllTheWay() {
-        return mAllocateAllTheWay;
-    }
-
-    public void setAllocateAllTheWay(boolean s) {
-        mAllocateAllTheWay = s;
-    }
-
     protected jmri.Section getSecondAllocatedSection() {
         return mSecondAllocatedSection;
+    }
+
+    /**
+     * Returns the AllocateM Method to be used by autoAllocate
+     *
+     * @return The number of Blocks ahead to be allocated or 0 = Allocate By Safe
+     *         sections or -1 - Allocate All The Way.
+     */
+    public int getAllocateMethod() {
+        return mAllocateMethod;
+    }
+
+    /**
+     * Sets the Allocation Method to be used bu autoAllocate
+     * @param i The number of Blocks ahead to be allocated or 0 = Allocate By Safe
+     *          sections or -1 - Allocate All The Way.
+     */
+    public void setAllocateMethod(int i) {
+        mAllocateMethod = i;
     }
 
     //

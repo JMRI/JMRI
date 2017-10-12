@@ -41,6 +41,7 @@ public class TrainInfo {
     private boolean autoRun = false;
     private boolean resetWhenDone = false;
     private boolean allocateAllTheWay = false;
+    private int allocationMethod = 3;
     private boolean reverseAtEnd = false;
     private int delayedStart = ActiveTrain.NODELAY;
     private int delayedRestart = ActiveTrain.NODELAY;
@@ -61,6 +62,10 @@ public class TrainInfo {
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
     private float maxTrainLength = 200.0f;
+    private boolean useSpeedProfile = false;
+    private boolean stopBySpeedProfile = false;
+    private float stopBySpeedProfileAdjust = 1.0f;
+
 
     //
     // Access methods for manual and automatic instance variables
@@ -215,6 +220,38 @@ public class TrainInfo {
 
     protected boolean getAllocateAllTheWay() {
         return allocateAllTheWay;
+    }
+
+    protected void setAllocationMethod(int i) {
+        allocationMethod = i;
+    }
+
+    protected int getAllocationMethod() {
+        return allocationMethod;
+    }
+
+    protected void setUseSpeedProfile(boolean b) {
+        useSpeedProfile = b;
+    }
+
+    protected boolean getUseSpeedProfile() {
+        return useSpeedProfile;
+    }
+
+    protected void setStopBySpeedProfile(boolean b) {
+        stopBySpeedProfile = b;
+    }
+
+    protected boolean getStopBySpeedProfile() {
+        return stopBySpeedProfile;
+    }
+
+    protected void setStopBySpeedProfileAdjust(float f) {
+        stopBySpeedProfileAdjust = f;
+    }
+
+    protected float getStopBySpeedProfileAdjust() {
+        return stopBySpeedProfileAdjust;
     }
 
     protected void setReverseAtEnd(boolean b) {
