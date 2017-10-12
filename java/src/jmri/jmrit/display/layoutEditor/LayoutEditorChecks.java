@@ -1,15 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import jmri.util.MathUtil;
 import jmri.util.swing.JMenuUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +42,7 @@ public class LayoutEditorChecks {
         checkMenu.setToolTipText(Bundle.getMessage("CheckMenuToolTip"));
 
         checkUnConnectedTracksMenuItem.setToolTipText(Bundle.getMessage("CheckUnConnectedTracksMenuToolTip"));
+        checkMenu.add(checkUnConnectedTracksMenuItem);
         checkUnConnectedTracksMenuItem.addActionListener((ActionEvent event) -> {
             if (checkUnConnectedTracksMenu.getParent() == null) {
                 JMenuUtil.replaceMenuItem(checkUnConnectedTracksMenuItem, checkUnConnectedTracksMenu);
@@ -65,9 +61,9 @@ public class LayoutEditorChecks {
                 }
             }
         });
-        checkMenu.add(checkUnConnectedTracksMenuItem);
 
         checkUnBlockedTracksMenuItem.setToolTipText(Bundle.getMessage("CheckUnBlockedTracksMenuToolTip"));
+        checkMenu.add(checkUnBlockedTracksMenuItem);
         checkUnBlockedTracksMenuItem.addActionListener((ActionEvent event) -> {
             if (checkUnBlockedTracksMenu.getParent() == null) {
                 JMenuUtil.replaceMenuItem(checkUnBlockedTracksMenuItem, checkUnBlockedTracksMenu);
@@ -86,12 +82,11 @@ public class LayoutEditorChecks {
                 }
             }
         });
-        checkMenu.add(checkUnBlockedTracksMenuItem);
     }
 
     // run the un-connected tracks check and populate the checkUnConnectedTracksMenu
     private void setupCheckUnConnectedTracksMenu() {
-        log.info("setupcheckUnConnectedTracksMenu");
+        log.debug("setupcheckUnConnectedTracksMenu");
 
         checkUnConnectedTracksMenu.removeAll();
         checkUnConnectedTracksMenu.add(checkUnConnectedTracksMenuItem);
@@ -118,7 +113,7 @@ public class LayoutEditorChecks {
 
     // run the un-blocked tracks check and populate the checkUnBlockedTracksMenu
     private void setupCheckUnBlockedTracksMenu() {
-        log.info("setupCheckUnBlockedTracksMenu");
+        log.debug("setupCheckUnBlockedTracksMenu");
 
         checkUnBlockedTracksMenu.removeAll();
         checkUnBlockedTracksMenu.add(checkUnBlockedTracksMenuItem);
@@ -144,7 +139,7 @@ public class LayoutEditorChecks {
 
     // action to be performed when checkUnConnectedTracksMenuItem is clicked
     private void doCheckUnConnectedTracksMenuItem(String menuItemName) {
-        log.info("docheckUnConnectedTracksMenuItem({})", menuItemName);
+        log.debug("docheckUnConnectedTracksMenuItem({})", menuItemName);
         layoutEditor.clearSelectionGroups();
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
@@ -154,7 +149,7 @@ public class LayoutEditorChecks {
 
     // action to be performed when checkUnBlockedTracksMenuItem is clicked
     private void doCheckUnBlockedTracksMenuItem(String menuItemName) {
-        log.info("doCheckUnBlockedTracksMenuItem({})", menuItemName);
+        log.debug("doCheckUnBlockedTracksMenuItem({})", menuItemName);
 
         layoutEditor.clearSelectionGroups();
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
@@ -163,35 +158,7 @@ public class LayoutEditorChecks {
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
 
-            Point2D p = layoutTrack.getCoordsCenter();
-            p = MathUtil.multiply(p, layoutEditor.getZoom());
-
-            JPopupMenu popupMenu = layoutTrack.showPopup(new MouseEvent(
-                    layoutEditor.getTargetPanel(), // source
-                    MouseEvent.MOUSE_CLICKED, // id
-                    System.currentTimeMillis(), // when
-                    0, // modifiers
-                    (int) p.getX(), (int) p.getY(), // where
-                    0, // click count
-                    true));                         // popup trigger
-
-            // if we can find the "Edit" menu item go ahead and click it
-            String editMenuItemText = Bundle.getMessage("ButtonEdit");
-            for (int i = 0; i < popupMenu.getComponentCount(); i++) {
-                Component c = popupMenu.getComponent(i);
-                if (c != null) {
-                    if (c instanceof JMenuItem) {
-                        JMenuItem jmi = (JMenuItem) c;
-                        if (jmi.getText().equals(editMenuItemText)) {
-                            // hide the popup menu
-                            popupMenu.setVisible(false);
-                            // and click the "Edit" menu
-                            jmi.doClick();
-                            break;
-                        }
-                    }
-                }
-            }
+            layoutEditor.getLayoutTrackEditors().editLayoutTrack(layoutTrack);
         }
     }
 

@@ -208,7 +208,7 @@ public class JMenuUtil extends GuiUtilBase {
     public static boolean replaceMenuItem(
             @Nullable JMenuItem orginalMenuItem,
             @Nonnull JMenuItem replacementMenuItem) {
-        return internalReplaceMenuItem(replacementMenuItem, replacementMenuItem);
+        return internalReplaceMenuItem(orginalMenuItem, replacementMenuItem);
     }
 
     /**
