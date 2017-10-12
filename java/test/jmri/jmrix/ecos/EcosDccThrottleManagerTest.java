@@ -10,19 +10,19 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EcosDccThrottleManagerTest {
+public class EcosDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
     public void testCTor() {
-        EcosTrafficController tc = new EcosInterfaceScaffold();
-        EcosDccThrottleManager t = new EcosDccThrottleManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc));
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        tm = new EcosDccThrottleManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc));
     }
 
     @After
