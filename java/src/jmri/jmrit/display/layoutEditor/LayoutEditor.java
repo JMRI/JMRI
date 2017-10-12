@@ -10310,7 +10310,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     // On Java 9 on Windows 10, there is no more meta key. Note that this
     // method is called both on mouse button events and mouse move events,
     // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
-    // event.getButton() always return 0 for MouseMoveEvent.
+    // event.getButton() always return 0 for MouseMoveEvent. 
     private boolean isMetaDown(MouseEvent event) {
         if (SystemType.isWindows())
             return SwingUtilities.isRightMouseButton(event);
