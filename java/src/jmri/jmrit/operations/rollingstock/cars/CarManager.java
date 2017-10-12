@@ -68,7 +68,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      */
     @Override
     public Car getById(String id) {
-        return (Car) super.getById(id);
+        return super.getById(id);
     }
 
     /**
@@ -80,7 +80,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      */
     @Override
     public Car getByRoadAndNumber(String road, String number) {
-        return (Car) super.getByRoadAndNumber(road, number);
+        return super.getByRoadAndNumber(road, number);
     }
 
     /**
@@ -93,7 +93,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      */
     @Override
     public Car getByTypeAndRoad(String type, String road) {
-        return (Car) super.getByTypeAndRoad(type, road);
+        return super.getByTypeAndRoad(type, road);
     }
 
     /**
@@ -148,7 +148,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         if (oldKernel != null) {
             Kernel newKernel = newKernel(newName);
             // keep the lead car
-            Car leadCar = (Car) oldKernel.getLead();
+            Car leadCar = oldKernel.getLead();
             if (leadCar != null) {
                 leadCar.setKernel(newKernel);
             }
@@ -414,7 +414,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         List<Car> out = new ArrayList<Car>();
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car rs : byDestination) {
-            Car car = (Car) rs;
+            Car car = rs;
             if (car.getKernel() != null && !car.getKernel().isLead(car)) {
                 continue; // not the lead car, skip for now.
             }
@@ -536,7 +536,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
         List<Car> cars = getList();
         for (Car rs : cars) {
-            Car car = (Car) rs;
+            Car car = rs;
             if (car.getTypeName().equals(type) && car.getLoadName().equals(oldLoadName)) {
                 if (newLoadName != null) {
                     car.setLoadName(newLoadName);
@@ -551,7 +551,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         List<Car> mias = new ArrayList<Car>();
         List<Car> cars = getByIdList();
         for (Car rs : cars) {
-            Car car = (Car) rs;
+            Car car = rs;
             if (car.isLocationUnknown()) {
                 mias.add(car); // return unknown location car
             }
@@ -624,7 +624,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         // add entries
         List<Car> carList = getByIdList();
         for (Car rs : carList) {
-            Car car = (Car) rs;
+            Car car = rs;
             values.addContent(car.store());
         }
     }

@@ -126,8 +126,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             }
 
             // Does this train have a unique railroad name?
-            if (!_train.getRailroadName().equals(Train.NONE)) {
-                textRailRoadName.setText(_train.getRailroadName());
+            if (!_train.getTrainRailroadName().equals(Train.NONE)) {
+                textRailRoadName.setText(_train.getTrainRailroadName());
             } else {
                 textRailRoadName.setText(Setup.getRailroadName());
             }

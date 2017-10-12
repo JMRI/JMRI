@@ -18,11 +18,10 @@ public class SimpleLightCtrlAction extends AbstractAction {
         if (jmri.InstanceManager.getNullableDefault(jmri.LightManager.class) == null) {
             setEnabled(false);
         }
-
     }
 
     public SimpleLightCtrlAction() {
-        this("Lights");
+        this(Bundle.getMessage("Lights"));
     }
 
     @Override
@@ -30,6 +29,6 @@ public class SimpleLightCtrlAction extends AbstractAction {
 
         SimpleLightCtrlFrame f = new SimpleLightCtrlFrame();
         f.setVisible(true);
-
     }
+
 }

@@ -54,13 +54,28 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             JPanel p = new JPanel();
             p.add(blurb);
             add(p);
-            DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
-            _decorator = new DecoratorPanel(_editor, null);
-            _decorator.initDecoratorPanel(sample);
-            add(_decorator);
+            makeDecoratorPanel();
             initLinkPanel();
             _paletteFrame.pack();
             super.init();
+        }
+    }
+
+    private void makeDecoratorPanel() {
+        if (_decorator != null) {
+            remove(_decorator);
+        }
+        DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
+        _decorator = new DecoratorPanel(_editor, null);
+        _decorator.initDecoratorPanel(sample);
+        add(_decorator, 1);
+    }
+
+    @Override
+    protected void setEditor(Editor ed) {
+        super.setEditor(ed);
+        if (_initialized) {
+            makeDecoratorPanel();
         }
     }
 

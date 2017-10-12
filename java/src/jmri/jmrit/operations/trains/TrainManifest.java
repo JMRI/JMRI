@@ -50,8 +50,8 @@ public class TrainManifest extends TrainCommon {
 
         try {
             // build header
-            if (!train.getRailroadName().equals(Train.NONE)) {
-                newLine(fileOut, train.getRailroadName());
+            if (!train.getTrainRailroadName().equals(Train.NONE)) {
+                newLine(fileOut, train.getTrainRailroadName());
             } else {
                 newLine(fileOut, Setup.getRailroadName());
             }

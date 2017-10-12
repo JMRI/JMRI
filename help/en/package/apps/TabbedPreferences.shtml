@@ -24,7 +24,7 @@
   <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
+    <p id="mainContent">
       <h1>JMRI: Preferences Pane</h1>The Preferences pane is where
       you configure the basic operation of your JMRI application.
 
@@ -70,9 +70,10 @@
       <h2>Connections</h2>You can select any of the various JMRI
       layout Connections here.
 
-      <p><a href="images/Ops_SetConnection214.png"><img src=
-      "images/Ops_SetConnection214.png" height="222" width="423"
-      align="right" alt="JMRI v2.14 Connection Prefs tab"></a> Each
+      <p><a href="../../html/setup/images/PrefsConnections_en.png"><img src=
+      "../../html/setup/images/PrefsConnections_en.png" height="195" width="425"
+      align="right" alt="JMRI v4 Connection Prefs tab"></a>
+      Each
       connection has its own unique tab. To get started, first
       select your DCC System Manufacturer, followed by the type of
       Connection that you are using. You will then be presented
@@ -261,9 +262,9 @@
       <h2>Messages</h2>This allows you to change the way that
       information and warning messages are displayed in JMRI.<br>
       It will also allow you to configure a default responses and
-      the question being displayed. <a name="Roster" id=
-      "Roster"></a>
+      the question being displayed.
 
+      <a name="Roster" id="Roster"></a>
       <h2>Roster</h2>
 
       <a href="images/PrefsRoster47.png"><img src=
@@ -376,11 +377,12 @@
         </dd>
       </dl><a name="Throttle" id="Throttle"></a>
 
-      <h2>Throttle</h2>This Preference pane tab lets you select
+      <h2>Throttle</h2>
+      <p>This Preference pane tab lets you select
       whether the extended Throttle features are available, and
-      which ones can be used. <a name="WiThrottle" id=
-      "WiThrottle"></a>
+      which ones can be used.</p>
 
+      <a name="WiThrottle" id="WiThrottle"></a>
       <h2>WiThrottle</h2>
 
       <dl>
@@ -445,20 +447,15 @@
       then restart WiThrottle) as instructed by the dialog.
       <a name="Profiles" id="Profiles"></a>
 
-      <h2>Config Profiles</h2>JMRI Configuration Profiles make it
+      <h2>Config Profiles</h2>
+      <p>JMRI Configuration Profiles make it
       easy to set up your JMRI applications to work with different
       setups. Each profile specifies one set of Preferences. You
-      can then select which one to use.
+      can then select which one to use.</p>
 
       <p>For more information, see the <a href=
       "../../html/setup/profiles.shtml">Configuration Profiles</a>
       help page. <a name="RailroadName" id="RailroadName"></a></p>
-
-      <h2>Railroad Name</h2>
-
-      <p>The Railroad Name tab lets you specify the name of your
-      model railroad (module), as it is used by several server
-      protocols.</p><a name="JSONServer" id="JSONServer"></a>
 
       <h2>JSON Server</h2>
 
@@ -472,9 +469,16 @@
       whether the connection has failed via a heartbeat
       message.</p><a name="WebServer" id="WebServer"></a>
 
-      <h2>Web Server</h2>The JMRI Web Server lets you connect to
+      <h2>Railroad Name</h2>
+
+      <p>The Railroad Name tab lets you specify the name of your
+      model railroad (module), as it is used by several server
+      protocols.</p><a name="JSONServer" id="JSONServer"></a>
+
+      <h2>Web Server</h2>
+      <p>The JMRI Web Server lets you connect to
       JMRI from a web browser on your computer, tablet or phone and
-      work with your railroad.
+      work with your railroad.</p>
 
       <p>This tab lets you control what the web server provides.
       For more information, see the <a href=
@@ -502,25 +506,26 @@
       (usually left at default).</p><a name="Warrants" id=
       "Warrants"></a>
 
-      <h2>Warrants</h2>This tab sets parameters used in computing
+      <h2>Warrants</h2>
+      <p>This tab sets parameters used in computing
       routes and speed changes for <a href=
       "../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
       and for controlling the events that warranted trains may
-      encounter.
+      encounter.</p>
 
       <h3>Speed Name Tables</h3>
-      When an automatically running train encounters a Signal
+      <p>When an automatically running train encounters a Signal
       aspect that calls for a speed change, the speed map table 
       provides the information of what the speed change should
       be. Other parameters control the way the
-      speed change is made.
+      speed change is made.</p>
 
       <h2>Aspect Speed Name Table</h2>
-      The Aspect Speed Name Table maps the speed names found in the aspects
+      <p>The Aspect Speed Name Table maps the speed names found in the aspects
       definition of a signal system to a value. It is important
       that all the speed names used in your signal system be listed
       in the Speed Map Table.  Rows can be added or deleted to conform
-      to the Signal System aspects.
+      to the Signal System aspects.</p>
       
       <p>The value associated with a speed
       name can be interpreted in four different ways and there are 
@@ -537,24 +542,24 @@
         <li><b>Kilometers per hour</b> - the value is an absolute
         scale speed in kilometers per hour.</li>
       </ul>
-      Choosing the interpretation is a matter of what you want to
+      <p>Choosing the interpretation is a matter of what you want to
       happen when a warranted train reaches a signal or block aspect.
       Percent Normal will always make the train change speed and
       Percent Throttle most likely will also.  The last two choices
       are the most prototypical, but if the train is already within
-      the speed limit called for, no speed change will occur.
+      the speed limit called for, no speed change will occur.</p>
 
       <h2>Head Appearance Name Table</h2>
-      The <b>Head Appearance Table</b> is used when Signal Heads
+      <p>The <b>Head Appearance Table</b> is used when Signal Heads
       are used as signals. It maps signal head appearance names 
       to aspect speed name which in turn are mapped by the Aspect
-      Speed Name table to values that interpret speed limits.
+      Speed Name table to values that interpret speed limits.</p>
 
       <h3>Layout Scale and Search Depth</h3>
-      It is important that the correct <b>Layout Scale</b> is 
+      <p>It is important that the correct <b>Layout Scale</b> is
       chosen since it is needed to convert throttle settings 
-      and track speeds to and from scale speeds.
-      <p>The <b>Max Number of Blocks in Route</b> is the depth to which
+      and track speeds to and from scale speeds.<br>
+      The <b>Max Number of Blocks in Route</b> is the depth to which
       JMRI will search for a route when defining a warrant. This is
       a global value that can be overridden when creating a
       warrant.</p>
@@ -584,28 +589,28 @@
         corresponding to the above, 
         300 to 1000 milliseconds would be appropriate.</li>
       </ul>
-       You should experiment by watching how NXWarrants start and end
+      <p>You should experiment by watching how NXWarrants start and end
        or by issuing "Stop" and "Resume" commands to a recorded
-       warrant.
+      warrant.</p>
        
       <h3>Throttle Factor</h3>
-      The value of <b>Throttle Setting/Speed Factor</b> 
+      <p>The value of <b>Throttle Setting/Speed Factor</b>
       along with <b>Layout Scale</b>
       adjusts a throttle setting to be a layout track speed. 
-      The Throttle Factor set here is a global default,.
+      The Throttle Factor set here is a global default.</p>
        
       <p>For more information on Warrant speed parameters, see
       <a href="../jmri/jmrit/logix/speedChanges.shtml">Modifying
       Warrant Speeds</a> and follow its links.</p>
       
       <h2>Merging Speed Profiles</h2>
-      In Release 4.9.2 Warrant compute a track speed when traversing 
+      <p>In Release 4.9.2 Warrant compute a track speed when traversing
       a path with known length and known throttle setting.  These 
       measurements are made for each address that is rub under a
       warrant and are kept for the entire layout session.  When
       JMRI is quit, at shutdown. These Session Speed Profiles can
       be merged into their Roster Speed Profiles.  The following
-      choices are available at shutdown.
+      choices are available at shutdown.</p>
       <ul>
         <li><b>Don't Merge</b> - Do not prompt and 
         discard the Session Profiles and
@@ -617,10 +622,10 @@
         Profile</b>, the potential <b>Merged Speed Profile</b> and the
         <b>Session Speed Profile</b>. (default)</li>
         <li><b>Merge All</b> - Do not prompt and always merge all
-        Session Speed Profiles into the Roster Speed Profiles. </li>
+        Session Speed Profiles into the Roster Speed Profiles.</li>
       </ul>
 
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
