@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.JPopupMenu;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.ColorUtil;
@@ -137,6 +138,7 @@ public abstract class LayoutTrack {
 
     /**
      * highlight unconnected connections
+     *
      * @param g2 the graphics context
      */
     protected abstract void drawUnconnected(Graphics2D g2);
@@ -418,7 +420,14 @@ public abstract class LayoutTrack {
      */
     public abstract Rectangle2D getBounds();
 
-    protected abstract void showPopup(MouseEvent e);
+    /**
+     * show the popup menu for this layout track
+     *
+     * @param mouseEvent the mouse down event that triggered this popup
+     * @return the popup menu for this layout track
+     */
+    @Nonnull
+    protected abstract JPopupMenu showPopup(@Nullable MouseEvent mouseEvent);
 
     /**
      * get the LayoutTrack connected at the specified connection type
@@ -469,6 +478,21 @@ public abstract class LayoutTrack {
         }
         return result;
     }
+
+    /**
+     * return a list of the available connects for this layout track
+     *
+     * @return
+     */
+    @Nonnull
+    public abstract List<Integer> getAvailableConnections();
+
+    /**
+     * determine if all the appropriate blocks have been assigned to this track
+     *
+     * @return
+     */
+    public abstract boolean areAllBlocksAssigned();
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

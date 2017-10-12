@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -873,14 +877,14 @@ public class LevelXing extends LayoutTrack {
         if (!requireUnconnected) {
             //check the center point
             if (r.contains(getCoordsCenter())) {
-                result = LayoutTrack.LEVEL_XING_CENTER;
+                result = LEVEL_XING_CENTER;
             }
         }
 
         if (!requireUnconnected || (getConnectA() == null)) {
             //check the A connection point
             if (r.contains(getCoordsA())) {
-                result = LayoutTrack.LEVEL_XING_A;
+                result = LEVEL_XING_A;
             }
         }
 
@@ -888,21 +892,21 @@ public class LevelXing extends LayoutTrack {
             //check the B connection point
             if (r.contains(getCoordsB())) {
                 //mouse was pressed on this connection point
-                result = LayoutTrack.LEVEL_XING_B;
+                result = LEVEL_XING_B;
             }
         }
 
         if (!requireUnconnected || (getConnectC() == null)) {
             //check the C connection point
             if (r.contains(getCoordsC())) {
-                result = LayoutTrack.LEVEL_XING_C;
+                result = LEVEL_XING_C;
             }
         }
 
         if (!requireUnconnected || (getConnectD() == null)) {
             //check the D connection point
             if (r.contains(getCoordsD())) {
-                result = LayoutTrack.LEVEL_XING_D;
+                result = LEVEL_XING_D;
             }
         }
         return result;
@@ -954,10 +958,12 @@ public class LevelXing extends LayoutTrack {
     LayoutEditorTools tools = null;
 
     /**
-     * Display popup menu for information and editing
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
-        if (popup != null) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+       if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
@@ -1140,12 +1146,13 @@ public class LevelXing extends LayoutTrack {
             }
 
             layoutEditor.setShowAlignmentMenu(popup);
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
-    }
+        return popup;
+    }   // showPopup
 
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -1397,6 +1404,44 @@ public class LevelXing extends LayoutTrack {
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
         // nothing to do here... move along...
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> getAvailableConnections() {
+        List<Integer> result = new ArrayList<>();
+
+        //check the A connection point
+        if (getConnectA() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_A));
+        }
+
+        //check the B connection point
+        if (getConnectB() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_B));
+        }
+
+        //check the C connection point
+        if (getConnectC() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_C));
+        }
+
+        //check the D connection point
+        if (getConnectD() == null) {
+            result.add(Integer.valueOf(LEVEL_XING_D));
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean areAllBlocksAssigned()
+    {
+        return ((getLayoutBlockAC() != null) && (getLayoutBlockBD() != null));
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);

@@ -571,21 +571,21 @@ public class TrackSegment extends LayoutTrack {
 
             if (isCircle()) {
                 if (r.contains(getCoordsCenterCircle())) {
-                    result = LayoutTrack.TRACK_CIRCLE_CENTRE;
+                    result = TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
                 // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
                     if (r.contains(bezierControlPoints.get(index))) {
-                        result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN + index;
+                        result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                         break;
                     }
                 }
             }
             if (result == NONE) {
                 if (r.contains(getCentreSeg())) {
-                    result = LayoutTrack.TRACK;
+                    result = TRACK;
                 }
             }
         }
@@ -634,9 +634,11 @@ public class TrackSegment extends LayoutTrack {
     private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Dashed"));
 
     /**
-     * Display popup menu for information and editing.
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -797,8 +799,9 @@ public class TrackSegment extends LayoutTrack {
                 }
             });
         }
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        return popup;
+    }   // showPopup
 
     /**
      * Display popup menu for information and editing.
@@ -1366,7 +1369,7 @@ public class TrackSegment extends LayoutTrack {
         // TrackSegments are always connected
         // nothing to do here... move along...
     }
-    
+
     private void drawHidden(Graphics2D g2) {
         // hidden track segments are drawn interleaved with non-hidden ones
         // so save and restore the previous stroke before & after drawing here
@@ -1461,7 +1464,7 @@ public class TrackSegment extends LayoutTrack {
                 Point2D circleCenterPoint = getCoordsCenterCircle();
                 g2.draw(new Line2D.Double(circleCenterPoint, ep1));
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
-                // Draw a circle and square at the circles centre, that 
+                // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
                 g2.draw(layoutEditor.trackControlCircleAt(circleCenterPoint));
                 g2.draw(layoutEditor.trackControlCircleRectAt(circleCenterPoint));
@@ -1504,21 +1507,21 @@ public class TrackSegment extends LayoutTrack {
         // ensure that block is assigned
         if (lb1 != null) {
             // check first connection for turnout or level crossing
-            if ((type1 >= LayoutTrack.TURNOUT_A) && (type1 <= LayoutTrack.LEVEL_XING_D)) {
+            if ((type1 >= TURNOUT_A) && (type1 <= LEVEL_XING_D)) {
                 // have connection to turnout or level crossing
-                if (type1 <= LayoutTrack.TURNOUT_D) {
+                if (type1 <= TURNOUT_D) {
                     // have connection to a turnout, is block different
                     LayoutTurnout lt = (LayoutTurnout) getConnect1();
                     lb2 = lt.getLayoutBlock();
                     if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                         // not RH, LH, or WYE turnout - other blocks possible
-                        if ((type1 == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
+                        if ((type1 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();
                         }
-                        if ((type1 == LayoutTrack.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
+                        if ((type1 == TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
                             lb2 = lt.getLayoutBlockC();
                         }
-                        if ((type1 == LayoutTrack.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
+                        if ((type1 == TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
                             lb2 = lt.getLayoutBlockD();
                         }
                     }
@@ -1535,7 +1538,7 @@ public class TrackSegment extends LayoutTrack {
                 } else {
                     // have connection to a level crossing
                     LevelXing lx = (LevelXing) getConnect1();
-                    if ((type1 == LayoutTrack.LEVEL_XING_A) || (type1 == LayoutTrack.LEVEL_XING_C)) {
+                    if ((type1 == LEVEL_XING_A) || (type1 == LEVEL_XING_C)) {
                         lb2 = lx.getLayoutBlockAC();
                     } else {
                         lb2 = lx.getLayoutBlockBD();
@@ -1551,7 +1554,7 @@ public class TrackSegment extends LayoutTrack {
                         results.add(lc);
                     }
                 }
-            } else if ((type1 >= LayoutTrack.SLIP_A) && (type1 <= LayoutTrack.SLIP_D)) {
+            } else if ((type1 >= SLIP_A) && (type1 <= SLIP_D)) {
                 // have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect1();
                 lb2 = ls.getLayoutBlock();
@@ -1566,21 +1569,21 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
             // check second connection for turnout or level crossing
-            if ((type2 >= LayoutTrack.TURNOUT_A) && (type2 <= LayoutTrack.LEVEL_XING_D)) {
+            if ((type2 >= TURNOUT_A) && (type2 <= LEVEL_XING_D)) {
                 // have connection to turnout or level crossing
-                if (type2 <= LayoutTrack.TURNOUT_D) {
+                if (type2 <= TURNOUT_D) {
                     // have connection to a turnout
                     LayoutTurnout lt = (LayoutTurnout) getConnect2();
                     lb2 = lt.getLayoutBlock();
                     if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                         // not RH, LH, or WYE turnout - other blocks possible
-                        if ((type2 == LayoutTrack.TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
+                        if ((type2 == TURNOUT_B) && (lt.getLayoutBlockB() != null)) {
                             lb2 = lt.getLayoutBlockB();
                         }
-                        if ((type2 == LayoutTrack.TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
+                        if ((type2 == TURNOUT_C) && (lt.getLayoutBlockC() != null)) {
                             lb2 = lt.getLayoutBlockC();
                         }
-                        if ((type2 == LayoutTrack.TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
+                        if ((type2 == TURNOUT_D) && (lt.getLayoutBlockD() != null)) {
                             lb2 = lt.getLayoutBlockD();
                         }
                     }
@@ -1597,7 +1600,7 @@ public class TrackSegment extends LayoutTrack {
                 } else {
                     // have connection to a level crossing
                     LevelXing lx = (LevelXing) getConnect2();
-                    if ((type2 == LayoutTrack.LEVEL_XING_A) || (type2 == LayoutTrack.LEVEL_XING_C)) {
+                    if ((type2 == LEVEL_XING_A) || (type2 == LEVEL_XING_C)) {
                         lb2 = lx.getLayoutBlockAC();
                     } else {
                         lb2 = lx.getLayoutBlockBD();
@@ -1613,7 +1616,7 @@ public class TrackSegment extends LayoutTrack {
                         results.add(lc);
                     }
                 }
-            } else if ((type2 >= LayoutTrack.SLIP_A) && (type2 <= LayoutTrack.SLIP_D)) {
+            } else if ((type2 >= SLIP_A) && (type2 <= SLIP_D)) {
                 // have connection to a slip crossing
                 LayoutSlip ls = (LayoutSlip) getConnect2();
                 lb2 = ls.getLayoutBlock();
@@ -1634,6 +1637,25 @@ public class TrackSegment extends LayoutTrack {
         }   // if (lb1 != null)
         return results;
     }   // getLayoutConnectivity()
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> getAvailableConnections() {
+        List<Integer> result = new ArrayList<>();
+        // Track Segments always have all their connections so...
+        // (nothing to do here... move along)
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean areAllBlocksAssigned() {
+        return (getLayoutBlock() != null);
+    }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
 }

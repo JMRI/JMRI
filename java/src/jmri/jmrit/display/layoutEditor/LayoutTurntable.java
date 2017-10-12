@@ -13,6 +13,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -413,14 +414,14 @@ public class LayoutTurntable extends LayoutTrack {
         if (!requireUnconnected) {
             //check the center point
             if (r.contains(getCoordsCenter())) {
-                result = LayoutTrack.TURNTABLE_CENTER;
+                result = TURNTABLE_CENTER;
             }
         }
 
         for (int k = 0; k < getNumberRays(); k++) {
             if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
                 if (r.contains(getRayCoordsOrdered(k))) {
-                    result = LayoutTrack.TURNTABLE_RAY_OFFSET + getRayIndex(k);
+                    result = TURNTABLE_RAY_OFFSET + getRayIndex(k);
                 }
             }
         }
@@ -450,9 +451,11 @@ public class LayoutTurntable extends LayoutTrack {
     JPopupMenu popup = null;
 
     /**
-     * Display popup menu for information and editing
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -467,7 +470,7 @@ public class LayoutTurntable extends LayoutTrack {
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layoutEditor.getLayoutTrackEditors().editTurntable(LayoutTurntable.this);
+                layoutEditor.getLayoutTrackEditors().editLayoutTurntable(LayoutTurntable.this);
             }
         });
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -481,8 +484,9 @@ public class LayoutTurntable extends LayoutTrack {
             }
         });
         layoutEditor.setShowAlignmentMenu(popup);
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        return popup;
+    }   // showPopup
 
     JPopupMenu rayPopup = null;
 
@@ -795,6 +799,33 @@ public class LayoutTurntable extends LayoutTrack {
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         // nothing to do here... move along...
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> getAvailableConnections() {
+        List<Integer> result = new ArrayList<>();
+
+        for (int k = 0; k < getNumberRays(); k++) {
+            if (getRayConnectOrdered(k) == null) {
+                result.add(Integer.valueOf(TURNTABLE_RAY_OFFSET + getRayIndex(k)));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean areAllBlocksAssigned()
+    {
+        // Layout turnouts get their block information from the 
+        // track segments attached to their rays so...
+        // nothing to do here... move along...
+        return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -711,9 +713,11 @@ public class PositionablePoint extends LayoutTrack {
     private LayoutEditorTools tools = null;
 
     /**
-     * For editing: only provides remove
+     * {@inheritDoc}
      */
-    protected void showPopup(MouseEvent e) {
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -955,8 +959,10 @@ public class PositionablePoint extends LayoutTrack {
             });
         }
         layoutEditor.setShowAlignmentMenu(popup);
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
+        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+
+        return popup;
+    }   // showPopup
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
@@ -1413,7 +1419,7 @@ public class PositionablePoint extends LayoutTrack {
                     }
                     lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
-                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    lc.setConnections(ts1, ts2, TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1441,7 +1447,7 @@ public class PositionablePoint extends LayoutTrack {
                     //In this instance work out the direction of the first track relative to the positionable poin.
                     lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
                     // save Connections
-                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
+                    lc.setConnections(ts1, ts2, TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1449,6 +1455,31 @@ public class PositionablePoint extends LayoutTrack {
         return results;
     }   // getLayoutConnectivity()
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> getAvailableConnections() {
+        List<Integer> result = new ArrayList<>();
 
+        if ((getConnect1() == null)
+                || ((getType() != END_BUMPER) && (getConnect2() == null)))
+        {
+            result.add(Integer.valueOf(POS_POINT));
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean areAllBlocksAssigned()
+    {
+        // Positionable Points don't have blocks so…
+        // nothing to do here... move along...
+        return true;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
 }

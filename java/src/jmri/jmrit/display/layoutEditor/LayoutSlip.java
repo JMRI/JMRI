@@ -337,23 +337,23 @@ public class LayoutSlip extends LayoutTurnout {
         Boolean result = false; // assume failure (pessimist!)
         switch (getSlipState()) {
             case STATE_AC: {
-                result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
-                        || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
+                result = ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED));
                 break;
             }
             case STATE_AD: {
-                result = ((block.getOccupancy() == LayoutBlock.OCCUPIED)
-                        || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
+                result = ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED));
                 break;
             }
             case STATE_BC: {
-                result = ((blockB.getOccupancy() == LayoutBlock.OCCUPIED)
-                        || (blockC.getOccupancy() == LayoutBlock.OCCUPIED));
+                result = ((getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED));
                 break;
             }
             case STATE_BD: {
-                result = ((blockB.getOccupancy() == LayoutBlock.OCCUPIED)
-                        || (blockD.getOccupancy() == LayoutBlock.OCCUPIED));
+                result = ((getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED));
                 break;
             }
             default: {
@@ -478,31 +478,31 @@ public class LayoutSlip extends LayoutTurnout {
     protected void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
-        if (block != null) {
-            block.updatePaths();
+        if (getLayoutBlock() != null) {
+            getLayoutBlock().updatePaths();
         }
         if (connectA != null) {
             b1 = ((TrackSegment) connectA).getLayoutBlock();
-            if ((b1 != null) && (b1 != block)) {
+            if ((b1 != null) && (b1 != getLayoutBlock())) {
                 b1.updatePaths();
             }
         }
         if (connectC != null) {
             b2 = ((TrackSegment) connectC).getLayoutBlock();
-            if ((b2 != null) && (b2 != block) && (b2 != b1)) {
+            if ((b2 != null) && (b2 != getLayoutBlock()) && (b2 != b1)) {
                 b2.updatePaths();
             }
         }
 
         if (connectB != null) {
             b1 = ((TrackSegment) connectB).getLayoutBlock();
-            if ((b1 != null) && (b1 != block)) {
+            if ((b1 != null) && (b1 != getLayoutBlock())) {
                 b1.updatePaths();
             }
         }
         if (connectD != null) {
             b2 = ((TrackSegment) connectD).getLayoutBlock();
-            if ((b2 != null) && (b2 != block) && (b2 != b1)) {
+            if ((b2 != null) && (b2 != getLayoutBlock()) && (b2 != b1)) {
                 b2.updatePaths();
             }
         }
@@ -559,7 +559,7 @@ public class LayoutSlip extends LayoutTurnout {
 
                 if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                     //mouse was pressed on this slip
-                    result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+                    result = (leftDistance < rightDistance) ? SLIP_LEFT : SLIP_RIGHT;
                 }
             }
         }
@@ -575,28 +575,28 @@ public class LayoutSlip extends LayoutTurnout {
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
                 if (r.contains(getCoordsA())) {
-                    result = LayoutTrack.SLIP_A;
+                    result = SLIP_A;
                 }
             }
 
             if (!requireUnconnected || (getConnectB() == null)) {
                 //check the B connection point
                 if (r.contains(getCoordsB())) {
-                    result = LayoutTrack.SLIP_B;
+                    result = SLIP_B;
                 }
             }
 
             if (!requireUnconnected || (getConnectC() == null)) {
                 //check the C connection point
                 if (r.contains(getCoordsC())) {
-                    result = LayoutTrack.SLIP_C;
+                    result = SLIP_C;
                 }
             }
 
             if (!requireUnconnected || (getConnectD() == null)) {
                 //check the D connection point
                 if (r.contains(getCoordsD())) {
-                    result = LayoutTrack.SLIP_D;
+                    result = SLIP_D;
                 }
             }
         }
@@ -684,10 +684,11 @@ public class LayoutSlip extends LayoutTurnout {
     LayoutEditorTools tools = null;
 
     /**
-     * Display popup menu for information and editing
+     * {@inheritDoc}
      */
     @Override
-    protected void showPopup(MouseEvent e) {
+    @Nonnull
+    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -738,7 +739,7 @@ public class LayoutSlip extends LayoutTurnout {
             if ((blockName == null) || (blockName.isEmpty())) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block.getDisplayName());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
                 blockAssigned = true;
             }
             jmi.setEnabled(false);
@@ -923,45 +924,46 @@ public class LayoutSlip extends LayoutTurnout {
             }
             setAdditionalEditPopUpMenu(popup);
             layoutEditor.setShowAlignmentMenu(popup);
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         } else if (!viewAdditionalMenu.isEmpty()) {
             setAdditionalViewPopUpMenu(popup);
-            popup.show(e.getComponent(), e.getX(), e.getY());
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
         }
-    }
+        return popup;
+    }   // showPopup
 
     @Override
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockName != null) && (!blockName.isEmpty()) && (block != null)) {
-            if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != block)) {
+        if ((blockName != null) && (!blockName.isEmpty()) && (getLayoutBlock() != null)) {
+            if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != getLayoutBlock())) {
                 try {
-                    boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + block.getDisplayName());
+                    boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                 } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection A doesn't contain a layout block");
                 }
             }
-            if ((connectC instanceof TrackSegment) && (((TrackSegment) connectC).getLayoutBlock() != block)) {
+            if ((connectC instanceof TrackSegment) && (((TrackSegment) connectC).getLayoutBlock() != getLayoutBlock())) {
                 try {
-                    boundaryBetween[2] = (((TrackSegment) connectC).getLayoutBlock().getDisplayName() + " - " + block.getDisplayName());
+                    boundaryBetween[2] = (((TrackSegment) connectC).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                 } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection C doesn't contain a layout block");
                 }
             }
-            if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != block)) {
+            if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != getLayoutBlock())) {
                 try {
-                    boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + block.getDisplayName());
+                    boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                 } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection B doesn't contain a layout block");
                 }
             }
-            if ((connectD instanceof TrackSegment) && (((TrackSegment) connectD).getLayoutBlock() != block)) {
+            if ((connectD instanceof TrackSegment) && (((TrackSegment) connectD).getLayoutBlock() != getLayoutBlock())) {
                 try {
-                    boundaryBetween[3] = (((TrackSegment) connectD).getLayoutBlock().getDisplayName() + " - " + block.getDisplayName());
+                    boundaryBetween[3] = (((TrackSegment) connectD).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                 } catch (java.lang.NullPointerException e) {
                     //Can be considered normal if tracksegement hasn't yet been allocated a block
                     log.debug("TrackSegement at connection D doesn't contain a layout block");
@@ -1435,7 +1437,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (connectA instanceof TrackSegment) {
             trkA = (TrackSegment) connectA;
-            if (trkA.getLayoutBlock() == block) {
+            if (trkA.getLayoutBlock() == getLayoutBlock()) {
                 if (signalAMastNamed != null) {
                     removeSML(getSignalAMast());
                 }
@@ -1445,7 +1447,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         if (connectC instanceof TrackSegment) {
             trkC = (TrackSegment) connectC;
-            if (trkC.getLayoutBlock() == block) {
+            if (trkC.getLayoutBlock() == getLayoutBlock()) {
                 if (signalCMastNamed != null) {
                     removeSML(getSignalCMast());
                 }
@@ -1455,7 +1457,7 @@ public class LayoutSlip extends LayoutTurnout {
         }
         if (connectB instanceof TrackSegment) {
             trkB = (TrackSegment) connectB;
-            if (trkB.getLayoutBlock() == block) {
+            if (trkB.getLayoutBlock() == getLayoutBlock()) {
                 if (signalBMastNamed != null) {
                     removeSML(getSignalBMast());
                 }
@@ -1466,7 +1468,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (connectD instanceof TrackSegment) {
             trkD = (TrackSegment) connectC;
-            if (trkD.getLayoutBlock() == block) {
+            if (trkD.getLayoutBlock() == getLayoutBlock()) {
                 if (signalDMastNamed != null) {
                     removeSML(getSignalDMast());
                 }
@@ -1522,6 +1524,35 @@ public class LayoutSlip extends LayoutTurnout {
         }
         return results;
     }   // getLayoutConnectivity()
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Integer> getAvailableConnections() {
+        List<Integer> result = new ArrayList<>();
+
+        //check the A connection point
+        if (getConnectA() == null) {
+            result.add(Integer.valueOf(SLIP_A));
+        }
+
+        //check the B connection point
+        if (getConnectB() == null) {
+            result.add(Integer.valueOf(SLIP_B));
+        }
+
+        //check the C connection point
+        if (getConnectC() == null) {
+            result.add(Integer.valueOf(SLIP_C));
+        }
+
+        //check the D connection point
+        if (getConnectD() == null) {
+            result.add(Integer.valueOf(SLIP_D));
+        }
+        return result;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
 }
