@@ -10,15 +10,14 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class NceThrottleManagerTest {
+public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private NceTrafficControlScaffold tcis = null;
     private NceSystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        NceThrottleManager t = new NceThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
@@ -28,6 +27,7 @@ public class NceThrottleManagerTest {
         tcis = new NceTrafficControlScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(tcis);
+        tm = new NceThrottleManager(memo);
     }
 
     @After

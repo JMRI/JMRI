@@ -87,7 +87,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         tempRow[CURVECOL] = noneText;
         tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
         tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
-        tempRow[SPEEDCOL] = "";         // Bundle.getMessage("Normal");
+        tempRow[SPEEDCOL] = "";
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 

@@ -56,8 +56,8 @@ public class JsonManifest extends TrainCommon {
 
     public void build() throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
-        if (!this.train.getRailroadName().equals(Train.NONE)) {
-            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getRailroadName()));
+        if (!this.train.getTrainRailroadName().equals(Train.NONE)) {
+            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getTrainRailroadName()));
         } else {
             root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(Setup.getRailroadName()));
         }

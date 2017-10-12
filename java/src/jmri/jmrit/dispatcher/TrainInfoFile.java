@@ -142,16 +142,17 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         log.error("Priority missing when reading TrainInfoFile " + name);
                     }
                     if (traininfo.getAttribute("allocatealltheway") != null) {
-                        tInfo.setAllocateAllTheWay(true);
-                        if (traininfo.getAttribute("allocatealltheway").getValue().equals("no")) {
-                            tInfo.setAllocateAllTheWay(false);
+                        if (traininfo.getAttribute("allocatealltheway").getValue().equals("yes")) {
+                            tInfo.setAllocateAllTheWay(true);
                         }
+                    }
+                    if (traininfo.getAttribute("allocationmethod") != null) {
+                        tInfo.setAllocationMethod(traininfo.getAttribute("allocationmethod").getIntValue());
                     }
 
                     if (traininfo.getAttribute("resetwhendone") != null) {
-                        tInfo.setResetWhenDone(true);
-                        if (traininfo.getAttribute("resetwhendone").getValue().equals("no")) {
-                            tInfo.setResetWhenDone(false);
+                        if (traininfo.getAttribute("resetwhendone").getValue().equals("yes")) {
+                            tInfo.setResetWhenDone(true);
                         }
                         if (traininfo.getAttribute("delayedrestart") != null) {
                             switch (traininfo.getAttribute("delayedrestart").getValue()) {
@@ -254,6 +255,22 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setTerminateWhenDone(true);
                         }
                     }
+                    if (traininfo.getAttribute("usespeedprofile") != null) {
+                        tInfo.setTerminateWhenDone(false);
+                        if (traininfo.getAttribute("usespeedprofile").getValue().equals("yes")) {
+                            tInfo.setUseSpeedProfile(true);
+                        }
+                    }
+                    if (traininfo.getAttribute("stopbyspeedprofile") != null) {
+                        tInfo.setTerminateWhenDone(false);
+                        if (traininfo.getAttribute("stopbyspeedprofile").getValue().equals("yes")) {
+                            tInfo.setStopBySpeedProfile(true);
+                        }
+                    }
+                    if (traininfo.getAttribute("stopbyspeedprofileadjust") != null) {
+                        tInfo.setStopBySpeedProfileAdjust(traininfo.getAttribute("stopbyspeedprofileadjust").getFloatValue());
+                    }
+
                     if (version == 1) {
                         String parseArray[];
                         // If you only have a systemname then its everything before the dash
@@ -401,7 +418,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("autorun", "" + (tf.getAutoRun() ? "yes" : "no"));
         traininfo.setAttribute("loadatstartup", "" + (tf.getLoadAtStartup() ? "yes" : "no"));
         traininfo.setAttribute("allocatealltheway", "" + (tf.getAllocateAllTheWay() ? "yes" : "no"));
-
+        traininfo.setAttribute("allocationmethod", Integer.toString(tf.getAllocationMethod()));
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
@@ -410,6 +427,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));
         traininfo.setAttribute("sounddecoder", "" + (tf.getSoundDecoder() ? "yes" : "no"));
         traininfo.setAttribute("maxtrainlength", Float.toString(tf.getMaxTrainLength()));
+        traininfo.setAttribute("usespeedprofile", "" + (tf.getUseSpeedProfile() ? "yes" : "no"));
+        traininfo.setAttribute("stopbyspeedprofile", "" + (tf.getStopBySpeedProfile() ? "yes" : "no"));
+        traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));
 
         root.addContent(traininfo);
 
@@ -444,7 +464,6 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         FileUtil.createDirectory(fileLocation);
         // create an array of file names from roster dir in preferences, count entries
         List<String> names = new ArrayList<>();
-        int np = 0;
         log.debug("directory of TrainInfoFiles is {}", fileLocation);
         File fp = new File(fileLocation);
         if (fp.exists()) {
