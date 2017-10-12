@@ -770,7 +770,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             newTrain.addTerminationScript(scriptName);
         }
         // manifest options
-        newTrain.setRailroadName(train.getRailroadName());
+        newTrain.setTrainRailroadName(train.getTrainRailroadName());
         newTrain.setManifestLogoURL(train.getManifestLogoURL());
         newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
         // build options
