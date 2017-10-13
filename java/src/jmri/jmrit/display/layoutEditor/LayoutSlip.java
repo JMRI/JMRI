@@ -12,10 +12,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -244,6 +242,9 @@ public class LayoutSlip extends LayoutTurnout {
             }
             case STATE_BC: {
                 result = "BC";
+                break;
+            }
+            default: {
                 break;
             }
         }
@@ -751,42 +752,46 @@ public class LayoutSlip extends LayoutTurnout {
                     || (connectC != null) || (connectD != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
                 if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + ((LayoutTrack) connectA).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectA).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
                         }
                     });
                 }
                 if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + ((LayoutTrack) connectB).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectB).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
                         }
                     });
                 }
                 if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + ((LayoutTrack) connectC).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectC).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
                         }
                     });
                 }
                 if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + ((LayoutTrack) connectD).getName()) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connectD).getName());
+                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
                             layoutEditor.setSelectionRect(lt.getBounds());
+                            lt.showPopup();
                         }
                     });
                 }
@@ -1556,157 +1561,7 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkForNonContiguousBlocks(
-            @Nonnull HashMap<String, Set<String>> blockToTracksListMap,
-            @Nonnull Set<String> badBlocks) {
-        boolean result = true; // assume success (optimist!)
-
-        // check all our (non-null) blocks and...
-        // #1) If it's in the bad blocks return false
-        // #2) If it's not in the blockToTracksListMap then add it (key:block, value:track)
-        //      and flood the neighbour on that connection
-        // #3) else add to bad blocks and return false
-        //check the A connection point
-        if (blockName != null) {
-            if (badBlocks.contains(blockName)) {
-                result = false;
-            } else if (connectA != null) {
-                Set<String> trackSet = blockToTracksListMap.get(blockName);
-                if (trackSet == null) {
-                    trackSet = new LinkedHashSet<>();
-                    trackSet.add(getName());
-                    blockToTracksListMap.put(blockName, trackSet);
-                    result &= connectA.checkForNonContiguousBlocks(blockName, trackSet);
-                } else {
-                    trackSet.add(getName());
-                    badBlocks.add(blockName);
-                    result = false;
-                }
-            }
-        }
-
-        //check the B connection point
-        if (blockBName != null) {
-            if (badBlocks.contains(blockBName)) {
-                result = false;
-            } else if (connectB != null) {
-                Set<String> trackSet = blockToTracksListMap.get(blockBName);
-                if (trackSet == null) {
-                    trackSet = new LinkedHashSet<>();
-                    trackSet.add(getName());
-                    blockToTracksListMap.put(blockBName, trackSet);
-                    result &= connectB.checkForNonContiguousBlocks(blockBName, trackSet);
-                } else {
-                    trackSet.add(getName());
-                    badBlocks.add(blockBName);
-                    result = false;
-                }
-            }
-        }
-
-        //check the C connection point
-        if (blockCName != null) {
-            if (badBlocks.contains(blockCName)) {
-                result = false;
-            } else if (connectC != null) {
-                Set<String> trackSet = blockToTracksListMap.get(blockCName);
-                if (trackSet == null) {
-                    trackSet = new LinkedHashSet<>();
-                    trackSet.add(getName());
-                    blockToTracksListMap.put(blockCName, trackSet);
-                    result &= connectC.checkForNonContiguousBlocks(blockCName, trackSet);
-                } else {
-                    trackSet.add(getName());
-                    badBlocks.add(blockCName);
-                    result = false;
-                }
-            }
-        }
-
-        //check the D connection point
-        if (blockDName != null) {
-            if (badBlocks.contains(blockDName)) {
-                result = false;
-            } else if (connectD != null) {
-                Set<String> trackSet = blockToTracksListMap.get(blockDName);
-                if (trackSet == null) {
-                    trackSet = new LinkedHashSet<>();
-                    trackSet.add(getName());
-                    blockToTracksListMap.put(blockDName, trackSet);
-                    result &= connectD.checkForNonContiguousBlocks(blockDName, trackSet);
-                } else {
-                    trackSet.add(getName());
-                    badBlocks.add(blockDName);
-                    result = false;
-                }
-            }
-        }
-        return result;
-    }   // checkForNonContiguousBlocks
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean checkForNonContiguousBlocks(@Nonnull String block,
-            @Nonnull Set<String> tracks) {
-        boolean result = true; // assume success (optimist!)
-
-        // check all the connections in this block and...
-        //  #1) add them to tracks and...
-        //  #2) flood them
-        //check the A connection point
-        if (blockName.equals(block)) {
-            // if we're not already in tracks...
-            if (!tracks.contains(ident)) {
-                tracks.add(ident);  // add us (#1)
-            }
-            if (connectA != null) {
-                // flood neighbour (#2)
-                result &= connectA.checkForNonContiguousBlocks(block, tracks);
-            }
-        }
-
-        //check the B connection point
-        if (blockBName.equals(block)) {
-            // if we're not already in tracks...
-            if (!tracks.contains(ident)) {
-                tracks.add(ident);  // add us
-            }
-            if (connectB != null) {
-                // flood neighbour (#2)
-                result &= connectB.checkForNonContiguousBlocks(block, tracks);
-            }
-        }
-
-        //check the C connection point
-        if (blockCName.equals(block)) {
-            // if we're not already in tracks...
-            if (!tracks.contains(ident)) {
-                tracks.add(ident);  // add us
-            }
-            if (connectC != null) {
-                // flood neighbour (#2)
-                result &= connectC.checkForNonContiguousBlocks(block, tracks);
-            }
-        }
-
-        //check the D connection point
-        if (blockDName.equals(block)) {
-            // if we're not already in tracks...
-            if (!tracks.contains(ident)) {
-                tracks.add(ident);  // add us
-            }
-            if (connectD != null) {
-                // flood neighbour (#2)
-                result &= connectD.checkForNonContiguousBlocks(block, tracks);
-            }
-        }
-        return result;
-    }
-
+    //NOTE: LayoutSlip uses the checkForNonContiguousBlocks methods
+    //      inherited from LayoutTurnout
     private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class);
 }

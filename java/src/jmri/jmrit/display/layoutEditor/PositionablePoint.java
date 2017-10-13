@@ -19,7 +19,6 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -123,7 +122,7 @@ public class PositionablePoint extends LayoutTrack {
                 break;
             }
         }
-        return result + " '" + ident + "'";
+        return result + " '" + getName() + "'";
     }
 
     /**
@@ -719,7 +718,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -733,7 +732,7 @@ public class PositionablePoint extends LayoutTrack {
         JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + ident);
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + getName());
                 jmi.setEnabled(false);
 
                 LayoutBlock block1 = null;
@@ -758,7 +757,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setEnabled(false);
                 break;
             case END_BUMPER:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + ident);
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + getName());
                 jmi.setEnabled(false);
 
                 LayoutBlock blockEnd = null;
@@ -772,7 +771,7 @@ public class PositionablePoint extends LayoutTrack {
                 endBumper = true;
                 break;
             case EDGE_CONNECTOR:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + ident);
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
@@ -814,26 +813,28 @@ public class PositionablePoint extends LayoutTrack {
         if ((connect1 != null) || (connect2 != null)) {
             JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
             if (connect1 != null) {
-                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName());
+                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "1") + connect1.getName());
                 //jmi.setEnabled(false);
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + ((LayoutTrack) connect1).getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "1") + connect1.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect1).getName());
+                        LayoutTrack lt = lf.findObjectByName(connect1.getName());
                         layoutEditor.setSelectionRect(lt.getBounds());
+                        lt.showPopup();
                     }
                 });
             }
             if (connect2 != null) {
-                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName());
+                //jmi = connectionsMenu.add(Bundle.getMessage("MakeLabel", "2") + connect2.getName());
                 //jmi.setEnabled(false);
-                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + ((LayoutTrack) connect2).getName()) {
+                connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "2") + connect2.getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-                        LayoutTrack lt = (LayoutTrack) lf.findObjectByName(((LayoutTrack) connect2).getName());
+                        LayoutTrack lt = lf.findObjectByName(connect2.getName());
                         layoutEditor.setSelectionRect(lt.getBounds());
+                        lt.showPopup();
                     }
                 });
             }
@@ -1487,35 +1488,51 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public boolean checkForNonContiguousBlocks(
             @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
-            @Nonnull Set<String> badBlocks) {
+            @Nonnull Set<String> badBlocksSet) {
         boolean result = true; // assume success (optimist!)
 
-        // check our (non-null) block
-        // #1) If it's in the bad blocks return false
-        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
-        //      and flood all neighbours on all connections
-        // #3) else add to bad blocks and return false
-        //check the A connection point
+        /* check our block (if not null)
+         *  #1) If it's in the bad blocks set do:
+         *      add this track to the  blockToTracksSetMap track set
+         *      for this block and return false
+         *  #2) else if it's not a key in the blockToTracksSetMap then add a
+         *      new set (with this track) to blockToTracksSetMap and check all
+         *      connections in this block (by calling the 2nd method below)
+         *  #3) else check to see if this track is in this blocks
+         *      (blockToTracksSetMap) track set:
+         *      if so return true
+         *      else add it to bad blocks set and return false
+         */
+        //check the 1st connection points block
         TrackSegment ts1 = getConnect1();
         String blk1 = null;
-        // this should always be true... but just in case...
+        // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
             if (blk1 != null) {
-                if (badBlocks.contains(blk1)) {
+                if (badBlocksSet.contains(blk1)) { // (#1)
+                    Set<String> tracksSet = blockToTracksSetMap.get(blk1);
+                    // this should never be null... but just in case...
+                    if ((tracksSet != null) && !tracksSet.contains(getName())) {
+                        log.info("•    add track '{}'for block '{}'", getName(), blk1);
+                        tracksSet.add(getName());
+                    }
                     result = false;
                 } else {
-                    Set<String> trackSet = blockToTracksSetMap.get(blk1);
-                    if (trackSet == null) {
-                        trackSet = new LinkedHashSet<>();
-                        trackSet.add(getName());
-                        blockToTracksSetMap.put(blk1, trackSet);
+                    Set<String> tracksSet = blockToTracksSetMap.get(blk1);
+                    if (tracksSet == null) { // (#2)
+                        log.info("•New block ('{}') tracksSet", blk1);
+                        tracksSet = new LinkedHashSet<>();
+                        log.info("•    Add track '{}'for block '{}'", getName(), blk1);
+                        tracksSet.add(getName());
+                        blockToTracksSetMap.put(blk1, tracksSet);
                         if (connect1 != null) {
-                            result &= connect1.checkForNonContiguousBlocks(blk1, trackSet);
+                            result &= connect1.checkForNonContiguousBlocks(blk1, tracksSet);
                         }
-                    } else {
-                        trackSet.add(getName());
-                        badBlocks.add(blk1);
+                    } else if (!tracksSet.contains(getName())) {   // (#3)
+                        log.info("•    add track '{}'for block '{}'", getName(), blk1);
+                        tracksSet.add(getName());
+                        badBlocksSet.add(blk1);
                         result = false;
                     }
                 }
@@ -1523,29 +1540,43 @@ public class PositionablePoint extends LayoutTrack {
         }
 
         if (getType() == ANCHOR) {
+            //check the 2nd connection points block
             TrackSegment ts2 = getConnect2();
-            // this should always be true... but just in case...
+            // this should never be null... but just in case...
             if (ts2 != null) {
                 String blk2 = ts2.getBlockName();
                 if (blk2 != null) {
-                    if (badBlocks.contains(blk2)) {
+                    if (badBlocksSet.contains(blk2)) { // (#1)
+                        Set<String> tracksSet = blockToTracksSetMap.get(blk2);
+                        // this should never be null... but just in case...
+                        if ((tracksSet != null) && !tracksSet.contains(getName())) {
+                            log.info("•    add track '{}'for block '{}'", getName(), blk2);
+                            tracksSet.add(getName());
+                        }
                         result = false;
                     } else {
                         boolean check = true;
-                        Set<String> trackSet = blockToTracksSetMap.get(blk2);
-                        if (trackSet == null) {
-                            trackSet = new LinkedHashSet<>();
-                            trackSet.add(getName());
-                            blockToTracksSetMap.put(blk2, trackSet);
-                        } else if (!blk1.equals(blk2)) {  // if blk1 already put us in blockToTracksSetMap
-                            trackSet.add(getName());
-                            badBlocks.add(blk2);
-                            result = false;
-                            check = false;
+                        Set<String> tracksSet = blockToTracksSetMap.get(blk2);
+                        if (tracksSet == null) { // (#2)
+                            log.info("•New block ('{}') tracksSet", blk2);
+                            tracksSet = new LinkedHashSet<>();
+                            log.info("•    Add track '{}'for block '{}'", getName(), blk2);
+                            tracksSet.add(getName());
+                            blockToTracksSetMap.put(blk2, tracksSet);
+                        } else // if blk1 didn't already put us in its track set
+                        if (!blk1.equals(blk2)) {
+                            if (!tracksSet.contains(getName())) {    // (#3)
+                                log.info("•    add track '{}'for block '{}'", getName(), blk2);
+                                tracksSet.add(getName());
+                                badBlocksSet.add(blk2);
+                                result = false;
+                                check = false;
+                            }
                         }
                         if (check) {
                             if (connect2 != null) {
-                                result &= connect2.checkForNonContiguousBlocks(blk2, trackSet);
+                                result &= connect2.checkForNonContiguousBlocks(
+                                        blk2, tracksSet);
                             }
                         }
                     }
@@ -1558,44 +1589,44 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    public boolean checkForNonContiguousBlocks(@Nonnull String block,
-            @Nonnull Set<String> tracks) {
+    public boolean checkForNonContiguousBlocks(@Nonnull String blockName,
+            @Nonnull Set<String> tracksSet) {
         boolean result = true; // assume success (optimist!)
 
         TrackSegment ts1 = getConnect1();
-        // this should always be true... but just in case...
+        // this should never be null... but just in case...
         if (ts1 != null) {
             String blk1 = ts1.getBlockName();
-
-            // flood all our connections in this block...
-            // check the A connection point
-            if (blk1.equals(block)) {
-                // if we're not in tracks...
-                if (!tracks.contains(ident)) {
-                    tracks.add(ident);  // add us
+            // is this the blockName we're looking for?
+            if (blk1.equals(blockName)) {
+                // if we're not in tracksSet...
+                if (!tracksSet.contains(getName())) {
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    tracksSet.add(getName());  // add us
                 }
-                // these should never be null... but just in case...
-                if (connect1 != null) {
-                    result &= connect1.checkForNonContiguousBlocks(blk1, tracks);
+                // this should never be null... but just in case...
+                // if it's not in the tracksSet...
+                if ((connect1 != null) && !tracksSet.contains(connect1.getName())) {
+                    result &= connect1.checkForNonContiguousBlocks(blockName, tracksSet);
                 }
             }
         }
 
         TrackSegment ts2 = getConnect2();
-        // this should always be true... but just in case...
+        // this should never be null... but just in case...
         if (ts2 != null) {
             String blk2 = ts2.getBlockName();
-
-            // flood all our connections in this block...
-            // check the A connection point
-            if (blk2.equals(block)) {
-                // if we're not in tracks...
-                if (!tracks.contains(ident)) {
-                    tracks.add(ident);  // add us
+            // is this the blockName we're looking for?
+            if (blk2.equals(blockName)) {
+                // if we're not in tracksSet...
+                if (!tracksSet.contains(getName())) {
+                    log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                    tracksSet.add(getName());  // add us
                 }
-                // these should never be null... but just in case...
-                if (connect2 != null) {
-                    result &= connect2.checkForNonContiguousBlocks(blk2, tracks);
+                // this should never be null... but just in case...
+                // if it's not in the tracksSet...
+                if ((connect2 != null) && !tracksSet.contains(connect2.getName())) {
+                    result &= connect2.checkForNonContiguousBlocks(blockName, tracksSet);
                 }
             }
         }

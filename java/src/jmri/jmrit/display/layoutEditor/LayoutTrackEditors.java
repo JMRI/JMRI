@@ -1653,7 +1653,7 @@ public class LayoutTrackEditors {
         if (-1 != editLevelXingBlock2NameComboBox.getSelectedIndex()) {
             newName = editLevelXingBlock2NameComboBox.getSelectedDisplayName();
         } else {
-            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
+            newName = (newName != null) ? NamedBean.normalizeUserName(newName) : "";
         }
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // block has changed, if old block exists, decrement use

@@ -460,8 +460,7 @@ public abstract class LayoutTrack {
     protected JPopupMenu showPopup() {
         Point2D where = MathUtil.multiply(getCoordsCenter(),
                 layoutEditor.getZoom());
-        return this.showPopup(where);                         // popup trigger
-
+        return this.showPopup(where); 
     }
 
     /**
@@ -539,25 +538,43 @@ public abstract class LayoutTrack {
 
     /**
      * check this track and its neighbors for non-contiguous blocks
+      * 
+     *  For each (non-null blocks of this track do:
+     *  #1) If it's in the bad blocks set do:
+     *      add this track to the  blockToTracksSetMap track set
+     *      for this block and return false
+     *  #2) else if it's not a key in the blockToTracksSetMap then add a new
+     *      set (with this track) to blockToTracksSetMap and check all
+     *      connections in this block (by calling the 2nd method below)
+     *  #3) else check to see if this track is in this blocks
+     *      (blockToTracksSetMap) track set:
+     *      if so return true
+     *      else add it to bad blocks set and return false
+     *  
+     *      Basicly, we're maintaining track sets for each block found
+     *      (blockToTracksSetMap) and a bad blocks set (badBlocksSet)
      *
-     * @param blockToTracksSetMap hashmap of blocks and Sets of tracks in those blocks
-     * @param badBlocks Set of bad blocks
+     * @param blockToTracksSetMap hashmap of key:block names and
+     * the track name sets for those blocks
+     * @param badBlocksSet Set of bad blocks names
      * @return true if the check is good; false otherwise
      * <p>
      * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
      */
     public abstract boolean checkForNonContiguousBlocks(
             @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
-            @Nonnull Set<String> badBlocks);
+            @Nonnull Set<String> badBlocksSet);
 
     /**
-     * recursive routine to check for contiguous tracks in same block
-     * @param block the block that we're checking for
-     * @param tracks the tracks that we've already checked
-     * @return true if this track in in this block
+     * recursive routine to check for all contiguous tracksSet in this blockName
+     * 
+     * @param blockName  the block that we're checking for
+     * @param tracksSet the set of track names in this block
+     * @return true if this track in in this blockName
      */
-    public abstract boolean checkForNonContiguousBlocks(@Nonnull String block,
-            @Nonnull Set<String> tracks);
-    
+    public abstract boolean checkForNonContiguousBlocks(
+            @Nonnull String blockName,
+            @Nonnull Set<String> tracksSet);
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

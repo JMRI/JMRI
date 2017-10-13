@@ -731,7 +731,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     || trackButton.isSelected());
             log.debug("blockPanel is {}", e ? "enabled" : "disabled");
 
-            if (null != blockPropertiesPanel) {
+            if (blockPropertiesPanel != null) {
                 for (Component i : blockPropertiesPanel.getComponents()) {
                     i.setEnabled(e);
                 }
@@ -1143,7 +1143,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
                 //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
-                if (null != prefsProp) {
+                if (prefsProp != null) {
                     float toolBarFontSize = Float.parseFloat(prefsProp.toString());
                     //setupToolBarFontSizes(toolBarFontSize);
                 }
@@ -1162,7 +1162,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                     prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
                     log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
 
-                    if (null != prefsProp) {
+                    if (prefsProp != null) {
                         Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
                         prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
                         prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
@@ -2148,7 +2148,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         menuBar.add(toolsMenu);
 
         //setup checks menu
-        getLEChecks().setupMenu(toolsMenu);
+        getLEChecks().setupChecksMenu(toolsMenu);
 
         //scale track diagram
         JMenuItem scaleItem = new JMenuItem(Bundle.getMessage("ScaleTrackDiagram") + "...");
@@ -2459,7 +2459,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
                         //now try to get a preference specific to this combobox
                         String ttt = focusedJBCB.getToolTipText();
 
-                        if (null != ttt) {
+                        if (ttt != null) {
                             //change the name of the preference based on the tool tip text
                             ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
                         }
@@ -3052,7 +3052,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
                 Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
 
-                if (null != ddldoProp) {
+                if (ddldoProp != null) {
                     //this will be the value if this combo box doesn't have a saved preference.
                     ddldoPref = ddldoProp.toString();
                 } else {
@@ -3068,12 +3068,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
                 if (jbcb instanceof JmriBeanComboBox) {
                     String ttt = jbcb.getToolTipText();
-                    if (null != ttt) {
+                    if (ttt != null) {
                         //change the name of the preference based on the tool tip text
                         ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
                         //try to get the preference
                         ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                        if (null != ddldoProp) { //if we found it...
+                        if (ddldoProp != null) { //if we found it...
                             ddldoPref = ddldoProp.toString(); //get it's (string value
                         } else { //otherwise...
                             //save it in the users preferences
@@ -3124,11 +3124,11 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
                 createFloatingEditToolBox();
-                if (null != editToolBarContainerPanel) {
+                if (editToolBarContainerPanel != null) {
                     editToolBarContainerPanel.setVisible(false);
                 }
             } else {
-                if (null != floatingEditToolBoxFrame) {
+                if (floatingEditToolBoxFrame != null) {
                     deleteFloatingEditToolBox();
                 }
                 floatingEditContentScrollPane = null; // The switch to toolbar will move the toolbox content to the new toolbar
@@ -3375,8 +3375,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     private void adjustScrollBars() {
         JScrollPane scrollPane = getPanelScrollPane();
-        JViewport viewPort = scrollPane.getViewport();
-
+        //JViewport viewPort = scrollPane.getViewport();
         //Dimension viewSize = viewPort.getViewSize();
         Dimension viewSize = scrollPane.getSize();
         Dimension panelSize = _targetPanel.getSize();
@@ -5367,10 +5366,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         Object obj = null;
         if (opt.isPresent()) {
             obj = opt.get();
-            if (null != obj) {
+            if (obj != null) {
                 /*  TODO: Dead-code strip this (if not needed)
-            if (obj instanceof LayoutTurntable) {
-                LayoutTurntable layoutTurntable = (LayoutTurntable) obj;
+            if (layoutTrack instanceof LayoutTurntable) {
+                LayoutTurntable layoutTurntable = (LayoutTurntable) layoutTrack;
                 if (LayoutTrack.isConnectionHitType(selectedPointType)) {
                     try {
                         selectedObject = layoutTurntable.getConnection(selectedPointType);
@@ -5416,13 +5415,12 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             return (LayoutTrack.NONE != foundPointType);
         }).findFirst();
 
-        Object obj = null;
+        LayoutTrack layoutTrack = null;
         if (opt.isPresent()) {
-            obj = opt.get();
+            layoutTrack = opt.get();
         }
 
-        if (null != obj) {
-            LayoutTrack layoutTrack = (LayoutTrack) obj;
+        if (layoutTrack != null) {
             foundObject = layoutTrack;
             foundLocation = layoutTrack.getCoordsForConnectionType(foundPointType);
             foundNeedsConnect = layoutTrack.isDisconnected(foundPointType);
@@ -7539,7 +7537,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             result = newBlk;
         }
 
-        if (null != result) {
+        if (result != null) {
             //set both new and previously existing block
             result.addLayoutEditor(this);
             result.incrementUse();
@@ -7564,7 +7562,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         if (!sensorName.isEmpty()) {
             //get a validated sensor corresponding to this name and assigned to block
             Sensor s = blk.validateSensor(sensorName, openFrame);
-            result = (null != s); //if sensor returned result is true.
+            result = (s != null); //if sensor returned result is true.
         }
         return result;
     } //validateSensor
@@ -8603,7 +8601,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
      */
     void addLabel() {
         String labelText = textLabelTextField.getText();
-        labelText = (null != labelText) ? labelText.trim() : "";
+        labelText = (labelText != null) ? labelText.trim() : "";
 
         if (labelText.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11"),
@@ -9378,7 +9376,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     private boolean highlightBlockInComboBox(@Nonnull JmriBeanComboBox inComboBox) {
         boolean result = false;
 
-        if (null != inComboBox) {
+        if (inComboBox != null) {
             Block b = (Block) inComboBox.getNamedBean();
             result = highlightBlock(b);
         }
@@ -9401,7 +9399,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             LayoutBlock lb = lbm.getLayoutBlock(b);
 
             if (lb != null) {
-                boolean enable = ((null != inBlock) && b.equals(inBlock));
+                boolean enable = ((inBlock != null) && b.equals(inBlock));
                 lb.setUseExtraColor(enable);
                 result |= enable;
             }

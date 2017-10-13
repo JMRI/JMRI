@@ -16,7 +16,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -78,7 +77,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     // this should only be used for debugging...
     public String toString() {
-        return "LayoutTurntable " + ident;
+        return "LayoutTurntable " + getName();
     }
 
     /**
@@ -458,14 +457,14 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
         }
 
-        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + ident);
+        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Turntable")) + getName());
         jmi.setEnabled(false);
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -504,6 +503,20 @@ public class LayoutTurntable extends LayoutTrack {
             if (rt.getConnectionIndex() == index) {
                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
                 jmi.setEnabled(false);
+
+                rayPopup.add(new AbstractAction(
+                        Bundle.getMessage("MakeLabel",
+                                Bundle.getMessage("Connected"))
+                        + rt.getConnect().getName()) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LayoutEditorFindItems lf = layoutEditor.getFinder();
+                        LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
+                        layoutEditor.setSelectionRect(lt.getBounds());
+                        lt.showPopup();
+                    }
+                });
+
                 if (rt.getTurnout() != null) {
                     String info = rt.getTurnout().getDisplayName();
                     String stateString = getTurnoutStateString(rt.getTurnoutState());
@@ -839,36 +852,50 @@ public class LayoutTurntable extends LayoutTrack {
             @Nonnull Set<String> badBlocks) {
         boolean result = true; // assume success (optimist!)
 
-        // check all our adjacent tracks (non-null) blocks and...
-        // #1) If it's in the bad blocks return false
-        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
-        //      and flood the neighbour on that connection
-        // #3) else add to bad blocks and return false
-        // check the block for all rays
-        Set<String> myBlockNames = new LinkedHashSet<>();
+        /* check all our (non-null) blocks and...
+         * #1) If it's in the bad blocks set do:
+         *     add this track to the  blockToTracksSetMap track set
+         *     for this block and return false
+         * #2) else if it's not a key in the blockToTracksSetMap then add a
+         *     new set (with this track) to blockToTracksSetMap and check all
+         *     connections in this block (by calling the 2nd method below)
+         * #3) else check to see if this track is in this blocks
+         *     (blockToTracksSetMap) track set:
+         *     if so return true
+         *     else add it to bad blocks set and return false
+         */
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
                 TrackSegment ts = getRayConnectOrdered(k);
                 if (ts != null) {
-                    String blk = ts.getBlockName();
-                    if (blk != null) {
-                        if (badBlocks.contains(blk)) {
+                    String blockName = ts.getBlockName();
+                    if (blockName != null) {
+                        if (badBlocks.contains(blockName)) {  // (#1)
+                            Set<String> tracksSet = blockToTracksSetMap.get(blockName);
+                            // this should never be null... but just in case...
+                            if ((tracksSet != null) && !tracksSet.contains(getName())) {
+                                log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                                tracksSet.add(getName());
+                            }
                             result = false;
                         } else {
                             boolean check = true;
-                            Set<String> trackSet = blockToTracksSetMap.get(blk);
-                            if (trackSet == null) {
-                                trackSet = new LinkedHashSet<>();
-                                trackSet.add(getName());
-                                blockToTracksSetMap.put(blk, trackSet);
-                            } else if (myBlockNames.contains(blk)) {
-                                trackSet.add(getName());
-                                badBlocks.add(blk);
+                            Set<String> tracksSet = blockToTracksSetMap.get(blockName);
+                            if (tracksSet == null) { // (#2)
+                                log.info("•New block ('{}') tracksSet", blockName);
+                                tracksSet = new LinkedHashSet<>();
+                                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                                tracksSet.add(getName());
+                                blockToTracksSetMap.put(blockName, tracksSet);
+                            } else if (!tracksSet.contains(getName())) {   // (#3)
+                                log.info("•    add track '{}'for block '{}'", getName(), blockName);
+                                tracksSet.add(getName());
+                                badBlocks.add(blockName);
                                 result = false;
                                 check = false;
                             }
                             if (check) {
-                                result &= ts.checkForNonContiguousBlocks(blk, trackSet);
+                                result &= ts.checkForNonContiguousBlocks(blockName, tracksSet);
                             }
                         }
                     }
@@ -881,12 +908,12 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-    public boolean checkForNonContiguousBlocks(@Nonnull String block,
-            @Nonnull Set<String> tracks) {
+    public boolean checkForNonContiguousBlocks(@Nonnull String blockName,
+            @Nonnull Set<String> tracksSet) {
         boolean result = true; // assume success (optimist!)
 
         // check all the matching blocks in this track and...
-        //  #1) add us to tracks and...
+        //  #1) add us to tracksSet and...
         //  #2) flood them
         for (int k = 0; k < getNumberRays(); k++) {
             if (getRayConnectOrdered(k) == null) {
@@ -894,14 +921,15 @@ public class LayoutTurntable extends LayoutTrack {
                 if (ts != null) {
                     String blk = ts.getBlockName();
                     if (blk != null) {
-                        if (blk.equals(block)) {
-                            // if we're not already in tracks...
-                            if (!tracks.contains(ident)) {
-                                tracks.add(ident);  // add us (#1)
+                        if (blk.equals(blockName)) {
+                            // if we're not already in tracksSet...
+                            if (!tracksSet.contains(getName())) {
+                                log.info("•    Add track '{}'for block '{}'", getName(), blockName);
+                                tracksSet.add(getName());  // add us (#1)
                             }
-                            if (!tracks.contains(ts.getName())) {
+                            if (!tracksSet.contains(ts.getName())) {
                                 // flood neighbour (#2)
-                                result &= ts.checkForNonContiguousBlocks(block, tracks);
+                                result &= ts.checkForNonContiguousBlocks(blockName, tracksSet);
                             }
                         }
                     }

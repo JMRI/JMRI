@@ -1880,7 +1880,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     //Might be possible to refactor the removal to use a bit of common code.
     private void removeAdjacency(Path removedPath) {
         Block block = removedPath.getBlock();
-        if (null != block) {
+        if (block != null) {
             if (enableDeleteRouteLogging) {
                 log.info("From " + this.getDisplayName()
                         + " Adjacency to be removed " + block.getDisplayName()
@@ -3231,7 +3231,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     @CheckForNull
     Routes getValidRoute(Block nxtBlock, Block dstBlock) {
-        if ((null != nxtBlock) && (null != dstBlock)) {
+        if ((nxtBlock != null) && (dstBlock != null)) {
             List<Routes> rtr = getRouteByNeighbour(nxtBlock);
 
             if (rtr.size() == 0) {
@@ -3250,8 +3250,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
         } else {
             log.warn("getValidRoute({}, {}",
-                    (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",
-                    (null != dstBlock) ? dstBlock.getDisplayName() : "<null>");
+                    (nxtBlock != null) ? nxtBlock.getDisplayName() : "<null>",
+                    (dstBlock != null) ? dstBlock.getDisplayName() : "<null>");
         }
         return null;
     }

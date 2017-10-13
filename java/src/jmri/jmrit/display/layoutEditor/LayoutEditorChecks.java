@@ -22,6 +22,7 @@ public class LayoutEditorChecks {
 
     private final LayoutEditor layoutEditor;
     private JMenu checkMenu = new JMenu(Bundle.getMessage("CheckMenuTitle"));
+    private JMenuItem checkInProgressMenuItem = new JMenuItem(Bundle.getMessage("CheckInProgressMenuItemTitle"));
     private JMenuItem checkNoResultsMenuItem = new JMenuItem(Bundle.getMessage("CheckNoResultsMenuItemTitle"));
 
     // Check Un-Connected Tracks
@@ -34,7 +35,7 @@ public class LayoutEditorChecks {
 
     // Check Non-Contiguous Blocks
     private JMenu checkNonContiguousBlocksMenu = new JMenu(Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"));
-    private JMenuItem checkNonContiguousBlocksMenuItem = new JMenuItem(Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"));
+//    private JMenuItem checkNonContiguousBlocksMenuItem = new JMenuItem(Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"));
 
     /**
      * The constructor for this class
@@ -52,11 +53,41 @@ public class LayoutEditorChecks {
      */
     //Note: I'm implemented these menus/sub-menu items three different ways...
     // (see the inline notes)
-    protected void setupMenu(@Nonnull JMenu toolsMenu) {
+    protected void setupChecksMenu(@Nonnull JMenu toolsMenu) {
         toolsMenu.add(checkMenu);
+        checkMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent menuEvent) {
+                log.debug("menuSelected");
+                boolean enabled = layoutEditor.isEditable();
+                checkUnConnectedTracksMenu.setEnabled(enabled);
+                checkUnConnectedTracksMenuItem.setEnabled(enabled);
+                checkUnBlockedTracksMenu.setEnabled(enabled);
+                checkUnBlockedTracksMenuItem.setEnabled(enabled);
+                checkNonContiguousBlocksMenu.setEnabled(enabled);
+//                checkNonContiguousBlocksMenuItem.setEnabled(enabled);
+            }
+
+            @Override
+
+            public void menuDeselected(MenuEvent menuEvent) {
+                log.debug("menuDeselected");
+                //nothing to do here... move along...
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent menuEvent) {
+                log.debug("menuCanceled");
+                //nothing to do here... move along...
+            }
+        }
+        );
+        checkMenu.setEnabled(layoutEditor.isEditable());
         checkMenu.setToolTipText(Bundle.getMessage("CheckMenuToolTip"));
         checkNoResultsMenuItem.setToolTipText(Bundle.getMessage("CheckNoResultsMenuItemToolTip"));
-
+        checkNoResultsMenuItem.setEnabled(false);
+        checkInProgressMenuItem.setToolTipText(Bundle.getMessage("CheckInProgressMenuItemToolTip"));
+        checkInProgressMenuItem.setEnabled(false);
         //
         //  check for tracks with free connections
         //
@@ -99,6 +130,7 @@ public class LayoutEditorChecks {
         // Note: This menu runs its checks as soon as the menu is moused over.
         // The sub-menus are populated at that time.
         checkNonContiguousBlocksMenu.setToolTipText(Bundle.getMessage("CheckNonContiguousBlocksMenuToolTip"));
+        checkNonContiguousBlocksMenu.add(checkInProgressMenuItem);
         checkMenu.add(checkNonContiguousBlocksMenu);
 
         checkNonContiguousBlocksMenu.addMenuListener(new MenuListener() {
@@ -121,9 +153,9 @@ public class LayoutEditorChecks {
             }
         });
 
-        checkNonContiguousBlocksMenuItem.setText(Bundle.getMessage("CheckMenuTitle"));
-        checkNonContiguousBlocksMenuItem.setToolTipText(Bundle.getMessage("CheckNonContiguousBlocksMenuToolTip"));
-        checkNonContiguousBlocksMenu.add(checkNonContiguousBlocksMenuItem);
+//        checkNonContiguousBlocksMenuItem.setText(Bundle.getMessage("CheckMenuTitle"));
+//        checkNonContiguousBlocksMenuItem.setToolTipText(Bundle.getMessage("CheckNonContiguousBlocksMenuToolTip"));
+//        checkNonContiguousBlocksMenu.add(checkNonContiguousBlocksMenuItem);
     }
 
     //TODO: not used… dead-code strip
@@ -167,11 +199,9 @@ public class LayoutEditorChecks {
         }
         if (checkUnConnectedTracksMenu.getItemCount() > 2) {
             Component menuItem2 = checkUnConnectedTracksMenu.getItem(2);
-            if (menuItem2 instanceof JMenuItem) {
-                JMenuItem jmi = (JMenuItem) menuItem2;
-                String menuItemName = jmi.getText();
-                doCheckUnConnectedTracksMenuItem(menuItemName);
-            }
+            JMenuItem jmi = (JMenuItem) menuItem2;
+            String menuItemName = jmi.getText();
+            doCheckUnConnectedTracksMenuItem(menuItemName);
         }
     }
 
@@ -220,11 +250,9 @@ public class LayoutEditorChecks {
         }
         if (checkUnBlockedTracksMenu.getItemCount() > 2) {
             Component menuItem2 = checkUnBlockedTracksMenu.getItem(2);
-            if (menuItem2 instanceof JMenuItem) {
-                JMenuItem jmi = (JMenuItem) menuItem2;
-                String menuItemName = jmi.getText();
-                doCheckUnBlockedTracksMenuItem(menuItemName);
-            }
+            JMenuItem jmi = (JMenuItem) menuItem2;
+            String menuItemName = jmi.getText();
+            doCheckUnBlockedTracksMenuItem(menuItemName);
         }
     }
 
@@ -255,12 +283,14 @@ public class LayoutEditorChecks {
         log.debug("setupCheckNonContiguousBlocksMenu");
 
         checkNonContiguousBlocksMenu.removeAll();
+        checkNonContiguousBlocksMenu.add(checkInProgressMenuItem);
 
         HashMap<String, Set<String>> blocksMap = new HashMap<>();
         Set<String> badBlocks = new LinkedHashSet<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
             layoutTrack.checkForNonContiguousBlocks(blocksMap, badBlocks);
         }
+        checkNonContiguousBlocksMenu.removeAll();
         if (badBlocks.size() > 0) {
             for (String blockName : badBlocks) {
                 Set<String> trackSet = blocksMap.get(blockName);
@@ -289,7 +319,7 @@ public class LayoutEditorChecks {
         }
     }
 
-    // action to be performed when checkNonContiguousBlocksMenuItem is clicked
+    // action to be performed when checkNonContiguousBlocksMenu item is clicked
     private void doCheckNonContiguousBlocksMenuItem(String menuItemName) {
         log.debug("doCheckNonContiguousBlocksMenuItem({})", menuItemName);
 
