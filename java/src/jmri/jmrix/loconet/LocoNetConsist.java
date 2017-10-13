@@ -469,6 +469,9 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
 
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         notifyConsistListeners(address,
                 ConsistListener.CONSIST_ERROR);
         removeFromConsistList((DccLocoAddress)address);

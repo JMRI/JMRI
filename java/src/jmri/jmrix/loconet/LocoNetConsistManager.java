@@ -56,6 +56,9 @@ public class LocoNetConsistManager extends AbstractConsistManager {
      */
     @Override
     public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(address)) // no duplicates allowed.
         {
             return consistTable.get(address);
