@@ -25,14 +25,6 @@ public interface LocoAddress {
 
     public Protocol getProtocol();
 
-    /*
-    * Returns true if it is a long address.
-    * If the protocol doesn't support short and long addresses, always return true.
-    */
-    default public boolean isLongAddress() {
-        return true;
-    }
-
     public enum Protocol {
 
         DCC_SHORT("dcc_short", "ProtocolDCC_Short"), // NOI18N

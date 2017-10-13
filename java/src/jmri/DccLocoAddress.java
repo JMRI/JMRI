@@ -98,7 +98,6 @@ public class DccLocoAddress implements LocoAddress {
         }
     }
 
-    @Override
     public boolean isLongAddress() {
         if (protocol == LocoAddress.Protocol.DCC_SHORT) {
             return false;
