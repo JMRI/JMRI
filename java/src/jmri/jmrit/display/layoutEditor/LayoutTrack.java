@@ -5,13 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.JPopupMenu;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.ColorUtil;
+import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -430,6 +433,38 @@ public abstract class LayoutTrack {
     protected abstract JPopupMenu showPopup(@Nullable MouseEvent mouseEvent);
 
     /**
+     * show the popup menu for this layout track
+     *
+     * @param where to show the popup
+     * @return the popup menu for this layout track
+     */
+    @Nonnull
+    protected JPopupMenu showPopup(Point2D where) {
+        return this.showPopup(new MouseEvent(
+                layoutEditor.getTargetPanel(), // source
+                MouseEvent.MOUSE_CLICKED, // id
+                System.currentTimeMillis(), // when
+                0, // modifiers
+                (int) where.getX(), (int) where.getY(), // where
+                0, // click count
+                true));                         // popup trigger
+
+    }
+
+    /**
+     * show the popup menu for this layout track
+     *
+     * @return the popup menu for this layout track
+     */
+    @Nonnull
+    protected JPopupMenu showPopup() {
+        Point2D where = MathUtil.multiply(getCoordsCenter(),
+                layoutEditor.getZoom());
+        return this.showPopup(where);                         // popup trigger
+
+    }
+
+    /**
      * get the LayoutTrack connected at the specified connection type
      *
      * @param connectionType where on us to get the connection
@@ -480,19 +515,49 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * return a list of the available connects for this layout track
+     * return a list of the available connections for this layout track
      *
-     * @return
+     * @return the list of available connections
+     * <p>
+     * note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
+     * <p>
+     * (This could have just returned a boolean but I thought a list might be
+     * more useful (eventually... not currently being used; we just check to see
+     * if it's not empty.)
      */
     @Nonnull
-    public abstract List<Integer> getAvailableConnections();
+    public abstract List<Integer> checkForFreeConnections();
 
     /**
      * determine if all the appropriate blocks have been assigned to this track
      *
-     * @return
+     * @return true if all appropriate blocks have been assigned
+     * <p>
+     * note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
      */
-    public abstract boolean areAllBlocksAssigned();
+    public abstract boolean checkForUnAssignedBlocks();
 
+    /**
+     * check this track and its neighbors for non-contiguous blocks
+     *
+     * @param blockToTracksSetMap hashmap of blocks and Sets of tracks in those blocks
+     * @param badBlocks Set of bad blocks
+     * @return true if the check is good; false otherwise
+     * <p>
+     * note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
+     */
+    public abstract boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
+            @Nonnull Set<String> badBlocks);
+
+    /**
+     * recursive routine to check for contiguous tracks in same block
+     * @param block the block that we're checking for
+     * @param tracks the tracks that we've already checked
+     * @return true if this track in in this block
+     */
+    public abstract boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks);
+    
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class);
 }

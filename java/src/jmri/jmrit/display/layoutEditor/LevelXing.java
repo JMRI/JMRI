@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -963,7 +965,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
-       if (popup != null) {
+        if (popup != null) {
             popup.removeAll();
         } else {
             popup = new JPopupMenu();
@@ -1410,7 +1412,7 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getAvailableConnections() {
+    public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
 
         //check the A connection point
@@ -1439,9 +1441,115 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean areAllBlocksAssigned()
-    {
+    public boolean checkForUnAssignedBlocks() {
         return ((getLayoutBlockAC() != null) && (getLayoutBlockBD() != null));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
+            @Nonnull Set<String> badBlocks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all our (non-null) blocks and...
+        // #1) If it's in the bad blocks return false
+        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
+        //      and flood the neighbour on that connection
+        // #3) else add to bad blocks and return false
+        //check the AC block
+        if (getLayoutBlockAC() != null) {
+            if (badBlocks.contains(blockNameAC)) {
+                result = false;
+            } else {
+                Set<String> trackSet = blockToTracksSetMap.get(blockNameAC);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksSetMap.put(blockNameAC, trackSet);
+                    if (connectA != null) {
+                        result &= connectA.checkForNonContiguousBlocks(blockNameAC, trackSet);
+                    }
+                    if (connectC != null) {
+                        result &= connectC.checkForNonContiguousBlocks(blockNameAC, trackSet);
+                    }
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockNameAC);
+                    result = false;
+                }
+            }
+        }
+
+        //check the B connection point
+        if (getLayoutBlockBD() != null) {
+            if (badBlocks.contains(blockNameBD)) {
+                result = false;
+            } else {
+                Set<String> trackSet = blockToTracksSetMap.get(blockNameBD);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksSetMap.put(blockNameBD, trackSet);
+                    if (connectB != null) {
+                        result &= connectB.checkForNonContiguousBlocks(blockNameBD, trackSet);
+                    }
+                    if (connectD != null) {
+                        result &= connectD.checkForNonContiguousBlocks(blockNameBD, trackSet);
+                    }
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockNameBD);
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }   // checkForNonContiguousBlocks
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all the matching blocks in this track and...
+        //  #1) add us to tracks and...
+        //  #2) flood them
+        //check the AC block
+        if ((blockNameAC != null) && (blockNameAC.equals(block))) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us (#1)
+            }
+            if ((connectA != null) && (!tracks.contains(connectA.getName()))) {
+                // flood neighbour (#2)
+                result &= connectA.checkForNonContiguousBlocks(block, tracks);
+            }
+            if ((connectC != null) && (!tracks.contains(connectC.getName()))) {
+                // flood neighbour (#2)
+                result &= connectC.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+        //check the BD block
+        if ((blockNameBD != null) && (blockNameBD.equals(block))) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us
+            }
+            if ((connectB != null) && (!tracks.contains(connectB.getName()))) {
+                // flood neighbour (#2)
+                result &= connectB.checkForNonContiguousBlocks(block, tracks);
+            }
+            if ((connectD != null) && (!tracks.contains(connectD.getName()))) {
+                // flood neighbour (#2)
+                result &= connectD.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class);

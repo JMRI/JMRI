@@ -8,7 +8,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -3671,7 +3674,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getAvailableConnections() {
+    public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
 
         //check the A connection point
@@ -3704,11 +3707,173 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean areAllBlocksAssigned() {
+    public boolean checkForUnAssignedBlocks() {
         // because getLayoutBlock[BCD] will return block [A] if they're null
         // we only need to test block [A]
         return (getLayoutBlock() != null);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
+            @Nonnull Set<String> badBlocks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all our (non-null) blocks and...
+        // #1) If it's in the bad blocks return false
+        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
+        //      and flood the neighbour on that connection
+        // #3) else add to bad blocks and return false
+        //check the A connection point
+        if (blockName != null) {
+            if (badBlocks.contains(blockName)) {
+                result = false;
+            } else if (connectA != null) {
+                Set<String> trackSet = blockToTracksSetMap.get(blockName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksSetMap.put(blockName, trackSet);
+                    result &= connectA.checkForNonContiguousBlocks(blockName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockName);
+                    result = false;
+                }
+            }
+        }
+
+        //check the B connection point
+        if (blockBName != null) {
+            if (badBlocks.contains(blockBName)) {
+                result = false;
+            } else if (connectB != null) {
+                Set<String> trackSet = blockToTracksSetMap.get(blockBName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksSetMap.put(blockBName, trackSet);
+                    result &= connectB.checkForNonContiguousBlocks(blockBName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockBName);
+                    result = false;
+                }
+            }
+        }
+
+        //check the C connection point
+        if (blockCName != null) {
+            if (badBlocks.contains(blockCName)) {
+                result = false;
+            } else if (connectC != null) {
+                Set<String> trackSet = blockToTracksSetMap.get(blockCName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksSetMap.put(blockCName, trackSet);
+                    result &= connectC.checkForNonContiguousBlocks(blockCName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockCName);
+                    result = false;
+                }
+            }
+        }
+
+        //check the D connection point
+        if ((getTurnoutType() == DOUBLE_XOVER)
+                || (getTurnoutType() == LH_XOVER)
+                || (getTurnoutType() == RH_XOVER)) {
+            if (blockDName != null) {
+                if (badBlocks.contains(blockDName)) {
+                    result = false;
+                } else if (connectD != null) {
+                    Set<String> trackSet = blockToTracksSetMap.get(blockDName);
+                    if (trackSet == null) {
+                        trackSet = new LinkedHashSet<>();
+                        trackSet.add(getName());
+                        blockToTracksSetMap.put(blockDName, trackSet);
+                        result &= connectD.checkForNonContiguousBlocks(blockDName, trackSet);
+                    } else {
+                        trackSet.add(getName());
+                        badBlocks.add(blockDName);
+                        result = false;
+                    }
+                }
+            }
+        }
+        return result;
+    }   // checkForNonContiguousBlocks
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks) {
+        boolean result = true; // assume success (optimist!)
+
+        // flood all the connections in this block
+        // check the A connection point
+        if (blockName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);
+            }
+            // if we have a neighbor and it's not in tracks...
+            if ((connectA != null) && (!tracks.contains(connectA))) {
+                // flood neighbour (#2)
+                result &= connectA.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+
+        //check the B connection point
+        if (blockBName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);
+            }
+            // if we have a neighbor and it's not in tracks...
+            if ((connectB != null) && (!tracks.contains(connectB))) {
+                // flood neighbour (#2)
+                result &= connectB.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+
+        //check the C connection point
+        if (blockCName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);
+            }
+            // if we have a neighbor and it's not in tracks...
+            if ((connectC != null) && (!tracks.contains(connectC))) {
+                // flood neighbour (#2)
+                result &= connectC.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+
+        //check the D connection point
+        if ((getTurnoutType() == DOUBLE_XOVER)
+                || (getTurnoutType() == LH_XOVER)
+                || (getTurnoutType() == RH_XOVER)) {
+            if (blockDName.equals(block)) {
+                // if we're not already in tracks...
+                if (!tracks.contains(ident)) {
+                    tracks.add(ident);
+                }
+                // if we have a neighbor and it's not in tracks...
+                if ((connectD != null) && (!tracks.contains(connectD))) {
+                    // flood neighbour (#2)
+                    result &= connectD.checkForNonContiguousBlocks(block, tracks);
+                }
+            }
+        }
+        return result;
+    }   // checkForNonContiguousBlocks
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class
     );

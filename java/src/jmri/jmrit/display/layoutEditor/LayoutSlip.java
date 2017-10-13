@@ -12,8 +12,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -1529,7 +1531,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getAvailableConnections() {
+    public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
 
         //check the A connection point
@@ -1550,6 +1552,158 @@ public class LayoutSlip extends LayoutTurnout {
         //check the D connection point
         if (getConnectD() == null) {
             result.add(Integer.valueOf(SLIP_D));
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksListMap,
+            @Nonnull Set<String> badBlocks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all our (non-null) blocks and...
+        // #1) If it's in the bad blocks return false
+        // #2) If it's not in the blockToTracksListMap then add it (key:block, value:track)
+        //      and flood the neighbour on that connection
+        // #3) else add to bad blocks and return false
+        //check the A connection point
+        if (blockName != null) {
+            if (badBlocks.contains(blockName)) {
+                result = false;
+            } else if (connectA != null) {
+                Set<String> trackSet = blockToTracksListMap.get(blockName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksListMap.put(blockName, trackSet);
+                    result &= connectA.checkForNonContiguousBlocks(blockName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockName);
+                    result = false;
+                }
+            }
+        }
+
+        //check the B connection point
+        if (blockBName != null) {
+            if (badBlocks.contains(blockBName)) {
+                result = false;
+            } else if (connectB != null) {
+                Set<String> trackSet = blockToTracksListMap.get(blockBName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksListMap.put(blockBName, trackSet);
+                    result &= connectB.checkForNonContiguousBlocks(blockBName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockBName);
+                    result = false;
+                }
+            }
+        }
+
+        //check the C connection point
+        if (blockCName != null) {
+            if (badBlocks.contains(blockCName)) {
+                result = false;
+            } else if (connectC != null) {
+                Set<String> trackSet = blockToTracksListMap.get(blockCName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksListMap.put(blockCName, trackSet);
+                    result &= connectC.checkForNonContiguousBlocks(blockCName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockCName);
+                    result = false;
+                }
+            }
+        }
+
+        //check the D connection point
+        if (blockDName != null) {
+            if (badBlocks.contains(blockDName)) {
+                result = false;
+            } else if (connectD != null) {
+                Set<String> trackSet = blockToTracksListMap.get(blockDName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksListMap.put(blockDName, trackSet);
+                    result &= connectD.checkForNonContiguousBlocks(blockDName, trackSet);
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockDName);
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }   // checkForNonContiguousBlocks
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all the connections in this block and...
+        //  #1) add them to tracks and...
+        //  #2) flood them
+        //check the A connection point
+        if (blockName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us (#1)
+            }
+            if (connectA != null) {
+                // flood neighbour (#2)
+                result &= connectA.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+
+        //check the B connection point
+        if (blockBName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us
+            }
+            if (connectB != null) {
+                // flood neighbour (#2)
+                result &= connectB.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+
+        //check the C connection point
+        if (blockCName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us
+            }
+            if (connectC != null) {
+                // flood neighbour (#2)
+                result &= connectC.checkForNonContiguousBlocks(block, tracks);
+            }
+        }
+
+        //check the D connection point
+        if (blockDName.equals(block)) {
+            // if we're not already in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us
+            }
+            if (connectD != null) {
+                // flood neighbour (#2)
+                result &= connectD.checkForNonContiguousBlocks(block, tracks);
+            }
         }
         return result;
     }

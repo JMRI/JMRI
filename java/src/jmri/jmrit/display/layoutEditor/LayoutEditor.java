@@ -5591,7 +5591,6 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         if (o != null) {
             result = ((LayoutTrack) o).getCoordsForConnectionType(connectionType);
         } else {
-            //log.error("Null connection point of type {} {}", connectionType, getLayoutName());
             log.error("Null connection point of type {}", connectionType);
         }
         return result;
@@ -7511,23 +7510,17 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         if (inBlockName.isEmpty()) {
             //nothing entered, try autoAssign
             if (autoAssignBlocks) {
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                ).createNewLayoutBlock();
-
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
                 if (null == newBlk) {
                     log.error("Failure to auto-assign LayoutBlock '{}'.", inBlockName);
-
                 }
             }
         } else {
             //check if this Layout Block already exists
-            result = InstanceManager.getDefault(LayoutBlockManager.class
-            ).getByUserName(inBlockName);
+            result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(inBlockName);
 
             if (null == result) { //(no)
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                ).createNewLayoutBlock(null, inBlockName);
-
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, inBlockName);
                 if (null == newBlk) {
                     log.error("Failure to create new LayoutBlock '{}'.", inBlockName);
                 }
@@ -9599,6 +9592,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         drawTrackSegments(g2, trackSegments, true, true);      //dashed, mainline
         drawTrackSegments(g2, trackSegments, false, false);    //non-dashed, non-mainline
         drawTrackSegments(g2, trackSegments, false, true);     //non-dashed, mainline
+
         drawLayoutTracks(g2);
 
         // things that only get drawn in edit mode
@@ -9628,6 +9622,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
     //had to make this protected so the LayoutTrack classes could access it
     //also returned the current value of trackWidth for the callers to use
     protected float setTrackStrokeWidth(Graphics2D g2, boolean needMain) {
+        log.debug("setTrackStrokeWidth(g2, {}), main: {}", needMain, main);
         if (main != needMain) {
             main = needMain;
 
@@ -9666,7 +9661,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         }
     } //drawLayoutTracks
 
-    private void drawTrackSegments(Graphics2D g2, List<TrackSegment> trackSegments, boolean dashed, boolean mainline) {
+    private void drawTrackSegments(Graphics2D g2,
+            List<TrackSegment> trackSegments,
+            boolean dashed,
+            boolean mainline) {
         setTrackStrokeWidth(g2, mainline);
         for (TrackSegment ts : trackSegments) {
             if ((ts.isDashed() == dashed) && (ts.isMainline() == mainline)) {
@@ -9742,6 +9740,10 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
         selectionWidth = selectionRect.getWidth();
         selectionHeight = selectionRect.getHeight();
 
+        // There's already code in the super class (Editor) to draw
+        // the selection rect... We just have to set _selectRect
+        _selectRect = MathUtil.rectangle2DToRectangle(getSelectionRect());
+
         clearSelectionGroups();
         selectionActive = true;
         createSelectionGroups();
@@ -9750,11 +9752,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
 
     private void drawSelectionRect(Graphics2D g2) {
         if (selectionActive && (selectionWidth != 0.0) && (selectionHeight != 0.0)) {
-            // There's already code in the super class (Editor) to draw
-            // the selection rect... We just have to set _selectRect
-            _selectRect = MathUtil.rectangle2DToRectangle(getSelectionRect());
-
-            // The Editor super class draw a dashed red selection rectangle...
+            // The Editor super class draws a dashed red selection rectangle...
             // We're going to also draw a non-dashed yellow selection rectangle...
             // This could be code stripped if the super-class implementation is "good enough"
             Stroke stroke = g2.getStroke();
@@ -9763,7 +9761,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             g2.setColor(new Color(204, 207, 88));
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-            g2.draw(getSelectionRect());
+            g2.draw(getSelectionRect());    // this sets _selectRect also
 
             g2.setColor(color);
             g2.setStroke(stroke);

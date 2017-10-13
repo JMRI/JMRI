@@ -11,7 +11,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -430,6 +433,8 @@ public class TrackSegment extends LayoutTrack {
         layoutBlock = b;
         if (b != null) {
             blockName = b.getId();
+        } else {
+            blockName = "";
         }
     }
 
@@ -1348,6 +1353,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw(Graphics2D g2) {
+        // hidden, dashed & solid track segments are drawn interleaved
+        // so save and restore the previous stroke before & after drawing
+        Stroke oldStroke = g2.getStroke();  // save previous stroke
         setColorForTrackBlock(g2, getLayoutBlock());
 
         if (isHidden()) {
@@ -1359,6 +1367,7 @@ public class TrackSegment extends LayoutTrack {
         } else if (!isHidden()) {
             drawSolid(g2);
         }
+        g2.setStroke(oldStroke);    // restore previous stroke
     }
 
     /**
@@ -1371,26 +1380,19 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private void drawHidden(Graphics2D g2) {
-        // hidden track segments are drawn interleaved with non-hidden ones
-        // so save and restore the previous stroke before & after drawing here
-        Stroke oldStroke = g2.getStroke();  // save previous stroke
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
                 layoutEditor.getCoords(getConnect2(), getType2())));
-        g2.setStroke(oldStroke);    // restore previous stroke
     }   // drawHidden
 
     private void drawDashed(Graphics2D g2) {
         float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
         if (isArc()) {
             calculateTrackSegmentAngle();
-            Stroke originalStroke = g2.getStroke();
             Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
             g2.setStroke(drawingStroke);
             g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-            g2.setStroke(originalStroke);
         } else if (isBezier()) {
-            Stroke originalStroke = g2.getStroke();
             Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
             g2.setStroke(drawingStroke);
 
@@ -1406,8 +1408,6 @@ public class TrackSegment extends LayoutTrack {
             points[cnt + 1] = pt2;
 
             MathUtil.drawBezier(g2, points);
-
-            g2.setStroke(originalStroke);
         } else {
             Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
             Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1642,7 +1642,7 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getAvailableConnections() {
+    public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
         // Track Segments always have all their connections so...
         // (nothing to do here... move along)
@@ -1653,9 +1653,77 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean areAllBlocksAssigned() {
+    public boolean checkForUnAssignedBlocks() {
         return (getLayoutBlock() != null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
+            @Nonnull Set<String> badBlocks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check our (non-null) block
+        // #1) If it's in the bad blocks return false
+        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
+        //      and flood all neighbours on all connections
+        // #3) else add to bad blocks and return false
+        //check the A connection point
+        if (blockName != null) {
+            if (badBlocks.contains(blockName)) {
+                result = false;
+            } else {
+                Set<String> trackSet = blockToTracksSetMap.get(blockName);
+                if (trackSet == null) {
+                    trackSet = new LinkedHashSet<>();
+                    trackSet.add(getName());
+                    blockToTracksSetMap.put(blockName, trackSet);
+                    if (connect1 != null) {
+                        result &= connect1.checkForNonContiguousBlocks(blockName, trackSet);
+                    }
+                    if (connect2 != null) {
+                        result &= connect2.checkForNonContiguousBlocks(blockName, trackSet);
+                    }
+                } else {
+                    trackSet.add(getName());
+                    badBlocks.add(blockName);
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }   // checkForNonContiguousBlocks
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks) {
+        boolean result = true; // assume success (optimist!)
+
+        // flood all our connections in this block...
+        //check the A connection point
+        if (blockName.equals(block)) {
+            // if we're not in tracks...
+            if (!tracks.contains(ident)) {
+                tracks.add(ident);  // add us
+                // these should never be null... but just in case...
+                // if we have a neighbor and it's not in tracks...
+                if ((connect1 != null) && (!tracks.contains(connect1))) {
+                    result &= connect1.checkForNonContiguousBlocks(block, tracks);
+                }
+                // if we have a neighbor and it's not in tracks...
+                if ((connect2 != null) && (!tracks.contains(connect2))) {
+                    result &= connect2.checkForNonContiguousBlocks(block, tracks);
+                }
+            }
+        }
+        return result;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class
+    );
 }

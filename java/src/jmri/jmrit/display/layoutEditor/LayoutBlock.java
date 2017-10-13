@@ -2578,7 +2578,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     return;
                 }
             }
-            HashSet<LayoutTurnout> set = new HashSet<LayoutTurnout>();
+            Set<LayoutTurnout> set = new HashSet<>();
 
             for (int i = 0; i < stod.size(); i++) {
                 boolean val = set.add(stod.get(i));
@@ -2609,7 +2609,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 maxtSet = tmpdtosSet;
             }
 
-            Set<LayoutTurnout> set = new HashSet<LayoutTurnout>(maxt);
+            Set<LayoutTurnout> set = new HashSet<>(maxt);
 
             if (set.size() == maxt.size()) {
                 if (enableAddRouteLogging) {
@@ -4434,7 +4434,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         boolean pathActive = false;
 
-        HashMap<Turnout, Integer> _turnouts = new HashMap<Turnout, Integer>();
+        HashMap<Turnout, Integer> _turnouts = new HashMap<>();
 
         ThroughPaths(Block srcBlock, Path srcPath, Block destBlock, Path dstPath) {
             sourceBlock = srcBlock;
@@ -4478,7 +4478,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 setRoutesValid(destinationBlock, true);
                 return;
             }
-            _turnouts = new HashMap<Turnout, Integer>(turnouts.size());
+            _turnouts = new HashMap<>(turnouts.size());
             for (int i = 0; i < turnouts.size(); i++) {
                 if (turnouts.get(i) instanceof LayoutSlip) {
                     int slipState = turnoutSettings.get(i);

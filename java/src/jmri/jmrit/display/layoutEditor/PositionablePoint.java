@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +12,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -1297,6 +1299,9 @@ public class PositionablePoint extends LayoutTrack {
                     g2.draw(new Line2D.Double(p3, p1));
                 }
             }
+            // this is to force setTrackStrokeWidth's mainline local to toggle
+            // so next time it's called it will "do the right thing"...
+            layoutEditor.setTrackStrokeWidth(g2, !mainline);
             g2.setStroke(originalStroke);
         }   // if (getType() != ANCHOR)
     }
@@ -1459,12 +1464,11 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getAvailableConnections() {
+    public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
 
         if ((getConnect1() == null)
-                || ((getType() != END_BUMPER) && (getConnect2() == null)))
-        {
+                || ((getType() != END_BUMPER) && (getConnect2() == null))) {
             result.add(Integer.valueOf(POS_POINT));
         }
         return result;
@@ -1474,11 +1478,131 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean areAllBlocksAssigned()
-    {
+    public boolean checkForUnAssignedBlocks() {
         // Positionable Points don't have blocks so…
         // nothing to do here... move along...
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
+            @Nonnull Set<String> badBlocks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check our (non-null) block
+        // #1) If it's in the bad blocks return false
+        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
+        //      and flood all neighbours on all connections
+        // #3) else add to bad blocks and return false
+        //check the A connection point
+        TrackSegment ts1 = getConnect1();
+        String blk1 = null;
+        // this should always be true... but just in case...
+        if (ts1 != null) {
+            blk1 = ts1.getBlockName();
+            if (blk1 != null) {
+                if (badBlocks.contains(blk1)) {
+                    result = false;
+                } else {
+                    Set<String> trackSet = blockToTracksSetMap.get(blk1);
+                    if (trackSet == null) {
+                        trackSet = new LinkedHashSet<>();
+                        trackSet.add(getName());
+                        blockToTracksSetMap.put(blk1, trackSet);
+                        if (connect1 != null) {
+                            result &= connect1.checkForNonContiguousBlocks(blk1, trackSet);
+                        }
+                    } else {
+                        trackSet.add(getName());
+                        badBlocks.add(blk1);
+                        result = false;
+                    }
+                }
+            }
+        }
+
+        if (getType() == ANCHOR) {
+            TrackSegment ts2 = getConnect2();
+            // this should always be true... but just in case...
+            if (ts2 != null) {
+                String blk2 = ts2.getBlockName();
+                if (blk2 != null) {
+                    if (badBlocks.contains(blk2)) {
+                        result = false;
+                    } else {
+                        boolean check = true;
+                        Set<String> trackSet = blockToTracksSetMap.get(blk2);
+                        if (trackSet == null) {
+                            trackSet = new LinkedHashSet<>();
+                            trackSet.add(getName());
+                            blockToTracksSetMap.put(blk2, trackSet);
+                        } else if (!blk1.equals(blk2)) {  // if blk1 already put us in blockToTracksSetMap
+                            trackSet.add(getName());
+                            badBlocks.add(blk2);
+                            result = false;
+                            check = false;
+                        }
+                        if (check) {
+                            if (connect2 != null) {
+                                result &= connect2.checkForNonContiguousBlocks(blk2, trackSet);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    } // checkForNonContiguousBlocks
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks) {
+        boolean result = true; // assume success (optimist!)
+
+        TrackSegment ts1 = getConnect1();
+        // this should always be true... but just in case...
+        if (ts1 != null) {
+            String blk1 = ts1.getBlockName();
+
+            // flood all our connections in this block...
+            // check the A connection point
+            if (blk1.equals(block)) {
+                // if we're not in tracks...
+                if (!tracks.contains(ident)) {
+                    tracks.add(ident);  // add us
+                }
+                // these should never be null... but just in case...
+                if (connect1 != null) {
+                    result &= connect1.checkForNonContiguousBlocks(blk1, tracks);
+                }
+            }
+        }
+
+        TrackSegment ts2 = getConnect2();
+        // this should always be true... but just in case...
+        if (ts2 != null) {
+            String blk2 = ts2.getBlockName();
+
+            // flood all our connections in this block...
+            // check the A connection point
+            if (blk2.equals(block)) {
+                // if we're not in tracks...
+                if (!tracks.contains(ident)) {
+                    tracks.add(ident);  // add us
+                }
+                // these should never be null... but just in case...
+                if (connect2 != null) {
+                    result &= connect2.checkForNonContiguousBlocks(blk2, tracks);
+                }
+            }
+        }
+        return result;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);

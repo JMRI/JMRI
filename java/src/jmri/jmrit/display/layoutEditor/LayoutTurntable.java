@@ -11,7 +11,10 @@ import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -805,7 +808,7 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getAvailableConnections() {
+    public List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
 
         for (int k = 0; k < getNumberRays(); k++) {
@@ -820,13 +823,94 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public boolean areAllBlocksAssigned()
-    {
-        // Layout turnouts get their block information from the 
+    public boolean checkForUnAssignedBlocks() {
+        // Layout turnouts get their block information from the
         // track segments attached to their rays so...
         // nothing to do here... move along...
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, Set<String>> blockToTracksSetMap,
+            @Nonnull Set<String> badBlocks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all our adjacent tracks (non-null) blocks and...
+        // #1) If it's in the bad blocks return false
+        // #2) If it's not in the blockToTracksSetMap then add it (key:block, value:track)
+        //      and flood the neighbour on that connection
+        // #3) else add to bad blocks and return false
+        // check the block for all rays
+        Set<String> myBlockNames = new LinkedHashSet<>();
+        for (int k = 0; k < getNumberRays(); k++) {
+            if (getRayConnectOrdered(k) == null) {
+                TrackSegment ts = getRayConnectOrdered(k);
+                if (ts != null) {
+                    String blk = ts.getBlockName();
+                    if (blk != null) {
+                        if (badBlocks.contains(blk)) {
+                            result = false;
+                        } else {
+                            boolean check = true;
+                            Set<String> trackSet = blockToTracksSetMap.get(blk);
+                            if (trackSet == null) {
+                                trackSet = new LinkedHashSet<>();
+                                trackSet.add(getName());
+                                blockToTracksSetMap.put(blk, trackSet);
+                            } else if (myBlockNames.contains(blk)) {
+                                trackSet.add(getName());
+                                badBlocks.add(blk);
+                                result = false;
+                                check = false;
+                            }
+                            if (check) {
+                                result &= ts.checkForNonContiguousBlocks(blk, trackSet);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    } // checkForNonContiguousBlocks
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean checkForNonContiguousBlocks(@Nonnull String block,
+            @Nonnull Set<String> tracks) {
+        boolean result = true; // assume success (optimist!)
+
+        // check all the matching blocks in this track and...
+        //  #1) add us to tracks and...
+        //  #2) flood them
+        for (int k = 0; k < getNumberRays(); k++) {
+            if (getRayConnectOrdered(k) == null) {
+                TrackSegment ts = getRayConnectOrdered(k);
+                if (ts != null) {
+                    String blk = ts.getBlockName();
+                    if (blk != null) {
+                        if (blk.equals(block)) {
+                            // if we're not already in tracks...
+                            if (!tracks.contains(ident)) {
+                                tracks.add(ident);  // add us (#1)
+                            }
+                            if (!tracks.contains(ts.getName())) {
+                                // flood neighbour (#2)
+                                result &= ts.checkForNonContiguousBlocks(block, tracks);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class
+    );
 }
