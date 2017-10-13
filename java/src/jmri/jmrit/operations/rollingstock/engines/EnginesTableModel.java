@@ -126,7 +126,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < sysList.size(); index++) {
-            Engine e = (Engine) sysList.get(index);
+            Engine e = sysList.get(index);
             if (e != null) {
                 String[] number = e.getNumber().split("-");
                 // check for wild card '*'
@@ -335,7 +335,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Engine eng = (Engine) sysList.get(row);
+        Engine eng = sysList.get(row);
         if (eng == null) {
             return "ERROR engine unknown " + row; // NOI18N
         }
@@ -416,7 +416,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        Engine engine = (Engine) sysList.get(row);
+        Engine engine = sysList.get(row);
         switch (col) {
             case MOVES_COLUMN:
                 try {

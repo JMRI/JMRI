@@ -156,12 +156,12 @@ We roll some general code maintenance items into the release process.  They can 
 
 ```
 git commit -m"for 4.9.5" scripts/HOWTO-distribution.md
+git push github
 ```
 
 ================================================================================
 ## Create the Release Branch
 
-- Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, wait for the CI test to complete, and merge the pull request.
 
 - Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number, dated the 2nd Saturday of the month (might be already there, we've been posting them a few in advance)
 
@@ -179,7 +179,7 @@ git commit -m"for 4.9.5" scripts/HOWTO-distribution.md
             remove old-version change notes
         git add jmri4.9.5.shtml
         git commit -m"start new 4.9.6 release note" jmri4.9.6.shtml
-        PR-and-merge (or direct push) and pull back.
+        git push github
         cd (local JMRI copy)
 ```
 
