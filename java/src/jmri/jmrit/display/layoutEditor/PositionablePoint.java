@@ -1250,8 +1250,6 @@ public class PositionablePoint extends LayoutTrack {
      */
     protected void draw(Graphics2D g2) {
         if (getType() != ANCHOR) {
-            Stroke originalStroke = g2.getStroke();
-
             Point2D pt = getCoordsCenter();
             boolean mainline = false;
             Point2D ep1 = pt, ep2 = pt;
@@ -1302,9 +1300,8 @@ public class PositionablePoint extends LayoutTrack {
             // this is to force setTrackStrokeWidth's mainline local to toggle
             // so next time it's called it will "do the right thing"...
             layoutEditor.setTrackStrokeWidth(g2, !mainline);
-            g2.setStroke(originalStroke);
         }   // if (getType() != ANCHOR)
-    }
+    }   // draw
 
     /**
      * {@inheritDoc}

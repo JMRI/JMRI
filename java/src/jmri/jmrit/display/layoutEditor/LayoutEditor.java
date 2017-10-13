@@ -9681,7 +9681,7 @@ public class LayoutEditor extends PanelEditor implements VetoableChangeListener,
             g2.draw(new Line2D.Double(beginLocation, currentLocation));
 
             // highlight unconnected endpoints of all tracks
-            Color highlightColor = ColorUtil.setAlpha(Color.yellow, 0.75);
+            Color highlightColor = ColorUtil.setAlpha(Color.red, 0.25);
             Color connectColor = ColorUtil.setAlpha(Color.green, 0.5);
             g2.setColor(highlightColor);
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
