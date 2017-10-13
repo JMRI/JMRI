@@ -9,6 +9,7 @@
 package jmri.jmrix.easydcc;
 
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
@@ -53,12 +54,12 @@ public class EasyDccConsistManager extends AbstractConsistManager {
      * consistTable/consistList
      */
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
         if (consistTable.containsKey(address)) { // no duplicates allowed.
             return consistTable.get(address);
         }
         EasyDccConsist consist;
-        consist = new EasyDccConsist(address);
+        consist = new EasyDccConsist((DccLocoAddress) address);
         consistTable.put(address, consist);
         return consist;
     }

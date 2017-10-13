@@ -86,6 +86,7 @@ import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.web.server.WebServerPreferences;
@@ -657,10 +658,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @param address The address to send a cancel to
      */
     @Override
-    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address) {
+    public void notifyControllerAddressDeclined(ThrottleController tc, LocoAddress address) {
         log.debug("notifyControllerAddressDeclined");
         if (multiThrottles != null) {   //  Should exist by this point
-            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
+            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), tc);
+//            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
             multiThrottles.get(tc.whichThrottle).canceledThrottleRequest(tc.locoKey);
         }
     }

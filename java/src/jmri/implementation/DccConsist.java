@@ -7,6 +7,7 @@ import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import org.slf4j.Logger;
@@ -462,7 +463,7 @@ public class DccConsist implements Consist, ProgListener {
      *       consistListener objects
      */
     @SuppressWarnings("unchecked")
-    protected void notifyConsistListeners(DccLocoAddress LocoAddress, int ErrorCode) {
+    protected void notifyConsistListeners(LocoAddress LocoAddress, int ErrorCode) {
         // make a copy of the listener vector to notify.
         ArrayList<ConsistListener> v;
         synchronized (this) {

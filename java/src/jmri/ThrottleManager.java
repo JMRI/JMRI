@@ -86,7 +86,7 @@ public interface ThrottleManager {
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
-    public boolean requestThrottle(DccLocoAddress address, ThrottleListener l);
+    public boolean requestThrottle(LocoAddress address, ThrottleListener l);
 
     /**
      * Request a throttle, given a decoder address or a RosterEntry. When the
@@ -103,7 +103,7 @@ public interface ThrottleManager {
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
-    public boolean requestThrottle(DccLocoAddress address, BasicRosterEntry re, ThrottleListener l);
+    public boolean requestThrottle(LocoAddress address, BasicRosterEntry re, ThrottleListener l);
 
     /**
      * Cancel a request for a throttle.
@@ -176,12 +176,12 @@ public interface ThrottleManager {
     /**
      * Steal a requested throttle.
      *
-     * @param address desired DccLocoAddress 
+     * @param address desired LocoAddress 
      * @param l  ThrottleListener requesting the throttle steal occur.
      * @param steal true if the request should continue, false otherwise.
      * @since 4.9.2
      */
-    public void stealThrottleRequest(DccLocoAddress address, ThrottleListener l,boolean steal);
+    public void stealThrottleRequest(LocoAddress address, ThrottleListener l,boolean steal);
 
     /**
      * Test if the Dispatch Button should be enabled or not.
@@ -276,20 +276,20 @@ public interface ThrottleManager {
     /**
      * Provides a Proxy method to return the SpeedSetting, Direction, Function
      * Settings, of a throttle, where the requesting code has used
-     * {@link #attachListener(DccLocoAddress, java.beans.PropertyChangeListener) attachListener}
+     * {@link #attachListener(LocoAddress, java.beans.PropertyChangeListener) attachListener}
      * to only be notified of changes in the throttle and not control it.
      * <P>
      * Valid values for item are IsForward SpeedSetting SpeedIncrement
      * SpeedStepMode F0-F28
      * <P>
-     * @param la   DccLocoAddress that we wish interrogate
+     * @param la   LocoAddress that we wish interrogate
      * @param item A string of the item we wish to know the value of.
      * @return the value as an object, if the loco address has not been assigned
      *         to a throttle or the item value is not valid, null is returned.
      */
-    public Object getThrottleInfo(DccLocoAddress la, String item);
+    public Object getThrottleInfo(LocoAddress la, String item);
 
-    public boolean addressStillRequired(DccLocoAddress la);
+    public boolean addressStillRequired(LocoAddress la);
 
     /**
      * The specified Throttle Listener has finished using a given throttle and
@@ -349,24 +349,24 @@ public interface ThrottleManager {
      * The PropertyChangeListener will be notified if it has been attached to a
      * loco address or not, via a PropertyChange notification.
      * <p>
-     * @param la - DccLocoAddress of the loco we wish to monitor
+     * @param la - LocoAddress of the loco we wish to monitor
      * @param p  - PropertyChangeListener to attach to the throttle
      */
-    public void attachListener(DccLocoAddress la, PropertyChangeListener p);
+    public void attachListener(LocoAddress la, PropertyChangeListener p);
 
     /**
      * Remove a PropertyChangeListener to a specific loco address, where the
      * requesting code has used
-     * {@link #attachListener(DccLocoAddress, java.beans.PropertyChangeListener) attachListener}
+     * {@link #attachListener(LocoAddress, java.beans.PropertyChangeListener) attachListener}
      * to get notification of changes in a throttle.
      * <P>
      * The PropertyChangeListener will be notified if it has been removed via a
      * PropertyChange notification.
      *
-     * @param la - DccLocoAddress of the loco we wish to monitor
+     * @param la - LocoAddress of the loco we wish to monitor
      * @param p  - PropertyChangeListener to remove from the throttle
      */
-    public void removeListener(DccLocoAddress la, PropertyChangeListener p);
+    public void removeListener(LocoAddress la, PropertyChangeListener p);
 
     /**
      * Get the user name of the system that the programmer is associated with.

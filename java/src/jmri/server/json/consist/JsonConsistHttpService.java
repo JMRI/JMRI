@@ -21,6 +21,7 @@ import java.util.Locale;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -157,7 +158,7 @@ public class JsonConsistHttpService extends JsonHttpService {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
         ArrayNode root = mapper.createArrayNode();
-        for (DccLocoAddress address : this.manager.getConsistList()) {
+        for (LocoAddress address : this.manager.getConsistList()) {
             root.add(getConsist(locale, address));
         }
         return root;
@@ -191,7 +192,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      * @throws JsonException This exception has code 404 if the consist does not
      *                       exist.
      */
-    public JsonNode getConsist(Locale locale, DccLocoAddress address) throws JsonException {
+    public JsonNode getConsist(Locale locale, LocoAddress address) throws JsonException {
         if (this.manager.getConsistList().contains(address)) {
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, CONSIST);

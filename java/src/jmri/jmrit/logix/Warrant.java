@@ -6,6 +6,7 @@ import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -805,14 +806,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     } //end notifyThrottleFound
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         abortWarrant(Bundle.getMessage("noThrottle",
                 (reason + " " + (address != null ? address.getNumber() : getDisplayName()))));
         fireRunStatus("throttleFail", null, reason);
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

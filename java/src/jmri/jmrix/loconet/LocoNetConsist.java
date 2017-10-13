@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -467,15 +468,15 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         notifyConsistListeners(address,
                 ConsistListener.CONSIST_ERROR);
-        removeFromConsistList(address);
+        removeFromConsistList((DccLocoAddress)address);
         consistRequestState = IDLESTATE;
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(LocoAddress address){
         // this is an automatically stealing impelementation.
         throttleManager.stealThrottleRequest(address, this, true);
     }

@@ -8,6 +8,7 @@ import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.Consist;
 import jmri.ConsistManager;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ProgListener;
@@ -84,7 +85,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     public void sendAllConsistData() {
         // Loop thru JMRI consists and send consist detail for each
-        for (DccLocoAddress conAddr : manager.getConsistList()) {
+        for (LocoAddress conAddr : manager.getConsistList()) {
             sendDataForConsist(manager.getConsist(conAddr));
         }
     }

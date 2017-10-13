@@ -38,6 +38,7 @@ import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -199,7 +200,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.warn("Throttle request failed for {} because {}.", address, reason);
         for (ThrottleControllerListener l : listeners) {
             l.notifyControllerAddressDeclined(this, address);
@@ -208,7 +209,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address) {
+    public void notifyStealThrottleRequired(LocoAddress address) {
         notifyFailedThrottleRequest(address, "Steal Required");
 
         // this is an automatically stealing impelementation.

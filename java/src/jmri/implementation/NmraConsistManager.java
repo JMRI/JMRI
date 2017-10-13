@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import jmri.Consist;
 import jmri.ConsistManager;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
 /**
@@ -18,12 +19,12 @@ public class NmraConsistManager extends DccConsistManager implements ConsistMana
     }
 
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
         if (consistTable.containsKey(address)) {
             return (consistTable.get(address));
         }
         NmraConsist consist;
-        consist = new NmraConsist(address);
+        consist = new NmraConsist((DccLocoAddress) address);
         consistTable.put(address, consist);
         return (consist);
     }
