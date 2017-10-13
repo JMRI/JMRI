@@ -17,10 +17,8 @@ angular.module('jmri.app').run(function logsNotification($rootScope, $http, $log
   // get the localization; once loaded, will trigger everything else
   $translatePartialLoader.addPart('app/logs');
   
-  this.webSocket = null;
   $rootScope.$on('$translateRefreshEnd', function () {
     $translate('LOGS.ERROR_NOTIFICATION').then(function (translation) {
-    if (this.webSocket === null) {
       // register a listener for logs with the jmriWebSocket service
       // this listener determines if a notification needs to be shown or cleared
       this.webSocket = jmriWebSocket.register({
@@ -42,7 +40,6 @@ angular.module('jmri.app').run(function logsNotification($rootScope, $http, $log
         }
       });
       jmriWebSocket.get('logs', {'state': jmriWebSocket.ACTIVE});
-    }
     });
   });
 
